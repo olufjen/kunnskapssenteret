@@ -18,4 +18,5 @@ To crate and init the database:
 7) click on the node "databases" in the tree viewer, press f5
 8) open database "helsebiblioteket-administration"
 9) click on the sql query button for the new database
-10) open and execute "init_database.sql"
+10) open and execute "create_tables.sql"
+11) open and execute "init_database.sql"
