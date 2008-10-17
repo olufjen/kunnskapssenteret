@@ -55,10 +55,11 @@ GRANT ALL ON TABLE hb_user_role TO postgres;
 GRANT ALL ON TABLE hb_user_role TO helsebiblioteket;
 
 -- grants for sequences
--- Short info on sequences in general:
+--
+-- short info on sequences in general:
 -- sequences are auto-generated when a table field of type "serial" is created
 -- sequences automatically get a name assigned by the following rule: "serialname"+_seq
--- sequences are referred to ad tables
+-- sequences are referred to as tables
 
 REVOKE ALL ON TABLE hb_user_id_seq FROM PUBLIC;
 REVOKE ALL ON TABLE hb_user_id_seq FROM postgres;
