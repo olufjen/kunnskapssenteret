@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>/WEB-INF/application.properties</value>
+	 			<value>/WEB-INF/jdbc.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSourceHelsebiblioteket" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url.innsiden}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+	</bean>
+
+	<bean id="jdbcTemplateHelsebiblioteket" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
+	</bean>
+	
+	<bean id="userDao" class="no.helsebiblioteket.admin.dao.JdbcUserDao">
+		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	</bean>
+
+	<!-- 
+		A generic admin service. Purpose: provide access to dao's.
+	-->
+	<bean id="adminService" class="no.helsebiblioteket.admin.service.AdminServiceImpl">
+	 	<property name="userDao" ref="userDao"></property>
+	</bean>
+	
+</beans>

@@ -16,7 +16,7 @@ SET default_with_oids = false;
 
 CREATE TABLE hb_user (
     id serial NOT NULL,
-    hb_username text,
+    username text,
     password text,
     hb_user_role_id integer
 );

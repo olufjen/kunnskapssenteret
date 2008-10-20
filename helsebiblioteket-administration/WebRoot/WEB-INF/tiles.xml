@@ -1,0 +1,67 @@
+<!DOCTYPE tiles-definitions
+    [
+        <!ELEMENT component-definitions (definition+)>
+        <!ELEMENT tiles-definitions (definition+)>
+        <!ELEMENT definition (put*, putList*)>
+        <!ATTLIST definition
+            name CDATA #REQUIRED
+            page CDATA #IMPLIED
+            path CDATA #IMPLIED
+            extends CDATA #IMPLIED
+            role CDATA #IMPLIED
+            template CDATA #IMPLIED
+            controllerClass CDATA #IMPLIED
+            controllerUrl CDATA #IMPLIED>
+        <!ELEMENT put (#PCDATA)>
+        <!ATTLIST put
+            name CDATA #REQUIRED
+            value CDATA #IMPLIED
+            type (string | page | template | definition) #IMPLIED
+            content CDATA #IMPLIED
+            direct (true | false) #IMPLIED>
+        <!ELEMENT putList ( (add* | item* | bean* | putList*)+) >
+        <!ATTLIST putList
+            name CDATA #REQUIRED>
+        <!ELEMENT putListElements (add | item | bean)>
+        <!ELEMENT add (#PCDATA)>
+        <!ATTLIST add
+            value CDATA #IMPLIED
+            type (string | page | template | definition) #IMPLIED
+            content CDATA #IMPLIED
+            direct (true | false) #IMPLIED>
+        <!ELEMENT bean (#PCDATA)>
+        <!ATTLIST bean
+            classtype CDATA #REQUIRED>
+        <!ELEMENT item (#PCDATA)>
+        <!ATTLIST item
+            value CDATA #REQUIRED
+            link CDATA #REQUIRED
+            classtype CDATA #IMPLIED
+            icon CDATA #IMPLIED
+            tooltip CDATA #IMPLIED>
+    ]>
+
+<tiles-definitions>
+	<definition name="default" path="/jsp/pagination.jsp">
+   		<put name="top" value="/jsp/top/top.jsp" type="page"/>	
+   		<put name="left" value="/jsp/left/left.jsp" type="page"/>
+   		<put name="right" value="/jsp/right/right.jsp" type="page"/>
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
+   	
+   	<definition name="standardFrame" path="/jsp/pagination.jsp">
+   		<put name="top" value="/jsp/top/top.jsp" type="page"/>	
+   		<put name="left" value="/jsp/left/left.jsp" type="page"/>
+   		<put name="right" value="/jsp/right/right.jsp" type="page"/>
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
+   	
+   	<definition name="welcome.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/welcome.jsp" type="page" />
+   	</definition>
+   	
+   	<definition name="user.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user.jsp" type="page" />
+   	</definition>
+   	
+</tiles-definitions>
