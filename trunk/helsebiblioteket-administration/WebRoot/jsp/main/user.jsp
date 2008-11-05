@@ -2,7 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@page buffer="none"%>
-<f:loadBundle var="msg" basename="no.helsebiblioteket.admin.web.jsf.messages" />
+<f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.errors"/> 
 
 <t:dataTable var="user" value="#{userBean.userList}">
 	<h:column>

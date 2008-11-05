@@ -1,2 +1,1 @@
-Bottom
-
+Adminstration service provided by <a href="http://www.helsebiblioteket.no">The Norwegian Health Library</a>
