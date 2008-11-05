@@ -47,6 +47,14 @@
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
+    	<!-- Separate copy-target to make sure property files are included -->
+		<copy 
+			todir="${build.dir}">
+			<fileset 
+				dir="${src.dir}"
+				excludes="**/*.java"
+			/>
+		</copy>
     </target>
 
     <target name="deploy" depends="build" description="Deploy application">

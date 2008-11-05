@@ -42,18 +42,31 @@
     ]>
 
 <tiles-definitions>
-	<definition name="default" path="/jsp/pagination.jsp">
-   		<put name="top" value="/jsp/top/top.jsp" type="page"/>	
-   		<put name="left" value="/jsp/left/left.jsp" type="page"/>
+	<definition name="default" path="/jsp/layout.jsp">
+		<put name="nav" value="/jsp/top/nav.jsp" type="page"/>
+   		<put name="topnav" value="/jsp/top/topnav.jsp" type="page"/>
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="left" value="/jsp/left/menu.jsp" type="page"/>
    		<put name="right" value="/jsp/right/right.jsp" type="page"/>
    		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
    	</definition>
    	
-   	<definition name="standardFrame" path="/jsp/pagination.jsp">
-   		<put name="top" value="/jsp/top/top.jsp" type="page"/>	
-   		<put name="left" value="/jsp/left/left.jsp" type="page"/>
+   	<definition name="standardFrame" path="/jsp/layout.jsp">
+   		<put name="nav" value="/jsp/top/nav.jsp" type="page"/>
+   		<put name="topnav" value="/jsp/top/topnav.jsp" type="page"/>
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="left" value="/jsp/left/menu.jsp" type="page"/>
    		<put name="right" value="/jsp/right/right.jsp" type="page"/>
    		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
+   	
+   	<definition name="loginFrame" path="/jsp/layout-login.jsp">
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
+   	
+   	<definition name="index.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/welcome.jsp" type="page" />
    	</definition>
    	
    	<definition name="welcome.tiles" extends="standardFrame">
@@ -62,6 +75,10 @@
    	
    	<definition name="user.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/user.jsp" type="page" />
+   	</definition>
+   	
+   	<definition name="login.tiles" extends="loginFrame">
+		<put name="main" value="/jsp/main/login.jsp" type="page" />
    	</definition>
    	
 </tiles-definitions>
