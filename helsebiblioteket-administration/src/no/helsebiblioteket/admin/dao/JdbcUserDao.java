@@ -25,6 +25,8 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
                 new UserMapper(),
                 new MapSqlParameterSource().addValue("username", user.getUsername())
         		);
+        // TODO: Create empty user or throw exception 
+        if(users.size()==0) return null;
         return users.get(0);
     }
     
