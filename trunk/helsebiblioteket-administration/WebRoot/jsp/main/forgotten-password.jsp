@@ -4,7 +4,11 @@
 <%@page buffer="none"%>
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/> 
 
-<h2>Login</h2>
+<h2><h:outputText value="#{msg_main.forgotten_password_title}" /></h2>
+<br/>
+<h:outputText value="#{forgotten_password_description}" />
+<br/>
+
 
 <h:form>
 	<table>
@@ -13,28 +17,13 @@
 				<h:outputText value="#{msg_main.email_address_input}" />
 			</td>
 			<td>
-				<h:inputText value="#{loginBean.email}"
+				<h:inputText value="#{forgottenPasswordBean.email}"
 					id="email" required="true"
 					validator="#{loginBean.validateEmail}" />
 				<h:message for="email" styleClass="RED"/>
 			</td>
 		</tr>
-		<!--<BR>-->
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.password_input}" />
-			</td>
-			<td>
-				<h:inputSecret value="#{loginBean.password}"
-					id="password" required="true" />
-				<h:message for="password" styleClass="RED"/>
-			</td>
-		</tr>
 	</table>
-	<!--<h:message for="password" styleClass="RED"/>-->
-	<BR>
-	<h:commandButton value="Logg inn" action="#{loginBean.login}" />
-		<a href="forgotten-password.faces">
-			<h:outputText value="#{msg_main.forgotten_password_link}" />
-		</a>
+	<br/>
+	<h:commandButton value="#{msg_main.send_password}" action="#{forgottenPasswordBean.login}" />
 </h:form>
