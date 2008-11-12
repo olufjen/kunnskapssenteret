@@ -92,8 +92,8 @@
         <managed-bean-class>no.helsebiblioteket.admin.bean.LoginBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-    		<property-name>adminService</property-name>
-        	<value>#{adminService}</value>
+    		<property-name>loginService</property-name>
+        	<value>#{loginService}</value>
 		</managed-property>
 	</managed-bean>
 
