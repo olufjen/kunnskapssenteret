@@ -76,9 +76,22 @@
    	<definition name="user.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/user.jsp" type="page" />
    	</definition>
+
+   	<definition name="user-new.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user-new.jsp" type="page" />
+   	</definition>
+   	<definition name="new-enduser.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/new-enduser.jsp" type="page" />
+   	</definition>
+   	<definition name="new-administrator.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/new-administrator.jsp" type="page" />
+   	</definition>
    	
    	<definition name="login.tiles" extends="loginFrame">
 		<put name="main" value="/jsp/main/login.jsp" type="page" />
+   	</definition>
+   	<definition name="forgotten-password.tiles" extends="loginFrame">
+		<put name="main" value="/jsp/main/forgotten-password.jsp" type="page" />
    	</definition>
    	
 </tiles-definitions>
