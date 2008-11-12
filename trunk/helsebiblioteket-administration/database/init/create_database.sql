@@ -2,4 +2,4 @@
 -- Creating database helsebiblioteket-administration
 --
 
-CREATE DATABASE "helsebiblioteket-administration" ENCODING 'utf8' TEMPLATE template1 OWNER postgres;
+CREATE DATABASE "helsebiblioteket-admin" ENCODING 'utf8' TEMPLATE template1 OWNER helsebiblioteket;
