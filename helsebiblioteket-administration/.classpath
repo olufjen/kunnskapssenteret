@@ -19,7 +19,7 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/jstl-1.1.0.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/jta.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/mail.jar"/>
-	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/myfaces-api-1.1.5.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/myfaces-api-1.1.5.jar" sourcepath="download-sources/myfaces-core-1.1.5-src.zip"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/myfaces-impl-1.1.5.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/poi-3.1-FINAL-20080629.jar"/>
@@ -32,5 +32,7 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/tomahawk-1.1.6.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/xalan-2.5.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-domain-dao-services"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/spring-ws-1.5.5-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
