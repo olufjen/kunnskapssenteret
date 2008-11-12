@@ -33,5 +33,9 @@
 	<bean id="adminService" class="no.helsebiblioteket.admin.service.AdminServiceImpl">
 	 	<property name="userDao" ref="userDao"></property>
 	</bean>
+
+	<bean id="loginService" class="no.helsebiblioteket.admin.service.LoginServiceImpl">
+	 	<property name="userDao" ref="userDao"></property>
+	</bean>
 	
 </beans>
