@@ -3,5 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-domain-dao-services"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
