@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.bean;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.domain.User;
 import no.helsebiblioteket.admin.service.AdminService;
 
 public class UserBean {
