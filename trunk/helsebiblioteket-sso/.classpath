@@ -2,5 +2,36 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/cms-api.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/antlr-2.7.2.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-dbcp-1.2.2.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-digester-1.6.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-el-1.0.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-fileupload-1.0.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-lang-2.1.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-pool-1.4.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/commons-validator-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/iText-2.1.3.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/iText-rtf-2.1.3.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/jstl-1.1.0.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/jta.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/mail.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/myfaces-api-1.1.5.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/myfaces-impl-1.1.5.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/oro-2.0.8.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/poi-3.1-FINAL-20080629.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/quartz-1.6.0.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/spring-webmvc-portlet.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/spring-webmvc.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/spring.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/struts-1.2.8.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/tomahawk-1.1.6.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/xalan-2.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
