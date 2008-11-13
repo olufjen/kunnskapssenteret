@@ -6,7 +6,7 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.domain.User;
 import no.helsebiblioteket.admin.service.AdminService;
 
 import org.apache.commons.logging.Log;
