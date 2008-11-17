@@ -106,7 +106,8 @@
   .note {background: #dfd; padding: 1em; border-top: 1px #bdb dotted; border-bottom: 1px #bdb dotted;}
   .important {background: #ffd; padding: 1em; border-top: 1px #ddb dotted; border-bottom: 1px #ddb dotted;}
   .warning {background: #fdd; padding: 1em; border-top: 1px #dbb dotted; border-bottom: 1px #dbb dotted;}
-
+  .error {color: red; font-style:italic;}
+  
   .float_left { float: left; display:inline; margin-right: 1em; margin-bottom: 0.15em;  }
   .float_right { float: right; display:inline; margin-left: 1em; margin-bottom: 0.15em;  }
   .center { text-align:center; margin: 0.5em auto }
