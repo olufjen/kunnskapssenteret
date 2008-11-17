@@ -1,4 +1,4 @@
-package no.helsebiblioteket.domain;
+package no.helsebiblioteket.admin.domain;
 
 public class Profile {
 	private Boolean receiveNewsletter = null;
