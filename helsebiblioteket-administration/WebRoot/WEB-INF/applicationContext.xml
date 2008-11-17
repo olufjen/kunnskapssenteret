@@ -26,12 +26,17 @@
 	<bean id="userDao" class="no.helsebiblioteket.admin.dao.JdbcUserDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
+	
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.dao.JdbcOrganizationTypeDao">
+		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	</bean>
 
 	<!-- 
-		A generic admin service. Purpose: provide access to dao's.
+		A service for accessing (relative) static properties like types of entities etc.
+		Example: types of organizations, types of roles, types of access etc
 	-->
 	<bean id="adminService" class="no.helsebiblioteket.admin.service.AdminServiceImpl">
-	 	<property name="userDao" ref="userDao"></property>
+	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
 	</bean>
 
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.LoginServiceImpl">

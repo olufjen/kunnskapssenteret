@@ -128,8 +128,27 @@
         <managed-bean-class>no.helsebiblioteket.admin.bean.ForgottenPasswordBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	   
-	   
+	
+	<managed-bean>
+    	<description>Backingbean related to creating a new organization</description>
+        <display-name>New organization Bean</display-name>
+        <managed-bean-name>newOrganizationBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.NewOrganizationBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	 
+	<managed-bean>
+    	<description>Backingbean related to common lookup operations (types of entities for dropdown lists etc)</description>
+        <display-name>adminBean</display-name>
+        <managed-bean-name>adminBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.AdminBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    	<managed-property>
+    		<property-name>adminService</property-name>
+        	<value>#{adminService}</value>
+		</managed-property>
+	</managed-bean>
+	  
 	<!-- <managed-bean>
     	<description>Backingbean related to "xxxx"</description>
         <display-name>xxxx</display-name>

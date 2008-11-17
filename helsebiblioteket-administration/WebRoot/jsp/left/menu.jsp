@@ -9,7 +9,7 @@
 	<li><a href="organizations-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.organizations_overview}" /><f:verbatim></a>
 		<ul>
 			<li><a href="organizations-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.overview}" /><f:verbatim></a></li>
-			<li><a href="organization-new.faces"></f:verbatim><h:outputText value="#{msg_menu.organization_new}" /><f:verbatim></a></li>
+			<li><a href="new-organization.faces"></f:verbatim><h:outputText value="#{msg_menu.organization_new}" /><f:verbatim></a></li>
 		</ul>
 	</li>			
 	<li><a href="users-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.users_overview}" /><f:verbatim></a>
