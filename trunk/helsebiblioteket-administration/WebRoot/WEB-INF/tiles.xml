@@ -87,11 +87,20 @@
 		<put name="main" value="/jsp/main/new-administrator.jsp" type="page" />
    	</definition>
    	
+   	<definition name="new-organization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/new-organization.jsp" type="page" />
+   	</definition>
+   	
    	<definition name="login.tiles" extends="loginFrame">
 		<put name="main" value="/jsp/main/login.jsp" type="page" />
    	</definition>
+   	
    	<definition name="forgotten-password.tiles" extends="loginFrame">
 		<put name="main" value="/jsp/main/forgotten-password.jsp" type="page" />
+   	</definition>
+   	
+   	<definition name="login.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/new-organization.jsp" type="page" />
    	</definition>
    	
 </tiles-definitions>
