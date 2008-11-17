@@ -1,4 +1,4 @@
-package no.helsebiblioteket.domain;
+package no.helsebiblioteket.admin.domain;
 
 import java.util.ArrayList;
 
