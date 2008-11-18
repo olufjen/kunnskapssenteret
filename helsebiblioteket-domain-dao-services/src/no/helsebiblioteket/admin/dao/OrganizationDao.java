@@ -1,0 +1,21 @@
+package no.helsebiblioteket.admin.dao;
+
+/**
+ * 
+ * @author ltg
+ * 
+ * Purpose of this class is retrieve and store types of organizations
+ */
+
+import java.util.List;
+
+import no.helsebiblioteket.admin.domain.Contract;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
+
+public interface OrganizationDao {
+	public List<Organization> getOrganizationList();
+	public Organization getOrganization(Integer organizationId);
+	public List<Contract> getContractList(OrganizationType organizationType);
+}

@@ -1,6 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
 import java.net.InetAddress;
+import java.util.List;
 
 public class Organization {
 	private Integer id = null;
@@ -9,11 +10,19 @@ public class Organization {
 	private String description = null;
 	private String nameShort = null;
 	private OrganizationType type = null;
+	private List<IpRange> ipRangeList = null;
+	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public List<IpRange> getIpRangeList() {
+		return ipRangeList;
+	}
+	public void setIpRangeList(List<IpRange> ipRangeList) {
+		this.ipRangeList = ipRangeList;
 	}
 	public Organization getParentOrganization() {
 		return parentOrganization;

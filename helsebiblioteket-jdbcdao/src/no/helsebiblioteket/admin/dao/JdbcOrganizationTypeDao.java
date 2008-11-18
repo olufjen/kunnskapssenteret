@@ -2,7 +2,6 @@ package no.helsebiblioteket.admin.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -19,23 +18,18 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 
 	public List<OrganizationType> getOrganizationTypeList() {
 		logger.info("fetching all organization types");
-        //List<OrganizationType> orgTypes = getSimpleJdbcTemplate().query(
-		//        "org_type_id, descs, name, key from tbl_org_type_reg", 
-		//        new OrgTypeMapper());
-        
-        List<OrganizationType> orgTypes = new ArrayList<OrganizationType>();
-        OrganizationType orgType = null;
-        orgType = new OrganizationType();
-        orgType.setId(1);
-        orgType.setKey("health_institution");
-        orgType.setName("fallbackname for org_type_health_institution");
-        orgTypes.add(orgType);
-        orgType = new OrganizationType();
-        orgType.setId(2);
-        orgType.setKey("health_education_institution");
-        orgType.setName("fallbackname for org_type_health_education_institution");
-        orgTypes.add(orgType);
+        List<OrganizationType> orgTypes = getSimpleJdbcTemplate().query(
+		        "org_type_id, descs, name, key from tbl_org_type_reg", 
+		        new OrgTypeMapper());
         return orgTypes;
+	}
+	
+	public OrganizationType getOrganizationType(Integer organizationTypeId) {
+		logger.info("fetching all organization types");
+        List<OrganizationType> orgTypes = getSimpleJdbcTemplate().query(
+		        "org_type_id, descs, name, key from tbl_org_type_reg", 
+		        new OrgTypeMapper());
+		return (orgTypes != null && orgTypes.size() == 0 ? orgTypes.get(0) : null);
 	}
 
 	private static class OrgTypeMapper implements ParameterizedRowMapper<OrganizationType> {

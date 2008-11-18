@@ -6,7 +6,7 @@
     <property name="src.dir" value="src"/>
     <property name="web.dir" value="WebRoot"/>
     <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
-    <property name="name" value="helsebiblioteket-administration"/>
+    <property name="name" value="helsebiblioteket-administration-web"/>
 	<property name="lib.dir" value="${web.dir}/WEB-INF/lib"/>
 
     <path id="master-classpath">
@@ -72,7 +72,7 @@
 			/>
 		</copy>
     </target>
-
+	
     <target name="deploy" depends="build" description="Deploy application">
         <copy todir="${deploy.path}/${name}" preservelastmodified="true">
             <fileset dir="${web.dir}">
