@@ -16,13 +16,13 @@
  */
 
 /* import core styles | Basis-Stylesheets einbinden */
-@import url(/helsebiblioteket-administration/css/yaml/core/base.css);
+@import url(../../css/yaml/core/base.css);
 
 /* import screen layout | Screen-Layout einbinden */
-@import url(/helsebiblioteket-administration/css/yaml/navigation/nav_shinybuttons.css);
-@import url(/helsebiblioteket-administration/css/yaml/navigation/nav_vlist.css);
-@import url(/helsebiblioteket-administration/css/hb-adm/screen/basemod.css);
-@import url(/helsebiblioteket-administration/css/hb-adm/screen/content.css);
+@import url(../../css/yaml/navigation/nav_shinybuttons.css);
+@import url(../../css/yaml/navigation/nav_vlist.css);
+@import url(screen/basemod.css);
+@import url(screen/content.css);
 
 /* import print layout | Druck-Layout einbinden */
-@import url(/helsebiblioteket-administration/css/yaml/print/print_003_draft.css);
+@import url(../../css/yaml/print/print_003_draft.css);
