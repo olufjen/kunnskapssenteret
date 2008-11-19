@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import no.helsebiblioteket.admin.domain.Contract;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 
 public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements OrganizationDao {
 
@@ -70,4 +71,10 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
             return org;
         }
     }
+
+	@Override
+	public List<SupplierOrganization> getSupplierList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
