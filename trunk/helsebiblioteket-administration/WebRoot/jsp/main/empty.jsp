@@ -2,9 +2,6 @@
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@page buffer="none"%>
-<f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/> 
+<f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.errors"/> 
 
-
-<h2><h:outputText value="#{msg_main.new_enduser_title}" /></h2>
-
-<br/>
+EMPTY
