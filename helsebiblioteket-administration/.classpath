@@ -33,6 +33,6 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/xalan-2.5.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-domain-dao-services"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/jdom-1.0.jar"/>
-	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/spring-ws-1.5.5-all.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-common-lib/lib/spring-ws-1.5.5-all.jar" sourcepath="download-sources/spring-ws-1.5.5-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
