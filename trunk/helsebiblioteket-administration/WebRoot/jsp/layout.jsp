@@ -74,6 +74,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 								<f:facet name="main">
 									<f:subview id="main">
 										<tiles:insert attribute="main" flush="false" />
+										<tiles:insert attribute="user" flush="false" />
 									</f:subview>
 								</f:facet>
 							</div>
