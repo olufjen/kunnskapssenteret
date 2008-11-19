@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<bean class="no.helsebiblioteket.evs.plugin.HttpInterceptorPluginAutoLoginHelsebiblioteket">
+ 	<property name="urlPattern" value="/site/[0-3]/.* "/>
+ 	<property name="sessionVarName" value="hbloggedin"/>
+ 	<property name="loginService" ref="loginService"/>
+</bean>
+<bean name="loginService" class="">
+	
+</bean>
