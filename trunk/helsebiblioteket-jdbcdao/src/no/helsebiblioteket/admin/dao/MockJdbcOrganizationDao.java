@@ -11,6 +11,9 @@ import no.helsebiblioteket.admin.domain.Contract;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.ResourceType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSource;
 
 public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements OrganizationDao {
 
@@ -84,5 +87,73 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
 	
 	public List<Contract> getContractList(OrganizationType organizationType) {
 		return null;
+	}
+
+	public List<SupplierOrganization> getSupplierList() {
+		List<SupplierOrganization> list = new ArrayList<SupplierOrganization>();
+		SupplierOrganization org = new SupplierOrganization();
+		SupplierSource source = new SupplierSource();
+		ResourceType type = new ResourceType();
+		OrganizationType orgType = new OrganizationType();
+		List<SupplierSource> sourceList = new ArrayList<SupplierSource>();
+		
+		type.setDescription("Supplier source (subsource)");
+		type.setId(1);
+		type.setKey("supplierSoruce");
+		type.setName("supplierSoruceName");
+		
+		source.setId(1);
+		source.setName("kilde 1");
+		source.setResourceType(type);
+		source.setUrl("http://www.proquest.com?resource=123)");
+		sourceList.add(source);
+		source = new SupplierSource();
+		source.setId(2);
+		source.setName("kilde 2");
+		source.setResourceType(type);
+		source.setUrl("http://www.proquest.com?resource=456)");
+		sourceList.add(source);
+		
+		orgType.setDescription("Supplier");
+		orgType.setId(1);
+		orgType.setKey("key");
+		orgType.setName("name");
+		
+		org.setDescription("ProQuest - journal portal");
+		org.setId(1);
+		org.setName("ProQuest");
+		org.setNameShort("PQ");		
+		org.setParentOrganization(new Organization());
+		org.setSourceList(sourceList);
+		org.setType(orgType);
+		
+		list.add(org);
+		
+		sourceList = new ArrayList<SupplierSource>();
+		source = new SupplierSource();
+		source.setId(3);
+		source.setName("kilde asdf");
+		source.setResourceType(type);
+		source.setUrl("http://www.ovid.com?resource=5342)");
+		sourceList.add(source);
+		source = new SupplierSource();
+		source.setId(4);
+		source.setName("kilde fdsa");
+		source.setResourceType(type);
+		source.setUrl("http://www.ovid.com?resource=asds8q2)");
+		sourceList.add(source);
+		
+		org = new SupplierOrganization();
+		org.setDescription("Ovid - journal portal");
+		org.setId(2);
+		org.setName("Ovid");
+		org.setNameShort("O");		
+		org.setParentOrganization(null);
+		org.setSourceList(sourceList);
+		org.setType(orgType);
+		
+		list.add(org);
+		
+		return list;
 	}
 }
