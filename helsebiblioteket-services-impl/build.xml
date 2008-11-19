@@ -82,4 +82,58 @@
             </fileset>
         </delete>
     </target>
+
+
+	
+	
+	
+	<!-- Web Services -->
+	<property name="webservices.classes.dir" value="${webservices.build.dir}/classes" />
+	<property name="webservices.metainf.dir" value="${webservices.classes.dir}/META-INF" />
+	<property name="webservices.tomcat.services.dir" value="${webservices.tomcat.dir}/services" />
+	<property name="webservices.tomcat.lib.dir" value="${webservices.tomcat.dir}/lib" />
+	
+	<path id="webservices.classpath">
+		<fileset dir="../helsebiblioteket-common-lib/lib">
+			<include name="*.jar" />
+		</fileset>
+		<!--add downloaded spring jars to classpath -->
+		<fileset dir="../pojoguidespring/src/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="generate-service" depends="">
+		<mkdir dir="${webservices.build.dir}" />
+		<mkdir dir="${webservices.classes.dir}" />
+		<mkdir dir="${webservices.metainf.dir}" />
+
+		<copy file="desc/services.xml" tofile="${webservices.metainf.dir}/services.xml" overwrite="true" />
+		<copy file="desc/applicationContext.xml" tofile="${webservices.classes.dir}/applicationContext.xml" overwrite="true" />
+
+		<javac debug="on" srcdir="src" destdir="${webservices.classes.dir}" includes="*/**">
+			<classpath refid="webservices.classpath" />
+			<classpath refid="master-classpath" />
+		</javac>
+
+		<jar basedir="${webservices.classes.dir}" destfile="${webservices.build.dir}/${webservices.servicename}.aar" />
+
+		<!--
+		<copy file="${webservices.build.dir}/${webservices.servicename}.aar"
+			tofile="${repository.path}/services/${service-name}.aar" overwrite="true" />
+		-->
+	</target>
+	
+	<target name="deploy-service" depends="generate-service">
+		<copy file="${webservices.build.dir}/${webservices.servicename}.aar" todir="${webservices.tomcat.services.dir}" />
+		<copy file="../helsebiblioteket-domain-dao-services/target/helsebiblioteket-domain-dao-services-1.0.jar"
+			todir="${webservices.tomcat.lib.dir}" />
+		<copy todir="${webservices.tomcat.lib.dir}">
+			<fileset dir="../helsebiblioteket-common-lib/lib/">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+
 </project>
