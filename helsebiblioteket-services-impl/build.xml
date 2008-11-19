@@ -19,6 +19,12 @@
     	<fileset dir="${lib.dir}">
             <include name="*.jar"/>
         </fileset>
+    	<fileset dir="../helsebiblioteket-sso/lib">
+            <include name="*.jar"/>
+        </fileset>
+    	<fileset dir="../pojoguidespring/src/lib">
+    		<include name="*.jar"/>
+		</fileset>
     </path>
 	
 	<path id="master-sourcedir">
