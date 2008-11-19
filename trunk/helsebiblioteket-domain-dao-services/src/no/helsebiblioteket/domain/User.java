@@ -2,6 +2,8 @@ package no.helsebiblioteket.domain;
 
 import java.util.List;
 
+import no.helsebiblioteket.admin.domain.Access;
+
 public class User {
 	protected Integer id = null;
 	protected String username = null;

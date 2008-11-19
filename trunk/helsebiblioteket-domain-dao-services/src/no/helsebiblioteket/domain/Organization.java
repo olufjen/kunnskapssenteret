@@ -2,6 +2,8 @@ package no.helsebiblioteket.domain;
 
 import java.net.InetAddress;
 
+import no.helsebiblioteket.admin.domain.OrganizationType;
+
 public class Organization {
 	private Integer id = null;
 	private Organization parentOrganization = null;
