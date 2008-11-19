@@ -1,6 +1,8 @@
 package no.helsebiblioteket.evs.plugin;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.enonic.cms.api.client.ClientFactory;
 import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
 
 /**
@@ -20,6 +22,13 @@ public final class HttpResponseFilterHelsebiblioteket
     public String filterResponse(HttpServletRequest request, String response, String contentType)
         throws Exception
     {
+    	String username = null;
+    	
+    	username = "HOW???";
+    	
+    	ClientFactory.getLocalClient().getUserName();
+    	
+//    	request.getSession()
         String remoteAddr = request.getRemoteAddr();
         return response.replaceAll(TAG_TO_REPLACE, remoteAddr);
     }

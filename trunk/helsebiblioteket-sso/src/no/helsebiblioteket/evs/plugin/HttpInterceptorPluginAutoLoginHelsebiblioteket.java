@@ -1,0 +1,76 @@
+package no.helsebiblioteket.evs.plugin;
+
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+
+import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.domain.IpAddress;
+import no.helsebiblioteket.domain.Organization;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public final class HttpInterceptorPluginAutoLoginHelsebiblioteket extends HttpInterceptorPlugin {
+	private final Log logger = LogFactory.getLog(getClass());
+	private LoginService loginService;
+	private String sessionVarName;
+	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	// FIXME: Remove these!
+    	logger.info("TESTING LOG");
+    	logger.info("What class? " + request.getClass().getName());
+    	
+    	// Get IP address
+    	IpAddress ipAddress = new IpAddress();
+    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
+    	Organization organization = this.loginService.logInIpAddress(ipAddress);
+    	request.getSession().setAttribute(this.sessionVarName, organization);
+	}
+	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1) throws Exception {
+		// This is empty
+		// TODO: 
+		// FIXME: VItkit!
+		return false;
+	}
+    private String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
+    	String XFF = "X-Forwarded-For";
+        String ret = null;
+        Enumeration en = request.getHeaderNames();
+
+        while (en != null && en.hasMoreElements()){
+
+            Object o = en.nextElement();
+            if (o instanceof String) {
+
+                String h = (String)o;
+                if (XFF.equalsIgnoreCase(h)) {
+                    String xFf = request.getHeader(h);
+                    logger.debug("Header " + XFF + "=" + xFf);
+
+                    StringTokenizer st = new StringTokenizer(xFf, ",");
+                    // allways the first element
+                    if (st.hasMoreElements()) {
+
+                        Object e = st.nextElement();
+                        if (e instanceof String) {
+                            ret = (String)e;
+                            logger.debug("Remote " + XFF + " address=" + ret);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return (ret != null ? ret : request.getRemoteAddr());
+    }
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
+	}
+	public void setSessionVarName(String sessionVarName) {
+		this.sessionVarName = sessionVarName;
+	}
+}

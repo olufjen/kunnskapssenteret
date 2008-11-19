@@ -1,21 +1,22 @@
 package no.helsebiblioteket.evs.plugin;
 
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+
 import com.enonic.cms.api.plugin.HttpAutoLoginPlugin;
+import com.sun.mail.iap.Response;
+
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * This class illustrates a simple http auto login example. It returns the name of who should be
- * logged in when first entering the path where it resides.
- */
-public final class HttpAutoLoginHelsebiblioteket
-    extends HttpAutoLoginPlugin
-{
-    /**
-     * Return the qualified user name of who should be logged in.
-     */
-    public String getAuthenticatedUser(HttpServletRequest request)
-        throws Exception
-    {
-        return "myuserstore\\someuser";
+import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.domain.IpAddress;
+import no.helsebiblioteket.domain.Organization;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public final class HttpAutoLoginHelsebiblioteket extends HttpAutoLoginPlugin {
+    public String getAuthenticatedUser(HttpServletRequest request) throws Exception {
+    	return null;
     }
 }
