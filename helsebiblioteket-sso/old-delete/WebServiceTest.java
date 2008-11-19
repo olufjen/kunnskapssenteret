@@ -36,8 +36,8 @@ public class WebServiceTest {
 		RPCServiceClient serviceClient;
 		try {
 			serviceClient = new RPCServiceClient();
-			Options options = serviceClient.getOptions();
 			EndpointReference targetEPR = new EndpointReference("http://localhost:8080/axis2/services/loginService");
+			Options options = serviceClient.getOptions();
 		    options.setTo(targetEPR);
 		    QName loginName = new QName("http://service.admin.helsebiblioteket.no", "logInIpAddress");
 		    IpAddress address = new IpAddress();
