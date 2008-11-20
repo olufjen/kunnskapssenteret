@@ -5,25 +5,25 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import no.helsebiblioteket.domain.Organization;
-import no.helsebiblioteket.domain.Role;
-import no.helsebiblioteket.domain.User;
-import no.helsebiblioteket.admin.service.AdminService;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.service.UserService;
 
 public class UserBean {
-	private AdminService adminService;
+	private UserService userService;
 	
 	private String searchinput;
 	private List<SelectItem> availableRoles;
 	private List<SelectItem> selectedRoles;
 	private List<User> users;
 	
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
+	public void setAdminService(UserService userService) {
+		this.userService = userService;
 	}
 	
 	public List<User> getUserList() {
-		return adminService.getUserList();
+		return userService.getUserList();
 	}
 
 	public String getSearchinput() {
