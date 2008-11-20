@@ -59,7 +59,6 @@
    		<put name="left" value="/jsp/left/menu.jsp" type="page"/>
    		<put name="right" value="/jsp/right/right.jsp" type="page"/>
    		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
-   		<put name="user" value="/jsp/main/empty.jsp" type="page"/>
    	</definition>
    	
    	<definition name="loginFrame" path="/jsp/layout-login.jsp">
@@ -90,6 +89,10 @@
 		<put name="main" value="/jsp/main/new-administrator.jsp" type="page" />
 		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
    	</definition>
+   	
+   	<definition name="new-memberorganization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/new-memberorganization.jsp" type="page" />
+   	</definition>
    	<definition name="edit-enduser.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/edit-enduser.jsp" type="page" />
 		<put name="user" value="/jsp/main/enduser.jsp" type="page" />
@@ -104,6 +107,9 @@
    	   	
    	<definition name="new-organization.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/new-organization.jsp" type="page" />
+   	</definition>
+   	<definition name="new-supplierorganization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/new-supplierorganization.jsp" type="page" />
    	</definition>
    	
    	<definition name="login.tiles" extends="loginFrame">
