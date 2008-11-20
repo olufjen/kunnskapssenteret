@@ -8,9 +8,9 @@ import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.domain.IpAddress;
-import no.helsebiblioteket.domain.Organization;
+import no.helsebiblioteket.admin.domain.Organization;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

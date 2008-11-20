@@ -8,9 +8,9 @@ import com.sun.mail.iap.Response;
 
 import javax.servlet.http.HttpServletRequest;
 
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.domain.IpAddress;
-import no.helsebiblioteket.domain.Organization;
+import no.helsebiblioteket.admin.domain.Organization;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
