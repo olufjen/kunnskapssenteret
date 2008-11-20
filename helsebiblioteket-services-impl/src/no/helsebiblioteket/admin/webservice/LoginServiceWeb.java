@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.webservice;
 
+import no.helsebiblioteket.admin.domain.IpAddress;
 import javax.xml.namespace.QName;
 
 import org.apache.axis2.AxisFault;
@@ -10,9 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.domain.IpAddress;
-import no.helsebiblioteket.domain.Organization;
-import no.helsebiblioteket.domain.User;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.User;
 @SuppressWarnings("serial")
 
 public class LoginServiceWeb implements LoginService {
