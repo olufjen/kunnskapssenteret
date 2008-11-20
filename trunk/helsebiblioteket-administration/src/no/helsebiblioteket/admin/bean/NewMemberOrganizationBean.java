@@ -4,28 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlDataTable;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.myfaces.custom.tree2.UITreeData;
 
 import no.helsebiblioteket.admin.domain.Contract;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.ResourceType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.service.OrganizationService;
 
-public class NewOrganizationBean {
+public class NewMemberOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
+	
+	private Person loggedInUser = null;
+	private OrganizationService organizationService = null;
 	
 	private Organization organization = null;
 	private String organizationName = null;
-	private Person loggedInUser = null;
 	private String ipAddressSingle = null;
 	private String ipAddressFrom = null;
 	private String ipAddressTo = null;
@@ -41,7 +43,7 @@ public class NewOrganizationBean {
 	
 	private List<Contract> choosenContracts = null;
 
-	public NewOrganizationBean() {
+	public NewMemberOrganizationBean() {
 		
 	}
 	
@@ -113,6 +115,10 @@ public class NewOrganizationBean {
 		this.loggedInUser = person;
 	}
 	
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
+	}
+
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -166,6 +172,10 @@ public class NewOrganizationBean {
 		this.ipRangeList.remove((IpRange) this.ipRangeListHtmlDataTable.getRowData());
 	}
 	
+	public String actionNewMemberOrganization() {
+		return "new_member_organization";
+	}
+	
 	public void addIpRangeActionListener(ActionEvent actionEvent) {
 		logger.debug("Method 'addIpRangeActionListener' invoked");
 		logger.debug("vce.getComponent().getId(): " + actionEvent.getComponent().getId());
@@ -173,5 +183,10 @@ public class NewOrganizationBean {
 	
 	public boolean isShowIpRangeList() {
 		return (ipRangeList != null && ipRangeList.size() > 0) ? true : false;
+	}
+	
+	
+	public List<SupplierOrganization> getSuppliersWithSourcesList() {
+		return organizationService.getSupplierList();
 	}
 }
