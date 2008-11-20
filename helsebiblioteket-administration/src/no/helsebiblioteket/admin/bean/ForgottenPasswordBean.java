@@ -6,8 +6,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import no.helsebiblioteket.domain.User;
-import no.helsebiblioteket.admin.service.AdminService;
+import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 public class ForgottenPasswordBean {
 	/** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
-    private AdminService adminService;
+    private UserService userService;
 	private String email;
 	private String password;
 	private UIComponent passwordComponent;
@@ -24,7 +24,7 @@ public class ForgottenPasswordBean {
 		logger.info("method 'actionLogin' invoked");
 		User user = new User();
 		user.setUsername(getEmail());
-		user = this.adminService.findUserByUsername(user);
+		user = this.userService.findUserByUsername(user);
 		if(user == null || ! user.getPassword().equals(password)){
 			// TODO: Use message from Resource Bundle
 			 //String warningContractRequired =  MessageBundleLoader.getMessage("required") + this.getContractTypeComponent().getLabel();
@@ -67,11 +67,11 @@ public class ForgottenPasswordBean {
 		this.password = password;
 	}
 
-	public AdminService getAdminService() {
-		return adminService;
+	public UserService getUserService() {
+		return userService;
 	}
 
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
+	public void setAdminService(UserService userService) {
+		this.userService = userService;
 	}
 }
