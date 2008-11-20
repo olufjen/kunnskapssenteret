@@ -7,10 +7,10 @@
     <property name="web.dir" value="WebRoot"/>
     <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
     <property name="name" value="helsebiblioteket-administration-web"/>
-	<property name="lib.dir" value="${web.dir}/WEB-INF/lib"/>
+	<property name="war-lib.dir" value="${web.dir}/WEB-INF/lib"/>
 
     <path id="master-classpath">
-        <fileset dir="${helsebiblioteket-common-lib.dir}">
+        <fileset dir="${lib.dir}">
             <include name="*.jar"/>
         </fileset>
     	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
@@ -45,16 +45,16 @@
     </target>
 
     <target name="build" description="Compile main source tree java files">
-    	<copy todir="${lib.dir}">
-			<fileset dir="${helsebiblioteket-common-lib.dir}" />
+    	<copy todir="${war-lib.dir}">
+			<fileset dir="${lib.dir}" />
 		</copy>
-    	<copy todir="${lib.dir}">
+    	<copy todir="${war-lib.dir}">
 			<fileset dir="${helsebiblioteket-jdbcdao-lib.dir}" />
 		</copy>
-    	<copy todir="${lib.dir}">
+    	<copy todir="${war-lib.dir}">
 			<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}" />
 		</copy>
-    	<copy todir="${lib.dir}">
+    	<copy todir="${war-lib.dir}">
 			<fileset dir="${helsebiblioteket-services-impl-lib.dir}" />
 		</copy>
         <mkdir dir="${build.dir}"/>
