@@ -1,14 +1,14 @@
 package no.helsebiblioteket.admin.domain;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 	protected Integer id = null;
 	protected String username = null;
 	protected String password = null;
-	protected Organization organizaion = null;
-	protected ArrayList<Role> roleList = null;
-	protected ArrayList<Access> accessList = null;
+	protected Organization organization = null;
+	protected List<Role> roleList = null;
+	protected List<Access> accessList = null;
 	
 	public Integer getId() {
 		return id;
@@ -28,22 +28,22 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Organization getOrganizaion() {
-		return organizaion;
+	public Organization getOrganization() {
+		return organization;
 	}
-	public void setOrganizaion(Organization organizaion) {
-		this.organizaion = organizaion;
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
-	public ArrayList<Role> getRoleList() {
+	public List<Role> getRoleList() {
 		return roleList;
 	}
-	public void setRoleList(ArrayList<Role> roleList) {
+	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
-	public ArrayList<Access> getAccessList() {
+	public List<Access> getAccessList() {
 		return accessList;
 	}
-	public void setAccessList(ArrayList<Access> accessList) {
+	public void setAccessList(List<Access> accessList) {
 		this.accessList = accessList;
 	}
 }

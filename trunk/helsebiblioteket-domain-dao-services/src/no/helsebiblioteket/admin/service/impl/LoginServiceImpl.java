@@ -5,9 +5,9 @@ package no.helsebiblioteket.admin.service.impl;
 
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.domain.IpAddress;
-import no.helsebiblioteket.domain.Organization;
-import no.helsebiblioteket.domain.User;
+import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.User;
 
 public class LoginServiceImpl implements LoginService {
 //	protected final Log logger = LogFactory.getLog(getClass());
