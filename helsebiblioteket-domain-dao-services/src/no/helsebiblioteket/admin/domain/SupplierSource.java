@@ -5,6 +5,20 @@ public class SupplierSource extends Resource {
 	private String url = null;
 	private String name = null;
 	
+	public SupplierSource() {
+	}
+	
+	public SupplierSource(String name, String url) {
+		this.name = name;
+		this.url = url;
+	}
+	
+	public SupplierSource(Integer id, String name, String url) {
+		this.id = id;
+		this.name = name;
+		this.url = url;
+	}
+	
 	public Integer getId() {
 		return this.id;
 	}

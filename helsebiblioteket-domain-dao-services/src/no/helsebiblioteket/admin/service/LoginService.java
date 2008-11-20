@@ -2,9 +2,9 @@ package no.helsebiblioteket.admin.service;
 
 import java.io.Serializable;
 
-import no.helsebiblioteket.domain.IpAddress;
-import no.helsebiblioteket.domain.Organization;
-import no.helsebiblioteket.domain.User;
+import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.User;
 
 public interface LoginService extends Serializable {
     public boolean logInUser(User user);

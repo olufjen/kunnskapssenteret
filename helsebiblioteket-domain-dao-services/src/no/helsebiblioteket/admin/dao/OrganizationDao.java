@@ -18,4 +18,5 @@ public interface OrganizationDao {
 	public List<Organization> getOrganizationList();
 	public Organization getOrganization(Integer organizationId);
 	public List<Contract> getContractList(OrganizationType organizationType);
+	public List<SupplierOrganization> getSupplierList();
 }

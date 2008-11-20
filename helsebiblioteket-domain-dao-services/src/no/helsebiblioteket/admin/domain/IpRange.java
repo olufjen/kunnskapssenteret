@@ -5,6 +5,9 @@ public class IpRange {
 	private String ipAddressFrom = null;
 	private String ipAddressTo = null;
 	
+	public IpRange() {	
+	}
+	
 	public IpRange(String ipAddressFrom, String ipAddressTo) {
 		this.ipAddressFrom = ipAddressFrom;
 		this.ipAddressTo = ipAddressTo;
