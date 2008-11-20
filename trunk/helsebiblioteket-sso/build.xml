@@ -4,11 +4,8 @@
     <property file="build.properties"/>
 	
     <path id="master-classpath">
-    	<fileset dir="${helsebiblioteket-common-lib.dir}">
-            <include name="*.jar"/>
-        </fileset>
     	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
-            <include name="*.jar"/>
+            <include name="**/*.jar"/>
         </fileset>
     	<fileset dir="${lib.dir}">
             <include name="**/*.jar"/>

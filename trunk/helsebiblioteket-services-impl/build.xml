@@ -8,23 +8,13 @@
 
 <project name="helsebiblioteket-services-impl" basedir="." default="usage">
     <property file="build.properties"/>
-	
     <path id="master-classpath">
-    	<fileset dir="${helsebiblioteket-common-lib.dir}">
-            <include name="*.jar"/>
-        </fileset>
     	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
             <include name="*.jar"/>
         </fileset>
     	<fileset dir="${lib.dir}">
             <include name="*.jar"/>
         </fileset>
-    	<fileset dir="../helsebiblioteket-sso/lib">
-            <include name="*.jar"/>
-        </fileset>
-    	<fileset dir="../pojoguidespring/src/lib">
-    		<include name="*.jar"/>
-		</fileset>
     </path>
 	
 	<path id="master-sourcedir">
