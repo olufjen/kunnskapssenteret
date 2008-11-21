@@ -39,15 +39,15 @@
 		A service for accessing (relative) static properties like types of entities etc.
 		Example: types of organizations, types of roles, types of access etc
 	-->
-	<bean id="adminService" class="no.helsebiblioteket.admin.service.AdminServiceImpl">
+	<bean id="adminService" class="no.helsebiblioteket.admin.service.impl.AdminServiceImpl">
 	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
 	</bean>
 
-	<bean id="organizationService" class="no.helsebiblioteket.admin.service.OrganizationServiceImpl">
+	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
 	 	<property name="organizationDao" ref="organizationDao"></property>
 	</bean>
 
-	<bean id="loginService" class="no.helsebiblioteket.admin.service.LoginServiceImpl">
+	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
 	 	<property name="userDao" ref="userDao"></property>
 	</bean>
 	
