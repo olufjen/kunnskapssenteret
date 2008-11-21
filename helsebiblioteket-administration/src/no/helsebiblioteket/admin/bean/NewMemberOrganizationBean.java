@@ -38,6 +38,13 @@ public class NewMemberOrganizationBean {
 	private String selectedOrganizationTypeId = null;
 	private List<IpRange> ipRangeList = null;
 	private List<Contract> contractsForOrganizationType = null;
+	private String orgAddress = null;
+	private String orgPostalCode = null;
+	private String orgPostalLocation = null;
+	private String contactPersonFirstName = null;
+	private String contactPersonLastName = null;
+	private String contactPersonTelephoneNumber = null;
+	private String contactPersonEmail = null;
 	
 	private HtmlDataTable ipRangeListHtmlDataTable = null;
 	
@@ -95,6 +102,62 @@ public class NewMemberOrganizationBean {
 		this.ipAddressTo = ipAddressTo;
 	}
 	
+	public String getOrgAddress() {
+		return orgAddress;
+	}
+
+	public void setOrgAddress(String orgAddress) {
+		this.orgAddress = orgAddress;
+	}
+
+	public String getOrgPostalCode() {
+		return orgPostalCode;
+	}
+
+	public void setOrgPostalCode(String orgPostalCode) {
+		this.orgPostalCode = orgPostalCode;
+	}
+
+	public String getOrgPostalLocation() {
+		return orgPostalLocation;
+	}
+
+	public void setOrgPostalLocation(String orgPostalLocation) {
+		this.orgPostalLocation = orgPostalLocation;
+	}
+
+	public String getContactPersonFirstName() {
+		return contactPersonFirstName;
+	}
+
+	public void setContactPersonFirstName(String contactPersonFirstName) {
+		this.contactPersonFirstName = contactPersonFirstName;
+	}
+
+	public String getContactPersonLastName() {
+		return contactPersonLastName;
+	}
+
+	public void setContactPersonLastName(String contactPersonLastName) {
+		this.contactPersonLastName = contactPersonLastName;
+	}
+
+	public String getContactPersonTelephoneNumber() {
+		return contactPersonTelephoneNumber;
+	}
+
+	public void setContactPersonTelephoneNumber(String contactPersonTelephoneNumber) {
+		this.contactPersonTelephoneNumber = contactPersonTelephoneNumber;
+	}
+
+	public String getContactPersonEmail() {
+		return contactPersonEmail;
+	}
+
+	public void setContactPersonEmail(String contactPersonEmail) {
+		this.contactPersonEmail = contactPersonEmail;
+	}
+
 	public UIInput getIpAddressFromUIInput() {
 		return ipAddressFromUIInput;
 	}
