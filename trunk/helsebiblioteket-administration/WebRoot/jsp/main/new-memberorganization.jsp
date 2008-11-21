@@ -40,6 +40,9 @@
 			</td>
 		</tr>
 		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.ip_address}" /></h5></td>
+		</tr>
+		<tr>
 			<td>
 				<h:outputText value="#{msg_main.ip_range}" />
 			</td>
@@ -86,7 +89,6 @@
 			<td >
 				<h:dataTable rendered="#{newMemberOrganizationBean.showIpRangeList}" var="ipRange" value="#{newMemberOrganizationBean.ipRangeList}" binding="#{newMemberOrganizationBean.ipRangeListHtmlDataTable}">
 					<h:column>
-			      		<f:facet name="header"><h:outputText id="ipRangeHeading" value="#{msg_main.ip_address} / #{msg_main.ip_range}" /></f:facet>
 			      		<h:outputText id="ipRange" value="#{ipRange.ipAddressFrom} #{ipRange.ipAddressTo}" />
 			    	</h:column>
 			    	<h:column>
@@ -99,13 +101,12 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top">
-				<h:outputText value="#{msg_main.suppliers_and_sources}" />
-			</td>
-			<td>
-				<t:dataTable var="supplier" value="#{newMemberOrganizationBean.suppliersWithSourcesList}">
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.suppliers_and_sources}" /></h5></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<t:dataTable newspaperColumns="3" var="supplier" value="#{newMemberOrganizationBean.suppliersWithSourcesList}">
 					<t:column style="vertical-align:top">
-			      		<f:facet name="header"><h:outputText id="supplierHeading" value="#{msg_main.suppliers}" /></f:facet>
 			      		<t:outputText id="supplierName" value="#{supplier.name}" />
 			    	</t:column>
 			    	<t:column>
@@ -120,6 +121,105 @@
 				</t:dataTable>
 			</td>
 		</tr>
+		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.organization}" /></h5></td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.postal_address}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.orgAddress}"
+					id="orgAddress" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.postal_code}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.orgPostalCode}"
+					id="orgPostalCode" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.postal_location}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.orgPostalLocation}"
+					id="orgPostalLocation" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.contact_person}" /></h5></td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.firstname}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.contactPersonFirstName}"
+					id="contactPersonFirstName" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.lastname}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.contactPersonLastName}"
+					id="contactPersonLastName" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.telephone_number}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.contactPersonTelephoneNumber}"
+					id="contactPersonTelephoneNumber" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.email_address_input}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.contactPersonEmail}"
+					id="contactPersonEmail" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		
 		<tr>
 			<td colspan="2" align="right">
 				<h:commandButton value="#{msg_main.save}" action="#{newMemberOrganizationBean.actionSaveOrganization}" />
