@@ -10,10 +10,7 @@
 	<property name="war-lib.dir" value="${web.dir}/WEB-INF/lib"/>
 
     <path id="master-classpath">
-        <fileset dir="${lib.dir}">
-            <include name="*.jar"/>
-        </fileset>
-    	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
+        <fileset dir="${war-lib.dir}">
             <include name="*.jar"/>
         </fileset>
         <!-- We need the servlet API classes: -->
