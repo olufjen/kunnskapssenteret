@@ -18,10 +18,10 @@
 			<li><a href="user-new.faces"></f:verbatim><h:outputText value="#{msg_menu.user_new}" /><f:verbatim></a></li>
 		</ul>
 	</li>
-	<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.ip_addresses_overview}" /><f:verbatim></a>
+	<!--<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.ip_addresses_overview}" /><f:verbatim></a>
 		<ul>
 			<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.overview}" /><f:verbatim></a></li>
 			<li><a href="ipaddress-new.faces"></f:verbatim><h:outputText value="#{msg_menu.ip_address_new}" /><f:verbatim></a></li>
 		</ul>
-	</li>
+	</li>-->
 </ul></f:verbatim>
