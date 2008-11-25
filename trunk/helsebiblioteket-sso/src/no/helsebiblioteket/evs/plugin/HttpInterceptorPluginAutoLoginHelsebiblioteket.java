@@ -19,7 +19,13 @@ public final class HttpInterceptorPluginAutoLoginHelsebiblioteket extends HttpIn
 	private final Log logger = LogFactory.getLog(getClass());
 	private LoginService loginService;
 	private String sessionVarName;
+	public HttpInterceptorPluginAutoLoginHelsebiblioteket(){
+		System.out.println("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
+		logger.info("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
+	}
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	}
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	// FIXME: Remove these!
     	logger.info("TESTING LOG");
     	logger.info("What class? " + request.getClass().getName());
@@ -29,12 +35,13 @@ public final class HttpInterceptorPluginAutoLoginHelsebiblioteket extends HttpIn
     	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
     	Organization organization = this.loginService.logInIpAddress(ipAddress);
     	request.getSession().setAttribute(this.sessionVarName, organization);
-	}
-	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1) throws Exception {
-		// This is empty
+
+    	logger.info("organization: " + organization.getName());
+    	
+    	// This is empty
 		// TODO: 
 		// FIXME: VItkit!
-		return false;
+		return true;
 	}
     private String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
     	String XFF = "X-Forwarded-For";
