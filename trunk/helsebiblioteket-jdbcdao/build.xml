@@ -10,6 +10,9 @@
     	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
             <include name="*.jar"/>
         </fileset>
+    	<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
     	<fileset dir="${lib.dir}">
             <include name="*.jar"/>
         </fileset>
