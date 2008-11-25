@@ -1,4 +1,4 @@
-package no.helsebiblioteket.admin.webservice;
+package no.helsebiblioteket.admin.service;
 
 import java.util.Date;
 import java.util.Properties;
