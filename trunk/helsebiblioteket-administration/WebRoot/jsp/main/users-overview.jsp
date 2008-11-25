@@ -4,12 +4,8 @@
 <%@page buffer="none"%>
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/> 
 
-
 <h2><h:outputText value="#{msg_main.user_overview_title}" /></h2>
-
 <br/>
-
-
 <h:form>
   <table>
     <tr>

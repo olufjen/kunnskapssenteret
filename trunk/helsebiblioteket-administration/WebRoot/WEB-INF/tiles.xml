@@ -109,9 +109,11 @@
    	   	
    	<definition name="new-organization.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/new-organization.jsp" type="page" />
+		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
    	</definition>
    	<definition name="new-supplierorganization.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/new-supplierorganization.jsp" type="page" />
+		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
    	</definition>
    	
    	<definition name="login.tiles" extends="loginFrame">

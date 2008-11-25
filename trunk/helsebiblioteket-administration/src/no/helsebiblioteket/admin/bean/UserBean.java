@@ -61,7 +61,9 @@ public class UserBean {
 			User user = new User();
 			user.setUsername("fredriks");
 			List<Role> roleList  = new ArrayList<Role>();
-			roleList.add(new Role());
+			Role role = new Role();
+			role.setRoleName("User");
+			roleList.add(role);
 			user.setRoleList(roleList);
 			Organization organizaion = new Organization();
 			organizaion.setName("Ullevål Sykehus");
@@ -72,8 +74,12 @@ public class UserBean {
 			User user = new User();
 			user.setUsername("leiftorger");
 			List<Role> roleList  = new ArrayList<Role>();
-			roleList.add(new Role());
-			roleList.add(new Role());
+			Role role = new Role();
+			role.setRoleName("User");
+			roleList.add(role);
+			Role role2 = new Role();
+			role2.setRoleName("Admin");
+			roleList.add(role2);
 			user.setRoleList(roleList);
 			Organization organization = new Organization();
 			organization.setName("Rikshospitalet");
@@ -88,5 +94,9 @@ public class UserBean {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }
