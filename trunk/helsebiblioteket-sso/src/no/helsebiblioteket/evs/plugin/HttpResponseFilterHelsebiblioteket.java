@@ -2,8 +2,8 @@ package no.helsebiblioteket.evs.plugin;
 
 import javax.servlet.http.HttpServletRequest;
 
-import no.helsebiblioteket.domain.Organization;
-import no.helsebiblioteket.domain.User;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.User;
 
 import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
 
@@ -22,7 +22,7 @@ public final class HttpResponseFilterHelsebiblioteket extends HttpResponseFilter
     		result = response.replaceAll(TAG_TO_REPLACE, "ORG: " + organization.getName());    		
     	} else if (sessionVar instanceof User){
     		User user = (User) sessionVar;
-    		result = response.replaceAll(TAG_TO_REPLACE, "USR: " + user.getName());
+    		result = response.replaceAll(TAG_TO_REPLACE, "USR: " + user.getUsername());
     	}
 //        String remoteAddr = request.getRemoteAddr();
         
