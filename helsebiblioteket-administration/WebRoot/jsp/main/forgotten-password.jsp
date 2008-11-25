@@ -25,5 +25,5 @@
 		</tr>
 	</table>
 	<br/>
-	<h:commandButton value="#{msg_main.send_password}" action="#{forgottenPasswordBean.login}" />
+	<h:commandButton value="#{msg_main.send_password}" action="#{forgottenPasswordBean.send}" />
 </h:form>
