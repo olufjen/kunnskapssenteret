@@ -8,12 +8,18 @@
 
 <project name="helsebiblioteket-services-impl" basedir="." default="usage">
     <property file="build.properties"/>
+	<property name="admin-web-lib.dir" value="../helsebiblioteket-administration-web/lib"/>
+	
+	
     <path id="master-classpath">
     	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
             <include name="*.jar"/>
         </fileset>
     	<fileset dir="${lib.dir}">
             <include name="*.jar"/>
+        </fileset>
+       	<fileset dir="${admin-web-lib.dir}">
+        	<include name="*.jar"/>
         </fileset>
     </path>
 	

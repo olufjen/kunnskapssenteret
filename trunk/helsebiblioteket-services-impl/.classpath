@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-sso/lib/cms-api.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-sso/lib/jdom.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/WebRoot/WEB-INF/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
