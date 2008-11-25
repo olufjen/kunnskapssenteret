@@ -1,7 +1,7 @@
 package no.helsebiblioteket.admin.service.impl;
 
-//import org.apache.commons.logging.Log;
-//import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.service.LoginService;
@@ -10,7 +10,7 @@ import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
 
 public class LoginServiceImpl implements LoginService {
-//	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Log logger = LogFactory.getLog(getClass());
 	private static final long serialVersionUID = 1L;
 	private UserDao userDao;
 	public void setUserDao(UserDao userDao) {
@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 	public Organization logInIpAddress(IpAddress address) {
 		
-//		logger.info("LOGGING IN WITH IP :" + address.getAddress());
+		logger.info("LOGGING IN WITH IP :" + address.getAddress());
 		
 		// TODO Do DAO lookup here
 		Organization organization = new Organization();
