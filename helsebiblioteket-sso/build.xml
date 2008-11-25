@@ -84,11 +84,19 @@
 			
 			<fileset file="lib/XmlSchema-1.4.2.jar" />
 			<fileset file="lib/neethi-2.0.4.jar" />
+			<fileset file="lib/annogen-0.1.0.jar" />
 				
 			<fileset file="../pojoguidespring/src/lib/axis2-kernel-1.4.1.jar" />
 			<fileset file="../pojoguidespring/src/lib/axis2-adb-1.4.1.jar" />
 			<fileset file="../pojoguidespring/src/lib/axiom-api-1.2.7.jar" />
 			<fileset file="../pojoguidespring/src/lib/axiom-impl-1.2.7.jar" />
+		</copy>
+	</target>
+
+	<target name="deploy-other" depends="package">
+		<copy todir="${evs.deploy.dir}">
+			<fileset file="${project.target.dir}/${project.target.filename}" />
+			<fileset file="pluginconfig/linkeditresponsefilter-plugin.xml" />
 		</copy>
 	</target>
 </project>
