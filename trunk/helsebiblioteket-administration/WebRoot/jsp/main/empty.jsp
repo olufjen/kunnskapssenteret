@@ -4,4 +4,4 @@
 <%@page buffer="none"%>
 <f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.errors"/> 
 
-EMPTY
+<!-- EMPTY -->

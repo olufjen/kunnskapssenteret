@@ -81,6 +81,7 @@
 
    	<definition name="user-new.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/user-new.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	<definition name="new-enduser.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/new-enduser.jsp" type="page" />
@@ -93,6 +94,7 @@
    	
    	<definition name="new-memberorganization.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/new-memberorganization.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	<definition name="edit-enduser.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/edit-enduser.jsp" type="page" />
