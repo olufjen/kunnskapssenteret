@@ -47,6 +47,13 @@
 	
 	<navigation-rule>
 		<navigation-case>
+			<from-outcome>send_email_success</from-outcome>
+			<to-view-id>/login.faces</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
 			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.faces</to-view-id>
 		</navigation-case>
@@ -141,6 +148,11 @@
         <managed-bean-name>forgottenPasswordBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.ForgottenPasswordBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+    		<property-name>loginService</property-name>
+        	<value>#{loginService}</value>
+		</managed-property>
+        
 	</managed-bean>
 	
 	<managed-bean>
@@ -177,6 +189,14 @@
     		<property-name>adminService</property-name>
         	<value>#{adminService}</value>
 		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+    	<description>Backingbean related to organizations</description>
+        <display-name>organizationBean</display-name>
+        <managed-bean-name>organizationBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.OrganizationBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	  
 	<!-- <managed-bean>

@@ -49,6 +49,11 @@
 
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
 	 	<property name="userDao" ref="userDao"></property>
+	 	<property name="emailDao" ref="emailDao"></property>
+	</bean>
+
+	<bean id="emailDao" class="no.helsebiblioteket.admin.service.EmailDAOImpl">
+		<property name="host" value="smtp.example.org"></property>
 	</bean>
 	
 </beans>

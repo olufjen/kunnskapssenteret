@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.service.LoginService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,32 +15,28 @@ import org.apache.commons.logging.LogFactory;
 public class ForgottenPasswordBean {
 	/** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
-    private UserService userService;
+    private LoginService loginService;
 	private String email;
 	private String password;
 	private UIComponent passwordComponent;
 	private UIComponent emailComponent;
-	public String login() {
-		logger.info("method 'actionLogin' invoked");
+	public String send() {
+		
+		// TODO: Complete this Bean!
+		
+		logger.info("method 'send' invoked");
 		User user = new User();
 		user.setUsername(getEmail());
-		user = this.userService.findUserByUsername(user);
-		if(user == null || ! user.getPassword().equals(password)){
-			// TODO: Use message from Resource Bundle
-			 //String warningContractRequired =  MessageBundleLoader.getMessage("required") + this.getContractTypeComponent().getLabel();
-			FacesContext context = FacesContext.getCurrentInstance();
-			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN,
-					 "Feil passord eller ukjent bruker.",
-					 "Prøv igjen");
-			 context.addMessage(this.emailComponent.getClientId(context), facesMessage);
-//			 context.getClientIdsWithMessages();
-//
-//			FacesContext.getCurrentInstance().addMessage("rart",
-//					 new FacesMessage("user_unknown"));
-			return null;
-		} else {
-			return "login_success";
-		}
+		this.loginService.sendPasswordEmail(user);
+		
+		// TODO: Use message from Resource Bundle
+		 //String warningContractRequired =  MessageBundleLoader.getMessage("required") + this.getContractTypeComponent().getLabel();
+//		FacesContext context = FacesContext.getCurrentInstance();
+//		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN,
+//				 "Feil passord eller ukjent bruker.",
+//				 "Prøv igjen");
+//		context.addMessage(this.emailComponent.getClientId(context), facesMessage);
+		return "send_email_success";
 	}
 	public void validateEmail(FacesContext facesContext,UIComponent component, Object newValue) throws ValidatorException {
 		String email = newValue.toString();
@@ -54,24 +50,16 @@ public class ForgottenPasswordBean {
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setAdminService(UserService userService) {
-		this.userService = userService;
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
 	}
 }

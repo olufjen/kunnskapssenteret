@@ -72,6 +72,7 @@
    	
    	<definition name="welcome.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/welcome.jsp" type="page" />
+   		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	
    	<definition name="user.tiles" extends="standardFrame">
@@ -103,6 +104,7 @@
    	</definition>
    	<definition name="users-overview.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/users-overview.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	   	
    	<definition name="new-organization.tiles" extends="standardFrame">
@@ -120,8 +122,9 @@
 		<put name="main" value="/jsp/main/forgotten-password.jsp" type="page" />
    	</definition>
    	
-   	<definition name="login.tiles" extends="standardFrame">
-		<put name="main" value="/jsp/main/new-organization.jsp" type="page" />
+   	<definition name="organizations-overview.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/organizations-overview.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	
 </tiles-definitions>
