@@ -2,34 +2,34 @@ package no.helsebiblioteket.evs.plugin;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.enonic.cms.api.client.ClientFactory;
+import no.helsebiblioteket.domain.Organization;
+import no.helsebiblioteket.domain.User;
+
 import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
 
-/**
- * This class illustrates a simple http response filter example. This filter adds the remote
- * address of the user to a predefined tag in the response. To configure this plugin place the
- * <b>example-plugin.xml</b> file into <b>CMS_HOME/plugins</b> directory with the jar file(s).
- */
-public final class HttpResponseFilterHelsebiblioteket
-    extends HttpResponseFilterPlugin
-{
-    /** Tag to replace. */
-    private final static String TAG_TO_REPLACE = "##ip##";
+public final class HttpResponseFilterHelsebiblioteket extends HttpResponseFilterPlugin {
+    private final static String TAG_TO_REPLACE = "helse";
+	private String sessionVarName;
     
-    /**
-     * Filters the textural response.
-     */
-    public String filterResponse(HttpServletRequest request, String response, String contentType)
-        throws Exception
-    {
-    	String username = null;
+    public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
+    	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
+    	String result = "ERROR";
     	
-    	username = "HOW???";
+    	// TODO: Complete this!
     	
-    	ClientFactory.getLocalClient().getUserName();
-    	
-//    	request.getSession()
-        String remoteAddr = request.getRemoteAddr();
-        return response.replaceAll(TAG_TO_REPLACE, remoteAddr);
+    	if(sessionVar instanceof Organization){
+    		Organization organization = (Organization) sessionVar;
+    		result = response.replaceAll(TAG_TO_REPLACE, "ORG: " + organization.getName());    		
+    	} else if (sessionVar instanceof User){
+    		User user = (User) sessionVar;
+    		result = response.replaceAll(TAG_TO_REPLACE, "USR: " + user.getName());
+    	}
+//        String remoteAddr = request.getRemoteAddr();
+        
+        return result;
     }
+
+	public void setSessionVarName(String sessionVarName) {
+		this.sessionVarName = sessionVarName;
+	}
 }
