@@ -9,7 +9,18 @@ public class User {
 	protected Organization organization = null;
 	protected List<Role> roleList = null;
 	protected List<Access> accessList = null;
-	
+	public String getName(){
+		// TODO: Remove this?
+		return "Name " + this.username;
+	}
+	public String getRoles(){
+		// TODO: Remove this?
+		StringBuffer result = new StringBuffer();
+		for (Role role : this.roleList) {
+			result.append(role.getRoleName() + " ");
+		}
+		return result.toString();
+	}
 	public Integer getId() {
 		return id;
 	}
