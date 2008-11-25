@@ -3,7 +3,7 @@
 
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.HttpInterceptorPluginAutoLoginHelsebiblioteket">
- 		<property name="urlPattern" value="/site/[0-3]/.* " />
+ 		<property name="urlPattern" value="/site/[0-3]/*" />
  		<property name="sessionVarName" value="hbloggedin" />
  		<property name="loginService" ref="loginService" />
 	</bean>
