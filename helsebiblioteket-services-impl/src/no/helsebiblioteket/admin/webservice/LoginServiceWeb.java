@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.webservice;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
 import javax.xml.namespace.QName;
+import javax.xml.ws.Endpoint;
 
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.addressing.EndpointReference;
@@ -56,5 +57,42 @@ public class LoginServiceWeb implements LoginService {
 	}
 	public void setLogInIpAddress(QName logInIpAddress) {
 		this.logInIpAddress = logInIpAddress;
+	}
+	public static void main(String[] args) throws Exception {
+		QName logInIpAddress = new QName("http://service.admin.helsebiblioteket.no", "logInIpAddress");
+		EndpointReference targetEPR = new EndpointReference("http://localhost:8080/axis2/services/loginService");
+		LoginServiceWeb loginService = new LoginServiceWeb();
+		RPCServiceClient serviceClient = new RPCServiceClient();
+		loginService.setServiceClient(serviceClient);
+		loginService.setTargetEPR(targetEPR);
+		loginService.setLogInIpAddress(logInIpAddress);
+		loginService.init();
+		
+    	IpAddress ipAddress = new IpAddress();
+    	ipAddress.setAddress("111.222.333");
+    	Organization organization = loginService.logInIpAddress(ipAddress);
+    	System.out.println("organization: " + organization.getName());
+    	
+
+		
+
+//	<bean name="loginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
+//		<property name="serviceClient" ref="serviceClient" />
+//		<property name="targetEPR" ref="targetEPR" />
+//		<property name="logInIpAddress" ref="logInIpAddress" />
+//	</bean>
+//	
+//	<bean name="serviceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+//	</bean>
+//
+//	<bean name="targetEPR" class="org.apache.axis2.addressing.EndpointReference">
+//		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+//	</bean>
+//	
+//	<bean name="logInIpAddress" class="javax.xml.namespace.QName">
+//		<constructor-arg value="" />
+//		<constructor-arg value="logInIpAddress" />
+//	</bean>
+//
 	}
 }
