@@ -3,11 +3,15 @@
 <project name="helsebiblioteket-domain-dao-services" basedir="." default="usage">
     <property file="build.properties"/>
 	<property name="lib.folder" value="../helsebiblioteket-common-lib/lib"/>
+	<property name="admin-web-lib.folder" value="../helsebiblioteket-administration-web/lib"/>
 	
     <path id="master-classpath">
     	<fileset dir="${lib.folder}">
             <include name="**/*.jar"/>
         </fileset>
+    	<fileset dir="${admin-web-lib.folder}">
+    		<include name="**/*.jar"/>
+    	</fileset>
     </path>
 	
 	<path id="master-sourcedir">
