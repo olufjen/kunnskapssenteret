@@ -47,13 +47,6 @@
 	
 	<navigation-rule>
 		<navigation-case>
-			<from-outcome>send_email_success</from-outcome>
-			<to-view-id>/login.faces</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-		<navigation-case>
 			<from-outcome>welcome</from-outcome>
 			<to-view-id>/welcome.faces</to-view-id>
 		</navigation-case>
@@ -83,7 +76,37 @@
 			<from-outcome>create-administrator</from-outcome>
 			<to-view-id>/new-administrator.faces</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>users_overview</from-outcome>
+			<to-view-id>/users-overview.faces</to-view-id>
+		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<!-- TODO: Use from view?  -->
+		<!-- <from-view-id>/forgotten-password.tiles</from-view-id> -->
+		<navigation-case>
+			<from-outcome>send_email_success</from-outcome>
+			<to-view-id>/forgotten-password-sent.tiles</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>goto_forgotten</from-outcome>
+			<to-view-id>/forgotten-password.tiles</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+
+	<navigation-rule>
+		<!-- TODO: Use from view?  -->
+		<!-- <from-view-id>forgotten-password-sent.tiles</from-view-id>  -->
+		<navigation-case>
+			<!-- TODO: Use action?  -->
+	    	<from-action>#{loginBean.actionBackToLogin}</from-action>
+		    <from-outcome>back_to_login</from-outcome>
+		    <to-view-id>/login.faces</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+
 	
 	 
     <managed-bean>
@@ -96,6 +119,12 @@
     		<property-name>userService</property-name>
         	<value>#{userService}</value>
 		</managed-property>
+		<!--
+		<managed-property>
+            <property-name>userId</property-name>
+            <value>#{param.userId}</value>
+        </managed-property>
+        -->
 	</managed-bean> 
 	
 	<managed-bean>

@@ -13,6 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class ForgottenPasswordBean {
+	
+	// FIXME: Delete this Bean!
+	
 	/** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
     private LoginService loginService;
@@ -21,6 +24,7 @@ public class ForgottenPasswordBean {
 	private UIComponent passwordComponent;
 	private UIComponent emailComponent;
 	public String send() {
+		if(true) return null;
 		
 		// TODO: Complete this Bean!
 		
@@ -39,6 +43,9 @@ public class ForgottenPasswordBean {
 		return "send_email_success";
 	}
 	public void validateEmail(FacesContext facesContext,UIComponent component, Object newValue) throws ValidatorException {
+		if(true) return;
+		
+		
 		String email = newValue.toString();
 		this.emailComponent = component;
 		if (false) {
@@ -48,12 +55,14 @@ public class ForgottenPasswordBean {
 		}  
 	} 
 	public String getEmail() {
+		if(true) return null;
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	public String getPassword() {
+		if(true) return null;
 		return password;
 	}
 	public void setPassword(String password) {
