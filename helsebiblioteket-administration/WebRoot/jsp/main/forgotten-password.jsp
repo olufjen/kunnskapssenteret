@@ -6,18 +6,14 @@
 
 <h2><h:outputText value="#{msg_main.forgotten_password_title}" /></h2>
 <br/>
-<h:outputText value="#{forgotten_password_description}" />
+<h:outputText value="#{msg_main.forgotten_password_description}" />
 <br/>
-
-
 <h:form>
 	<table>
 		<tr>
+			<td> <h:outputText value="#{msg_main.email_address_input}" /> </td>
 			<td>
-				<h:outputText value="#{msg_main.email_address_input}" />
-			</td>
-			<td>
-				<h:inputText value="#{forgottenPasswordBean.email}"
+				<h:inputText value="#{loginBean.email}"
 					id="email" required="true"
 					validator="#{loginBean.validateEmail}" />
 				<h:message for="email" styleClass="RED"/>
@@ -25,5 +21,5 @@
 		</tr>
 	</table>
 	<br/>
-	<h:commandButton value="#{msg_main.send_password}" action="#{forgottenPasswordBean.send}" />
+	<h:commandButton value="#{msg_main.forgotten_password_send_password}" action="#{loginBean.send}" />
 </h:form>

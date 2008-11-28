@@ -26,15 +26,17 @@
 			</td>
 			<td>
 				<h:inputSecret value="#{loginBean.password}"
-					id="password" required="true" />
+					id="password" required="true"
+					validator="#{loginBean.validatePassword}" />
 				<h:message for="password" styleClass="RED"/>
 			</td>
 		</tr>
 	</table>
 	<!--<h:message for="password" styleClass="RED"/>-->
-	<BR>
+	<h:outputText value="#{msg_main.login_unknown_user}"
+		rendered="#{loginBean.failed}"
+		styleClass="RED"/>
+	<br/>
 	<h:commandButton value="Logg inn" action="#{loginBean.login}" />
-		<a href="forgotten-password.faces">
-			<h:outputText value="#{msg_main.forgotten_password_link}" />
-		</a>
+    <h:commandLink value="#{msg_main.forgotten_password_link}" action="#{loginBean.actionForgottenPassword}" />
 </h:form>

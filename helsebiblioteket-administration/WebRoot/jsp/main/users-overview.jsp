@@ -14,7 +14,7 @@
       </td>
       <td>
         <h:inputText value="#{userBean.searchinput}"
-      	  id="searchinput" required="true" size="30" />
+      	  id="searchinput" size="30" />
       </td>
     </tr>
     <tr>
@@ -29,7 +29,7 @@
     </tr>
     <tr>
       <td colspan="2" align="right">
-		<h:commandButton value="#{msg_main.user_overview_filter_search}" action="#{userBean.search}" />
+		<h:commandButton value="#{msg_main.user_overview_filter_search}" action="#{userBean.actionSearch}" />
       </td>
     </tr>
   </table>
@@ -58,20 +58,24 @@
       <h:outputText id="organizationOutput" value="#{user.organization.name}" />
     </h:column>
 
-    <h:column id="detailsColumn">
-      <f:facet name="header" />
-      <f:verbatim><a href="edit-administrator.faces"></f:verbatim>
-        <h:outputText id="detailsOutput" value="#{msg_main.user_overview_details}" />
-      <f:verbatim></a></f:verbatim>
+	<h:column id="detailsColumn">
+    	<f:facet name="header" />
+		<h:commandLink value="#{msg_main.user_overview_details}"
+			action="#{userBean.actionDetails}">
+			<f:param name="userId" value="#{user.id}" />
+		</h:commandLink>
     </h:column>
 
     <h:column id="changeColumn">
       <f:facet name="header" />
-      <f:verbatim><a href="edit-enduser.faces"></f:verbatim>
-        <h:outputText id="changeOutput" value="#{msg_main.user_overview_change}" />
-      <f:verbatim></a></f:verbatim>
+		<h:commandLink value="#{msg_main.user_overview_change}"
+			action="#{userBean.actionChange}">
+			<f:param name="userId" value="#{user.id}" />
+		</h:commandLink>
     </h:column>
 
   </h:dataTable>
+
+  <h2><h:outputText value="#{userBean.userId}" /></h2>
   
 </h:form>

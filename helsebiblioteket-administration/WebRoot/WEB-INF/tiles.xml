@@ -125,6 +125,10 @@
    	<definition name="forgotten-password.tiles" extends="loginFrame">
 		<put name="main" value="/jsp/main/forgotten-password.jsp" type="page" />
    	</definition>
+
+   	<definition name="forgotten-password-sent.tiles" extends="loginFrame">
+		<put name="main" value="/jsp/main/forgotten-password-sent.jsp" type="page" />
+   	</definition>
    	
    	<definition name="organizations-overview.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/organizations-overview.jsp" type="page" />
