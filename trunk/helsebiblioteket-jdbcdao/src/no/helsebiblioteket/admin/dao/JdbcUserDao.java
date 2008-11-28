@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
 
 import org.apache.commons.logging.Log;
@@ -21,17 +22,18 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
     public User findUserByUsername(User user) {
         logger.info("finding user with username '" + ((user != null) ? user.getUsername() : "") + "'");
         List<User> users = getSimpleJdbcTemplate().query(
-                "select id, username, password from hb_user where username = :username", 
+                "select user_id, username, password, org_unit_id from tbl_user where username = :username", 
                 new UserMapper(),
                 new MapSqlParameterSource().addValue("username", user.getUsername())
         		);
-        return users.get(0);
+        if(users.size() == 0) return null;
+        else return users.get(0);
     }
     
     public List<User> getUserList() {
         logger.info("fetching all users");
         List<User> users = getSimpleJdbcTemplate().query(
-                "select id, username, password from hb_user", 
+                "select id, username, password from tbl_user", 
                 new UserMapper());
         return users;
     }
@@ -39,7 +41,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
     public void createUser(User user) {
         logger.info("Creating user: " + user.getUsername());
         int count = getSimpleJdbcTemplate().update(
-            "insert into hb_user (username, password) values (:username, :password)",
+            "insert into tbl_user (username, password) values (:username, :password)",
             new MapSqlParameterSource().addValue("username", user.getUsername())
                 .addValue("password", user.getPassword()));
         logger.info("Rows affected: " + count);
@@ -48,9 +50,12 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setId(rs.getInt("id"));
+            user.setId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
+            Organization organization = new Organization();
+            user.setOrganization(organization);
+            user.getOrganization().setId((rs.getInt("org_unit_id")));
             return user;
         }
     }
