@@ -2,7 +2,6 @@ package no.helsebiblioteket.admin.webservice;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
 import javax.xml.namespace.QName;
-import javax.xml.ws.Endpoint;
 
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.addressing.EndpointReference;
