@@ -108,11 +108,18 @@
 	<target name="generate-service" depends="">
 		<mkdir dir="${webservices.build.dir}" />
 		<mkdir dir="${webservices.classes.dir}" />
+		<mkdir dir="${webservices.classes.dir}/lib" />
 		<mkdir dir="${webservices.metainf.dir}" />
 
 		<copy file="desc/services.xml" tofile="${webservices.metainf.dir}/services.xml" overwrite="true" />
 		<copy file="desc/applicationContext.xml" tofile="${webservices.classes.dir}/applicationContext.xml" overwrite="true" />
 
+
+<!--
+		<copy file="../helsebiblioteket-domain-dao-services/target/helsebiblioteket-domain-dao-services-1.0.jar"
+			tofile="${webservices.classes.dir}/lib/helsebiblioteket-domain-dao-services-1.0.jar" overwrite="true" />
+-->
+		
 		<javac debug="on" srcdir="src" destdir="${webservices.classes.dir}" includes="*/**">
 			<classpath refid="webservices.classpath" />
 			<classpath refid="master-classpath" />

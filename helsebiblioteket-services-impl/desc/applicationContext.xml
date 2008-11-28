@@ -24,7 +24,7 @@
 <beans>
   <bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
 
-  <bean id="loginService" class="no.helsebiblioteket.admin.service.LoginServiceImpl">
+  <bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
     <!--<property name="weather" ref="weatherBean"/>-->
   </bean>
 <!--
