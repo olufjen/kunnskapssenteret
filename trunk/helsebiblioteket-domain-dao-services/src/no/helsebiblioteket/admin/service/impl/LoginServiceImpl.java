@@ -19,9 +19,13 @@ public class LoginServiceImpl implements LoginService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	public boolean logInUser(User user) {
+	public User logInUser(User user) {
 		User loggedIn = this.userDao.findUserByUsername(user);
-		return (loggedIn != null) && loggedIn.getPassword().equals(user.getPassword());
+		if(loggedIn != null && loggedIn.getPassword().equals(user.getPassword())){
+			return loggedIn;
+		} else {
+			return null;
+		}
 	}
 	public void sendPasswordEmail(User user) {
 		logger.info("Sends email to :" + user.getUsername());
