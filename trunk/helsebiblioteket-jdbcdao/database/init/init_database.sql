@@ -18,8 +18,20 @@ ALTER TABLE tbl_org_unit DROP COLUMN org_unit_parent_id ;
 ALTER TABLE tbl_org_unit ADD COLUMN org_unit_parent_id integer;
 ALTER TABLE tbl_org_unit ALTER COLUMN org_unit_parent_id SET STORAGE PLAIN;
 
+-- THIS MUST BE DONE
+alter table tbl_user add person_id integer;
+alter table tbl_user add foreign key(person_id) references tbl_person (person_id);
+alter table tbl_person drop user_id;
+alter table tbl_person drop org_unit_id;
 
 -- Some test data
-insert into tbl_org_type_reg (descr, name, key) values ('Kommentar for helseforetak', 'Helseforetak', 'hftk')
-insert into tbl_org_unit (name, descr, name_short, org_type_key) values ('Ullevål universitetssykehus', '', 'Ullevål UvS', 'hftk')
-insert into tbl_user (username, password, org_unit_id) values ('test@example.org', 'qwerty', 3)
+insert into tbl_org_type_reg (descr, name, key) values ('Kommentar for helseforetak', 'Helseforetak', 'hftk');
+insert into tbl_org_unit (name, descr, name_short, org_type_key) values ('Ullevål universitetssykehus', '', 'Ullevål UvS', 'hftk');
+insert into tbl_user (username, password, org_unit_id) values ('test@example.org', 'qwerty', 3);
+insert into tbl_user (username, password, org_unit_id) values ('leif@hb.no', 'qwerty', 3);
+insert into tbl_person (first_name, last_name) values ('Fredrik', 'Sørensen');
+insert into tbl_person (first_name, last_name) values ('Leif Torger', 'Grøndahl');
+--select * from tbl_person; --1,2
+--select * from tbl_user; --2,3
+update tbl_user set person_id = 1 where user_id = 2;  
+update tbl_user set person_id = 2 where user_id = 3;

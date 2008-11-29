@@ -2,10 +2,11 @@ package no.helsebiblioteket.admin.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
@@ -35,8 +36,8 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
 	public List<User> getAllUsers() {
         logger.info("fetching all users");
         List<User> users = getSimpleJdbcTemplate().query(
-                "select id, username, password from tbl_user", 
-                new UserMapper());
+                "select user_id, username, password, tbl_person.person_id, first_name, last_name from tbl_user inner join tbl_person on tbl_user.person_id = tbl_person.person_id", 
+                new UserPersonMapper());
         return users;
     }
 
@@ -49,6 +50,20 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
         logger.info("Rows affected: " + count);
     }
     
+    public List<User> getAllUsers(String name, List<Role> roles) {
+		// FIXME: Improve this!
+		// Use ILIKE for caseinsensitive LIKE: 'abc' LIKE 'a%'     true
+		// Use view and/or index on name := fname || lname, etc
+		List<User> all = this.getAllUsers();
+		List<User> some = new ArrayList<User>();
+		for (User user : all) {
+			if(user.getPerson().getName().toLowerCase().contains(name.toLowerCase())){
+				some.add(user);
+			}
+		}
+		return some;
+	}
+
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
@@ -61,15 +76,15 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
             return user;
         }
     }
-	public List<User> getAllUsers(String name, List<Role> roles) {
-		// FIXME: Write this!
-		// Use ILIKE for caseinsensitive LIKE: 'abc' LIKE 'a%'     true
-		// Use view and/or index on name := fname || lname, etc
-		List<User> all = this.getAllUsers();
-		for (User user : all) {
-			if
-		}
-		
-		return null;
-	}
+    private static class UserPersonMapper extends UserMapper implements ParameterizedRowMapper<User> {
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            User user = super.mapRow(rs, rowNum);
+            Person person = new Person();
+            person.setFirstName(rs.getString("first_name"));
+            person.setLastName(rs.getString("last_name"));
+            person.setId(rs.getInt("person_id"));
+            user.setPerson(person);
+            return user;
+        }
+    }
 }
