@@ -9,11 +9,12 @@ public class User {
 	protected Organization organization = null;
 	protected List<Role> roleList = null;
 	protected List<Access> accessList = null;
-	public String getName(){
-		// TODO: Remove this?
-		return "Name " + this.username;
-	}
-	public String getRoles(){
+	private Person person;
+//	public String getName(){
+//		// FIXME: Remove this!
+//		return "Name " + this.username;
+//	}
+	public String getRoleText(){
 		// TODO: Remove this?
 		StringBuffer result = new StringBuffer();
 		for (Role role : this.roleList) {
@@ -56,5 +57,11 @@ public class User {
 	}
 	public void setAccessList(List<Access> accessList) {
 		this.accessList = accessList;
+	}
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }
