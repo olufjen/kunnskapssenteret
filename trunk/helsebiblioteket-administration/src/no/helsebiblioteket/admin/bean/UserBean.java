@@ -55,6 +55,7 @@ public class UserBean {
 		return this.selectedRoles;
 	}
 	public List<SelectItem> getAllRolesAsItems() {
+		this.logger.info("this.userService=" + this.userService);
 		List<Role> roles = this.userService.getAllUserRoles();
 		List<SelectItem> items = new ArrayList<SelectItem>();
 		for (Role role : roles) {
@@ -71,4 +72,6 @@ public class UserBean {
 	public void setUserService(UserService userService) { this.userService = userService; }
 	public HtmlDataTable getUsersTable() { return usersTable; }
 	public void setUsersTable(HtmlDataTable usersTable) { this.usersTable = usersTable; }
+	public HtmlSelectManyCheckbox getRolesManyCheckbox() { return rolesManyCheckbox; }
+	public void setRolesManyCheckbox(HtmlSelectManyCheckbox rolesManyCheckbox) { this.rolesManyCheckbox = rolesManyCheckbox; }
 }
