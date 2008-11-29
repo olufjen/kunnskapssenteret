@@ -41,12 +41,12 @@
       <f:facet name="header">
         <h:outputText value="#{msg_main.user_overview_name}" />
       </f:facet>
-      <h:outputText id="nameOutput" value="#{user.name}" />
+      <h:outputText id="nameOutput" value="#{user.person.name}" />
     </h:column>
 
     <h:column id="rolesColumn">
       <f:facet name="header" />
-      <h:outputText id="rolesOutput" value="#{user.roles}" />
+      <h:outputText id="rolesOutput" value="#{user.roleText}" />
     </h:column>
 
     <h:column id="organizationColumn">
