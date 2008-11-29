@@ -1,16 +1,16 @@
 package no.helsebiblioteket.admin.bean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-import javax.faces.context.FacesContext;
+import javax.faces.component.html.HtmlDataTable;
+import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.model.SelectItem;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.UserService;
@@ -20,123 +20,55 @@ public class UserBean {
 	private String searchinput;
 	private List<SelectItem> availableRoles;
 	private List<SelectItem> selectedRoles;
+	// FIXME: Use caching?
 	private List<User> users;
-	private String userId = "X";
+	private User user;
+	private HtmlSelectManyCheckbox rolesManyCheckbox;
+	private HtmlDataTable usersTable;
     protected final Log logger = LogFactory.getLog(getClass());
-
 	public String actionDetails(){
-		return "users_overview";
-	}
-	public String actionChange(){
-		return "users_overview";
-	}
-
-	public String actionSearch(){
-		
-		this.userId = "Y";
-
-		logger.info("method 'search' invoked");
-
 //		FacesContext context = FacesContext.getCurrentInstance();
 //		Map requestParams = context.getExternalContext().getRequestParameterMap();
 //		logger.info("userId: " +
 //				requestParams.get("userId"));
-		
+		this.user = (User)this.usersTable.getRowData();
+		logger.info("USER: " + user.getName());
+//		this.supplierSourceList.remove((SupplierSource) this.supplierSourceListHtmlDataTable.getRowData());
+		return "user_details";
+	}
+	public String actionChange(){ return "user_change"; }
+	public String actionSearch(){
+		logger.info("method 'search' invoked");
+		List<Role> roles = Arrays.asList((Role[])this.rolesManyCheckbox.getSelectedValues());
+		this.users = this.userService.findUsersBySearchStringRoles(this.searchinput, roles);
 		return "users_overview";
-
 	}
-	public void setAdminService(UserService userService) {
-		this.userService = userService;
-	}
-	
-	public List<User> getUserList() {
-		return userService.getUserList();
-	}
-
-	public String getSearchinput() {
-		return searchinput;
-	}
-
-	public void setSearchinput(String searchinput) {
-		this.searchinput = searchinput;
-	}
-
+	public String getSearchinput() { return searchinput; }
+	public void setSearchinput(String searchinput) { this.searchinput = searchinput; }
 	public List<SelectItem> getAvailableRoles() {
-    	List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem option = new SelectItem("ch1", "choice1", "This bean is for selectItems tag", true);
-		option.setDisabled(false);
-		list.add(option);
-		option = new SelectItem("ch2", "choice3", "This bean is for selectItems tag", true);
-		option.setDisabled(false);
-		list.add(option);
-		return list;
+		if(this.availableRoles == null) { this.availableRoles = getAllRolesAsItems(); }
+		return this.availableRoles;
 	}
-
-	public void setAvailableRoles(List<SelectItem> availableRoles) {
-		this.availableRoles = availableRoles;
-	}
-
+	public void setSelectedRoles(List<SelectItem> selectedRoles) { this.selectedRoles = selectedRoles; }
 	public List<SelectItem> getSelectedRoles() {
-		return selectedRoles;
+		if(this.selectedRoles == null){ this.selectedRoles = getAllRolesAsItems(); }
+		return this.selectedRoles;
 	}
-
-	public void setSelectedRoles(List<SelectItem> selectedRoles) {
-		this.selectedRoles = selectedRoles;
+	public List<SelectItem> getAllRolesAsItems() {
+		List<Role> roles = this.userService.getAllUserRoles();
+		List<SelectItem> items = new ArrayList<SelectItem>();
+		for (Role role : roles) {
+			SelectItem option = new SelectItem(role, "This bean is for selectItems tag");
+			option.setDisabled(false);
+			items.add(option);
+		}
+		return items;
 	}
-
 	public List<User> getUsers() {
-		List<User> myUsers = new ArrayList<User>();
-		{
-			User user = new User();
-			user.setUsername("fredriks");
-			List<Role> roleList  = new ArrayList<Role>();
-			Role role = new Role();
-			role.setRoleName("User");
-			roleList.add(role);
-			user.setRoleList(roleList);
-			Organization organizaion = new Organization();
-			organizaion.setName("Ullevål Sykehus");
-			user.setOrganization(organizaion);
-			user.setId(123);
-			myUsers.add(user);
-		}
-		{
-			User user = new User();
-			user.setUsername("leiftorger");
-			List<Role> roleList  = new ArrayList<Role>();
-			Role role = new Role();
-			role.setRoleName("User");
-			roleList.add(role);
-			Role role2 = new Role();
-			role2.setRoleName("Admin");
-			roleList.add(role2);
-			user.setRoleList(roleList);
-			Organization organization = new Organization();
-			organization.setName("Rikshospitalet");
-			user.setOrganization(organization);
-			user.setId(321);
-			myUsers.add(user);
-		}
-
-
-		this.users = myUsers;
-		return users;
+		if(this.users == null) { this.users = userService.getAllUsers(); }
+		return this.users;
 	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
+	public void setUserService(UserService userService) { this.userService = userService; }
+	public HtmlDataTable getUsersTable() { return usersTable; }
+	public void setUsersTable(HtmlDataTable usersTable) { this.usersTable = usersTable; }
 }

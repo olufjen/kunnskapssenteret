@@ -9,20 +9,16 @@
 <h:form>
   <table>
     <tr>
-      <td>
-        <h:outputText value="#{msg_main.user_overview_write_username_etc}" />
-      </td>
-      <td>
-        <h:inputText value="#{userBean.searchinput}"
-      	  id="searchinput" size="30" />
-      </td>
+      <td> <h:outputText value="#{msg_main.user_overview_write_username_etc}" /> </td>
+      <td> <h:inputText value="#{userBean.searchinput}" id="searchinput" size="30" /> </td>
     </tr>
     <tr>
+      <td colspan="2"> <h:message for="searchinput" styleClass="RED"/> </td>
+    </tr>
+    <tr>
+      <td> <h:outputText value="#{msg_main.user_overview_limit_roles}" /> </td>
       <td>
-      	<h:outputText value="#{msg_main.user_overview_limit_roles}" />
-      </td>
-      <td>
-        <h:selectManyCheckbox value="#{userBean.selectedRoles}">
+        <h:selectManyCheckbox value="#{userBean.selectedRoles}" layout="pageDirection" binding="#{userBean.rolesManyCheckbox}">
 		  <f:selectItems value="#{userBean.availableRoles}"/>
 		</h:selectManyCheckbox>
       </td>
@@ -38,9 +34,9 @@
   	<h:outputText value="#{msg_main.user_overview_add_filter_text}" />
   </p>
   
-  <ul><h:outputText value="#{msg_main.user_overview_result}" /></ul>
+  <u><h:outputText value="#{msg_main.user_overview_result}" /></u>
   
-  <h:dataTable id="users" value="#{userBean.users}" var="user" >
+  <h:dataTable id="users" value="#{userBean.users}" var="user" binding="#{userBean.usersTable}">
     <h:column id="nameColumn">
       <f:facet name="header">
         <h:outputText value="#{msg_main.user_overview_name}" />
@@ -61,21 +57,19 @@
 	<h:column id="detailsColumn">
     	<f:facet name="header" />
 		<h:commandLink value="#{msg_main.user_overview_details}"
-			action="#{userBean.actionDetails}">
-			<f:param name="userId" value="#{user.id}" />
+			action="#{userBean.actionDetails}" immediate="true">
+			<!--<f:param name="userId" value="#{user.id}" />-->
 		</h:commandLink>
     </h:column>
 
     <h:column id="changeColumn">
       <f:facet name="header" />
 		<h:commandLink value="#{msg_main.user_overview_change}"
-			action="#{userBean.actionChange}">
-			<f:param name="userId" value="#{user.id}" />
+			action="#{userBean.actionChange}" immediate="true">
+			<!--<f:param name="userId" value="#{user.id}" />-->
 		</h:commandLink>
     </h:column>
 
   </h:dataTable>
-
-  <h2><h:outputText value="#{userBean.userId}" /></h2>
   
 </h:form>
