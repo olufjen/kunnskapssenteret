@@ -26,6 +26,10 @@
 	<bean id="userDao" class="no.helsebiblioteket.admin.dao.JdbcUserDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
+
+	<bean id="roleDao" class="no.helsebiblioteket.admin.dao.JdbcRoleDao">
+		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	</bean>
 	
 	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.dao.MockJdbcOrganizationTypeDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
@@ -45,6 +49,11 @@
 
 	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
 	 	<property name="organizationDao" ref="organizationDao"></property>
+	</bean>
+
+	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
+	 	<property name="userDao" ref="userDao"></property>
+	 	<property name="roleDao" ref="roleDao"></property>
 	</bean>
 
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
