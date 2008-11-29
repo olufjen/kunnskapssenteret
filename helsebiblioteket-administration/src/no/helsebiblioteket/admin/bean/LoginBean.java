@@ -56,7 +56,7 @@ public class LoginBean {
 	public String actionBackToLogin() {
 		return "back_to_login";
 	}
-	public String actionactionForgottenPassword() {
+	public String actionForgottenPassword() {
 		return "goto_forgotten";
 	}
 	public void validateEmail(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
