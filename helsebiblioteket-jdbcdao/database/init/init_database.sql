@@ -3,6 +3,7 @@
 -- TODO: init database
 
 -- Some corrections
+-- TODO: Some of this is wrong!
 ALTER TABLE tbl_org_unit DROP COLUMN org_type_id;
 ALTER TABLE tbl_org_unit ADD COLUMN org_type_key character varying;
 ALTER TABLE tbl_org_unit ALTER COLUMN org_type_key SET STORAGE PLAIN;

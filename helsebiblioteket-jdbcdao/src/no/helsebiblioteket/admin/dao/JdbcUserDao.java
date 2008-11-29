@@ -2,9 +2,11 @@ package no.helsebiblioteket.admin.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 import org.apache.commons.logging.Log;
@@ -30,7 +32,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
         else return users.get(0);
     }
     
-    public List<User> getUserList() {
+	public List<User> getAllUsers() {
         logger.info("fetching all users");
         List<User> users = getSimpleJdbcTemplate().query(
                 "select id, username, password from tbl_user", 
@@ -59,4 +61,15 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
             return user;
         }
     }
+	public List<User> getAllUsers(String name, List<Role> roles) {
+		// FIXME: Write this!
+		// Use ILIKE for caseinsensitive LIKE: 'abc' LIKE 'a%'     true
+		// Use view and/or index on name := fname || lname, etc
+		List<User> all = this.getAllUsers();
+		for (User user : all) {
+			if
+		}
+		
+		return null;
+	}
 }
