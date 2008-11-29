@@ -23,6 +23,8 @@ alter table tbl_user add person_id integer;
 alter table tbl_user add foreign key(person_id) references tbl_person (person_id);
 alter table tbl_person drop user_id;
 alter table tbl_person drop org_unit_id;
+alter table tbl_user_role_reg drop  user_role_category_id;
+alter table tbl_user_role_reg drop  system_id;
 
 -- Some test data
 insert into tbl_org_type_reg (descr, name, key) values ('Kommentar for helseforetak', 'Helseforetak', 'hftk');
@@ -35,3 +37,7 @@ insert into tbl_person (first_name, last_name) values ('Leif Torger', 'Grøndahl'
 --select * from tbl_user; --2,3
 update tbl_user set person_id = 1 where user_id = 2;  
 update tbl_user set person_id = 2 where user_id = 3;
+
+insert into tbl_user_role_reg(name, descr, key) values ('Administrator', '', 'ADM');
+insert into tbl_user_role_reg(name, descr, key) values ('Stoopid user', '', 'STP');
+insert into tbl_user_role_reg(name, descr, key) values ('End User', '', 'END');
