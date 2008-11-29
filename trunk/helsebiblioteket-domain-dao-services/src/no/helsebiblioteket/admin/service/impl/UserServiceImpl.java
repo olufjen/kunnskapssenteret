@@ -15,6 +15,11 @@ public class UserServiceImpl implements UserService {
 	public void setUserDao(UserDao userDao) { this.userDao = userDao; }
 	public User findUserByUsername(User user) { return userDao.findUserByUsername(user); }
 	public void createUser(User user) { userDao.createUser(user); }
+	public List<Role> getAllUserRoles() { return this.roleDao.getAllRoles(); }
+	public void setRoleDao(RoleDao roleDao) { this.roleDao = roleDao; }
+	public List<User> findUsersBySearchStringRoles(String searchString, List<Role> roles) {
+		return this.userDao.getAllUsers(searchString, roles);
+	}
 	public List<User> getAllUsers() {
 		//FIXME: Delete!
 //		List<User> myUsers = new ArrayList<User>();
@@ -52,11 +57,5 @@ public class UserServiceImpl implements UserService {
 //		this.users = myUsers;
 //		return users;
 		return userDao.getAllUsers();
-	}
-	public List<User> findUsersBySearchStringRoles(String searchString, List<Role> roles) {
-		return this.userDao.getAllUsers(searchString, roles);
-	}
-	public List<Role> getAllUserRoles() {
-		return this.roleDao.getAllRoles();
 	}
 }
