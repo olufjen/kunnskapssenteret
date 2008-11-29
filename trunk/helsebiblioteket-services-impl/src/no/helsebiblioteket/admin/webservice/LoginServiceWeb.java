@@ -40,9 +40,9 @@ public class LoginServiceWeb implements LoginService {
 		}
 		return null;
 	}
-	public boolean logInUser(User user) {
+	public User logInUser(User user) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 	public void sendPasswordEmail(User user) {
 		// TODO Auto-generated method stub
