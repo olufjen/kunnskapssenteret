@@ -32,7 +32,7 @@ public class UserBean {
 //		logger.info("userId: " +
 //				requestParams.get("userId"));
 		this.user = (User)this.usersTable.getRowData();
-		logger.info("USER: " + user.getName());
+		logger.info("USER: " + user.getPerson().getName());
 //		this.supplierSourceList.remove((SupplierSource) this.supplierSourceListHtmlDataTable.getRowData());
 		return "user_details";
 	}
