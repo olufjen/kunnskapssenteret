@@ -38,6 +38,15 @@ insert into tbl_person (first_name, last_name) values ('Leif Torger', 'Grøndahl'
 update tbl_user set person_id = 1 where user_id = 2;  
 update tbl_user set person_id = 2 where user_id = 3;
 
-insert into tbl_user_role_reg(name, descr, key) values ('Administrator', '', 'ADM');
-insert into tbl_user_role_reg(name, descr, key) values ('Stoopid user', '', 'STP');
-insert into tbl_user_role_reg(name, descr, key) values ('End User', '', 'END');
+insert into tbl_user_role_reg(name, descr, key) values ('Administrator', '', 'ADMN');
+insert into tbl_user_role_reg(name, descr, key) values ('Health Personnel', '', 'HPNR');
+insert into tbl_user_role_reg(name, descr, key) values ('Student', '', 'STUD');
+insert into tbl_user_role_reg(name, descr, key) values ('Health or public worker', '', 'ANST');
+
+insert into tbl_user_role(user_id, user_role_id) values (2, 4);
+insert into tbl_user_role(user_id, user_role_id) values (2, 5);
+insert into tbl_user_role(user_id, user_role_id) values (3, 3);
+
+
+-- EXTRA: NOT NEEDED! FIX STUPID ERROR ABOVE!
+update tbl_org_unit set org_type_id = 1;
