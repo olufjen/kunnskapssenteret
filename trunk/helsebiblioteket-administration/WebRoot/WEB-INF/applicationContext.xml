@@ -35,7 +35,7 @@
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 
-	<bean id="organizationDao" class="no.helsebiblioteket.admin.dao.MockJdbcOrganizationDao">
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.dao.JdbcOrganizationDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 

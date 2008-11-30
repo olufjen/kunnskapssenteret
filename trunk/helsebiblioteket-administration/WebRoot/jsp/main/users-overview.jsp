@@ -19,7 +19,7 @@
       <td> <h:outputText value="#{msg_main.user_overview_limit_roles}" /> </td>
       <td>
         <h:selectManyCheckbox value="#{userBean.selectedRoles}" layout="pageDirection" binding="#{userBean.rolesManyCheckbox}">
-		  <f:selectItems value="#{userBean.availableRoles}"/>
+        	<f:selectItems value="#{userBean.availableRoles}"/>
 		</h:selectManyCheckbox>
       </td>
     </tr>
@@ -65,7 +65,7 @@
     <h:column id="changeColumn">
       <f:facet name="header" />
 		<h:commandLink value="#{msg_main.user_overview_change}"
-			action="#{userBean.actionChange}" immediate="true">
+			action="#{userBean.actionEdit}" immediate="true">
 			<!--<f:param name="userId" value="#{user.id}" />-->
 		</h:commandLink>
     </h:column>
