@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -7,18 +8,27 @@ public class User {
 	protected String username = null;
 	protected String password = null;
 	protected Organization organization = null;
-	protected List<Role> roleList = null;
+	// FIXME: Set this in UserDAO or service!
+	protected List<Role> roleList = new ArrayList<Role>();
 	protected List<Access> accessList = null;
 	private Person person;
 //	public String getName(){
 //		// FIXME: Remove this!
 //		return "Name " + this.username;
 //	}
+	public boolean hasRole(Role someRole){
+		for (Role role : this.roleList) {
+			if(role.getKey().equals(someRole.getKey())){return true;}
+		}
+		return false;
+	}
 	public String getRoleText(){
 		// TODO: Remove this?
 		StringBuffer result = new StringBuffer();
-		for (Role role : this.roleList) {
-			result.append(role.getRoleName() + " ");
+		for (int i=0; i<this.roleList.size(); i++) {
+			Role role = this.roleList.get(i);
+			result.append(role.getRoleName());
+			if(i < this.roleList.size() - 1) { result.append(", "); }
 		}
 		return result.toString();
 	}

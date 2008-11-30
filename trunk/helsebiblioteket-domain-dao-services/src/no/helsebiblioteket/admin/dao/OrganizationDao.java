@@ -15,7 +15,7 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 
 public interface OrganizationDao {
-	public List<Organization> getOrganizationList();
+	public List<Organization> getAllOrganizations();
 	public Organization getOrganization(Integer organizationId);
 	public List<Contract> getContractList(OrganizationType organizationType);
 	public List<SupplierOrganization> getSupplierList();

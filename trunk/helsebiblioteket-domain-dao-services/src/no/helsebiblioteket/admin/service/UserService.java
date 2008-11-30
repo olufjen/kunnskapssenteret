@@ -8,13 +8,17 @@ package no.helsebiblioteket.admin.service;
 import java.io.Serializable;
 import java.util.List;
 
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.request.PageRequest;
+import no.helsebiblioteket.admin.request.PageResult;
 
 public interface UserService extends Serializable {
 	public void createUser(User user);
 	public User findUserByUsername(User user);
-	public List<User> findUsersBySearchStringRoles(String searchString, List<Role> roles);
-	public List<User> getAllUsers();
+	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request);
+	public PageResult<User> getAllUsers(PageRequest<User> request);
 	public List<Role> getAllUserRoles();
+	public List<Position> getAllUserPositions();
 }
