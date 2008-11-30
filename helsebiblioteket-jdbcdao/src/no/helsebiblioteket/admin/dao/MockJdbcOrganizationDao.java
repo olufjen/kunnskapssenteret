@@ -20,7 +20,7 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
 
-	public List<Organization> getOrganizationList() {
+	public List<Organization> getAllOrganizations() {
 		logger.debug("Mock: fetching all organization types");
 
         List<Organization> orgs = new ArrayList<Organization>();

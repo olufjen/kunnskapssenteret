@@ -3,7 +3,9 @@ package no.helsebiblioteket.admin.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
@@ -36,9 +38,22 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
 	public List<User> getAllUsers() {
         logger.info("fetching all users");
         List<User> users = getSimpleJdbcTemplate().query(
-                "select user_id, username, password, tbl_person.person_id, first_name, last_name from tbl_user inner join tbl_person on tbl_user.person_id = tbl_person.person_id", 
-                new UserPersonMapper());
-        return users;
+                "select tbl_user.user_id, username, tbl_user.org_unit_id, password, tbl_person.person_id, first_name, last_name, "+
+                "tbl_user_role.user_role_id, tbl_user_role_reg.name as role_name, tbl_user_role_reg.key, tbl_org_unit.name as org_name " +
+                "from tbl_user " +
+                "left outer join tbl_person on tbl_user.person_id = tbl_person.person_id " +
+                "left outer join tbl_user_role on tbl_user.user_id = tbl_user_role.user_id " +
+                "left outer join tbl_user_role_reg on tbl_user_role.user_role_id = tbl_user_role_reg.user_role_id " +
+                "left outer join tbl_org_unit on tbl_org_unit.org_unit_id = tbl_user.org_unit_id ",
+                new UserPersonRoleOrgMapper());
+        // FIXME: Only include users once!
+        Map<String, User> userMap = new HashMap<String, User>();
+        List<User> uniqueUsers = new ArrayList<User>();
+        for (User user : users) {
+        	if(userMap.containsKey(""+user.getId())) { userMap.get(""+user.getId()).getRoleList().addAll(user.getRoleList()); }
+        	else { userMap.put(""+user.getId(), user); uniqueUsers.add(user); }
+		}
+        return uniqueUsers;
     }
 
     public void createUser(User user) {
@@ -57,8 +72,11 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
 		List<User> all = this.getAllUsers();
 		List<User> some = new ArrayList<User>();
 		for (User user : all) {
-			if(user.getPerson().getName().toLowerCase().contains(name.toLowerCase())){
-				some.add(user);
+			if(user.getPerson().getName().toLowerCase().contains(name.toLowerCase()) ||
+					user.getUsername().toLowerCase().contains(name.toLowerCase())){
+				for (Role role : roles) {
+					if(user.hasRole(role)) { some.add(user); break; }
+				}
 			}
 		}
 		return some;
@@ -76,14 +94,26 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
             return user;
         }
     }
-    private static class UserPersonMapper extends UserMapper implements ParameterizedRowMapper<User> {
+    private static class UserPersonRoleOrgMapper extends UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = super.mapRow(rs, rowNum);
+            user.getOrganization().setName(rs.getString("org_name"));
             Person person = new Person();
             person.setFirstName(rs.getString("first_name"));
             person.setLastName(rs.getString("last_name"));
             person.setId(rs.getInt("person_id"));
             user.setPerson(person);
+            
+            Role role = new Role();
+            role.setKey(rs.getString("key"));
+            role.setRoleName(rs.getString("role_name"));
+            role.setRoleId(rs.getInt("user_role_id"));
+            List<Role> roleList = new ArrayList<Role>();
+            roleList.add(role);
+            user.setRoleList(roleList);
+            
+//             
+
             return user;
         }
     }
