@@ -27,7 +27,7 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 	public OrganizationType getOrganizationType(Integer organizationTypeId) {
 		logger.info("fetching all organization types");
         List<OrganizationType> orgTypes = getSimpleJdbcTemplate().query(
-		        "org_type_id, descs, name, key from tbl_org_type_reg", 
+		        "select org_type_id, descr, name, key from tbl_org_type_reg", 
 		        new OrgTypeMapper());
 		return (orgTypes != null && orgTypes.size() == 0 ? orgTypes.get(0) : null);
 	}

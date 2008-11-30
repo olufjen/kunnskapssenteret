@@ -2,7 +2,10 @@ package no.helsebiblioteket.admin.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,18 +19,14 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 
 public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements OrganizationDao {
-
-    /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
-
-	public List<Organization> getOrganizationList() {
-		logger.info("fetching all organization types");
-        List<Organization> orgs = getSimpleJdbcTemplate().query(
-		        "org_unit_id, org_unit_parent_id, name, name_short, descr, org_type_id from tbl_org_unit", 
-		        new OrgMapper());
+	public List<Organization> getAllOrganizations() {
+		logger.info("fetching all organizations");
+		List<Organization> orgs = getSimpleJdbcTemplate().query(
+				"select org_unit_id, name, descr, name_short, org_type_key, org_unit_parent_id, org_type_id from tbl_org_unit",
+                new OrgMapper());
         return orgs;
 	}
-
 	public Organization getOrganization(Integer organizationId) {
 		List<Organization> orgs = getSimpleJdbcTemplate().query(
 		        "org_unit_id, org_unit_parent_id, name, name_short, descr, org_type_id from tbl_org_unit where org_unit_id = :org_unit_id", 
@@ -36,7 +35,6 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
 		        );
 		return (orgs != null && orgs.size() == 1) ? orgs.get(0) : null;
 	}
-	
 	public List<Contract> getContractList(OrganizationType organizationType) {
 		List<Contract> orgs = getSimpleJdbcTemplate().query(
 		        "org_unit_contract_id, org_unit_customer_id, org_unit_supplier_id, org_type_id from tbl_org_unit_contract where org_type_id = :org_type_id", 
@@ -45,7 +43,6 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
 		        );
 		return orgs;
 	}
-	
 	private static class ContractMapper implements ParameterizedRowMapper<Contract> {
         public Contract mapRow(ResultSet rs, int rowNum) throws SQLException {
             Contract contract = new Contract();
@@ -57,22 +54,24 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
             return contract;
         }
     }
-	
 	private static class OrgMapper implements ParameterizedRowMapper<Organization> {
         public Organization mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	//select org_unit_id, name, descr, name_short, org_type_key, org_unit_parent_id from tbl_org_unit
             Organization org = new Organization();
             org.setId(rs.getInt("org_unit_id"));
-            // traverse upwards and set parents until root is reached
-            org.setParentOrganization((rs.getObject("org_unit_parent_id") != null) ? (new JdbcOrganizationDao().getOrganization(rs.getInt("org_unit_parent_id"))) : null);
-            org.setDescription(rs.getString("descr"));
             org.setName(rs.getString("name"));
+            org.setDescription(rs.getString("descr"));
             org.setNameShort(rs.getString("name_short"));
-            org.setType(new JdbcOrganizationTypeDao().getOrganizationType(rs.getInt("org_type_id")));
+            
+            // TODO: Is this the right way to do this!
+            // traverse upwards and set parents until root is reached
+//            org.setParentOrganization((rs.getObject("org_unit_parent_id") != null) ? (new JdbcOrganizationDao().getOrganization(rs.getInt("org_unit_parent_id"))) : null);
+            // TODO: Is this the right way to do this!
+            // Set the Org Type
+            //org.setType(new JdbcOrganizationTypeDao().getOrganizationType(rs.getInt("org_type_id")));
             return org;
         }
     }
-
-	@Override
 	public List<SupplierOrganization> getSupplierList() {
 		// TODO Auto-generated method stub
 		return null;
