@@ -37,6 +37,6 @@
 		rendered="#{loginBean.failed}"
 		styleClass="RED"/>
 	<br/>
-	<h:commandButton value="Logg inn" action="#{loginBean.login}" />
-    <h:commandLink value="#{msg_main.forgotten_password_link}" action="#{loginBean.actionForgottenPassword}" />
+	<h:commandButton value="#{msg_main.login_button}" action="#{loginBean.login}" />
+    <h:commandLink value="#{msg_main.forgotten_password_link}" action="#{loginBean.actionForgottenPassword}" immediate="true"/>
 </h:form>

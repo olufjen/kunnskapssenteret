@@ -65,9 +65,25 @@
 			<to-view-id>/new-memberorganization.faces</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
-		<!-- TODO: Use this? <from-view-id>user-new.tiles</from-view-id>-->
+		<!-- TODO: Use this? <from-view-id>/organizations-overview.tiles</from-view-id>-->
+		<navigation-case>
+			<from-outcome>organizations_overview</from-outcome>
+			<to-view-id>/organizations-overview.faces</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>organization_details</from-outcome>
+			<to-view-id>/organization-details.faces</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>organization_edit</from-outcome>
+			<to-view-id>/organization-edit.faces</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<navigation-rule>
+		<!-- TODO: Use this? <from-view-id>/user-new.tiles</from-view-id>-->
 		<navigation-case>
 			<from-outcome>create-enduser</from-outcome>
 			<to-view-id>/new-enduser.faces</to-view-id>
@@ -80,6 +96,14 @@
 			<from-outcome>users_overview</from-outcome>
 			<to-view-id>/users-overview.faces</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>user_details</from-outcome>
+			<to-view-id>/user-details.faces</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>user_edit</from-outcome>
+			<to-view-id>/user-edit.faces</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
@@ -87,13 +111,12 @@
 		<!-- <from-view-id>/forgotten-password.tiles</from-view-id> -->
 		<navigation-case>
 			<from-outcome>send_email_success</from-outcome>
-			<to-view-id>/forgotten-password-sent.tiles</to-view-id>
+			<to-view-id>/forgotten-password-sent.faces</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>goto_forgotten</from-outcome>
-			<to-view-id>/forgotten-password.tiles</to-view-id>
+			<to-view-id>/forgotten-password.faces</to-view-id>
 		</navigation-case>
-		
 	</navigation-rule>
 
 	<navigation-rule>
@@ -119,12 +142,10 @@
     		<property-name>userService</property-name>
         	<value>#{userService}</value>
 		</managed-property>
-		<!--
 		<managed-property>
-            <property-name>userId</property-name>
-            <value>#{param.userId}</value>
+            <property-name>organizationService</property-name>
+            <value>#{organizationService}</value>
         </managed-property>
-        -->
 	</managed-bean> 
 	
 	<managed-bean>
@@ -226,6 +247,10 @@
         <managed-bean-name>organizationBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.OrganizationBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+    		<property-name>organizationService</property-name>
+        	<value>#{organizationService}</value>
+		</managed-property>
 	</managed-bean>
 	  
 	<!-- <managed-bean>
