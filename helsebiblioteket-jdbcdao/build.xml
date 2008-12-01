@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
 <project name="helsebiblioteket-jdbcdao" basedir="." default="usage">
-    <property file="build.properties"/>
-	
-    <property name="lib.dir" value="${project.home.dir}/lib"/>
+			
+	<property file="build.properties"/>
+	<property name="lib.dir" value="${project.home.dir}/lib"/>
 	<property name="project.src.dir" value="${project.home.dir}/src"/>
 	<property name="project.build.dir" value="${project.home.dir}/build"/>
 	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
-	<property name="project.build.lib.dir" value="${project.build.dir}/lib"/>
 	<property name="project.target.dir" value="${project.home.dir}/target"/>
 	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
+	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services.dir}/target"/>
 	<property name="helsebiblioteket-domain.target.filename" value="${helsebiblioteket-domain.name}-${helsebiblioteket-domain.version}.jar"/>
 
     <path id="master-classpath">
     	<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
             <include name="*.jar"/>
         </fileset>
-    	<fileset dir="${project.build.lib.dir}">
+    	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
             <include name="*.jar"/>
         </fileset>
     </path>
@@ -45,11 +45,7 @@
 	</target>
 	
 	<target name="import-lib" >
-		<copy todir="${project.build.lib.dir}">
-			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" >
-				<filename name="${helsebiblioteket-domain.target.filename}"/>
-			</fileset>
-		</copy>
+		<ant dir="${helsebiblioteket-domain-dao-services.dir}" inheritAll="false" target="package"/>
 	</target>
 	
 	<target name="build" description="Compile main source tree java files" depends="import-lib">
@@ -85,6 +81,7 @@
             </fileset>
         </delete>
     </target>
+
 	<target name="clean-target" description="Clean target directory">
         <delete includeemptydirs="true">
         	<fileset dir="${project.target.dir}">
