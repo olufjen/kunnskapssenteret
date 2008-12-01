@@ -44,11 +44,11 @@
 		<echo message="kunnskapssenteret.common.lib: ${kunnskapssenteret.common.lib}" />
 	</target>
 	
-	<target name="import-lib" >
+	<target name="prepare-dependencies" description="Compile main source tree java files">
 		<ant dir="${helsebiblioteket-domain-dao-services.dir}" inheritAll="false" target="package"/>
 	</target>
 	
-	<target name="build" description="Compile main source tree java files" depends="import-lib">
+	<target name="build" description="Compile main source tree java files" depends="prepare-dependencies">
 		<mkdir dir="${project.build.dir}"/>
 		<mkdir dir="${project.classes.dir}"/>
         <javac 
