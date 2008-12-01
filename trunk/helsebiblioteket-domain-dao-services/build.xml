@@ -2,14 +2,18 @@
 
 <project name="helsebiblioteket-domain-dao-services" basedir="." default="usage">
     <property file="build.properties"/>
-	<property name="lib.folder" value="../helsebiblioteket-common-lib/lib"/>
-	<property name="admin-web-lib.folder" value="../helsebiblioteket-administration-web/lib"/>
+	<!-- TODO: Remove! -->
+	<!--<property name="lib.folder" value="../helsebiblioteket-common-lib/lib"/>-->
+	<property name="admin-web-lib.dir" value="../helsebiblioteket-administration-web/lib"/>
+	<property name="project.src" value="${project.home}/src"/>
+	<property name="project.build.dir" value="${project.home}/build"/>
+	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
+	<property name="project.target.dir" value="${project.home}/target"/>
+	<property name="project.target.filename" value="${name}-${project.version}.jar"/>
+
 	
     <path id="master-classpath">
-    	<fileset dir="${lib.folder}">
-            <include name="**/*.jar"/>
-        </fileset>
-    	<fileset dir="${admin-web-lib.folder}">
+    	<fileset dir="${admin-web-lib.dir}">
     		<include name="**/*.jar"/>
     	</fileset>
     </path>
@@ -40,8 +44,9 @@
     
 	<target name="build" description="Compile main source tree java files">
 		<mkdir dir="${project.build.dir}"/>
+		<mkdir dir="${project.classes.dir}"/>
         <javac 
-        	destdir="${project.classes}" source="1.5" target="1.5" debug="true"
+        	destdir="${project.classes.dir}" source="1.5" target="1.5" debug="true"
             deprecation="false" optimize="false" failonerror="true">
             <src path="${project.src}"/>
             <classpath refid="master-classpath"/>
@@ -61,15 +66,15 @@
 		<mkdir dir="${project.target.dir}"/>
 		<jar 
 			destfile="${project.target.dir}\${project.target.filename}"
-			basedir="${project.classes}"
+			basedir="${project.classes.dir}"
 		/>
 	</target>
 
 	<target name="clean" description="Clean output directories">
-        <delete>
-            <fileset dir="${project.build.dir}">
-                <include name="**/*.class"/>
-            </fileset>
+        <delete includeemptydirs="true">
+            <fileset dir="${project.build.dir}" >
+            	<include name="**/*"/>
+        	</fileset>
         	<fileset dir="${project.target.dir}">
                 <include name="**/*.jar"/>
             </fileset>

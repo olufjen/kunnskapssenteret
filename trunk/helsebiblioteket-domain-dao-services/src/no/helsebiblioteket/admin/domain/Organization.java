@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.domain;
 
-import java.net.InetAddress;
 import java.util.List;
 
 public class Organization {
