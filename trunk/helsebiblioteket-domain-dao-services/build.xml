@@ -4,7 +4,6 @@
     <property file="build.properties"/>
 	<!-- TODO: Remove! -->
 	<!--<property name="lib.folder" value="../helsebiblioteket-common-lib/lib"/>-->
-	<property name="admin-web-lib.dir" value="../helsebiblioteket-administration-web/lib"/>
 	<property name="project.src" value="${project.home}/src"/>
 	<property name="project.build.dir" value="${project.home}/build"/>
 	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
@@ -75,9 +74,13 @@
             <fileset dir="${project.build.dir}" >
             	<include name="**/*"/>
         	</fileset>
-        	<fileset dir="${project.target.dir}">
+        </delete>
+	</target>
+	<target name="clean-target" description="Clean target directory">
+		<delete includeemptydirs="true">
+			<fileset dir="${project.target.dir}">
                 <include name="**/*.jar"/>
             </fileset>
-        </delete>
-    </target>
+       </delete>
+	</target>
 </project>
