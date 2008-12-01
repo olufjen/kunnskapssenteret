@@ -79,19 +79,19 @@ public class LoginBean {
 	}
 	public void validatePassword(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
 		// FIXME: This must go!
-		this.logger.error("email: " + email);
-		if(this.getEmail() == null || this.getPassword() != null) { return; }
-		User user = new User();
-		user.setUsername(this.getEmail());
-		user.setPassword(this.getPassword());
-		if(this.loginService.logInUser(user) == null){
-			UIInput passwordInput = (UIInput) component;
-			String msgId = "login_unknown_user";
-			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
-			FacesMessage message = new FacesMessage(bundle.getString(msgId));
-			facesContext.addMessage(passwordInput.getClientId(facesContext), message);
-			throw new ValidatorException(message);
-		}
+//		this.logger.error("email: " + email);
+//		if(this.getEmail() == null || this.getPassword() != null) { return; }
+//		User user = new User();
+//		user.setUsername(this.getEmail());
+//		user.setPassword(this.getPassword());
+//		if(this.loginService.logInUser(user) == null){
+//			UIInput passwordInput = (UIInput) component;
+//			String msgId = "login_unknown_user";
+//			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+//			FacesMessage message = new FacesMessage(bundle.getString(msgId));
+//			facesContext.addMessage(passwordInput.getClientId(facesContext), message);
+//			throw new ValidatorException(message);
+//		}
 	}
 	public String getEmail() {
 		return email;

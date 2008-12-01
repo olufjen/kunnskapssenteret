@@ -7,8 +7,7 @@
 
 <h:outputText value="#{msg_main.user_details_cannot_show}"  rendered="#{userBean.cannotShowUser}" />
 <h:outputText value="#{userBean.userRole}" rendered="#{userBean.cannotShowUser}" />
-
-
+<h:form>
 <f:subview id="canShowUser" rendered="#{userBean.canShowUser}">
 	<table>
 		<tr>
@@ -62,6 +61,10 @@
 			<td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
 			<td><h:outputText value="#{userBean.user.roleText}"/></td>
 		</tr>
-
+		<tr>
+			<td></td>
+			<td><h:commandLink value="#{msg_main.user_overview_change}" action="#{userBean.actionEditSingle}" immediate="true"/></td>
+		</tr>
 	</table>
 </f:subview>
+</h:form>

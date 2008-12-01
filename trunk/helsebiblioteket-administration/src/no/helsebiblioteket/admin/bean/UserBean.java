@@ -42,6 +42,7 @@ public class UserBean {
     public boolean getCannotShowUser(){ return false; }
     public boolean getCanShowUser(){ return true; }
     public String actionEdit(){ this.user = (User) this.usersTable.getRowData(); return "user_edit"; }
+    public String actionEditSingle(){ return "user_edit"; }
     public String getUserRole(){
     	if(this.user != null && this.user.getRoleList().size()>0) {
     		return this.user.getRoleList().get(0).getRoleName();
