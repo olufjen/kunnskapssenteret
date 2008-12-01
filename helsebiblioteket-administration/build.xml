@@ -9,8 +9,8 @@
 	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
 	<property name="project.web.dir" value="${project.home.dir}/WebRoot"/>
 	<property name="project.build.web.dir" value="${project.build.dir}/WebRoot"/>
-    <property name="project.build.web.classes.dir" value="${project.web.dir}/WEB-INF/classes"/>
-    <property name="project.build.web.lib.dir" value="${project.web.dir}/WEB-INF/lib"/>
+    <property name="project.build.web.classes.dir" value="${project.build.web.dir}/WEB-INF/classes"/>
+    <property name="project.build.web.lib.dir" value="${project.build.web.dir}/WEB-INF/lib"/>
 	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
 	<property name="project.target.dir" value="${project.home.dir}/target"/>
 
@@ -24,7 +24,7 @@
         <fileset dir="${project.lib.dir}">
             <include name="*.jar"/>
         </fileset>
-        <pathelement path="${helsebiblioteket-domain-dao-services-target.dir}"/>
+    	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="*.jar"/>
         <pathelement path="${test.dir}"/>
 
     	<!-- We need the servlet API classes: -->
@@ -110,7 +110,7 @@
     </target>
 
     <target name="undeploy" description="Un-Deploy application">
-        <delete> <fileset dir="${deploy.path}/${project.name}" includes="**/*.*"/> </delete>
+        <delete includeemptydirs="true"> <fileset dir="${deploy.path}/${project.name}" includes="**/*"/> </delete>
     </target>
     
         
@@ -233,7 +233,7 @@
     <path id="catalina-ant-classpath">
         <!-- We need the Catalina jars for Tomcat -->
         <!--  * for other app servers - check the docs -->
-        <fileset dir="${appserver.lib}">
+        <fileset dir="${appserver.lib.dir}">
             <include name="catalina-ant.jar"/>
         </fileset>
     </path>
