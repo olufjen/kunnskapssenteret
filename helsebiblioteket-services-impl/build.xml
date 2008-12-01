@@ -1,30 +1,43 @@
 <?xml version="1.0"?>
-
 <!-- 
 	TODO: add targets for webservice-generation
 	TODO: add target for war-deployment
 -->
-
-
 <project name="helsebiblioteket-services-impl" basedir="." default="usage">
     <property file="build.properties"/>
-	<property name="admin-web-lib.dir" value="../helsebiblioteket-administration-web/lib"/>
 	
+	<property name="project.src.dir" value="${project.home.dir}/src"/>
+	<property name="project.build.dir" value="${project.home.dir}/build"/>
+	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
+	<property name="project.target.dir" value="${project.home.dir}/target"/>
+	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
+	<property name="project.lib.dir" value="${project.home.dir}/lib"/>
+	<property name="helsebiblioteket-administration-web-lib.dir" value="${helsebiblioteket-administration-web-home.dir}/lib"/>
+	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
+	<!-- Web Services -->
+	<property name="webservices.build.dir" value="${project.build.dir}/webservices"/>
+	<property name="webservices.classes.dir" value="${webservices.build.dir}/classes" />
+	<property name="webservices.classes.lib.dir" value="${webservices.classes.dir}/lib" />
+	<property name="webservices.metainf.dir" value="${webservices.classes.dir}/META-INF" />
+	<property name="webservices.tomcat.services.dir" value="${webservices.tomcat.dir}/services" />
+	<property name="webservices.tomcat.lib.dir" value="${webservices.tomcat.dir}/lib" />
+	<property name="webservices.target.dir" value="${project.home.dir}/target"/>
+	<property name="webservices.target.filename" value="${webservices.servicename}-${webservices.serviceversion}.aar"/>
 	
     <path id="master-classpath">
-    	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
+    	<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
             <include name="*.jar"/>
         </fileset>
-    	<fileset dir="${lib.dir}">
+    	<fileset dir="${project.lib.dir}">
             <include name="*.jar"/>
         </fileset>
-       	<fileset dir="${admin-web-lib.dir}">
-        	<include name="*.jar"/>
+    	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
+            <include name="*.jar"/>
         </fileset>
     </path>
 	
 	<path id="master-sourcedir">
-    	<fileset dir="${project.src}">
+    	<fileset dir="${project.src.dir}">
             <include name="*.java"/>
         </fileset>
     </path>
@@ -45,24 +58,24 @@
 	<target name="echo-debug-params">
 		<echo message="kunnskapssenteret.common.lib: ${kunnskapssenteret.common.lib}" />
 	</target>
-	
-    
-	<target name="build" description="Compile main source tree java files">
+
+	<target name="prepare-dependencies" description="Compile main source tree java files">
+		<ant dir="${helsebiblioteket-domain-dao-services-home.dir}" inheritAll="false" target="package"/>
+	</target>
+
+	<target name="build" description="Compile main source tree java files" depends="prepare-dependencies">
 		<mkdir dir="${project.build.dir}"/>
+		<mkdir dir="${project.classes.dir}"/>
         <javac 
-        	destdir="${project.classes}" source="1.5" target="1.5" debug="true"
+        	destdir="${project.classes.dir}" source="1.5" target="1.5" debug="true"
             deprecation="false" optimize="false" failonerror="true">
-            <src path="${project.src}"/>
+            <src path="${project.src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
         
         <!-- Separate copy-target to make sure property files are included -->
-		<copy 
-			todir="${project.build.dir}">
-			<fileset 
-				dir="${project.src}"
-				excludes="**/*.java"
-			/>
+		<copy todir="${project.classes.dir}">
+			<fileset  dir="${project.src.dir}" excludes="**/*.java" />
 		</copy>
 	</target>
 	
@@ -70,37 +83,30 @@
 		<mkdir dir="${project.target.dir}"/>
 		<jar 
 			destfile="${project.target.dir}\${project.target.filename}"
-			basedir="${project.classes}"
-		/>
+			basedir="${project.classes.dir}"/>
 	</target>
 
 	<target name="clean" description="Clean output directories">
-        <delete>
+        <delete includeemptydirs="true">
             <fileset dir="${project.build.dir}">
-                <include name="**/*.class"/>
-            </fileset>
-        	<fileset dir="${project.target.dir}">
-                <include name="**/*.jar"/>
+                <include name="**/*"/>
             </fileset>
         </delete>
     </target>
-
-
+	<target name="clean-target" description="Clean output directories">
+		<delete includeemptydirs="true">
+	       	<fileset dir="${project.target.dir}">
+				<include name="**/*.jar"/>
+            </fileset>
+        </delete>
+    </target>
 	
-	
-	
-	<!-- Web Services -->
-	<property name="webservices.classes.dir" value="${webservices.build.dir}/classes" />
-	<property name="webservices.metainf.dir" value="${webservices.classes.dir}/META-INF" />
-	<property name="webservices.tomcat.services.dir" value="${webservices.tomcat.dir}/services" />
-	<property name="webservices.tomcat.lib.dir" value="${webservices.tomcat.dir}/lib" />
 	
 	<path id="webservices.classpath">
-		<fileset dir="../helsebiblioteket-common-lib/lib">
+		<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
 			<include name="*.jar" />
 		</fileset>
-		<!--add downloaded spring jars to classpath -->
-		<fileset dir="../pojoguidespring/src/lib">
+		<fileset dir="${project.lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
@@ -108,41 +114,41 @@
 	<target name="generate-service" depends="">
 		<mkdir dir="${webservices.build.dir}" />
 		<mkdir dir="${webservices.classes.dir}" />
-		<mkdir dir="${webservices.classes.dir}/lib" />
+		<mkdir dir="${webservices.classes.lib.dir}" />
 		<mkdir dir="${webservices.metainf.dir}" />
 
 		<copy file="desc/services.xml" tofile="${webservices.metainf.dir}/services.xml" overwrite="true" />
 		<copy file="desc/applicationContext.xml" tofile="${webservices.classes.dir}/applicationContext.xml" overwrite="true" />
 
 
-<!--
+		<!-- TODO: Include jars in aar-file
 		<copy file="../helsebiblioteket-domain-dao-services/target/helsebiblioteket-domain-dao-services-1.0.jar"
 			tofile="${webservices.classes.dir}/lib/helsebiblioteket-domain-dao-services-1.0.jar" overwrite="true" />
--->
+		-->
 		
-		<javac debug="on" srcdir="src" destdir="${webservices.classes.dir}" includes="*/**">
+		<javac debug="on" srcdir="${project.src.dir}" destdir="${webservices.classes.dir}" includes="*/**">
 			<classpath refid="webservices.classpath" />
-			<classpath refid="master-classpath" />
 		</javac>
 
-		<jar basedir="${webservices.classes.dir}" destfile="${webservices.build.dir}/${webservices.servicename}.aar" />
-
-		<!--
-		<copy file="${webservices.build.dir}/${webservices.servicename}.aar"
-			tofile="${repository.path}/services/${service-name}.aar" overwrite="true" />
-		-->
+		<jar basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}" />
 	</target>
 	
 	<target name="deploy-service" depends="generate-service">
-		<copy file="${webservices.build.dir}/${webservices.servicename}.aar" todir="${webservices.tomcat.services.dir}" />
-		<copy file="../helsebiblioteket-domain-dao-services/target/helsebiblioteket-domain-dao-services-1.0.jar"
-			todir="${webservices.tomcat.lib.dir}" />
+		<copy file="${webservices.target.dir}/${webservices.target.filename}" todir="${webservices.tomcat.services.dir}" />
 		<copy todir="${webservices.tomcat.lib.dir}">
-			<fileset dir="../helsebiblioteket-common-lib/lib/">
+			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
+				<include name="*.jar"/>
+			</fileset>
+		</copy>
+		<!-- TODO: Only copy neccessary files! -->
+		<copy todir="${webservices.tomcat.lib.dir}">
+			<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${project.lib.dir}">
 				<include name="*.jar" />
 			</fileset>
 		</copy>
 	</target>
-
 
 </project>
