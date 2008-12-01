@@ -53,7 +53,14 @@
         <echo message=""/>
     </target>
 
-    <target name="build" description="Compile main source tree java files">
+	<target name="prepare-dependencies" description="Compile main source tree java files">
+		<ant dir="${helsebiblioteket-domain-dao-services-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-jdbc-dao-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-services-impl.dir}" inheritAll="false" target="package"/>
+	</target>
+
+
+    <target name="build" description="Compile main source tree java files" depends="prepare-dependencies">
         <mkdir dir="${project.build.dir}"/>
     	<mkdir dir="${project.classes.dir}"/>
     	<mkdir dir="${project.build.web.dir}"/>
