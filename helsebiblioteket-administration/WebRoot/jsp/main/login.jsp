@@ -14,8 +14,7 @@
 			</td>
 			<td>
 				<h:inputText value="#{loginBean.email}"
-					id="email" required="true"
-					validator="#{loginBean.validateEmail}" />
+					id="email" required="true" />
 				<h:message for="email" styleClass="RED"/>
 			</td>
 		</tr>
