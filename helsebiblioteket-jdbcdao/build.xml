@@ -3,23 +3,26 @@
 <project name="helsebiblioteket-jdbcdao" basedir="." default="usage">
     <property file="build.properties"/>
 	
+    <property name="lib.dir" value="${project.home.dir}/lib"/>
+	<property name="project.src.dir" value="${project.home.dir}/src"/>
+	<property name="project.build.dir" value="${project.home.dir}/build"/>
+	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
+	<property name="project.build.lib.dir" value="${project.build.dir}/lib"/>
+	<property name="project.target.dir" value="${project.home.dir}/target"/>
+	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
+	<property name="helsebiblioteket-domain.target.filename" value="${helsebiblioteket-domain.name}-${helsebiblioteket-domain.version}.jar"/>
+
     <path id="master-classpath">
-    	<fileset dir="${helsebiblioteket-common-lib.dir}">
-            <include name="*.jar"/>
-        </fileset>
-    	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
-            <include name="*.jar"/>
-        </fileset>
     	<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
             <include name="*.jar"/>
         </fileset>
-    	<fileset dir="${lib.dir}">
+    	<fileset dir="${project.build.lib.dir}">
             <include name="*.jar"/>
         </fileset>
     </path>
 	
 	<path id="master-sourcedir">
-    	<fileset dir="${project.src}">
+    	<fileset dir="${project.src.dir}">
             <include name="*.java"/>
         </fileset>
     </path>
@@ -41,23 +44,30 @@
 		<echo message="kunnskapssenteret.common.lib: ${kunnskapssenteret.common.lib}" />
 	</target>
 	
-    
-	<target name="build" description="Compile main source tree java files">
+	<target name="import-lib" >
+		<copy todir="${project.build.lib.dir}">
+			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" >
+				<filename name="${helsebiblioteket-domain.target.filename}"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="build" description="Compile main source tree java files" depends="import-lib">
 		<mkdir dir="${project.build.dir}"/>
+		<mkdir dir="${project.classes.dir}"/>
         <javac 
-        	destdir="${project.classes}" source="1.5" target="1.5" debug="true"
+        	destdir="${project.classes.dir}" source="1.5" target="1.5" debug="true"
             deprecation="false" optimize="false" failonerror="true">
-            <src path="${project.src}"/>
+            <src path="${project.src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
         
         <!-- Separate copy-target to make sure property files are included -->
 		<copy 
-			todir="${project.build.dir}">
+			todir="${project.classes.dir}">
 			<fileset 
-				dir="${project.src}"
-				excludes="**/*.java"
-			/>
+				dir="${project.src.dir}"
+				excludes="**/*.java" />
 		</copy>
 	</target>
 	
@@ -65,15 +75,18 @@
 		<mkdir dir="${project.target.dir}"/>
 		<jar 
 			destfile="${project.target.dir}\${project.target.filename}"
-			basedir="${project.classes}"
-		/>
+			basedir="${project.classes.dir}" />
 	</target>
 
 	<target name="clean" description="Clean output directories">
-        <delete>
+        <delete includeemptydirs="true">
             <fileset dir="${project.build.dir}">
-                <include name="**/*.class"/>
+                <include name="**/*"/>
             </fileset>
+        </delete>
+    </target>
+	<target name="clean-target" description="Clean target directory">
+        <delete includeemptydirs="true">
         	<fileset dir="${project.target.dir}">
                 <include name="**/*.jar"/>
             </fileset>
