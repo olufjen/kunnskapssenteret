@@ -3,24 +3,36 @@
 <project name="helsebiblioteket-administration-web" basedir="." default="usage">
     <property file="build.properties"/>
 
-    <property name="src.dir" value="src"/>
-    <property name="web.dir" value="WebRoot"/>
-    <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
-    <property name="name" value="helsebiblioteket-administration-web"/>
-	<property name="war-lib.dir" value="${web.dir}/WEB-INF/lib"/>
+    <property name="project.src.dir" value="${project.home.dir}/src"/>
+	<property name="project.lib.dir" value="${project.home.dir}/lib"/>
+	<property name="project.build.dir" value="${project.home.dir}/build"/>
+	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
+	<property name="project.web.dir" value="${project.home.dir}/WebRoot"/>
+	<property name="project.build.web.dir" value="${project.build.dir}/WebRoot"/>
+    <property name="project.build.web.classes.dir" value="${project.web.dir}/WEB-INF/classes"/>
+    <property name="project.build.web.lib.dir" value="${project.web.dir}/WEB-INF/lib"/>
+	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
+	<property name="project.target.dir" value="${project.home.dir}/target"/>
+
+	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
+	<property name="helsebiblioteket-jdbc-dao-target.dir" value="${helsebiblioteket-jdbc-dao-home.dir}/target"/>
+	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl.dir}/target"/>
+
+    <property name="test.dir" value="test"/>
 
     <path id="master-classpath">
-        <fileset dir="${war-lib.dir}">
+        <fileset dir="${project.lib.dir}">
             <include name="*.jar"/>
         </fileset>
-        <!-- We need the servlet API classes: -->
+        <pathelement path="${helsebiblioteket-domain-dao-services-target.dir}"/>
+        <pathelement path="${test.dir}"/>
+
+    	<!-- We need the servlet API classes: -->
         <!--  * for Tomcat 5/6 use servlet-api.jar -->
         <!--  * for other app servers - check the docs -->
-        <fileset dir="${appserver.lib}">
+        <fileset dir="${appserver.lib.dir}">
             <include name="servlet*.jar"/>
         </fileset>
-        <pathelement path="${build.dir}"/>
-        <pathelement path="${test.dir}"/>
     </path>
 
     <target name="usage">
@@ -42,43 +54,44 @@
     </target>
 
     <target name="build" description="Compile main source tree java files">
-    	<copy todir="${war-lib.dir}">
-			<fileset dir="${lib.dir}" />
-		</copy>
-    	<copy todir="${war-lib.dir}">
-			<fileset dir="${helsebiblioteket-jdbcdao-lib.dir}" />
-		</copy>
-    	<copy todir="${war-lib.dir}">
-			<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}" />
-		</copy>
-    	<copy todir="${war-lib.dir}">
-			<fileset dir="${helsebiblioteket-services-impl-lib.dir}" />
-		</copy>
-        <mkdir dir="${build.dir}"/>
-        <javac destdir="${build.dir}" source="1.5" target="1.5" debug="true"
+        <mkdir dir="${project.build.dir}"/>
+    	<mkdir dir="${project.classes.dir}"/>
+    	<mkdir dir="${project.build.web.dir}"/>
+    	<mkdir dir="${project.build.web.classes.dir}"/>
+    	<mkdir dir="${project.build.web.lib.dir}"/>
+
+    	<javac destdir="${project.classes.dir}" source="1.5" target="1.5" debug="true"
                deprecation="false" optimize="false" failonerror="true">
-            <src path="${src.dir}"/>
+            <src path="${project.src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
     	<!-- Separate copy-target to make sure property files are included -->
-		<copy 
-			todir="${build.dir}">
-			<fileset 
-				dir="${src.dir}"
-				excludes="**/*.java"
-			/>
+		<copy todir="${project.classes.dir}">
+			<fileset dir="${project.src.dir}" excludes="**/*.java"/>
+		</copy>
+
+		<copy todir="${project.build.web.dir}">
+			<fileset dir="${project.web.dir}"/>
+		</copy>
+		<copy todir="${project.build.web.classes.dir}">
+			<fileset dir="${project.classes.dir}"/>
+		</copy>
+    	<copy todir="${project.build.web.lib.dir}">
+			<fileset dir="${project.lib.dir}" includes="*.jar" />
+    		<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="*.jar"/>
+			<fileset dir="${helsebiblioteket-jdbc-dao-target.dir}" includes="*.jar"/>
+			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="*.jar"/>
 		</copy>
     </target>
 	
     <target name="deploy" depends="build" description="Deploy application">
-        <copy todir="${deploy.path}/${name}" preservelastmodified="true">
-            <fileset dir="${web.dir}">
-                <include name="**/*.*"/>
-            </fileset>
+        <copy todir="${deploy.path}/${project.name}" preservelastmodified="true">
+            <fileset dir="${project.build.web.dir}"><include name="**/*.*"/></fileset>
         </copy>
     </target>
 
     <target name="deploywar" depends="build" description="Deploy application as a WAR file">
+    	<!-- TODO: Fix this! -->
         <war destfile="${name}.war"
              webxml="${web.dir}/WEB-INF/web.xml">
             <fileset dir="${web.dir}">
@@ -93,24 +106,16 @@
     </target>
 
     <target name="clean" description="Clean output directories">
-        <delete>
-            <fileset dir="${build.dir}">
-                <include name="**/*.class"/>
-            </fileset>
-        </delete>
+        <delete includeemptydirs="true"> <fileset dir="${project.build.dir}" includes="**/*"/> </delete>
     </target>
 
     <target name="undeploy" description="Un-Deploy application">
-        <delete>
-            <fileset dir="${deploy.path}/${name}">
-                <include name="**/*.*"/>
-            </fileset>
-        </delete>
+        <delete> <fileset dir="${deploy.path}/${project.name}" includes="**/*.*"/> </delete>
     </target>
     
-    <property name="test.dir" value="test"/>
         
     <target name="buildtests" description="Compile test tree java files">
+    	<!-- TODO: Fix this -->
         <mkdir dir="${build.dir}"/>
         <javac destdir="${build.dir}" source="1.5" target="1.5" debug="true"
             deprecation="false" optimize="false" failonerror="true">
