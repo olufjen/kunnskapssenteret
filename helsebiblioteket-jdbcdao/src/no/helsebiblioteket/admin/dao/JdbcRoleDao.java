@@ -25,7 +25,7 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao {
         public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
         	Role role = new Role();
             role.setRoleId(rs.getInt("user_role_id"));
-            role.setRoleName(rs.getString("name"));
+            role.setName(rs.getString("name"));
             role.setKey(rs.getString("key"));
             return role;
         }
