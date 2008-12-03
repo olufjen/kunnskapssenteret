@@ -138,11 +138,11 @@
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	<definition name="new-enduser.tiles" extends="standardFrame">
-		<put name="main" value="/jsp/main/new-enduser.jsp" type="page" />
+		<put name="main" value="/jsp/main/user-new-enduser.jsp" type="page" />
 		<put name="user" value="/jsp/main/enduser.jsp" type="page" />
    	</definition>
    	<definition name="new-administrator.tiles" extends="standardFrame">
-		<put name="main" value="/jsp/main/new-administrator.jsp" type="page" />
+		<put name="main" value="/jsp/main/user-new-administrator.jsp" type="page" />
 		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
    	</definition>
 

@@ -5,6 +5,9 @@
 <f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.errors"/> 
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/>
 
+<h2><h:outputText value="#{msg_main.user_details_tiltle}" /></h2>
+<br/>
+
 <h:outputText value="#{msg_main.user_details_cannot_show}"  rendered="#{userBean.cannotShowUser}" />
 <h:outputText value="#{userBean.userRole}" rendered="#{userBean.cannotShowUser}" />
 <h:form>
@@ -20,8 +23,10 @@
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_is_student}"  /></td>
-			<td><h:selectBooleanCheckbox id="isStudent" disabled="true"
-					value="#{userBean.user.person.isStudent}"/></td>
+			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}" id="isStudent" 
+					layout="pageDirection" disabled="true" binding="#{userBean.isStudentSelectOne}">
+				<f:selectItems value="#{userBean.availableIsStudent}"/>
+        		</h:selectOneRadio></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_first_name}"  /></td>
@@ -59,7 +64,7 @@
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
-			<td><h:outputText value="#{userBean.user.roleText}"/></td>
+			<td><h:outputText value="#{userBean.user.role.name}"/></td>
 		</tr>
 		<tr>
 			<td></td>

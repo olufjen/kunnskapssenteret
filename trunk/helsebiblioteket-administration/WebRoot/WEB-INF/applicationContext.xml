@@ -27,7 +27,15 @@
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 
+	<bean id="userCompositeDao" class="no.helsebiblioteket.admin.dao.JdbcUserCompositeDao">
+		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	</bean>
+
 	<bean id="roleDao" class="no.helsebiblioteket.admin.dao.JdbcRoleDao">
+		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	</bean>
+	
+	<bean id="personDao" class="no.helsebiblioteket.admin.dao.JdbcPersonDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 	
@@ -53,7 +61,9 @@
 
 	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
 	 	<property name="userDao" ref="userDao"></property>
+	 	<property name="userCompositeDao" ref="userCompositeDao"></property>
 	 	<property name="roleDao" ref="roleDao"></property>
+	 	<property name="personDao" ref="personDao"></property>
 	</bean>
 
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
@@ -64,5 +74,6 @@
 	<bean id="emailDao" class="no.helsebiblioteket.admin.service.EmailDAOImpl">
 		<property name="host" value="smtp.example.org"></property>
 	</bean>
+	
 	
 </beans>
