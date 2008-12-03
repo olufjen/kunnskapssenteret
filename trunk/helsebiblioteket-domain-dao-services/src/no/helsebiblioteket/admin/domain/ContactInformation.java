@@ -7,6 +7,7 @@ public class ContactInformation {
 	private String telephoneNumber= null;
 	private String postalLocation = null;
 	private String email = null;
+	private Person person;
 	public Integer getId() {
 		return id;
 	}
@@ -43,6 +44,10 @@ public class ContactInformation {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 }
