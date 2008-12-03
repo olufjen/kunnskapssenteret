@@ -2,13 +2,13 @@ package no.helsebiblioteket.admin.domain;
 
 public class Role {
 	private String key;
-	private String roleName;
+	private String name;
 	private int roleId;
-	public String getRoleName() {
-		return roleName;
+	public String getName() {
+		return name;
 	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getRoleId() {
 		return roleId;

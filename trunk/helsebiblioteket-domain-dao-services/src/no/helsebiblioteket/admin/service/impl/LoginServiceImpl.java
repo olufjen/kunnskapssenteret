@@ -20,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 		this.userDao = userDao;
 	}
 	public User logInUser(User user) {
-		User loggedIn = this.userDao.findUserByUsername(user);
+		User loggedIn = this.userDao.getUserByUsername(user);
 		if(loggedIn != null && loggedIn.getPassword().equals(user.getPassword())){
 			return loggedIn;
 		} else {
