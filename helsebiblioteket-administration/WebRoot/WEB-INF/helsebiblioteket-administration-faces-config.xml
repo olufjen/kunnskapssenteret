@@ -174,6 +174,10 @@
         <managed-bean-name>newUserBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.NewUserBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+    		<property-name>userBean</property-name>
+        	<value>#{userBean}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -190,6 +194,14 @@
         <managed-bean-name>newAdministratorBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.NewAdministratorBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+    		<property-name>userBean</property-name>
+        	<value>#{userBean}</value>
+		</managed-property>
+        <managed-property>
+    		<property-name>userService</property-name>
+        	<value>#{userService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>

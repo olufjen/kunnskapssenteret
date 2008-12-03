@@ -14,10 +14,10 @@
   <table>
     <tr>
       <td>
-        <h:commandButton value="#{msg_main.new_end_user_button}" action="#{newUserBean.newEndUser}" />
+        <h:commandButton value="#{msg_main.new_end_user_button}" action="#{newUserBean.actionNewEndUser}" />
       </td>
       <td>
-        <h:commandButton value="#{msg_main.new_administrator_button}" action="#{newUserBean.newAdministrator}" />
+        <h:commandButton value="#{msg_main.new_administrator_button}" action="#{newUserBean.actionNewAdministrator}" />
       </td>
     </tr>
   </table>
