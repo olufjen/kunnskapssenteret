@@ -11,6 +11,7 @@ public class Person {
 	private Integer hprNumber = null;
 	private ContactInformation contactInformation = new ContactInformation();
 	private Profile profile = new Profile();
+	private User user;
 	public String getName() {
 		return this.firstName + " " + lastName;
 	}
@@ -73,5 +74,11 @@ public class Person {
 	}
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
