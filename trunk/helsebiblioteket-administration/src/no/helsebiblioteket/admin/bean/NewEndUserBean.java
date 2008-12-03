@@ -8,7 +8,7 @@ import javax.faces.model.SelectItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class NewEndUserBean {
+public class NewEndUserBean extends NewUserBean {
     protected final Log logger = LogFactory.getLog(getClass());
     private String firstname;
     private String lastname;

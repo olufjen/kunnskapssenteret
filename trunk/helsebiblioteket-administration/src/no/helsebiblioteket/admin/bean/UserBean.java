@@ -3,10 +3,14 @@ package no.helsebiblioteket.admin.bean;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
+import javax.faces.component.UIData;
 import javax.faces.component.UISelectMany;
-import javax.faces.component.html.HtmlDataTable;
+import javax.faces.component.UISelectOne;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.apache.commons.logging.Log;
@@ -14,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.request.PageRequest;
@@ -27,33 +32,170 @@ public class UserBean {
 	private List<SelectItem> availableRoles;
 	private List<SelectItem> availablePositions;
 	private List<SelectItem> availableEmployers;
+	private List<SelectItem> availableIsStudent;
 	private List<String> selectedRoles;
-	private List<String> selectedUserRoles;
+	private String selectedUserRole;
+	private String selectedIsStudent;
+
 	private List<Role> allRoles;
 	private Map<String, Role> allRolesMap;
+	private List<Position> allPositions;
+	private Map<String, Position> allPositionsMap;
 	// FIXME: Use caching?
 	private List<User> users;
 	private User user;
+	
+	private boolean showHprNumber;
+	private boolean showEmployerNumber;
+	private boolean showIsStudent;
+	private boolean showEmployerText;
+	private boolean showPositionText;
+	private boolean showPositionMenu;
+	private boolean showProfile;
+
 	private UISelectMany rolesManyCheckbox;
-	private UISelectMany userRolesManyCheckbox;
-	private HtmlDataTable usersTable;
+	private UISelectOne userRolesSelectOne;
+	private UISelectOne isStudentSelectOne;
+	private UIData usersTable;
     protected final Log logger = LogFactory.getLog(getClass());
 
+    private boolean isNew(){ return this.user.getId() == null; }
+    
+    public void initSelectedIsStudent(){
+//		if(this.availableIsStudent == null){
+		this.availableIsStudent = new ArrayList<SelectItem>();
+    	if(this.user.getRole().getKey().equals("ADM") | 
+    			this.user.getRole().getKey().equals("ANST") |
+    			this.user.getRole().getKey().equals("HPNR")){
+			this.availableIsStudent.add(new SelectItem("U", "None"));
+    		this.selectedIsStudent = "U";
+    		if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
+    	} else if(this.user.getRole().getKey().equals("STUD")){
+			this.availableIsStudent.add(new SelectItem("Y", "Student"));
+			this.availableIsStudent.add(new SelectItem("N", "Employee"));
+			this.selectedIsStudent = this.user.getPerson().getIsStudent() ? "Y" : "N";
+			if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
+    	}
+//		}
+
+		logger.info("this.user.getRole().getKey()=" + this.user.getRole().getKey());
+		logger.info("this.selectedIsStudent=" + this.selectedIsStudent);
+		logger.info("this.isStudentSelectOne=" + this.isStudentSelectOne);
+		
+
+    }
+    public void enableDisableFields(){
+    	// TODO: Is this done correctly?
+    	this.initSelectedIsStudent();
+    	if(this.user.getRole().getKey().equals("ADM")){
+        	this.showHprNumber = false;
+        	this.user.getPerson().setHprNumber(null);
+        	this.showEmployerNumber = false;
+    		this.user.getPerson().setStudentNumber(null);
+    		this.showIsStudent = false;
+        	this.showEmployerText = false;
+    		this.user.getPerson().setEmployer("");
+        	this.showPositionText = false;
+        	this.showPositionMenu = false;
+    		this.user.getPerson().setPosition(new Position());
+    		this.showProfile = false;
+    		this.user.getPerson().setProfile(new Profile());
+    	} else if(this.user.getRole().getKey().equals("ANST")){
+    		this.showHprNumber = false;
+    		this.user.getPerson().setHprNumber(null);
+        	this.showEmployerNumber = false;
+    		this.user.getPerson().setStudentNumber(null);
+    		this.showIsStudent = false;
+        	this.showEmployerText = true;
+        	this.showPositionText = true;
+        	this.showPositionMenu = false;
+    		this.user.getPerson().setPosition(new Position());
+    		this.showProfile = true;
+    	} else if(this.user.getRole().getKey().equals("HPNR")){
+    		this.showHprNumber = true;
+        	this.showEmployerNumber = false;
+    		this.user.getPerson().setStudentNumber(null);
+    		this.showIsStudent = false;
+        	this.showEmployerText = true;
+        	this.showPositionText = false;
+        	this.showPositionMenu = true;
+    		this.showProfile = true;
+    	} else if(this.user.getRole().getKey().equals("STUD")){
+    		this.showHprNumber = false;
+    		this.user.getPerson().setHprNumber(null);
+        	this.showEmployerNumber = true;
+    		this.showIsStudent = true;
+        	this.showEmployerText = true;
+        	this.showPositionText = false;
+        	this.showPositionMenu = false;
+    		this.user.getPerson().setPosition(new Position());
+    		this.showProfile = true;
+    	}
+    }
+    public void roleChanged(ValueChangeEvent event){
+    	// FIXME: Really use submit and this action for enable and disable fields?
+    	logger.info("OLD: " + event.getOldValue());
+    	logger.info("NEW: " + event.getNewValue());
+    	if(this.allRolesMap.containsKey(event.getNewValue())){
+    		this.user.setRole(this.allRolesMap.get(event.getNewValue()));
+    	}
+    	this.enableDisableFields();
+    }
+    public void studentChanged(ValueChangeEvent event){
+    	if("Y".equals(event.getNewValue())){ this.user.getPerson().setIsStudent(true); }
+    	if("N".equals(event.getNewValue())){ this.user.getPerson().setIsStudent(false); }
+    	this.enableDisableFields();
+    }
     public boolean getCannotShowUser(){ return false; }
     public boolean getCanShowUser(){ return true; }
-    public String actionEdit(){ this.user = (User) this.usersTable.getRowData(); return "user_edit"; }
+    public String actionEdit(){ this.user = (User) this.usersTable.getRowData(); this.enableDisableFields(); return "user_edit"; }
     public String actionEditSingle(){ return "user_edit"; }
     public String getUserRole(){
-    	if(this.user != null && this.user.getRoleList().size()>0) {
-    		return this.user.getRoleList().get(0).getRoleName();
+    	if(this.user != null && this.user.getRole() != null) {
+    		return this.user.getRole().getName();
     	} else {
     		return "MISSING_USER_ROLE";
     	}
     }
-    public String actionSave(){ return "user_details"; }
-    public String actionCancel(){ return "user_details"; }
+    public String actionSave(){
+    	this.user.setRole(this.allRolesMap.get(this.selectedUserRole));
+    	if(this.user.getRole().getKey().equals("ADM")){
+        	this.user.getPerson().setHprNumber(null);
+    		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setIsStudent(false);
+    		this.user.getPerson().setEmployer("");
+    		this.user.getPerson().setPosition(new Position());
+    		this.user.getPerson().setProfile(new Profile());
+    	} else if(this.user.getRole().getKey().equals("ANST")){
+        	this.user.getPerson().setHprNumber(null);
+    		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setIsStudent(false);
+    	} else if(this.user.getRole().getKey().equals("HPNR")){
+    		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setIsStudent(false);
+    		this.user.getPerson().setPosition(this.allPositionsMap.get(this.user.getPerson().getPosition().getKey()));
+    	} else if(this.user.getRole().getKey().equals("STUD")){
+        	this.user.getPerson().setHprNumber(null);
+        	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
+    		this.user.getPerson().setPosition(new Position());
+    	}
+    	if(this.isNew()){
+    		this.userService.createUser(this.user);
+    	} else {
+    		this.userService.saveUser(this.user);
+    	}
+    	return "user_details";
+    }
+    public String actionCancel(){
+    	this.user = this.userService.findUserByUsername(this.user);
+    	return "user_details";
+    }
     public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
     public boolean getFailed() { return true; }
+    public String details(){
+		logger.info("USER: " + user.getPerson().getName());
+		return "user_details";
+    }
     public String actionDetails(){
 //		FacesContext context = FacesContext.getCurrentInstance();
 //		Map requestParams = context.getExternalContext().getRequestParameterMap();
@@ -63,9 +205,7 @@ public class UserBean {
 		
 		// FIXME: Remove testing.
 		this.user.getPerson().setIsStudent(true);
-		
-		logger.info("USER: " + user.getPerson().getName());
-		return "user_details";
+		return details();
 	}
 	public List<Role> getSelectedRolesRoleList(){
 		List<Role> selectedRoles = new ArrayList<Role>();
@@ -85,6 +225,11 @@ public class UserBean {
 				new PageRequest<User>()).result;
 		return "users_overview";
 	}
+	public List<SelectItem> getAvailableIsStudent() {
+		this.initSelectedIsStudent();
+		return availableIsStudent;
+	}
+
 	public List<SelectItem> getAvailableRoles() {
 		if(this.availableRoles == null) {
 			this.availableRoles = new ArrayList<SelectItem>();
@@ -92,7 +237,7 @@ public class UserBean {
 			this.logger.info("this.userService=" + this.userService);
 			for (Role role : this.getAllRoles()) {
 				logger.info("role: " + role.getKey());
-				SelectItem option = new SelectItem(role.getKey(), role.getRoleName(), "", false);
+				SelectItem option = new SelectItem(role.getKey(), role.getName(), "", false);
 				this.availableRoles.add(option);
 			}
 			logger.info("DONEROLES");
@@ -103,7 +248,7 @@ public class UserBean {
 	public List<SelectItem> getAvailablePositions() {
 		if(this.availablePositions == null) {
 			this.availablePositions = new ArrayList<SelectItem>();
-			for (Position position : this.userService.getAllUserPositions()) {
+			for (Position position : getAllPositions()) {
 				SelectItem option = new SelectItem(position.getKey(), position.getTitle(), "", false);
 				this.availablePositions.add(option);
 			}
@@ -113,6 +258,13 @@ public class UserBean {
 	public List<SelectItem> getavailableEmployers() {
 		if(this.availableEmployers == null) {
 			this.availableEmployers = new ArrayList<SelectItem>();
+			Organization dummy = new Organization();
+			dummy.setId(-999);
+			dummy.setName(ResourceBundle.getBundle(
+					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
+							"user_details_no_employer"));
+			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getName(), "", false);
+			this.availableEmployers.add(dummyOption);
 			for (Organization organization : this.organizationService.getAllOrganizations()) {
 				SelectItem option = new SelectItem(""+organization.getId(), organization.getName(), "", false);
 				this.availableEmployers.add(option);
@@ -130,14 +282,16 @@ public class UserBean {
 		}
 		return this.selectedRoles;
 	}
-	public List<String> getSelectedUserRoles() {
-		List<String> selectedRoles = new ArrayList<String>();
-		if(this.user != null){ 
-			for (Role role : this.user.getRoleList()) {
-				selectedRoles.add(role.getKey());
+	public String getSelectedUserRole() {
+		if(this.selectedUserRole == null){
+//			this.selectedUserRole = new ArrayList<String>();
+			if(this.user != null){ 
+//				for (Role role : this.user.getRoleList()) {
+				this.selectedUserRole = user.getRole().getKey();
+//				}
 			}
 		}
-		return selectedRoles;
+		return this.selectedUserRole;
 	}
 	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
@@ -149,23 +303,57 @@ public class UserBean {
 		}
 		return this.allRoles;
 	}
+	public List<Position> getAllPositions() {
+		if(this.allPositions == null){
+			this.allPositions = new ArrayList<Position>();
+
+			// TODO: Right way to add DUMMY?
+			Position dummy = new Position();
+			dummy.setKey("-999");
+			dummy.setTitle(ResourceBundle.getBundle(
+					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
+							"user_details_no_position"));
+			this.allPositions.add(dummy);
+			
+			this.allPositions.addAll(this.userService.getAllUserPositions());
+			this.allPositionsMap = new HashMap<String, Position>();
+			for (Position position : this.allPositions) {
+				this.allPositionsMap.put(position.getKey(), position);
+			}
+		}
+		return this.allPositions;
+	}
 	public List<User> getUsers() {
 		// FIXME: Handle paged result!
 		if(this.users == null) { this.users = userService.getAllUsers(new PageRequest<User>()).result; }
 		return this.users;
 	}
+	public String getSelectedIsStudent() {
+		initSelectedIsStudent();
+		return selectedIsStudent;
+	}
 	public void setUserService(UserService userService) { this.userService = userService; }
 	public void setOrganizationService(OrganizationService organizationService) { this.organizationService = organizationService; }
-	public HtmlDataTable getUsersTable() { return usersTable; }
-	public void setUsersTable(HtmlDataTable usersTable) { this.usersTable = usersTable; }
+	public UIData getUsersTable() { return usersTable; }
+	public void setUsersTable(UIData usersTable) { this.usersTable = usersTable; }
 	public UISelectMany getRolesManyCheckbox() { return rolesManyCheckbox; }
 	public void setRolesManyCheckbox(UISelectMany rolesManyCheckbox) { this.rolesManyCheckbox = rolesManyCheckbox; }
-	public UISelectMany getUserRolesManyCheckbox() { return userRolesManyCheckbox; }
-	public void setUserRolesManyCheckbox(UISelectMany userRolesManyCheckbox) { this.userRolesManyCheckbox = userRolesManyCheckbox; }
+	public UISelectOne getUserRolesSelectOne() { return userRolesSelectOne; }
+	public void setUserRolesSelectOne(UISelectOne userRolesSelectOne) { this.userRolesSelectOne = userRolesSelectOne; }
+	public UISelectOne getIsStudentSelectOne() { return isStudentSelectOne; }
+	public void setIsStudentSelectOne(UISelectOne isStudentSelectOne) { this.isStudentSelectOne = isStudentSelectOne; }
 	public void setSelectedRoles(List<String> selectedRoles) { this.selectedRoles = selectedRoles; }
-	public void setSelectedUserRoles(List<String> selectedUserRoles) { this.selectedUserRoles = selectedUserRoles; }
+	public void setSelectedUserRole(String selectedUserRole) { this.selectedUserRole = selectedUserRole; }
 	public String getSearchinput() { return searchinput; }
 	public void setSearchinput(String searchinput) { this.searchinput = searchinput; }
 	public User getUser() { return user; }
-	
+	public boolean isShowPositionText() { return showPositionText; }
+	public boolean isShowPositionMenu() { return showPositionMenu; }
+	public boolean isShowIsStudent() { return showIsStudent; }
+	public boolean isShowEmployerText() { return showEmployerText; }
+	public void setSelectedIsStudent(String selectedIsStudent) { this.selectedIsStudent = selectedIsStudent; }
+	public boolean isShowHprNumber() { return showHprNumber; }
+	public boolean isShowEmployerNumber() { return showEmployerNumber; }
+	public boolean isShowProfile() { return showProfile; }
+	public void setUser(User user) { this.user = user; }
 }
