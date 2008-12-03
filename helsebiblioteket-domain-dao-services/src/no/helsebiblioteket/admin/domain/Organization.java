@@ -10,6 +10,11 @@ public class Organization {
 	private String nameShort = null;
 	private OrganizationType type = null;
 	private List<IpRange> ipRangeList = null;
+	private Person contactPerson = null;
+	private ContactInformation contactInformation = null;
+	
+	public Organization() {
+	}
 	
 	public Integer getId() {
 		return id;
@@ -52,5 +57,17 @@ public class Organization {
 	}
 	public void setType(OrganizationType organizationType) {
 		this.type = organizationType;
+	}
+	public Person getContactPerson() {
+		return contactPerson;
+	}
+	public void setContactPerson(Person contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+	public ContactInformation getContactInformation() {
+		return contactInformation;
+	}
+	public void setContactInformation(ContactInformation contactInformation) {
+		this.contactInformation = contactInformation;
 	}
 }
