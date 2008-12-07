@@ -111,7 +111,7 @@
 		</fileset>
 	</path>
 
-	<target name="generate-service" depends="">
+	<target name="generate-service" depends="prepare-dependencies">
 		<mkdir dir="${webservices.build.dir}" />
 		<mkdir dir="${webservices.classes.dir}" />
 		<mkdir dir="${webservices.classes.lib.dir}" />
@@ -128,6 +128,8 @@
 		
 		<javac debug="on" srcdir="${project.src.dir}" destdir="${webservices.classes.dir}" includes="*/**">
 			<classpath refid="webservices.classpath" />
+            <src path="${project.src.dir}"/>
+            <classpath refid="master-classpath"/>
 		</javac>
 
 		<jar basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}" />
@@ -137,7 +139,7 @@
 		<copy file="${webservices.target.dir}/${webservices.target.filename}" todir="${webservices.tomcat.services.dir}" />
 		<copy todir="${webservices.tomcat.lib.dir}">
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
-				<include name="*.jar"/>
+				<include name="**/*.jar"/>
 			</fileset>
 		</copy>
 		<!-- TODO: Only copy neccessary files! -->
