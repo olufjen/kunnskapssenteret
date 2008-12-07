@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
+ 		<property name="urlPattern" value="/site/[0-3]/*" />
+ 		<property name="sessionVarName" value="hbloggedin" />
+ 		<property name="urlService" ref="urlService" />
+	</bean>
+		<bean name="urlService" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
+		<property name="serviceClient" ref="serviceClient" />
+		<property name="targetEPR" ref="targetEPR" />
+		<property name="isAffectedName" ref="isAffectedName" />
+		<property name="translateName" ref="translateName" />
+	</bean>
+		<bean name="serviceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="targetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/urlService" />
+	</bean>
+	<bean name="isAffectedName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="isAffected" />
+	</bean>
+	<bean name="translateName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="translate" />
+	</bean>
+</beans>

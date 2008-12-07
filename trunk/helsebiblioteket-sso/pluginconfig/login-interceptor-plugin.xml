@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean class="no.helsebiblioteket.evs.plugin.HttpInterceptorPluginAutoLoginHelsebiblioteket">
+	<bean class="no.helsebiblioteket.evs.plugin.LoginInterceptor">
  		<property name="urlPattern" value="/site/[0-3]/*" />
  		<property name="sessionVarName" value="hbloggedin" />
  		<property name="loginService" ref="loginService" />

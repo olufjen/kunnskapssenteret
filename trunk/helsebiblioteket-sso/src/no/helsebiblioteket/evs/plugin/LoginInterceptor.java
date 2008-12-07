@@ -15,11 +15,11 @@ import no.helsebiblioteket.admin.domain.Organization;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public final class HttpInterceptorPluginAutoLoginHelsebiblioteket extends HttpInterceptorPlugin {
+public final class LoginInterceptor extends HttpInterceptorPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
 	private LoginService loginService;
 	private String sessionVarName;
-	public HttpInterceptorPluginAutoLoginHelsebiblioteket(){
+	public LoginInterceptor(){
 		System.out.println("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 		logger.info("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 	}
