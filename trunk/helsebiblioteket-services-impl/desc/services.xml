@@ -19,15 +19,11 @@
 
 <serviceGroup>
   <service name="SpringInit" class="no.helsebiblioteket.admin.webserviceinit.SpringInit">
-    <description>
-      This web service initializes Spring.
-    </description>
+    <description>This web service initializes Spring.</description>
     <parameter name="ServiceClass" >no.helsebiblioteket.admin.webserviceinit.SpringInit</parameter>
     <parameter name="ServiceTCCL" >composite</parameter>
     <parameter name="load-on-startup" >true</parameter>
-    <operation name="springInit">
-      <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
-    </operation>
+    <operation name="springInit"> <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/> </operation>
   </service>
 
   <service name="loginService">
@@ -35,6 +31,17 @@
     <parameter name="ServiceClass">no.helsebiblioteket.admin.service.LoginService</parameter>
     <parameter name="ServiceObjectSupplier" >org.apache.axis2.extensions.spring.receivers.SpringAppContextAwareObjectSupplier</parameter>
     <parameter name="SpringBeanName" >loginService</parameter>
+    <messageReceivers>
+      <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+      <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out" class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+    </messageReceivers>
+  </service>
+
+  <service name="urlService">
+    <description>Url Service for Helsebiblioteket</description>
+    <parameter name="ServiceClass">no.helsebiblioteket.admin.service.URLService</parameter>
+    <parameter name="ServiceObjectSupplier" >org.apache.axis2.extensions.spring.receivers.SpringAppContextAwareObjectSupplier</parameter>
+    <parameter name="SpringBeanName" >urlService</parameter>
     <messageReceivers>
       <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
       <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out" class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>

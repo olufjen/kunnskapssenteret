@@ -25,14 +25,7 @@
   <bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
 
   <bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
-    <!--<property name="weather" ref="weatherBean"/>-->
   </bean>
-<!--
-  <bean id="weatherBean" class="sample.spring.bean.Weather">
-    <property name="temperature" value="89.9"/>
-    <property name="forecast" value="Sunny"/>
-    <property name="rain" value="false"/>
-    <property name="howMuchRain" value="0.2"/>
+  <bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
   </bean>
--->
 </beans>
