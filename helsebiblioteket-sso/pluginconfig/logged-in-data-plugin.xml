@@ -2,8 +2,8 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean class="no.helsebiblioteket.evs.plugin.HttpResponseFilterHelsebiblioteket">
- 		<property name="urlPattern" value="/site/[0-3]/*" />
+	<bean class="no.helsebiblioteket.evs.plugin.LoggedInDataController">
+ 		<property name="urlPattern" value="/site/2/loggedInUserXML" />
  		<property name="sessionVarName" value="hbloggedin" />
 	</bean>
 </beans>
