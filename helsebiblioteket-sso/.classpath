@@ -5,9 +5,13 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-domain-dao-services"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-services-impl"/>
 	<classpathentry kind="lib" path="lib/cms-api.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="lib/jdom.jar"/>
-	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="lib/mail.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-services-impl/lib/axiom-api-1.2.7.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-services-impl/lib/axis2-adb-1.4.1.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-services-impl/lib/axis2-kernel-1.4.1.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/mail.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-services-impl/lib/axiom-impl-1.2.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

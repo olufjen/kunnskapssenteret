@@ -2,18 +2,31 @@
 
 <project name="helsebiblioteket-sso" basedir="." default="usage">
     <property file="build.properties"/>
+    <property name="project.src.dir" value="${project.home}/src"/>
+	<property name="project.build.dir" value="${project.home}/build"/>
+	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
+	<property name="project.lib.dir" value="${project.home}/lib"/>
+	<property name="project.target.dir" value="${project.home}/target"/>
+	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
+	<property name="project.plugin.config.dir" value="${project.home}/pluginconfig"/>
+
+	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
+	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl-home.dir}/target"/>
+	<property name="helsebiblioteket-administration-web-lib.dir" value="${helsebiblioteket-administration-web-home.dir}/lib"/>
 	
     <path id="master-classpath">
-    	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
+    	<fileset dir="${project.lib.dir}">
             <include name="**/*.jar"/>
         </fileset>
-    	<fileset dir="${lib.dir}">
+    	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    	<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
             <include name="**/*.jar"/>
         </fileset>
     </path>
-	
 	<path id="master-sourcedir">
-    	<fileset dir="${project.src}">
+    	<fileset dir="${project.src.dir}">
             <include name="*.java"/>
         </fileset>
     </path>
@@ -35,39 +48,43 @@
 		<echo message="kunnskapssenteret.common.lib: ${kunnskapssenteret.common.lib}" />
 	</target>
 	
-    
-	<target name="build" description="Compile main source tree java files">
+	<target name="prepare-dependencies" description="Compile main source tree java files">
+		<ant dir="${helsebiblioteket-domain-dao-services-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-services-impl-home.dir}" inheritAll="false" target="package"/>
+	</target>
+
+	<target name="build" description="Compile main source tree java files" depends="prepare-dependencies">
 		<mkdir dir="${project.build.dir}"/>
-        <javac 
-        	destdir="${project.classes}" source="1.5" target="1.5" debug="true"
+		<mkdir dir="${project.classes.dir}"/>
+        <javac destdir="${project.classes.dir}" source="1.5" target="1.5" debug="true"
             deprecation="false" optimize="false" failonerror="true">
-            <src path="${project.src}"/>
-            <classpath refid="master-classpath"/>
+            <src path="${project.src.dir}"/>
+            <classpath refid="master-classpath" />
+        	
         </javac>
         
         <!-- Separate copy-target to make sure property files are included -->
-		<copy 
-			todir="${project.build.dir}">
-			<fileset 
-				dir="${project.src}"
-				excludes="**/*.java"
-			/>
+		<copy todir="${project.classes.dir}">
+			<fileset dir="${project.src.dir}" excludes="**/*.java" />
 		</copy>
 	</target>
 	
 	<target name="package" depends="build">
 		<mkdir dir="${project.target.dir}"/>
-		<jar 
-			destfile="${project.target.dir}\${project.target.filename}"
-			basedir="${project.classes}"
-		/>
+		<jar destfile="${project.target.dir}/${project.target.filename}"
+			basedir="${project.classes.dir}" />
 	</target>
 
 	<target name="clean" description="Clean output directories">
-        <delete>
+        <delete includeemptydirs="true">
             <fileset dir="${project.build.dir}">
-                <include name="**/*.class"/>
+                <include name="**/*"/>
             </fileset>
+        </delete>
+    </target>
+	
+	<target name="clean-target" description="Clean output directories">
+        <delete includeemptydirs="true">
         	<fileset dir="${project.target.dir}">
                 <include name="**/*.jar"/>
             </fileset>
@@ -77,26 +94,22 @@
 	<target name="deploy" depends="package">
 		<copy todir="${evs.deploy.dir}">
 			<fileset file="${project.target.dir}/${project.target.filename}" />
-			<fileset file="pluginconfig/iplogininterceptor-plugin.xml" />
-
-			<fileset file="../helsebiblioteket-services-impl/target/helsebiblioteket-services-impl-1.0.jar" />
-			<fileset file="../helsebiblioteket-domain-dao-services\target\helsebiblioteket-domain-dao-services-1.0.jar" />
+			<fileset dir="${project.plugin.config.dir}" includes="*-plugin.xml"/>
+			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
+			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
 			
-			<fileset file="lib/XmlSchema-1.4.2.jar" />
-			<fileset file="lib/neethi-2.0.4.jar" />
-			<fileset file="lib/annogen-0.1.0.jar" />
+
+			<!-- TODO: Copy all from folders. Make sure all are include from right source! -->
+			<fileset file="${project.lib.dir}/XmlSchema-1.4.2.jar" />
+			<fileset file="${project.lib.dir}/neethi-2.0.4.jar" />
+			<fileset file="${project.lib.dir}/annogen-0.1.0.jar" />
 				
-			<fileset file="lib/axis2-kernel-1.4.1.jar" />
-			<fileset file="lib/axis2-adb-1.4.1.jar" />
-			<fileset file="lib/axiom-api-1.2.7.jar" />
-			<fileset file="lib/axiom-impl-1.2.7.jar" />
+			<fileset file="${project.lib.dir}/axis2-kernel-1.4.1.jar" />
+			<fileset file="${project.lib.dir}/axis2-adb-1.4.1.jar" />
+			<fileset file="${project.lib.dir}/axiom-api-1.2.7.jar" />
+			<fileset file="${project.lib.dir}/axiom-impl-1.2.7.jar" />
+
 		</copy>
 	</target>
 
-	<target name="deploy-other" depends="package">
-		<copy todir="${evs.deploy.dir}">
-			<fileset file="${project.target.dir}/${project.target.filename}" />
-			<fileset file="pluginconfig/linkeditresponsefilter-plugin.xml" />
-		</copy>
-	</target>
 </project>
