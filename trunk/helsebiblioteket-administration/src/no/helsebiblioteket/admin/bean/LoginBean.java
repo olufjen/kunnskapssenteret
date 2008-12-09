@@ -1,13 +1,20 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.LoginService;
@@ -15,8 +22,35 @@ import no.helsebiblioteket.admin.validator.EmailValidator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.security.BadCredentialsException;
+import org.springframework.security.ui.AbstractProcessingFilter;
+import org.springframework.stereotype.Component;
 
+
+@Component
+@Scope("request")
 public class LoginBean {
+	
+
+	public LoginBean(){ 
+		 Exception ex = (Exception) FacesContext
+         .getCurrentInstance()
+         .getExternalContext()
+         .getSessionMap()
+         .get(AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY);
+         
+         if (ex != null)
+         FacesContext.getCurrentInstance().addMessage(
+         null,
+         new FacesMessage(FacesMessage.SEVERITY_ERROR, ex
+         .getMessage(), ex.getMessage()));
+         
+         }
+
+
+
+	
 	/** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
     private LoginService loginService;
@@ -24,12 +58,12 @@ public class LoginBean {
 	private String password;
 	private boolean failed = false;
 	public boolean getFailed() {
-		logger.error("method 'getFailed' invoked");
+		logger.debug("method 'getFailed' invoked");
 		return this.failed;
 	}
 	public void setFailed(boolean failed) {
 		// FIXME: Remove!
-		logger.error("method 'setFailed' invoked");
+		logger.debug("method 'setFailed' invoked");
 //		this.failed = failed;
 	}
 	public String login() {
@@ -46,6 +80,7 @@ public class LoginBean {
 			return "login_success";
 		}
 	}
+	
 	public String send() {
 		logger.info("method 'send' invoked");
 		User user = new User();
