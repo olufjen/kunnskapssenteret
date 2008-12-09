@@ -54,9 +54,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 							<div id="col3_content" class="clearfix">
 								<a id="content" name="content"></a>
 								<f:facet name="main">
-									<f:subview id="main">
+								<f:subview id="main">  
 										<tiles:insert attribute="main" flush="false" />
-									</f:subview>
+								</f:subview>  
 								</f:facet>
 							</div>
 							<div id="ie_clearing">&nbsp;</div>
@@ -76,5 +76,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 				</div>
 			</div>
 		</f:view>
+	
 	</body>
 </html>
