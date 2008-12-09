@@ -2,9 +2,11 @@ package no.helsebiblioteket.admin.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 import org.apache.commons.logging.Log;
@@ -56,4 +58,30 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
             return user;
         }
     }
+    
+    public User findUser(String username) {
+        User user = null;
+        List<User> users = getSimpleJdbcTemplate().query(
+                "select user_id, username, password, org_unit_id from tbl_user where username = :username", 
+                new UserMapper(),
+                new MapSqlParameterSource().addValue("username", username)
+        		);
+        if(users.size() == 0) return user;
+        else{
+        	user = new User();
+        	user.setUsername(username);
+        	
+     
+        	Role role = new Role();
+        	List<Role> roleList = new ArrayList<Role>();
+            
+        	role.setRoleId(1);
+        	role.setName("ROLE_ALLACCESS");
+        	roleList.add(role); 
+        	user.setRoleList(roleList) ; 
+        	return user;
+        }
+        
+    }
+    
 }
