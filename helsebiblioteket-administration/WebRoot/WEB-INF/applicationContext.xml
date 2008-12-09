@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+ -->
+<beans
 
-<beans>
+xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+
+>
+
+<context:annotation-config />
+	<context:component-scan
+		base-package="no.helsebiblioteket.admin" />
+	<bean
+		id="loggerListener"
+		class="org.springframework.security.event.authentication.LoggerListener" />
+
 
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	 	<property name="locations">
@@ -75,5 +94,133 @@
 		<property name="host" value="smtp.example.org"></property>
 	</bean>
 	
+<!--  Spring security bean classes start    -->
+
+
+	<bean id="filterChainProxy"
+         class="org.springframework.security.util.FilterChainProxy">
+         <property name="filterInvocationDefinitionSource">
+	         <value>
+	         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+	         PATTERN_TYPE_APACHE_ANT
+	         /error/*=#NONE#
+	         /back*=#NONE#
+	         /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+	         </value>
+         </property>
+    </bean>
+		
+	<bean id="httpSessionContextIntegrationFilter" class="org.springframework.security.context.HttpSessionContextIntegrationFilter"/>
+
+	<bean id="logoutFilter" 
+		class="org.springframework.security.ui.logout.LogoutFilter">
+		<constructor-arg value="/login.faces" />
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+		<property name="filterProcessesUrl">
+			<value>/j_spring_security_logout.jsp</value>
+		</property>
+	</bean>
 	
-</beans>
+	<bean id="authenticationProcessingFilter"   class="org.springframework.security.ui.webapp.AuthenticationProcessingFilter">
+       <property name="filterProcessesUrl">
+       <value>/j_spring_security_check.jsp</value>
+       </property>
+       <property name="authenticationFailureUrl">
+       <value>/login.faces</value>
+       </property>
+       <property name="defaultTargetUrl">
+       <value>/welcome.faces</value>
+       </property>
+  
+       <property name="authenticationManager">
+       <ref bean="authenticationManager" />
+       </property>
+    </bean>
+	
+	<bean id="securityContextHolderAwareRequestFilter"	class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter" />
+	
+	 <bean id="anonymousProcessingFilter"
+		class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
+		<property name="key" value="changeThis" />
+		<property name="userAttribute"
+			value="anonymousUser,ROLE_ANONYMOUS" />
+	</bean>
+	 
+	<bean id="exceptionTranslationFilter" class="org.springframework.security.ui.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<bean
+				class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+				<property name="loginFormUrl" value="/login.faces" />
+				<property name="forceHttps" value="false" />
+			</bean>
+		</property>
+		<property name="accessDeniedHandler">
+			<bean
+				class="org.springframework.security.ui.AccessDeniedHandlerImpl">
+				<property name="errorPage" value="/accessDenied.faces" />
+			</bean>
+		</property>
+	</bean>
+	 
+	 
+	 <bean id="filterInvocationInterceptor"
+		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="accessDecisionManager"
+			ref="accessDecisionManager" />
+		<property name="objectDefinitionSource">
+			<value>
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
+				/login.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				
+				/welcome.faces=ROLE_ALLACCESS,ROLE_URLACCESS
+			</value>
+		</property>
+	</bean>
+	 
+	 <bean id="accessDecisionManager"
+		class="org.springframework.security.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions" value="false" />
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.vote.RoleVoter" />
+				<bean class="org.springframework.security.vote.AuthenticatedVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
+       <property name="providers">
+       <list>
+       <ref local="daoAuthenticationProvider" />
+       </list>
+       </property>
+    </bean>
+	
+	<bean
+        id="daoAuthenticationProvider"
+        class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService" />
+    </bean>
+            
+            
+     <bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl">
+          <constructor-arg  ref="userDao" />
+     </bean>
+        
+ <!--    <bean id="userRepository"  class="no.helsebiblioteket.admin.dao.JdbcUserDao"></bean>  --> 
+ 
+ 
+ 
+                           
+<!-- End of spring security  -->	
+
+ </beans>
+
