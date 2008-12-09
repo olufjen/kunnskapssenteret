@@ -9,6 +9,7 @@ import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 public class LoginServiceImpl implements LoginService {
@@ -27,6 +28,7 @@ public class LoginServiceImpl implements LoginService {
 			return null;
 		}
 	}
+
 	public void sendPasswordEmail(User user) {
 		logger.info("Sends email to :" + user.getUsername());
 		// TODO: Complete this!
