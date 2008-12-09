@@ -30,13 +30,24 @@
 			<to-view-id>/user.faces</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+ 	
 	<navigation-rule>
+		<from-view-id>/login.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>login</from-outcome>
-			<to-view-id>/login.faces</to-view-id>
+			<to-view-id>/j_spring_security_check</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+                <from-outcome>logout</from-outcome>
+                <to-view-id>/j_spring_security_logout</to-view-id>
+        </navigation-case>
+</navigation-rule>
+	
+	
 	
 	<navigation-rule>
 		<navigation-case>
@@ -161,12 +172,13 @@
         <display-name>Login</display-name>
         <managed-bean-name>loginBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.LoginBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
     		<property-name>loginService</property-name>
         	<value>#{loginService}</value>
 		</managed-property>
 	</managed-bean>
+
 
 	<managed-bean>
     	<description>Backingbean related to Adding a user</description>
