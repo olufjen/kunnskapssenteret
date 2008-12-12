@@ -24,7 +24,7 @@ public final class LoggedInDataController extends HttpControllerPlugin {
 		// TODO: Use buffer, etc correctly!
     	StringBuffer buffer = new StringBuffer();
     	buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-    	buffer.append("<loggedin>");
+    	buffer.append("\n<loggedin>");
     	if(sessionVar instanceof Organization){
         	Organization organization = (Organization) sessionVar;
     		OrganizationToXMLTranslator translator = new OrganizationToXMLTranslator();
