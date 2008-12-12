@@ -1,7 +1,5 @@
 package no.helsebiblioteket.evs.plugin;
 
-import java.io.OutputStreamWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,17 +27,19 @@ public final class LogInController extends HttpControllerPlugin {
     	if(user == null){
     		request.getSession().setAttribute(this.sessionVarName, user);
     	} else {
-    		
+    		// Nothing
     	}
-    		
-		response.setContentType("text/xml");
-		response.setCharacterEncoding("utf-8");
-
-		OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
-		writer.close();
-    	this.logger.info("LoggedInData DONE");
+		String referer = request.getHeader("referer");
+    	this.logger.info("Referer: " + referer);
+		response.sendRedirect(referer);
+    	this.logger.info("LogInController DONE");
+    	
+//    	http://localhost:8080/cms/site/2/logIn?brukernavn=leiftorger&passord=password
 	}
 	public void setSessionVarName(String sessionVarName) {
 		this.sessionVarName = sessionVarName;
+	}
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
 	}
 }

@@ -5,5 +5,20 @@
 	<bean class="no.helsebiblioteket.evs.plugin.LogInController">
  		<property name="urlPattern" value="/site/2/logIn" />
  		<property name="sessionVarName" value="hbloggedin" />
+ 		<property name="loginService" ref="loginService" />
+	</bean>
+	<bean name="loginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
+		<property name="serviceClient" ref="serviceClient" />
+		<property name="targetEPR" ref="targetEPR" />
+		<property name="logInUser" ref="logInUser" />
+	</bean>
+	<bean name="serviceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="targetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+	</bean>
+	<bean name="logInUser" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="logInUser" />
 	</bean>
 </beans>
