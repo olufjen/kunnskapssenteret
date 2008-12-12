@@ -23,6 +23,7 @@ public final class LoggedInDataController extends HttpControllerPlugin {
     	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
 		// TODO: Use buffer, etc correctly!
     	StringBuffer buffer = new StringBuffer();
+    	buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     	buffer.append("<loggedin>");
     	if(sessionVar instanceof Organization){
         	Organization organization = (Organization) sessionVar;
