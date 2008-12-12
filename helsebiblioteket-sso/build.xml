@@ -100,9 +100,9 @@
 			
 
 			<!-- TODO: Copy all from folders. Make sure all are include from right source! -->
-			<fileset file="${project.lib.dir}/XmlSchema-1.4.2.jar" />
-			<fileset file="${project.lib.dir}/neethi-2.0.4.jar" />
-			<fileset file="${project.lib.dir}/annogen-0.1.0.jar" />
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/XmlSchema-1.4.2.jar" />
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/neethi-2.0.4.jar" />
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/annogen-0.1.0.jar" />
 				
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-kernel-1.4.1.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-adb-1.4.1.jar" />
