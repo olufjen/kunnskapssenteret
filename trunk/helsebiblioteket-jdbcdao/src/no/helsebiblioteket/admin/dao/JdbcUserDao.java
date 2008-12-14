@@ -81,7 +81,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
         	role.setRoleId(1);
         	role.setName("ROLE_ALLACCESS");
         	roleList.add(role); 
-        	user.setRoleList(roleList) ; 
+//        	user.setRoleList(roleList) ; 
         	return user;
         }
         
