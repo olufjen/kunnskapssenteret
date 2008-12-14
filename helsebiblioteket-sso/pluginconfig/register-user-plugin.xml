@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
+ 		<property name="urlPattern" value="/site/2/Helsebiblioteket/Passord" />
+ 		<property name="resultSessionVarName" value="hbregisterresult" />
+ 		<property name="loggedInSessionVarName" value="hbloggedin" />
+ 		<!-- TODO: Use different names! -->
+ 		<property name="userService" ref="registerUserService" />
+ 		<property name="parameterNames"><map>
+ 			<entry key="hprno" value="uid"/>
+ 			<entry key="firstname" value="firstname"/>
+ 			<entry key="lastname" value="surname"/>
+ 			<entry key="employer" value="org"/>
+ 			<entry key="newsletter" value="newsletter"/>
+ 			<entry key="questionaire" value="survey"/>
+ 			<entry key="emailaddress" value="email"/>
+ 			<entry key="username" value="username"/>
+ 			<entry key="password" value="password"/>
+ 			<entry key="passwordrepeat" value="confirmpassword"/>
+ 			
+ 			<entry key="from" value="from"/>
+ 			<entry key="goto" value="goto"/>
+ 			<entry key="resultName" value="result"/>
+ 			<entry key="resultValue" value="true"/>
+ 		</map></property>
+	</bean>
+	<bean name="registerUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
+		<property name="serviceClient" ref="registerServiceClient" />
+		<property name="targetEPR" ref="registerTargetEPR" />
+		<property name="saveUser" ref="registerSaveUser" />
+		<property name="findUser" ref="registerFindUser" />
+		<property name="createUser" ref="registerCreateUser" />
+	</bean>
+	<bean name="registerServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="registerTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/userService" />
+	</bean>
+	<bean name="registerSaveUser" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="saveUser" />
+	</bean>
+	<bean name="registerFindUser" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="findUserByUsername" />
+	</bean>
+	<bean name="registerCreateUser" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="createUser" />
+	</bean>
+</beans>
