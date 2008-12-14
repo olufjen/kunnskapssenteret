@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
 	public User findUserByUsername(User user) { return userCompositeDao.getUserByUsername(user); }
 	public List<Role> getAllUserRoles() { return this.roleDao.getAllRoles(); }
-	public void createUser(User user) {
+	public User createUser(User user) {
 		// FIXME: Insert data into all tables!
 		int pId = this.personDao.insertPerson(user.getPerson());
 		user.getPerson().setId(pId);
@@ -61,9 +61,11 @@ public class UserServiceImpl implements UserService {
 		logger.info("Saved user:" + user.getUsername());
 		
 //		userDao.insertUser(user);
+		
+		return this.findUserByUsername(user);
 	}
 	
-	public void saveUser(User user) {
+	public User saveUser(User user) {
 		// TODO: How to get users without person object!
 		User old = this.userCompositeDao.getUserByUsername(user);
 		
@@ -96,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
 		if(user.getPerson()==null) {
 			// TODO: How to save users without person object!
-			return;
+			return null;
 		} 
 		// Move backwards
 		this.personDao.updateContactInformation(user.getPerson().getContactInformation());
@@ -112,6 +114,7 @@ public class UserServiceImpl implements UserService {
 
 		// TODO: Write this.
 		
+		return this.findUserByUsername(user);
 	}
 	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request) {
 		// FIXME: Cache and page results
