@@ -21,7 +21,8 @@ public class LoginServiceWeb implements LoginService {
 	private EndpointReference targetEPR;
 	private Options options;
 	private QName logInIpAddress;
-	
+	private QName logInUser;
+	private QName sendPasswordEmail;
 	public void init(){
 		options = serviceClient.getOptions();
 	    options.setTo(targetEPR);
@@ -41,12 +42,28 @@ public class LoginServiceWeb implements LoginService {
 		return null;
 	}
 	public User logInUser(User user) {
-		// TODO Auto-generated method stub
+		Object[] args = new Object[] { user };
+		Class[] returnTypes = new Class[] { User.class };
+		try {
+			Object[] response = serviceClient.invokeBlocking(this.logInUser,
+			        args, returnTypes);
+			return (User ) response[0];
+		} catch (AxisFault e) {
+			logger.error(e);
+		}
 		return null;
 	}
-	public void sendPasswordEmail(User user) {
-		// TODO Auto-generated method stub
-		
+	public boolean sendPasswordEmail(User user) {
+		Object[] args = new Object[] { user };
+		Class[] returnTypes = new Class[] { Boolean.class  };
+		try {
+			Object[] response = serviceClient.invokeBlocking(this.sendPasswordEmail,
+			        args, returnTypes);
+			return (Boolean) response[0];
+		} catch (AxisFault e) {
+			logger.error(e);
+			return false;
+		}
 	}
 	public void setServiceClient(RPCServiceClient serviceClient) {
 		this.serviceClient = serviceClient;
@@ -93,5 +110,11 @@ public class LoginServiceWeb implements LoginService {
 //		<constructor-arg value="logInIpAddress" />
 //	</bean>
 //
+	}
+	public void setLogInUser(QName logInUser) {
+		this.logInUser = logInUser;
+	}
+	public void setSendPasswordEmail(QName sendPasswordEmail) {
+		this.sendPasswordEmail = sendPasswordEmail;
 	}
 }
