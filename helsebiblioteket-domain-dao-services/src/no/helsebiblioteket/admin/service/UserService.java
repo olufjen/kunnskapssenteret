@@ -15,8 +15,8 @@ import no.helsebiblioteket.admin.request.PageRequest;
 import no.helsebiblioteket.admin.request.PageResult;
 
 public interface UserService extends Serializable {
-	public void createUser(User user);
-	public void saveUser(User user);
+	public User createUser(User user);
+	public User saveUser(User user);
 	public User findUserByUsername(User user);
 	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request);
 	public PageResult<User> getAllUsers(PageRequest<User> request);
