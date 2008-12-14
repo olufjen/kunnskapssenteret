@@ -27,6 +27,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
         if(users.size() == 0) { return null; } else { return users.get(0); }
 	}
 	public void insertUser(User user) {
+		// FIXME: Also include person_id!
 		String sql = "insert into tbl_user (username, org_unit_id, password) values (" +
 				":username, :org_unit_id, :password)";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
@@ -51,7 +52,9 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
             User user = new User();
             user.setId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
+            if(user.getUsername() == null) { user.setUsername(""); }
             user.setPassword(rs.getString("password"));
+            if(user.getPassword() == null) { user.setPassword(""); }
             Organization organization = new Organization();
             user.setOrganization(organization);
             user.getOrganization().setId((rs.getInt("org_unit_id")));
