@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -10,6 +11,12 @@ public class User {
 	protected Role role;
 	protected List<Access> accessList;
 	private Person person;
+	public List<Role> getRoleList(){
+		// TODO: Is this correct?
+		ArrayList<Role> list = new ArrayList<Role>();
+		list.add(this.role);
+		return list;
+	}
 	public Integer getId() {
 		return id;
 	}

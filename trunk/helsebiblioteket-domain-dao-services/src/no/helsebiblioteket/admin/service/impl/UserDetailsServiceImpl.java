@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().size()];
 		int i = 0;
 		for (Role role : user.getRoleList()) {
-			result[i++] = new GrantedAuthorityImpl(role.getRoleName());
+			result[i++] = new GrantedAuthorityImpl(role.getName());
 		}
 		return result; 
 		/*
