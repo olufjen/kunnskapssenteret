@@ -29,7 +29,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
-	public void sendPasswordEmail(User user) {
+	public boolean sendPasswordEmail(User user) {
 		logger.info("Sends email to :" + user.getUsername());
 		// TODO: Complete this!
 		Email email = new Email();
@@ -43,6 +43,7 @@ public class LoginServiceImpl implements LoginService {
 		email.setSubject("Lost password");
 		
 		emailDao.sendEmail(email);
+		return true;
 	}
 	public Organization logInIpAddress(IpAddress address) {
 		
