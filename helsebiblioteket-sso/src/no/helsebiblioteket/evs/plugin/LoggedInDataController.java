@@ -41,7 +41,7 @@ public final class LoggedInDataController extends HttpControllerPlugin {
     	// TODO: Is this the right heading?
 		response.setContentType("text/xml");
 		response.setCharacterEncoding("utf-8");
-
+		response.setStatus(HttpServletResponse.SC_OK);
 		OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
 		writer.append(buffer);
 		writer.close();
