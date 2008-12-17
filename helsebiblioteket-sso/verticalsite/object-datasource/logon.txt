@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources querystringcontext="true" usercontext="true">
+  <datasource>
+    <methodname>getFormattedDate</methodname>
+    <parameters>
+      <parameter name="offset" type="int">0</parameter>
+      <parameter name="format" type="String">SSS</parameter>
+      <parameter name="language" type="String">no</parameter>
+      <parameter name="country" type="String">NO</parameter>
+    </parameters>
+  </datasource>
+  <datasource>
+    <methodname>getURLAsXML</methodname>
+    <parameters>
+      <parameter name="url" type="string">http://localhost:8080/cms/site/2/loggedinuser</parameter>
+    </parameters>
+  </datasource>
+</datasources>
