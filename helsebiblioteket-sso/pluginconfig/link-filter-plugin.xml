@@ -8,8 +8,8 @@
  		<property name="urlService" ref="urlService" />
 	</bean>
 		<bean name="urlService" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
-		<property name="urlServiceClient" ref="serviceClient" />
-		<property name="urlTargetEPR" ref="targetEPR" />
+		<property name="serviceClient" ref="urlServiceClient" />
+		<property name="targetEPR" ref="urlTargetEPR" />
 		<property name="isAffectedName" ref="isAffectedName" />
 		<property name="translateName" ref="translateName" />
 	</bean>
