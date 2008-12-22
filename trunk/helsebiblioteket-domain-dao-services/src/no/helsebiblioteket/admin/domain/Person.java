@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.Date;
+
 public class Person {
 	private Integer id = null;
 	private String firstName = null;
@@ -12,6 +14,8 @@ public class Person {
 	private ContactInformation contactInformation = new ContactInformation();
 	private Profile profile = new Profile();
 	private User user;
+	private Date lastChanged = null;
+	
 	public String getName() {
 		return this.firstName + " " + lastName;
 	}
@@ -80,5 +84,14 @@ public class Person {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+	public void setStudent(boolean isStudent) {
+		this.isStudent = isStudent;
 	}
 }

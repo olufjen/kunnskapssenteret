@@ -8,7 +8,7 @@ package no.helsebiblioteket.admin.service;
 import java.io.Serializable;
 import java.util.List;
 
-import no.helsebiblioteket.admin.domain.Contract;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -19,6 +19,6 @@ public interface OrganizationService extends Serializable {
 	public List<Organization> getAllOrganizations();
 	public PageResult<Organization> findOrganizationsBySearchStringRoles(String searchString, PageRequest<Organization> request);
 	public Organization getOrganization(Integer organizationId);
-	public List<Contract> getContractList(OrganizationType organizationType);
+	public MemberOrganization getMemberOrganization(Integer organizationId);
 	public List<SupplierOrganization> getSupplierList();
 }
