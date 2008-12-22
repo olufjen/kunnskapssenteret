@@ -5,23 +5,23 @@
 	<bean class="no.helsebiblioteket.evs.plugin.LoginInterceptor">
  		<property name="urlPattern" value="/site/[0-3]/*" />
  		<property name="sessionVarName" value="hbloggedin" />
- 		<property name="loginService" ref="loginService" />
+ 		<property name="loginService" ref="interceptorLoginService" />
 	</bean>
 
-	<bean name="loginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
-		<property name="serviceClient" ref="serviceClient" />
-		<property name="targetEPR" ref="targetEPR" />
-		<property name="logInIpAddress" ref="logInIpAddress" />
+	<bean name="interceptorLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
+		<property name="serviceClient" ref="interceptorLoginServiceClient" />
+		<property name="targetEPR" ref="interceptorLoginServiceTargetEPR" />
+		<property name="logInIpAddress" ref="interceptorLogInIpAddress" />
 	</bean>
 	
-	<bean name="serviceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	<bean name="interceptorLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 
-	<bean name="targetEPR" class="org.apache.axis2.addressing.EndpointReference">
+	<bean name="interceptorLoginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
 		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
 	</bean>
 	
-	<bean name="logInIpAddress" class="javax.xml.namespace.QName">
+	<bean name="interceptorLogInIpAddress" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="logInIpAddress" />
 	</bean>
