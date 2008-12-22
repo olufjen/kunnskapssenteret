@@ -13,7 +13,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-import no.helsebiblioteket.admin.domain.Contract;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -35,25 +34,8 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
 		        );
 		return (orgs != null && orgs.size() == 1) ? orgs.get(0) : null;
 	}
-	public List<Contract> getContractList(OrganizationType organizationType) {
-		List<Contract> orgs = getSimpleJdbcTemplate().query(
-		        "org_unit_contract_id, org_unit_customer_id, org_unit_supplier_id, org_type_id from tbl_org_unit_contract where org_type_id = :org_type_id", 
-		        new ContractMapper(),
-		        new MapSqlParameterSource().addValue("org_type_id", organizationType.getId())
-		        );
-		return orgs;
-	}
-	private static class ContractMapper implements ParameterizedRowMapper<Contract> {
-        public Contract mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Contract contract = new Contract();
-            contract.setId(rs.getInt("contract_id"));
-            contract.setCustomerId(rs.getInt("org_unit_customer_id"));
-            contract.setSupplierId(rs.getInt("org_unit_supplier_id"));
-            contract.setOrgTypeId(rs.getInt("org_type_id"));
-            //contract.setAccessList(accessList);
-            return contract;
-        }
-    }
+	
+	
 	private static class OrgMapper implements ParameterizedRowMapper<Organization> {
         public Organization mapRow(ResultSet rs, int rowNum) throws SQLException {
         	//select org_unit_id, name, descr, name_short, org_type_key, org_unit_parent_id from tbl_org_unit
@@ -61,7 +43,6 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
             org.setId(rs.getInt("org_unit_id"));
             org.setName(rs.getString("name"));
             org.setDescription(rs.getString("descr"));
-            org.setNameShort(rs.getString("name_short"));
             
             // TODO: Is this the right way to do this!
             // traverse upwards and set parents until root is reached
@@ -75,5 +56,9 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
 	public List<SupplierOrganization> getSupplierList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void saveOrganization(Organization organization) {
+		// noop
 	}
 }

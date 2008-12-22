@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-import no.helsebiblioteket.admin.domain.Contract;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -38,10 +37,9 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
         Organization org = null;
         org = new Organization();
         org.setId(1);
-        org.setParentOrganization(new Organization());
+        org.setParent(new Organization());
         org.setIpRangeList(ipRangeList);
         org.setName("Organisajonsnavn 1");
-        org.setNameShort("org 1");
         
         OrganizationType orgType = new OrganizationType();
         orgType.setDescription("Helseforetak");
@@ -64,10 +62,9 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
         
         org = new Organization();
         org.setId(1);
-        org.setParentOrganization(new Organization());
+        org.setParent(new Organization());
         org.setIpRangeList(ipRangeList);
         org.setName("Organisajonsnavn 2");
-        org.setNameShort("org 2");
         
         orgType = new OrganizationType();
         orgType.setDescription("Utdanningsinstitusjon");
@@ -82,10 +79,6 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
 	}
 
 	public Organization getOrganization(Integer organizationId) {
-		return null;
-	}
-	
-	public List<Contract> getContractList(OrganizationType organizationType) {
 		return null;
 	}
 
@@ -121,9 +114,8 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
 		
 		org.setDescription("ProQuest - journal portal");
 		org.setId(1);
-		org.setName("ProQuest");
-		org.setNameShort("PQ");		
-		org.setParentOrganization(new Organization());
+		org.setName("ProQuest");		
+		org.setParent(new Organization());
 		org.setSourceList(sourceList);
 		org.setType(orgType);
 		
@@ -146,14 +138,17 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
 		org = new SupplierOrganization();
 		org.setDescription("Ovid - journal portal");
 		org.setId(2);
-		org.setName("Ovid");
-		org.setNameShort("O");		
-		org.setParentOrganization(null);
+		org.setName("Ovid");	
+		org.setParent(null);
 		org.setSourceList(sourceList);
 		org.setType(orgType);
 		
 		list.add(org);
 		
 		return list;
+	}
+	
+	public void saveOrganization(Organization organization) {
+		// noop
 	}
 }
