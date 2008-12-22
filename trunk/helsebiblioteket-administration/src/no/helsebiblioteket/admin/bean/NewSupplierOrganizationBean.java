@@ -9,8 +9,8 @@ import org.apache.myfaces.component.html.ext.HtmlDataTable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
@@ -20,24 +20,16 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 public class NewSupplierOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	
-	private Person loggedInUser = null;
 	private OrganizationService organizationService = null;
 	
-	private Organization organization = null;
-	private String organizationName = null;
+	private SupplierOrganization supplierOrganization = null;
 	
 	private String sourceName = null;
 	private String sourceUrl = null;
 	private UIInput sourceNameUIInput = null;
 	private UIInput sourceUrlUIInput = null;
-	
-	private OrganizationType organizationType = null;
-	private String selectedOrganizationTypeId = null;
-	
 	private List<SupplierSource> supplierSourceList = null;
-	
 	private HtmlDataTable supplierSourceListHtmlDataTable = null;
-	
 
 	public NewSupplierOrganizationBean() {
 		
@@ -59,22 +51,6 @@ public class NewSupplierOrganizationBean {
 		this.sourceUrlUIInput = sourceUrlUIInput;
 	}
 
-	public String getOrganizationName() {
-		return organizationName;
-	}
-
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
-	}
-
-	public String getSelectedOrganizationTypeId() {
-		return selectedOrganizationTypeId;
-	}
-
-	public void setSelectedOrganizationTypeId(String selectedOrganizationTypeId) {
-		this.selectedOrganizationTypeId = selectedOrganizationTypeId;
-	}
-
 	public String getSourceName() {
 		return sourceName;
 	}
@@ -90,25 +66,26 @@ public class NewSupplierOrganizationBean {
 	public void setSourceUrl(String sourceUrl) {
 		this.sourceUrl = sourceUrl;
 	}
-
-	public void setLoggedInUser(Person person) {
-		this.loggedInUser = person;
-	}
 	
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
 
-	public Organization getOrganization() {
-		return this.organization;
+	public Organization getSupplierOrganization() {
+		if (this.supplierOrganization == null) {
+			this.supplierOrganization = new SupplierOrganization();
+		}
+		if (this.supplierOrganization.getContactInformation() == null) {
+			this.supplierOrganization.setContactInformation(new ContactInformation());
+		}
+		if (this.supplierOrganization.getContactPerson() == null) {
+			this.supplierOrganization.setContactPerson(new Person());
+		}
+		return this.supplierOrganization;
 	}
 	
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-	
-	public OrganizationType getOrganizationType() {
-		return this.organizationType;
+	public void setOrganization(SupplierOrganization supplierOrganization) {
+		this.supplierOrganization = supplierOrganization;
 	}
 	
 	public List<SupplierSource> getSupplierSourceList() {
@@ -118,9 +95,9 @@ public class NewSupplierOrganizationBean {
 	public HtmlDataTable getSupplierSourceListHtmlDataTable() {
 		return this.supplierSourceListHtmlDataTable;
 	}
-
-	public void setSupplierSourceListHtmlDataTable(HtmlDataTable ipRangeListHtmlDataTable) {
-		this.supplierSourceListHtmlDataTable = ipRangeListHtmlDataTable;
+	
+	public void setSupplierSourceListHtmlDataTable(HtmlDataTable supplierSourceListHtmlDataTable) {
+		this.supplierSourceListHtmlDataTable = supplierSourceListHtmlDataTable;
 	}
 
 	public void actionSaveOrganization() {
@@ -138,7 +115,7 @@ public class NewSupplierOrganizationBean {
 	}
 	
 	public void actionDeleteSource() {
-		logger.debug("Method 'actionDeleteIpRange' invoked");
+		logger.debug("Method 'actionDeleteSource' invoked");
 		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
 		this.supplierSourceList.remove((SupplierSource) this.supplierSourceListHtmlDataTable.getRowData());
 	}
@@ -149,7 +126,7 @@ public class NewSupplierOrganizationBean {
 
 	public boolean isShowSourceList() {
 		return (supplierSourceList != null && supplierSourceList.size() > 0) ? true : false;
-	}	
+	}
 	
 	public List<SupplierOrganization> getSuppliersWithSourcesList() {
 		return organizationService.getSupplierList();
