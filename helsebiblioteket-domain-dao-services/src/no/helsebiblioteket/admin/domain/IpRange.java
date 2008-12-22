@@ -1,10 +1,21 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.Date;
+
 public class IpRange {
 	private String id = null;
 	private String ipAddressFrom = null;
 	private String ipAddressTo = null;
+	private Date lastChanged = null;
 	
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+
 	public IpRange() {	
 	}
 	

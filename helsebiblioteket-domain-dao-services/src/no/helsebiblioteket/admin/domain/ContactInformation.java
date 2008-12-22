@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.Date;
+
 public class ContactInformation {
 	private Integer id = null;
 	private String postalAddress = null;
@@ -8,6 +10,8 @@ public class ContactInformation {
 	private String postalLocation = null;
 	private String email = null;
 	private Person person;
+	private Date lastChanged = null;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -49,5 +53,11 @@ public class ContactInformation {
 	}
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
 	}
 }

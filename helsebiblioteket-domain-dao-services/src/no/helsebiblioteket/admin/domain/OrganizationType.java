@@ -6,6 +6,13 @@ public class OrganizationType {
 	private String description = null;
 	private String key = null;
 	
+	public OrganizationType() {
+	}
+	
+	public OrganizationType(Integer id) {
+		this.id = id;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -30,4 +37,16 @@ public class OrganizationType {
 	public void setKey(String key) {
 		this.key = key;
 	}
+	
+	public boolean equals(OrganizationType orgType) {
+        if (this == orgType) return true;
+        if (key != null ? !key.equals(orgType.key) : orgType.key != null) return false;
+        return true;
+    }
+	
+	public int hashCode() {
+        int result;
+        result = (key != null ? key.hashCode() : 0);
+        return result;
+    }
 }

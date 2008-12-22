@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.helsebiblioteket.admin.dao.OrganizationDao;
-import no.helsebiblioteket.admin.domain.Contract;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -15,10 +15,23 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 public class OrganizationServiceImpl implements OrganizationService {
 	private static final long serialVersionUID = 1L;
 	private OrganizationDao organizationDao;
-	public Organization getOrganization(Integer organizationId) { return this.organizationDao.getOrganization(organizationId); }
-	public List<Contract> getContractList(OrganizationType organizationType) { return this.organizationDao.getContractList(organizationType); }
-	public List<SupplierOrganization> getSupplierList() { return this.organizationDao.getSupplierList(); }
-	public List<Organization> getAllOrganizations() { return this.organizationDao.getAllOrganizations(); }
+	
+	public Organization getOrganization(Integer organizationId) {
+		return this.organizationDao.getOrganization(organizationId);
+	}
+	
+	public MemberOrganization getMemberOrganization(Integer organizationId) {
+		return (MemberOrganization) getOrganization(organizationId);
+	}
+	
+	public List<SupplierOrganization> getSupplierList() {
+		return this.organizationDao.getSupplierList();
+	}
+	
+	public List<Organization> getAllOrganizations() {
+		return this.organizationDao.getAllOrganizations();
+	}
+	
 	public PageResult<Organization> findOrganizationsBySearchStringRoles( String searchString, PageRequest<Organization> request) {
 		List<Organization> allOrganizations = this.organizationDao.getAllOrganizations();
 		List<Organization> someOrganizations = new ArrayList<Organization>();

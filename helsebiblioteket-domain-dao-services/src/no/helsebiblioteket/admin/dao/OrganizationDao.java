@@ -9,7 +9,6 @@ package no.helsebiblioteket.admin.dao;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.domain.Contract;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -17,6 +16,6 @@ import no.helsebiblioteket.admin.domain.SupplierOrganization;
 public interface OrganizationDao {
 	public List<Organization> getAllOrganizations();
 	public Organization getOrganization(Integer organizationId);
-	public List<Contract> getContractList(OrganizationType organizationType);
 	public List<SupplierOrganization> getSupplierList();
+	public void saveOrganization(Organization organization);
 }

@@ -1,9 +1,13 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.Date;
+
 public class Role {
 	private String key;
 	private String name;
 	private int roleId;
+	private Date lastChanged = null;
+	
 	public String getName() {
 		return name;
 	}
@@ -21,5 +25,11 @@ public class Role {
 	}
 	public void setKey(String key) {
 		this.key = key;
+	}
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
 	}
 }

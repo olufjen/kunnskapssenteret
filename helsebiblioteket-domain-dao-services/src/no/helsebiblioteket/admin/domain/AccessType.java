@@ -5,6 +5,7 @@ public class AccessType {
 	private String description = null;
 	private String name = null;
 	private String key = null;
+	private String category = null;
 	
 	public Integer getId() {
 		return id;
@@ -29,5 +30,11 @@ public class AccessType {
 	}
 	public void setKey(String key) {
 		this.key = key;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

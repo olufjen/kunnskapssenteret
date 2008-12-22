@@ -1,17 +1,21 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Organization {
 	private Integer id = null;
-	private Organization parentOrganization = null;
-	private String name = null;
+	private Organization parent = null;
 	private String description = null;
-	private String nameShort = null;
 	private OrganizationType type = null;
 	private List<IpRange> ipRangeList = null;
 	private Person contactPerson = null;
 	private ContactInformation contactInformation = null;
+	private List<Access> accessList = null;
+	private Date lastChanged = null;
+	private List<OrganizationName> nameList = null;
 	
 	public Organization() {
 	}
@@ -28,17 +32,11 @@ public class Organization {
 	public void setIpRangeList(List<IpRange> ipRangeList) {
 		this.ipRangeList = ipRangeList;
 	}
-	public Organization getParentOrganization() {
-		return parentOrganization;
+	public Organization getParent() {
+		return parent;
 	}
-	public void setParentOrganization(Organization parentOrganization) {
-		this.parentOrganization = parentOrganization;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
+	public void setParent(Organization parent) {
+		this.parent = parent;
 	}
 	public String getDescription() {
 		return description;
@@ -46,17 +44,11 @@ public class Organization {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getNameShort() {
-		return nameShort;
-	}
-	public void setNameShort(String nameShort) {
-		this.nameShort = nameShort;
-	}
 	public OrganizationType getType() {
 		return type;
 	}
-	public void setType(OrganizationType organizationType) {
-		this.type = organizationType;
+	public void setType(OrganizationType type) {
+		this.type = type;
 	}
 	public Person getContactPerson() {
 		return contactPerson;
@@ -70,4 +62,72 @@ public class Organization {
 	public void setContactInformation(ContactInformation contactInformation) {
 		this.contactInformation = contactInformation;
 	}
+
+	public List<Access> getAccessList() {
+		return accessList;
+	}
+
+	public void setAccessList(List<Access> accessList) {
+		this.accessList = accessList;
+	}
+
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+
+	public List<OrganizationName> getNameList() {
+		return nameList;
+	}
+
+	public void setNameList(List<OrganizationName> nameList) {
+		this.nameList = nameList;
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public String getName() {
+		return "Deprecated";
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public void setName(String name) {
+		// deprecated
+	}
+	
+	/*
+	 * Creates a map of "organization names" for a given category.
+	 * Examples: a map of short names indexed on locale or a map of normal names indexed on locale.
+	 */
+	public Map<String, OrganizationName> getNameMap(OrganizationNameCategory orgNameCat) {
+		Map<String, OrganizationName> orgNameMap = new HashMap<String, OrganizationName>();
+		for (OrganizationName orgName: nameList) {
+			if (orgName.getCategory().equals(orgNameCat)) {
+				orgNameMap.put(orgName.getLocale().toString(), orgName);
+			}
+		}
+		return orgNameMap;
+	}
+	
+	public int hashCode() {
+        int result;
+        result = (parent != null ? parent.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (nameList != null ? nameList.hashCode() : 0);
+        return result;
+    }
+	
+	public boolean equals(Organization org) {
+        if (this == org) return true;
+        if (parent != null ? !parent.equals(org.parent) : org.parent != null) return false;
+        if (type != null ? !type.equals(org.type) : org.type != null) return false;
+        if (nameList != null ? !nameList.equals(org.nameList) : org.nameList != null) return false;
+        return true;
+    }
 }
