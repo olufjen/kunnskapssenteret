@@ -33,7 +33,7 @@ xmlns="http://www.springframework.org/schema/beans"
 	
 	<bean id="dataSourceHelsebiblioteket" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${database.driver}"></property>
-		<property name="url" value="${database.url.innsiden}"></property>
+		<property name="url" value="${database.url}"></property>
 		<property name="username" value="${database.username}"></property>
 		<property name="password" value="${database.password}"></property>
 	</bean>
@@ -62,9 +62,14 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 
-	<bean id="organizationDao" class="no.helsebiblioteket.admin.dao.JdbcOrganizationDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+    	<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
+    	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
+   	</bean>
 
 	<!-- 
 		A service for accessing (relative) static properties like types of entities etc.
