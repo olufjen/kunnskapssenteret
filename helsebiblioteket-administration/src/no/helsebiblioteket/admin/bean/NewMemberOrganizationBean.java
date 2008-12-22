@@ -1,67 +1,54 @@
 package no.helsebiblioteket.admin.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.domain.Contract;
+import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.ResourceType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
-import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class NewMemberOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	
-	private Person loggedInUser = null;
 	private OrganizationService organizationService = null;
 	
-	private Organization organization = null;
-	private String organizationName = null;
+	private MemberOrganization memberOrganization;
+
 	private String ipAddressSingle = null;
 	private String ipAddressFrom = null;
 	private String ipAddressTo = null;
 	private UIInput ipAddressSingleUIInput = null;
 	private UIInput ipAddressFromUIInput = null;
 	private UIInput ipAddressToUIInput = null;
-	private OrganizationType organizationType = null;
-	private String selectedOrganizationTypeId = null;
-	private List<IpRange> ipRangeList = null;
-	private List<Contract> contractsForOrganizationType = null;
-	private String orgAddress = null;
-	private String orgPostalCode = null;
-	private String orgPostalLocation = null;
-	private String contactPersonFirstName = null;
-	private String contactPersonLastName = null;
-	private String contactPersonTelephoneNumber = null;
-	private String contactPersonEmail = null;
 	
+	private String selectedOrganizationTypeId = null;
+	
+	private List<IpRange> ipRangeList = null;
+	
+	
+	
+	private List<String> selectedSourceList = null;
 	private HtmlDataTable ipRangeListHtmlDataTable = null;
 	
-	private List<Contract> choosenContracts = null;
 
+	
 	public NewMemberOrganizationBean() {
-		
 	}
 	
-	public String getOrganizationName() {
-		return organizationName;
-	}
-
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
-	}
-
 	public String getSelectedOrganizationTypeId() {
 		return selectedOrganizationTypeId;
 	}
@@ -102,62 +89,6 @@ public class NewMemberOrganizationBean {
 		this.ipAddressTo = ipAddressTo;
 	}
 	
-	public String getOrgAddress() {
-		return orgAddress;
-	}
-
-	public void setOrgAddress(String orgAddress) {
-		this.orgAddress = orgAddress;
-	}
-
-	public String getOrgPostalCode() {
-		return orgPostalCode;
-	}
-
-	public void setOrgPostalCode(String orgPostalCode) {
-		this.orgPostalCode = orgPostalCode;
-	}
-
-	public String getOrgPostalLocation() {
-		return orgPostalLocation;
-	}
-
-	public void setOrgPostalLocation(String orgPostalLocation) {
-		this.orgPostalLocation = orgPostalLocation;
-	}
-
-	public String getContactPersonFirstName() {
-		return contactPersonFirstName;
-	}
-
-	public void setContactPersonFirstName(String contactPersonFirstName) {
-		this.contactPersonFirstName = contactPersonFirstName;
-	}
-
-	public String getContactPersonLastName() {
-		return contactPersonLastName;
-	}
-
-	public void setContactPersonLastName(String contactPersonLastName) {
-		this.contactPersonLastName = contactPersonLastName;
-	}
-
-	public String getContactPersonTelephoneNumber() {
-		return contactPersonTelephoneNumber;
-	}
-
-	public void setContactPersonTelephoneNumber(String contactPersonTelephoneNumber) {
-		this.contactPersonTelephoneNumber = contactPersonTelephoneNumber;
-	}
-
-	public String getContactPersonEmail() {
-		return contactPersonEmail;
-	}
-
-	public void setContactPersonEmail(String contactPersonEmail) {
-		this.contactPersonEmail = contactPersonEmail;
-	}
-
 	public UIInput getIpAddressFromUIInput() {
 		return ipAddressFromUIInput;
 	}
@@ -173,25 +104,32 @@ public class NewMemberOrganizationBean {
 	public void setIpAddressToUIInput(UIInput ipAddressToUIInput) {
 		this.ipAddressToUIInput = ipAddressToUIInput;
 	}
-
-	public void setLoggedInUser(Person person) {
-		this.loggedInUser = person;
-	}
 	
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
 
-	public Organization getOrganization() {
-		return this.organization;
+	public MemberOrganization getMemberOrganization() {
+		if (this.memberOrganization == null) {
+			this.memberOrganization = new MemberOrganization();
+		}
+		if (this.memberOrganization.getContactInformation() == null) {
+			this.memberOrganization.setContactInformation(new ContactInformation());
+		}
+		if (this.memberOrganization.getContactPerson() == null) {
+			this.memberOrganization.setContactPerson(new Person());
+		}
+		if (this.memberOrganization.getContactPerson().getContactInformation() == null) {
+			this.memberOrganization.getContactPerson().setContactInformation(new ContactInformation());
+		}
+		if (this.memberOrganization.getIpRangeList() == null) {
+			this.memberOrganization.setIpRangeList(new ArrayList<IpRange>());
+		}
+		return this.memberOrganization;
 	}
 	
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
-	
-	public OrganizationType getOrganizationType() {
-		return this.organizationType;
+	public void setOrganization(MemberOrganization memberOrganization) {
+		this.memberOrganization = memberOrganization;
 	}
 	
 	public List<IpRange> getIpRangeList() {
@@ -208,6 +146,8 @@ public class NewMemberOrganizationBean {
 
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
+		memberOrganization.setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
+		//organizationService.saveOrganization();
 	}
 	
 	public void actionAddSingleIp() {
@@ -239,6 +179,13 @@ public class NewMemberOrganizationBean {
 		return "new_member_organization";
 	}
 	
+	public String actionEditOrganization() {
+		Integer orgId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("organizationId");
+		this.memberOrganization = organizationService.getMemberOrganization(orgId);
+		//setContactPersonEmail(organization.getContactPerson())
+		return "new_member_organization";
+	}
+	
 	public void addIpRangeActionListener(ActionEvent actionEvent) {
 		logger.debug("Method 'addIpRangeActionListener' invoked");
 		logger.debug("vce.getComponent().getId(): " + actionEvent.getComponent().getId());
@@ -248,8 +195,16 @@ public class NewMemberOrganizationBean {
 		return (ipRangeList != null && ipRangeList.size() > 0) ? true : false;
 	}
 	
-	
 	public List<SupplierOrganization> getSuppliersWithSourcesList() {
 		return organizationService.getSupplierList();
+	}
+	
+	public List<String> getSelectedSourceList() {
+		List<String> list = new ArrayList<String>();
+		return list;
+	}
+	
+	public void setSelectedSourceList(List<String> list) { 
+		this.selectedSourceList = list;
 	}
 }
