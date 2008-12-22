@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Organization">
+	<typeAlias alias="contactinformation" type="no.helsebiblioteket.admin.domain.ContactInformation"/>
+	<select id="getContactInformationById" resultClass="contactinformation" parameterClass="integer">
+		select 
+		contact_information_id as id,
+		postal_address as postalAddress,
+		postal_code as postalCode,
+		telephone_number as telephoneNumber,
+		postal_location as postalLocation,
+		email as email,
+		last_changed as lastChanged
+		from tlb_contact_information
+		where contact_information_id = #contactInformationId#;
+	</select>
+	<select id="getOrganizationList" resultClass="organization">
+		select 
+		org_unit_id as id,
+		org_unit_parent_id as "parent.id",
+		descr as description,
+		org_type_id as "type.id",
+		contact_information_id as "contactInformation.id",
+		person_id as "person.id",
+		last_changed as lastChanged
+		from tlb_org_unit_id
+	</select>
+	<insert id="insertOrganization" parameterClass="organization">
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_org_unit_org_unit_id_seq') as id;
+		</selectKey>
+		insert into tbl_org_unit 
+		(org_unit_id, description, last_changed) 
+		values 
+		(#id#, #description#, now());
+	</insert>
+	<update id="updateOrganization" parameterClass="organization">
+		update organization set
+      	descr = #description#,
+      	last_changed = now();
+    	where org_unit_id = #id# and
+    	last_changed = #lastChanged#;
+  </update>
+</sqlMap>
