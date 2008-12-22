@@ -1,6 +1,6 @@
 package no.helsebiblioteket.admin.domain;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class User {
@@ -11,12 +11,17 @@ public class User {
 	protected Role role;
 	protected List<Access> accessList;
 	private Person person;
+	private List<Role> roleList;
+	private Date lastChanged = null;
+	
 	public List<Role> getRoleList(){
-		// TODO: Is this correct?
-		ArrayList<Role> list = new ArrayList<Role>();
-		list.add(this.role);
-		return list;
+		return roleList;
 	}
+	
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	} 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -41,6 +46,7 @@ public class User {
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
+	
 	public Role getRole() {
 		return role;
 	}
@@ -58,5 +64,11 @@ public class User {
 	}
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
 	}
 }
