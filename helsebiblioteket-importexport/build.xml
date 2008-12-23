@@ -1,12 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="helsebiblioteket-import" basedir="." default="usage">
+<project name="helsebiblioteket-importexport" basedir="." default="usage">
     <property file="build.properties"/>
 	
     <path id="master-classpath">
-    	<fileset dir="${lib.dir}">
-            <include name="**/*.jar"/>
-        </fileset>
     	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
     		<include name="**/*.jar" />
     	</fileset>

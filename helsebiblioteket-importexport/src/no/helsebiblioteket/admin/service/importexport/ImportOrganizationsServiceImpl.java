@@ -35,7 +35,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-public class ImportOrganizations {
+public class ImportOrganizationsServiceImpl {
 	private static final String NODE_GROUP = "group";
     private static final String NODE_DESC = "desc";
     private static final String NODE_FROM = "from";
@@ -53,14 +53,14 @@ public class ImportOrganizations {
     private Map<String, Organization> organizationMap;
     private String xmlDoc;
 
-    private static final Logger logger = Logger.getLogger(ImportOrganizations.class.getName());
+    private static final Logger logger = Logger.getLogger(ImportOrganizationsServiceImpl.class.getName());
 
-    public ImportOrganizations() {
+    public ImportOrganizationsServiceImpl() {
         xmlDoc = XML_DOC;
         organizationMap = new HashMap<String, Organization>();
     }
 
-    public ImportOrganizations(String xml) {
+    public ImportOrganizationsServiceImpl(String xml) {
         xmlDoc = xml;
         organizationMap = new HashMap<String, Organization>();
     }
