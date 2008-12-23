@@ -70,6 +70,18 @@ xmlns="http://www.springframework.org/schema/beans"
     	<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
     	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
    	</bean>
+   	
+   	<bean id="LDAPLookupUtil" class="no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil">
+	</bean>
+	
+   	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.ImportEndUsersServiceImpl">
+	 	<property name="userDao" ref="userDao"></property>
+	 	<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
+	 	<property name="ldapDN" value="cn=root,dc=kunnskapssenteret,dc=no"></property>
+	 	<!-- <property name="commonPassword" value="password" />-->
+	</bean>
+	
+	
 
 	<!-- 
 		A service for accessing (relative) static properties like types of entities etc.

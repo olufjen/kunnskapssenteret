@@ -142,6 +142,19 @@
 	</navigation-rule> 
 
 	
+	
+	<managed-bean>
+    	<description>Backingbean the welcome page</description>
+        <display-name>welcome</display-name>
+        <managed-bean-name>welcomeBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.WelcomeBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    	<managed-property>
+    		<property-name>importEndUsersService</property-name>
+        	<value>#{importEndUsersService}</value>
+		</managed-property>
+	</managed-bean> 
+	
 	 
     <managed-bean>
     	<description>Backingbean related to "user"</description>
