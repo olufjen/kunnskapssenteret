@@ -5,13 +5,13 @@
 
 <sqlMap namespace="Organization">
 	<typeAlias alias="organization" type="no.helsebiblioteket.admin.domain.Organization"/>
-	<resultMap id="getOrganizationResultMap" class="organization">
+	<!--  <resultMap id="getOrganizationResultMap" class="organization">
 		<result property="id" column="org_unit_id" />
 		<result property="parent.id" column="org_unit_parent_id" />
 		<result property="description" column="descr" />
 		<result property="type.id" column="org_type_id" />
 		<result property="contactInformation.id" column="contact_information_id" />
-		<result property="person.id" column="person_id" />
+		<result property="contactPerson.id" column="person_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<select id="getOrganizationById" resultMap="getOrganizationResultMap" parameterClass="integer">
@@ -68,5 +68,5 @@
       	last_changed = now();
     	where org_unit_id = #id# and
     	last_changed = #lastChanged#;
-  </update>
+  </update>-->
 </sqlMap>
