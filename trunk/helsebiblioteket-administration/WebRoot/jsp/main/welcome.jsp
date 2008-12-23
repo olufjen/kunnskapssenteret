@@ -9,4 +9,6 @@
 <f:verbatim></f:verbatim><h:outputText value="#{msg_main.welcome_ingress}" /><f:verbatim></f:verbatim>
 <f:verbatim></f:verbatim><h:outputText value="#{msg_main.welcome_body}" /><f:verbatim></f:verbatim>
 <h:commandButton action="logout" value="logout" immediate="true"/>
+<br /><br />
+
 </h:form>
