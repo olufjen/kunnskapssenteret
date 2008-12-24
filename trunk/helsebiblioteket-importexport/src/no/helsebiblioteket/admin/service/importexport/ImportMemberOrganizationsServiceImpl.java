@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
@@ -35,7 +37,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-public class ImportOrganizationsServiceImpl {
+public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganizationsService {
 	private static final String NODE_GROUP = "group";
     private static final String NODE_DESC = "desc";
     private static final String NODE_FROM = "from";
@@ -53,19 +55,32 @@ public class ImportOrganizationsServiceImpl {
     private Map<String, Organization> organizationMap;
     private String xmlDoc;
 
-    private static final Logger logger = Logger.getLogger(ImportOrganizationsServiceImpl.class.getName());
+    private OrganizationDao organizationDao;
+    
+    private static final Logger logger = Logger.getLogger(ImportMemberOrganizationsServiceImpl.class.getName());
 
-    public ImportOrganizationsServiceImpl() {
+    public ImportMemberOrganizationsServiceImpl() {
         xmlDoc = XML_DOC;
         organizationMap = new HashMap<String, Organization>();
     }
 
-    public ImportOrganizationsServiceImpl(String xml) {
+    public ImportMemberOrganizationsServiceImpl(String xml) {
         xmlDoc = xml;
         organizationMap = new HashMap<String, Organization>();
     }
 
-    public Map<String, Organization> getIpRanges() {
+    public void setOrganizationDao(OrganizationDao organizationDao) {
+    	this.organizationDao = organizationDao;
+    }
+    
+    public void importAllMemberOrganizations() {
+    	Collection<Organization> memberOrganizationList = getAllMemberOrganizations().values();
+    	for (Organization organization : memberOrganizationList) {
+    		organizationDao.saveOrganization(organization);
+    	}
+    }
+    
+    private Map<String, Organization> getAllMemberOrganizations() {
 
         XPath xpath = XPathFactory.newInstance().newXPath();
         NodeList rangeNodes = null;
@@ -102,14 +117,11 @@ public class ImportOrganizationsServiceImpl {
         Map<String, Organization> organizationMap = new HashMap<String, Organization>();
         Organization organization = null;
         
-        OrganizationType orgTypeHPR = new OrganizationType();
-        orgTypeHPR.setKey("health_enterprise");
+        OrganizationType orgTypeHPR = organizationDao.getOrganizationTypeByKey("health_enterprise");
         
-        OrganizationType orgTypeStud = new OrganizationType();
-        orgTypeStud.setKey("teaching");
+        OrganizationType orgTypeStud = organizationDao.getOrganizationTypeByKey("teaching");
         
-        OrganizationType orgTypeEmp = new OrganizationType();
-        orgTypeEmp.setKey("others");
+        OrganizationType orgTypeEmp = organizationDao.getOrganizationTypeByKey("others");
         
         
         for(int i = 0 ; i < nodeList.getLength(); i++){

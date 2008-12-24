@@ -32,14 +32,8 @@ import no.helsebiblioteket.admin.domain.User;
 public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 	LDAPLookupUtil ldapLookupUtil;
 	UserDao userDao;
-	String ldapDN;
 	String commonPassword;
 	private static final Logger LOG = Logger.getLogger(ImportEndUsersServiceImpl.class.toString());
-	
-	
-	public void setLdapDN(String ldapDN) {
-		this.ldapDN = ldapDN;
-	}
 
 	public void setLdapLookupUtil(LDAPLookupUtil util) {
 		this.ldapLookupUtil = util;
@@ -56,8 +50,6 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 	public void importAllEndUsers() {
 		Collection<LDAPUser> allEndUsersAsLdapUsers = new ArrayList();
 		try {
-			Collection<String> ldapDNCollection = new ArrayList<String>();
-			ldapDNCollection.add(ldapDN);
 			allEndUsersAsLdapUsers = ldapLookupUtil.getAllLDAPUsers();
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
