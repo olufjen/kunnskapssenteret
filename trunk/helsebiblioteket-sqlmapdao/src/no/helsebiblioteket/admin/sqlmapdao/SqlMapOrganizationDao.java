@@ -7,6 +7,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 
@@ -31,13 +32,13 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 	
 	private void insertOrganization(Organization organization) {
 		if (organization.getContactPerson() != null) {
-			getSqlMapClientTemplate().update("insertPerson", organization.getContactPerson());
+			//getSqlMapClientTemplate().update("insertPerson", organization.getContactPerson());
 		}
-		getSqlMapClientTemplate().update("insertOrganization", organization);
-		//getSqlMapClientTemplate().update("insertContactInformation", organization);
-		//getSqlMapClientTemplate().update("insertAccessList", organization);
-		//getSqlMapClientTemplate().update("insertIpRangeList", organization);
-		//getSqlMapClientTemplate().update("insertNameList", organization);
+		getSqlMapClientTemplate().insert("insertOrganization", organization);
+		//getSqlMapClientTemplate().insert("insertContactInformation", organization);
+		//getSqlMapClientTemplate().insert("insertAccessList", organization);
+		//getSqlMapClientTemplate().insert("insertIpRangeList", organization);
+		//getSqlMapClientTemplate().insert("insertNameList", organization);
 	}
 	
 	public List<Organization> getAllOrganizations() {
@@ -69,5 +70,13 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 
 	public List<SupplierOrganization> getSupplierList() {
 		return null;
+	}
+	
+	public OrganizationType getOrganizationTypeById(Integer organizationTypeId) {
+		return (OrganizationType) getSqlMapClientTemplate().queryForObject("getOrganizationTypeById", organizationTypeId);
+	}
+	
+	public OrganizationType getOrganizationTypeByKey(String organizationTypeKey) {
+		return (OrganizationType) getSqlMapClientTemplate().queryForObject("getOrganizationTypeByKey", organizationTypeKey);
 	}
 }
