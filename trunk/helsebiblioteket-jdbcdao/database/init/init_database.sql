@@ -1,52 +1,16 @@
--- This script inserts initial data into the database
+INSERT INTO tbl_system_reg (name, descr, key, system_id) VALUES ('Helsebiblioteket - administration', 'Administration of organizations, IP-addresses, users and access', 'helsebiblioteket_admin', 1);
 
--- TODO: init database
+INSERT INTO tbl_user_role_reg (name, descr, user_role_id, system_id, key) VALUES ('Administrator', 'Administrator with access to all functionality', 1, 1, 'administrator');
+INSERT INTO tbl_user_role_reg (name, descr, user_role_id, system_id, key) VALUES ('Health personell', 'Authorized health personell with health personnel number', 2, 1, 'health_personnel');
+INSERT INTO tbl_user_role_reg (name, descr, user_role_id, system_id, key) VALUES ('Students', 'Students with valid student number', 3, 1, 'students');
+INSERT INTO tbl_user_role_reg (name, descr, user_role_id, system_id, key) VALUES ('Health personell other', 'Authorized health personell without health personnel number', 4, 1, 'health_personnel_other');
 
--- Some corrections
--- TODO: Some of this is wrong!
-ALTER TABLE tbl_org_unit DROP COLUMN org_type_id;
-ALTER TABLE tbl_org_unit ADD COLUMN org_type_key character varying;
-ALTER TABLE tbl_org_unit ALTER COLUMN org_type_key SET STORAGE PLAIN;
-ALTER TABLE tbl_org_unit ALTER COLUMN org_type_key SET NOT NULL;
---ALTER TABLE tbl_org_unit DROP CONSTRAINT organizations_for_org_type;
-ALTER TABLE tbl_org_type_reg  ADD UNIQUE (key);
-ALTER TABLE tbl_org_unit
-  ADD CONSTRAINT organizations_for_org_type FOREIGN KEY (org_type_key)
-      REFERENCES tbl_org_type_reg (key) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE tbl_org_unit DROP COLUMN org_unit_parent_id ;
-ALTER TABLE tbl_org_unit ADD COLUMN org_unit_parent_id integer;
-ALTER TABLE tbl_org_unit ALTER COLUMN org_unit_parent_id SET STORAGE PLAIN;
+INSERT INTO tbl_access_type_reg (access_type_id, descr, name, key, category) VALUES (1, 'general access permission', 'general', 'general', 'GRANT');
+INSERT INTO tbl_access_type_reg (access_type_id, descr, name, key, category) VALUES (2, 'general denial of access', 'general', 'general', 'DENY');
 
--- THIS MUST BE DONE
-alter table tbl_user add person_id integer;
-alter table tbl_user add foreign key(person_id) references tbl_person (person_id);
-alter table tbl_person drop user_id;
-alter table tbl_person drop org_unit_id;
-alter table tbl_user_role_reg drop  user_role_category_id;
-alter table tbl_user_role_reg drop  system_id;
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (1, 'Health enterprise', 'health enterprise', 'health_enterprise');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (2, 'Public administration', 'public administration', 'public_administration');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (3, 'Teaching', 'teaching', 'teaching');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (4, 'Others', 'others', 'others');
 
--- Some test data
-insert into tbl_org_type_reg (descr, name, key) values ('Kommentar for helseforetak', 'Helseforetak', 'hftk');
-insert into tbl_org_unit (name, descr, name_short, org_type_key) values ('Ullevål universitetssykehus', '', 'Ullevål UvS', 'hftk');
-insert into tbl_user (username, password, org_unit_id) values ('test@example.org', 'qwerty', 3);
-insert into tbl_user (username, password, org_unit_id) values ('leif@hb.no', 'qwerty', 3);
-insert into tbl_person (first_name, last_name) values ('Fredrik', 'Sørensen');
-insert into tbl_person (first_name, last_name) values ('Leif Torger', 'Grøndahl');
---select * from tbl_person; --1,2
---select * from tbl_user; --2,3
-update tbl_user set person_id = 1 where user_id = 2;  
-update tbl_user set person_id = 2 where user_id = 3;
-
-insert into tbl_user_role_reg(name, descr, key) values ('Administrator', '', 'ADMN');
-insert into tbl_user_role_reg(name, descr, key) values ('Health Personnel', '', 'HPNR');
-insert into tbl_user_role_reg(name, descr, key) values ('Student', '', 'STUD');
-insert into tbl_user_role_reg(name, descr, key) values ('Health or public worker', '', 'ANST');
-
-insert into tbl_user_role(user_id, user_role_id) values (select id from role where key='ADMN', 4);
-insert into tbl_user_role(user_id, user_role_id) values (2, 5);
-insert into tbl_user_role(user_id, user_role_id) values (3, 3);
-
-
--- EXTRA: NOT NEEDED! FIX STUPID ERROR ABOVE!
-update tbl_org_unit set org_type_id = 1;
+INSERT INTO tbl_resource_type_reg (resource_type_id, descr, name, key) VALUES (1, 'Supplier source', 'supplier source', 'supplier_source');
