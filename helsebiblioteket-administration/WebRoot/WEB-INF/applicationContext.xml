@@ -77,11 +77,12 @@ xmlns="http://www.springframework.org/schema/beans"
    	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.ImportEndUsersServiceImpl">
 	 	<property name="userDao" ref="userDao"></property>
 	 	<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
-	 	<property name="ldapDN" value="cn=root,dc=kunnskapssenteret,dc=no"></property>
 	 	<!-- <property name="commonPassword" value="password" />-->
 	</bean>
 	
-	
+	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.ImportMemberOrganizationsServiceImpl">
+	 	<property name="organizationDao" ref="organizationDao"></property>
+	</bean>
 
 	<!-- 
 		A service for accessing (relative) static properties like types of entities etc.

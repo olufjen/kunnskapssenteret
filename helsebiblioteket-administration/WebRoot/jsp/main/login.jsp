@@ -23,7 +23,8 @@
 		<h:commandButton action="login" value="Login" />
 		<h:messages id="messages" layout="table" globalOnly="true"
 				showSummary="true" showDetail="false" />
-	<h:commandButton action="#{welcomeBean.actionImportAllEndUsers}" value="Import all end users" immediate="true"/>
+	<br /><h:commandButton action="#{welcomeBean.actionImportAllEndUsers}" value="Import all end users" immediate="true"/>
+	<br /><h:commandButton action="#{welcomeBean.actionImportMemberOrganizations}" value="Import all member organizations" immediate="true"/>
 	</h:form>
 
 </body>
