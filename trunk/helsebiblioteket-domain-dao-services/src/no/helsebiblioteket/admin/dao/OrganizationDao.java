@@ -18,4 +18,6 @@ public interface OrganizationDao {
 	public Organization getOrganization(Integer organizationId);
 	public List<SupplierOrganization> getSupplierList();
 	public void saveOrganization(Organization organization);
+	public OrganizationType getOrganizationTypeById(Integer organizationTypeId);
+	public OrganizationType getOrganizationTypeByKey(String organizationTypeKey);
 }
