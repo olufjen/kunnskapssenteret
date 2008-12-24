@@ -153,6 +153,10 @@
     		<property-name>importEndUsersService</property-name>
         	<value>#{importEndUsersService}</value>
 		</managed-property>
+		<managed-property>
+    		<property-name>importMemberOrganizationsService</property-name>
+        	<value>#{importMemberOrganizationsService}</value>
+		</managed-property>
 	</managed-bean> 
 	
 	 
