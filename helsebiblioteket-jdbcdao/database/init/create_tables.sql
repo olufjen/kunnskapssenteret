@@ -49,24 +49,34 @@ CREATE TABLE tbl_profile
 );
 
 
-
 CREATE TABLE tbl_org_unit
 (
     org_unit_id          SERIAL             NOT NULL,
     org_unit_parent_id   INTEGER             NULL,
-    name_no              VARCHAR             NULL,
     descr                VARCHAR             NULL,
-    name_no_short        VARCHAR             NULL,
     org_type_id          INTEGER             NOT NULL,
-    access_id            INTEGER             NULL,
     contact_information_id INTEGER           NULL,
     person_id            INTEGER             NULL,
-    name_en              VARCHAR             NULL,
-    name_en_short        VARCHAR             NULL,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( org_unit_id )
 );
 
+
+CREATE TABLE tbl_org_unit_name
+(
+    org_unit_name_id     SERIAL             NOT NULL,
+    language_code	     VARCHAR             NULL,
+    name                 VARCHAR             NULL,
+    org_unit_id          INTEGER             NOT NULL,
+    category	 		 VARCHAR			 NOT NULL,
+    PRIMARY KEY ( org_unit_name_id )
+);
+
+ALTER TABLE tbl_org_unit_name
+	ADD CHECK (category in ('SHORT', 'NORMAL'));
+
+ALTER TABLE tbl_org_unit_name
+  ADD CONSTRAINT tbl_org_unit_name_unique UNIQUE (language_code, name, org_unit_id, category);
 
 
 CREATE TABLE tbl_database_patches
@@ -100,12 +110,13 @@ CREATE TABLE tbl_access
     user_role_id         INTEGER             NULL,
     valid_from           TIMESTAMP           NULL,
     valid_to             TIMESTAMP           NULL,
-    access_id            SERIAL             NOT NULL,
-    resource_id          INTEGER             NOT NULL,
+    access_id            SERIAL              NOT NULL,
+    resource_id          INTEGER             NULL,
     org_type_id          INTEGER             NULL,
     provided_by_org_unit INTEGER             NULL,
     org_unit_id          INTEGER             NULL,
     last_changed         TIMESTAMP           NULL,
+    org_unit_as_resource_id INTEGER          NULL,
     PRIMARY KEY ( access_id )
 );
 
@@ -228,6 +239,9 @@ CREATE TABLE tbl_access_type_reg
 ALTER TABLE tbl_access_type_reg
   ADD CONSTRAINT tbl_access_type_reg_unique UNIQUE (key, category);
 
+ALTER TABLE tbl_access_type_reg
+  ADD CHECK (category in ('GRANT', 'DENY'));
+
 
 
 CREATE TABLE tbl_resource_type_reg
@@ -261,9 +275,6 @@ ALTER TABLE tbl_ip_address
     ADD CONSTRAINT ip_addresses_for_organization FOREIGN KEY ( org_unit_id ) REFERENCES tbl_org_unit ( org_unit_id );
 
 ALTER TABLE tbl_org_unit
-    ADD CONSTRAINT access_to_org FOREIGN KEY ( access_id ) REFERENCES tbl_access ( access_id );
-
-ALTER TABLE tbl_org_unit
     ADD CONSTRAINT contact_information_for_organization FOREIGN KEY ( contact_information_id ) REFERENCES tbl_contact_information ( contact_information_id );
 
 ALTER TABLE tbl_org_unit
@@ -274,6 +285,9 @@ ALTER TABLE tbl_org_unit
 
 ALTER TABLE tbl_org_unit
     ADD CONSTRAINT parent_organization FOREIGN KEY ( org_unit_parent_id ) REFERENCES tbl_org_unit ( org_unit_id );
+
+ALTER TABLE tbl_org_unit_name
+    ADD CONSTRAINT names_for_org FOREIGN KEY ( org_unit_id ) REFERENCES tbl_org_unit ( org_unit_id );
 
 ALTER TABLE tbl_access
     ADD CONSTRAINT access_for_access_type FOREIGN KEY ( access_type_id ) REFERENCES tbl_access_type_reg ( access_type_id );
@@ -289,6 +303,9 @@ ALTER TABLE tbl_access
 
 ALTER TABLE tbl_access
     ADD CONSTRAINT access_for_user FOREIGN KEY ( user_id ) REFERENCES tbl_user ( user_id );
+
+ALTER TABLE tbl_access
+    ADD CONSTRAINT access_to_org FOREIGN KEY ( org_unit_as_resource_id ) REFERENCES tbl_org_unit ( org_unit_id );
 
 ALTER TABLE tbl_access
     ADD CONSTRAINT access_to_resource FOREIGN KEY ( resource_id ) REFERENCES tbl_resource ( resource_id );
@@ -344,21 +361,61 @@ ALTER TABLE tbl_person
 ALTER TABLE tbl_person
     ADD CONSTRAINT positions_for_person FOREIGN KEY ( position_type_id ) REFERENCES tbl_position_type_reg ( position_type_id );
 
-ALTER TABLE tbl_access OWNER TO helsebiblioteket;
-ALTER TABLE tbl_access_type_reg OWNER TO helsebiblioteket;
-ALTER TABLE tbl_action OWNER TO helsebiblioteket;
-ALTER TABLE tbl_contact_information OWNER TO helsebiblioteket;
-ALTER TABLE tbl_database_patches OWNER TO helsebiblioteket;
-ALTER TABLE tbl_ip_address OWNER TO helsebiblioteket;
-ALTER TABLE tbl_org_type_reg OWNER TO helsebiblioteket;
-ALTER TABLE tbl_org_unit OWNER TO helsebiblioteket;
-ALTER TABLE tbl_person OWNER TO helsebiblioteket;
-ALTER TABLE tbl_profile OWNER TO helsebiblioteket;
-ALTER TABLE tbl_resource OWNER TO helsebiblioteket;
-ALTER TABLE tbl_resource_type_reg OWNER TO helsebiblioteket;
-ALTER TABLE tbl_supplier_source OWNER TO helsebiblioteket;
-ALTER TABLE tbl_system_reg OWNER TO helsebiblioteket;
-ALTER TABLE tbl_user OWNER TO helsebiblioteket;
-ALTER TABLE tbl_user_role OWNER TO helsebiblioteket;
-ALTER TABLE tbl_user_role_reg OWNER TO helsebiblioteket;
-ALTER TABLE tbl_position_type_reg OWNER TO helsebiblioteket;
+
+
+    
+ALTER TABLE tbl_access 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_access_type_reg 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_action 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_contact_information 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_database_patches 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_ip_address 
+	OWNER TO helsebiblioteket;
+ALTER TABLE tbl_org_type_reg 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_org_unit 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_org_unit_name 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_person 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_profile 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_resource 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_resource_type_reg 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_supplier_source 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_system_reg 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_user 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_user_role 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_user_role_reg 
+	OWNER TO helsebiblioteket;
+	
+ALTER TABLE tbl_position_type_reg 
+	OWNER TO helsebiblioteket;
