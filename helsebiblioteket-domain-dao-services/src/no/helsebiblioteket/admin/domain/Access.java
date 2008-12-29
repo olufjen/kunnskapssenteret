@@ -20,6 +20,12 @@ public class Access {
 	private Date validTo = null;
 	private Date lastChanged = null;
 	
+	// foreign keys
+	private Integer accessTypeId;
+	private Integer userId;
+	private Integer userRoleId;
+	private Integer orgTypeId;
+	
 	public Organization getOrganization() {
 		return organization;
 	}
@@ -67,5 +73,31 @@ public class Access {
 	}
 	public void setProvidedBy(Organization providedBy) {
 		this.providedBy = providedBy;
+	}
+	
+	// foreign keys
+	public Integer getAccessTypeId() {
+		return accessTypeId;
+	}
+	public void setAccessTypeId(Integer accessTypeId) {
+		this.accessTypeId = accessTypeId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Integer getUserRoleId() {
+		return userRoleId;
+	}
+	public void setUserRoleId(Integer userRoleId) {
+		this.userRoleId = userRoleId;
+	}
+	public Integer getOrgTypeId() {
+		return orgTypeId;
+	}
+	public void setOrgTypeId(Integer orgTypeId) {
+		this.orgTypeId = orgTypeId;
 	}
 }

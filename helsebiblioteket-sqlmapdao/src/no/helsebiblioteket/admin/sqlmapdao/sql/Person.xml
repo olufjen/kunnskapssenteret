@@ -5,59 +5,45 @@
 
 <sqlMap namespace="Person">
 	<typeAlias alias="person" type="no.helsebiblioteket.admin.domain.Person"/>
-	<select id="getPersonById" resultClass="person" parameterClass="integer">
-		select *
-		from tlb_person
+	<resultMap id="getPersonResultMap" class="person">
+		<result property="id" column="person_id" />
+		<result property="firstName" column="first_name" />
+		<result property="lastName" column="last_name" />
+		<result property="studentNumber" column="student_number" />
+		<result property="hprNumber" column="hpr_number" />
+		<result property="contactInformation.id" column="contact_information_id" />
+		<result property="profile.id" column="profile_id" />
+		<result property="position.id" column="position_type_id" />
+		<result property="lastChanged" column="last_changed" />
+	</resultMap>
+	<select id="getPersonById" resultMap="getPersonResultMap" parameterClass="integer">
+		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
+		from tbl_person;
 		where person_id = #personId#;
 	</select>
-	<select id="getPersonList" resultClass="person">
+	<select id="getPersonList" resultMap="getPersonResultMap">
 		select 
-		person_id as id, 
-		first_name as firstName, 
-		last_name as lastName, 
-		student_number as studentNumber, 
-		hpr_number as hprNumber, 
-		contact_information_id as "contactInformation.id", 
-		profile_id as "profile.id", 
-		position_type_id as "positionType.id", 
-		last_changed as lastChanged
-		from
-		tbl_person;
+		person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
+		from tbl_person;
 	</select>
 	<insert id="insertPerson" parameterClass="person">
-		<selectKey resultClass="int" keyProperty="personId">
-			SELECT nextval('tbl_person_person_id_seq') as person_id;
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_person_person_id_seq') as id;
 		</selectKey>
-		insert into person
-		(person_id, 
-		first_name, 
-		last_name, 
-		student_number, 
-		hpr_number, 
-		contact_information_id, 
-		profile_id, 
-		position_type_id, 
-		last_changed) 
+		insert into tbl_person
+		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed) 
 		values 
-		(#personId#, 
-		#firstName#, 
-		#lastName#, 
-		#studentNumber#, 
-		#hprNumber#, 
-		#contactInformation.id#, 
-		#profile.id#, 
-		#position.id#, 
-		now());
+		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, now());
 	</insert>
 	<update id="updatePerson" parameterClass="person">
-		update person
+		update tbl_person
 		set first_name = #firstName#
 		last_name = #lastName#
 		student_number = #studentNumber#
 		hpr_number = #hprNumber#
-		contact_information_id = #contact_information_id#
-		profile_id = #profile_id#
-		position_type_id = #position_type_id#
+		contact_information_id = #contactInformation.id#
+		profile_id = #profile.id#
+		position_type_id = #position.id#
 		last_changed = now()
 		where person_id = #id# and 
     	last_changed = #lastChanged#;

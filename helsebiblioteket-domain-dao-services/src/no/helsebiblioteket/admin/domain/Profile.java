@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Profile {
+	private Integer id = null;
 	private Boolean receiveNewsletter = false;
 	private Boolean participateSurvey = false;
 	private Person person;
@@ -13,6 +14,12 @@ public class Profile {
 	public Boolean getParticipateSurvey() { return participateSurvey; }
 	public void setParticipateSurvey(Boolean participateSurvey) { this.participateSurvey = participateSurvey; }
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getId() {
+		return this.id;
+	}
 	public Person getPerson() {
 		return person;
 	}
