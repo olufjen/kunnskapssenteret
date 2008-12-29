@@ -3,45 +3,49 @@
 	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
-<sqlMap namespace="Organization">
-	<typeAlias alias="contactinformation" type="no.helsebiblioteket.admin.domain.ContactInformation"/>
-	<select id="getContactInformationById" resultClass="contactinformation" parameterClass="integer">
-		select 
-		contact_information_id as id,
-		postal_address as postalAddress,
-		postal_code as postalCode,
-		telephone_number as telephoneNumber,
-		postal_location as postalLocation,
-		email as email,
-		last_changed as lastChanged
+<sqlMap namespace="ContactInformation">
+	<typeAlias alias="contactInformation" type="no.helsebiblioteket.admin.domain.ContactInformation"/>
+	<resultMap id="getContactInformationResultMap" class="contactInformation">
+		<result property="id" column="contact_information_id" />
+		<result property="postalAddress" column="postal_address" />
+		<result property="postalCode" column="postal_code" />
+		<result property="telephoneNumber" column="telephone_number" />
+		<result property="postalLocation" column="postal_location" />
+		<result property="email" column="email" />
+		<result property="lastChanged" column="last_changed" />
+	</resultMap>
+	<select id="getContactInformationById" resultMap="getContactInformationResultMap" parameterClass="integer">
+		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed
 		from tlb_contact_information
 		where contact_information_id = #contactInformationId#;
 	</select>
-	<select id="getOrganizationList" resultClass="organization">
-		select 
-		org_unit_id as id,
-		org_unit_parent_id as "parent.id",
-		descr as description,
-		org_type_id as "type.id",
-		contact_information_id as "contactInformation.id",
-		person_id as "person.id",
-		last_changed as lastChanged
-		from tlb_org_unit_id
+	<select id="getContactInformationList" resultMap="getContactInformationResultMap">
+		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed
+		from tlb_contact_information
 	</select>
-	<insert id="insertOrganization" parameterClass="organization">
+	<insert id="insertContactInformation" parameterClass="contactInformation">
 		<selectKey resultClass="int" keyProperty="id">
-			SELECT nextval('tbl_org_unit_org_unit_id_seq') as id;
+			SELECT nextval('tbl_contact_information_contact_information_id_seq') as id;
 		</selectKey>
-		insert into tbl_org_unit 
-		(org_unit_id, description, last_changed) 
+		insert into tbl_contact_information 
+		(contact_information_id, postal_address, postal_code, postal_location, telephone_number, email, last_changed) 
 		values 
-		(#id#, #description#, now());
+		(#id#, #postalAddress#, #postalCode#, #postalLocation#, #telephoneNumber#, #email#, now());
 	</insert>
-	<update id="updateOrganization" parameterClass="organization">
-		update organization set
-      	descr = #description#,
+	<update id="updateContactInformation" parameterClass="contactInformation">
+		update tbl_contact_information set
+      	postal_address = #postalAddress#,
+      	postal_code = #postalCode#,
+      	postal_location = #postalLocation#,
+      	telephone_number = #telephoneNumber#,
+      	email = #email#,
       	last_changed = now();
     	where org_unit_id = #id# and
     	last_changed = #lastChanged#;
   </update>
+  <delete id="deleteContactInformation" parameterClass="integer">
+  		delete from tbl_contact_information
+  		where
+  		contact_information_id = #contactInformationId#;
+  </delete>
 </sqlMap>

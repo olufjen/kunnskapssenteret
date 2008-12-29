@@ -1,12 +1,17 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.Date;
 import java.util.Locale;
 
 public class OrganizationName {
 	private Integer id = null;
 	private String name = null;
-	private Locale locale = null;
+	private String languageCode = null;
 	private OrganizationNameCategory category = null;
+	private Date lastChanged = null;
+	
+	// foreign keys
+	private Integer organizationId;
 	
 	public Integer getId() {
 		return id;
@@ -20,11 +25,11 @@ public class OrganizationName {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Locale getLocale() {
-		return locale;
+	public String getLanguageCode() {
+		return this.languageCode;
 	}
-	public void setLocale(Locale locale) {
-		this.locale = locale;
+	public void setLanguageCode(String languageCode) {
+		this.languageCode = languageCode;
 	}
 	public OrganizationNameCategory getCategory() {
 		return category;
@@ -33,10 +38,22 @@ public class OrganizationName {
 		this.category = category;
 	}
 	
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+	public Integer getOrganizationId() {
+		return organizationId;
+	}
+	public void setOrganizationId(Integer organizationId) {
+		this.organizationId = organizationId;
+	}
 	public boolean equals(OrganizationName orgName) {
         if (this == orgName) return true;
         if (name != null ? !name.equals(orgName.name) : orgName.name != null) return false;
-        if (locale != null ? !locale.equals(orgName.locale) : orgName.locale != null) return false;
+        if (languageCode != null ? !languageCode.equals(orgName.languageCode) : orgName.languageCode != null) return false;
         if (category != null ? !category.equals(orgName.category) : orgName.category!= null) return false;
         return true;
     }
@@ -44,7 +61,7 @@ public class OrganizationName {
 	public int hashCode() {
         int result;
         result = (name != null ? name.hashCode() : 0);
-        result = 31 * result + (locale != null ? locale.hashCode() : 0);
+        result = 31 * result + (languageCode != null ? languageCode.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
         return result;
     }

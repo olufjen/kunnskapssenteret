@@ -1,8 +1,7 @@
 package no.helsebiblioteket.admin.service.importexport;
 
 /*
- * TODO:
- * implement class as service, not with mainclass
+ * Import service for member organizations
  */
 import java.io.IOException;
 import java.net.InetAddress;
@@ -91,7 +90,6 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             // This one does not cache - yhiiihaaa!!
             URL r = this.getClass().getResource(xmlDoc);
             rangeNodes = (NodeList)xpath.evaluate(XPATH_EXPR, new InputSource(r.openStream()), XPathConstants.NODESET);
-            
         } catch (NullPointerException e) {
             logger.log(Level.WARNING, "Could not load xml config: " + xmlDoc, e);            
         } catch (IOException e) {
@@ -123,6 +121,9 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         
         OrganizationType orgTypeEmp = organizationDao.getOrganizationTypeByKey("others");
         
+        boolean hasContactInformationValue = false;
+        boolean hasContactPersonValue = false;
+        String nodeValue = null;
         
         for(int i = 0 ; i < nodeList.getLength(); i++){
             Node n = nodeList.item(i);
@@ -145,11 +146,11 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             	}
             }
             found = findNodeByName(n, NODE_DESC);
-            if (found != null) {
+            if (found != null && found.getTextContent().trim().length() > 0) {
             	if (organization.getNameList() == null) {
             		OrganizationName orgName = new OrganizationName();
                     orgName.setCategory(OrganizationNameCategory.NORMAL);
-                    orgName.setLocale(new Locale("no"));
+                    orgName.setLanguageCode("no");
             		orgName.setName(found.getTextContent());
             		List<OrganizationName> orgNameList = new ArrayList<OrganizationName>();
             		orgNameList.add(orgName);
@@ -157,47 +158,69 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             	}
             } 
             found = findNodeByName(n, NODE_FROM);
-            if (found != null) {
+            if (found != null && found.getTextContent().trim().length() > 0) {
             	String addressFrom = null, addressTo = null;
-                try {
-                    addressFrom = InetAddress.getByName(found.getTextContent()).toString();
-                    addressTo = InetAddress.getByName(findNodeByName(n, NODE_FROM).getTextContent()).toString();
-                    IpRange range = new IpRange(addressFrom, addressTo);
-                    if (organization.getIpRangeList() == null) {
-                    	organization.setIpRangeList(new ArrayList<IpRange>());
-                    	if (!organization.getIpRangeList().contains(range)) {
-                    		organization.getIpRangeList().add(range);
-                    		logger.log(Level.FINE, "Adding range: " + addressFrom + " - " + addressTo);
-                    	}
-                    }
-                } catch (UnknownHostException e) {
-                	logger.log(Level.WARNING, "Could not resolve ip-range from either: " + addressFrom + " or " + addressTo);
+                addressFrom = found.getTextContent().toString();
+                addressTo = findNodeByName(n, NODE_TO).getTextContent().toString().trim();
+                if (addressTo.length() > 0) {
+                	addressTo = addressTo.replace("/", "");
+                } else {
+                	addressTo = null;
                 }
+                addressFrom.replace("/", "");
+                IpRange range = new IpRange(addressFrom, addressTo);
+                if (organization.getIpRangeList() == null) {
+                	organization.setIpRangeList(new ArrayList<IpRange>());
+                }
+            	if (!organization.getIpRangeList().contains(range)) {
+            		organization.getIpRangeList().add(range);
+            		logger.log(Level.ALL, "Adding range: " + addressFrom + " - " + addressTo);
+            	}
             }
             found = findNodeByName(n, NODE_CONTACT);
-            if (found != null) {
+            if (found != null && found.getTextContent().trim().length() > 0) {
             	Person contactPerson = new Person();
             	contactPerson.setFirstName(found.getTextContent());
             	organization.setContactPerson(contactPerson);
             }
             ContactInformation contactInformation = new ContactInformation();
             if ((found = findNodeByName(n, NODE_EMAIL)) != null) {
-            	contactInformation.setEmail(found.getTextContent());
+            	if (found.getTextContent().trim().length() > 0) {
+            		hasContactInformationValue = true;
+            		contactInformation.setEmail(found.getTextContent());
+            	}
             }
             if ((found = findNodeByName(n, NODE_PHONE)) != null) {
-            	contactInformation.setTelephoneNumber(found.getTextContent());
+            	if (found.getTextContent().trim().length() > 0) {
+            		hasContactInformationValue = true;
+            		contactInformation.setTelephoneNumber(found.getTextContent());
+            	}
             }
             if ((found = findNodeByName(n, NODE_POSTAL_CODE)) != null) {
-            	contactInformation.setPostalCode(found.getTextContent());
+            	if (found.getTextContent().trim().length() > 0) {
+            		hasContactInformationValue = true;
+            		contactInformation.setPostalCode(found.getTextContent());
+            	}
             }
             if ((found = findNodeByName(n, NODE_POSTAL_LOCATION)) != null) {
-            	contactInformation.setPostalLocation(found.getTextContent());
+            	if (found.getTextContent().trim().length() > 0) {
+            		hasContactInformationValue = true;
+            		contactInformation.setPostalLocation(found.getTextContent());
+            	}
             }
             if ((found = findNodeByName(n, NODE_POSTAL_ADDRESS)) != null) {
-            	contactInformation.setPostalAddress(found.getTextContent());
+            	if (found.getTextContent().trim().length() > 0) {
+            		hasContactInformationValue = true;
+            		contactInformation.setPostalAddress(found.getTextContent());
+            	}
             }
-        	organization.setContactInformation(contactInformation);
+            if (hasContactInformationValue) {
+            	organization.setContactInformation(contactInformation);
+            }
         	organizationMap.put(orgNameNorwegian, organization);
+        	
+        	hasContactInformationValue = false;
+            hasContactPersonValue = false;
         }
         return organizationMap;
     }

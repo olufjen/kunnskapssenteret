@@ -15,48 +15,20 @@
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<select id="getOrganizationById" resultMap="getOrganizationResultMap" parameterClass="integer">
-		select 
-		org_unit_id,
-		org_unit_parent_id,
-		descr,
-		org_type_id,
-		contact_information_id,
-		person_id,
-		last_changed
-		from tlb_org_unit_id
+		select org_unit_id, org_unit_parent_id, descr, org_type_id, contact_information_id, person_id, last_changed
+		from tbl_org_unit
 		where org_unit_id = #organizationId#;
 	</select>
 	<select id="getOrganizationList" resultMap="getOrganizationResultMap">
-		select 
-		org_unit_id as id,
-		org_unit_parent_id,
-		descr,
-		org_type_id,
-		contact_information_id,
-		person_id,
-		last_changed
-		from tlb_org_unit_id
+		select org_unit_id as id, org_unit_parent_id, descr, org_type_id, contact_information_id, person_id, last_changed
+		from tbl_org_unit
 	</select>
 	<insert id="insertOrganization" parameterClass="organization">
 		<selectKey resultClass="int" keyProperty="id">
 			SELECT nextval('tbl_org_unit_org_unit_id_seq') as id;
 		</selectKey>
-		insert into tbl_org_unit 
-		(org_unit_id, 
-		org_unit_parent_id,
-		descr, 
-		org_type_id,
-		contact_information_id,
-		person_id,
-		last_changed) 
-		values 
-		(#id#,
-		#parent.id#,
-		#description#,
-		#type.id#,
-		#contactInformation.id#,
-		#contactPerson.id#,
-		now());
+		insert into tbl_org_unit (org_unit_id, org_unit_parent_id, descr, org_type_id, contact_information_id, person_id, last_changed) 
+		values (#id#, #parent.id#, #description#, #type.id#, #contactInformation.id#, #contactPerson.id#, now());
 	</insert>
 	<update id="updateOrganization" parameterClass="organization">
 		update organization set

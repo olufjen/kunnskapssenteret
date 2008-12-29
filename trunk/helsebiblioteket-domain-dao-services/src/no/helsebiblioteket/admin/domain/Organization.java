@@ -105,15 +105,15 @@ public class Organization {
 	 * Creates a map of "organization names" for a given category.
 	 * Examples: a map of short names indexed on locale or a map of normal names indexed on locale.
 	 */
-	public Map<String, OrganizationName> getNameMap(OrganizationNameCategory orgNameCat) {
-		Map<String, OrganizationName> orgNameMap = new HashMap<String, OrganizationName>();
-		for (OrganizationName orgName: nameList) {
-			if (orgName.getCategory().equals(orgNameCat)) {
-				orgNameMap.put(orgName.getLocale().toString(), orgName);
-			}
-		}
-		return orgNameMap;
-	}
+	//public Map<String, OrganizationName> getNameMap(OrganizationNameCategory orgNameCat) {
+	//	Map<String, OrganizationName> orgNameMap = new HashMap<String, OrganizationName>();
+	//	for (OrganizationName orgName: nameList) {
+	//		if (orgName.getCategory().equals(orgNameCat)) {
+	//			orgNameMap.put(orgName.getLocale().toString(), orgName);
+	//		}
+	//	}
+	//	return orgNameMap;
+	//}
 	
 	public int hashCode() {
         int result;

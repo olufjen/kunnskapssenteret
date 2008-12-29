@@ -7,6 +7,9 @@ public class Resource {
 	private ResourceType resourceType = null;
 	private Date lastChanged = null;
 	
+	// foreign keys
+	private Integer organizationId;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -24,5 +27,11 @@ public class Resource {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+	public Integer getOrganizationId() {
+		return organizationId;
+	}
+	public void setOrganizationId(Integer organizationId) {
+		this.organizationId = organizationId;
 	}
 }

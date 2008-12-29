@@ -12,29 +12,17 @@
 		<result property="key" column="key" />
 	</resultMap>
 	<select id="getOrganizationTypeById" resultMap="getOrganizationTypeResultMap" parameterClass="integer">
-		select 
-		org_type_id,
-		descr,
-		name,
-		key
+		select org_type_id, descr, name, key
 		from tbl_org_type_reg
 		where org_type_id = #organizationTypeId#;
 	</select>
 	<select id="getOrganizationTypeByKey" resultMap="getOrganizationTypeResultMap" parameterClass="string">
-		select 
-		org_type_id,
-		descr,
-		name,
-		key
+		select org_type_id, descr, name, key
 		from tbl_org_type_reg
 		where key = #organizationTypeKey#;
 	</select>
 	<select id="getOrganizationTypeList" resultMap="getOrganizationTypeResultMap">
-		select 
-		org_type_id,
-		descr,
-		name,
-		key
+		select org_type_id, descr, name, key
 		from tbl_org_type_reg
 	</select>
 </sqlMap>
