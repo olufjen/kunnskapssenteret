@@ -22,13 +22,13 @@ public final class LogInController extends HttpControllerPlugin {
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	this.logger.info("LogInController RUNNING");
     	// TODO: Real parsing of query string
-    	String prefix = "&" + this.parameterNames.get("resultName") + "=" +
-    		this.parameterNames.get("resultValue");
-    	if(request.getQueryString().endsWith(prefix)){
-    		this.result(request, response);
-    	} else {
+//    	String prefix = "&" + this.parameterNames.get("resultName") + "=" +
+//    		this.parameterNames.get("resultValue");
+//    	if(request.getQueryString().endsWith(prefix)){
+//    		this.result(request, response);
+//    	} else {
     		this.login(request, response);
-    	}
+//    	}
     	this.logger.info("LogInController DONE");
     	// TODO: From and goto in Spring or in the HTML-forms?
 //    	http://localhost:8080/cms/site/2/login?brukernavn=leiftorger&passord=password
@@ -36,7 +36,7 @@ public final class LogInController extends HttpControllerPlugin {
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringBuffer result = new StringBuffer();
-		result.append("<loginresult>");
+		result.append("<" + this.resultSessionVarName + ">");
     	String username = request.getParameter(this.parameterNames.get("username"));
     	String password = request.getParameter(this.parameterNames.get("password"));
     	if(username == null) { username = ""; }
@@ -50,24 +50,23 @@ public final class LogInController extends HttpControllerPlugin {
        	}
     	if(user != null){
     		// Found user!
-    		result.append("<success>true</success>");
-    		request.getSession().setAttribute(this.loggedInSessionVarName, user);
+    		result.append("<success/>");
+    		LoggedInFunction.logIn(this.loggedInSessionVarName, request.getSession(), user);
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
-        	this.logger.info("Goto: " + gotoUrl);
+//        	this.logger.info("Goto: " + gotoUrl);
     		response.sendRedirect(gotoUrl);
     	} else {
     		// Return!
     		makeXML(username, password, result);
     		String referer = request.getParameter(this.parameterNames.get("from"));
-        	this.logger.info("From: " + referer);
+//        	this.logger.info("From: " + referer);
     		response.sendRedirect(referer);
     	}
-    	result.append("</loginresult>");
-    	request.getSession().setAttribute(this.resultSessionVarName, result);
+		result.append("</" + this.resultSessionVarName + ">");
+    	LoggedInFunction.setResult(this.resultSessionVarName, result);
 	}
 	private void makeXML(String username, String password, StringBuffer result) {
 		boolean lookup = true;
-		result.append("<success>false</success>");
 		result.append("<values><username>");
 		result.append(username);
 		result.append("</username><password>");
@@ -75,38 +74,38 @@ public final class LogInController extends HttpControllerPlugin {
 		result.append("</password></values><messages><username>");
 		if(username.length() == 0) {
 	    	// TODO: Return errors, etc from property files!
-			result.append("Must write user name.");
+			result.append("NO_USERNAME");
 			lookup = false;
 		}
 		result.append("</username><password>");
 		if(password.length() == 0) {
 	    	// TODO: Return errors, etc from property files!
-			result.append("Must write password.");
+			result.append("NO_PASSWORD");
 			lookup = false;
 		}
 		result.append("</password></messages><summary>");
 		if(lookup){
 	    	// TODO: Return errors, etc from property files!
-			result.append("User not found!");
+			result.append("UNKNOWN_USER");
 		}
 		result.append("</summary>");
 	}
-	private void emptyXML(StringBuffer result) {
-		// TODO: Make initial XML for forms!
-		result.append("<loginresult>");
-		result.append("<empty/>");
-		result.append("</loginresult>");
-	}
-	private void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = (StringBuffer) request.getSession().getAttribute(this.resultSessionVarName);
-		if(result == null){
-			result = new StringBuffer();
-			emptyXML(result);
-		}
-		// TODO: Use buffer properties!
-		response.setContentType("text/xml");
-		response.getWriter().write(result.toString());
-	}
+//	private void emptyXML(StringBuffer result) {
+//		// TODO: Make initial XML for forms!
+//		result.append("<loginresult>");
+//		result.append("<empty/>");
+//		result.append("</loginresult>");
+//	}
+//	private void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		StringBuffer result = (StringBuffer) request.getSession().getAttribute(this.resultSessionVarName);
+//		if(result == null){
+//			result = new StringBuffer();
+//			emptyXML(result);
+//		}
+//		// TODO: Use buffer properties!
+//		response.setContentType("text/xml");
+//		response.getWriter().write(result.toString());
+//	}
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}

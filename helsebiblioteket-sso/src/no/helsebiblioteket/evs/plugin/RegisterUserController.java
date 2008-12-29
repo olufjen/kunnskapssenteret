@@ -2,26 +2,123 @@ package no.helsebiblioteket.evs.plugin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
-	private final Log logger = LogFactory.getLog(getClass());
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		this.logger.info("RegisterUserController RUNNING");
-    	// TODO: Real parsing of query string
-    	String resultPrefix = "&" + this.parameterNames.get("resultName") + "=" +
-    		this.parameterNames.get("resultValue");
-    	if(request.getQueryString().endsWith(resultPrefix)){
-    		this.result(request, response);
+		String save = request.getParameter(this.parameterNames.get("saveName"));
+		String cancel = request.getParameter(this.parameterNames.get("cancelName"));
+    	if(save != null && save.equals(this.parameterNames.get("saveValue"))){
+    		if(cancel != null && cancel.equals(this.parameterNames.get("cancelValue"))){
+    			this.cancel(request, response);
+        	} else {
+        		this.registerUser(request, response);
+        	}
     	} else {
-    		this.registerUser(request, response);
+    		this.init(request, response);
     	}
-    	this.logger.info("RegisterUserController DONE");
+	}
+	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		User user = new User();
+		String usertype = request.getParameter(this.parameterNames.get("usertype"));
+		
+		
+		
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document document = translator.newDocument();
+		Element element = document.createElement(this.resultSessionVarName);
+//		element.appendChild(document.createElement("init"));
+		Element values = document.createElement("values");
+		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
+		userXML(user, null, document, values);
+		element.appendChild(values);
+		document.appendChild(element);
+		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+		response.sendRedirect(gotoUrl);
+	}
+	private void cancel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document document = translator.newDocument();
+		Element element = document.createElement(this.resultSessionVarName);
+		Element cancel = document.createElement("cancel");
+		element.appendChild(cancel);
+		document.appendChild(element);
+		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		String gotoUrl = request.getParameter(this.parameterNames.get("from"));
+		response.sendRedirect(gotoUrl);
+	}
+	private void registerUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// TODO: How to initialize person?
+		User user = new User();
+		user.setPerson(new Person());
+		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
+		if(hprNumber == null) { hprNumber = "";}
+		String usertype = request.getParameter(this.parameterNames.get("usertype"));
+		// TODO: Check for errors.
+		// TODO: Load errror messages from props!
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document document = translator.newDocument();
+		Element element = document.createElement(this.resultSessionVarName);
+		Element messages = document.createElement("messages");
+		if(hprNumber.length() == 0 || ! isInteger(hprNumber)){
+			messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NOT_NUMBER"));
+		}
+		this.validateUser(user, request, document, messages);
+		
+		// TODO: Deal with different user types!
+
+		boolean success = false;
+		String summary = "";
+		// TODO: Bad test!
+		if( ! messages.hasChildNodes()){
+			user.getPerson().setHprNumber(new Integer(hprNumber));
+			// TODO: Saving may fail though!
+	    	boolean saved = true;
+	    	this.userService.createUser(user);
+	    	if( ! saved){
+	    		summary = "USER_NOT_REGISTERED";
+	    	} else {
+	    		success = true;
+	    	}
+    	}
+		String gotoUrl = "";
+		if(success){
+			element.appendChild(document.createElement("success"));
+			gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+		} else {
+			Element values = document.createElement("values");
+			values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
+			userXML(user, hprNumber, document, values);
+			element.appendChild(values);
+			element.appendChild(messages);
+			if(summary.length() != 0){
+				element.appendChild(UserToXMLTranslator.element(document, "summary", summary));
+			}
+			gotoUrl = request.getParameter(this.parameterNames.get("from"));
+		}
+		document.appendChild(element);
+		LoggedInFunction.setResult(this.resultSessionVarName, document);
+    	response.sendRedirect(gotoUrl);
+	}
+	protected void validateUser(User user, HttpServletRequest request, Document document, Element element){
+		super.validateUser(user, request, document, element);
+		String username = request.getParameter(this.parameterNames.get("username"));
+		if(username == null) { username = "";}
+		user.setUsername(username);
+		if(username.length() == 0){
+			element.appendChild(UserToXMLTranslator.element(document, "username", "NO_VALUE"));
+		} else if(userExists(username)){
+			element.appendChild(UserToXMLTranslator.element(document, "username", "USERNAME_IN_USER"));
+		}
 	}
 	private boolean userExists(String username) {
 		// FIXME: Write this!
@@ -29,79 +126,8 @@ public final class RegisterUserController extends ProfileController {
 		test.setUsername(username);
 		return this.userService.findUserByUsername(test) != null;
 	}
-	private void registerUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = new StringBuffer();
-		// TODO: How to initialize person?
-		User user = new User();
-		user.setPerson(new Person());
-		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
-		if(hprNumber == null) { hprNumber = "";}
-		// TODO: Check for errors.
-		// TODO: Load errror messages from props!
-		StringBuffer errorBuffer = new StringBuffer();
-		if(hprNumber.length() == 0 || ! isInteger(hprNumber)){
-			errorBuffer.append("<hprnumber>Not a number.</hprnumber>");
-		}
-		this.validateUser(user, request, errorBuffer);
-		
-		// TODO: Deal with different user types!
-		
-		boolean success = false;
-		String summary = "";
-		// TODO: Bad test!
-		if(errorBuffer.toString().length() == 0){
-			user.getPerson().setHprNumber(new Integer(hprNumber));
-			// TODO: Saving may fail though!
-	    	boolean saved = true;
-	    	this.userService.createUser(user);
-	    	if( ! saved){
-	    		summary = "<summary>User was not registered. Try again later.</summary>";
-	    	} else {
-	    		success = true;
-	    	}
-    	}
-		String gotoUrl = "";
-		result.append("<profileresult>");
-		if(success){
-			result.append("<success>true</success>");
-			gotoUrl = request.getParameter(this.parameterNames.get("goto"));
-		} else {
-			result.append("<success>false</success>");
-			result.append("<values>");
-			userXML(user, hprNumber, result);
-			result.append("</values>");
-			result.append("<messages>");
-			result.append(errorBuffer);
-			result.append("</messages>");
-			if(summary.length() != 0){
-				result.append("<summary>");
-				result.append(summary);
-				result.append("</summary>");
-			}
-			gotoUrl = request.getParameter(this.parameterNames.get("from"));
-		}
-    	result.append("</profileresult>");
-    	request.getSession().setAttribute(this.resultSessionVarName, result);
-    	response.sendRedirect(gotoUrl);
-	}
-	protected void validateUser(User user, HttpServletRequest request, StringBuffer errorBuffer){
-		super.validateUser(user, request, errorBuffer);
-		String username = request.getParameter(this.parameterNames.get("username"));
-		if(username == null) { username = "";}
-		user.setUsername(username);
-		if(username.length() == 0){
-			errorBuffer.append("<username>Must have value.</username>");
-		} else if(userExists(username)){
-			errorBuffer.append("<username>Username in use.</username>");
-		}
-	}
-	protected void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		super.result(request, response);
-	}
-	protected void userXML(User user, String hprNumber, StringBuffer result) {
-		super.userXML(user, hprNumber, result);
-		result.append("<username>");
-		result.append(user.getUsername());
-		result.append("</username>");
+	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
+		super.userXML(user, hprNumber, document, element);
+		element.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
 	}
 }

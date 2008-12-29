@@ -1,51 +1,50 @@
 package no.helsebiblioteket.evs.plugin;
 
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
 public class ProfileController extends HttpControllerPlugin {
-	private final Log logger = LogFactory.getLog(getClass());
 	protected String resultSessionVarName;
-	private String loggedInSessionVarName;
 	protected UserService userService;
 	protected Map<String, String> parameterNames;
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// FIXME: Remove testing:
-		User user = new User(); user.setUsername("test@example.org");
-		request.getSession().setAttribute(this.loggedInSessionVarName, this.userService.findUserByUsername(user));
-//		request.getSession().setAttribute(this.loggedInSessionVarName, null);
-		
-		this.logger.info("ProfileController RUNNING");
-    	// TODO: Real parsing of query string
-    	String resultPrefix = "&" + this.parameterNames.get("resultName") + "=" +
-    		this.parameterNames.get("resultValue");
-    	String initPrefix = "&" + this.parameterNames.get("initName") + "=" +
-			this.parameterNames.get("initValue");
-    	if(request.getQueryString().endsWith(resultPrefix)){
-    		this.result(request, response);
-    	} else if(request.getQueryString().endsWith(initPrefix)){
-    		this.init(request, response);
-    	} else {
+		String save = request.getParameter(this.parameterNames.get("saveName"));
+		String delete = request.getParameter(this.parameterNames.get("deleteName"));
+		if(save != null && save.equals(this.parameterNames.get("saveValue"))){
     		this.saveProfile(request, response);
+		} else if(delete != null && delete.equals(this.parameterNames.get("deleteValue"))){
+			this.delete(request, response);
+    	} else {
+    		this.init(request, response);
     	}
-    	this.logger.info("ProfileController DONE");
+	}
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+		response.sendRedirect(gotoUrl);
 	}
 	private void saveProfile(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = new StringBuffer();
-		result.append("<profileresult>");
-		Object loggedIn = request.getSession().getAttribute(this.loggedInSessionVarName);
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document document = translator.newDocument();
+		Element element = document.createElement(this.resultSessionVarName);
+		Object loggedIn = LoggedInFunction.loggedIn();
 		if((loggedIn == null) || ( ! (loggedIn instanceof User))){
-			result.append("<success>false</success><notloggedin/>");
+			element.appendChild(document.createElement("notloggedin"));
     		String referer = request.getParameter(this.parameterNames.get("from"));
     		response.sendRedirect(referer);
 		} else {
@@ -54,44 +53,44 @@ public class ProfileController extends HttpControllerPlugin {
 			if(hprNumber == null) { hprNumber = "";}
 			// TODO: Check for errors.
 			// TODO: Load errror messages from props!
-			StringBuffer errorBuffer = new StringBuffer();
+//			StringBuffer errorBuffer = new StringBuffer();
+    		Element messages = document.createElement("messages");
 			if(hprNumber.length() == 0 || ! isInteger(hprNumber)){
-				errorBuffer.append("<hprnumber>Not a number.</hprnumber>");
+				messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NOT_NUMBER"));
+				user.getPerson().setHprNumber(null);
 			}
-			this.validateUser(user, request, errorBuffer);
+			this.validateUser(user, request, document, messages);
 			// TODO: Bad test!
-			if(errorBuffer.toString().length() == 0){
+			if( ! messages.hasChildNodes()){
 				user.getPerson().setHprNumber(new Integer(hprNumber));
 				// TODO: Saving may fail though!
 		    	boolean saved = true;
 		    	this.userService.saveUser(user);
 		    	if( ! saved){
-		    		result.append("<success>false</success>");
-		    		result.append("<values>");
-		    		userXML(user, hprNumber, result);
-		    		result.append("</values>");
-		    		result.append("<summary>Profile was not saved. Try again later.</summary>");
+		    		Element values = document.createElement("values");
+		    		userXML(user, hprNumber, document, values);
+		    		element.appendChild(values);
+		    		element.appendChild(messages);
+		    		element.appendChild(UserToXMLTranslator.element(document, "summary", "NOT_SAVED"));
 		    	} else {
-		    		result.append("<success>true</success>");
+					element.appendChild(document.createElement("success"));
 		    	}
 	    		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 	    		response.sendRedirect(gotoUrl);
 	    	} else {
-	    		result.append("<success>false</success>");
-	    		result.append("<values>");
-	    		userXML(user, hprNumber, result);
-	    		result.append("</values>");
-	    		result.append("<messages>");
-	    		result.append(errorBuffer);
-	    		result.append("</messages>");
+//	    		result.append("<success>false</success>");
+	    		Element values = document.createElement("values");
+	    		userXML(user, hprNumber, document, values);
+	    		element.appendChild(values);
+	    		element.appendChild(messages);
 	    		String referer = request.getParameter(this.parameterNames.get("from"));
 	    		response.sendRedirect(referer);
 	    	}
 		}
-    	result.append("</profileresult>");
-    	request.getSession().setAttribute(this.resultSessionVarName, result);
+		document.appendChild(element);
+		LoggedInFunction.setResult(this.resultSessionVarName, document);
 	}
-	protected void validateUser(User user, HttpServletRequest request, StringBuffer errorBuffer){
+	protected void validateUser(User user, HttpServletRequest request, Document document, Element messages){
 		String firstName = request.getParameter(this.parameterNames.get("firstname"));
 		if(firstName == null) { firstName = "";}
 		String lastName = request.getParameter(this.parameterNames.get("lastname"));
@@ -111,23 +110,23 @@ public class ProfileController extends HttpControllerPlugin {
 		if(passwordRepeat == null) { passwordRepeat = "";}
 
 		if(firstName.length() == 0){
-			errorBuffer.append("<firstname>Must have value.</firstname>");
+			messages.appendChild(UserToXMLTranslator.element(document, "firstname", "NO_VALUE"));
 		}
 		if(lastName.length() == 0){
-			errorBuffer.append("<lastname>Must have value.</lastname>");
+			messages.appendChild(UserToXMLTranslator.element(document, "lastname", "NO_VALUE"));
 		}
 		if(employer.length() == 0){
-			errorBuffer.append("<employer>Must have value.</employer>");
+			messages.appendChild(UserToXMLTranslator.element(document, "employer", "NO_VALUE"));
 		}
 		if(email.length() == 0 || ! validEmail(email)){
-			errorBuffer.append("<emailaddress>Not valid.</emailaddress>");
+			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NOT_VALID"));
 		}
 		if(password.length() == 0 || ! validPassword(password)){
-			errorBuffer.append("<password>Not long enough.</password>");
+			messages.appendChild(UserToXMLTranslator.element(document, "password", "TOO_SHORT"));
 		}
 //		if(passwordRepeat.length() == 0){ }
 		if(! password.equals(passwordRepeat)){
-			errorBuffer.append("<passwordrepeat>Not equal.</passwordrepeat>");
+			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
 		}
 //		if( ! isBoolean(receiveNewsletter)){
 //			errorBuffer.append("<newsletter>Not valid.</newsletter>");
@@ -163,61 +162,78 @@ public class ProfileController extends HttpControllerPlugin {
 		try{Integer.parseInt(integer);} catch (NumberFormatException e) {return false;}
 		return true;
 	}
-	protected void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = (StringBuffer) request.getSession().getAttribute(this.resultSessionVarName);
-		if(result == null){
-			result = new StringBuffer();
-			result.append("<profileresult><empty/></profileresult>");
+//	protected void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		StringBuffer result = (StringBuffer) request.getSession().getAttribute(this.resultSessionVarName);
+//		if(result == null){
+//			result = new StringBuffer();
+//			result.append("<profileresult><empty/></profileresult>");
+//		}
+//		// TODO: Use buffer properties!
+//		response.setContentType("text/xml");
+//		response.getWriter().write(result.toString());
+//	}
+	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		translator.translate(user, document, element);
+		if(hprNumber == null){
+			Integer hpr = user.getPerson().getHprNumber();
+			if(hpr == null) hprNumber = "";
+			else hprNumber = hpr.toString();
 		}
-		// TODO: Use buffer properties!
-		response.setContentType("text/xml");
-		response.getWriter().write(result.toString());
-	}
-	protected void userXML(User user, String hprNumber, StringBuffer result) {
-		result.append("<hprnumber>");
-		if(hprNumber != null){
-			result.append(hprNumber);
-		} else {
-			Integer num =  user.getPerson().getHprNumber();
-			if(num != null){ result.append(num); }
-			else { result.append(""); }
-		}
-		result.append("</hprnumber>");
-		result.append("<firstname>");
-		result.append(user.getPerson().getFirstName());
-		result.append("</firstname>");
-		result.append("<lastname>");
-		result.append(user.getPerson().getLastName());
-		result.append("</lastname>");
-		result.append("<employer>");
-		result.append(user.getPerson().getEmployer());
-		result.append("</employer>");
-		result.append("<newsletter>");
-		result.append(user.getPerson().getProfile().getReceiveNewsletter());
-		result.append("</newsletter>");
-		result.append("<questionaire>");
-		result.append(user.getPerson().getProfile().getParticipateSurvey());
-		result.append("</questionaire>");
-		result.append("<emailaddress>");
-		result.append(user.getPerson().getContactInformation().getEmail());
-		result.append("</emailaddress>");
-		result.append("<password></password>");
-		result.append("<passwordrepeat></passwordrepeat>");
+		element.appendChild(UserToXMLTranslator.element(document, "hprnumber", hprNumber));
+
+//		Source source = new DOMSource(document);
+//        StringWriter stringWriter = new StringWriter();
+//		Result streamResult = new StreamResult(stringWriter);
+//		TransformerFactory factory = TransformerFactory.newInstance();
+//		Transformer transformer = factory.newTransformer();
+//		transformer.transform(source, streamResult);
+//		
+//		// TODO: Use DOM all the way!
+//		result.append(stringWriter.getBuffer().toString());
+
+		
+//		result.append("<hprnumber>");
+//		result.append("</hprnumber>");
+//		result.append("<firstname>");
+//		result.append(user.getPerson().getFirstName());
+//		result.append("</firstname>");
+//		result.append("<lastname>");
+//		result.append(user.getPerson().getLastName());
+//		result.append("</lastname>");
+//		result.append("<employer>");
+//		result.append(user.getPerson().getEmployer());
+//		result.append("</employer>");
+//		result.append("<newsletter>");
+//		result.append(user.getPerson().getProfile().getReceiveNewsletter());
+//		result.append("</newsletter>");
+//		result.append("<questionaire>");
+//		result.append(user.getPerson().getProfile().getParticipateSurvey());
+//		result.append("</questionaire>");
+//		result.append("<emailaddress>");
+//		result.append(user.getPerson().getContactInformation().getEmail());
+//		result.append("</emailaddress>");
+//		result.append("<password></password>");
+//		result.append("<passwordrepeat></passwordrepeat>");
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = new StringBuffer();
-		Object loggedIn = request.getSession().getAttribute(this.loggedInSessionVarName);
+		Object loggedIn = LoggedInFunction.loggedIn();
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document document = translator.newDocument();
+		Element element = document.createElement(this.resultSessionVarName);
 		if((loggedIn == null) || ( ! (loggedIn instanceof User))){
-			result.append("<profileresult><notloggedin/></profileresult>");
+			Element notloggedin = document.createElement("notloggedin");
+			element.appendChild(notloggedin);
 		} else {
 			User user = (User) loggedIn;
-			result.append("<profileresult>");
-			userXML(user, null, result);
-			result.append("</profileresult>");
+			Element values = document.createElement("values");
+			userXML(user, null, document, values);
+			element.appendChild(values);
 		}
-		// TODO: Use buffer properties!
-		response.setContentType("text/xml");
-		response.getWriter().write(result.toString());
+		document.appendChild(element);
+		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+		response.sendRedirect(gotoUrl);
 	}
 	public void setParameterNames(Map<String, String> parameterNames) {
 		this.parameterNames = parameterNames;
@@ -227,8 +243,5 @@ public class ProfileController extends HttpControllerPlugin {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-	public void setLoggedInSessionVarName(String loggedInSessionVarName) {
-		this.loggedInSessionVarName = loggedInSessionVarName;
 	}
 }

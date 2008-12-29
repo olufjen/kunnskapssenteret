@@ -1,12 +1,12 @@
 package no.helsebiblioteket.evs.plugin;
 
 import java.io.OutputStreamWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
@@ -16,38 +16,37 @@ import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
 public final class LoggedInDataController extends HttpControllerPlugin {
-	private final Log logger = LogFactory.getLog(getClass());
-	private String sessionVarName;
-	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	this.logger.info("LoggedInData RUNNING");
-    	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
-		// TODO: Use buffer, etc correctly!
-    	StringBuffer buffer = new StringBuffer();
-    	buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-    	buffer.append("\n<loggedin>");
+	public static Document printUser() throws ParserConfigurationException {
+    	// Not like this anymore.
+//    	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
+    	Object sessionVar = LoggedInFunction.loggedIn();
+		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
+//    	buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		Document result = userTranslator.newDocument();
+		Element loggedinElement = result.createElement("loggedin");
     	if(sessionVar instanceof Organization){
         	Organization organization = (Organization) sessionVar;
     		OrganizationToXMLTranslator translator = new OrganizationToXMLTranslator();
-    		translator.translate(organization, buffer);
+    		translator.translate(organization, result, loggedinElement);
     	} else if (sessionVar instanceof User){
         	User user = (User) sessionVar;
-        	UserToXMLTranslator translator = new UserToXMLTranslator();
-        	translator.translate(user, buffer);
+        	userTranslator.translate(user, result, loggedinElement);
     	} else {
-    		buffer.append("<none />");
+    		loggedinElement.appendChild(result.createElement("none"));
     	}
-    	buffer.append("</loggedin>");
-    	
+		result.appendChild(loggedinElement);
+		return result;
+	}
+	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// TODO: Remove this plugin!
+		// FIXME: Move everything to LoggedInFunction!
+    	StringBuffer buffer = new StringBuffer();
     	// TODO: Is this the right heading?
 		response.setContentType("text/xml");
 		response.setCharacterEncoding("utf-8");
-		response.setStatus(HttpServletResponse.SC_OK);
+//		response.setStatus(HttpServletResponse.SC_OK);
 		OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
 		writer.append(buffer);
 		writer.close();
-    	this.logger.info("LoggedInData DONE");
-	}
-	public void setSessionVarName(String sessionVarName) {
-		this.sessionVarName = sessionVarName;
 	}
 }

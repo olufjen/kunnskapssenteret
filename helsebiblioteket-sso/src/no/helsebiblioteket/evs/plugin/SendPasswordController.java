@@ -19,24 +19,24 @@ public final class SendPasswordController extends HttpControllerPlugin {
 	private LoginService loginService;
 	private Map<String, String> parameterNames;
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// FIXME: Remove test!
-//		request.getSession().setAttribute(this.resultSessionVarName, null);
-		
-		
     	this.logger.info("SendPasswordController RUNNING");
     	// TODO: Real parsing of query string
-    	String prefix = "&" + this.parameterNames.get("resultName") + "=" +
-    		this.parameterNames.get("resultValue");
-    	if(request.getQueryString().endsWith(prefix)){
-    		this.result(request, response);
-    	} else {
+//    	String prefix = "&" + this.parameterNames.get("resultName") + "=" +
+//    		this.parameterNames.get("resultValue");
+//    	String initPrefix = "&" + this.parameterNames.get("initName") + "=" +
+//			this.parameterNames.get("initValue");
+//    	if(request.getQueryString().endsWith(prefix)){
+//    		this.result(request, response);
+//    	} else if(request.getQueryString().endsWith(initPrefix)){
+//    		this.init(request, response);
+//    	} else {
     		this.sendEmail(request, response);
-    	}
+//    	}
     	this.logger.info("SendPasswordController DONE");
 	}
 	private void sendEmail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringBuffer result = new StringBuffer();
-		result.append("<passwordresult>");
+		result.append("<" + this.resultSessionVarName + ">");
     	String email = request.getParameter(this.parameterNames.get("emailaddress"));
     	if(email == null) { email = ""; }
     	User user = new User();
@@ -48,28 +48,30 @@ public final class SendPasswordController extends HttpControllerPlugin {
    		if( ! email.contains("@")) {
    			success = false;
    	    	// TODO: Return errors, etc from property files!
-   			emailError = "Not a valid address.";
+   			emailError = "NOT_VALID";
    		} else if(! this.loginService.sendPasswordEmail(user)) {
    			success = false;
    			sent = false;
    		}
     	if(success){
-    		result.append("<success>true</success>");
+    		result.append("<success/>");
+    		failXML("", result, emailError, sent);
+    		result.append("</" + this.resultSessionVarName + ">");
+        	LoggedInFunction.setResult(this.resultSessionVarName, result);
+
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
-        	this.logger.info("Goto: " + gotoUrl);
-        	result.append("</passwordresult>");
-        	request.getSession().setAttribute(this.resultSessionVarName, result);
     		response.sendRedirect(gotoUrl);
     	} else {
     		failXML(email, result, emailError, sent);
-    		String referer = request.getParameter(this.parameterNames.get("from"));
-        	result.append("</passwordresult>");
-    		request.getSession().setAttribute(this.resultSessionVarName, result);
+    		result.append("</" + this.resultSessionVarName + ">");
+        	LoggedInFunction.setResult(this.resultSessionVarName, result);
+
+        	String referer = request.getParameter(this.parameterNames.get("from"));
     		response.sendRedirect(referer);
     	}
 	}
 	private void failXML(String email, StringBuffer result, String emailError, boolean sent) {
-		result.append("<success>false</success>");
+//		result.append("<success>false</success>");
 		result.append("<values><email>");
 		result.append(email);
 		result.append("</email></values>");
@@ -77,24 +79,8 @@ public final class SendPasswordController extends HttpControllerPlugin {
 		result.append(emailError);
 		result.append("</email></messages>");
 		result.append("<summary>");
-		if(!sent){ result.append("Could not send email!");}
+		if(!sent){ result.append("NOT_SENT");}
 		result.append("</summary>");
-	}
-	private void emptyXML(StringBuffer result) {
-		// TODO: Make initial XML for forms!
-		result.append("<passwordresult>");
-		result.append("<empty/>");
-		result.append("</passwordresult>");
-	}
-	private void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = (StringBuffer) request.getSession().getAttribute(this.resultSessionVarName);
-		if(result == null){
-			result = new StringBuffer();
-			emptyXML(result);
-		}
-		// TODO: Use buffer properties!
-		response.setContentType("text/xml");
-		response.getWriter().write(result.toString());
 	}
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
