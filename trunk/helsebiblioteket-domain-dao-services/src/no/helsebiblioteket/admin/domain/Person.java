@@ -3,14 +3,14 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Person {
-	private Integer id = null;
-	private String firstName = null;
-	private String lastName = null;
-	private String employer = null;
+	private Integer id;
+	private String firstName = "";
+	private String lastName = "";
+	private String employer = "";
 	private Position position = new Position();
 	private boolean isStudent;
-	private Integer studentNumber = null;
-	private Integer hprNumber = null;
+	private Integer studentNumber;
+	private Integer hprNumber;
 	private ContactInformation contactInformation = new ContactInformation();
 	private Profile profile = new Profile();
 	private User user;
