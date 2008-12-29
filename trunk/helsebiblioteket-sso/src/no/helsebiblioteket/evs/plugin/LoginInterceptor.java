@@ -16,7 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public final class LoginInterceptor extends HttpInterceptorPlugin {
-	private final Log logger = LogFactory.getLog(getClass());
+	private static final Log logger = LogFactory.getLog(LoginInterceptor.class);
 	private LoginService loginService;
 	private String sessionVarName;
 	public LoginInterceptor(){
@@ -26,24 +26,29 @@ public final class LoginInterceptor extends HttpInterceptorPlugin {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	// FIXME: Remove these!
-    	logger.info("TESTING LOG");
-    	logger.info("What class? " + request.getClass().getName());
-    	
-    	// Get IP address
+		Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
+		
+		if(false) sessionVar = null;
+		
+    	if(sessionVar != null){
+    		return true;
+    	}
     	IpAddress ipAddress = new IpAddress();
     	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
     	Organization organization = this.loginService.logInIpAddress(ipAddress);
-    	request.getSession().setAttribute(this.sessionVarName, organization);
 
-    	logger.info("organization: " + organization.getName());
+    	if(false) organization = null;
     	
-    	// This is empty
-		// TODO: 
-		// FIXME: VItkit!
+    	if(organization != null){
+    		LoggedInFunction.logIn(this.sessionVarName, request.getSession(), organization);
+//        	request.getSession().setAttribute(this.sessionVarName, organization);
+//        	logger.info("organization: " + organization.getName());
+    	} else {
+    		LoggedInFunction.logOut(this.sessionVarName, request.getSession());
+    	}
 		return true;
 	}
-    private String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
+    public static String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
     	String XFF = "X-Forwarded-For";
         String ret = null;
         Enumeration en = request.getHeaderNames();

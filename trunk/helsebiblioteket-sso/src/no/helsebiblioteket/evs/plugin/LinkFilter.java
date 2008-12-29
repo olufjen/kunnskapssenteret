@@ -30,6 +30,12 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private URLService urlService;
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
+
+
+    	if(true) return response;
+    	
+    	
+    	
     	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
     	Organization organization = null;
     	User user = null; 
@@ -50,7 +56,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 
     	List<Element> allAElements = path.selectNodes(doc);
     	for (Element element : allAElements) {
-    		this.logger.info("ELEM: " + element.getText());
+//    		this.logger.info("ELEM: " + element.getText());
     		String href = element.getAttributeValue("href");
     		URL url = this.deproxyfy(href);
     		if(url != null){
