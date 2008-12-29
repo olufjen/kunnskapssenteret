@@ -1,17 +1,18 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class User {
 	protected Integer id;
-	protected String username;
-	protected String password;
-	protected Organization organization;
-	protected Role role;
-	protected List<Access> accessList;
-	private Person person;
-	private List<Role> roleList;
+	protected String username = "";
+	protected String password = "";
+	protected Organization organization = new Organization();
+	protected Role role = new Role();
+	protected List<Access> accessList = new ArrayList<Access>();
+	private Person person = new Person();
+	private List<Role> roleList = new ArrayList<Role>();
 	private Date lastChanged = null;
 	
 	public List<Role> getRoleList(){
