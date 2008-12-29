@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
@@ -24,12 +26,14 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserCo
         logger.info("finding user with username '" + ((user != null) ? user.getUsername() : "") + "'");
         List<User> users = getSimpleJdbcTemplate().query(
         		"select tbl_user.user_id, username, tbl_user.org_unit_id, password, tbl_person.person_id, first_name, last_name, " +
-                "tbl_user_role.user_role_id, tbl_user_role_reg.name as role_name, tbl_user_role_reg.key, tbl_org_unit.name as org_name " +
+                "tbl_user_role.user_role_id, tbl_user_role_reg.name as role_name, tbl_user_role_reg.key, tbl_org_unit.name_no as org_name," +
+                "tbl_profile.receive_newsletter, tbl_profile.participate_survey, tbl_profile.profile_id " +
                 "from tbl_user " +
                 "left outer join tbl_person on tbl_user.person_id = tbl_person.person_id " +
                 "left outer join tbl_user_role on tbl_user.user_id = tbl_user_role.user_id " +
                 "left outer join tbl_user_role_reg on tbl_user_role.user_role_id = tbl_user_role_reg.user_role_id " +
                 "left outer join tbl_org_unit on tbl_org_unit.org_unit_id = tbl_user.org_unit_id " +
+                "left outer join tbl_profile on tbl_person.profile_id = tbl_profile.profile_id " +
                 " where username = :username", 
                 new UserPersonRoleOrgMapper(),
                 new MapSqlParameterSource().addValue("username", user.getUsername())
@@ -40,7 +44,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserCo
         logger.info("fetching all users");
         List<User> users = getSimpleJdbcTemplate().query(
                 "select tbl_user.user_id, username, tbl_user.org_unit_id, password, tbl_person.person_id, first_name, last_name, " +
-                "tbl_user_role.user_role_id, tbl_user_role_reg.name as role_name, tbl_user_role_reg.key, tbl_org_unit.name as org_name " +
+                "tbl_user_role.user_role_id, tbl_user_role_reg.name as role_name, tbl_user_role_reg.key, tbl_org_unit.name_no as org_name " +
                 "from tbl_user " +
                 "left outer join tbl_person on tbl_user.person_id = tbl_person.person_id " +
                 "left outer join tbl_user_role on tbl_user.user_id = tbl_user_role.user_id " +
@@ -77,6 +81,19 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserCo
             person.setLastName(rs.getString("last_name"));
             person.setId(rs.getInt("person_id"));
             user.setPerson(person);
+            
+            int profileId = rs.getInt("profile_id");
+            if(profileId != 0){
+            	Profile profile = new Profile();
+            	profile.setId(profileId);
+            	profile.setReceiveNewsletter(rs.getBoolean("receive_newsletter"));
+            	profile.setParticipateSurvey(rs.getBoolean("participate_survey"));
+            }
+            
+            ContactInformation contactInformation = new ContactInformation();
+            // FIXME: Use real email address!
+            contactInformation.setEmail(rs.getString("username"));
+            person.setContactInformation(contactInformation);
             
             Role role = new Role();
             role.setKey(rs.getString("key"));
