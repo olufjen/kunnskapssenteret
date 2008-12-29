@@ -1,10 +1,7 @@
 package no.helsebiblioteket.admin.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
@@ -15,14 +12,9 @@ import no.helsebiblioteket.admin.domain.User;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
 public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
     protected final Log logger = LogFactory.getLog(getClass());
@@ -49,12 +41,11 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 	}
 	public void insertProfile(Profile profile) {
 		// FIXME: Translate into bit!
-		String sql ="insert into tbl_profile (receive_newsletter, participate_survey, person_id) values (" +
+		String sql ="insert into tbl_profile (receive_newsletter, participate_survey) values (" +
 			"'" + (profile.getReceiveNewsletter() ? "1" : "0") + "', " +
-			"'" + (profile.getParticipateSurvey() ? "1" : "0") + "', " +
-			":person_id)";
+			"'" + (profile.getParticipateSurvey() ? "1" : "0") + "')";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
-		sqlParameters.addValue("person_id", profile.getPerson().getId());
+//		sqlParameters.addValue("person_id", profile.getPerson().getId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public int insertPerson(Person person) {
@@ -128,11 +119,11 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		String sql ="update tbl_profile set " +
 			"receive_newsletter='" + (profile.getReceiveNewsletter() ? "1" : "0") + "', " +
 			"participate_survey='" + (profile.getParticipateSurvey() ? "1" : "0") + "' " +
-			"where person_id=:person_id";
+			"where profile_id=:profile_id";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
 //		sqlParameters.addValue("receive_newsletter", null);
 //		sqlParameters.addValue("participate_survey", null);
-		sqlParameters.addValue("person_id", profile.getPerson().getId());
+		sqlParameters.addValue("profile_id", profile.getId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public void updatePerson(Person person) {
