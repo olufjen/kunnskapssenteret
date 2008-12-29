@@ -3,13 +3,13 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class ContactInformation {
-	private Integer id = null;
-	private String postalAddress = null;
-	private String postalCode = null;
-	private String telephoneNumber= null;
-	private String postalLocation = null;
-	private String email = null;
-	private Person person;
+	private Integer id = -1;
+	private String postalAddress = "";
+	private String postalCode = "";
+	private String telephoneNumber = "";
+	private String postalLocation = "";
+	private String email = "";
+	private Person person = null;
 	private Date lastChanged = null;
 	
 	public Integer getId() {
