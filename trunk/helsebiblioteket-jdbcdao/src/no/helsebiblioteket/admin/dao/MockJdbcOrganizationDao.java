@@ -151,4 +151,14 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
 	public void saveOrganization(Organization organization) {
 		// noop
 	}
+
+	public OrganizationType getOrganizationTypeById(Integer organizationTypeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public OrganizationType getOrganizationTypeByKey(String organizationTypeKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
