@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
+ 		<property name="urlPattern" value="/site/2/LoggUtServlet" />
+ 		<property name="loggedInSessionVarName" value="hbloggedin" />
+ 		<property name="gotoUrl" value="/cms/site/2/Helsebiblioteket" />
+	</bean>
+</beans>

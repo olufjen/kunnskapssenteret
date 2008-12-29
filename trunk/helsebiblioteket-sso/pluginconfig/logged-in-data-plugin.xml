@@ -3,7 +3,6 @@
 
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.LoggedInDataController">
- 		<property name="urlPattern" value="/site/2/loggedinuser" />
- 		<property name="sessionVarName" value="hbloggedin" />
+ 		<property name="urlPattern" value="/site/2/Dummy/Dummy" />
 	</bean>
 </beans>
