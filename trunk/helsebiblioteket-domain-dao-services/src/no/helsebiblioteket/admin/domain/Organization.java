@@ -1,21 +1,22 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Organization {
-	private Integer id = null;
+	private Integer id;
 	private Organization parent = null;
-	private String description = null;
-	private OrganizationType type = null;
-	private List<IpRange> ipRangeList = null;
-	private Person contactPerson = null;
-	private ContactInformation contactInformation = null;
-	private List<Access> accessList = null;
+	private String description = "";
+	private OrganizationType type = new OrganizationType();
+	private List<IpRange> ipRangeList = new ArrayList<IpRange>();
+	private Person contactPerson = new Person();
+	private ContactInformation contactInformation = new ContactInformation();
+	private List<Access> accessList = new ArrayList<Access>();
 	private Date lastChanged = null;
-	private List<OrganizationName> nameList = null;
+	private List<OrganizationName> nameList = new ArrayList<OrganizationName>();
 	
 	public Organization() {
 	}
@@ -105,15 +106,15 @@ public class Organization {
 	 * Creates a map of "organization names" for a given category.
 	 * Examples: a map of short names indexed on locale or a map of normal names indexed on locale.
 	 */
-	//public Map<String, OrganizationName> getNameMap(OrganizationNameCategory orgNameCat) {
-	//	Map<String, OrganizationName> orgNameMap = new HashMap<String, OrganizationName>();
-	//	for (OrganizationName orgName: nameList) {
-	//		if (orgName.getCategory().equals(orgNameCat)) {
-	//			orgNameMap.put(orgName.getLocale().toString(), orgName);
-	//		}
-	//	}
-	//	return orgNameMap;
-	//}
+	public Map<String, OrganizationName> getNameMap(OrganizationNameCategory orgNameCat) {
+		Map<String, OrganizationName> orgNameMap = new HashMap<String, OrganizationName>();
+		for (OrganizationName orgName: nameList) {
+			if (orgName.getCategory().equals(orgNameCat)) {
+				orgNameMap.put(orgName.getLocale().toString(), orgName);
+			}
+		}
+		return orgNameMap;
+	}
 	
 	public int hashCode() {
         int result;

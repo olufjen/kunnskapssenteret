@@ -65,4 +65,8 @@ public class OrganizationName {
         result = 31 * result + (category != null ? category.hashCode() : 0);
         return result;
     }
+	public Object getLocale() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
