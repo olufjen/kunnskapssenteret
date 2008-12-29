@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.dao.EmailDAO;
+import no.helsebiblioteket.admin.dao.UserCompositeDao;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.Email;
@@ -16,6 +17,7 @@ public class LoginServiceImpl implements LoginService {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static final long serialVersionUID = 1L;
 	private UserDao userDao;
+	private UserCompositeDao userCompositeDao;
 	private EmailDAO emailDao;
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -23,7 +25,8 @@ public class LoginServiceImpl implements LoginService {
 	public User logInUser(User user) {
 		User loggedIn = this.userDao.getUserByUsername(user);
 		if(loggedIn != null && loggedIn.getPassword().equals(user.getPassword())){
-			return loggedIn;
+			// TODO: Not fetch all user data here!
+			return this.userCompositeDao.getUserByUsername(user);
 		} else {
 			return null;
 		}
@@ -56,5 +59,8 @@ public class LoginServiceImpl implements LoginService {
 	}
 	public void setEmailDao(EmailDAO emailDao) {
 		this.emailDao = emailDao;
+	}
+	public void setUserCompositeDao(UserCompositeDao userCompositeDao) {
+		this.userCompositeDao = userCompositeDao;
 	}
 }
