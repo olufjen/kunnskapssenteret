@@ -41,6 +41,13 @@ public final class LoggedInDataController extends HttpControllerPlugin {
 		// TODO: Remove this plugin!
 		// FIXME: Move everything to LoggedInFunction!
     	StringBuffer buffer = new StringBuffer();
+    	
+    	String sessionVarName = "hbloggedin";
+    	Object object = request.getSession().getAttribute(sessionVarName);
+    	
+    	
+    	
+    	
     	// TODO: Is this the right heading?
 		response.setContentType("text/xml");
 		response.setCharacterEncoding("utf-8");
