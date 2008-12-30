@@ -21,5 +21,14 @@
         <parameter name="key" type="String">hbloginresult</parameter>
       </parameters>
   </datasource>
+  
+  
+
+  <datasource>
+    <methodname>getURLAsXML</methodname>
+    <parameters>
+        <parameter name="url" type="String">http://localhost:8080/cms/site/2/Dummy</parameter>
+    </parameters>
+  </datasource>
 
 </datasources>
