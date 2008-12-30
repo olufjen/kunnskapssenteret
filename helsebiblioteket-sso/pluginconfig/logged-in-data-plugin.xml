@@ -3,6 +3,6 @@
 
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.LoggedInDataController">
- 		<property name="urlPattern" value="/site/2/Dummy/Dummy" />
+ 		<property name="urlPattern" value="/site/2/Dummy" />
 	</bean>
 </beans>
