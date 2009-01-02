@@ -27,6 +27,15 @@ public class URLServiceWeb implements URLService {
 	    options.setTo(targetEPR);
 	}
 	public Boolean isAffected(Url url) {
+		// FIXME: Testing!
+		boolean res = false;
+		res = true;
+		if(true) return res;
+		
+		
+		
+		
+		
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		try {
@@ -40,6 +49,11 @@ public class URLServiceWeb implements URLService {
 		}
 	}
 	public Url translate(User user, Organization organization, Url url) {
+		// FIXME: Testing!
+		Url res = new Url();
+		res.setValue("proxy:" + url.getValue());
+		if(true) return res;
+
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Url.class };
 		try {
@@ -51,6 +65,17 @@ public class URLServiceWeb implements URLService {
 			logger.error(e);
 			return null;
 		}
+	}
+	public String group(Url url) {
+		// FIXME: Testing!
+		String res = "vg";
+		return res;
+	}
+	public Boolean hasAccess(User user, Organization organization, Url url) {
+		// FIXME: Testing!
+		boolean res = false;
+		res = true;
+		return res;
 	}
 	public void setServiceClient(RPCServiceClient serviceClient) {
 		this.serviceClient = serviceClient;
