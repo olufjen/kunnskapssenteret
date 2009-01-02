@@ -9,4 +9,6 @@ import no.helsebiblioteket.admin.domain.User;
 public interface URLService extends Serializable {
     public Url translate(User user, Organization organization, Url url);
     public Boolean isAffected(Url url);
+    public Boolean hasAccess(User user, Organization organization, Url url);
+    public String group(Url url);
 }

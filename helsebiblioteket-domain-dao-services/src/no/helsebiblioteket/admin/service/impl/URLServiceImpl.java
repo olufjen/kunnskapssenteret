@@ -38,4 +38,12 @@ public class URLServiceImpl implements URLService {
 		logger.info("Translating " + url.getValue()  + " into " + newUrl.getValue());
 		return newUrl;
 	}
+	public String group(Url url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Boolean hasAccess(User user, Organization organization, Url url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
