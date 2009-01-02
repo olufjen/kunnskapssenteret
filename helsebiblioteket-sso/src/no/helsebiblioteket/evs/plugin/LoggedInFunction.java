@@ -32,10 +32,12 @@ public class LoggedInFunction{
 	public static void logIn(String varName, HttpSession session, Object user){
 		// TODO: Do this in a much better way!
 		// FIXME: Replace names!
-		String longName = "kunnskapssenteret\\leift";
+//		String longName = "kunnskapssenteret\\leift";
 		String shortName = "leift";
 		loggedIn.put(shortName, user);
        	Client client = ClientFactory.getLocalClient();
+//       	client.
+       	
        	client.login(shortName, "");
 		session.setAttribute(varName, user);
 	}
