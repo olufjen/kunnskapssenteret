@@ -23,36 +23,37 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Element;
 
-import com.enonic.cms.api.client.Client;
-import com.enonic.cms.api.client.ClientFactory;
+import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public class LoggedInFunction{
 	private static Map<String, Map<String, org.w3c.dom.Document>> results = new HashMap<String, Map<String,org.w3c.dom.Document>>();
 	private static Map<String, Object> loggedIn = new HashMap<String, Object>();
 	public static void logIn(String varName, HttpSession session, Object user){
 		// TODO: Do this in a much better way!
-		// FIXME: Replace names!
+		// FIXME: Replace names!		
 //		String longName = "kunnskapssenteret\\leift";
-		String shortName = "leift";
-		loggedIn.put(shortName, user);
-       	Client client = ClientFactory.getLocalClient();
+//		String shortName = "leift";
+//		loggedIn.put(shortName, user);
+//       	Client client = ClientFactory.getLocalClient();
 //       	client.
-       	
-       	client.login(shortName, "");
-		session.setAttribute(varName, user);
+//       	client.login(shortName, "");
+//		session.setAttribute(varName, user);
+		PluginEnvironment.getInstance().getCurrentSession().setAttribute("loggedIn", user);
 	}
 	public static void logOut(String varName, HttpSession session){
-       	Client client = ClientFactory.getLocalClient();
-       	String userName = client.getUserName();
-		loggedIn.remove(userName);
-       	client.logout();
-		session.setAttribute(varName, null);
+//       	Client client = ClientFactory.getLocalClient();
+//       	String userName = client.getUserName();
+//		loggedIn.remove(userName);
+//       	client.logout();
+//		session.setAttribute(varName, null);
+		PluginEnvironment.getInstance().getCurrentSession().setAttribute("loggedIn", null);
 	}
 	public static Object loggedIn() {
-    	Client client = ClientFactory.getLocalClient();
-    	String name = client.getUserName();
-    	name = client.getRunAsUserName();
-		return loggedIn.get(name);
+//    	Client client = ClientFactory.getLocalClient();
+//    	String name = client.getUserName();
+//    	name = client.getRunAsUserName();
+//		return loggedIn.get(name);
+		return PluginEnvironment.getInstance().getCurrentSession().getAttribute("loggedIn");
 	}
 	public Document getUserAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		return translate(LoggedInDataController.printUser());
@@ -62,12 +63,14 @@ public class LoggedInFunction{
 
 	}
 	public static void setResult(String key, org.w3c.dom.Document result) {
-		Client client = ClientFactory.getLocalClient();
-		String username = client.getUserName();
-		Map<String, org.w3c.dom.Document> userMap = results.get(username);
+//		Client client = ClientFactory.getLocalClient();
+//		String username = client.getUserName();
+//		Map<String, org.w3c.dom.Document> userMap = results.get(username);
+		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>) PluginEnvironment.getInstance().getCurrentSession().getAttribute("result");
 		if(userMap == null){
 			userMap = new HashMap<String, org.w3c.dom.Document>();
-			results.put(username, userMap);
+			PluginEnvironment.getInstance().getCurrentSession().setAttribute("result", userMap);
+//			results.put(username, userMap);
 		}
 		userMap.put(key, result);
 
@@ -75,9 +78,10 @@ public class LoggedInFunction{
 		
 	}
 	public Document getResult(String key) throws JDOMException, IOException, ParserConfigurationException, TransformerException {
-		Client client = ClientFactory.getLocalClient();
-		String username = client.getUserName();
-		Map<String, org.w3c.dom.Document> userMap = results.get(username);
+//		Client client = ClientFactory.getLocalClient();
+//		String username = client.getUserName();
+//		Map<String, org.w3c.dom.Document> userMap = results.get(username);
+		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>) PluginEnvironment.getInstance().getCurrentSession().getAttribute("result");
 		org.w3c.dom.Document result = null;
 		if(userMap != null){
 			result = userMap.get(key);

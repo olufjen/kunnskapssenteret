@@ -26,7 +26,8 @@ public final class LoginInterceptor extends HttpInterceptorPlugin {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
+		Object sessionVar = LoggedInFunction.loggedIn();
+//			request.getSession().getAttribute(this.sessionVarName);
 		
 		if(false) sessionVar = null;
 		
