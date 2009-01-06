@@ -1,0 +1,56 @@
+Setup for EVS:
+
+***  MENU  ***
+LoggInnServlet            [Page (Standard)]
+LoggUtServlet             [Page (Standard)]
+PassordServlet            [Page (Standard)]
+RedigerProfilServlet      [Page (Standard)]
+RegistreringBrukerServlet [Page (Standard)]
+ProxyServlet              [Page (Standard)]
+Vis profil                [Page (Enkeltside - Logg Inn)]
+  center-top: viewProfile
+Rediger profil            [Page (Enkeltside - Logg Inn)]
+  center-top: editProfile
+Registrering av ny bruker [Page (Enkeltside - Logg Inn)]
+  center-top: registerUser
+Logg inn                  [Page (Enkeltside - Logg Inn)]
+  <IKKE VESENTLIG>
+Passord                   [Page (Enkeltside - Logg Inn)]
+  center-top: password
+
+*** OBJECTS ***
+viewProfile
+  Stylesheet: viewProfile.xsl
+  editProfileServletPage: RedigerProfilServlet
+  editProfilePage: Rediger profil
+  datasource: view_profile.txt
+editProfile
+  Stylesheet: editProfile.xsl
+  viewProfilePage: Vis profil
+  editProfilePage: Rediger profil
+  editProfileServletPage: RedigerProfilServlet
+  datasource: edit_profile.txt
+registerUser
+  Stylesheet: register_user.xsl
+  viewProfilePage: Vis profil
+  registerUserPage: Registrering av ny bruker
+  registerUserServletPage: RegistreringBrukerServlet
+  <Other props not set, or default!>
+  datasource: registerUser.txt
+password
+  Stylesheet: password.xsl
+  passwordPage: Passord
+  passwordServletPage: PassordServlet
+  frontPage: Helsebiblioteket
+  <Other props not set, or default!>
+  datasource: password.txt
+logon [Used in Position: right, as default, etc]
+  Stylesheet: logon.xsl
+  frontPage: Helsebiblioteket
+  passportPage: Passord
+  registerPage: Registrering av ny bruker
+  profilePage: Vis profil
+  loginPage: Logg inn
+  logOutServletPage: LoggUtServlet
+  loginServletPage: LoggInnServlet
+  datasource: logon.xsl
