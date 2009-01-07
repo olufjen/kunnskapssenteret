@@ -108,8 +108,9 @@
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-adb-1.4.1.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-api-1.2.7.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-impl-1.2.7.jar" />
-
+			
 		</copy>
+			
 	</target>
 
 </project>
