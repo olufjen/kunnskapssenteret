@@ -6,7 +6,7 @@
  		<property name="urlPattern" value="/site/2/RegistreringBrukerServlet" />
  		<property name="resultSessionVarName" value="hbregisterresult" />
  		<!-- TODO: Use different names! -->
- 		<property name="userService" ref="userServiceImpl" />
+ 		<property name="userService" ref="registerUserService" />
  		<property name="parameterNames"><map>
  			<entry key="usertype" value="usertype"/>
  			<entry key="hprno" value="uid"/>
@@ -28,35 +28,6 @@
  			<entry key="cancelValue" value="Avbryt"/>
  		</map></property>
 	</bean>
-		<!-- TODO: Use web services! -->
-	<bean id="userServiceImpl" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
-	 	<property name="userDao" ref="userDao"></property>
-	 	<property name="userCompositeDao" ref="userCompositeDao"></property>
-	 	<property name="personDao" ref="personDao"></property>
-	</bean>
-	<bean id="userDao" class="no.helsebiblioteket.admin.dao.JdbcUserDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
-	</bean>
-	<bean id="userCompositeDao" class="no.helsebiblioteket.admin.dao.JdbcUserCompositeDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
-	</bean>
-	<bean id="personDao" class="no.helsebiblioteket.admin.dao.JdbcPersonDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
-	</bean>
-	<bean id="jdbcTemplateHelsebiblioteket" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
-	</bean>
-	<bean id="dataSourceHelsebiblioteket" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="org.postgresql.Driver"></property>
-		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket-admin"></property>
-		<property name="username" value="helsebiblioteket"></property>
-		<property name="password" value="helsebiblioteket"></property>
-	</bean>
-	
-	
-	
-	
-	
 	<bean name="registerUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="registerServiceClient" />
 		<property name="targetEPR" ref="registerTargetEPR" />
