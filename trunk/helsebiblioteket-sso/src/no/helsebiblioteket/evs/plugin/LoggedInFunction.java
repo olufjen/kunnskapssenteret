@@ -1,12 +1,16 @@
 package no.helsebiblioteket.evs.plugin;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -17,10 +21,12 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.evs.util.Helper;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.DOMOutputter;
 import org.w3c.dom.Element;
 
 import com.enonic.cms.api.plugin.PluginEnvironment;
@@ -59,8 +65,24 @@ public class LoggedInFunction{
 		return translate(LoggedInDataController.printUser());
 	}
 	public static void setResult(String key, StringBuffer result) {
-		// FIXME: Write this now!
-
+		InputStream is = null; 
+		try {
+            is = new ByteArrayInputStream(result.toString().getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        
+        org.w3c.dom.Document document = null;
+        
+        try {
+        	document = new DOMOutputter().output(Helper.parseXml(is));
+        } catch(IOException ioe) {
+        	ioe.printStackTrace();
+        } catch (JDOMException jde) {
+        	jde.printStackTrace();
+        }
+        
+		setResult(key, document);
 	}
 	public static void setResult(String key, org.w3c.dom.Document result) {
 //		Client client = ClientFactory.getLocalClient();
