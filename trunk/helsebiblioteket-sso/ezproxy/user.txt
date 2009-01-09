@@ -1,31 +1,10 @@
-# For more information on this file and the options for user
-# authentication, see:
-#      http://www.oclc.org/us/en/support/documentation/ezproxy/usr/
-#
-# Lines starting with # are comments
-#
-# This file may be updated while EZproxy is running without the need to
-# stop and restart the program.
-#
-# This file contains three fields separated by colons (:) of the form
-#
-#      username:password:options
-#
-#
-# A basic entry consists of a username and password, such as
-#
-#      someuser:somepass
-#
-# To create an administrative user, place :admin after the password.
-# For example, the following line would create a username of rdoe with
-# a password of keepsafe that has administrative access to the EZproxy server.
-#
-#      rdoe:keepsafe:admin
-
 admin:password:admin
 
-::group=altavista+google
-myusername:mypassword:cgi=http://192.168.1.100:8080/cms/site/2/ProxyServlet?
+::group=altavista
+altavista:mypassword:cgi=http://192.168.1.100:8080/cms/site/2/ProxyServlet?init=true&
 
-# TODO: Use this!
-#3r89jwefa:fmkj90w3z:cgi=http://localhost:8080/cms/site/2/ezproxy?
+::group=vg
+vg:mypassword:cgi=http://192.168.1.100:8080/cms/site/2/ProxyServlet?init=true&
+
+# TODO: Use something like this!
+# 3r89jwefa:fmkj90w3z:cgi=http://localhost:8080/cms/site/2/ProxyServlet?init=true&
