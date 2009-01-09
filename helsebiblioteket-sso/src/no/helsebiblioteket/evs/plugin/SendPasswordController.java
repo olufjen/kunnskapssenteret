@@ -7,9 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
@@ -35,9 +38,11 @@ public final class SendPasswordController extends HttpControllerPlugin {
     	this.logger.info("SendPasswordController DONE");
 	}
 	private void sendEmail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = new StringBuffer();
-		result.append("<" + this.resultSessionVarName + ">");
-    	String email = request.getParameter(this.parameterNames.get("emailaddress"));
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document document = translator.newDocument();
+		Element element = document.createElement(this.resultSessionVarName);
+
+		String email = request.getParameter(this.parameterNames.get("emailaddress"));
     	if(email == null) { email = ""; }
     	User user = new User();
    		user.setUsername(email);
@@ -54,33 +59,38 @@ public final class SendPasswordController extends HttpControllerPlugin {
    			sent = false;
    		}
     	if(success){
-    		result.append("<success/>");
-    		failXML("", result, emailError, sent);
-    		result.append("</" + this.resultSessionVarName + ">");
-        	LoggedInFunction.setResult(this.resultSessionVarName, result);
+    		element.appendChild(document.createElement("success"));
+    		failXML("", document, element, emailError, sent);
+    		document.appendChild(element);
+        	LoggedInFunction.setResult(this.resultSessionVarName, document);
 
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
     		response.sendRedirect(gotoUrl);
     	} else {
-    		failXML(email, result, emailError, sent);
-    		result.append("</" + this.resultSessionVarName + ">");
-        	LoggedInFunction.setResult(this.resultSessionVarName, result);
+    		failXML(email, document, element, emailError, sent);
+    		
+    		document.appendChild(element);
+        	LoggedInFunction.setResult(this.resultSessionVarName, document);
 
         	String referer = request.getParameter(this.parameterNames.get("from"));
     		response.sendRedirect(referer);
     	}
 	}
-	private void failXML(String email, StringBuffer result, String emailError, boolean sent) {
+	private void failXML(String email, Document document, Element element, String emailError, boolean sent) {
 //		result.append("<success>false</success>");
-		result.append("<values><email>");
-		result.append(email);
-		result.append("</email></values>");
-		result.append("<messages><email>");
-		result.append(emailError);
-		result.append("</email></messages>");
-		result.append("<summary>");
-		if(!sent){ result.append("NOT_SENT");}
-		result.append("</summary>");
+		Element values = document.createElement("values");
+		values.appendChild(UserToXMLTranslator.element(document, "email", email));
+		element.appendChild(values);
+
+		Element messages = document.createElement("messages");
+		messages.appendChild(UserToXMLTranslator.element(document, "email", emailError));
+		element.appendChild(messages);
+		
+		if(!sent){
+			element.appendChild(UserToXMLTranslator.element(document, "summary", "NOT_SENT"));
+		} else {
+			element.appendChild(document.createElement("summary"));
+		}
 	}
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;

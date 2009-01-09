@@ -60,7 +60,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
         
-        String init = request.getParameter("init");
+        String init = request.getParameter("login");
         
         if(init != null && init.equals("true")){
         	redirect(response, this.logUpServletUrl + "?url=" + requestedUrlText);
@@ -81,13 +81,14 @@ public class ProxyLoginController extends HttpControllerPlugin {
     			if(this.urlService.hasAccess(user, organization, requestedUrl)){
 
     				String group = this.urlService.group(requestedUrl);
-    				this.createProxySession(response, requestedUrlText, group);
-    				
-    				// Great, done!
-
-    				redirectUrl = "";
-    	    		element.appendChild(document.createElement("success"));
-
+    				if(this.createProxySession(response, requestedUrlText, group)){
+        				// Great, done!
+        				redirectUrl = "";
+        	    		element.appendChild(document.createElement("success"));
+    				} else {
+        				redirectUrl = "";
+    					
+    				}
     			} else {
     	    		element.appendChild(UserToXMLTranslator.element(document, "requestedUrl", requestedUrlText));
     				if(user != null){

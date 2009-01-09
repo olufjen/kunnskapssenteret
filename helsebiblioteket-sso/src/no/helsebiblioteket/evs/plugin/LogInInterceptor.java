@@ -15,11 +15,10 @@ import no.helsebiblioteket.admin.domain.Organization;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public final class LoginInterceptor extends HttpInterceptorPlugin {
-	private static final Log logger = LogFactory.getLog(LoginInterceptor.class);
+public final class LogInInterceptor extends HttpInterceptorPlugin {
+	private static final Log logger = LogFactory.getLog(LogInInterceptor.class);
 	private LoginService loginService;
-	private String sessionVarName;
-	public LoginInterceptor(){
+	public LogInInterceptor(){
 		System.out.println("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 		logger.info("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 	}
@@ -41,11 +40,11 @@ public final class LoginInterceptor extends HttpInterceptorPlugin {
     	if(false) organization = null;
     	
     	if(organization != null){
-    		LoggedInFunction.logIn(this.sessionVarName, request.getSession(), organization);
+    		LoggedInFunction.logIn(organization);
 //        	request.getSession().setAttribute(this.sessionVarName, organization);
 //        	logger.info("organization: " + organization.getName());
     	} else {
-    		LoggedInFunction.logOut(this.sessionVarName, request.getSession());
+//    		LoggedInFunction.logOut(this.sessionVarName, request.getSession());
     	}
 		return true;
 	}
@@ -82,8 +81,5 @@ public final class LoginInterceptor extends HttpInterceptorPlugin {
     }
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
-	}
-	public void setSessionVarName(String sessionVarName) {
-		this.sessionVarName = sessionVarName;
 	}
 }

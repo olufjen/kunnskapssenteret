@@ -7,15 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
 public final class LogInController extends HttpControllerPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
-	private String loggedInSessionVarName;
 	private String resultSessionVarName;
 	private LoginService loginService;
 	private Map<String, String> parameterNames;
@@ -35,8 +37,10 @@ public final class LogInController extends HttpControllerPlugin {
 //    	http://localhost:8080/cms/site/2/login?errors=true
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		StringBuffer result = new StringBuffer();
-		result.append("<" + this.resultSessionVarName + ">");
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document result = translator.newDocument();
+		Element element = result.createElement(this.resultSessionVarName);
+		
     	String username = request.getParameter(this.parameterNames.get("username"));
     	String password = request.getParameter(this.parameterNames.get("password"));
     	if(username == null) { username = ""; }
@@ -50,70 +54,53 @@ public final class LogInController extends HttpControllerPlugin {
        	}
     	if(user != null){
     		// Found user!
-    		result.append("<success/>");
-    		LoggedInFunction.logIn(this.loggedInSessionVarName, request.getSession(), user);
+    		element.appendChild(result.createElement("success"));
+    		LoggedInFunction.logIn(user);
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 //        	this.logger.info("Goto: " + gotoUrl);
     		response.sendRedirect(gotoUrl);
     	} else {
     		// Return!
-    		makeXML(username, password, result);
+    		makeXML(username, password, result, element);
     		String referer = request.getParameter(this.parameterNames.get("from"));
 //        	this.logger.info("From: " + referer);
     		response.sendRedirect(referer);
     	}
-		result.append("</" + this.resultSessionVarName + ">");
+		result.appendChild(element);
     	LoggedInFunction.setResult(this.resultSessionVarName, result);
 	}
-	private void makeXML(String username, String password, StringBuffer result) {
+	private void makeXML(String username, String password, Document document, Element element) {
 		boolean lookup = true;
-		result.append("<values><username>");
-		result.append(username);
-		result.append("</username><password>");
-		result.append(password);
-		result.append("</password></values><messages><username>");
+		
+		Element values = document.createElement("values");
+		values.appendChild(UserToXMLTranslator.element(document, "username", username));
+		values.appendChild(UserToXMLTranslator.element(document, "password", password));
+		element.appendChild(values);
+
+		Element messages = document.createElement("messages");
 		if(username.length() == 0) {
-	    	// TODO: Return errors, etc from property files!
-			result.append("NO_USERNAME");
+			messages.appendChild(UserToXMLTranslator.element(document, "username", "NO_USERNAME"));
 			lookup = false;
 		}
-		result.append("</username><password>");
 		if(password.length() == 0) {
-	    	// TODO: Return errors, etc from property files!
-			result.append("NO_PASSWORD");
+			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_PASSWORD"));
 			lookup = false;
 		}
-		result.append("</password></messages><summary>");
+		element.appendChild(messages);
+
+		Element summary = document.createElement("summary");
 		if(lookup){
-	    	// TODO: Return errors, etc from property files!
-			result.append("UNKNOWN_USER");
+			summary.appendChild(UserToXMLTranslator.element(document, "summary", "UNKNOWN_USER"));
 		}
-		result.append("</summary>");
+		element.appendChild(summary);
+		
+		document.appendChild(element);
 	}
-//	private void emptyXML(StringBuffer result) {
-//		// TODO: Make initial XML for forms!
-//		result.append("<loginresult>");
-//		result.append("<empty/>");
-//		result.append("</loginresult>");
-//	}
-//	private void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		StringBuffer result = (StringBuffer) request.getSession().getAttribute(this.resultSessionVarName);
-//		if(result == null){
-//			result = new StringBuffer();
-//			emptyXML(result);
-//		}
-//		// TODO: Use buffer properties!
-//		response.setContentType("text/xml");
-//		response.getWriter().write(result.toString());
-//	}
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
 	public void setParameterNames(Map<String, String> parameterNames) {
 		this.parameterNames = parameterNames;
-	}
-	public void setLoggedInSessionVarName(String loggedInSessionVarName) {
-		this.loggedInSessionVarName = loggedInSessionVarName;
 	}
 	public void setResultSessionVarName(String resultSessionVarName) {
 		this.resultSessionVarName = resultSessionVarName;
