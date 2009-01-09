@@ -3,8 +3,6 @@ package no.helsebiblioteket.admin.translator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.sun.tools.doclets.internal.toolkit.resources.doclets;
-
 import no.helsebiblioteket.admin.domain.Profile;
 
 public class ProfileToXMLTranslator {
