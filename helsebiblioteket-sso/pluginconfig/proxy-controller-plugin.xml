@@ -4,7 +4,6 @@
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
  		<property name="urlPattern" value="/site/2/ProxyServlet" />
- 		<property name="resultSessionVarName" value="hbproxyresult" />
  		<property name="urlService" ref="proxyUrlServiceWeb" />
 	</bean>
 	<bean name="proxyUrlServiceWeb" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
