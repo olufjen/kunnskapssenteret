@@ -2,11 +2,21 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean class="no.helsebiblioteket.evs.plugin.LoginInterceptor">
+	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
- 		<property name="sessionVarName" value="hbloggedin" />
- 		<property name="loginService" ref="interceptorLoginService" />
+ 		<property name="priority" value="100" />
+ 		<property name="loginService" ref="loginServiceMock" />
 	</bean>
+
+	<!-- TODO: Do not use this! -->
+	<bean id="loginServiceMock" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
+	</bean>
+
+	
+
+
+
+
 
 	<bean name="interceptorLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
 		<property name="serviceClient" ref="interceptorLoginServiceClient" />

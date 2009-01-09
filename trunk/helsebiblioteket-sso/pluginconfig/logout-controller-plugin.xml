@@ -4,7 +4,6 @@
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
  		<property name="urlPattern" value="/site/2/LoggUtServlet" />
- 		<property name="loggedInSessionVarName" value="hbloggedin" />
  		<property name="gotoUrl" value="/cms/site/2/Helsebiblioteket" />
 	</bean>
 </beans>

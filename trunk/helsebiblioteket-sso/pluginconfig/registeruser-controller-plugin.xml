@@ -4,8 +4,6 @@
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
  		<property name="urlPattern" value="/site/2/RegistreringBrukerServlet" />
- 		<property name="resultSessionVarName" value="hbregisterresult" />
- 		<!-- TODO: Use different names! -->
  		<property name="userService" ref="registerUserService" />
  		<property name="parameterNames"><map>
  			<entry key="usertype" value="usertype"/>

@@ -4,9 +4,7 @@
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.LogInController">
  		<property name="urlPattern" value="/site/2/LoggInnServlet" />
- 		<property name="loggedInSessionVarName" value="hbloggedin" />
  		<property name="resultSessionVarName" value="hbloginresult" />
- 		<!-- TODO: Use different names! -->
  		<property name="loginService" ref="loginControllerLoginService" />
  		<property name="parameterNames"><map>
  			<entry key="username" value="uid"/>
