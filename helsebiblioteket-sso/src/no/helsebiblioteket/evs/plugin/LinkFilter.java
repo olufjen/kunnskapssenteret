@@ -31,7 +31,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
 
-
+    	// FIXME: Remove!
     	if(true) return response;
     	
     	
