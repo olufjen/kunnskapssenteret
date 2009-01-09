@@ -20,9 +20,8 @@ CREATE TABLE tbl_ip_address
     PRIMARY KEY ( ip_address_id )
 );
 
-ALTER TABLE tbl_ip_address
-  ADD CONSTRAINT tbl_ip_address_unique UNIQUE (ip_address_from, ip_address_to);
-
+--ALTER TABLE tbl_ip_address
+--  ADD CONSTRAINT tbl_ip_address_unique UNIQUE(ip_address_from, ip_address_to, org_unit_id);
 
 
 CREATE TABLE tbl_contact_information
@@ -69,6 +68,7 @@ CREATE TABLE tbl_org_unit_name
     name                 VARCHAR             NULL,
     org_unit_id          INTEGER             NOT NULL,
     category	 		 VARCHAR			 NOT NULL,
+    last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( org_unit_name_id )
 );
 
