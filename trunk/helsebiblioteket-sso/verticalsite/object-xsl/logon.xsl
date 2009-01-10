@@ -153,9 +153,13 @@
                                             	Brukernavn:<br/>
                                             	<input id="inputfield1" name="uid" type="text"
                                             		value="{$errorUserLogin/values/username/text()}"/>
+                                            	<xsl:value-of select="$errorUserLogin/messages/username"/>
+                                            	
+                                            	<br/>
 
                                             	Passord:<br/>
                                             	<input id="inputfield2" name="password" type="password"/>
+                                            	<xsl:value-of select="$errorUserLogin/messages/password"/>
                                             
                                             	<table id="logon">
                                                 	<tr>
