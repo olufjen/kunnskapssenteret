@@ -3,6 +3,8 @@
 
 <beans>
 	<bean class="no.helsebiblioteket.evs.plugin.LoggedInDataController">
- 		<property name="urlPattern" value="/site/2/Dummy" />
+ 		<property name="urlPattern" value="/site/2/Databaser" />
+ 		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
+	<bean name="loggedInFunction" class="no.helsebiblioteket.evs.plugin.LoggedInFunction" />
 </beans>
