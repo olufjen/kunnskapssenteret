@@ -17,8 +17,8 @@ import no.helsebiblioteket.admin.domain.Organization;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public final class LogInInterceptor2 extends HttpInterceptorPlugin {
-	private static final Log logger = LogFactory.getLog(LogInInterceptor2.class);
+public final class LogInInterceptor extends HttpInterceptorPlugin {
+	private static final Log logger = LogFactory.getLog(LogInInterceptor.class);
 	private LoginService loginService;
 	private LoggedInFunction loggedInFunction;
 	public LogInInterceptor(){
