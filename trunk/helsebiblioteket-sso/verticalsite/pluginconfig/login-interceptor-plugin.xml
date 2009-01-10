@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
+ 		<property name="urlPattern" value="/site/[0-3]/.*" />
+ 		<property name="priority" value="9999" />
+ 		<property name="loginService" ref="loginServiceMock" />
+ 		<property name="loggedInFunction" ref="loggedInFunction" />
+	</bean>
+
+	<!-- TODO: Do not use this! -->
+	<bean id="loginServiceMock" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
+	</bean>
+
+	
+
+
+
+
+
+	<bean name="interceptorLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
+		<property name="serviceClient" ref="interceptorLoginServiceClient" />
+		<property name="targetEPR" ref="interceptorLoginServiceTargetEPR" />
+		<property name="logInIpAddress" ref="interceptorLogInIpAddress" />
+	</bean>
+	
+	<bean name="interceptorLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+
+	<bean name="interceptorLoginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+	</bean>
+	
+	<bean name="interceptorLogInIpAddress" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="logInIpAddress" />
+	</bean>
+</beans>
