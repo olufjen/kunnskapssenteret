@@ -4,9 +4,11 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 
 import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
+import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.service.LoginService;
@@ -15,9 +17,10 @@ import no.helsebiblioteket.admin.domain.Organization;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public final class LogInInterceptor extends HttpInterceptorPlugin {
-	private static final Log logger = LogFactory.getLog(LogInInterceptor.class);
+public final class LogInInterceptor2 extends HttpInterceptorPlugin {
+	private static final Log logger = LogFactory.getLog(LogInInterceptor2.class);
 	private LoginService loginService;
+	private LoggedInFunction loggedInFunction;
 	public LogInInterceptor(){
 		System.out.println("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 		logger.info("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
@@ -25,7 +28,11 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Object sessionVar = LoggedInFunction.loggedIn();
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+
+		
+		
+		Object sessionVar = loggedInFunction.loggedIn();
 //			request.getSession().getAttribute(this.sessionVarName);
 		
 		if(false) sessionVar = null;
@@ -40,7 +47,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
     	if(false) organization = null;
     	
     	if(organization != null){
-    		LoggedInFunction.logIn(organization);
+    		loggedInFunction.logIn(organization);
 //        	request.getSession().setAttribute(this.sessionVarName, organization);
 //        	logger.info("organization: " + organization.getName());
     	} else {
@@ -81,5 +88,8 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
     }
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
+	}
+	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
+		this.loggedInFunction = loggedInFunction;
 	}
 }
