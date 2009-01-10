@@ -2,14 +2,16 @@
 <datasources querystringcontext="true" usercontext="true">
 
   <datasource>
-    <methodname>loggedinuser.getUserAsXML</methodname>
-      <parameters/>
-  </datasource>
-  
-  <datasource>
     <methodname>loggedinuser.getResult</methodname>
       <parameters>
         <parameter name="key" type="String">hbloginresult</parameter>
+      </parameters>
+  </datasource>
+
+  <datasource>
+    <methodname>loggedinuser.getResult</methodname>
+      <parameters>
+        <parameter name="key" type="String">hbproxyresult</parameter>
       </parameters>
   </datasource>
 
