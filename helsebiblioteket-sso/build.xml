@@ -8,7 +8,7 @@
 	<property name="project.lib.dir" value="${project.home}/lib"/>
 	<property name="project.target.dir" value="${project.home}/target"/>
 	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
-	<property name="project.plugin.config.dir" value="${project.home}/pluginconfig"/>
+	<property name="project.plugin.config.dir" value="${project.home}/verticalsite/pluginconfig"/>
 
 	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
 	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl-home.dir}/target"/>
