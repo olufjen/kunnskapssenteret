@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
+ 		<property name="urlPattern" value="/site/2/ProxyServlet" />
+ 		<property name="priority" value="9998" />
+ 		<property name="urlService" ref="proxyUrlServiceMock" />
+ 		<property name="loginService" ref="loginServiceMock" />
+ 		<property name="loggedInFunction" ref="loggedInFunction" />
+	</bean>
+	
+	<bean name="proxyUrlServiceMock" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
+	</bean>
+	<bean id="loginServiceMock" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
+	</bean>
+	
+	
+	
+	
+	<bean name="proxyUrlServiceWeb" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
+		<property name="serviceClient" ref="proxyControllerLoginServiceClient" />
+		<property name="targetEPR" ref="proxyControllerLoginServiceTargetEPR" />
+	</bean>
+	<bean name="proxyControllerLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="proxyControllerLoginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+	</bean>
+	<bean name="proxyControllerIsAffected" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="logInUser" />
+	</bean>
+</beans>
