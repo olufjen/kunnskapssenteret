@@ -13,6 +13,8 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
+	private LoggedInFunction loggedInFunction;
+	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String cancel = request.getParameter(this.parameterNames.get("cancelName"));
@@ -41,7 +43,7 @@ public final class RegisterUserController extends ProfileController {
 		userXML(user, null, document, values);
 		element.appendChild(values);
 		document.appendChild(element);
-		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		loggedInFunction.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -52,7 +54,7 @@ public final class RegisterUserController extends ProfileController {
 		Element cancel = document.createElement("cancel");
 		element.appendChild(cancel);
 		document.appendChild(element);
-		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		loggedInFunction.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -106,7 +108,7 @@ public final class RegisterUserController extends ProfileController {
 			gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		}
 		document.appendChild(element);
-		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		loggedInFunction.setResult(this.resultSessionVarName, document);
     	response.sendRedirect(gotoUrl);
 	}
 	protected void validateUser(User user, HttpServletRequest request, Document document, Element element){
@@ -129,5 +131,8 @@ public final class RegisterUserController extends ProfileController {
 	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
 		super.userXML(user, hprNumber, document, element);
 		element.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
+	}
+	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
+		this.loggedInFunction = loggedInFunction;
 	}
 }

@@ -22,6 +22,7 @@ public class ProfileController extends HttpControllerPlugin {
 	protected String resultSessionVarName;
 	protected UserService userService;
 	protected Map<String, String> parameterNames;
+	private LoggedInFunction loggedInFunction;
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String delete = request.getParameter(this.parameterNames.get("deleteName"));
@@ -42,7 +43,7 @@ public class ProfileController extends HttpControllerPlugin {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
-		Object loggedIn = LoggedInFunction.loggedIn();
+		Object loggedIn = loggedInFunction.loggedIn();
 		if((loggedIn == null) || ( ! (loggedIn instanceof User))){
 			element.appendChild(document.createElement("notloggedin"));
     		String referer = request.getParameter(this.parameterNames.get("from"));
@@ -88,7 +89,7 @@ public class ProfileController extends HttpControllerPlugin {
 	    	}
 		}
 		document.appendChild(element);
-		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		loggedInFunction.setResult(this.resultSessionVarName, document);
 	}
 	protected void validateUser(User user, HttpServletRequest request, Document document, Element messages){
 		String firstName = request.getParameter(this.parameterNames.get("firstname"));
@@ -217,7 +218,7 @@ public class ProfileController extends HttpControllerPlugin {
 //		result.append("<passwordrepeat></passwordrepeat>");
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Object loggedIn = LoggedInFunction.loggedIn();
+		Object loggedIn = loggedInFunction.loggedIn();
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
@@ -231,7 +232,7 @@ public class ProfileController extends HttpControllerPlugin {
 			element.appendChild(values);
 		}
 		document.appendChild(element);
-		LoggedInFunction.setResult(this.resultSessionVarName, document);
+		loggedInFunction.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -243,5 +244,8 @@ public class ProfileController extends HttpControllerPlugin {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
+		this.loggedInFunction = loggedInFunction;
 	}
 }

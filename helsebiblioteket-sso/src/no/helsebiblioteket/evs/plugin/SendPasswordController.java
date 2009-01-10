@@ -21,6 +21,8 @@ public final class SendPasswordController extends HttpControllerPlugin {
 	private String resultSessionVarName;
 	private LoginService loginService;
 	private Map<String, String> parameterNames;
+	private LoggedInFunction loggedInFunction;
+	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	this.logger.info("SendPasswordController RUNNING");
     	// TODO: Real parsing of query string
@@ -62,7 +64,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
     		element.appendChild(document.createElement("success"));
     		failXML("", document, element, emailError, sent);
     		document.appendChild(element);
-        	LoggedInFunction.setResult(this.resultSessionVarName, document);
+        	loggedInFunction.setResult(this.resultSessionVarName, document);
 
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
     		response.sendRedirect(gotoUrl);
@@ -70,7 +72,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
     		failXML(email, document, element, emailError, sent);
     		
     		document.appendChild(element);
-        	LoggedInFunction.setResult(this.resultSessionVarName, document);
+        	loggedInFunction.setResult(this.resultSessionVarName, document);
 
         	String referer = request.getParameter(this.parameterNames.get("from"));
     		response.sendRedirect(referer);
@@ -100,5 +102,8 @@ public final class SendPasswordController extends HttpControllerPlugin {
 	}
 	public void setResultSessionVarName(String resultSessionVarName) {
 		this.resultSessionVarName = resultSessionVarName;
+	}
+	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
+		this.loggedInFunction = loggedInFunction;
 	}
 }
