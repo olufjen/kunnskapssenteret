@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,14 +16,18 @@ import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
+import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public final class LogInController extends HttpControllerPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
 	private String resultSessionVarName;
 	private LoginService loginService;
 	private Map<String, String> parameterNames;
+	private LoggedInFunction loggedInFunction;
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	this.logger.info("LogInController RUNNING");
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
+
+		this.logger.info("LogInController RUNNING");
     	// TODO: Real parsing of query string
 //    	String prefix = "&" + this.parameterNames.get("resultName") + "=" +
 //    		this.parameterNames.get("resultValue");
@@ -55,7 +60,7 @@ public final class LogInController extends HttpControllerPlugin {
     	if(user != null){
     		// Found user!
     		element.appendChild(result.createElement("success"));
-    		LoggedInFunction.logIn(user);
+    		loggedInFunction.logIn(user);
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 //        	this.logger.info("Goto: " + gotoUrl);
     		response.sendRedirect(gotoUrl);
@@ -67,7 +72,7 @@ public final class LogInController extends HttpControllerPlugin {
     		response.sendRedirect(referer);
     	}
 		result.appendChild(element);
-    	LoggedInFunction.setResult(this.resultSessionVarName, result);
+    	loggedInFunction.setResult(this.resultSessionVarName, result);
 	}
 	private void makeXML(String username, String password, Document document, Element element) {
 		boolean lookup = true;
@@ -93,8 +98,6 @@ public final class LogInController extends HttpControllerPlugin {
 			summary.appendChild(UserToXMLTranslator.element(document, "summary", "UNKNOWN_USER"));
 		}
 		element.appendChild(summary);
-		
-		document.appendChild(element);
 	}
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
@@ -104,5 +107,8 @@ public final class LogInController extends HttpControllerPlugin {
 	}
 	public void setResultSessionVarName(String resultSessionVarName) {
 		this.resultSessionVarName = resultSessionVarName;
+	}
+	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
+		this.loggedInFunction = loggedInFunction;
 	}
 }
