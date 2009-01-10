@@ -1,10 +1,10 @@
 admin:password:admin
 
 ::group=altavista
-altavista:mypassword:cgi=http://192.168.1.100:8080/cms/site/2/ProxyServlet?init=true&
+altavista:mypassword:cgi=http://192.168.1.100:8080/cms/site/2/ProxyServlet?
 
 ::group=vg
-vg:mypassword:cgi=http://192.168.1.100:8080/cms/site/2/ProxyServlet?init=true&
+vg:mypassword:cgi=http://192.168.1.100:8080/cms/site/2/ProxyServlet?
 
 # TODO: Use something like this!
 # 3r89jwefa:fmkj90w3z:cgi=http://localhost:8080/cms/site/2/ProxyServlet?init=true&
