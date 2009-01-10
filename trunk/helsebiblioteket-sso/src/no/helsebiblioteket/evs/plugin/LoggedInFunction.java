@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -29,23 +30,30 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public class LoggedInFunction{
 	// TODO: Set in bean, but global?
-	private static String sessionLoggedInVarName = "loggedin";
-	private static String sessionResultsVarName = "results";
+	private String sessionLoggedInVarName = "hbloggedin";
+	private String sessionResultsVarName = "hbresults";
 
-	public static void logIn(Object user){
-		PluginEnvironment.getInstance().getCurrentSession().setAttribute(sessionLoggedInVarName, user);
+	public void logIn(Object user){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		session.setAttribute(sessionLoggedInVarName, user);
 	}
-	public static void logOut(){
-		PluginEnvironment.getInstance().getCurrentSession().setAttribute(sessionLoggedInVarName, null);
+	public void logOut(){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		session.setAttribute(sessionLoggedInVarName, null);
 	}
-	public static Object loggedIn() {
-		return PluginEnvironment.getInstance().getCurrentSession().getAttribute(sessionLoggedInVarName);
+	public Object loggedIn() {
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		return session.getAttribute(sessionLoggedInVarName);
 	}
 	public Document getUserAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		return translate(printUser());
 	}
-	public static void setResult(String key, org.w3c.dom.Document result) {
-		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>) PluginEnvironment.getInstance().getCurrentSession().getAttribute("result");
+	public void setResult(String key, org.w3c.dom.Document result) {
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+
+		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>)
+			session.getAttribute(sessionResultsVarName);
+		
 		if(userMap == null){
 			userMap = new HashMap<String, org.w3c.dom.Document>();
 			PluginEnvironment.getInstance().getCurrentSession().setAttribute(sessionResultsVarName, userMap);
@@ -53,7 +61,10 @@ public class LoggedInFunction{
 		userMap.put(key, result);
 	}
 	public Document getResult(String key) throws JDOMException, IOException, ParserConfigurationException, TransformerException {
-		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>) PluginEnvironment.getInstance().getCurrentSession().getAttribute("result");
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>)
+			session.getAttribute(sessionResultsVarName);
+		
 		org.w3c.dom.Document result = null;
 		if(userMap != null){
 			result = userMap.get(key);
@@ -74,10 +85,10 @@ public class LoggedInFunction{
 		result.appendChild(element);
 		return result;
 	}
-	public static org.w3c.dom.Document printUser() throws ParserConfigurationException {
+	public org.w3c.dom.Document printUser() throws ParserConfigurationException {
 	    	// Not like this anymore.
 	//    	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
-	    	Object sessionVar = LoggedInFunction.loggedIn();
+	    	Object sessionVar = loggedIn();
 			UserToXMLTranslator userTranslator = new UserToXMLTranslator();
 	//    	buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			org.w3c.dom.Document result = userTranslator.newDocument();
