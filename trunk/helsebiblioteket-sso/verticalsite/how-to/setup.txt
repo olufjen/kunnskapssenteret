@@ -14,7 +14,7 @@ Rediger profil            [Page (Enkeltside - Logg Inn)]
 Registrering av ny bruker [Page (Enkeltside - Logg Inn)]
   center-top: registerUser
 Logg inn                  [Page (Enkeltside - Logg Inn)]
-  <IKKE VESENTLIG>
+  center-top: loginUser
 Passord                   [Page (Enkeltside - Logg Inn)]
   center-top: password
 
@@ -44,6 +44,13 @@ password
   frontPage: Helsebiblioteket
   <Other props not set, or default!>
   datasource: password.txt
+loginUser
+  Stylesheet: login_user.xsl
+  proxyLoginPage: Logg inn
+  proxyServletPage: ProxyServlet
+  logOutServletPage: LoggUtServlet
+  loginServletPage: LoggInnServlet
+  datasource: loginUser.txt
 logon [Used in Position: right, as default, etc]
   Stylesheet: logon.xsl
   frontPage: Helsebiblioteket
