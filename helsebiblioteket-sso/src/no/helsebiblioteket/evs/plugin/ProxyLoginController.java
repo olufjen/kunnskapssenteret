@@ -84,7 +84,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
     			} else {
     				// Add organization for IP!
     		    	IpAddress ipAddress = new IpAddress();
-    		    	ipAddress.setAddress(LogInInterceptor2.getXforwardedForOrRemoteAddress(request));
+    		    	ipAddress.setAddress(LogInInterceptor.getXforwardedForOrRemoteAddress(request));
     		    	Organization altOrganization = this.loginService.logInIpAddress(ipAddress);
     		    	if(altOrganization != null) {
     	        		createXML(false, loggedin, requestedUrl, altOrganization, document, element);
