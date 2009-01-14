@@ -1,5 +1,8 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -15,6 +18,9 @@ public class URLServiceImpl implements URLService {
 		// TODO: Complete this! Look up values in DB!
 		
 		logger.info("Is this affected? " + url.getValue());
+		boolean res = false;
+		res = true;
+		if(true) return res;
 
 		return Boolean.FALSE;
 	}
@@ -39,11 +45,31 @@ public class URLServiceImpl implements URLService {
 		return newUrl;
 	}
 	public String group(Url url) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO: Write!
+		try {
+			URL old;
+			old = new URL(url.getValue());
+			String hostname = old.getHost();
+			String[] parts = hostname.split("\\.");
+			return parts[1];
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
 	}
 	public Boolean hasAccess(User user, Organization organization, Url url) {
+//		if(user != null && "".equals(user.getUsername())){
 		// TODO Auto-generated method stub
-		return null;
+		if(group(url).equals("digi")){
+			return Boolean.FALSE;
+		}
+
+		if(group(url).equals("vg")){
+			return Boolean.TRUE;
+		} else if(user != null){
+			return Boolean.TRUE;
+		} else {
+			return Boolean.FALSE;
+		}
 	}
 }
