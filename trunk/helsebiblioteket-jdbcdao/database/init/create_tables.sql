@@ -6,7 +6,7 @@
 -- Mapping:        Default                                                         
 -- Date:           04 December 2008                                                
 -- ********************************************************************************
--- Modified by Leif Torger Grøndahl, nokc.no:
+-- Modified by Leif Torger GrÃ¸ndahl, nokc.no:
 -- added serials as primary keys
 -- added grants for ownership for all tables
 
