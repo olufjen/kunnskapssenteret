@@ -9,7 +9,7 @@
  		<property name="proxyPassword" value="mypassword" />
  		<property name="urlParamName" value="url" />
  		<property name="proxyUrl" value="http://localhost:2048/login" />
- 		<property name="logUpUrl" value="http://localhost:8080/cms/site/2/Logg+inn";
+ 		<property name="logUpUrl" value="http://localhost:8080/cms/site/2/Logg+inn" />
 
  		<property name="urlService" ref="proxyUrlServiceWeb" />
  		

@@ -221,7 +221,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
 //	http://192.168.1.133:2048/groups
 //	http://192.168.1.133:2048/menu
 //	Link:
-//    http://192.168.1.133:2048/login?url=http://www.altavista.com/
+//    http://localhost:2048/login?url=http://www.altavista.com/
 //    http://192.168.1.133:2048/login?url=http://www.vg.no/
 //	Return URL:
 //	http://192.168.1.100:8080/cms/site/2/ProxyServlet?logup=UNS0u31JXwUajAF&url=http://www.google.com/
