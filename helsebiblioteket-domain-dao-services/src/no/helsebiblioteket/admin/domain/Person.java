@@ -91,7 +91,8 @@ public class Person {
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-	public void setStudent(boolean isStudent) {
-		this.isStudent = isStudent;
-	}
+	// FIXME: Hva i alle dager er dette? Skaper problemer for Axis!
+//	public void setStudent(boolean isStudent) {
+//		this.isStudent = isStudent;
+//	}
 }
