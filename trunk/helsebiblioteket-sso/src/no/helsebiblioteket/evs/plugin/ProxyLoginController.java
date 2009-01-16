@@ -12,7 +12,6 @@ import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -36,7 +35,6 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private int proxyTimeout = 0;
 
 	private URLService urlService;
-	private LoginService loginService;
 	private LoggedInFunction loggedInFunction;
 
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -85,7 +83,10 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				// Add organization for IP!
     		    	IpAddress ipAddress = new IpAddress();
     		    	ipAddress.setAddress(LogInInterceptor.getXforwardedForOrRemoteAddress(request));
-    		    	Organization altOrganization = this.loginService.logInIpAddress(ipAddress);
+    		    	
+    		    	// FIXME: Get from session. Both user and organization
+    		    	
+    		    	Organization altOrganization = null;//this.loginService.logInIpAddress(ipAddress);
     		    	if(altOrganization != null) {
     	        		createXML(false, loggedin, requestedUrl, altOrganization, document, element);
     		    	} else {
@@ -204,33 +205,28 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;
 	}
-	public void setLoginService(LoginService loginService) {
-		this.loginService = loginService;
-	}
 	public void setResultSessionVarName(String resultSessionVarName) {
 		this.resultSessionVarName = resultSessionVarName;
 	}
 	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
 		this.loggedInFunction = loggedInFunction;
 	}
-// TODO: Remove!
-//	Admin:
-//    http://192.168.1.133:2048/login?user=admin&pass=password
-//	http://192.168.1.133:2048/logout
-//	http://192.168.1.133:2048/admin
-//	http://192.168.1.133:2048/groups
-//	http://192.168.1.133:2048/menu
-//	Link:
-//    http://localhost:2048/login?url=http://www.altavista.com/
-//    http://192.168.1.133:2048/login?url=http://www.vg.no/
-//	Return URL:
-//	http://192.168.1.100:8080/cms/site/2/ProxyServlet?logup=UNS0u31JXwUajAF&url=http://www.google.com/
-//	http://192.168.1.100:8080/cms/site/2/ProxyServlet?url=http://www.vg.no/
-//	http://192.168.1.100:8080/cms/site/2/ProxyServlet?url=http://www.altavista.com/
-//	http://192.168.1.100:8080/cms/site/2/ProxyServlet?url=http://www.digi.no/
-//	Login URL:
-//	http://192.168.1.133:2048/login?user=myusername&pass=mypassword&group=google&url=http://www.vg.no/
-//	Redirect:
-//	http://192.168.1.133:2048/connect?session=t8hvlMSUuUtshMZu&url=http://www.google.com/
-//	http://192.168.1.133:2048/logout
+	public void setProxyPassword(String proxyPassword) {
+		this.proxyPassword = proxyPassword;
+	}
+	public void setUrlParamName(String urlParamName) {
+		this.urlParamName = urlParamName;
+	}
+	public void setProxyUrl(String proxyUrl) {
+		this.proxyUrl = proxyUrl;
+	}
+	public void setLogUpUrl(String logUpUrl) {
+		this.logUpUrl = logUpUrl;
+	}
+	public void setProxyUseGroup(boolean proxyUseGroup) {
+		this.proxyUseGroup = proxyUseGroup;
+	}
+	public void setProxyTimeout(int proxyTimeout) {
+		this.proxyTimeout = proxyTimeout;
+	}
 }
