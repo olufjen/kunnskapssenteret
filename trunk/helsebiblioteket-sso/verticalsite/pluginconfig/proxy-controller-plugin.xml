@@ -5,18 +5,16 @@
 	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
  		<property name="urlPattern" value="/site/2/ProxyServlet" />
  		<property name="priority" value="9998" />
- 		<property name="urlService" ref="proxyUrlServiceMock" />
- 		<property name="loginService" ref="loginServiceMock" />
+ 		<property name="resultSessionVarName" value="hbproxyresult" />
+ 		<property name="proxyPassword" value="mypassword" />
+ 		<property name="urlParamName" value="url" />
+ 		<property name="proxyUrl" value="http://localhost:2048/login" />
+ 		<property name="logUpUrl" value="http://localhost:8080/cms/site/2/Logg+inn";
+
+ 		<property name="urlService" ref="proxyUrlServiceWeb" />
+ 		
  		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
-	
-	<bean name="proxyUrlServiceMock" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
-	</bean>
-	<bean id="loginServiceMock" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
-	</bean>
-	
-	
-	
 	
 	<bean name="proxyUrlServiceWeb" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
 		<property name="serviceClient" ref="proxyControllerLoginServiceClient" />
