@@ -1,4 +1,6 @@
-Name 192.168.1.133
+Name localhost
+
+##Name 192.168.1.133
 ##Name proxy.no
 #Option ProxyByHostname
 #IncludeIP 0.0.0.0-255.255.255.255
