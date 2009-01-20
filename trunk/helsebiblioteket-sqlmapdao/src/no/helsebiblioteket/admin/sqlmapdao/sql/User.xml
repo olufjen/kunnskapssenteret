@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="User">
+	<typeAlias alias="user" type="no.helsebiblioteket.admin.domain.User"/>
+	<resultMap id="getUserResultMap" class="user">
+		<result property="id" column="user_id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="lastChanged" column="last_changed" />
+	</resultMap>
+	<select id="getUserById" resultMap="getUserResultMap" parameterClass="integer">
+		select user_id, username, password, org_unit_id, person_id, last_changed
+		from tbl_user
+		where user_id = #userId#;
+	</select>
+	<select id="getUserByUsername" resultMap="getUserResultMap" parameterClass="string">
+		select user_id, username, password, org_unit_id, person_id, last_changed
+		from tbl_user
+		where username = #userName#;
+	</select>
+	<select id="getUserList" resultMap="getUserResultMap">
+		select user_id, username, password, org_unit_id, person_id, last_changed
+		from tbl_user;
+	</select>
+	<insert id="insertUser" parameterClass="user">
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_user_user_id_seq') as id;
+		</selectKey>
+		insert into tbl_user
+		(user_id, username, password, org_unit_id, person_id, last_changed) 
+		values 
+		(#id#, #username#, #password#, #organization.id#, #person.id#, now());
+	</insert>
+	<update id="updateUser" parameterClass="user">
+		update tbl_user
+		set username = #username#
+		password = #password#
+		org_unit_id = #organization.id#
+		person_id = #person.id#
+		last_changed = now()
+		where user_id = #id# and 
+    	last_changed = #lastChanged#;
+	</update>
+</sqlMap>

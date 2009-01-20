@@ -1,10 +1,12 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
+import no.helsebiblioteket.admin.ModifiedListHelper;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.ContactInformation;
@@ -15,7 +17,6 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
-import no.helsebiblioteket.admin.sqlmapdao.helper.ModifiedListHelper;
 
 public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements OrganizationDao {
 	
@@ -34,23 +35,25 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 		}
 	}
 	
-	private void updateOrganization(Organization changedOrganization, Organization originalOrganization) {
-		if (changedOrganization == null && originalOrganization != null) {
-			getSqlMapClientTemplate().delete("deleteOrganization", originalOrganization);
-		} else {
-			getSqlMapClientTemplate().update("updateOrganization", changedOrganization);
-			setForeignKeysForOrganization(changedOrganization);
-			savePerson(changedOrganization.getContactPerson(), changedOrganization.getContactPerson());
-			saveContactInformation(changedOrganization.getContactInformation(), originalOrganization.getContactInformation());
-			saveIpRangeList(changedOrganization.getIpRangeList(), originalOrganization.getIpRangeList());
-			saveOrganizationNameList(changedOrganization.getNameList(), originalOrganization.getNameList());
-			// TODO: save access
-		}
+	private void updateOrganization(Organization changedOrganization, Organization originalOrganization) {		
+		getSqlMapClientTemplate().update("updateOrganization", changedOrganization);
+		setForeignKeysForOrganization(changedOrganization);
+		savePerson(changedOrganization.getContactPerson(), changedOrganization.getContactPerson());
+		saveContactInformation(changedOrganization.getContactInformation(), originalOrganization.getContactInformation());
+		saveIpRangeList(changedOrganization.getIpRangeList(), originalOrganization.getIpRangeList());
+		saveOrganizationNameList(changedOrganization.getNameList(), originalOrganization.getNameList());
+		saveAccessList(changedOrganization.getAccessList(), originalOrganization.getAccessList());
+	
+	// USERID | USERNAME | ROLEID | ROLENAME
+	// 1	  | Leif	 | 1	  | ADMIN
+	// 1      | Leif	 | 2      | STUD
+	// 2      | Fredrik  | 1      | ADMIN
+	                     // -1    | Test
 	}
 	
 	private void savePerson(Person person, Person originalPerson) {
 		saveContactInformation(person.getContactInformation(), originalPerson.getContactInformation());
-		saveUserProfile(person.getProfile(), originalPerson.getProfile());
+		saveProfile(person.getProfile(), originalPerson.getProfile());
 		
 		if (person.getId() != null) {
 			getSqlMapClientTemplate().update("updatePerson", person);
@@ -71,7 +74,7 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 		}
 	}
 	
-	private void saveAccess(Access access) {	
+	private void saveAccess(Access access) {
 	}
 	
 	private void saveIpRange(IpRange ipRange) {
@@ -122,17 +125,30 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 		}
 	}
 	
-	private void saveUserProfile(Profile changedProfile, Profile originalProfile) {
+	private void saveAccessList(List<Access> changedAccessList, List<Access> originalAccessList) {
+		ModifiedListHelper<Access> listHelper = new ModifiedListHelper<Access>();
+		List<Access> deleteList = listHelper.getDeleteList(changedAccessList, originalAccessList);
+		List<Access> insertAndUpdateList = listHelper.getInsertAndUpdateList(changedAccessList, originalAccessList);
+		if (deleteList != null) {
+			for (Access access : deleteList) {
+				getSqlMapClientTemplate().delete("deleteAccess", access);
+			}
+		}
+		if (insertAndUpdateList != null) {
+			for (Access access : insertAndUpdateList) {
+				saveAccess(access);
+			}
+		}
+	}
+	
+	private void saveProfile(Profile changedProfile, Profile originalProfile) {
 		if (changedProfile == null && originalProfile != null) {
-			// TODO: create sql map for user profile
-			// getSqlMapClientTemplate().delete("deleteUserProfile", originalProfile);
+			getSqlMapClientTemplate().delete("deleteProfile", originalProfile);
 		} else {
 			if (changedProfile.getId() == null) {
-				// TODO: create sql map for user profile
-				//getSqlMapClientTemplate().insert("insertUserProfile", changedProfile);
+				getSqlMapClientTemplate().insert("insertProfile", changedProfile);
 			} else {
-				// TODO: create sql map for user profile
-				//getSqlMapClientTemplate().update("updateUserProfile", changedProfile);
+				getSqlMapClientTemplate().update("updateProfile", changedProfile);
 			}
 		}
 	}
@@ -140,23 +156,16 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 	private void insertOrganization(Organization organization) {
 		if (organization.getContactPerson() != null) {
 			if (organization.getContactPerson().getContactInformation() != null) {
-				//organization.getContactPerson().getContactInformation().setId(
-						getSqlMapClientTemplate().insert("insertContactInformation", organization.getContactPerson().getContactInformation());
-				//		);
+				getSqlMapClientTemplate().insert("insertContactInformation", organization.getContactPerson().getContactInformation());
 			}
-			// TODO create sqlmap for user profile
-			// if (organization.getContactPerson().getProfile() != null) {
-			// 	organization.getContactPerson().getProfile().setId(
-			// 			(Integer) getSqlMapClientTemplate().insert("insertUserProfile", organization.getContactPerson().getProfile())
-			// 			);
-			// }
+			if (organization.getContactPerson().getProfile() != null) {
+				getSqlMapClientTemplate().insert("insertProfile", organization.getContactPerson().getProfile());
+			}
 			getSqlMapClientTemplate().insert("insertPerson", organization.getContactPerson());
 		}
 		
 		if (organization.getContactInformation() != null) {
-			// organization.getContactInformation().setId(
-					getSqlMapClientTemplate().insert("insertContactInformation", organization.getContactInformation());
-			//		);
+			getSqlMapClientTemplate().insert("insertContactInformation", organization.getContactInformation());
 		}
 		
 		getSqlMapClientTemplate().insert("insertOrganization", organization);
@@ -176,11 +185,12 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 	
 	public List<Organization> getAllOrganizations() {
 		List<Organization> organizationList = null;
-		organizationList = getSqlMapClientTemplate().queryForList("getOrganizationList");
+		organizationList = (List<Organization>) getSqlMapClientTemplate().queryForList("getOrganizationList");
+		List<Organization> organizationListPopulated = new ArrayList<Organization>();
 		for (Organization organization : organizationList) {
-			organization = populateOrganization(organization);
+			organizationListPopulated.add(populateOrganization(organization));
 		}
-		return organizationList;
+		return organizationListPopulated;
 	}
 
 	public Organization getOrganization(Integer organizationId) {
@@ -191,7 +201,7 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 	}
 	
 	private Organization populateOrganization(Organization organization) {
-		organization = (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
+		//organization = (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
 		if (organization.getParent() != null) {
 			organization.setParent((Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getParent().getId()));
 		}
@@ -202,16 +212,14 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 			if (organization.getContactPerson().getContactInformation() != null) {
 				organization.getContactPerson().setContactInformation((ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", organization.getContactPerson().getContactInformation().getId()));
 			}
-			// TODO create sqlmap for user profile
-			// if (organization.getContactPerson().getProfile() != null) {
-			// 	organization.getContactPerson().setProfile((Profile) getSqlMapClientTemplate().queryForObject("getUserProfileById", organization.getContactPerson().getProfile().getId()));
-			// }
+			if (organization.getContactPerson().getProfile() != null) {
+				organization.getContactPerson().setProfile((Profile) getSqlMapClientTemplate().queryForObject("getProfileById", organization.getContactPerson().getProfile().getId()));
+			}
 			organization.setContactPerson((Person) getSqlMapClientTemplate().queryForObject("getPersonById", organization.getContactPerson().getId()));
 		}
-		organization.setIpRangeList(getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organization.getId()));
-		// TODO: create sqlmap for access
-		// organization.setAccessList(getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId()));
-		organization.setNameList(getSqlMapClientTemplate().queryForList("getOrganizationNameListByOrganizationId", organization.getId()));	
+		organization.setIpRangeList((List<IpRange>) getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organization.getId()));
+		organization.setAccessList((List<Access>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId()));
+		organization.setNameList((List<OrganizationName>) getSqlMapClientTemplate().queryForList("getOrganizationNameListByOrganizationId", organization.getId()));	
 		return organization;
 	}
 

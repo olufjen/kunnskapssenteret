@@ -40,7 +40,7 @@
 		name = #name#,
 		org_unit_id = #organizationId#,
 		category = #category#,
-      	last_changed = now();
+      	last_changed = now()
     	where org_unit_name_id = #id# and
     	last_changed = #lastChanged#;
   </update>

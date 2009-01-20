@@ -18,7 +18,7 @@
 	</resultMap>
 	<select id="getPersonById" resultMap="getPersonResultMap" parameterClass="integer">
 		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
-		from tbl_person;
+		from tbl_person
 		where person_id = #personId#;
 	</select>
 	<select id="getPersonList" resultMap="getPersonResultMap">
