@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		{
 		User user=  userDao.findUser(username);
 		if(user !=null){
-			user.setPassword("qaa");
+//			user.setPassword("qaa");
 			return makeAcegiUser(user);
 		}
 		else throw new UsernameNotFoundException("User not found: " );

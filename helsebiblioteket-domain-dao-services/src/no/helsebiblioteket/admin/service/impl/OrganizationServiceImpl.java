@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.helsebiblioteket.admin.dao.OrganizationDao;
+import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -15,7 +16,12 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 public class OrganizationServiceImpl implements OrganizationService {
 	private static final long serialVersionUID = 1L;
 	private OrganizationDao organizationDao;
-	
+	private OrganizationTypeDao organizationTypeDao;
+
+	public List<OrganizationType> getOrganizationTypeList() {
+		return this.organizationTypeDao.getOrganizationTypeList();
+	}
+
 	public Organization getOrganization(Integer organizationId) {
 		return this.organizationDao.getOrganization(organizationId);
 	}
@@ -46,12 +52,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 //		
 //		{
 //			Organization organization = new Organization();
-//			organization.setName("Sykehuset i Bodø");
+//			organization.setName("Sykehuset i Bodï¿½");
 //			myOrganizations.add(organization);
 //		}
 //		{
 //			Organization organization = new Organization();
-//			organization.setName("Sykehuset i Bodø");
+//			organization.setName("Sykehuset i Bodï¿½");
 //			myOrganizations.add(organization);
 //		}
 //		this.organizations = myOrganizations;
@@ -62,4 +68,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	public void setOrganizationDao(OrganizationDao organizationDao) { this.organizationDao = organizationDao; }
+
+	public void setOrganizationTypeDao(OrganizationTypeDao organizationTypeDao) {
+		this.organizationTypeDao = organizationTypeDao;
+	}
+
+	public void createOrganization(Organization organization) {
+		// TODO: Save new organizations!
+		// TODO: Is this doing the right thing?
+		this.organizationDao.saveOrganization(organization);
+	}
 }

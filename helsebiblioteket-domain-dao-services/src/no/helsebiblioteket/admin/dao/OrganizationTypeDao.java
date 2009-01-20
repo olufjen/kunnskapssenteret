@@ -12,4 +12,5 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 
 public interface OrganizationTypeDao {
 	public List<OrganizationType> getOrganizationTypeList();
+	public OrganizationType getOrganizationType(String organizationTypeKey);
 }
