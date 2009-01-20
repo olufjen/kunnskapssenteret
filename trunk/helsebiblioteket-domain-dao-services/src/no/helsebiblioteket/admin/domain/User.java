@@ -12,7 +12,8 @@ public class User {
 	protected Role role = new Role();
 	protected List<Access> accessList = new ArrayList<Access>();
 	private Person person = new Person();
-	private List<Role> roleList = new ArrayList<Role>();
+	// must be initated to NULL.
+	private List<Role> roleList = null;
 	private Date lastChanged = null;
 	
 	public List<Role> getRoleList(){

@@ -3,18 +3,18 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Resource {
-	private Integer id = null;
+	private Integer resourceId = null;
 	private ResourceType resourceType = null;
 	private Date lastChanged = null;
 	
 	// foreign keys
 	private Integer organizationId;
 	
-	public Integer getId() {
-		return id;
+	public Integer getResourceId() {
+		return resourceId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setResourceId(Integer id) {
+		this.resourceId = id;
 	}
 	public ResourceType getResourceType() {
 		return resourceType;

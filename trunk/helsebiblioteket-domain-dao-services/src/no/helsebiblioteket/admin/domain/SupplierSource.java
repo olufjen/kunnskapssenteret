@@ -1,7 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
 public class SupplierSource extends Resource {
-	private Integer id = null;
+	private Integer supplierSourceId = null;
 	private String url = null;
 	private String name = null;
 	
@@ -14,16 +14,16 @@ public class SupplierSource extends Resource {
 	}
 	
 	public SupplierSource(Integer id, String name, String url) {
-		this.id = id;
+		this.supplierSourceId = id;
 		this.name = name;
 		this.url = url;
 	}
 	
-	public Integer getId() {
-		return this.id;
+	public Integer getSupplierSourceId() {
+		return this.supplierSourceId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setSupplierSourceId(Integer id) {
+		this.supplierSourceId = id;
 	}
 	public String getUrl() {
 		return this.url;

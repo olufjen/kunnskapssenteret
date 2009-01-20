@@ -1,11 +1,11 @@
 package no.helsebiblioteket.admin.domain;
 
 /**
- * @author Leif Torger Grøndahl, nokc.no
+ * @author Leif Torger Grï¿½ndahl, nokc.no
  * Class represents the link between requestor and resource
  * Typical usage: A user, an organization, a role or a type of organization
  * contains lists of objects of type Access. The access object contains the
- * resources available to the requestor/callee.
+ * resources available to the requestor
  */
 
 import java.util.Date;
@@ -14,7 +14,8 @@ public class Access {
 	private Integer id = null;
 	private SupplierSource supplierSource = null;
 	private Organization organization = null;
-	private AccessType accessType = null;
+	private Organization organizationAsResource = null;
+	private AccessType type = null;
 	private Organization providedBy = null;
 	private Date validFrom = null;
 	private Date validTo = null;
@@ -24,7 +25,8 @@ public class Access {
 	private Integer accessTypeId;
 	private Integer userId;
 	private Integer userRoleId;
-	private Integer orgTypeId;
+	private Integer organizationTypeId;
+	private Integer organizationId;
 	
 	public Organization getOrganization() {
 		return organization;
@@ -50,11 +52,11 @@ public class Access {
 	public void setSupplierSource(SupplierSource supplierSource) {
 		this.supplierSource = supplierSource;
 	}
-	public AccessType getAccessType() {
-		return accessType;
+	public AccessType getType() {
+		return type;
 	}
-	public void setAccessType(AccessType accessType) {
-		this.accessType = accessType;
+	public void setType(AccessType accessType) {
+		this.type = accessType;
 	}
 	public Date getValidFrom() {
 		return validFrom;
@@ -95,9 +97,21 @@ public class Access {
 		this.userRoleId = userRoleId;
 	}
 	public Integer getOrgTypeId() {
-		return orgTypeId;
+		return organizationTypeId;
 	}
 	public void setOrgTypeId(Integer orgTypeId) {
-		this.orgTypeId = orgTypeId;
+		this.organizationTypeId = orgTypeId;
+	}
+	public Organization getOrganizationAsResource() {
+		return organizationAsResource;
+	}
+	public void setOrganizationAsResource(Organization organizationAsResource) {
+		this.organizationAsResource = organizationAsResource;
+	}
+	public Integer getOrganizationId() {
+		return organizationId;
+	}
+	public void setOrganizationId(Integer organizationId) {
+		this.organizationId = organizationId;
 	}
 }

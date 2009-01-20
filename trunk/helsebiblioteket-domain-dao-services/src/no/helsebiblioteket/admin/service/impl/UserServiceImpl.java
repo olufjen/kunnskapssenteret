@@ -41,19 +41,19 @@ public class UserServiceImpl implements UserService {
 	public List<Role> getAllUserRoles() { return this.roleDao.getAllRoles(); }
 	public User createUser(User user) {
 		// FIXME: Insert data into all tables!
-		int pId = this.personDao.insertPerson(user.getPerson());
-		user.getPerson().setId(pId);
+		//int pId = this.personDao.insertPerson(user.getPerson());
+		//user.getPerson().setId(pId);
 		user.getPerson().getProfile().setPerson(user.getPerson());
 		user.getPerson().getContactInformation().setPerson(user.getPerson());
 		
-		int ciId = this.personDao.insertContactInformation(user.getPerson().getContactInformation());
-		user.getPerson().getContactInformation().setId(ciId);
+		//int ciId = this.personDao.insertContactInformation(user.getPerson().getContactInformation());
+		//user.getPerson().getContactInformation().setId(ciId);
 		
 		// FIXME: No dummy org!
 		Organization organization = new Organization();
 		organization.setId(3);
 		user.setOrganization(organization);
-		this.personDao.insertProfile(user.getPerson().getProfile());
+		//this.personDao.insertProfile(user.getPerson().getProfile());
 //		user.getPerson().getProfile().setId(proId);
 		
 		this.userDao.insertUser(user);
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
 		if(user.getAccessList() != null){
 			for (Access access : user.getAccessList()) {
 				// FIXME: Save access.
-				AccessType accessType = access.getAccessType();
+				AccessType accessType = access.getType();
 				SupplierSource supplierSource = access.getSupplierSource();
 				ResourceType resourceType = supplierSource.getResourceType();
 			}
@@ -101,12 +101,12 @@ public class UserServiceImpl implements UserService {
 			return null;
 		} 
 		// Move backwards
-		this.personDao.updateContactInformation(user.getPerson().getContactInformation());
+		//this.personDao.updateContactInformation(user.getPerson().getContactInformation());
 //		this.personDao.updatePosition(user.getPerson().getPosition());
 		user.getPerson().getProfile().setPerson(user.getPerson());
 		if(user.getPerson().getProfile() != null){
 			// TODO: Should all persons have a profile?
-			this.personDao.updateProfile(user.getPerson().getProfile());
+			//	this.personDao.updateProfile(user.getPerson().getProfile());
 		}
 		user.getPerson().setUser(user);
 		this.personDao.updatePerson(user.getPerson());
