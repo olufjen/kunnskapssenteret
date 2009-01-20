@@ -9,14 +9,14 @@ import java.util.Map;
 public class Organization {
 	private Integer id;
 	private Organization parent = null;
-	private String description = "";
-	private OrganizationType type = new OrganizationType();
-	private List<IpRange> ipRangeList = new ArrayList<IpRange>();
-	private Person contactPerson = new Person();
-	private ContactInformation contactInformation = new ContactInformation();
-	private List<Access> accessList = new ArrayList<Access>();
+	private String description = null;
+	private OrganizationType type = null;
+	private List<IpRange> ipRangeList = null;
+	private Person contactPerson = null;
+	private ContactInformation contactInformation = null;
+	private List<Access> accessList = null;
 	private Date lastChanged = null;
-	private List<OrganizationName> nameList = new ArrayList<OrganizationName>();
+	private List<OrganizationName> nameList = null;
 	
 	public Organization() {
 	}
@@ -114,6 +114,58 @@ public class Organization {
 			}
 		}
 		return orgNameMap;
+	}
+	
+	public String getNameEnglish() {
+		String name = null;
+		if (nameList != null) {
+			for (OrganizationName orgName : nameList) {
+				if ("en".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.toString().equals(orgName.getCategory())) {
+					name = orgName.getName();
+					break;
+				}
+			}
+		}
+		return name;
+	}
+	
+	public String getNameNorwegian() {
+		String name = null;
+		if (nameList != null) {
+			for (OrganizationName orgName : nameList) {
+				if ("no".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.equals(orgName.getCategory())) {
+					name = orgName.getName();
+					break;
+				}
+			}
+		}
+		return name;
+	}
+	
+	public String getNameShortEnglish() {
+		String name = null;
+		if (nameList != null) {
+			for (OrganizationName orgName : nameList) {
+				if ("en".equals(orgName.getLanguageCode()) && OrganizationNameCategory.SHORT.toString().equals(orgName.getCategory())) {
+					name = orgName.getName();
+					break;
+				}
+			}
+		}
+		return name;
+	}
+	
+	public String getNameShortNorwegian() {
+		String name = null;
+		if (nameList != null) {
+			for (OrganizationName orgName : nameList) {
+				if ("no".equals(orgName.getLanguageCode()) && OrganizationNameCategory.SHORT.toString().equals(orgName.getCategory())) {
+					name = orgName.getName();
+					break;
+				}
+			}
+		}
+		return name;
 	}
 	
 	public int hashCode() {
