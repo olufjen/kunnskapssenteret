@@ -82,7 +82,7 @@ public final class RegisterUserController extends ProfileController {
 		String summary = "";
 		// TODO: Bad test!
 		if( ! messages.hasChildNodes()){
-			user.getPerson().setHprNumber(new Integer(hprNumber));
+			user.getPerson().setHprNumber(hprNumber);
 			// TODO: Saving may fail though!
 	    	boolean saved = true;
 	    	this.userService.createUser(user);

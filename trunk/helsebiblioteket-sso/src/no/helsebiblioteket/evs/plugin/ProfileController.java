@@ -63,7 +63,7 @@ public class ProfileController extends HttpControllerPlugin {
 			this.validateUser(user, request, document, messages);
 			// TODO: Bad test!
 			if( ! messages.hasChildNodes()){
-				user.getPerson().setHprNumber(new Integer(hprNumber));
+				user.getPerson().setHprNumber(hprNumber);
 				// TODO: Saving may fail though!
 		    	boolean saved = true;
 		    	this.userService.saveUser(user);
@@ -177,7 +177,7 @@ public class ProfileController extends HttpControllerPlugin {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		translator.translate(user, document, element);
 		if(hprNumber == null){
-			Integer hpr = user.getPerson().getHprNumber();
+			String hpr = user.getPerson().getHprNumber();
 			if(hpr == null) hprNumber = "";
 			else hprNumber = hpr.toString();
 		}
