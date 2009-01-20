@@ -1,0 +1,5591 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<iprange xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<range>
+		<entryid>1</entryid>
+		<group>3</group>
+		<desc>4mklinikken</desc>
+		<from>213.236.173.66</from>
+		<to>213.236.173.66</to>
+	</range>
+	<range>
+		<entryid>2</entryid>
+		<group>3</group>
+		<desc>Statens institutt for rusmiddelforskning (SIRUS)</desc>
+		<from>85.95.63.106</from>
+		<to>85.95.63.106</to>
+		<contact>Beate Henriksen</contact>
+		<email>bh@sirus.no</email>
+	</range>
+	<range>
+		<entryid>3</entryid>
+		<group>3</group>
+		<desc>Aker universitetssykehus HF</desc>
+		<from>129.240.0.0</from>
+		<to>129.240.41.255</to>
+	</range>
+	<range>
+		<entryid>4</entryid>
+		<group>3</group>
+		<desc>Aker universitetssykehus HF</desc>
+		<from>129.240.44.0</from>
+		<to>129.240.214.255</to>
+	</range>
+	<range>
+		<entryid>5</entryid>
+		<group>3</group>
+		<desc>Aker universitetssykehus HF</desc>
+		<from>129.240.216.0</from>
+		<to>129.240.255.255</to>
+	</range>
+	<range>
+		<entryid>6</entryid>
+		<group>3</group>
+		<desc>Aker universitetssykehus HF</desc>
+		<from>158.36.186.211</from>
+		<to>158.36.186.211</to>
+	</range>
+	<range>
+		<entryid>7</entryid>
+		<group>3</group>
+		<desc>Aker universitetssykehus HF</desc>
+		<from>158.36.186.21</from>
+		<to>158.36.186.21</to>
+	</range>
+	<range>
+		<entryid>8</entryid>
+		<group>3</group>
+		<desc>Aker universitetssykehus HF</desc>
+		<from>129.240.174.1</from>
+		<to>129.240.175.254</to>
+	</range>
+	<range>
+		<entryid>9</entryid>
+		<group>3</group>
+		<desc>Akershus University Hospital</desc>
+		<from>195.18.130.64</from>
+		<to>195.18.130.95</to>
+	</range>
+	<range>
+		<entryid>10</entryid>
+		<group>3</group>
+		<desc>Akershus University Hospital</desc>
+		<from>91.186.73.64</from>
+		<to>91.186.73.127</to>
+	</range>
+	<range>
+		<entryid>11</entryid>
+		<group>3</group>
+		<desc>Haraldsplass Diakonale Sykehus/Haraldsplass diakonale hoegskole</desc>
+		<from>161.4.82.9</from>
+		<to>161.4.82.9</to>
+		<contact>Irene Hunskår</contact>
+		<email>irene.hunskar@haraldsplass.no</email>
+		<address>Ulriksdal 8</address>
+		<postal_code>5009</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>55979629</phone>
+	</range>
+	<range>
+		<entryid>12</entryid>
+		<group>3</group>
+		<desc>Diakonhjemmet Høgskole</desc>
+		<from>158.36.63.0</from>
+		<to>158.36.63.255</to>
+		<contact>Hilde Trygstad</contact>
+		<email>trygstad@diakonhjemmet.no</email>
+		<address>Postboks 184 Vinderen</address>
+		<postal_code>319</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22451945</phone>
+	</range>
+	<range>
+		<entryid>13</entryid>
+		<group>3</group>
+		<desc>Diakonhjemmet Høgskole</desc>
+		<from>158.36.64.0</from>
+		<to>158.36.64.255</to>
+		<contact>Hilde Trygstad</contact>
+		<email>trygstad@diakonhjemmet.no</email>
+		<address>Postboks 184 Vinderen</address>
+		<postal_code>319</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22451946</phone>
+	</range>
+	<range>
+		<entryid>14</entryid>
+		<group>3</group>
+		<desc>Diakonhjemmet Høgskole</desc>
+		<from>158.36.65.0</from>
+		<to>158.36.65.255</to>
+		<contact>Hilde Trygstad</contact>
+		<email>trygstad@diakonhjemmet.no</email>
+		<address>Postboks 184 Vinderen</address>
+		<postal_code>319</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22451947</phone>
+	</range>
+	<range>
+		<entryid>15</entryid>
+		<group>1</group>
+		<desc>Diakonhjemmet Høgskole</desc>
+		<from>158.37.43.0</from>
+		<to>158.37.43.255</to>
+		<contact>Hilde Trygstad</contact>
+		<email>trygstad@diakonhjemmet.no</email>
+		<address>Postboks 184 Vinderen</address>
+		<postal_code>319</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22451948</phone>
+	</range>
+	<range>
+		<entryid>16</entryid>
+		<group>3</group>
+		<desc>Buskerrud Sykehus, Sykehuest Innlandet (Hospital), Sykehuset Buskerud HF</desc>
+		<from>82.196.206.2</from>
+		<to>82.196.206.2</to>
+	</range>
+	<range>
+		<entryid>17</entryid>
+		<group>3</group>
+		<desc>Buskerrud Sykehus</desc>
+		<from>91.186.68.5</from>
+		<to>91.186.68.7</to>
+	</range>
+	<range>
+		<entryid>18</entryid>
+		<group>3</group>
+		<desc>FIXME: Buskerrud Sykehus - Haalogaland Hospital - Sosial og helsedirektoratet</desc>
+		<from>217.13.20.103</from>
+		<to>217.13.20.103</to>
+	</range>
+	<range>
+		<entryid>19</entryid>
+		<group>3</group>
+		<desc>Nordre Aasen bo- og habiliteringssenter og Kapellveien</desc>
+		<from>195.1.56.133</from>
+		<to>195.1.56.133</to>
+		<contact>Thor Jonny Eriksen</contact>
+		<email>thor.jonny.eriksen@kapellveien.no</email>
+		<address>Kapellveien habiliteringssenter, Kapellveien 6</address>
+		<postal_code>487</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 79 73 00</phone>
+	</range>
+	<range>
+		<entryid>20</entryid>
+		<group>3</group>
+		<desc>Nordre Aasen bo- og habiliteringssenter og Kapellveien</desc>
+		<from>193.69.158.26</from>
+		<to>193.69.158.26</to>
+		<contact>Thor Jonny Eriksen</contact>
+		<email>thor.jonny.eriksen@kapellveien.no</email>
+		<address>Kapellveien habiliteringssenter, Kapellveien 7</address>
+		<postal_code>487</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>23 79 73 00</phone>
+	</range>
+	<range>
+		<entryid>21</entryid>
+		<group>3</group>
+		<desc>Nordre Aasen bo- og habiliteringssenter og Kapellveien</desc>
+		<from>62.101.243.210</from>
+		<to>62.101.243.210</to>
+		<contact>Thor Jonny Eriksen</contact>
+		<email>thor.jonny.eriksen@kapellveien.no</email>
+		<address>Kapellveien habiliteringssenter, Kapellveien 8</address>
+		<postal_code>487</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>24 79 73 00</phone>
+	</range>
+	<range>
+		<entryid>22</entryid>
+		<group>3</group>
+		<desc>Drammen kommune</desc>
+		<from>81.0.186.192</from>
+		<to>81.0.186.199</to>
+	</range>
+	<range>
+		<entryid>23</entryid>
+		<group>3</group>
+		<desc>Drammen kommune</desc>
+		<from>81.0.147.32</from>
+		<to>81.0.147.63</to>
+	</range>
+	<range>
+		<entryid>24</entryid>
+		<group>3</group>
+		<desc>Drammen kommune</desc>
+		<from>89.191.25.64</from>
+		<to>89.191.25.128</to>
+	</range>
+	<range>
+		<entryid>25</entryid>
+		<group>3</group>
+		<desc>Feiringklinikken</desc>
+		<from>217.8.151.98</from>
+		<to>217.8.151.98</to>
+	</range>
+	<range>
+		<entryid>26</entryid>
+		<group>3</group>
+		<desc>Feiringklinikken</desc>
+		<from>217.8.148.253</from>
+		<to>217.8.148.253</to>
+	</range>
+	<range>
+		<entryid>27</entryid>
+		<group>3</group>
+		<desc>Frambu: A national Centre for Rare Disorders</desc>
+		<from>64.28.26.10</from>
+		<to>64.28.26.10</to>
+	</range>
+	<range>
+		<entryid>28</entryid>
+		<group>3</group>
+		<desc>Furst Medical Liboratory</desc>
+		<from>193.214.114.162</from>
+		<to>193.214.114.167</to>
+	</range>
+	<range>
+		<entryid>29</entryid>
+		<group>3</group>
+		<desc>Fylkesmannen i Rogaland</desc>
+		<from>80.239.107.162</from>
+		<to>80.239.107.162</to>
+	</range>
+	<range>
+		<entryid>30</entryid>
+		<group>3</group>
+		<desc>Fylkesmannen i Sogn og Fjordane</desc>
+		<from>217.17.209.139</from>
+		<to>217.17.209.139</to>
+	</range>
+	<range>
+		<entryid>31</entryid>
+		<group>3</group>
+		<desc>Glittreklinikken</desc>
+		<from>193.213.80.1</from>
+		<to>193.213.80.1</to>
+	</range>
+	<range>
+		<entryid>32</entryid>
+		<group>3</group>
+		<desc>Group for Tromso University Hospital ONLY 193.157.</desc>
+		<from>193.157.64.0</from>
+		<to>193.157.64.2</to>
+	</range>
+	<range>
+		<entryid>33</entryid>
+		<group>3</group>
+		<desc>GRUK</desc>
+		<from>85.19.26.218</from>
+		<to>85.19.26.218</to>
+	</range>
+	<range>
+		<entryid>34</entryid>
+		<group>3</group>
+		<desc>Helse Fonna HF</desc>
+		<from>161.4.82.6</from>
+		<to>161.4.82.6</to>
+	</range>
+	<range>
+		<entryid>35</entryid>
+		<group>3</group>
+		<desc>Helse Sunmoere (Health Sunmoere), Sunnaas Sykehus HF (Sunnaas Rehabilitation Hospital)</desc>
+		<from>85.112.136.224</from>
+		<to>85.112.136.224</to>
+	</range>
+	<range>
+		<entryid>36</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Vestfold</desc>
+		<from>128.39.19.0</from>
+		<to>128.39.19.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsø</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsø</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>37</entryid>
+		<group>3</group>
+		<desc>Nordlandssykehuset - (under Norsk helsenett - nhn.no)</desc>
+		<from>81.0.182.128</from>
+		<to>81.0.182.191</to>
+		<contact>Ove Eide</contact>
+		<email>oei@nlsh.no</email>
+	</range>
+	<range>
+		<entryid>38</entryid>
+		<group>3</group>
+		<desc>Kreftregisteret</desc>
+		<from>79.135.1.2</from>
+		<to>79.135.1.2</to>
+	</range>
+	<range>
+		<entryid>39</entryid>
+		<group>3</group>
+		<desc>Lovisenberg Diakonale hoegskole</desc>
+		<from>158.36.67.2</from>
+		<to>158.36.67.2</to>
+		<contact>Turid Brandsdal</contact>
+		<email>turid.brandsdal@ldh.no</email>
+		<address>Lovisenberggt. 15b</address>
+		<postal_code>456</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 35 82 74</phone>
+	</range>
+	<range>
+		<entryid>40</entryid>
+		<group>3</group>
+		<desc>Lovisenberg Diakonale Sykehus</desc>
+		<from>81.0.137.157</from>
+		<to>81.0.137.157</to>
+	</range>
+	<range>
+		<entryid>41</entryid>
+		<group>3</group>
+		<desc>Lovisenberg Diakonale Sykehus - Norwegian Institue of Public Health</desc>
+		<from>158.36.184.128</from>
+		<to>158.36.184.255</to>
+	</range>
+	<range>
+		<entryid>42</entryid>
+		<group>3</group>
+		<desc>Helse Nord-Trondelag</desc>
+		<from>91.186.72.50</from>
+		<to>91.186.72.50</to>
+	</range>
+	<range>
+		<entryid>43</entryid>
+		<group>3</group>
+		<desc>Helse Sunnmoere</desc>
+		<from>91.186.72.48</from>
+		<to>91.186.72.48</to>
+	</range>
+	<range>
+		<entryid>44</entryid>
+		<group>3</group>
+		<desc>Helse Nordmoere og Romsdal</desc>
+		<from>91.186.72.49</from>
+		<to>91.186.72.49</to>
+	</range>
+	<range>
+		<entryid>45</entryid>
+		<group>3</group>
+		<desc>Nasjonal kompetanseenhet for minoritetshelse</desc>
+		<from>62.89.32.4</from>
+		<to>62.89.32.4</to>
+	</range>
+	<range>
+		<entryid>46</entryid>
+		<group>3</group>
+		<desc>Nasjonalt folkehelseinstitutt</desc>
+		<from>158.36.43.133</from>
+		<to>158.36.43.133</to>
+	</range>
+	<range>
+		<entryid>47</entryid>
+		<group>3</group>
+		<desc>National Institute of Occupational Health</desc>
+		<from>195.26.0.116</from>
+		<to>195.26.0.116</to>
+	</range>
+	<range>
+		<entryid>48</entryid>
+		<group>3</group>
+		<desc>National Institute of Occupational Health</desc>
+		<from>82.196.205.114</from>
+		<to>82.196.205.114</to>
+	</range>
+	<range>
+		<entryid>49</entryid>
+		<group>3</group>
+		<desc>National Institute of Occupational Health</desc>
+		<from>195.204.3.67</from>
+		<to>195.204.3.67</to>
+	</range>
+	<range>
+		<entryid>50</entryid>
+		<group>3</group>
+		<desc>National Institute of Occupational Health</desc>
+		<from>195.159.17.129</from>
+		<to>195.159.17.129</to>
+	</range>
+	<range>
+		<entryid>51</entryid>
+		<group>3</group>
+		<desc>National Institute of Public Health</desc>
+		<from>128.39.60.0</from>
+		<to>128.39.62.127</to>
+	</range>
+	<range>
+		<entryid>52</entryid>
+		<group>3</group>
+		<desc>National Institute of Public Health</desc>
+		<from>195.159.17.130</from>
+		<to>195.159.17.190</to>
+	</range>
+	<range>
+		<entryid>53</entryid>
+		<group>3</group>
+		<desc>NAV,the Norwegian Government authority for work and welfare</desc>
+		<from>155.55.0.0</from>
+		<to>155.55.255.254</to>
+	</range>
+	<range>
+		<entryid>54</entryid>
+		<group>3</group>
+		<desc>Norwegian Board of Health</desc>
+		<from>195.204.222.2</from>
+		<to>195.204.222.18</to>
+	</range>
+	<range>
+		<entryid>55</entryid>
+		<group>3</group>
+		<desc>Norwegian Health Services Research Ctr NHSRC</desc>
+		<from>81.0.145.208</from>
+		<to>81.0.145.223</to>
+	</range>
+	<range>
+		<entryid>56</entryid>
+		<group>3</group>
+		<desc>Norwegian Health Services Research Ctr NHSRC</desc>
+		<from>82.134.7.64</from>
+		<to>82.134.7.95</to>
+	</range>
+	<range>
+		<entryid>57</entryid>
+		<group>3</group>
+		<desc>Norwegian Health Services Research Ctr NHSRC</desc>
+		<from>81.0.145.208</from>
+		<to>81.0.145.223</to>
+	</range>
+	<range>
+		<entryid>58</entryid>
+		<group>3</group>
+		<desc>Norwegian Health Services Research Ctr NHSRC</desc>
+		<from>194.19.102.35</from>
+		<to>194.19.102.43</to>
+	</range>
+	<range>
+		<entryid>59</entryid>
+		<group>3</group>
+		<desc>Norwegian Radiation Protection Authority</desc>
+		<from>193.69.140.80</from>
+		<to>193.69.140.80</to>
+	</range>
+	<range>
+		<entryid>60</entryid>
+		<group>3</group>
+		<desc>Norwegian Radiation Protection Authority</desc>
+		<from>195.204.92.2</from>
+		<to>195.204.92.2</to>
+	</range>
+	<range>
+		<entryid>61</entryid>
+		<group>3</group>
+		<desc>Profdoc</desc>
+		<from>213.236.173.65</from>
+		<to>213.236.173.65</to>
+	</range>
+	<range>
+		<entryid>62</entryid>
+		<group>3</group>
+		<desc>Radiumhospitalet</desc>
+		<from>128.39.244.126</from>
+		<to>128.39.244.126</to>
+	</range>
+	<range>
+		<entryid>63</entryid>
+		<group>3</group>
+		<desc>Radiumhospitalet</desc>
+		<from>128.39.244.128</from>
+		<to>128.39.244.128</to>
+	</range>
+	<range>
+		<entryid>64</entryid>
+		<group>3</group>
+		<desc>Radiumhospitalet</desc>
+		<from>193.156.79.200</from>
+		<to>193.156.79.200</to>
+	</range>
+	<range>
+		<entryid>65</entryid>
+		<group>3</group>
+		<desc>RBT Headoffice</desc>
+		<from>158.36.77.0</from>
+		<to>158.36.77.255</to>
+	</range>
+	<range>
+		<entryid>66</entryid>
+		<group>3</group>
+		<desc>RBUP oest og Soer</desc>
+		<from>81.0.189.231</from>
+		<to>81.0.189.231</to>
+	</range>
+	<range>
+		<entryid>67</entryid>
+		<group>3</group>
+		<desc>Rikshospitalet</desc>
+		<from>128.39.244.113</from>
+		<to>128.39.244.113</to>
+	</range>
+	<range>
+		<entryid>68</entryid>
+		<group>3</group>
+		<desc>Ringerike Sykehus HF</desc>
+		<from>82.117.33.26</from>
+		<to>82.117.33.26</to>
+	</range>
+	<range>
+		<entryid>69</entryid>
+		<group>3</group>
+		<desc>Ringerike Sykehus HF, Helse Soer</desc>
+		<from>158.36.72.178</from>
+		<to>158.36.72.178</to>
+	</range>
+	<range>
+		<entryid>70</entryid>
+		<group>3</group>
+		<desc>Rogaland Central Hospital</desc>
+		<from>217.68.116.177</from>
+		<to>217.68.116.177</to>
+	</range>
+	<range>
+		<entryid>71</entryid>
+		<group>3</group>
+		<desc>SINTEF Helse Oslo</desc>
+		<from>128.39.217.0</from>
+		<to>128.39.217.255</to>
+	</range>
+	<range>
+		<entryid>72</entryid>
+		<group>3</group>
+		<desc>SINTEF Helse Trondheim</desc>
+		<from>129.241.242.0</from>
+		<to>129.241.242.255</to>
+	</range>
+	<range>
+		<entryid>73</entryid>
+		<group>3</group>
+		<desc>Skogli helse- og rehab. senter as</desc>
+		<from>193.75.65.38</from>
+		<to>193.75.65.38</to>
+	</range>
+	<range>
+		<entryid>74</entryid>
+		<group>3</group>
+		<desc>Soerlandet sykehus HF</desc>
+		<from>212.20.206.47</from>
+		<to>212.20.206.47</to>
+	</range>
+	<range>
+		<entryid>75</entryid>
+		<group>3</group>
+		<desc>Soerlandet sykehus HF Arendal (Aust-Agder Central</desc>
+		<from>212.20.206.52</from>
+		<to>212.20.206.53</to>
+	</range>
+	<range>
+		<entryid>76</entryid>
+		<group>3</group>
+		<desc>Soerlandet sykehus HF Arendal (Aust-Agder Central)</desc>
+		<from>212.4.33.224</from>
+		<to>212.4.33.224</to>
+	</range>
+	<range>
+		<entryid>77</entryid>
+		<group>3</group>
+		<desc>Sosial og helsedirektoratet (tidligere library)</desc>
+		<from>194.248.77.110</from>
+		<to>194.248.77.110</to>
+	</range>
+	<range>
+		<entryid>78</entryid>
+		<group>3</group>
+		<desc>St. Olavs Hospital HF, Trondheim</desc>
+		<from>153.110.45.16</from>
+		<to>153.110.45.16</to>
+	</range>
+	<range>
+		<entryid>79</entryid>
+		<group>3</group>
+		<desc>St. Olavs Hospital HF, Trondheim</desc>
+		<from>153.110.45.15</from>
+		<to>153.110.45.15</to>
+	</range>
+	<range>
+		<entryid>80</entryid>
+		<group>3</group>
+		<desc>St. Olavs Hospital HF, Trondheim</desc>
+		<from>91.186.72.51</from>
+		<to>91.186.72.51</to>
+	</range>
+	<range>
+		<entryid>81</entryid>
+		<group>3</group>
+		<desc>Statens straalevern (Norwegian Radiation Protection Authority, NRPA), Svanhovd</desc>
+		<from>85.113.162.118</from>
+		<to>85.113.162.118</to>
+	</range>
+	<range>
+		<entryid>82</entryid>
+		<group>3</group>
+		<desc>Statens straalevern (Norwegian Radiation Protection Authority, NRPA), Tromsoe</desc>
+		<from>158.39.76.97</from>
+		<to>158.39.76.113</to>
+	</range>
+	<range>
+		<entryid>83</entryid>
+		<group>3</group>
+		<desc>Statens straalevern OEsteraas</desc>
+		<from>89.191.6.2</from>
+		<to>89.191.6.2</to>
+	</range>
+	<range>
+		<entryid>84</entryid>
+		<group>3</group>
+		<desc>Stavanger University Hospital</desc>
+		<from>217.68.116.174</from>
+		<to>217.68.116.174</to>
+	</range>
+	<range>
+		<entryid>85</entryid>
+		<group>3</group>
+		<desc>Stavanger University Hospital</desc>
+		<from>161.4.82.7</from>
+		<to>161.4.82.7</to>
+	</range>
+	<range>
+		<entryid>86</entryid>
+		<group>3</group>
+		<desc>Stavanger University Hospital</desc>
+		<from>217.68.116.150</from>
+		<to>217.68.116.152</to>
+	</range>
+	<range>
+		<entryid>87</entryid>
+		<group>3</group>
+		<desc>Stavanger University Hospital</desc>
+		<from>161.4.82.1</from>
+		<to>161.4.82.1</to>
+	</range>
+	<range>
+		<entryid>88</entryid>
+		<group>3</group>
+		<desc>Alle health-institutions in Stavanger kommune</desc>
+		<from>217.68.125.2</from>
+		<to>217.68.125.2</to>
+	</range>
+	<range>
+		<entryid>89</entryid>
+		<group>3</group>
+		<desc>Stifltelsen Alternativ til Vold</desc>
+		<from>193.213.32.142</from>
+		<to>193.213.32.142</to>
+	</range>
+	<range>
+		<entryid>90</entryid>
+		<group>3</group>
+		<desc>Stiftelsen Viken senter for psykiatri og sjelesorg (Helse-Nord)</desc>
+		<from>85.221.31.31</from>
+		<to>85.221.31.31</to>
+	</range>
+	<range>
+		<entryid>91</entryid>
+		<group>3</group>
+		<desc>Sunnaas sykehus HF</desc>
+		<from>62.92.37.152</from>
+		<to>62.92.37.152</to>
+	</range>
+	<range>
+		<entryid>92</entryid>
+		<group>3</group>
+		<desc>Sunnaas sykehus HF</desc>
+		<from>212.33.133.163</from>
+		<to>212.33.133.163</to>
+	</range>
+	<range>
+		<entryid>93</entryid>
+		<group>3</group>
+		<desc>Sunnaas Sykehus HF (Sunnaas Rehabilitation Hospital)</desc>
+		<from>82.196.200.226</from>
+		<to>82.196.200.230</to>
+	</range>
+	<range>
+		<entryid>94</entryid>
+		<group>3</group>
+		<desc>Sunnaas Sykehus HF (Sunnaas Rehabilitation Hospital)</desc>
+		<from>82.196.200.242</from>
+		<to>82.196.200.246</to>
+	</range>
+	<range>
+		<entryid>95</entryid>
+		<group>3</group>
+		<desc>Sunnaas sykehus HF/Ullevaal Universitetssykehus</desc>
+		<from>158.36.186.210</from>
+		<to>158.36.186.210</to>
+	</range>
+	<range>
+		<entryid>96</entryid>
+		<group>3</group>
+		<desc>Sunnaas sykehus HF/Ullevaal Universitetssykehus</desc>
+		<from>195.204.46.130</from>
+		<to>195.204.46.130</to>
+	</range>
+	<range>
+		<entryid>97</entryid>
+		<group>3</group>
+		<desc>Sykehuest Innlandet (Hospital)</desc>
+		<from>91.186.74.5</from>
+		<to>91.186.74.5</to>
+	</range>
+	<range>
+		<entryid>98</entryid>
+		<group>3</group>
+		<desc>Sykehuest Innlandet (Hospital)</desc>
+		<from>82.147.34.246</from>
+		<to>82.147.34.246</to>
+	</range>
+	<range>
+		<entryid>99</entryid>
+		<group>3</group>
+		<desc>Sykehuset Asker og Baerum HF</desc>
+		<from>195.134.32.197</from>
+		<to>195.134.32.197</to>
+	</range>
+	<range>
+		<entryid>100</entryid>
+		<group>3</group>
+		<desc>Sykehuset Asker og Baerum HF</desc>
+		<from>91.186.73.0</from>
+		<to>91.186.73.16</to>
+	</range>
+	<range>
+		<entryid>101</entryid>
+		<group>3</group>
+		<desc>Sykehuset Innlandet HF, Tynset</desc>
+		<from>213.151.140.246</from>
+		<to>213.151.140.246</to>
+	</range>
+	<range>
+		<entryid>102</entryid>
+		<group>3</group>
+		<desc>Sykehuset Ostfold Trust - Ostfold Hospital</desc>
+		<from>64.28.22.101</from>
+		<to>64.28.22.101</to>
+	</range>
+	<range>
+		<entryid>103</entryid>
+		<group>3</group>
+		<desc>Telemark Hospital</desc>
+		<from>62.92.32.53</from>
+		<to>62.92.32.53</to>
+	</range>
+	<range>
+		<entryid>104</entryid>
+		<group>3</group>
+		<desc>Trygderetten</desc>
+		<from>62.92.92.114</from>
+		<to>62.92.92.114</to>
+	</range>
+	<range>
+		<entryid>105</entryid>
+		<group>3</group>
+		<desc>Trygderetten</desc>
+		<from>195.18.163.18</from>
+		<to>195.18.163.18</to>
+	</range>
+	<range>
+		<entryid>106</entryid>
+		<group>3</group>
+		<desc>Ullevaal</desc>
+		<from>158.36.186.205</from>
+		<to>158.36.186.205</to>
+	</range>
+	<range>
+		<entryid>107</entryid>
+		<group>3</group>
+		<desc>Ullevaal</desc>
+		<from>193.213.16.35</from>
+		<to>193.213.16.35</to>
+	</range>
+	<range>
+		<entryid>108</entryid>
+		<group>3</group>
+		<desc>Ullevaal</desc>
+		<from>193.216.26.16</from>
+		<to>193.216.26.16</to>
+	</range>
+	<range>
+		<entryid>109</entryid>
+		<group>3</group>
+		<desc>Ullevaal</desc>
+		<from>193.213.16.50</from>
+		<to>193.213.16.50</to>
+	</range>
+	<range>
+		<entryid>110</entryid>
+		<group>3</group>
+		<desc>Ullevaal University Hospital</desc>
+		<from>129.240.42.2</from>
+		<to>129.240.42.254</to>
+	</range>
+	<range>
+		<entryid>111</entryid>
+		<group>3</group>
+		<desc>Ullevaal University Hospital</desc>
+		<from>129.240.43.2</from>
+		<to>129.240.43.254</to>
+	</range>
+	<range>
+		<entryid>112</entryid>
+		<group>3</group>
+		<desc>Ullevaal University Hospital</desc>
+		<from>129.240.215.1</from>
+		<to>129.240.215.254</to>
+	</range>
+	<range>
+		<entryid>113</entryid>
+		<group>3</group>
+		<desc>Universitetssykehuset Nord-Norge</desc>
+		<from>193.157.64.3</from>
+		<to>193.157.95.254</to>
+	</range>
+	<range>
+		<entryid>114</entryid>
+		<group>3</group>
+		<desc>Universitetssykehuset Nord-Norge HF</desc>
+		<from>81.0.182.136</from>
+		<to>81.0.182.191</to>
+	</range>
+	<range>
+		<entryid>115</entryid>
+		<group>3</group>
+		<desc>Valnesfjord Rehabilitation Hospital</desc>
+		<from>82.196.197.178</from>
+		<to>82.196.197.178</to>
+	</range>
+	<range>
+		<entryid>116</entryid>
+		<group>3</group>
+		<desc>Vest-Agder Central Hospital</desc>
+		<from>159.81.252.2</from>
+		<to>159.81.252.2</to>
+	</range>
+	<range>
+		<entryid>117</entryid>
+		<group>3</group>
+		<desc>Vestfold Hospital Trust</desc>
+		<from>64.28.28.43</from>
+		<to>64.28.28.44</to>
+	</range>
+	<range>
+		<entryid>118</entryid>
+		<group>3</group>
+		<desc>vss.no</desc>
+		<from>82.196.197.179</from>
+		<to>82.196.197.179</to>
+	</range>
+	<range>
+		<entryid>119</entryid>
+		<group>3</group>
+		<desc>Nasjonalt kunnskapssenter for helsetjenesten</desc>
+		<from>195.159.249.66</from>
+		<to>195.159.249.66</to>
+		<contact>Kjell Tjensvoll</contact>
+		<email>kjell.tjensvoll@helsebiblioteket.no</email>
+		<address>Postboks 7004 St. Olavs plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+	</range>
+	<range>
+		<entryid>120</entryid>
+		<group>3</group>
+		<desc>Nasjonalt kunnskapssenter for helsetjenesten - ProxyServer</desc>
+		<from>81.93.173.131</from>
+		<to>81.93.173.131</to>
+		<contact>Kjell Tjensvoll</contact>
+		<email>kjell.tjensvoll@helsebiblioteket.no</email>
+		<address>Postboks 7004 St. Olavs plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+	</range>
+	<range>
+		<entryid>121</entryid>
+		<group>3</group>
+		<desc>Nasjonalt kunnskapssenter for helsetjenesten - ProxyServer</desc>
+		<from>81.93.173.137</from>
+		<to>81.93.173.137</to>
+		<contact>Kjell Tjensvoll</contact>
+		<email>kjell.tjensvoll@helsebiblioteket.no</email>
+		<address>Postboks 7004 St. Olavs plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+	</range>
+	<range>
+		<entryid>122</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.38.0</from>
+		<to>128.39.38.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>123</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.39.0</from>
+		<to>128.39.39.143</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>124</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.40.0</from>
+		<to>128.39.40.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>125</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.50.0</from>
+		<to>128.39.51.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>126</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.52.0</from>
+		<to>128.39.52.53</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>127</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.54.0</from>
+		<to>128.39.55.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>128</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.64.0</from>
+		<to>128.39.64.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>129</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.144.0</from>
+		<to>128.39.147.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>130</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.158.97</from>
+		<to>128.39.158.131</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>131</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.159.0</from>
+		<to>128.39.159.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>132</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.200.0</from>
+		<to>128.39.203.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>133</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>128.39.253.0</from>
+		<to>128.39.253.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>134</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>158.36.86.160</from>
+		<to>158.36.86.223</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>135</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>158.36.87.0</from>
+		<to>158.36.87.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>136</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>158.36.93.0</from>
+		<to>158.36.93.127</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>137</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>158.36.117.0</from>
+		<to>158.36.117.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>138</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>158.36.166.0</from>
+		<to>158.36.166.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>139</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>158.36.168.0</from>
+		<to>158.36.179.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>140</entryid>
+		<group>1</group>
+		<desc>Agder University College</desc>
+		<from>158.36.224.0</from>
+		<to>158.36.235.255</to>
+		<contact>Else Margrethe Bredland</contact>
+		<email>else.m.bredland@uia.no</email>
+		<address>Serviceboks 422</address>
+		<postal_code>4604</postal_code>
+		<postal_location>Kristiansand</postal_location>
+		<phone>38 14 11 10</phone>
+	</range>
+	<range>
+		<entryid>141</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.36.244.0</from>
+		<to>158.36.244.255</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 423</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>64 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>142</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.36.240.0</from>
+		<to>158.36.240.255</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 423</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>64 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>143</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.36.241.0</from>
+		<to>158.36.241.255</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 423</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>64 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>144</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.26.176.1</from>
+		<to>158.36.176.255</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 423</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>64 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>145</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.36.127.3</from>
+		<to>158.36.127.255</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 423</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>64 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>146</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.36.246.16</from>
+		<to>158.36.246.127</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 423</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>64 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>147</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.36.245.0</from>
+		<to>158.36.245.255</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 423</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>64 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>148</entryid>
+		<group>1</group>
+		<desc>Akershus University College</desc>
+		<from>158.36.86.151</from>
+		<to>158.36.86.151</to>
+		<contact>Anne-Berit Gregersen</contact>
+		<email>anne-berit.gregersen@hiak.no</email>
+		<address>Postboks 424</address>
+		<postal_code>2001</postal_code>
+		<postal_location>Lillestrøm</postal_location>
+		<phone>65 84 93 70</phone>
+	</range>
+	<range>
+		<entryid>149</entryid>
+		<group>1</group>
+		<desc>Akershus University Hospital</desc>
+		<from>158.36.184.2</from>
+		<to>158.36.184.127</to>
+	</range>
+	<range>
+		<entryid>150</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.17.0</from>
+		<to>158.37.18.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>151</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.24.0</from>
+		<to>158.37.24.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>152</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.30.0</from>
+		<to>158.37.32.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>153</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.72.0</from>
+		<to>158.37.78.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>154</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.84.0</from>
+		<to>158.37.89.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>155</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.160.129</from>
+		<to>158.37.160.158</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>156</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.161.193</from>
+		<to>158.37.161.254</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>157</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.202.0</from>
+		<to>158.37.203.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>158</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.209.129</from>
+		<to>158.37.209.158</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>159</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>158.37.1.0</from>
+		<to>158.37.8.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>160</entryid>
+		<group>1</group>
+		<desc>Bergen University College</desc>
+		<from>129.177.0.0</from>
+		<to>129.177.255.255</to>
+		<contact>Tove Pemmer Sætre</contact>
+		<email>tove.setre@hib.no</email>
+		<address>Postboks 7030</address>
+		<postal_code>5020</postal_code>
+		<postal_location>Bergen</postal_location>
+		<phone>64 84 90 80</phone>
+	</range>
+	<range>
+		<entryid>161</entryid>
+		<group>1</group>
+		<desc>Betanien diakonale hogskole</desc>
+		<from>161.4.150.7</from>
+		<to>161.4.150.7</to>
+		<contact>Irene Hunskår</contact>
+		<email>Irene.hunskar@betanien.no</email>
+		<address>Vestlundveien 19</address>
+		<postal_code>5145</postal_code>
+		<postal_location>Fyllingsdalen</postal_location>
+		<phone>55 50 72 85</phone>
+	</range>
+	<range>
+		<entryid>162</entryid>
+		<group>1</group>
+		<desc>BIBSYS group for NHSRC access</desc>
+		<from>129.241.16.2</from>
+		<to>129.241.16.2</to>
+	</range>
+	<range>
+		<entryid>163</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.11.0</from>
+		<to>158.36.12.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>164</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.62.0</from>
+		<to>158.36.62.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>165</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.14.0</from>
+		<to>158.36.14.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>166</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.30.0</from>
+		<to>158.36.30.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>167</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.31.0</from>
+		<to>158.36.31.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>168</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.142.0</from>
+		<to>158.36.143.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>169</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.38.0</from>
+		<to>158.36.38.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>170</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.13.0</from>
+		<to>158.36.13.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>171</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.69.0</from>
+		<to>158.36.69.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>172</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.9.0</from>
+		<to>158.36.9.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>173</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.164.0</from>
+		<to>158.36.165.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>174</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.150.0</from>
+		<to>158.36.150.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>175</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.138.0</from>
+		<to>158.36.138.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>176</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.139.0</from>
+		<to>158.36.139.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>177</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.70.0</from>
+		<to>158.36.70.255</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>178</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.71.193</from>
+		<to>158.36.71.254</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>179</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.36.72.1</from>
+		<to>158.36.72.126</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 235</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>32 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>180</entryid>
+		<group>1</group>
+		<desc>Buskerud College</desc>
+		<from>158.39.208.0</from>
+		<to>158.39.208.155</to>
+		<contact>Kari Fagerjord</contact>
+		<email>Kari.Fagerjord@hibu.no</email>
+		<address>Postboks 236</address>
+		<postal_code>3603</postal_code>
+		<postal_location>Kongsberg</postal_location>
+		<phone>33 86 95 17</phone>
+	</range>
+	<range>
+		<entryid>181</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.7.0</from>
+		<to>158.39.7.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>182</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.9.0</from>
+		<to>158.39.9.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>183</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.13.0</from>
+		<to>158.39.13.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>184</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.14.0</from>
+		<to>158.39.14.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>185</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.15.0</from>
+		<to>158.39.15.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>186</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.16.0</from>
+		<to>158.39.16.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>187</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.17.0</from>
+		<to>158.39.17.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>188</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.22.0</from>
+		<to>158.39.22.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>189</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.23.0</from>
+		<to>158.39.23.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>190</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.24.0</from>
+		<to>158.39.24.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>191</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.45.0</from>
+		<to>158.39.45.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>192</entryid>
+		<group>1</group>
+		<desc>Finnmark University College</desc>
+		<from>158.39.112.0</from>
+		<to>158.39.112.255</to>
+		<contact>Mari Lundevall and Kari Heitmann</contact>
+		<email>maril@hifm.no and karih@hifm.no</email>
+		<address>Follumsvei 31</address>
+		<postal_code>9509</postal_code>
+		<postal_location>Alta</postal_location>
+		<phone>78 45 04 35</phone>
+	</range>
+	<range>
+		<entryid>193</entryid>
+		<group>1</group>
+		<desc>Fjell Kommune</desc>
+		<from>82.134.45.128</from>
+		<to>82.134.45.128</to>
+	</range>
+	<range>
+		<entryid>194</entryid>
+		<group>1</group>
+		<desc>Fylkesmannen i Oppland</desc>
+		<from>82.147.33.227</from>
+		<to>82.147.33.227</to>
+	</range>
+	<range>
+		<entryid>195</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.20.0</from>
+		<to>158.36.20.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>196</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.21.0</from>
+		<to>158.36.21.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>197</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.22.0</from>
+		<to>158.36.22.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>198</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.23.0</from>
+		<to>158.36.23.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>199</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.24.0</from>
+		<to>158.36.24.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>200</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.25.0</from>
+		<to>158.36.25.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>201</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.26.0</from>
+		<to>158.36.26.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>202</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.27.0</from>
+		<to>158.36.27.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>203</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.28.0</from>
+		<to>158.36.28.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>204</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.34.0</from>
+		<to>158.36.34.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>205</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.80.0</from>
+		<to>158.36.80.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>206</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.89.0</from>
+		<to>158.36.89.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>207</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.128.0</from>
+		<to>158.36.128.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>208</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.129.0</from>
+		<to>158.36.129.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>209</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.134.0</from>
+		<to>158.36.134.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>210</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.212.0</from>
+		<to>158.36.212.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>211</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.213.0</from>
+		<to>158.36.213.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>212</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.253.0</from>
+		<to>158.36.253.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>213</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.254.0</from>
+		<to>158.36.254.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>214</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.36.255.0</from>
+		<to>158.36.255.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>215</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.213.0</from>
+		<to>158.39.213.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>216</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.214.0</from>
+		<to>158.39.214.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>217</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.215.0</from>
+		<to>158.39.215.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>218</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.216.0</from>
+		<to>158.39.216.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>219</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.217.0</from>
+		<to>158.39.217.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>220</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.218.0</from>
+		<to>158.39.218.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>221</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.219.0</from>
+		<to>158.39.219.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>222</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.220.0</from>
+		<to>158.39.220.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>223</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.221.0</from>
+		<to>158.39.221.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>224</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.222.0</from>
+		<to>158.39.222.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>225</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.223.0</from>
+		<to>158.39.223.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>226</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.224.0</from>
+		<to>158.39.224.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>227</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.225.0</from>
+		<to>158.39.225.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>228</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.226.0</from>
+		<to>158.39.226.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>229</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.227.0</from>
+		<to>158.39.227.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>230</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.228.0</from>
+		<to>158.39.228.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>231</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.229.0</from>
+		<to>158.39.229.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>232</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.230.0</from>
+		<to>158.39.230.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>233</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.231.0</from>
+		<to>158.39.231.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>234</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.232.0</from>
+		<to>158.39.232.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>235</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.233.0</from>
+		<to>158.39.233.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>236</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.234.0</from>
+		<to>158.39.234.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>237</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.235.0</from>
+		<to>158.39.235.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>238</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.236.0</from>
+		<to>158.39.236.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>239</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.237.0</from>
+		<to>158.39.237.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>240</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.238.0</from>
+		<to>158.39.238.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>241</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.239.0</from>
+		<to>158.39.239.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>242</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.240.0</from>
+		<to>158.39.240.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>243</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.241.0</from>
+		<to>158.39.241.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>244</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.242.0</from>
+		<to>158.39.242.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>245</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.243.0</from>
+		<to>158.39.243.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>246</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.244.0</from>
+		<to>158.39.244.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>247</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.245.0</from>
+		<to>158.39.245.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>248</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.246.0</from>
+		<to>158.39.246.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>249</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.247.0</from>
+		<to>158.39.247.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>250</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.248.0</from>
+		<to>158.39.248.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>251</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.249.0</from>
+		<to>158.39.249.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>252</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.250.0</from>
+		<to>158.39.250.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>253</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.251.0</from>
+		<to>158.39.251.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>254</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.252.0</from>
+		<to>158.39.252.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>255</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.253.0</from>
+		<to>158.39.253.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>256</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.254.0</from>
+		<to>158.39.254.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>257</entryid>
+		<group>1</group>
+		<desc>Hedmark University College</desc>
+		<from>158.39.255.0</from>
+		<to>158.39.255.255</to>
+		<contact>Britt Elise Hjortnes Wold</contact>
+		<email>Britt.Wold@hihm.no</email>
+		<address>Lærerskolealléen 1</address>
+		<postal_code>2418</postal_code>
+		<postal_location>Elverum</postal_location>
+		<phone>62 43 00 36</phone>
+	</range>
+	<range>
+		<entryid>258</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.28.0</from>
+		<to>158.39.28.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>259</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.29.0</from>
+		<to>158.39.29.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>260</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.80.0</from>
+		<to>158.39.80.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>261</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.81.0</from>
+		<to>158.39.81.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>262</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.82.0</from>
+		<to>158.39.82.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>263</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.83.0</from>
+		<to>158.39.83.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>264</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.84.0</from>
+		<to>158.39.84.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>265</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.100.0</from>
+		<to>158.39.100.127</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>266</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Harstad</desc>
+		<from>158.39.100.191</from>
+		<to>158.39.100.255</to>
+		<contact>Ruth Markussen</contact>
+		<email>ruth.markussen@hih.no</email>
+		<address>Havnegt. 5</address>
+		<postal_code>9480</postal_code>
+		<postal_location>Harstad</postal_location>
+		<phone>77 05 81 73</phone>
+	</range>
+	<range>
+		<entryid>267</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Narvik - hin.no</desc>
+		<from>158.39.21.1</from>
+		<to>158.39.21.128</to>
+		<contact>Ellen Margrethe Julin</contact>
+		<email>emj@hin.no</email>
+		<address>Postboks 385</address>
+		<postal_code>8505</postal_code>
+		<postal_location>Narvik</postal_location>
+		<phone>76 96 62 83</phone>
+	</range>
+	<range>
+		<entryid>268</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Narvik - hin.no</desc>
+		<from>158.39.25.1</from>
+		<to>158.39.27.255</to>
+		<contact>Ellen Margrethe Julin</contact>
+		<email>emj@hin.no</email>
+		<address>Postboks 385</address>
+		<postal_code>8505</postal_code>
+		<postal_location>Narvik</postal_location>
+		<phone>76 96 62 83</phone>
+	</range>
+	<range>
+		<entryid>269</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Narvik - hin.no</desc>
+		<from>158.39.42.1</from>
+		<to>158.39.42.255</to>
+		<contact>Ellen Margrethe Julin</contact>
+		<email>emj@hin.no</email>
+		<address>Postboks 385</address>
+		<postal_code>8505</postal_code>
+		<postal_location>Narvik</postal_location>
+		<phone>76 96 62 83</phone>
+	</range>
+	<range>
+		<entryid>270</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Narvik - hin.no</desc>
+		<from>158.39.116.1</from>
+		<to>158.39.116.255</to>
+		<contact>Ellen Margrethe Julin</contact>
+		<email>emj@hin.no</email>
+		<address>Postboks 385</address>
+		<postal_code>8505</postal_code>
+		<postal_location>Narvik</postal_location>
+		<phone>76 96 62 83</phone>
+	</range>
+	<range>
+		<entryid>271</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Narvik - hin.no</desc>
+		<from>158.39.124.1</from>
+		<to>158.39.125.255</to>
+		<contact>Ellen Margrethe Julin</contact>
+		<email>emj@hin.no</email>
+		<address>Postboks 385</address>
+		<postal_code>8505</postal_code>
+		<postal_location>Narvik</postal_location>
+		<phone>76 96 62 83</phone>
+	</range>
+	<range>
+		<entryid>272</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Narvik - hin.no - filial i Alta</desc>
+		<from>158.39.100.128</from>
+		<to>158.39.100.190</to>
+	</range>
+	<range>
+		<entryid>273</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>128.39.162.0</from>
+		<to>128.39.162.127</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>274</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>158.39.52.32</from>
+		<to>158.39.52.63</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>275</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>128.39.15.0</from>
+		<to>128.39.15.254</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>276</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>193.213.39.155</from>
+		<to>193.213.39.155</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>277</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>128.39.12.0</from>
+		<to>128.39.12.127</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>278</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>128.39.14.0</from>
+		<to>128.39.14.255</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>279</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>128.39.163.0</from>
+		<to>128.39.163.255</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>280</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Nesna</desc>
+		<from>158.39.107.2</from>
+		<to>158.39.107.62</to>
+		<contact>Ingvill Dahl</contact>
+		<email>id@hinesna.no</email>
+		<address>Høgskolen i Nesna</address>
+		<postal_code>8700</postal_code>
+		<postal_location>Nesna</postal_location>
+		<phone>75 05 79 11</phone>
+	</range>
+	<range>
+		<entryid>281</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.17.0</from>
+		<to>158.38.17.255</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>282</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.30.1</from>
+		<to>158.38.31.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>283</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.32.1</from>
+		<to>158.38.35.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>284</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.36.0</from>
+		<to>158.38.36.255</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>285</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.37.1</from>
+		<to>158.38.37.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>286</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.43.0</from>
+		<to>158.38.43.255</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>287</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.44.1</from>
+		<to>158.38.44.255</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>288</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.46.1</from>
+		<to>158.38.46.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>289</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.47.1</from>
+		<to>158.38.47.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>290</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.48.1</from>
+		<to>158.38.55.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>291</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.56.1</from>
+		<to>158.38.57.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>292</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.90.0</from>
+		<to>158.38.91.255</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>293</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.111.1</from>
+		<to>158.38.111.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7004</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559128</phone>
+	</range>
+	<range>
+		<entryid>294</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.29.16</from>
+		<to>158.38.29.16</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7005</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559129</phone>
+	</range>
+	<range>
+		<entryid>295</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.29.17</from>
+		<to>158.38.29.17</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7006</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559130</phone>
+	</range>
+	<range>
+		<entryid>296</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Soer-Troendelag</desc>
+		<from>158.38.36.129</from>
+		<to>158.38.36.254</to>
+		<contact>Liv Inger Lamøy</contact>
+		<email>liv.i.lamoy@hist.no</email>
+		<address>Bibliotektjenesten AHS/ASP</address>
+		<postal_code>7007</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73559131</phone>
+	</range>
+	<range>
+		<entryid>297</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.131.96</from>
+		<to>128.39.131.127</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>298</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.195.0</from>
+		<to>128.39.195.127</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>299</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.93.0</from>
+		<to>128.39.93.254</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>300</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.118.128</from>
+		<to>128.39.118.159</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>301</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.132.0</from>
+		<to>128.39.132.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>302</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.151.0</from>
+		<to>128.39.151.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>303</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.155.0</from>
+		<to>128.39.155.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>304</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.158.16</from>
+		<to>128.39.158.31</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>305</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.195.128</from>
+		<to>128.39.195.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>306</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.198.0</from>
+		<to>128.39.198.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>307</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.118.160</from>
+		<to>128.39.118.191</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>308</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.130.0</from>
+		<to>128.39.130.127</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>309</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.199.0</from>
+		<to>128.39.199.127</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>310</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark</desc>
+		<from>128.39.199.128</from>
+		<to>128.39.199.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>311</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (BOE</desc>
+		<from>128.39.156.0</from>
+		<to>128.39.156.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>312</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (BOE)</desc>
+		<from>128.39.196.0</from>
+		<to>128.39.197.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>313</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (BOE)</desc>
+		<from>128.39.118.0</from>
+		<to>128.39.118.127</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>314</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (Drammen)</desc>
+		<from>158.36.76.64</from>
+		<to>158.36.76.95</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>315</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (Notodden)</desc>
+		<from>128.39.152.0</from>
+		<to>128.39.152.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>316</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (Notodden)</desc>
+		<from>128.39.157.0</from>
+		<to>128.39.157.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>317</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (Porsgrunn)</desc>
+		<from>128.39.34.0</from>
+		<to>128.39.35.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>318</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (Porsgrunn)</desc>
+		<from>128.39.86.0</from>
+		<to>128.39.88.255</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>319</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (Rauland)</desc>
+		<from>128.39.131.64</from>
+		<to>128.39.131.95</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>320</entryid>
+		<group>3</group>
+		<desc>Hoegskolen i Telemark (Rauland)</desc>
+		<from>128.39.131.128</from>
+		<to>128.39.131.191</to>
+		<contact>Frode Bakken</contact>
+		<email>frode.bakken@hit.no</email>
+		<address>Postboks 203</address>
+		<postal_code>3901</postal_code>
+		<postal_location>Porsgrunn</postal_location>
+		<phone>35 57 50 41</phone>
+	</range>
+	<range>
+		<entryid>321</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.36.191.17</from>
+		<to>158.36.191.23</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>322</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.40.0</from>
+		<to>158.39.040.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>323</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.41.0</from>
+		<to>158.39.41.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>324</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.66.0</from>
+		<to>158.39.66.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>325</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.18.1</from>
+		<to>158.39.18.254</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>326</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.19.1</from>
+		<to>158.39.19.254</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>327</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.20.0</from>
+		<to>158.39.20.96</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>328</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.21.161</from>
+		<to>158.39.21.196</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>329</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.39.1</from>
+		<to>158.39.39.254</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>330</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.60.1</from>
+		<to>158.39.60.254</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>331</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.79.1</from>
+		<to>158.39.79.254</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>332</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.88.1</from>
+		<to>158.39.88.254</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>333</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.92.1</from>
+		<to>158.39.92.254</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>334</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.18.8</from>
+		<to>158.39.18.8</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>335</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.18.114</from>
+		<to>158.39.18.114</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>336</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe</desc>
+		<from>158.39.8.14</from>
+		<to>158.39.8.14</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>337</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe, Avdeling for helsefag</desc>
+		<from>158.39.89.0</from>
+		<to>158.39.89.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>338</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe, Avdeling for helsefag</desc>
+		<from>158.39.90.0</from>
+		<to>158.39.90.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>339</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe, Avdeling for helsefag</desc>
+		<from>158.39.91.0</from>
+		<to>158.39.91.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>340</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Tromsoe, Avdeling for helsefag</desc>
+		<from>158.39.114.0</from>
+		<to>158.39.114.255</to>
+		<contact>Elisabeth Sverdrup</contact>
+		<email>Elisabeth.Sverdrup@hitos.no</email>
+		<address>Høgskolen i Tromsoe</address>
+		<postal_code>9293</postal_code>
+		<postal_location>Tromsoe</postal_location>
+		<phone>77 66 04 52</phone>
+	</range>
+	<range>
+		<entryid>341</entryid>
+		<group>1</group>
+		<desc>HOEYSKOLEN DIAKONOVA - Norwegian Nurses Association</desc>
+		<from>152.93.179.134</from>
+		<to>152.93.179.134</to>
+		<contact>Jenny Owe</contact>
+		<email>jenny.owe@diakonova.no</email>
+		<address>Linstowsgate 5</address>
+		<postal_code>166</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 98 63 14</phone>
+	</range>
+	<range>
+		<entryid>342</entryid>
+		<group>1</group>
+		<desc>HOEYSKOLEN DIAKONOVA</desc>
+		<from>158.36.102.128</from>
+		<to>158.36.102.255</to>
+		<contact>Jenny Owe</contact>
+		<email>jenny.owe@diakonova.no</email>
+		<address>Linstowsgate 5</address>
+		<postal_code>166</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 98 63 14</phone>
+	</range>
+	<range>
+		<entryid>343</entryid>
+		<group>1</group>
+		<desc>HOEYSKOLEN DIAKONOVA</desc>
+		<from>158.36.107.0</from>
+		<to>158.36.107.255</to>
+		<contact>Jenny Owe</contact>
+		<email>jenny.owe@diakonova.no</email>
+		<address>Linstowsgate 5</address>
+		<postal_code>166</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 98 63 14</phone>
+	</range>
+	<range>
+		<entryid>344</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Alesund</desc>
+		<from>158.38.58.129</from>
+		<to>158.38.58.158</to>
+		<contact>Astrid Engelsen</contact>
+		<email>ae@hials.no</email>
+		<address>Serviceboks 17</address>
+		<postal_code>6025</postal_code>
+		<postal_location>Ålesund</postal_location>
+		<phone>70 16 14 23</phone>
+	</range>
+	<range>
+		<entryid>345</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Alesund</desc>
+		<from>158.38.58.161</from>
+		<to>158.38.58.190</to>
+		<contact>Astrid Engelsen</contact>
+		<email>ae@hials.no</email>
+		<address>Serviceboks 17</address>
+		<postal_code>6025</postal_code>
+		<postal_location>Ålesund</postal_location>
+		<phone>70 16 14 23</phone>
+	</range>
+	<range>
+		<entryid>346</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Alesund</desc>
+		<from>158.38.65.0</from>
+		<to>158.38.67.255</to>
+		<contact>Astrid Engelsen</contact>
+		<email>ae@hials.no</email>
+		<address>Serviceboks 17</address>
+		<postal_code>6025</postal_code>
+		<postal_location>Ålesund</postal_location>
+		<phone>70 16 14 23</phone>
+	</range>
+	<range>
+		<entryid>347</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Alesund</desc>
+		<from>158.38.79.0</from>
+		<to>158.38.79.255</to>
+		<contact>Astrid Engelsen</contact>
+		<email>ae@hials.no</email>
+		<address>Serviceboks 17</address>
+		<postal_code>6025</postal_code>
+		<postal_location>Ålesund</postal_location>
+		<phone>70 16 14 23</phone>
+	</range>
+	<range>
+		<entryid>348</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Alesund</desc>
+		<from>158.38.84.0</from>
+		<to>158.38.84.255</to>
+		<contact>Astrid Engelsen</contact>
+		<email>ae@hials.no</email>
+		<address>Serviceboks 17</address>
+		<postal_code>6025</postal_code>
+		<postal_location>Ålesund</postal_location>
+		<phone>70 16 14 23</phone>
+	</range>
+	<range>
+		<entryid>349</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Alesund</desc>
+		<from>158.38.140.0</from>
+		<to>158.38.143.255</to>
+		<contact>Astrid Engelsen</contact>
+		<email>ae@hials.no</email>
+		<address>Serviceboks 17</address>
+		<postal_code>6025</postal_code>
+		<postal_location>Ålesund</postal_location>
+		<phone>70 16 14 23</phone>
+	</range>
+	<range>
+		<entryid>350</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Gjovik</desc>
+		<from>128.39.32.1</from>
+		<to>128.39.32.126</to>
+		<contact>Klaus Jøran Tollan</contact>
+		<email>klaus.tollan@hig.no</email>
+		<address>Teknologivn. 22</address>
+		<postal_code>2802</postal_code>
+		<postal_location>Gjøvik</postal_location>
+		<phone>61 13 51 30</phone>
+	</range>
+	<range>
+		<entryid>351</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Gjovik</desc>
+		<from>128.39.41.0</from>
+		<to>128.39.43.255</to>
+		<contact>Klaus Jøran Tollan</contact>
+		<email>klaus.tollan@hig.no</email>
+		<address>Teknologivn. 22</address>
+		<postal_code>2802</postal_code>
+		<postal_location>Gjøvik</postal_location>
+		<phone>61 13 51 30</phone>
+	</range>
+	<range>
+		<entryid>352</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Gjovik</desc>
+		<from>128.39.80.0</from>
+		<to>128.39.81.255</to>
+		<contact>Klaus Jøran Tollan</contact>
+		<email>klaus.tollan@hig.no</email>
+		<address>Teknologivn. 22</address>
+		<postal_code>2802</postal_code>
+		<postal_location>Gjøvik</postal_location>
+		<phone>61 13 51 30</phone>
+	</range>
+	<range>
+		<entryid>353</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Gjovik</desc>
+		<from>128.39.140.0</from>
+		<to>128.39.142.255</to>
+		<contact>Klaus Jøran Tollan</contact>
+		<email>klaus.tollan@hig.no</email>
+		<address>Teknologivn. 22</address>
+		<postal_code>2802</postal_code>
+		<postal_location>Gjøvik</postal_location>
+		<phone>61 13 51 30</phone>
+	</range>
+	<range>
+		<entryid>354</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Gjovik</desc>
+		<from>128.39.242.0</from>
+		<to>128.39.243.255</to>
+		<contact>Klaus Jøran Tollan</contact>
+		<email>klaus.tollan@hig.no</email>
+		<address>Teknologivn. 22</address>
+		<postal_code>2802</postal_code>
+		<postal_location>Gjøvik</postal_location>
+		<phone>61 13 51 30</phone>
+	</range>
+	<range>
+		<entryid>355</entryid>
+		<group>1</group>
+		<desc>Hogskolen I Gjovik</desc>
+		<from>158.36.153.253</from>
+		<to>158.36.153.255</to>
+		<contact>Klaus Jøran Tollan</contact>
+		<email>klaus.tollan@hig.no</email>
+		<address>Teknologivn. 22</address>
+		<postal_code>2802</postal_code>
+		<postal_location>Gjøvik</postal_location>
+		<phone>61 13 51 30</phone>
+	</range>
+	<range>
+		<entryid>356</entryid>
+		<group>1</group>
+		<desc>Hogskolen i Lillehammer, Biblioteket</desc>
+		<from>158.36.196.0</from>
+		<to>158.36.201.255</to>
+		<contact>Sigbjørn Hernes</contact>
+		<email>sigbjorn.hernes@hil.no</email>
+		<address>Høgskolen i Lillehammer</address>
+		<postal_code>2626</postal_code>
+		<postal_location>Lillehammer</postal_location>
+		<phone>61 28 82 65</phone>
+	</range>
+	<range>
+		<entryid>357</entryid>
+		<group>1</group>
+		<desc>Hogskolen i Lillehammer, Biblioteket</desc>
+		<from>128.39.109.0</from>
+		<to>128.39.109.255</to>
+		<contact>Sigbjørn Hernes</contact>
+		<email>sigbjorn.hernes@hil.no</email>
+		<address>Høgskolen i Lillehammer</address>
+		<postal_code>2626</postal_code>
+		<postal_location>Lillehammer</postal_location>
+		<phone>61 28 82 65</phone>
+	</range>
+	<range>
+		<entryid>358</entryid>
+		<group>1</group>
+		<desc>Hogskolen i Lillehammer, Biblioteket</desc>
+		<from>158.36.32.129</from>
+		<to>158.36.32.255</to>
+		<contact>Sigbjørn Hernes</contact>
+		<email>sigbjorn.hernes@hil.no</email>
+		<address>Høgskolen i Lillehammer</address>
+		<postal_code>2626</postal_code>
+		<postal_location>Lillehammer</postal_location>
+		<phone>61 28 82 65</phone>
+	</range>
+	<range>
+		<entryid>359</entryid>
+		<group>1</group>
+		<desc>Hogskolen i Lillehammer, Biblioteket</desc>
+		<from>158.36.156.0</from>
+		<to>158.36.159.255</to>
+		<contact>Sigbjørn Hernes</contact>
+		<email>sigbjorn.hernes@hil.no</email>
+		<address>Høgskolen i Lillehammer</address>
+		<postal_code>2626</postal_code>
+		<postal_location>Lillehammer</postal_location>
+		<phone>61 28 82 65</phone>
+	</range>
+	<range>
+		<entryid>360</entryid>
+		<group>1</group>
+		<desc>Hogskolen i Lillehammer, Biblioteket</desc>
+		<from>158.36.214.128</from>
+		<to>158.36.214.255</to>
+		<contact>Sigbjørn Hernes</contact>
+		<email>sigbjorn.hernes@hil.no</email>
+		<address>Høgskolen i Lillehammer</address>
+		<postal_code>2626</postal_code>
+		<postal_location>Lillehammer</postal_location>
+		<phone>61 28 82 65</phone>
+	</range>
+	<range>
+		<entryid>361</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.22.0</from>
+		<to>158.37.23.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>362</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.25.0</from>
+		<to>158.37.28.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>363</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.33.0</from>
+		<to>158.37.42.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>364</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.50.0</from>
+		<to>158.37.50.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>365</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.69.0</from>
+		<to>158.37.69.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>366</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.208.0</from>
+		<to>158.37.208.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>367</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.211.0</from>
+		<to>158.37.211.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>368</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.16.0</from>
+		<to>158.37.16.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5000</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 54</phone>
+	</range>
+	<range>
+		<entryid>369</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.48.0</from>
+		<to>158.37.48.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5001</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 55</phone>
+	</range>
+	<range>
+		<entryid>370</entryid>
+		<group>1</group>
+		<desc>Hogskolen Stord/Haugesund University College</desc>
+		<from>158.37.49.0</from>
+		<to>158.37.49.255</to>
+		<contact>Halfdan Wiik</contact>
+		<email>halfdan.wiik@hsh.no</email>
+		<address>Postboks 5002</address>
+		<postal_code>5409</postal_code>
+		<postal_location>Stord</postal_location>
+		<phone>53 49 13 56</phone>
+	</range>
+	<range>
+		<entryid>371</entryid>
+		<group>1</group>
+		<desc>Hogskulen i Sogn og Fjordane</desc>
+		<from>158.37.29.128</from>
+		<to>158.37.29.223</to>
+		<contact>Gerd Vik</contact>
+		<email>gerd.vik@hisf.no</email>
+		<address>Postboks 133</address>
+		<postal_code>6851</postal_code>
+		<postal_location>Songdal</postal_location>
+		<phone>57 67 60 83</phone>
+	</range>
+	<range>
+		<entryid>372</entryid>
+		<group>1</group>
+		<desc>Hogskulen i Sogn og Fjordane</desc>
+		<from>158.37.10.0</from>
+		<to>158.37.15.255</to>
+		<contact>Gerd Vik</contact>
+		<email>gerd.vik@hisf.no</email>
+		<address>Postboks 133</address>
+		<postal_code>6851</postal_code>
+		<postal_location>Songdal</postal_location>
+		<phone>57 67 60 83</phone>
+	</range>
+	<range>
+		<entryid>373</entryid>
+		<group>1</group>
+		<desc>Hogskulen i Sogn og Fjordane</desc>
+		<from>158.37.153.0</from>
+		<to>158.37.158.255</to>
+		<contact>Gerd Vik</contact>
+		<email>gerd.vik@hisf.no</email>
+		<address>Postboks 133</address>
+		<postal_code>6851</postal_code>
+		<postal_location>Songdal</postal_location>
+		<phone>57 67 60 83</phone>
+	</range>
+	<range>
+		<entryid>374</entryid>
+		<group>1</group>
+		<desc>Hogskulen i Sogn og Fjordane</desc>
+		<from>158.37.19.0</from>
+		<to>158.37.19.255</to>
+		<contact>Gerd Vik</contact>
+		<email>gerd.vik@hisf.no</email>
+		<address>Postboks 133</address>
+		<postal_code>6851</postal_code>
+		<postal_location>Songdal</postal_location>
+		<phone>57 67 60 83</phone>
+	</range>
+	<range>
+		<entryid>375</entryid>
+		<group>1</group>
+		<desc>Hogskulen i Sogn og Fjordane</desc>
+		<from>158.37.21.0</from>
+		<to>158.37.21.63</to>
+		<contact>Gerd Vik</contact>
+		<email>gerd.vik@hisf.no</email>
+		<address>Postboks 133</address>
+		<postal_code>6851</postal_code>
+		<postal_location>Songdal</postal_location>
+		<phone>57 67 60 83</phone>
+	</range>
+	<range>
+		<entryid>376</entryid>
+		<group>1</group>
+		<desc>Hogskulen i Sogn og Fjordane</desc>
+		<from>158.37.212.0</from>
+		<to>158.37.212.255</to>
+		<contact>Gerd Vik</contact>
+		<email>gerd.vik@hisf.no</email>
+		<address>Postboks 133</address>
+		<postal_code>6851</postal_code>
+		<postal_location>Songdal</postal_location>
+		<phone>57 67 60 83</phone>
+	</range>
+	<range>
+		<entryid>377</entryid>
+		<group>1</group>
+		<desc>Hogskulen i Sogn og Fjordane</desc>
+		<from>158.37.9.0</from>
+		<to>158.37.9.255</to>
+		<contact>Gerd Vik</contact>
+		<email>gerd.vik@hisf.no</email>
+		<address>Postboks 133</address>
+		<postal_code>6851</postal_code>
+		<postal_location>Songdal</postal_location>
+		<phone>57 67 60 83</phone>
+	</range>
+	<range>
+		<entryid>378</entryid>
+		<group>1</group>
+		<desc>Lovisenberg Diakokonale Hoegskole, biblioteket</desc>
+		<from>158.36.19.6</from>
+		<to>158.36.19.6</to>
+		<contact>Turid Brandsdal</contact>
+		<email>turid.brandsdal@ldh.no</email>
+		<address>Lovisenberggt. 15b</address>
+		<postal_code>456</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 35 82 74</phone>
+	</range>
+	<range>
+		<entryid>379</entryid>
+		<group>1</group>
+		<desc>Lovisenberg Diakonale Hogskole</desc>
+		<from>158.36.19.6</from>
+		<to>158.36.19.255</to>
+		<contact>Turid Brandsdal</contact>
+		<email>turid.brandsdal@ldh.no</email>
+		<address>Lovisenberggt. 15b</address>
+		<postal_code>456</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 35 82 74</phone>
+	</range>
+	<range>
+		<entryid>380</entryid>
+		<group>1</group>
+		<desc>Lovisenberg Diakonale Hogskole</desc>
+		<from>158.036.067.2</from>
+		<to>158.036.067.2</to>
+		<contact>Turid Brandsdal</contact>
+		<email>turid.brandsdal@ldh.no</email>
+		<address>Lovisenberggt. 15b</address>
+		<postal_code>456</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 35 82 74</phone>
+	</range>
+	<range>
+		<entryid>381</entryid>
+		<group>1</group>
+		<desc>Lovisenberg Diakonale Hogskole</desc>
+		<from>158.036.067.060</from>
+		<to>158.036.067.239</to>
+		<contact>Turid Brandsdal</contact>
+		<email>turid.brandsdal@ldh.no</email>
+		<address>Lovisenberggt. 15b</address>
+		<postal_code>456</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 35 82 74</phone>
+	</range>
+	<range>
+		<entryid>382</entryid>
+		<group>1</group>
+		<desc>Lovisenberg Diakonale Hogskole</desc>
+		<from>158.036.160.141</from>
+		<to>158.036.160.180</to>
+		<contact>Turid Brandsdal</contact>
+		<email>turid.brandsdal@ldh.no</email>
+		<address>Lovisenberggt. 15b</address>
+		<postal_code>456</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 35 82 74</phone>
+	</range>
+	<range>
+		<entryid>383</entryid>
+		<group>1</group>
+		<desc>Lovisenberg Diakonale Hogskole</desc>
+		<from>192.168.0.058</from>
+		<to>192.168.0.255</to>
+		<contact>Turid Brandsdal</contact>
+		<email>turid.brandsdal@ldh.no</email>
+		<address>Lovisenberggt. 15b</address>
+		<postal_code>456</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 35 82 74</phone>
+	</range>
+	<range>
+		<entryid>384</entryid>
+		<group>1</group>
+		<desc>Molde kommune</desc>
+		<from>194.19.96.0</from>
+		<to>194.19.96.31</to>
+	</range>
+	<range>
+		<entryid>385</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.68.0</from>
+		<to>158.38.70.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>386</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.88.0</from>
+		<to>158.38.88.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>387</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.89.0</from>
+		<to>158.38.89.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>388</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.116.0</from>
+		<to>158.38.116.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>389</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.159.0</from>
+		<to>158.38.159.24</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>390</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.74.0</from>
+		<to>158.38.74.254</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>391</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.82.0</from>
+		<to>158.38.83.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>392</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.94.0</from>
+		<to>158.38.95.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>393</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.156.0</from>
+		<to>158.38.158.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>394</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.159.128</from>
+		<to>158.38.159.128</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>395</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.165.0</from>
+		<to>158.38.165.255</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>396</entryid>
+		<group>1</group>
+		<desc>Molde University College Library</desc>
+		<from>158.38.58.193</from>
+		<to>158.38.58.254</to>
+		<contact>Anne Hustad </contact>
+		<email>anne.hustad@himolde.no </email>
+		<address>Postboks 2110</address>
+		<postal_code>6402</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 21 41 67 </phone>
+	</range>
+	<range>
+		<entryid>397</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>128.39.46.166</from>
+		<to>128.39.46.166</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>398</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.19.0</from>
+		<to>158.38.19.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>399</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.25.0</from>
+		<to>158.38.27.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>400</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.23.0</from>
+		<to>158.38.23.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>401</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.77.65</from>
+		<to>158.38.77.254</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>402</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.78.0</from>
+		<to>158.38.78.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>403</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.80.31</from>
+		<to>158.38.80.254</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>404</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.108.0</from>
+		<to>158.38.109.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>405</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.122.129</from>
+		<to>158.38.122.254</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>406</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.123.0</from>
+		<to>158.38.123.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>407</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.132.0</from>
+		<to>158.38.132.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>408</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.136.0</from>
+		<to>158.38.137.255</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>409</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.104.2</from>
+		<to>158.38.104.254</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2501</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>74 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>410</entryid>
+		<group>3</group>
+		<desc>Nord -Trondelag University College</desc>
+		<from>158.38.105.1</from>
+		<to>158.38.105.254</to>
+		<contact>Jorun Fallin</contact>
+		<email>jorun.fallin@hint.no</email>
+		<address>Serviceboks 2502</address>
+		<postal_code>7729</postal_code>
+		<postal_location>Steinkjer</postal_location>
+		<phone>75 02 25 44</phone>
+	</range>
+	<range>
+		<entryid>411</entryid>
+		<group>1</group>
+		<desc>Norwegian School of Sport Sciences</desc>
+		<from>158.36.204.0</from>
+		<to>158.36.207.255</to>
+	</range>
+	<range>
+		<entryid>412</entryid>
+		<group>1</group>
+		<desc>Norwegian School of Sport Sciences</desc>
+		<from>158.36.215.0</from>
+		<to>158.36.215.255</to>
+	</range>
+	<range>
+		<entryid>413</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.36.16.0</from>
+		<to>158.36.016.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>414</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.36.29.0</from>
+		<to>158.36.29.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>415</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.36.33.0</from>
+		<to>158.36.33.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>416</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.36.35.0</from>
+		<to>158.36.36.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>417</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.36.47.0</from>
+		<to>158.36.47.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>418</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.36.49.0</from>
+		<to>158.36.58.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>419</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.36.85.0</from>
+		<to>158.36.85.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>420</entryid>
+		<group>1</group>
+		<desc>Ostfold College</desc>
+		<from>158.39.160.0</from>
+		<to>158.39.191.255</to>
+		<contact>Else Norheim</contact>
+		<email>else.norheim@hiof.no</email>
+		<address>Høgskolen i Østfold</address>
+		<postal_code>1757</postal_code>
+		<postal_location>Halden</postal_location>
+		<phone>69 21 50 00</phone>
+	</range>
+	<range>
+		<entryid>421</entryid>
+		<group>1</group>
+		<desc>Stavanger University Library</desc>
+		<from>152.94.0.0</from>
+		<to>152.94.255.255</to>
+	</range>
+	<range>
+		<entryid>422</entryid>
+		<group>1</group>
+		<desc>Stortingsbiblioteket</desc>
+		<from>85.88.64.0</from>
+		<to>85.88.64.255</to>
+	</range>
+	<range>
+		<entryid>423</entryid>
+		<group>1</group>
+		<desc>Statens legemiddelverk</desc>
+		<from>80.203.179.26</from>
+		<to>80.203.179.26</to>
+	</range>
+	<range>
+		<entryid>424</entryid>
+		<group>1</group>
+		<desc>Universitetet i Oslo (kun Lippincott tidsskriftene og PsycARTICLES)</desc>
+		<from>193.157.128.0</from>
+		<to>193.157.255.255</to>
+		<contact>Bente Rachel Andreassen</contact>
+		<email>b.r.andreassen@ub.uio.no</email>
+		<address>Postboks 1072</address>
+		<postal_code>316</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 84 40 01</phone>
+	</range>
+	<range>
+		<entryid>425</entryid>
+		<group>1</group>
+		<desc>Universitetsbiblioteket i Tromsoe</desc>
+		<from>129.242.0.0</from>
+		<to>129.242.255.255</to>
+		<contact>Ingrid Berntsen</contact>
+		<email>Ingrid.Berntsen@ub.uit.no</email>
+		<address>University of Tromso</address>
+		<postal_code>9037</postal_code>
+		<postal_location>Tromsø</postal_location>
+		<phone>77 64 41 43</phone>
+	</range>
+	<range>
+		<entryid>426</entryid>
+		<group>1</group>
+		<desc>Vefsn kommune</desc>
+		<from>195.1.55.81</from>
+		<to>195.1.55.81</to>
+	</range>
+	<range>
+		<entryid>427</entryid>
+		<group>1</group>
+		<desc>Vestfold University College</desc>
+		<from>128.39.32.128</from>
+		<to>128.39.32.192</to>
+		<contact>Åsta Hagen</contact>
+		<email>Asta.Hagen@hive.no  </email>
+		<address>Postboks 2243</address>
+		<postal_code>3103</postal_code>
+		<postal_location>Tønsberg</postal_location>
+		<phone>33 03 10 41</phone>
+	</range>
+	<range>
+		<entryid>428</entryid>
+		<group>1</group>
+		<desc>Vestfold University College</desc>
+		<from>128.39.53.0</from>
+		<to>128.39.53.255</to>
+		<contact>Åsta Hagen</contact>
+		<email>Asta.Hagen@hive.no  </email>
+		<address>Postboks 2243</address>
+		<postal_code>3103</postal_code>
+		<postal_location>Tønsberg</postal_location>
+		<phone>33 03 10 41</phone>
+	</range>
+	<range>
+		<entryid>429</entryid>
+		<group>1</group>
+		<desc>Vestfold University College</desc>
+		<from>128.39.105.0</from>
+		<to>128.39.105.255</to>
+		<contact>Åsta Hagen</contact>
+		<email>Asta.Hagen@hive.no  </email>
+		<address>Postboks 2243</address>
+		<postal_code>3103</postal_code>
+		<postal_location>Tønsberg</postal_location>
+		<phone>33 03 10 41</phone>
+	</range>
+	<range>
+		<entryid>430</entryid>
+		<group>1</group>
+		<desc>Vestfold University College</desc>
+		<from>128.39.112.0</from>
+		<to>128.39.117.255</to>
+		<contact>Åsta Hagen</contact>
+		<email>Asta.Hagen@hive.no  </email>
+		<address>Postboks 2243</address>
+		<postal_code>3103</postal_code>
+		<postal_location>Tønsberg</postal_location>
+		<phone>33 03 10 41</phone>
+	</range>
+	<range>
+		<entryid>431</entryid>
+		<group>1</group>
+		<desc>Vestfold University College</desc>
+		<from>128.39.164.0</from>
+		<to>128.39.167.255</to>
+		<contact>Åsta Hagen</contact>
+		<email>Asta.Hagen@hive.no  </email>
+		<address>Postboks 2243</address>
+		<postal_code>3103</postal_code>
+		<postal_location>Tønsberg</postal_location>
+		<phone>33 03 10 41</phone>
+	</range>
+	<range>
+		<entryid>432</entryid>
+		<group>1</group>
+		<desc>Vestfold University College</desc>
+		<from>128.39.246.0</from>
+		<to>128.39.246.255</to>
+		<contact>Åsta Hagen</contact>
+		<email>Asta.Hagen@hive.no  </email>
+		<address>Postboks 2243</address>
+		<postal_code>3103</postal_code>
+		<postal_location>Tønsberg</postal_location>
+		<phone>33 03 10 41</phone>
+	</range>
+	<range>
+		<entryid>433</entryid>
+		<group>1</group>
+		<desc>Vestfold University College</desc>
+		<from>158.36.180.0</from>
+		<to>158.36.183.255</to>
+		<contact>Åsta Hagen</contact>
+		<email>Asta.Hagen@hive.no  </email>
+		<address>Postboks 2243</address>
+		<postal_code>3103</postal_code>
+		<postal_location>Tønsberg</postal_location>
+		<phone>33 03 10 41</phone>
+	</range>
+	<range>
+		<entryid>434</entryid>
+		<group>1</group>
+		<desc>Vivisimo</desc>
+		<from>70.84.99.106</from>
+		<to>70.84.99.106</to>
+	</range>
+	<range>
+		<entryid>435</entryid>
+		<group>1</group>
+		<desc>Vivisimo</desc>
+		<from>206.210.89.129</from>
+		<to>206.210.89.129</to>
+	</range>
+	<range>
+		<entryid>436</entryid>
+		<group>1</group>
+		<desc>Vivisimo</desc>
+		<from>206.210.75.84</from>
+		<to>206.210.75.84</to>
+	</range>
+	<range>
+		<entryid>437</entryid>
+		<group>1</group>
+		<desc>Vivisimo</desc>
+		<from>206.210.89.131</from>
+		<to>206.210.89.131</to>
+	</range>
+	<range>
+		<entryid>438</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.38.225</from>
+		<to>158.38.38.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>439</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.75.0</from>
+		<to>158.38.75.255</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>440</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.76.0</from>
+		<to>158.38.76.255</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>441</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.81.1</from>
+		<to>158.38.81.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>442</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.86.1</from>
+		<to>158.38.86.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>443</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.87.1</from>
+		<to>158.38.87.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>444</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.114.0</from>
+		<to>158.38.115.255</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>445</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.118.0</from>
+		<to>158.38.118.62</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>446</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.118.65</from>
+		<to>158.38.118.127</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>447</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.118.129</from>
+		<to>158.38.118.255</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>448</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.122.65</from>
+		<to>158.38.122.126</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>449</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.124.1</from>
+		<to>158.38.124.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>450</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.126.1</from>
+		<to>158.38.126.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>451</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.127.1</from>
+		<to>158.38.127.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>452</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.146.1</from>
+		<to>158.38.146.126</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>453</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.146.129</from>
+		<to>158.38.146.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>454</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.147.1</from>
+		<to>158.38.147.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>455</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.148.0</from>
+		<to>158.38.149.255</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>456</entryid>
+		<group>1</group>
+		<desc>Volda University College</desc>
+		<from>158.38.150.1</from>
+		<to>158.38.151.254</to>
+		<contact>Lars Havåg</contact>
+		<email>LarsH@hivolda.no</email>
+		<address>Postboks 500</address>
+		<postal_code>6101</postal_code>
+		<postal_location>Volda</postal_location>
+		<phone>90 55 35 18</phone>
+	</range>
+	<range>
+		<entryid>457</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>128.39.89.1</from>
+		<to>128.39.89.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>458</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>128.39.73.1</from>
+		<to>128.39.73.126</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>459</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>128.39.73.129</from>
+		<to>128.39.73.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>460</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>128.39.74.1</from>
+		<to>128.39.75.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>461</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.78.1</from>
+		<to>158.36.79.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>462</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.90.1</from>
+		<to>158.36.91.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>463</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.98.1</from>
+		<to>158.36.99.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>464</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.101.1</from>
+		<to>158.36.101.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>465</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.108.1</from>
+		<to>158.36.109.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>466</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.118.1</from>
+		<to>158.36.119.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>467</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.144.1</from>
+		<to>158.36.144.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>468</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.146.1</from>
+		<to>158.36.147.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>469</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.148.1</from>
+		<to>158.36.149.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>470</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.155.129</from>
+		<to>158.36.155.190</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>471</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>158.36.161.1</from>
+		<to>158.36.161.254</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<email>marianne.montgomery@hio.no</email>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>472</entryid>
+		<group>1</group>
+		<desc>Hoegskolen i Oslo</desc>
+		<from>195.159.89.132</from>
+		<to>195.159.89.132</to>
+		<contact>Marianne Julin Montgomery</contact>
+		<address>Postboks 4, st. Olavs Plass</address>
+		<postal_code>130</postal_code>
+		<postal_location>Oslo</postal_location>
+		<phone>22 45 35 82</phone>
+	</range>
+	<range>
+		<entryid>473</entryid>
+		<group>1</group>
+		<desc>Norges Naturvitenskapelige Universitet (NTNU)</desc>
+		<from>129.241.0.0</from>
+		<to>129.241.223.255</to>
+		<contact>Kari Berg</contact>
+		<email>Kari.Berg@ub.ntnu.no</email>
+		<postal_code>7491</postal_code>
+		<postal_location>Trondheim</postal_location>
+		<phone>73 86 84 89</phone>
+	</range>
+	<range>
+		<entryid>474</entryid>
+		<group>1</group>
+		<desc>Norges Naturvitenskapelige Universitet (NTNU)</desc>
+		<from>78.91.0.0</from>
+		<to>78.91.83.255</to>
+		<contact>Kari Berg</contact>
+		<email>Kari.Berg@ub.ntnu.no</email>
+		<postal_code>7491</postal_code>
+		<postal_location>Trondheim</postal_location>
+	</range>
+	<range>
+		<entryid>475</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.175.0</from>
+		<to>128.39.175.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>476</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.176.0</from>
+		<to>128.39.179.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>477</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.180.0</from>
+		<to>128.39.181.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>478</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.186.0</from>
+		<to>128.39.186.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>479</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.190.0</from>
+		<to>128.39.190.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>480</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.191.128</from>
+		<to>128.39.191.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>481</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.232.0</from>
+		<to>128.39.235.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>482</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.236.0</from>
+		<to>128.39.239.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>483</entryid>
+		<group>1</group>
+		<desc>Universitetet for miljø- og biovitenskap</desc>
+		<from>128.39.240.0</from>
+		<to>128.39.241.255</to>
+		<contact>Ingeborg Hvaale</contact>
+		<email>ingeborg.hvaale@umb.no</email>
+		<postal_code>1432</postal_code>
+		<postal_location>Aas</postal_location>
+		<phone>64 96 50 60</phone>
+	</range>
+	<range>
+		<entryid>484</entryid>
+		<group>3</group>
+		<desc>Vadsø helsesenter</desc>
+		<from>193.91.218.2</from>
+		<to>193.91.218.2</to>
+		<contact>Dr Ellen Cathrine Steen</contact>
+		<email>Ellen-Cathrine.Steen@vadso.kommune.no</email>
+		<address>Vidjevn 4</address>
+		<postal_code>9800</postal_code>
+		<postal_location>Vadsø</postal_location>
+		<phone>78 94 25 00</phone>
+	</range>
+	<range>
+		<entryid>485</entryid>
+		<group>3</group>
+		<desc>Helsetilsynet/fylkeslegen hos Fylkesmannen i Moere og Romsdal</desc>
+		<from>213.184.193.65</from>
+		<to>213.184.193.65</to>
+		<contact>Hilde M. Aure</contact>
+		<email>hilde.aure@fmmr.no</email>
+		<address>Fylkeshuset</address>
+		<postal_code>6404</postal_code>
+		<postal_location>Molde</postal_location>
+		<phone>71 25 84 31</phone>
+	</range>
+	<range>
+		<entryid>486</entryid>
+		<group>3</group>
+		<desc>Valestrand legekontor</desc>
+		<from>172.22.112.32</from>
+		<to>172.22.112.63</to>
+		<contact>Janecke Thesen</contact>
+		<email>janecke.thesen@isf.uib.no</email>
+	</range>
+	<range>
+		<entryid>486</entryid>
+		<group>1</group>
+		<desc>Randaberg Kommune</desc>
+		<from>217.68.115.20</from>
+		<to>217.68.115.20</to>
+		<contact>Thor Bjarte Tangeland</contact>
+		<email>Thor.Bjarte.Tangeland@randaberg.kommune.no</email>
+	</range>
+	<range>
+		<entryid>487</entryid>
+		<group>3</group>
+		<desc>Rossvollheimen, Skaun kommune</desc>
+		<from>82.194.192.134</from>
+		<to>82.194.192.134</to>
+		<contact>Jan-Tomas Flosand</contact>
+		<email>jan-tomas.flosand@skaun.kommune.no</email>
+		<address></address>
+		<postal_code>7353</postal_code>
+		<postal_location>Boersa</postal_location>
+		<phone>72867330</phone>
+	</range>
+	<range>
+		<entryid>488</entryid>
+		<group>3</group>
+		<desc>Oasen Legeseneter</desc>
+		<from>172.31.5.34</from>
+		<to>172.31.5.40</to>
+		<contact>Geir Thue</contact>
+		<email>post@oasenlegesenter.nhn.no</email>
+	</range>
+</iprange>
