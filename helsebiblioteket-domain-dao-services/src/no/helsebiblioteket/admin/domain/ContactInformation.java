@@ -3,7 +3,8 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class ContactInformation {
-	private Integer id = -1;
+	// Id's most NOT be set this to -1. Initial values for keys is NULL. 
+	private Integer id;
 	private String postalAddress = "";
 	private String postalCode = "";
 	private String telephoneNumber = "";

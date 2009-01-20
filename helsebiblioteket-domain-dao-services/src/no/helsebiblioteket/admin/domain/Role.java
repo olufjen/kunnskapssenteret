@@ -7,6 +7,7 @@ public class Role {
 	private String name = "";
 	private int roleId;
 	private Date lastChanged = null;
+	private String description = null;
 	
 	public String getName() {
 		return name;
@@ -31,5 +32,11 @@ public class Role {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
