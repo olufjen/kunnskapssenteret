@@ -40,8 +40,8 @@ CREATE TABLE tbl_contact_information
 
 CREATE TABLE tbl_profile
 (
-    receive_newsletter   BIT                 NULL,
-    participate_survey   BIT                 NULL,
+    receive_newsletter   BOOLEAN                 NULL,
+    participate_survey   BOOLEAN                 NULL,
     profile_id           SERIAL             NOT NULL,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( profile_id )
@@ -260,8 +260,8 @@ CREATE TABLE tbl_person
     person_id            SERIAL             NOT NULL,
     first_name           VARCHAR             NULL,
     last_name            VARCHAR             NULL,
-    student_number       INTEGER             NULL,
-    hpr_number           INTEGER             NULL,
+    student_number       VARCHAR             NULL,
+    hpr_number           VARCHAR             NULL,
     contact_information_id INTEGER           NULL,
     profile_id           INTEGER             NULL,
     position_type_id     INTEGER             NULL,
