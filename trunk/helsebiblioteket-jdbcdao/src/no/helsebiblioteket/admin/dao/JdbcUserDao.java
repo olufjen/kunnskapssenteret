@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
+public class JdbcUserDao extends SimpleJdbcDaoSupport {
     protected final Log logger = LogFactory.getLog(getClass());
 	public User getUserByUsername(User user) {
         logger.info("finding user with username '" + ((user != null) ? user.getUsername() : "") + "'");

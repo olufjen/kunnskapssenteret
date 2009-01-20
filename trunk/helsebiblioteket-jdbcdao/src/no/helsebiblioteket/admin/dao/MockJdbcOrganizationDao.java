@@ -95,13 +95,13 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
 		type.setKey("supplierSoruce");
 		type.setName("supplierSoruceName");
 		
-		source.setId(1);
+		source.setResourceId(1);
 		source.setName("kilde 1");
 		source.setResourceType(type);
 		source.setUrl("http://www.proquest.com?resource=123)");
 		sourceList.add(source);
 		source = new SupplierSource();
-		source.setId(2);
+		source.setResourceId(2);
 		source.setName("kilde 2");
 		source.setResourceType(type);
 		source.setUrl("http://www.proquest.com?resource=456)");
@@ -123,13 +123,13 @@ public class MockJdbcOrganizationDao extends SimpleJdbcDaoSupport implements Org
 		
 		sourceList = new ArrayList<SupplierSource>();
 		source = new SupplierSource();
-		source.setId(3);
+		source.setResourceId(3);
 		source.setName("kilde asdf");
 		source.setResourceType(type);
 		source.setUrl("http://www.ovid.com?resource=5342)");
 		sourceList.add(source);
 		source = new SupplierSource();
-		source.setId(4);
+		source.setResourceId(4);
 		source.setName("kilde fdsa");
 		source.setResourceType(type);
 		source.setUrl("http://www.ovid.com?resource=asds8q2)");
