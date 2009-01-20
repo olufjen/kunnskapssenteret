@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Role">
+	<typeAlias alias="role" type="no.helsebiblioteket.admin.domain.Role"/>
+	<typeAlias alias="userroleline" type="no.helsebiblioteket.admin.domain.UserRoleLine"/>
+	<resultMap id="getRoleResultMap" class="role">
+		<result property="roleId" column="user_role_id" />
+		<result property="key" column="key" />
+		<result property="name" column="name" />
+		<result property="description" column="descr" />
+		<result property="lastChanged" column="last_changed" />
+	</resultMap>
+	<select id="getUserRoleListByUserId" resultMap="getRoleResultMap" parameterClass="integer">
+		select 
+			urr.user_role_id as user_role_id, 
+			urr.key as key, 
+			urr.name as name, 
+			urr.descr as descr, 
+			ur.last_changed as last_changed
+		from tbl_user u, tbl_user_role ur, tbl_user_role_reg urr
+		where u.user_id = #userId# and u.user_id = ur.user_id and ur.user_role_id = urr.user_role_id;
+	</select>
+	<select id="getUserRoleList" resultMap="getRoleResultMap">
+		select user_role_id, key, name, descr
+		from tbl_user_role_reg;
+	</select>
+	<select id="getUserRoleListBySystemId" resultMap="getRoleResultMap" parameterClass="integer">
+		select user_role_id, key, name, descr 
+		from tbl_user_role_reg
+		where system_id = #systemId#;
+	</select>
+	<select id="getUserRoleById" resultMap="getRoleResultMap" parameterClass="integer">
+		select user_role_id, key, name, descr
+		from tbl_user_role_reg
+		where user_role_id = #userRoleId#;
+	</select>
+	<insert id="insertUserRoleLine" parameterClass="userroleline">
+		insert into tbl_user_role
+		(user_role_id, user_id, last_changed)
+		values 
+		(#userRoleId#, #userId#, now());
+	</insert>
+	<delete id="deleteUserRoleLine" parameterClass="userroleline">
+		delete from tbl_user_role
+		where user_role_id = #userRoleId# and 
+    	user_id = #userId#;
+	</delete>
+</sqlMap>

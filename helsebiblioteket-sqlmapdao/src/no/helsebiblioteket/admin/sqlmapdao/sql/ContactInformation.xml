@@ -16,12 +16,12 @@
 	</resultMap>
 	<select id="getContactInformationById" resultMap="getContactInformationResultMap" parameterClass="integer">
 		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed
-		from tlb_contact_information
+		from tbl_contact_information
 		where contact_information_id = #contactInformationId#;
 	</select>
 	<select id="getContactInformationList" resultMap="getContactInformationResultMap">
 		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed
-		from tlb_contact_information
+		from tbl_contact_information
 	</select>
 	<insert id="insertContactInformation" parameterClass="contactInformation">
 		<selectKey resultClass="int" keyProperty="id">
@@ -39,8 +39,8 @@
       	postal_location = #postalLocation#,
       	telephone_number = #telephoneNumber#,
       	email = #email#,
-      	last_changed = now();
-    	where org_unit_id = #id# and
+      	last_changed = now()
+    	where contact_information_id = #id# and
     	last_changed = #lastChanged#;
   </update>
   <delete id="deleteContactInformation" parameterClass="integer">

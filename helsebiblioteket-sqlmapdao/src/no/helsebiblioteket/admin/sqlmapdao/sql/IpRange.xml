@@ -38,7 +38,7 @@
 		ip_address_from = #ipAddressFrom#,
 		ip_address_to = #ipAddressTo#,
 		org_unit_id = #organizationId#,
-      	last_changed = now();
+      	last_changed = now()
     	where ip_address_id = #id# and
     	last_changed = #lastChanged#;
   </update>
