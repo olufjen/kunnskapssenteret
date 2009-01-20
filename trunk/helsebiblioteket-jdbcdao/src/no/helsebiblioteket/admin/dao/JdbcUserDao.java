@@ -71,8 +71,12 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
         		);
         if(users.size() == 0) return user;
         else{
+        	// FIXME: Alt slettes her? Hvorfor? Får aldri logget inn.
+        	// Må ihvertfall ha passordet!
+        	String password = users.get(0).getPassword();
         	user = new User();
         	user.setUsername(username);
+        	user.setPassword(password);
         	
      
         	Role role = new Role();
@@ -81,7 +85,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
         	role.setRoleId(1);
         	role.setName("ROLE_ALLACCESS");
         	roleList.add(role); 
-//        	user.setRoleList(roleList) ; 
+        	user.setRoleList(roleList) ; 
         	return user;
         }
         

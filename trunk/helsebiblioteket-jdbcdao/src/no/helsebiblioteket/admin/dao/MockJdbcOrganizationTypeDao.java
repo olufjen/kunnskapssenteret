@@ -1,13 +1,10 @@
 package no.helsebiblioteket.admin.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -35,7 +32,7 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
         return orgTypes;
 	}
 	
-	public OrganizationType getOrganizationType(Integer organizationTypeId) {
+	public OrganizationType getOrganizationType(String organizationTypeKey) {
 		return null;
 	}
 }
