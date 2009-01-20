@@ -2,19 +2,22 @@ package no.helsebiblioteket.admin.service.importexport;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.naming.NamingException;
 
+import com.sun.security.auth.module.LdapLoginModule;
+
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.service.impl.UserServiceImpl;
 import no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil;
 import no.helsebiblioteket.admin.service.importexport.ldap.domain.LDAPUser;
+import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
-import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 /**
@@ -26,31 +29,20 @@ import no.helsebiblioteket.admin.domain.User;
  *
  */
 
-public class ImportEndUsersServiceImpl implements ImportEndUsersService {
+public class LocateFaultyUsersMain {
 	LDAPLookupUtil ldapLookupUtil;
 	UserService userService;
-	
-	static List<Role> roleOtherList = new ArrayList<Role>();
-	static List<Role> roleHealthPersonellList = new ArrayList<Role>();
-	static List<Role> roleStudentList = new ArrayList<Role>();
-	
-	static {
-		Role roleOther = new Role();
-		roleOther.setRoleId(4);
-		roleOtherList.add(roleOther);
-		
-		Role roleHealthPersonell = new Role();
-		roleHealthPersonell.setRoleId(2);
-		roleHealthPersonellList.add(roleHealthPersonell);
-		
-		Role roleStudent = new Role();
-		roleStudent.setRoleId(3);
-		roleStudentList.add(roleStudent);
-	}
 
 	String commonPassword;
-	private static final Logger LOG = Logger.getLogger(ImportEndUsersServiceImpl.class.toString());
-
+	private static final Logger LOG = Logger.getLogger(LocateFaultyUsersMain.class.toString());
+	
+	public static void main(String args[]) {
+		LocateFaultyUsersMain locateFaultyUsers = new LocateFaultyUsersMain();
+		UserServiceImpl userServiceImpl = new UserServiceImpl();
+		//userServiceImpl.setUserDao(new SqlMapUserDao());
+		locateFaultyUsers.setUserService(new UserServiceImpl());
+	}
+	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
@@ -80,9 +72,7 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 		for (LDAPUser ldapUser : allEndUsersAsLdapUsers) {
 			helsebibliotekUser = new User();
 			helsebibliotekUser = populateUser(ldapUser);
-			if (null != helsebibliotekUser) {
-				allEndUsersAsHelsebibliotekUsers.add(helsebibliotekUser);
-			}
+			allEndUsersAsHelsebibliotekUsers.add(helsebibliotekUser);
 		}
 		
 		for (User user : allEndUsersAsHelsebibliotekUsers) {
@@ -92,57 +82,32 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 	
 	private User populateUser(LDAPUser ldapUser) {
         User user = new User();
-        Person person = new Person();
-        
         if (null == this.commonPassword) {
         	user.setPassword(ldapUser.getUserPassword());
         } else {
         	user.setPassword(this.commonPassword);
         }
-        
         user.setUsername(ldapUser.getUid());
-        
-        String studentOrHprNumber = null;
-        
-        studentOrHprNumber = ldapUser.getEmployeeNumber(); 
-        
-        if ("Emp".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList(roleOtherList);
-        }
-        if ("Stud".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList(roleStudentList);
-        	person.setStudentNumber(studentOrHprNumber);
-        }
-        if ("HPR".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList(roleHealthPersonellList);
-        	person.setStudentNumber(studentOrHprNumber);
-        }
-        
-        if (user.getRoleList() == null) {
-        	LOG.log(Level.SEVERE, "No roles for user '" + ldapUser.getUid() + "', ommiting user");
-        	return null;
-        }
-        
+        Person person = new Person();
         person.setFirstName(ldapUser.getGivenName());
         person.setLastName(ldapUser.getSureName());
-        
         ContactInformation contactInformation = new ContactInformation();
         contactInformation.setEmail(ldapUser.getEmail());
         Profile userProfile = new Profile();
         try {
         	userProfile.setParticipateSurvey((ldapUser.getMobile() != null) ? Boolean.valueOf(ldapUser.getMobile()) : false);
         } catch (Exception e) {
-        	LOG.log(Level.SEVERE, "'survey' for user '" + ldapUser.getUid() + "' has wrong format, should have been boolean: " + ldapUser.getMobile());
+        	LOG.log(Level.SEVERE, "'survey' has wrong format, should have been boolean: " + ldapUser.getMobile());
         }
         try {
         	userProfile.setReceiveNewsletter((ldapUser.getPager() != null) ? Boolean.valueOf(ldapUser.getPager()) : false);
         } catch (Exception e) {
-        	LOG.log(Level.SEVERE, "'newsletter' for user '" + ldapUser.getUid() + "' has wrong format, should have been boolean: " + ldapUser.getPager());
+        	LOG.log(Level.SEVERE, "'newsletter' has wrong format, should have been boolean: " + ldapUser.getPager());
         }
         person.setProfile(userProfile);
         person.setContactInformation(contactInformation);
         user.setPerson(person);
-        //user.setOrganization(new Organization());
+        user.setOrganization(new Organization());
         //TODO
         /*user.setDn(ldapUser.getDn());
         user.setUid(ldapUser.getUid());
