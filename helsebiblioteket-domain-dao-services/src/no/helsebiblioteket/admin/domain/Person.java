@@ -9,8 +9,8 @@ public class Person {
 	private String employer = "";
 	private Position position = new Position();
 	private boolean isStudent;
-	private Integer studentNumber;
-	private Integer hprNumber;
+	private String studentNumber;
+	private String hprNumber;
 	private ContactInformation contactInformation = new ContactInformation();
 	private Profile profile = new Profile();
 	private User user;
@@ -49,10 +49,10 @@ public class Person {
 	public void setPosition(Position position) {
 		this.position = position;
 	}
-	public Integer getHprNumber() {
+	public String getHprNumber() {
 		return hprNumber;
 	}
-	public void setHprNumber(Integer hprNumber) {
+	public void setHprNumber(String hprNumber) {
 		this.hprNumber = hprNumber;
 	}
 	public boolean getIsStudent() {
@@ -61,10 +61,10 @@ public class Person {
 	public void setIsStudent(boolean isStudent) {
 		this.isStudent = isStudent;
 	}
-	public Integer getStudentNumber() {
+	public String getStudentNumber() {
 		return studentNumber;
 	}
-	public void setStudentNumber(Integer studentNumber) {
+	public void setStudentNumber(String studentNumber) {
 		this.studentNumber = studentNumber;
 	}
 	public ContactInformation getContactInformation() {
