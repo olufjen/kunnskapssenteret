@@ -272,15 +272,6 @@
 		<url-pattern>*.faces</url-pattern>
 	</servlet-mapping>
 	
-	<servlet>
-		<servlet-name>spring-ws</servlet-name>
-		<servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	<servlet-name>spring-ws</servlet-name>
-		<url-pattern>/ws/*</url-pattern>
-	</servlet-mapping>
-	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.html</welcome-file>

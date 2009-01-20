@@ -58,7 +58,7 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 	
-	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.dao.MockJdbcOrganizationTypeDao">
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.dao.JdbcOrganizationTypeDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 
@@ -88,12 +88,13 @@ xmlns="http://www.springframework.org/schema/beans"
 		A service for accessing (relative) static properties like types of entities etc.
 		Example: types of organizations, types of roles, types of access etc
 	-->
+	
 	<bean id="adminService" class="no.helsebiblioteket.admin.service.impl.AdminServiceImpl">
-	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
 	</bean>
 
 	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
 	 	<property name="organizationDao" ref="organizationDao"></property>
+	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
 	</bean>
 
 	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">

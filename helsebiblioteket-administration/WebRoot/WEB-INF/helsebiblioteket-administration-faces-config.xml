@@ -277,8 +277,8 @@
         <managed-bean-class>no.helsebiblioteket.admin.bean.AdminBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     	<managed-property>
-    		<property-name>adminService</property-name>
-        	<value>#{adminService}</value>
+    		<property-name>organizationService</property-name>
+        	<value>#{organizationService}</value>
 		</managed-property>
 	</managed-bean>
 
