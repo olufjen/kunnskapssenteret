@@ -1,7 +1,6 @@
 package no.helsebiblioteket.admin.bean;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -15,13 +14,12 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
-public class NewMemberOrganizationBean {
+public class NewMemberOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	
 	private OrganizationService organizationService = null;
@@ -46,8 +44,17 @@ public class NewMemberOrganizationBean {
 	
 
 	
+	
+	
 	public NewMemberOrganizationBean() {
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public String getSelectedOrganizationTypeId() {
 		return selectedOrganizationTypeId;
@@ -146,8 +153,37 @@ public class NewMemberOrganizationBean {
 
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
+		// FIXME: Save in a different way?
+		this.memberOrganization = new MemberOrganization();
+//		private String organizationName;
+		this.memberOrganization.setName(this.getOrganizationName());
+		ContactInformation contactInformationOrganization = new ContactInformation();
+//		private String orgAddress;
+		contactInformationOrganization.setPostalAddress(this.getOrgAddress());
+//		private String orgPostalCode;
+		contactInformationOrganization.setPostalCode(this.getOrgPostalCode());
+//		private String orgPostalLocation;
+		contactInformationOrganization.setPostalLocation(this.getOrgPostalLocation());
+		ContactInformation contactInformationPerson = new ContactInformation();
+		Person contactPerson = new Person();
+//		private String contactPersonFirstName;
+		contactPerson.setFirstName(this.getContactPersonFirstName());
+//		private String contactPersonLastName;
+		contactPerson.setLastName(this.getContactPersonLastName());
+//		private String contactPersonTelephoneNumber;
+		contactInformationPerson.setTelephoneNumber(this.getContactPersonTelephoneNumber());
+//		private String contactPersonEmail;
+		contactInformationPerson.setEmail(this.getContactPersonEmail());
+		
+		contactPerson.setContactInformation(contactInformationPerson);
+		this.memberOrganization.setContactInformation(contactInformationOrganization);
+		this.memberOrganization.setContactPerson(contactPerson);
+		
+
+		
+		
 		memberOrganization.setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		//organizationService.saveOrganization();
+		this.organizationService.createOrganization(this.memberOrganization);
 	}
 	
 	public void actionAddSingleIp() {

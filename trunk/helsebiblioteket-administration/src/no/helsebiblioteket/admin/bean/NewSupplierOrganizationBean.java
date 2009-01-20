@@ -17,7 +17,7 @@ import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 
-public class NewSupplierOrganizationBean {
+public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	
 	private OrganizationService organizationService = null;
