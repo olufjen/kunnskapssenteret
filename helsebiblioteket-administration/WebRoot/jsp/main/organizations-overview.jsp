@@ -16,7 +16,8 @@
 		binding="#{organizationBean.organizationsTable}" >
     	<h:column id="nameColumn">
       		<f:facet name="header"><h:outputText value="#{msg_main.organization_overview_organization}"/></f:facet>
-      		<h:outputText id="nameOutput" value="#{organization.name}" />
+      		<h:outputText id="nameNorwegian" value="#{organization.nameNorwegian}" />
+      		<h:outputText id="nameEnglish" value="#{organization.nameEnglish}" />
     	</h:column>
     	<h:column id="detailsColumn">
       		<f:facet name="header" />
