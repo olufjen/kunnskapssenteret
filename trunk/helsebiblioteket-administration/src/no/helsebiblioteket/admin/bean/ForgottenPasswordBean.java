@@ -38,7 +38,7 @@ public class ForgottenPasswordBean {
 //		FacesContext context = FacesContext.getCurrentInstance();
 //		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN,
 //				 "Feil passord eller ukjent bruker.",
-//				 "Prøv igjen");
+//				 "PrÃ¸v igjen");
 //		context.addMessage(this.emailComponent.getClientId(context), facesMessage);
 		return "send_email_success";
 	}

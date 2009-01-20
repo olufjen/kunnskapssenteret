@@ -11,18 +11,75 @@
 	<table>
 		<tr>
 			<td>
-				<h:outputText value="#{msg_main.name}" />
+				<h:outputText value="#{msg_main.english_name}" />
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.organizationName}"
-					id="organizationName" 
+					value="#{newMemberOrganizationBean.memberOrganization.nameEnglish}"
+					id="organizationNameEnglish" 
 					required="true"
 					>
 				</h:inputText>
-				<br /><h:message for="organizationName" styleClass="error"/>
+				<br /><h:message for="organizationNameEnglish" styleClass="error"/>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.english_name_short}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.nameShortEnglish}"
+					id="organizationNameEnglishShort" 
+					required="true"
+					>
+				</h:inputText>
+				<br /><h:message for="organizationNameEnglishShort" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.norwegian_name}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.nameNorwegian}"
+					id="organizationNameNorwegian" 
+					required="true"
+					>
+				</h:inputText>
+				<br /><h:message for="organizationNameNorwegian" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.norwegian_name_short}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.nameShortNorwegian}"
+					id="organizationNameShortNorwegian" 
+					required="true"
+					>
+				</h:inputText>
+				<br /><h:message for="organizationNameShortNorwegian" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.description}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.description}"
+					id="organizationDescription" 
+					required="true"
+					>
+				</h:inputText>
+				<h:message for="organizationDescription" styleClass="error"/>
+			</td>
+		</tr>
+	
 		<tr>
 			<td>
 				<h:outputText value="#{msg_main.group}" />
@@ -39,6 +96,106 @@
 				<br /><h:message for="organizationType" styleClass="error"/>
 			</td>
 		</tr>
+		
+		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.organization}" /></h5></td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.postal_address}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.contactInformation.postalAddress}"
+					id="orgAddress" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.postal_code}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.contactInformation.postalCode}"
+					id="orgPostalCode" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.postal_location}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.contactInformation.postalLocation}"
+					id="orgPostalLocation" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.contact_person}" /></h5></td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.firstname}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.firstName}"
+					id="contactPersonFirstName" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.lastname}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.lastName}"
+					id="contactPersonLastName" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.telephone_number}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.contactInformation.telephoneNumber}"
+					id="contactPersonTelephoneNumber" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.email_address_input}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.contactInformation.email}"
+					id="contactPersonEmail" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.ip_address}" /></h5></td>
 		</tr>
@@ -112,111 +269,13 @@
 			    	<t:column>
 			      		<t:dataTable var="source" value="#{supplier.sourceList}">
 			      			<t:column>
-			      				<t:selectManyCheckbox id="suppliersources" layout="pageDirection">
-			      					<f:selectItem itemLabel="#{source.name}" itemValue="#{supplier.id}-#{source.id}" />
+			      				<t:selectManyCheckbox id="suppliersources" layout="pageDirection" value="#{newMemberOrganizationBean.selectedSourceList}">
+				      				<f:selectItem id="suppliersource" itemLabel="#{source.name}" itemValue="#{source.id}"/>
 			      				</t:selectManyCheckbox>
 			      			</t:column>
 			      		</t:dataTable>
 			    	</t:column>
 				</t:dataTable>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.organization}" /></h5></td>
-		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.postal_address}"></h:outputText>
-			</td>
-			<td>
-				<h:inputText 
-					value="#{newMemberOrganizationBean.orgAddress}"
-					id="orgAddress" 
-					required="false"
-					>
-				</h:inputText>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.postal_code}"></h:outputText>
-			</td>
-			<td>
-				<h:inputText 
-					value="#{newMemberOrganizationBean.orgPostalCode}"
-					id="orgPostalCode" 
-					required="false"
-					>
-				</h:inputText>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.postal_location}"></h:outputText>
-			</td>
-			<td>
-				<h:inputText 
-					value="#{newMemberOrganizationBean.orgPostalLocation}"
-					id="orgPostalLocation" 
-					required="false"
-					>
-				</h:inputText>
-			</td>
-		</tr>
-		
-		<tr>
-			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.contact_person}" /></h5></td>
-		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.firstname}"></h:outputText>
-			</td>
-			<td>
-				<h:inputText 
-					value="#{newMemberOrganizationBean.contactPersonFirstName}"
-					id="contactPersonFirstName" 
-					required="false"
-					>
-				</h:inputText>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.lastname}"></h:outputText>
-			</td>
-			<td>
-				<h:inputText 
-					value="#{newMemberOrganizationBean.contactPersonLastName}"
-					id="contactPersonLastName" 
-					required="false"
-					>
-				</h:inputText>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.telephone_number}"></h:outputText>
-			</td>
-			<td>
-				<h:inputText 
-					value="#{newMemberOrganizationBean.contactPersonTelephoneNumber}"
-					id="contactPersonTelephoneNumber" 
-					required="false"
-					>
-				</h:inputText>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.email_address_input}"></h:outputText>
-			</td>
-			<td>
-				<h:inputText 
-					value="#{newMemberOrganizationBean.contactPersonEmail}"
-					id="contactPersonEmail" 
-					required="false"
-					>
-				</h:inputText>
 			</td>
 		</tr>
 		

@@ -11,17 +11,77 @@
 	<table>
 		<tr>
 			<td>
-				<h:outputText value="#{msg_main.name}" />
+				<h:outputText value="#{msg_main.english_name}" />
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.organizationName}"
-					id="organizationName" 
+					value="#{newSupplierOrganizationBean.supplierOrganization.nameEnglish}"
+					id="organizationNameEnglish" 
 					required="true"
 					>
 				</h:inputText>
-				<br /><h:message for="organizationName" styleClass="error"/>
+				<br /><h:message for="organizationNameEnglish" styleClass="error"/>
 			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.english_name_short}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newSupplierOrganizationBean.supplierOrganization.nameShortEnglish}"
+					id="organizationNameEnglishShort" 
+					required="true"
+					>
+				</h:inputText>
+				<br /><h:message for="organizationNameEnglishShort" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.norwegian_name}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newSupplierOrganizationBean.supplierOrganization.nameNorwegian}"
+					id="organizationNameNorwegian" 
+					required="true"
+					>
+				</h:inputText>
+				<br /><h:message for="organizationNameNorwegian" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.norwegian_name_short}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newSupplierOrganizationBean.supplierOrganization.nameShortNorwegian}"
+					id="organizationNameShortNorwegian" 
+					required="true"
+					>
+				</h:inputText>
+				<br /><h:message for="organizationNameShortNorwegian" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.description}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{newSupplierOrganizationBean.supplierOrganization.description}"
+					id="organizationDescription" 
+					required="true"
+					>
+				</h:inputText>
+				<h:message for="organizationDescription" styleClass="error"/>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.sources}" /></h5></td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -44,8 +104,8 @@
 					>
 				</h:inputText>
 				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{newSupplierOrganizationBean.actionAddSupplierSource}" />
-				<br /><h:message for="sourceName" styleClass="error" />
-				<br /><h:message for="sourceUrl" styleClass="error" />
+				<h:message for="sourceName" styleClass="error" />
+				<h:message for="sourceUrl" styleClass="error" />
 			</td>
 		</tr>
 		<tr>

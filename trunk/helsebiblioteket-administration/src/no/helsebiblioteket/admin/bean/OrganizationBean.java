@@ -38,9 +38,9 @@ public class OrganizationBean {
 		this.organizations = this.organizationService.findOrganizationsBySearchStringRoles(this.searchinput, request).result;
 	}
 	public List<Organization> getOrganizations() {
-		if(this.organizations == null){
+		//if(this.organizations == null){
 			this.organizations = this.organizationService.getAllOrganizations();
-		}
+		//}
 		return this.organizations;
 	}
 	public String getSearchinput() { return searchinput; }

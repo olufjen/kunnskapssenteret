@@ -42,20 +42,28 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
 	</bean>
 	
-	<bean id="userDao" class="no.helsebiblioteket.admin.dao.JdbcUserDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+
+	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 
 	<bean id="userCompositeDao" class="no.helsebiblioteket.admin.dao.JdbcUserCompositeDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
 
-	<bean id="roleDao" class="no.helsebiblioteket.admin.dao.JdbcRoleDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
-	<bean id="personDao" class="no.helsebiblioteket.admin.dao.JdbcPersonDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
 	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.dao.JdbcOrganizationTypeDao">
@@ -75,9 +83,9 @@ xmlns="http://www.springframework.org/schema/beans"
 	</bean>
 	
    	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.ImportEndUsersServiceImpl">
-	 	<property name="userDao" ref="userDao"></property>
+	 	<property name="userService" ref="userService"></property>
 	 	<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
-	 	<!-- <property name="commonPassword" value="password" />-->
+	 	<!--<property name="commonPassword" value="password" />-->
 	</bean>
 	
 	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.ImportMemberOrganizationsServiceImpl">
@@ -97,11 +105,12 @@ xmlns="http://www.springframework.org/schema/beans"
 	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
 	</bean>
 
-	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
+	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl2">
 	 	<property name="userDao" ref="userDao"></property>
-	 	<property name="userCompositeDao" ref="userCompositeDao"></property>
 	 	<property name="roleDao" ref="roleDao"></property>
 	 	<property name="personDao" ref="personDao"></property>
+	 	<property name="profileDao" ref="profileDao"></property>
+	 	<property name="contactInformationDao" ref="contactInformationDao"></property>
 	</bean>
 
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
@@ -198,8 +207,25 @@ xmlns="http://www.springframework.org/schema/beans"
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
 				/login.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				
-				/welcome.faces=ROLE_ALLACCESS,ROLE_URLACCESS
+				/welcome.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/forgotten-password.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/forgotten-password-sent.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/organizations-overview.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/organization-details.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/organization-edit.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/new-organization.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/new-supplierorganization.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/new-memberorganization.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/users-overview.tiles.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/user-details.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/user-edit.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/edit-enduser.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/edit-administrator.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/user-new.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/new-enduser.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/new-administrator.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/user.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				<!--  /welcome.faces=ROLE_ALLACCESS,ROLE_URLACCESS-->
 			</value>
 		</property>
 	</bean>
