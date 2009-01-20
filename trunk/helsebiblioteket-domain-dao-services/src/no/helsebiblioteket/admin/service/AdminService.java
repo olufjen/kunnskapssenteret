@@ -6,10 +6,6 @@ package no.helsebiblioteket.admin.service;
  */
 
 import java.io.Serializable;
-import java.util.List;
-
-import no.helsebiblioteket.admin.domain.OrganizationType;
 
 public interface AdminService extends Serializable {
-    public List<OrganizationType> getOrganizationTypeList();
 }

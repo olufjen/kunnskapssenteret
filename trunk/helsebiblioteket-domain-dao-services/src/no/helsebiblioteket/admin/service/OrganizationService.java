@@ -16,9 +16,13 @@ import no.helsebiblioteket.admin.request.PageRequest;
 import no.helsebiblioteket.admin.request.PageResult;
 
 public interface OrganizationService extends Serializable {
-	public List<Organization> getAllOrganizations();
+    public List<OrganizationType> getOrganizationTypeList();
+
+    public List<Organization> getAllOrganizations();
 	public PageResult<Organization> findOrganizationsBySearchStringRoles(String searchString, PageRequest<Organization> request);
 	public Organization getOrganization(Integer organizationId);
 	public MemberOrganization getMemberOrganization(Integer organizationId);
 	public List<SupplierOrganization> getSupplierList();
+	
+	public void createOrganization(Organization organization);
 }
