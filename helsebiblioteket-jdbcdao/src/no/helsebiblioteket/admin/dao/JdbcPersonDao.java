@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
+public class JdbcPersonDao extends SimpleJdbcDaoSupport {
     protected final Log logger = LogFactory.getLog(getClass());
 	public int insertContactInformation(ContactInformation contactInformation) {
 		String sql ="insert into tbl_contact_information (postal_address, postal_code, " +

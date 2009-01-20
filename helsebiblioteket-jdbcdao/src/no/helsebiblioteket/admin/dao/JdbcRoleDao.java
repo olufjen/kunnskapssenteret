@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao {
+public class JdbcRoleDao extends SimpleJdbcDaoSupport {
     protected final Log logger = LogFactory.getLog(getClass());
 	public List<Role> getAllRoles() {
         logger.info("fetching all roles");
