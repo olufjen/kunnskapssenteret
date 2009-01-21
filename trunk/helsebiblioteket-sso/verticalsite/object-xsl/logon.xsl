@@ -148,18 +148,34 @@
                                         	<xsl:call-template name="displayErrorMessage">
                                         	    <xsl:with-param name="id" select="'password'"/>
                                         	</xsl:call-template>
+                                    	    <xsl:if test="$user/organization">
+                                    	        <div class="logonheading">Personlig innlogging:</div>
+                                    	    </xsl:if>
+                                        <xsl:text>Loginresultatet er </xsl:text><xsl:copy-of select="/verticaldata/node()"></xsl:copy-of>
+                                        <xsl:if test="/verticaldata/hbloginresult/messages/username !=''">
+                                    	        <div class="error_message">      
+                                    	            Du må fylle inn brukernavn.
+                                    	        </div>
+                                        </xsl:if>
+                                    	    <xsl:if test="/verticaldata/hbloginresult/messages/password !=''">
+                                    	        <div class="error_message">      
+                                    	            Du må fylle inn passord.
+                                    	        </div>
+                                    	    </xsl:if>
+                                    	    <xsl:if test="/verticaldata/hbloginresult/summary !=''">
+                                    	        <div class="error_message">      
+                                    	            <b>Brukeren finnes ikke!</b><br/>Du kan registrere deg som bruker ved å trykke 'Ny bruker' over.<br/><br/>
+                                    	        </div>
+                                    	    </xsl:if>
+                                    	   
                                         	<div class="normaltext">
 
                                             	Brukernavn:<br/>
                                             	<input id="inputfield1" name="uid" type="text"
                                             		value="{$errorUserLogin/values/username/text()}"/>
-                                            	<xsl:value-of select="$errorUserLogin/messages/username"/>
-                                            	
-                                            	<br/>
 
                                             	Passord:<br/>
                                             	<input id="inputfield2" name="password" type="password"/>
-                                            	<xsl:value-of select="$errorUserLogin/messages/password"/>
                                             
                                             	<table id="logon">
                                                 	<tr>
@@ -171,7 +187,7 @@
                                                 	</tr>
                                             	</table>
                                             	
-                                            	<xsl:choose>
+                                            	<!--<xsl:choose>
 	                                        		<xsl:when test="$errorUserLogin/success">
                                         				SUCCESS!
     	                                    	    </xsl:when>
@@ -193,7 +209,7 @@
                                         	            	</xsl:otherwise>
                                         	        	</xsl:choose>                                        
                                         	        </xsl:otherwise>
-                                        		</xsl:choose>
+                                        		</xsl:choose>-->
                                             	     
                                         	</div>
                                         
