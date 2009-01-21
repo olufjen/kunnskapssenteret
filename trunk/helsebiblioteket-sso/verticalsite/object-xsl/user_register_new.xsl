@@ -60,7 +60,7 @@
     </xsl:template> <!-- end content -->
     
     <xsl:template name="step1">
-        <h4 class="logon_column_heading">Registreringsskjema - steg 1 av 2</h4>
+        <h4 class="logon_column_heading">Steg 1 av 2: Velg type tilgang</h4>
       <!--  <xsl:if test="$errorUserCreate/text()">
             <div class="error_message">                                        
                 <xsl:choose>
@@ -86,15 +86,16 @@
         </xsl:if>-->
         <form action="" method="">
             <div class="column_content">
-                <p><strong>Kun studenter og ansatte innen helsesektoren oppfyller kravene for tilgang til passordbeskyttede tjenester i Helsebiblioteket.<br/> Type tilgang: velg et alternativ og trykk «Neste».</strong></p>                            
+                <p>Kun studenter og ansatte innen helsesektoren oppfyller kravene for tilgang til passordbeskyttede tjenester i Helsebiblioteket.<br/><br/>Velg ett alternativ:
+                </p>                            
                 
                 
                 <input class="radio" id="reg_form_1" name="form_3" type="radio" value="HPR"/>
                 <label for="reg_form_1">Jeg er registrert i Helsepersonellregisteret</label>
                 <br/>
-                <p>Velg dette dersom du har et helsepersonellnummer. Da får du også tilgang til Norsk Elektronisk Legehåndbok (NEL). Finn helsepersonellnummeret ditt her: <a href="http://www.safh.no/hpr/main.php" rel="external">www.safh.no</a></p>
+                <p>Velg dette dersom du har et helsepersonellnummer. Da får du også tilgang til Norsk Elektronisk Legehåndbok (NEL). Finn helsepersonellnummeret ditt på <a href="http://www.safh.no/hpr/main.php" rel="external">SAFHs nettsider</a>.</p>
                 <input class="radio" id="reg_form_2" name="form_3" type="radio" value="Stud"/>
-                <label for="reg_form_2">Jeg er student på helsefag</label>
+                <label for="reg_form_2">Jeg er student eller ansatt ved helsefaglig utdanningslinje</label>
                 <br/>
                 <p>Velg dette dersom du studerer helsefag ved universitet eller høyskole. Du kan bruke studentnummeret ditt i registreringen på neste side.</p>
                 <input class="radio" id="reg_form_3" name="form_3" type="radio" value="Emp"/>
@@ -110,72 +111,15 @@
     <xsl:template name="step2">
         <div id="steg2av2">
             <div class="wrap">
-                <h4 class="logon_column_heading">Registreringsskjema - steg 2 av 2</h4>                
+                <xsl:choose>
+                    <xsl:when test="$status='HPR'"><h4 class="logon_column_heading">Registrering av ny bruker - helsepersonell</h4></xsl:when>
+                    <xsl:when test="$status='Stud'"><h4 class="logon_column_heading">Registrering av ny bruker - høyskole/universitet</h4></xsl:when>
+                    <xsl:otherwise><h4 class="logon_column_heading">Registrering av ny bruker - andre ansatte</h4></xsl:otherwise>
+                </xsl:choose>
+                
+                <h4 class="logon_column_heading">Steg 2 av 2: Brukerdata og passord</h4>                
                 <div class="column_content">
-                    
-                  <!--  <script type="text/javascript">
-                        <xsl:comment>                          
-                            function validatePassword(form) {                          
-                            var pass1 = form.password.value;                            
-                            var pass2 = form.confirmpassword.value;                            
-                            var status = true;                           
-                            var minLength = 6;
-                            if (pass1.length &lt; minLength) {
-                            alert ('Passordet må være minst 6 tegn langt');
-                            status = false;
-                            } 
-                            
-                            var alphaAndNumericExp = /^[a-zA-Z0-9]+$/;
-                            
-                            if(!form.password.value.match(alphaAndNumericExp)) {
-                            status = false;
-                            alert ('Passordfelt kan kun inneholde tegnene A-Z, a-z og 0-9');
-                            }
-                            
-                            if (pass1 != pass2) {
-                            alert ('Passordfeltene er ulik');
-                            status = false;
-                            }                           
-                            return status;
-                            } 
-                            function validateForm(form) {      
-                            validateInput['firstname'] = new Object();
-                            validateInput['surname'] = new Object();
-                            validateInput['email'] = new Object();
-                            validateInput['username'] = new Object();
-                            validateInput['org'] = new Object();
-                            validateInput['email'] = new Object();
-                            validateInput['uid'] = new Object();
-                            validateInput['password'] = new Object();
-                            validateInput['confirmpassword'] = new Object();
-                            
-                            <xsl:value-of select="concat('validateInput[&quot;username&quot;].pattern = ', $regExpStandard, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;username&quot;].error = &quot;', $translations/required_input, '&quot;;')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;uid&quot;].pattern = ', $regExpStandard, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;uid&quot;].error = &quot;', $translations/required_input, '&quot;;')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;password&quot;].pattern = ', $regExpStandard, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;password&quot;].error = &quot;', $translations/required_input, '&quot;;')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;confirmpassword&quot;].pattern = ', $regExpStandard, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;confirmpassword&quot;].error = &quot;', $translations/required_input, '&quot;;')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;firstname&quot;].pattern = ', $regExpStandard, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;firstname&quot;].error = &quot;', $translations/required_input, '&quot;;')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;surname&quot;].pattern = ', $regExpStandard, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;surname&quot;].error = &quot;', $translations/required_input, '&quot;;')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;org&quot;].pattern = ', $regExpStandard, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;org&quot;].error = &quot;', $translations/required_input, '&quot;;')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;email&quot;].pattern = ', $regExpEmail, ';')"/>
-                            <xsl:value-of select="concat('validateInput[&quot;email&quot;].error = &quot;', $translations/missing_or_invalid_email, '&quot;;')"/>
-                            
-                            var formOK = validate(form);                           
-                            var passwordOK = validatePassword(form);                            
-                            if (passwordOK == true &amp;&amp; formOK == true) {
-                            return true;
-                            } else {
-                            return false;
-                            }                         
-                            }
-                            //</xsl:comment>
-                    </script>-->
+ 
                     <form action="/cms/site/2/Helsebiblioteket/Passord" id="register" method="post" >
                         <div>                      
                             <!--<input name="action" type="hidden" value="create"/>-->
@@ -202,7 +146,7 @@
                                             Helsepersonellnummer:
                                         </xsl:if>
                                         <xsl:if test="$status='Stud' ">
-                                            Studentnummer:
+                                            Student/ansattnummer:
                                         </xsl:if>
                                         <xsl:if test="$status='Emp' ">
                                             Fødselsdato:
@@ -213,7 +157,16 @@
                                     </td>                                 
                                     <td colspan="2">
                                         
-                                        <input name="uid" size="20" type="text"/><xsl:comment>//</xsl:comment>
+                                        <input name="uid" size="20" type="text"/>
+                                        <xsl:choose>
+                                            <xsl:when test="$status='HPR'">
+                                               <a href="http://www.safh.no/hpr/main.php" rel="external">Finn ditt helsepersonellnummer</a>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:comment>//</xsl:comment>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                        
                                     </td>                               
                                 </tr>
                                 <tr>
@@ -230,13 +183,49 @@
                                         <input name="surname" size="20" type="text"/>
                                     </td>
                                 </tr>
-                                <tr>                                
-                                    <td>Arbeidsgiver:</td> 
-                                    <td colspan="2">
-                                        
-                                        <input name="org" size="20" type="text"/>
-                                    </td>                             
-                                </tr>
+                                <xsl:choose>
+                                    <xsl:when test="$status='HPR'">
+                                        <tr>  
+                                            <td>Arbeidsgiver:</td> 
+                                            <td colspan="2">
+                                                <input name="org" size="20" type="text"/>
+                                            </td>                             
+                                        </tr>
+                                        <tr>  
+                                            <td>Stilling/fagfelt:</td> 
+                                            <td colspan="2">
+                                                <select name="stilling">
+                                                    <option value="test">Test</option>
+                                                </select>
+                                            </td>                             
+                                        </tr>
+                                    </xsl:when>
+                                    <xsl:when test="$status='Stud'">
+                                        <tr>  
+                                            <td>Skole/arbeidsgiver:</td> 
+                                            <td colspan="2">
+                                                <select name="skole">
+                                                    <option value="test">Test</option>
+                                                </select>
+                                            </td>                             
+                                        </tr>
+                                        <tr>
+                                            <td><xsl:comment>//</xsl:comment></td>
+                                            <td colspan="2"><input type="radio" name="type" value="Student">Student</input> <input type="radio" name="type" value="Ansatt">Ansatt</input></td>
+                                        </tr>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <tr>  
+                                            
+                                            <td>Arbeidsgiver:</td> 
+                                            <td colspan="2">
+                                                
+                                                <input name="org" size="20" type="text"/>
+                                            </td>                             
+                                        </tr>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                                
                                 
                                 <tr>
                                     <td>Ønsker du å motta nyhetsbrev?</td> 
@@ -268,7 +257,14 @@
                                         
                                         <input name="email" size="30" type="text"/>
                                     </td>
-                                </tr>                             
+                                </tr>        
+                                <tr>
+                                    <td>Gjenta e-postadresse:</td>
+                                    <td colspan="2">
+                                        
+                                        <input name="email2" size="30" type="text"/>
+                                    </td>
+                                </tr>             
                                 <tr>
                                     <td>Brukernavn:</td>
                                     <td colspan="2">
