@@ -6,6 +6,7 @@
 <sqlMap namespace="Organization">
 	<typeAlias alias="organization" type="no.helsebiblioteket.admin.domain.Organization"/>
 	<resultMap id="getOrganizationResultMap" class="organization">
+		<!--  TODO: Rename org_unit_id to id???  -->
 		<result property="id" column="org_unit_id" />
 		<result property="parent.id" column="org_unit_parent_id" />
 		<result property="description" column="descr" />
