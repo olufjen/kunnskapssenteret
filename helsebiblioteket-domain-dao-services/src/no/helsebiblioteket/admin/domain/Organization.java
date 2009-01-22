@@ -18,9 +18,36 @@ public class Organization {
 	private Date lastChanged = null;
 	private List<OrganizationName> nameList = null;
 	
-	public Organization() {
+	public String findName(String language, OrganizationNameCategory category){
+		for (OrganizationName name : this.nameList) {
+			if(name.getLanguageCode().equals(language) &&
+					name.getCategory().equals(category)){
+				return name.getName();
+			}
+		}
+		// TODO: How to handle error here?
+		return "";
 	}
-	
+
+	public void insertName(String language, OrganizationNameCategory category, String name){
+		boolean set = false;
+		for (OrganizationName organizationName : this.nameList) {
+			if(organizationName.getLanguageCode().equals(language) &&
+					organizationName.getCategory().equals(category)){
+				organizationName.setName(name);
+				set = true;
+			}
+		}
+		// TODO: This should probably _never_ happen?
+		if( ! set ) {
+			OrganizationName newOrganizationName = new OrganizationName();
+			newOrganizationName.setLanguageCode(language);
+			newOrganizationName.setCategory(category);
+			newOrganizationName.setName(name);
+			this.nameList.add(newOrganizationName);
+		}
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -117,29 +144,34 @@ public class Organization {
 	}
 	
 	public String getNameEnglish() {
-		String name = null;
-		if (nameList != null) {
-			for (OrganizationName orgName : nameList) {
-				if ("en".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.toString().equals(orgName.getCategory())) {
-					name = orgName.getName();
-					break;
-				}
-			}
-		}
-		return name;
+		// TODO: isn't this enough?
+		return this.findName("en", OrganizationNameCategory.NORMAL);
+		
+//		String name = null;
+//		if (nameList != null) {
+//			for (OrganizationName orgName : nameList) {
+//				if ("en".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.toString().equals(orgName.getCategory())) {
+//					name = orgName.getName();
+//					break;
+//				}
+//			}
+//		}
+//		return name;
 	}
 	
 	public String getNameNorwegian() {
-		String name = null;
-		if (nameList != null) {
-			for (OrganizationName orgName : nameList) {
-				if ("no".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.equals(orgName.getCategory())) {
-					name = orgName.getName();
-					break;
-				}
-			}
-		}
-		return name;
+		// TODO: isn't this enough?
+		return this.findName("en", OrganizationNameCategory.NORMAL);
+//		String name = null;
+//		if (nameList != null) {
+//			for (OrganizationName orgName : nameList) {
+//				if ("no".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.equals(orgName.getCategory())) {
+//					name = orgName.getName();
+//					break;
+//				}
+//			}
+//		}
+//		return name;
 	}
 	
 	public String getNameShortEnglish() {

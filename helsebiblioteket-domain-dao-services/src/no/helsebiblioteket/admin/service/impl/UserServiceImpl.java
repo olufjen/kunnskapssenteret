@@ -5,8 +5,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.OptimisticLockingFailureException;
 
+import no.helsebiblioteket.admin.dao.ContactInformationDao;
+import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.dao.PersonDao;
+import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.UserCompositeDao;
 import no.helsebiblioteket.admin.dao.UserDao;
@@ -31,13 +35,23 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	private RoleDao roleDao;
 	private PersonDao personDao;
-	private UserCompositeDao userCompositeDao;
+	private ProfileDao profileDao;
+	private ContactInformationDao contactInformationDao;
+    private OrganizationDao organizationDao;
 	public void setUserDao(UserDao userDao) { this.userDao = userDao; }
 	public void setRoleDao(RoleDao roleDao) { this.roleDao = roleDao; }
 	public void setPersonDao(PersonDao personDao) { this.personDao = personDao; }
-	public void setUserCompositeDao(UserCompositeDao userCompositeDao) { this.userCompositeDao = userCompositeDao; }
+//	public void setUserCompositeDao(UserCompositeDao userCompositeDao) { this.userCompositeDao = userCompositeDao; }
 
-	public User findUserByUsername(User user) { return userCompositeDao.getUserByUsername(user); }
+	public User findUserByUsername(User user) {
+		User foundUser = this.userDao.getUserByUsername(user);
+		// TODO: Add more data here!
+		foundUser.setRoleList(this.roleDao.getUserRoleListByUserId(user.getId()));
+//		foundUser.setOrganization(this.organizationDao.getOrganizationTypeByKey(organizationTypeKey))
+		
+		
+		return foundUser;
+	}
 	public List<Role> getAllUserRoles() { return this.roleDao.getAllRoles(); }
 	public User createUser(User user) {
 		// FIXME: Insert data into all tables!
@@ -67,7 +81,8 @@ public class UserServiceImpl implements UserService {
 	
 	public User saveUser(User user) {
 		// TODO: How to get users without person object!
-		User old = this.userCompositeDao.getUserByUsername(user);
+		// TODO: Does it fetch everything now?
+		User old = this.userDao.getUserByUsername(user);
 		
 		if(user.getAccessList() != null){
 			for (Access access : user.getAccessList()) {
@@ -80,8 +95,9 @@ public class UserServiceImpl implements UserService {
 		// TODO: Assume that these are saved?
 		Organization organization = user.getOrganization();
 		if(organization==null) { user.setOrganization(old.getOrganization()); }
-		Role role = user.getRole();
-		if(role==null) { user.setRole(old.getRole()); }
+		for (Role role : user.getRoleList()) {
+//			if(role==null) { user.setRole(old.getRole()); }
+		}
 		
 		// FIXME: Save person.
 		Person person = user.getPerson();
@@ -115,6 +131,27 @@ public class UserServiceImpl implements UserService {
 		// TODO: Write this.
 		
 		return this.findUserByUsername(user);
+		
+		// TODO: Use this from UserServiceImpl2 instead???
+//		if (changedUser.getId() != null) {
+//			if (originalUser == null || (originalUser != null && !originalUser.getLastChanged().equals(changedUser.getLastChanged()))) {
+//				throw new OptimisticLockingFailureException("User has been changed since last time loaded from datastore");
+//			}
+//			savePerson(changedUser.getPerson(), originalUser.getPerson());
+//			userDao.updateUser(changedUser);
+//			userDao.setForeignKeysForUser(changedUser);
+//			// save access
+//			saveUserRoleLineListForUser(changedUser, originalUser);
+//		} else {
+//			savePerson(changedUser.getPerson(), null);
+//			userDao.insertUser(changedUser);
+//			userDao.setForeignKeysForUser(changedUser);
+//			// save access
+//			saveUserRoleLineListForUser(changedUser, null);
+//		}
+//		
+//		return changedUser;
+
 	}
 	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request) {
 		// FIXME: Cache and page results
@@ -125,7 +162,7 @@ public class UserServiceImpl implements UserService {
 			if(user.getPerson().getName().toLowerCase().contains(searchString.toLowerCase()) ||
 					user.getUsername().toLowerCase().contains(searchString.toLowerCase())){
 				for (Role role : roles) {
-					if(user.getRole().getKey().equals(role.getKey())) { some.add(user); break; }
+					if(user.hasRole(role)) { some.add(user); break; }
 				}
 			}
 		}
@@ -138,7 +175,7 @@ public class UserServiceImpl implements UserService {
 	}
 	public PageResult<User> getAllUsers(PageRequest<User> request) {
 		PageResult<User> result = new PageResult<User>();
-		result.result = userCompositeDao.getAllUsers();
+		result.result = this.userDao.getAllUsers();
 		result.from = 0;
 		result.total = result.result.size();
 		return result;
@@ -159,5 +196,14 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return null;
+	}
+	public void setProfileDao(ProfileDao profileDao) {
+		this.profileDao = profileDao;
+	}
+	public void setContactInformationDao(ContactInformationDao contactInformationDao) {
+		this.contactInformationDao = contactInformationDao;
+	}
+	public void setOrganizationDao(OrganizationDao organizationDao) {
+		this.organizationDao = organizationDao;
 	}
 }

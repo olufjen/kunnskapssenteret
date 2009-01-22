@@ -1,7 +1,4 @@
 package no.helsebiblioteket.admin.domain;
 
-import java.util.List;
-
-public class MemberOrganization extends Organization {
-	
+public class MemberOrganization extends NamedOrganization {
 }

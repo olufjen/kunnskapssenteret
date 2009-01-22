@@ -1,7 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
 public class Position {
-	private int id;
+	private Integer id;
 	private String key;
 	private String name;
 	private String description;
@@ -9,10 +9,10 @@ public class Position {
 	// foreign keys
 //	private Integer organizationTypeId;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getKey() { return key; }
