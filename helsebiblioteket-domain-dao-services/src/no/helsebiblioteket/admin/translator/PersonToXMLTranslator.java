@@ -9,6 +9,7 @@ import no.helsebiblioteket.admin.domain.Person;
 public class PersonToXMLTranslator {
 	private ProfileToXMLTranslator profileToXMLTranslator = new ProfileToXMLTranslator();
 	private ContactInformationToXMLTranslator contactInformationToXMLTranslator = new ContactInformationToXMLTranslator();
+	private PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
 	public void translate(Person person, Document document, Element element){
 		Element personElement = document.createElement("person");
 		personElement.appendChild(UserToXMLTranslator.cDataElement(document, "name", person.getName()));
@@ -21,13 +22,14 @@ public class PersonToXMLTranslator {
 
 		this.profileToXMLTranslator.translate(person.getProfile(), document, personElement);
 		this.contactInformationToXMLTranslator.translate(person.getContactInformation(), document, personElement);
+		this.positionToXMLTranslator.translate(person.getPosition(), document, element);
 
+		
 		
 		// TODO: Complete this!
 		person.getId();
 		person.getIsStudent();
 		person.getLastChanged();
-		person.getPosition();
 		
 		if(element == null){
 			document.appendChild(personElement);

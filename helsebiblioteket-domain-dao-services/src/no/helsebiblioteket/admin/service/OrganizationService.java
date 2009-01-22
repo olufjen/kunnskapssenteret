@@ -11,6 +11,8 @@ import java.util.List;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.PositionList;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.request.PageRequest;
 import no.helsebiblioteket.admin.request.PageResult;
@@ -25,4 +27,6 @@ public interface OrganizationService extends Serializable {
 	public List<SupplierOrganization> getSupplierList();
 	
 	public void createOrganization(Organization organization);
+	
+	public PositionList getAllPositions(String dummy);
 }

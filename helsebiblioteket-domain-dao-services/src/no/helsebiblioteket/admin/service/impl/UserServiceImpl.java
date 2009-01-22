@@ -146,8 +146,8 @@ public class UserServiceImpl implements UserService {
 	public List<Position> getAllUserPositions() {
 		// FIXME: Implement this with DB fetch!
 		List<Position> all = new ArrayList<Position>();
-		{ Position position = new Position(); position.setKey("NRS"); position.setTitle("Nurse"); all.add(position); }
-		{ Position position = new Position(); position.setKey("DCT"); position.setTitle("Doctor"); all.add(position); }
+		{ Position position = new Position(); position.setKey("NRS"); position.setName("Nurse"); all.add(position); }
+		{ Position position = new Position(); position.setKey("DCT"); position.setName("Doctor"); all.add(position); }
 		return all;
 	}
 	public Role getRoleByKey(Role role) {
