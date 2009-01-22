@@ -10,6 +10,21 @@
     </bean>
     
     <bean name="loggedInFunction" class="no.helsebiblioteket.evs.plugin.LoggedInFunction">
+    	<property name="organizationService" ref="loggedInFunctionOrganizationService" />
     </bean>
-    
+
+    <bean name="loggedInFunctionOrganizationService" class="no.helsebiblioteket.admin.webservice.OrganizationServiceWeb" init-method="init">
+		<property name="serviceClient" ref="loggedInServiceClient" />
+		<property name="targetEPR" ref="loggedInTargetEPR" />
+		<property name="allPositionsName" ref="loggedInAllPositionsName" />
+	</bean>
+	<bean name="loggedInServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="loggedInTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/organizationService" />
+	</bean>
+	<bean name="loggedInAllPositionsName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAllPositions" />
+	</bean>
 </beans>
