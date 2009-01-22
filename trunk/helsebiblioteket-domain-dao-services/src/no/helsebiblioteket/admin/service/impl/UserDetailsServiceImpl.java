@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetailsService;
 import no.helsebiblioteket.admin.dao.UserDao;
@@ -17,12 +19,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	public UserDetailsServiceImpl(UserDao userDao) {
         this.userDao = userDao;
-  }
+	}
 		
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException, DataAccessException
-		{
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		User user=  userDao.findUser(username);
+		// TODO: Should this not allready have been fetched?
+		// Must set it here or makeAcegiUser will crash!
+		if(user.getRoleList() == null){
+			user.setRoleList(new ArrayList<Role>());
+		}
 		if(user !=null){
 //			user.setPassword("qaa");
 			return makeAcegiUser(user);
@@ -31,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	private org.springframework.security.userdetails.User makeAcegiUser(User user) {
-		return new org.springframework.security.userdetails.User(user.getUsername() ,
+		return new org.springframework.security.userdetails.User(user.getUsername(),
 				user.getPassword(), true, true, true, true,
 				makeGrantedAuthorities(user));
 	}
@@ -44,15 +49,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			result[i++] = new GrantedAuthorityImpl(role.getName());
 		}
 		return result; 
-		/*
-		GrantedAuthority[] result = new GrantedAuthority[2];
-		result[0]= new GrantedAuthorityImpl("ROLE_ALLACCESS");
-		result[1]= new GrantedAuthorityImpl("ROLE_URLACCESS");
-		
-		return result;
-		*/
+//		GrantedAuthority[] result = new GrantedAuthority[2];
+//		result[0]= new GrantedAuthorityImpl("ROLE_ALLACCESS");
+//		result[1]= new GrantedAuthorityImpl("ROLE_URLACCESS");
+//		return result;
 	}
-	
-	
 
 }

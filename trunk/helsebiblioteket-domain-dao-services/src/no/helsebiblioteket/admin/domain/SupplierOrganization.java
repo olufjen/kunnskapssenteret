@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.List;
 
-public class SupplierOrganization extends Organization {
+public class SupplierOrganization extends NamedOrganization {
 	private List<SupplierSource> sourceList = null;
 	
 	public SupplierOrganization() {

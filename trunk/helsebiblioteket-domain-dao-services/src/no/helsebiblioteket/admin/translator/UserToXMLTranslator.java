@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.translator;
 
+import java.util.Iterator;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,6 +12,7 @@ import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 public class UserToXMLTranslator {
@@ -28,7 +31,11 @@ public class UserToXMLTranslator {
 		Element userElement = document.createElement("user");
 		userElement.appendChild(cDataElement(document, "username", user.getUsername()));
 
-		this.roleToXMLTranslator.translate(user.getRole(), document, userElement);
+		Element rolesElement = document.createElement("roles");
+		for (Role role : user.getRoleList()) {
+			this.roleToXMLTranslator.translate(role, document, rolesElement);
+		}
+		userElement.appendChild(rolesElement);
 		Organization organization = user.getOrganization();
 		if(organization != null){
 			this.organizationToXMLTranslator.translate(organization, document, userElement);

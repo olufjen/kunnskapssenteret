@@ -22,5 +22,6 @@ public interface UserService extends Serializable {
 	public PageResult<User> getAllUsers(PageRequest<User> request);
 	public List<Role> getAllUserRoles();
 	public Role getRoleByKey(Role role);
+	// TODO: Denne finnes også i OrganizationService?
 	public List<Position> getAllUserPositions();
 }

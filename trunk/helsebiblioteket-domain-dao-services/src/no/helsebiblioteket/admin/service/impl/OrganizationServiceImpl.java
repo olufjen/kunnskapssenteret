@@ -8,6 +8,7 @@ import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.PositionList;
@@ -44,6 +45,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 	
 	public PageResult<Organization> findOrganizationsBySearchStringRoles( String searchString, PageRequest<Organization> request) {
 		List<Organization> allOrganizations = this.organizationDao.getAllOrganizations();
+		
+		// TODO: Must set the value here!
+		for (Organization organization : allOrganizations) {
+			if(organization.getNameList() == null){
+				ArrayList<OrganizationName> list = new ArrayList<OrganizationName>();
+				organization.setNameList(list);
+			}
+		}
+		
+		
 		List<Organization> someOrganizations = new ArrayList<Organization>();
 		for (Organization organization : allOrganizations) {
 			if(organization.getName().toLowerCase().contains(searchString.toLowerCase())){
