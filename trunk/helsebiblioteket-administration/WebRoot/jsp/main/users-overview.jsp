@@ -46,7 +46,7 @@
 
     <h:column id="rolesColumn">
       <f:facet name="header" />
-      <h:outputText id="rolesOutput" value="#{user.role.name}" />
+      <h:outputText id="rolesOutput" value="#{user.roleList[0].name}" />
     </h:column>
 
     <h:column id="organizationColumn">
