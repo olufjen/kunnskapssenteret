@@ -11,7 +11,8 @@
 		<result property="key" column="key" />
 		<result property="name" column="name" />
 		<result property="description" column="descr" />
-		<result property="lastChanged" column="last_changed" />
+		<!-- TODO: Denne finnes vel ikke?-->
+		<!--<result property="lastChanged" column="last_changed" />-->
 	</resultMap>
 	<select id="getUserRoleListByUserId" resultMap="getRoleResultMap" parameterClass="integer">
 		select 
