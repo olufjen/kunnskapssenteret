@@ -100,5 +100,10 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 		// TODO: Not a nice solution.
 		
 	}
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
