@@ -3,7 +3,9 @@ package no.helsebiblioteket.evs.plugin;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,8 +19,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
+import no.helsebiblioteket.admin.translator.PositionToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import org.jdom.Document;
@@ -32,6 +37,7 @@ public class LoggedInFunction{
 	// TODO: Set in bean, but global?
 	private String sessionLoggedInVarName = "hbloggedin";
 	private String sessionResultsVarName = "hbresults";
+	private OrganizationService organizationService;
 
 	public void logIn(Object user){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
@@ -47,6 +53,9 @@ public class LoggedInFunction{
 	}
 	public Document getUserAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		return translate(printUser());
+	}
+	public Document getPositionsAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
+		return translate(printPositions());
 	}
 	public void setResult(String key, org.w3c.dom.Document result) {
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
@@ -85,6 +94,19 @@ public class LoggedInFunction{
 		result.appendChild(element);
 		return result;
 	}
+	public org.w3c.dom.Document printPositions() throws ParserConfigurationException {
+		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
+		PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
+		org.w3c.dom.Document document = userTranslator.newDocument();
+		Element element = document.createElement("positions");
+		Position[] positions = this.organizationService.getAllPositions("").getList();
+		for (Position position : positions) {
+			positionToXMLTranslator.translate(position, document, element);
+		}
+		document.appendChild(element);
+		return document;
+	}
+
 	public org.w3c.dom.Document printUser() throws ParserConfigurationException {
 	    	// Not like this anymore.
 	//    	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
@@ -120,5 +142,8 @@ public class LoggedInFunction{
     	Document doc = parser.build(sr);
 		return doc;
 		
+	}
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
 	}
 }
