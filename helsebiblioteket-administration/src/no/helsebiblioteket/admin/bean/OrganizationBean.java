@@ -18,6 +18,12 @@ public class OrganizationBean {
 	private List<Organization> organizations;
 	private Organization organization;
 	private HtmlDataTable organizationsTable;
+	public String actionEditSingle(){
+		// TODO: Of course not do that!
+		return "organization_edit";
+	}
+    public boolean getFailed() { return true; }
+    public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
 	public String actionDetails(){
 		this.organization = (Organization) this.organizationsTable.getRowData();
 		// FIXME: Pass this on to the edit bean!
@@ -48,4 +54,7 @@ public class OrganizationBean {
 	public HtmlDataTable getOrganizationsTable() { return organizationsTable; }
 	public void setOrganizationsTable(HtmlDataTable organizationsTable) { this.organizationsTable = organizationsTable; }
 	public void setOrganizationService(OrganizationService organizationService) { this.organizationService = organizationService; }
+	public Organization getOrganization() {
+		return organization;
+	}
 }

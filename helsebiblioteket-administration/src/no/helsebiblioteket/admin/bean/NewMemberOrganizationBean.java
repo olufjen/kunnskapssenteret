@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -131,6 +132,9 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		}
 		if (this.memberOrganization.getIpRangeList() == null) {
 			this.memberOrganization.setIpRangeList(new ArrayList<IpRange>());
+		}
+		if(this.memberOrganization.getNameList() == null){
+			this.memberOrganization.setNameList(new ArrayList<OrganizationName>());
 		}
 		return this.memberOrganization;
 	}

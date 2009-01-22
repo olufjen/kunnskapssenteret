@@ -60,17 +60,20 @@ public class UserBean {
     protected final Log logger = LogFactory.getLog(getClass());
 
     private boolean isNew(){ return this.user.getId() == null; }
+    // TODO: Place in User class?
+    private Role mainRole(){ return this.user.getRoleList().get(0); }
+    private void mainRole(Role role){ this.user.setRoleList(new ArrayList<Role>()); this.user.getRoleList().add(role); }
     
     public void initSelectedIsStudent(){
 //		if(this.availableIsStudent == null){
 		this.availableIsStudent = new ArrayList<SelectItem>();
-    	if(this.user.getRole().getKey().equals("ADM") | 
-    			this.user.getRole().getKey().equals("ANST") |
-    			this.user.getRole().getKey().equals("HPNR")){
+    	if(this.mainRole().getKey().equals("ADM") | 
+    			this.mainRole().getKey().equals("ANST") |
+    			this.mainRole().getKey().equals("HPNR")){
 			this.availableIsStudent.add(new SelectItem("U", "None"));
     		this.selectedIsStudent = "U";
     		if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
-    	} else if(this.user.getRole().getKey().equals("STUD")){
+    	} else if(this.mainRole().getKey().equals("STUD")){
 			this.availableIsStudent.add(new SelectItem("Y", "Student"));
 			this.availableIsStudent.add(new SelectItem("N", "Employee"));
 			this.selectedIsStudent = this.user.getPerson().getIsStudent() ? "Y" : "N";
@@ -78,7 +81,7 @@ public class UserBean {
     	}
 //		}
 
-		logger.info("this.user.getRole().getKey()=" + this.user.getRole().getKey());
+		logger.info("this.user.getRole().getKey()=" + this.mainRole().getKey());
 		logger.info("this.selectedIsStudent=" + this.selectedIsStudent);
 		logger.info("this.isStudentSelectOne=" + this.isStudentSelectOne);
 		
@@ -87,7 +90,7 @@ public class UserBean {
     public void enableDisableFields(){
     	// TODO: Is this done correctly?
     	this.initSelectedIsStudent();
-    	if(this.user.getRole().getKey().equals("ADM")){
+    	if(this.mainRole().getKey().equals("ADM")){
         	this.showHprNumber = false;
         	this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = false;
@@ -100,7 +103,7 @@ public class UserBean {
     		this.user.getPerson().setPosition(new Position());
     		this.showProfile = false;
     		this.user.getPerson().setProfile(new Profile());
-    	} else if(this.user.getRole().getKey().equals("ANST")){
+    	} else if(this.mainRole().getKey().equals("ANST")){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = false;
@@ -111,7 +114,7 @@ public class UserBean {
         	this.showPositionMenu = false;
     		this.user.getPerson().setPosition(new Position());
     		this.showProfile = true;
-    	} else if(this.user.getRole().getKey().equals("HPNR")){
+    	} else if(this.mainRole().getKey().equals("HPNR")){
     		this.showHprNumber = true;
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber(null);
@@ -120,7 +123,7 @@ public class UserBean {
         	this.showPositionText = false;
         	this.showPositionMenu = true;
     		this.showProfile = true;
-    	} else if(this.user.getRole().getKey().equals("STUD")){
+    	} else if(this.mainRole().getKey().equals("STUD")){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = true;
@@ -137,7 +140,7 @@ public class UserBean {
     	logger.info("OLD: " + event.getOldValue());
     	logger.info("NEW: " + event.getNewValue());
     	if(this.allRolesMap.containsKey(event.getNewValue())){
-    		this.user.setRole(this.allRolesMap.get(event.getNewValue()));
+    		this.mainRole(this.allRolesMap.get(event.getNewValue()));
     	}
     	this.enableDisableFields();
     }
@@ -151,30 +154,30 @@ public class UserBean {
     public String actionEdit(){ this.user = (User) this.usersTable.getRowData(); this.enableDisableFields(); return "user_edit"; }
     public String actionEditSingle(){ return "user_edit"; }
     public String getUserRole(){
-    	if(this.user != null && this.user.getRole() != null) {
-    		return this.user.getRole().getName();
+    	if(this.user != null && this.mainRole() != null) {
+    		return this.mainRole().getName();
     	} else {
     		return "MISSING_USER_ROLE";
     	}
     }
     public String actionSave(){
-    	this.user.setRole(this.allRolesMap.get(this.selectedUserRole));
-    	if(this.user.getRole().getKey().equals("ADM")){
+    	this.mainRole(this.allRolesMap.get(this.selectedUserRole));
+    	if(this.mainRole().getKey().equals("ADM")){
         	this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setEmployer("");
     		this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().setProfile(new Profile());
-    	} else if(this.user.getRole().getKey().equals("ANST")){
+    	} else if(this.mainRole().getKey().equals("ANST")){
         	this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(false);
-    	} else if(this.user.getRole().getKey().equals("HPNR")){
+    	} else if(this.mainRole().getKey().equals("HPNR")){
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setPosition(this.allPositionsMap.get(this.user.getPerson().getPosition().getKey()));
-    	} else if(this.user.getRole().getKey().equals("STUD")){
+    	} else if(this.mainRole().getKey().equals("STUD")){
         	this.user.getPerson().setHprNumber(null);
         	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
     		this.user.getPerson().setPosition(new Position());
@@ -287,7 +290,7 @@ public class UserBean {
 //			this.selectedUserRole = new ArrayList<String>();
 			if(this.user != null){ 
 //				for (Role role : this.user.getRoleList()) {
-				this.selectedUserRole = user.getRole().getKey();
+				this.selectedUserRole = this.mainRole().getKey();
 //				}
 			}
 		}

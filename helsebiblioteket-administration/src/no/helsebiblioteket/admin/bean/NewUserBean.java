@@ -21,8 +21,8 @@ public class NewUserBean {
     public String actionNewEndUser() {
 		logger.info("method 'newEndUser' invoked");
 		User user = new User();
-		user.setRole(new Role());
-		user.getRole().setKey("X");
+//		user.setRole(new Role());
+//		user.getRole().setKey("X");
 		user.setPerson(new Person());
 		this.userBean.setUser(user);
 		
@@ -52,7 +52,7 @@ public class NewUserBean {
     	user.setPassword(this.password);
     	Role role = new Role();
     	role.setKey("ADM");
-    	user.setRole(this.userService.getRoleByKey(role));
+    	user.getRoleList().add((this.userService.getRoleByKey(role)));
     	this.userService.createUser(user);
     	
     	// FIXME: Reload
