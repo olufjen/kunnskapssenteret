@@ -5,9 +5,12 @@ import java.util.List;
 
 import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
+import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.PositionList;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.request.PageRequest;
 import no.helsebiblioteket.admin.request.PageResult;
@@ -17,6 +20,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private static final long serialVersionUID = 1L;
 	private OrganizationDao organizationDao;
 	private OrganizationTypeDao organizationTypeDao;
+	private PositionDao positionDao;
 
 	public List<OrganizationType> getOrganizationTypeList() {
 		return this.organizationTypeDao.getOrganizationTypeList();
@@ -66,6 +70,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 		result.from = 0; result.result = someOrganizations; result.total = someOrganizations.size();
 		return result;
 	}
+	public void createOrganization(Organization organization) {
+		// TODO: Save new organizations!
+		// TODO: Is this doing the right thing?
+		this.organizationDao.saveOrganization(organization);
+	}
+	public PositionList getAllPositions(String dummy) {
+		PositionList list = new PositionList();
+		List<Position> res = this.positionDao.getAllPositions();
+		Position arr[] = new Position[res.size()];
+		int i=0;
+		for (Position position : res) {
+			arr[i++] = position;
+		}
+		list.setList(arr);
+		return list;
+	}
 
 	public void setOrganizationDao(OrganizationDao organizationDao) { this.organizationDao = organizationDao; }
 
@@ -73,9 +93,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 		this.organizationTypeDao = organizationTypeDao;
 	}
 
-	public void createOrganization(Organization organization) {
-		// TODO: Save new organizations!
-		// TODO: Is this doing the right thing?
-		this.organizationDao.saveOrganization(organization);
+	public void setPositionDao(PositionDao positionDao) {
+		this.positionDao = positionDao;
 	}
+
 }
