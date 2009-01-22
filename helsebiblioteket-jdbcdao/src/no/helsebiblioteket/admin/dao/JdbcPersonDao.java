@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-public class JdbcPersonDao extends SimpleJdbcDaoSupport {
+public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
     protected final Log logger = LogFactory.getLog(getClass());
 	public int insertContactInformation(ContactInformation contactInformation) {
 		String sql ="insert into tbl_contact_information (postal_address, postal_code, " +
@@ -48,7 +48,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport {
 //		sqlParameters.addValue("person_id", profile.getPerson().getId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
-	public int insertPerson(Person person) {
+	public void insertPerson(Person person) {
 		String sql = "insert into tbl_person (first_name, last_name, " +
 		"student_number, hpr_number "+//, org_unit_id=:org_unit_id, " +
 		") values (" +
@@ -61,7 +61,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport {
 		sqlParameters.addValue("student_number", person.getStudentNumber());
 		sqlParameters.addValue("hpr_number", person.getHprNumber());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
-		return getSimpleJdbcTemplate().queryForInt("select currval('tbl_person_person_id_seq');");
+//		return getSimpleJdbcTemplate().queryForInt("select currval('tbl_person_person_id_seq');");
 		
 		
 //		// TODO Auto-generated method stub
@@ -182,4 +182,14 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport {
             return user;
         }
     }
+
+    public void deletePerson(Person person) {
+		// TODO: Need not be implemented!
+		
+	}
+
+	public Person getPersonById(Integer personId) {
+		// FIXME: We should not do this! Username is unique.
+		return null;
+	}
 }
