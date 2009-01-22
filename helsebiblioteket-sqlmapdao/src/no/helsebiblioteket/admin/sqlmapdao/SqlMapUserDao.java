@@ -51,4 +51,8 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	public void updateUser(User user) {
 		getSqlMapClientTemplate().update("updateUser", user);
 	}
+
+	public List<User> getAllUsers() {
+		return (List<User>) getSqlMapClientTemplate().queryForList("getAllUsers");
+	}
 }
