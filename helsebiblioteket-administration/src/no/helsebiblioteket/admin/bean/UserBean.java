@@ -249,7 +249,7 @@ public class UserBean {
 		if(this.availablePositions == null) {
 			this.availablePositions = new ArrayList<SelectItem>();
 			for (Position position : getAllPositions()) {
-				SelectItem option = new SelectItem(position.getKey(), position.getTitle(), "", false);
+				SelectItem option = new SelectItem(position.getKey(), position.getName(), "", false);
 				this.availablePositions.add(option);
 			}
 		}
@@ -310,7 +310,7 @@ public class UserBean {
 			// TODO: Right way to add DUMMY?
 			Position dummy = new Position();
 			dummy.setKey("-999");
-			dummy.setTitle(ResourceBundle.getBundle(
+			dummy.setName(ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
 							"user_details_no_position"));
 			this.allPositions.add(dummy);
