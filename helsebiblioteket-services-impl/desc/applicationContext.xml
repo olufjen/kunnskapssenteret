@@ -42,6 +42,16 @@
   		<property name="roleDao" ref="roleDao"></property>
   		<property name="personDao" ref="personDao"></property>
   	</bean>
+  	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
+  		<property name="positionDao" ref="positionDao"></property>
+  		<!-- TODO: Not in use. -->
+  		<!--
+    		<property name="organizationDao" ref="organizationDao"></property>
+    		<property name="organizationTypeDao" ref="organizationTypeDao"></property>
+  		-->
+  	</bean>
+  	
+  	
 	<bean id="userDao" class="no.helsebiblioteket.admin.dao.JdbcUserDao">
 		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
 	</bean>
@@ -57,6 +67,10 @@
 	<bean id="emailDao" class="no.helsebiblioteket.admin.service.EmailDAOImpl">
 		<property name="host" value="smtp.example.org"></property>
 	</bean>
+	<bean id="positionDao" class="no.helsebiblioteket.admin.dao.JdbcPositionDao">
+		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	</bean>
+	
 	<bean id="jdbcTemplateHelsebiblioteket" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
 	</bean>
