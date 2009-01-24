@@ -5,6 +5,7 @@
 	<bean class="no.helsebiblioteket.evs.plugin.ProfileController">
  		<property name="urlPattern" value="/site/2/RedigerProfilServlet" />
  		<property name="userService" ref="profileUserService" />
+ 		<property name="resultSessionVarName" value="hbprofileresult" />
  		<property name="parameterNames"><map>
  			<entry key="hprno" value="uid"/>
  			<entry key="firstname" value="firstname"/>
