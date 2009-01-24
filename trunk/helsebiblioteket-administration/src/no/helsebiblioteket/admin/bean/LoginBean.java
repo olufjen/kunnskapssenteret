@@ -95,6 +95,11 @@ public class LoginBean {
 		return "goto_forgotten";
 	}
 	public void validateEmail(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
+		
+		// TODO: No longer user email.
+		// Check length?
+		if(true) return;
+		
 		String email = (String)newValue;
 		UIInput emailComponent = (UIInput)component;
 		this.logger.debug("email: " + email);

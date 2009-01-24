@@ -215,6 +215,10 @@
         <managed-bean-name>newEndUserBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.NewEndUserBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+    	<managed-property>
+    		<property-name>userService</property-name>
+        	<value>#{userService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>

@@ -115,45 +115,24 @@
     </tr>
 
     <tr>
-      <td>
-        <h:outputText value="#{msg_main.groups}" />
+      <td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
+      <td colspan="3"><h:selectOneRadio value="#{newEndUserBean.selectedUserRole}" id="roles" 
+              layout="pageDirection" binding="#{newEndUserBean.userRolesSelectOne}">
+            <f:selectItems value="#{newEndUserBean.availableRoles}"/>
+          </h:selectOneRadio>
       </td>
-      <td>
-        <h:outputText value="#{msg_main.available}" />
-        <br/>
-        <h:selectManyListbox id="available"
-          value="#{newEndUserBean.available}">
-
-		  <f:selectItems value="#{newEndUserBean.availableValues}" />
-
-        </h:selectManyListbox>
-      </td>
-      <td>
-      	-&gt; <br/> &lt;-
-      </td>
-      <td align="right" >
-        <h:outputText value="#{msg_main.chosen}" />
-        <br/>
-        <h:selectManyListbox id="chosen"
-          value="#{newEndUserBean.chosen}">
-
-		  <f:selectItems value="#{newEndUserBean.chosenValues}" />
-
-        </h:selectManyListbox>
-      </td>
-      <td>
-		<h:message for="password" styleClass="RED"/>
-      </td>
+      <td><h:message for="roles" styleClass="RED"/></td>
     </tr>
 
 	<tr>
-      <td colspan="3">
-        &nbsp;
-      </td>
+      <td colspan="2">&nbsp;</td>
       <td align="right" >
-        <h:commandButton value="#{msg_main.save}" action="#{newEndUserBean.save}" />
+        <h:commandButton value="#{msg_main.save}" action="#{newEndUserBean.actionSaveNewUser}" />
       </td>
-      <td> &nbsp; </td>
+      <td align="right">
+      	<h:commandButton value="#{msg_main.cancel}" action="#{newEndUserBean.actionCancelNewUser}" immediate="true" />
+      </td>
+      <td>&nbsp;</td>
     </tr>
   </table>
 </h:form>

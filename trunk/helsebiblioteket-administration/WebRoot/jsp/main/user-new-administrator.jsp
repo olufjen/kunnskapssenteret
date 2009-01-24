@@ -35,7 +35,8 @@
     </tr>
 
 	<tr>
-      <td colspan="3" align="right">
+      <td colspan="2">&nbsp;</td>
+      <td align="right">
       		<h:commandButton value="#{msg_main.save}" action="#{newAdministratorBean.actionSaveNewUser}" />
       </td>
       <td align="right">
