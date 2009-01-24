@@ -18,6 +18,10 @@ public class OrganizationBean {
 	private List<Organization> organizations;
 	private Organization organization;
 	private HtmlDataTable organizationsTable;
+	
+	// TODO: Include the ipRangeList in the
+	//       Details view (organization-details.jsp)
+	
 	public String actionEditSingle(){
 		// TODO: Of course not do that!
 		return "organization_edit";

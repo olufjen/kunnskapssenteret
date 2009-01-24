@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
@@ -28,6 +29,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	private String sourceUrl = null;
 	private UIInput sourceNameUIInput = null;
 	private UIInput sourceUrlUIInput = null;
+	
 	private List<SupplierSource> supplierSourceList = null;
 	private HtmlDataTable supplierSourceListHtmlDataTable = null;
 
@@ -74,6 +76,10 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	public Organization getSupplierOrganization() {
 		if (this.supplierOrganization == null) {
 			this.supplierOrganization = new SupplierOrganization();
+			// TODO: Set values here?
+			this.supplierOrganization.setNameList(new ArrayList<OrganizationName>());
+			
+			
 		}
 		if (this.supplierOrganization.getContactInformation() == null) {
 			this.supplierOrganization.setContactInformation(new ContactInformation());
@@ -130,5 +136,9 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	
 	public List<SupplierOrganization> getSuppliersWithSourcesList() {
 		return organizationService.getSupplierList();
+	}
+
+	public void setSupplierOrganization(SupplierOrganization supplierOrganization) {
+		this.supplierOrganization = supplierOrganization;
 	}
 }

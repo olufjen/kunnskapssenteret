@@ -32,7 +32,7 @@ public class NewUserBean {
 		
 		//return "create-enduser";
 		// TODO: Ok to reuse beans etc?
-		return "user_edit";
+		return "create-enduser";
 	}
     public String actionNewAdministrator() {
 		logger.info("method 'newEndUser' invoked");

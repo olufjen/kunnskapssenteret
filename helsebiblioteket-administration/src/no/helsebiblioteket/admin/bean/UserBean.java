@@ -52,6 +52,12 @@ public class UserBean {
 	private boolean showPositionText;
 	private boolean showPositionMenu;
 	private boolean showProfile;
+	
+	// TODO: Move to domain model!
+	private String roleKeyStudent = "student";
+	private String roleKeyEmployee = "health_personnel_other";
+	private String roleKeyHealthWorker = "health_personnel";
+	private String roleKeyAdministrator = "administrator";
 
 	private UISelectMany rolesManyCheckbox;
 	private UISelectOne userRolesSelectOne;
@@ -67,13 +73,13 @@ public class UserBean {
     public void initSelectedIsStudent(){
 //		if(this.availableIsStudent == null){
 		this.availableIsStudent = new ArrayList<SelectItem>();
-    	if(this.mainRole().getKey().equals("ADM") | 
-    			this.mainRole().getKey().equals("ANST") |
-    			this.mainRole().getKey().equals("HPNR")){
+    	if(this.mainRole().getKey().equals(roleKeyAdministrator) | 
+    			this.mainRole().getKey().equals(roleKeyEmployee) |
+    			this.mainRole().getKey().equals(roleKeyHealthWorker)){
 			this.availableIsStudent.add(new SelectItem("U", "None"));
     		this.selectedIsStudent = "U";
     		if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
-    	} else if(this.mainRole().getKey().equals("STUD")){
+    	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
 			this.availableIsStudent.add(new SelectItem("Y", "Student"));
 			this.availableIsStudent.add(new SelectItem("N", "Employee"));
 			this.selectedIsStudent = this.user.getPerson().getIsStudent() ? "Y" : "N";
@@ -90,7 +96,7 @@ public class UserBean {
     public void enableDisableFields(){
     	// TODO: Is this done correctly?
     	this.initSelectedIsStudent();
-    	if(this.mainRole().getKey().equals("ADM")){
+    	if(this.mainRole().getKey().equals(roleKeyAdministrator)){
         	this.showHprNumber = false;
         	this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = false;
@@ -103,7 +109,7 @@ public class UserBean {
     		this.user.getPerson().setPosition(new Position());
     		this.showProfile = false;
     		this.user.getPerson().setProfile(new Profile());
-    	} else if(this.mainRole().getKey().equals("ANST")){
+    	} else if(this.mainRole().getKey().equals(roleKeyEmployee)){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = false;
@@ -114,7 +120,7 @@ public class UserBean {
         	this.showPositionMenu = false;
     		this.user.getPerson().setPosition(new Position());
     		this.showProfile = true;
-    	} else if(this.mainRole().getKey().equals("HPNR")){
+    	} else if(this.mainRole().getKey().equals(roleKeyHealthWorker)){
     		this.showHprNumber = true;
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber(null);
@@ -123,7 +129,7 @@ public class UserBean {
         	this.showPositionText = false;
         	this.showPositionMenu = true;
     		this.showProfile = true;
-    	} else if(this.mainRole().getKey().equals("STUD")){
+    	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = true;
@@ -162,22 +168,22 @@ public class UserBean {
     }
     public String actionSave(){
     	this.mainRole(this.allRolesMap.get(this.selectedUserRole));
-    	if(this.mainRole().getKey().equals("ADM")){
+    	if(this.mainRole().getKey().equals(roleKeyAdministrator)){
         	this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setEmployer("");
     		this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().setProfile(new Profile());
-    	} else if(this.mainRole().getKey().equals("ANST")){
+    	} else if(this.mainRole().getKey().equals(roleKeyEmployee)){
         	this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(false);
-    	} else if(this.mainRole().getKey().equals("HPNR")){
+    	} else if(this.mainRole().getKey().equals(roleKeyHealthWorker)){
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setPosition(this.allPositionsMap.get(this.user.getPerson().getPosition().getKey()));
-    	} else if(this.mainRole().getKey().equals("STUD")){
+    	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
         	this.user.getPerson().setHprNumber(null);
         	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
     		this.user.getPerson().setPosition(new Position());

@@ -1,16 +1,24 @@
 package no.helsebiblioteket.admin.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.component.UISelectOne;
 import javax.faces.model.SelectItem;
+
+import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class NewEndUserBean extends NewUserBean {
     protected final Log logger = LogFactory.getLog(getClass());
-    private String firstname;
+	private UserService userService;
+
+	private String firstname;
     private String lastname;
     private String studentHprNo;
     private String employer;
@@ -19,20 +27,34 @@ public class NewEndUserBean extends NewUserBean {
     private String emailaddress;
     private String username;
     private String password;
-    private List<SelectItem> available;
-    private List<SelectItem> availableValues;
-    private List<SelectItem> chosen;
-    private List<SelectItem> chosenValues;
-    
-    public List<SelectItem> getAvailableValues(){
-    	List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem option = new SelectItem("ch1", "choice1", "This bean is for selectItems tag", true);
-		list.add(option);
-		return list;
-    }
-    public void setAvailableValues(List<SelectItem> list){
-    	
-    }
+
+    private String selectedUserRole;
+	private UISelectOne userRolesSelectOne;
+	private List<SelectItem> availableRoles;
+	private List<Role> allRoles;
+	private Map<String, Role> allRolesMap;
+
+	public List<SelectItem> getAvailableRoles() {
+		if(this.availableRoles == null) {
+			this.availableRoles = new ArrayList<SelectItem>();
+			for (Role role : this.getAllRoles()) {
+				SelectItem option = new SelectItem(role.getKey(), role.getName(), "", false);
+				this.availableRoles.add(option);
+			}
+		}
+		return this.availableRoles;
+	}
+	public List<Role> getAllRoles() {
+		if(this.allRoles == null){
+			this.allRoles = this.userService.getAllUserRoles();
+			this.allRolesMap = new HashMap<String, Role>();
+			for (Role role : this.allRoles) {
+				this.allRolesMap.put(role.getKey(), role);
+			}
+		}
+		return this.allRoles;
+	}
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -87,28 +109,19 @@ public class NewEndUserBean extends NewUserBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public List<SelectItem> getAvailable() {
-		return available;
+	public String getSelectedUserRole() {
+		return selectedUserRole;
 	}
-	public void setAvailable(List<SelectItem> available) {
-		this.available = available;
+	public void setSelectedUserRole(String selectedUserRole) {
+		this.selectedUserRole = selectedUserRole;
 	}
-	public List<SelectItem> getChosen() {
-		return chosen;
+	public UISelectOne getUserRolesSelectOne() {
+		return userRolesSelectOne;
 	}
-	public void setChosen(List<SelectItem> chosen) {
-		this.chosen = chosen;
+	public void setUserRolesSelectOne(UISelectOne userRolesSelectOne) {
+		this.userRolesSelectOne = userRolesSelectOne;
 	}
-	public List<SelectItem> getChosenValues() {
-    	List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem option = new SelectItem("ch1", "choice1", "This bean is for selectItems tag", true);
-		list.add(option);
-		return list;
-	}
-	public void setChosenValues(List<SelectItem> chosenValues) {
-		this.chosenValues = chosenValues;
-	}
-	public Log getLogger() {
-		return logger;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

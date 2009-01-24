@@ -20,6 +20,31 @@
 			<td><h:outputText value="#{organizationBean.organization.nameShortNorwegian}"/></td>
 		</tr>
 		<tr>
+			<td><h:outputText value="#{msg_main.organization_name_english_normal}"  /></td>
+			<td><h:outputText value="#{organizationBean.organization.nameEnglish}"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.organization_name_english_short}"  /></td>
+			<td><h:outputText value="#{organizationBean.organization.nameShortEnglish}"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.organization_description}"  /></td>
+			<td><h:outputText value="#{organizationBean.organization.description}"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.organization_type}"  /></td>
+			<td><h:outputText value="#{organizationBean.organization.type.name}"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.organization_contact_person}"  /></td>
+			<td><h:outputText value="#{organizationBean.organization.contactPerson.firstName}
+									   #{organizationBean.organization.contactPerson.lastName}"/></td>
+		</tr>
+
+		<!-- TODO: More properties? -->
+		<!-- Insert ipRangeList-->
+
+		<tr>
 			<td></td>
 			<td><h:commandLink value="#{msg_main.organization_edit}" action="#{organizationBean.actionEditSingle}" immediate="true"/></td>
 		</tr>
