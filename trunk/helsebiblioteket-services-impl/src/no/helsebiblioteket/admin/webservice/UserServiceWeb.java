@@ -35,7 +35,7 @@ public class UserServiceWeb implements UserService {
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { User.class };
 		try {
-			Object[] response = serviceClient.invokeBlocking(name,args, returnTypes);
+			Object[] response = serviceClient.invokeBlocking(name, args, returnTypes);
 			return (User) response[0];
 		} catch (AxisFault e) {
 			logger.error(e);
