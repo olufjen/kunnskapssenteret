@@ -18,8 +18,8 @@ public class Organization {
 	private Date lastChanged = null;
 	private List<OrganizationName> nameList = null;
 	
-	public String findName(String language, OrganizationNameCategory category){
-		for (OrganizationName name : this.nameList) {
+	public static String findName(Organization organization, String language, OrganizationNameCategory category){
+		for (OrganizationName name : organization.nameList) {
 			if(name.getLanguageCode().equals(language) &&
 					name.getCategory().equals(category)){
 				return name.getName();
@@ -29,9 +29,9 @@ public class Organization {
 		return "";
 	}
 
-	public void insertName(String language, OrganizationNameCategory category, String name){
+	public static void insertName(Organization organization, String language, OrganizationNameCategory category, String name){
 		boolean set = false;
-		for (OrganizationName organizationName : this.nameList) {
+		for (OrganizationName organizationName : organization.nameList) {
 			if(organizationName.getLanguageCode().equals(language) &&
 					organizationName.getCategory().equals(category)){
 				organizationName.setName(name);
@@ -44,7 +44,7 @@ public class Organization {
 			newOrganizationName.setLanguageCode(language);
 			newOrganizationName.setCategory(category);
 			newOrganizationName.setName(name);
-			this.nameList.add(newOrganizationName);
+			organization.nameList.add(newOrganizationName);
 		}
 	}
 
@@ -145,7 +145,7 @@ public class Organization {
 	
 	public String getNameEnglish() {
 		// TODO: isn't this enough?
-		return this.findName("en", OrganizationNameCategory.NORMAL);
+		return findName(this, "en", OrganizationNameCategory.NORMAL);
 		
 //		String name = null;
 //		if (nameList != null) {
@@ -161,7 +161,7 @@ public class Organization {
 	
 	public String getNameNorwegian() {
 		// TODO: isn't this enough?
-		return this.findName("en", OrganizationNameCategory.NORMAL);
+		return findName(this, "en", OrganizationNameCategory.NORMAL);
 //		String name = null;
 //		if (nameList != null) {
 //			for (OrganizationName orgName : nameList) {
