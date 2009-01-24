@@ -29,8 +29,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private String resultSessionVarName = "hbproxyresult";
 	private String proxyPassword = "mypassword";
 	private String urlParamName = "url";
-	private String proxyUrl = "http://192.168.1.133:2048/login";
-	private String logUpUrl = "http://192.168.1.100:8080/cms/site/2/Logg+inn";
+	// TODO: Include these in X-plugin.xml
+	private String proxyUrl = "http://localhost:2048/login";
+	private String logUpUrl = "http://localhost:8080/cms/site/2/Logg+inn";
 	private boolean proxyUseGroup = true;
 	private int proxyTimeout = 0;
 

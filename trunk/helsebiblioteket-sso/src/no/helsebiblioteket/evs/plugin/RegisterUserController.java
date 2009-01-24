@@ -1,5 +1,7 @@
 package no.helsebiblioteket.evs.plugin;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
@@ -8,7 +10,9 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
@@ -30,6 +34,9 @@ public final class RegisterUserController extends ProfileController {
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = new User();
+		// TODO: Should not need to init here!
+		user.setRoleList(new ArrayList<Role>());
+		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
 		
 		
@@ -62,6 +69,9 @@ public final class RegisterUserController extends ProfileController {
 		// TODO: How to initialize person?
 		User user = new User();
 		user.setPerson(new Person());
+		user.setRoleList(new ArrayList<Role>());
+		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
+		
 		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
 		if(hprNumber == null) { hprNumber = "";}
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
@@ -126,6 +136,9 @@ public final class RegisterUserController extends ProfileController {
 		// FIXME: Write this!
 		User test = new User();
 		test.setUsername(username);
+		// TODO: no,no,no
+		test.setRoleList(new ArrayList<Role>());
+		test.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		return this.userService.findUserByUsername(test) != null;
 	}
 	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
