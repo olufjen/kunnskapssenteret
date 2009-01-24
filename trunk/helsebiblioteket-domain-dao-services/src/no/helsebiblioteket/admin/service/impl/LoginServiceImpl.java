@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.util.ArrayList;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -10,6 +12,7 @@ import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
@@ -26,7 +29,11 @@ public class LoginServiceImpl implements LoginService {
 		User loggedIn = this.userDao.getUserByUsername(user);
 		if(loggedIn != null && loggedIn.getPassword().equals(user.getPassword())){
 			// TODO: Not fetch all user data here!
-			return this.userCompositeDao.getUserByUsername(user);
+			User newUser = this.userDao.getUserByUsername(user);
+			// TODO: Remove testing!
+			newUser.getOrganization().setNameList(new ArrayList<OrganizationName>());
+			newUser.setRoleList(new ArrayList<Role>());
+			return newUser;
 		} else {
 			return null;
 		}
@@ -55,6 +62,7 @@ public class LoginServiceImpl implements LoginService {
 		// TODO Do DAO lookup here
 		Organization organization = new Organization();
 		organization.setName("Universitetssykehuset i Oslo");
+		organization.setNameList(new ArrayList<OrganizationName>());
 		return organization;
 	}
 	public void setEmailDao(EmailDAO emailDao) {
