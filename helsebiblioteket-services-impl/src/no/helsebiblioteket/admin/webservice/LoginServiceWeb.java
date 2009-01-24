@@ -42,6 +42,8 @@ public class LoginServiceWeb implements LoginService {
 		return null;
 	}
 	public User logInUser(User user) {
+		// TODO: And the result is that this is needed. Urk!
+		user.setOrganization(null);
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { User.class };
 		try {

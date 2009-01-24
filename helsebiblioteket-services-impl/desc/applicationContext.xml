@@ -38,7 +38,8 @@
   	</bean>
   	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
   		<property name="userDao" ref="userDao"></property>
-  		<property name="userCompositeDao" ref="userCompositeDao"></property>
+  		<!-- TODO: Do not use! -->
+  		<!--<property name="userCompositeDao" ref="userCompositeDao"></property>-->
   		<property name="roleDao" ref="roleDao"></property>
   		<property name="personDao" ref="personDao"></property>
   	</bean>
