@@ -4,17 +4,12 @@ package no.helsebiblioteket.admin.service.importexport.impl;
  * Import service for member organizations
  */
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
