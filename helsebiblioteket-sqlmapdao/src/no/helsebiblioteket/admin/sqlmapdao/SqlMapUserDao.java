@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -53,6 +54,14 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	}
 
 	public List<User> getAllUsers() {
-		return (List<User>) getSqlMapClientTemplate().queryForList("getAllUsers");
+		List<User> users = (List<User>) getSqlMapClientTemplate().queryForList("getAllUsers");
+		for (User user : users) {
+			if (user.getRoleList() == null){
+				user.setRoleList(new ArrayList<Role>());
+				// TODO: Remove test!
+				user.getRoleList().add(new Role());
+			}
+		}
+		return users;
 	}
 }
