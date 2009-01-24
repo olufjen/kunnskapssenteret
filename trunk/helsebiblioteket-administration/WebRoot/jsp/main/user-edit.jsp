@@ -53,7 +53,7 @@
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_position}"  /></td>
-			<td><h:inputText value="#{userBean.user.person.position.title}" id="position"
+			<td><h:inputText value="#{userBean.user.person.position.name}" id="position"
 					readonly="#{ ! userBean.showPositionText}"/></td>
 			<td><h:message for="position" styleClass="RED"/></td>
 		</tr>

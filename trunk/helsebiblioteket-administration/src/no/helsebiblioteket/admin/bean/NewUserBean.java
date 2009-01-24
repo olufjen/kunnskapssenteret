@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.util.ArrayList;
+
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
@@ -21,8 +23,10 @@ public class NewUserBean {
     public String actionNewEndUser() {
 		logger.info("method 'newEndUser' invoked");
 		User user = new User();
-//		user.setRole(new Role());
-//		user.getRole().setKey("X");
+		Role role = new Role();
+		role.setKey("X");
+		user.setRoleList(new ArrayList<Role>());
+		user.getRoleList().add(role);
 		user.setPerson(new Person());
 		this.userBean.setUser(user);
 		
