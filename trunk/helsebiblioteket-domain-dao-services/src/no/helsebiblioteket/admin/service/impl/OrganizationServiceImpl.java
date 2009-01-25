@@ -22,6 +22,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private OrganizationDao organizationDao;
 	private OrganizationTypeDao organizationTypeDao;
 	private PositionDao positionDao;
+	
+	public void saveOrganization(Organization organization) {
+		this.organizationDao.saveOrganization(organization);
+	}
 
 	public List<OrganizationType> getOrganizationTypeList() {
 		return this.organizationTypeDao.getOrganizationTypeList();

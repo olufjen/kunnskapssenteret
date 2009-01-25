@@ -89,4 +89,10 @@ public class OrganizationServiceWeb implements OrganizationService {
 	public void setAllPositionsName(QName allPositionsName) {
 		this.allPositionsName = allPositionsName;
 	}
+
+	@Override
+	public void saveOrganization(Organization organization) {
+		// TODO Auto-generated method stub
+		
+	}
 }
