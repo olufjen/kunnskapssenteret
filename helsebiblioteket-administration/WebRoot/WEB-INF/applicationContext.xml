@@ -82,18 +82,11 @@ xmlns="http://www.springframework.org/schema/beans"
    	<bean id="LDAPLookupUtil" class="no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil">
 	</bean>
 	
-	<!-- TODO: Re-insert -->
-	<!--
-   		<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportEndUsersServiceImpl">
-	 		<property name="userService" ref="userService"></property>
-	 		<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
-		</bean>
-	-->
-	<!-- TODO: With this inside: -->
-		 	<!--<property name="commonPassword" value="password" />-->
-
-
-
+  	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportEndUsersServiceImpl">
+ 		<property name="userService" ref="userService"></property>
+ 		<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
+ 		<!--<property name="commonPassword" value="password" />-->
+	</bean>
 	
 	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportMemberOrganizationsServiceImpl">
 	 	<property name="organizationDao" ref="organizationDao"></property>
