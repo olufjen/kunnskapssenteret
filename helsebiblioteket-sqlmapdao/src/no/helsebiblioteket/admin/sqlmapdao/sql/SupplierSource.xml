@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Resource">
+	<typeAlias alias="suppliersource" type="no.helsebiblioteket.admin.domain.SupplierSource" />
+	<resultMap id="getSupplierSourceResultMap" class="suppliersource">
+		<result property="supplierSourceId" column="supplier_source_id" />
+		<result property="url" column="url" />
+		<result property="name" column="supplier_source_name" />
+		<result property="lastChanged" column="last_changed" />
+	</resultMap>
+	<select id="getSupplierSourceById" resultMap="getSupplierSourceResultMap" parameterClass="integer">
+		select supplier_source_id, url, supplier_source_name, last_changed
+		from tbl_supplier_source
+		where supplier_source_id = #supplierSourceId#;
+	</select>
+	<select id="getSupplierSourceList" resultMap="getSupplierSourceResultMap">
+		select supplier_source_id, url, supplier_source_name, last_changed
+		from tbl_supplier_source
+	</select>
+	<insert id="insertSupplierSource" parameterClass="suppliersource">
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_supplier_source_supplier_source_id_seq') as id;
+		</selectKey>
+		insert into tbl_supplier_resource (supplier_source_id, url, supplier_source_name, last_changed) 
+		values (#supplierSourceId#, #url#, #name#, now());
+	</insert>
+	<delete id="deleteSupplierSource" parameterClass="suppliersource">
+		delete from tbl_supplier_source
+		where supplier_source_id = #supplierSourceId# 
+	</delete>
+	<update id="updateSupplierSource" parameterClass="suppliersource">
+		update tbl_resource set
+      	url = #url#,
+      	name = #name#,
+      	last_changed = now()
+    	where supplier_source_id = #supplierSourceId# and
+    	last_changed = #lastChanged#;
+  </update>
+</sqlMap>
