@@ -27,6 +27,7 @@
             <include name="*.jar"/>
         </fileset>
     	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="*.jar"/>
+    	<fileset dir="${helsebiblioteket-importexport-target.dir}" includes="*.jar"/>
         <pathelement path="${test.dir}"/>
 
     	<!-- We need the servlet API classes: -->
