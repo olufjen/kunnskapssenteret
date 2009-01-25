@@ -108,6 +108,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
+		organizationService.saveOrganization(supplierOrganization);
 	}
 	
 	public void actionAddSupplierSource() {
