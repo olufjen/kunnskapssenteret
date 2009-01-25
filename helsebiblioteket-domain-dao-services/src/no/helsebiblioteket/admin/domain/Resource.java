@@ -9,6 +9,7 @@ public class Resource {
 	
 	// foreign keys
 	private Integer organizationId;
+	private Integer supplierSourceId;
 	
 	public Integer getResourceId() {
 		return resourceId;
@@ -33,5 +34,11 @@ public class Resource {
 	}
 	public void setOrganizationId(Integer organizationId) {
 		this.organizationId = organizationId;
+	}
+	public Integer getSupplierSourceId() {
+		return supplierSourceId;
+	}
+	public void setSupplierSourceId(Integer supplierSourceId) {
+		this.supplierSourceId = supplierSourceId;
 	}
 }
