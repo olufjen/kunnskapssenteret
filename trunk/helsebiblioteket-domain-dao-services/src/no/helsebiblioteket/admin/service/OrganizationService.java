@@ -29,5 +29,6 @@ public interface OrganizationService extends Serializable {
 	public void createOrganization(Organization organization);
 	public void saveOrganization(Organization organization);
 	
+	public OrganizationType getOrganizationTypeByKey(String key);
 	public PositionList getAllPositions(String dummy);
 }
