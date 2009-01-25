@@ -18,6 +18,12 @@ import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
+/**
+ * 
+ * @author Leif Torger Grøndahl, nokc.no
+ * The class handles both creating of new organization if type "supplier" 
+ * and editing the same type of organization. 
+ */
 
 public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -90,15 +96,14 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		if (this.supplierOrganization.getType() == null) {
 			this.supplierOrganization.setType(organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier.toString()));
 		}
+		if (this.supplierOrganization.getSourceList() == null) {
+			this.supplierOrganization.setSourceList(new ArrayList<SupplierSource>());
+		}
 		return this.supplierOrganization;
 	}
 	
 	public void setOrganization(SupplierOrganization supplierOrganization) {
 		this.supplierOrganization = supplierOrganization;
-	}
-	
-	public List<SupplierSource> getSupplierSourceList() {
-		return this.supplierSourceList;
 	}
 
 	public HtmlDataTable getSupplierSourceListHtmlDataTable() {
@@ -118,16 +123,13 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		logger.debug("Method 'actionAddSupplierSource' invoked");
 		setSourceName((getSourceNameUIInput().getSubmittedValue() != null) ? getSourceNameUIInput().getSubmittedValue().toString() : null);
 		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
-		if (this.supplierSourceList == null) {
-			this.supplierSourceList = new ArrayList<SupplierSource>();
-		}
-		this.supplierSourceList.add(new SupplierSource(getSourceName(), getSourceUrl()));
+		this.supplierOrganization.getSourceList().add(new SupplierSource(getSourceName(), getSourceUrl()));
 	}
 	
 	public void actionDeleteSource() {
 		logger.debug("Method 'actionDeleteSource' invoked");
 		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
-		this.supplierSourceList.remove((SupplierSource) this.supplierSourceListHtmlDataTable.getRowData());
+		supplierOrganization.getSourceList().remove((SupplierSource) this.supplierSourceListHtmlDataTable.getRowData());
 	}
 
 	public String actionNewSupplierOrganization() {
@@ -135,11 +137,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	}
 
 	public boolean isShowSourceList() {
-		return (supplierSourceList != null && supplierSourceList.size() > 0) ? true : false;
-	}
-	
-	public List<SupplierOrganization> getSuppliersWithSourcesList() {
-		return organizationService.getSupplierList();
+		return (supplierOrganization.getSourceList() != null && supplierOrganization.getSourceList().size() > 0) ? true : false;
 	}
 
 	public void setSupplierOrganization(SupplierOrganization supplierOrganization) {
