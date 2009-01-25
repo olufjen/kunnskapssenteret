@@ -113,7 +113,7 @@
 				<h:outputText value="#{msg_main.chosen} #{msg_main.sources}:" />
 			</td>
 			<td valign="top">
-				<t:dataTable rendered="#{newSupplierOrganizationBean.showSourceList}" var="source" value="#{newSupplierOrganizationBean.supplierSourceList}" binding="#{newSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
+				<t:dataTable rendered="#{newSupplierOrganizationBean.showSourceList}" var="source" value="#{newSupplierOrganizationBean.supplierOrganization.sourceList}" binding="#{newSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
 					<t:column>
 			      		<t:outputText id="source" value="#{source.name} #{source.url}" />
 			    	</t:column>
