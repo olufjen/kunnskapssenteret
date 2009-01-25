@@ -112,4 +112,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		this.positionDao = positionDao;
 	}
 
+	public OrganizationType getOrganizationTypeByKey(String key) {
+		return this.organizationDao.getOrganizationTypeByKey(key);
+	}
 }

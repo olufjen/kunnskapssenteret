@@ -95,4 +95,10 @@ public class OrganizationServiceWeb implements OrganizationService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public OrganizationType getOrganizationTypeByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
