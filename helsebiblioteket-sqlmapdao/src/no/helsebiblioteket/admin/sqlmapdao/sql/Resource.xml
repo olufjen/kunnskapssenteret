@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Resource">
+	<typeAlias alias="resource" type="no.helsebiblioteket.admin.domain.Resource" />
+	<resultMap id="getResourceResultMap" class="resource">
+		<result property="resourceId" column="resource_id" />
+		<result property="resourceType.id" column="resource_type_id" />
+		<result property="supplierSourceId" column="supplier_source_id" />
+		<result property="organizationId" column="org_unit_id" />
+		<result property="lastChanged" column="last_changed" />
+	</resultMap>
+	<select id="getResourceById" resultMap="getResourceResultMap" parameterClass="integer">
+		select resource_id, resource_type_id, supplier_source_id, org_unit_id, last_changed
+		from tbl_resource
+		where resource_id = #resourceId#;
+	</select>
+	<select id="getResourceList" resultMap="getResourceResultMap">
+		select resource_id, resource_type_id, descr, supplier_source_id, org_unit_id, last_changed
+		from tbl_resource
+	</select>
+	<insert id="insertResource" parameterClass="resource">
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_resource_resource_id_seq') as id;
+		</selectKey>
+		insert into tbl_resource (resource_id, resource_type_id, supplier_source_id, org_unit_id, last_changed) 
+		values (#id#, #type.id#, #supplierSourceId#, #organizationId#, now());
+	</insert>
+	<delete id="deleteResource" parameterClass="resource">
+		delete from tbl_resource
+		where resource_id = #resourceId# 
+	</delete>
+	<update id="updateResource" parameterClass="resource">
+		update tbl_resource set
+      	resource_type_id = #type.id#,
+      	supplier_source_id = #supplierSourceId#,
+      	org_unit_id = #organizationId#,
+      	last_changed = now()
+    	where resource_id = #resourceId# and
+    	last_changed = #lastChanged#;
+  </update>
+</sqlMap>
