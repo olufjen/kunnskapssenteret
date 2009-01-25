@@ -19,10 +19,12 @@ public class Organization {
 	private List<OrganizationName> nameList = null;
 	
 	public static String findName(Organization organization, String language, OrganizationNameCategory category){
-		for (OrganizationName name : organization.nameList) {
-			if(name.getLanguageCode().equals(language) &&
-					name.getCategory().equals(category)){
-				return name.getName();
+		if (organization.nameList != null) {
+			for (OrganizationName name : organization.nameList) {
+				if(name.getLanguageCode().equals(language) &&
+						name.getCategory().equals(category)){
+					return name.getName();
+				}
 			}
 		}
 		// TODO: How to handle error here?
@@ -31,6 +33,7 @@ public class Organization {
 
 	public static void insertName(Organization organization, String language, OrganizationNameCategory category, String name){
 		boolean set = false;
+		organization.setNameList(organization.getNameList() == null ? new ArrayList<OrganizationName>() : organization.getNameList());
 		for (OrganizationName organizationName : organization.nameList) {
 			if(organizationName.getLanguageCode().equals(language) &&
 					organizationName.getCategory().equals(category)){
@@ -39,6 +42,7 @@ public class Organization {
 			}
 		}
 		// TODO: This should probably _never_ happen?
+		// LTG - this occurs when a new organizationname is created (i.a: when a new organization is created)
 		if( ! set ) {
 			OrganizationName newOrganizationName = new OrganizationName();
 			newOrganizationName.setLanguageCode(language);
@@ -161,7 +165,7 @@ public class Organization {
 	
 	public String getNameNorwegian() {
 		// TODO: isn't this enough?
-		return findName(this, "en", OrganizationNameCategory.NORMAL);
+		return findName(this, "no", OrganizationNameCategory.NORMAL);
 //		String name = null;
 //		if (nameList != null) {
 //			for (OrganizationName orgName : nameList) {
