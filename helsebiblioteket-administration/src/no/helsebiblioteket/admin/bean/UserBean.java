@@ -21,7 +21,11 @@ import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.request.PageRequest;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 
@@ -66,6 +70,7 @@ public class UserBean {
     protected final Log logger = LogFactory.getLog(getClass());
 
     private boolean isNew(){ return this.user.getId() == null; }
+	// TODO: Now fetching main role with: user.roleList[0].name
     // TODO: Place in User class?
     private Role mainRole(){ return this.user.getRoleList().get(0); }
     private void mainRole(Role role){ this.user.setRoleList(new ArrayList<Role>()); this.user.getRoleList().add(role); }
@@ -189,14 +194,19 @@ public class UserBean {
     		this.user.getPerson().setPosition(new Position());
     	}
     	if(this.isNew()){
-    		this.userService.createUser(this.user);
+    		this.userService.insertUser(this.user);
     	} else {
-    		this.userService.saveUser(this.user);
+    		this.userService.updateUser(this.user);
     	}
     	return "user_details";
     }
     public String actionCancel(){
-    	this.user = this.userService.findUserByUsername(this.user);
+    	SingleResult<User> result = this.userService.findUserByUsername(this.user.getUsername());
+    	if(result instanceof ValueResult){
+        	this.user = ((ValueResult<User>)result).getValue();
+    	} else {
+    		this.user = null;
+    	}
     	return "user_details";
     }
     public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
@@ -269,13 +279,20 @@ public class UserBean {
 			this.availableEmployers = new ArrayList<SelectItem>();
 			Organization dummy = new Organization();
 			dummy.setId(-999);
-			dummy.setName(ResourceBundle.getBundle(
+			String name = ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
-							"user_details_no_employer"));
-			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getName(), "", false);
+					"user_details_no_employer");
+			// TODO: How to find right name here?
+			dummy.setNameEnglishNormal(name);
+			dummy.setNameEnglishShort(name);
+			dummy.setNameNorwegianNormal(name);
+			dummy.setNameNorwegianShort(name);
+			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getNameEnglish(), "", false);
 			this.availableEmployers.add(dummyOption);
-			for (Organization organization : this.organizationService.getOrganizationList()) {
-				SelectItem option = new SelectItem(""+organization.getId(), organization.getName(), "", false);
+			PageResult<Organization> orgs = this.organizationService.getOrganizationListAll(null);
+			for (Organization organization : orgs.result) {
+				// TODO: How to find right name here?
+				SelectItem option = new SelectItem(""+organization.getId(), organization.getNameEnglish(), "", false);
 				this.availableEmployers.add(option);
 			}
 		}
@@ -304,9 +321,11 @@ public class UserBean {
 	}
 	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
-			this.allRoles = this.userService.getAllUserRoles();
+			Role[] roles = this.userService.getRoleListAll("").getList();
+			this.allRoles = new ArrayList<Role>();
 			this.allRolesMap = new HashMap<String, Role>();
-			for (Role role : this.allRoles) {
+			for (Role role : roles) {
+				this.allRoles.add(role);
 				this.allRolesMap.put(role.getKey(), role);
 			}
 		}
@@ -324,7 +343,10 @@ public class UserBean {
 							"user_details_no_position"));
 			this.allPositions.add(dummy);
 			
-			this.allPositions.addAll(this.userService.getAllUserPositions());
+			Position[] positions = this.userService.getPositionListAll("").getList();
+			for (Position loadedPos : positions) {
+				this.allPositions.add(loadedPos);
+			}
 			this.allPositionsMap = new HashMap<String, Position>();
 			for (Position position : this.allPositions) {
 				this.allPositionsMap.put(position.getKey(), position);
@@ -334,7 +356,7 @@ public class UserBean {
 	}
 	public List<User> getUsers() {
 		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getAllUsers(new PageRequest<User>()).result; }
+		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest<User>()).result; }
 		return this.users;
 	}
 	public String getSelectedIsStudent() {

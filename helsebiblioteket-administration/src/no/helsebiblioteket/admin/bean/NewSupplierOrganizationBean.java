@@ -9,12 +9,15 @@ import org.apache.myfaces.component.html.ext.HtmlDataTable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.daoobjects.OrganizationName;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationName;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 /**
@@ -82,9 +85,10 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		if (this.organization == null) {
 			this.organization = new Organization();
 		}
-		if (this.organization.getNameList() == null) {
-			this.organization.setNameList(new ArrayList<OrganizationName>());
-		}
+		// TODO: Should not be nessecary
+//		if (this.organization.getNameList() == null) {
+//			this.organization.setNameList(new ArrayList<OrganizationName>());
+//		}
 		if (this.organization.getContactInformation() == null) {
 			this.organization.setContactInformation(new ContactInformation());
 		}
@@ -92,7 +96,10 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 			this.organization.setContactPerson(new Person());
 		}
 		if (this.organization.getType() == null) {
-			this.organization.setType(organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier.toString()));
+			SingleResult<OrganizationType> res = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier.toString());
+			if(res instanceof ValueResult){
+				this.organization.setType(((ValueResult<OrganizationType>)res).getValue());
+			}
 		}
 		if (this.organization.getSupplierSourceList() == null) {
 			this.organization.setSupplierSourceList(new ArrayList<SupplierSource>());
@@ -114,7 +121,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
-		organizationService.saveOrganization(organization);
+		organizationService.insertOrganization(organization);
 	}
 	
 	public void actionAddSupplierSource() {

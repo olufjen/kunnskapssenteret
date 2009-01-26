@@ -46,9 +46,11 @@ public class NewEndUserBean extends NewUserBean {
 	}
 	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
-			this.allRoles = this.userService.getAllUserRoles();
+			Role[] roles = this.userService.getRoleListAll("").getList();
+			this.allRoles = new ArrayList<Role>();
 			this.allRolesMap = new HashMap<String, Role>();
-			for (Role role : this.allRoles) {
+			for (Role role : roles) {
+				this.allRoles.add(role);
 				this.allRolesMap.put(role.getKey(), role);
 			}
 		}
