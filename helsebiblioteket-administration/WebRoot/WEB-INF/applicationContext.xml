@@ -74,6 +74,26 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
+	<bean id="positionDao" class="no.helsebiblioteket.admin.dao.JdbcPositionDao">
+		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
+	</bean>
+	
+	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	<bean id="ipRangeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapIpRangeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	<bean id="resourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
     	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
@@ -89,7 +109,7 @@ xmlns="http://www.springframework.org/schema/beans"
 	</bean>
 	
 	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportMemberOrganizationsServiceImpl">
-	 	<property name="organizationDao" ref="organizationDao"></property>
+	 	<property name="organizationService" ref="organizationService"></property>
 	</bean>
 
 	<!-- 
@@ -103,6 +123,13 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
 	 	<property name="organizationDao" ref="organizationDao"></property>
 	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
+	 	<property name="positionDao" ref="positionDao"></property>
+	 	<property name="personDao" ref="personDao"></property>
+	 	<property name="accessDao" ref="accessDao"></property>
+	 	<property name="contactInformationDao" ref="contactInformationDao"></property>
+	 	<property name="ipRangeDao" ref="ipRangeDao"></property>
+	 	<property name="resourceDao" ref="resourceDao"></property>
+	 	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
 	</bean>
 
 	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
