@@ -18,14 +18,17 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import no.helsebiblioteket.admin.daoobjects.OrganizationName;
+import no.helsebiblioteket.admin.daoobjects.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationName;
-import no.helsebiblioteket.admin.domain.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.importexport.ImportMemberOrganizationsService;
 
@@ -72,7 +75,9 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     public void importAllMemberOrganizations() {
     	Collection<Organization> memberOrganizationList = getAllMemberOrganizations().values();
     	for (Organization organization : memberOrganizationList) {
-    		organizationService.saveOrganization(organization);
+    		// FIXME: Are they unique or check for existing?
+//    		organizationService.saveOrganization(organization);
+    		organizationService.insertOrganization(organization);
     	}
     }
     
@@ -112,11 +117,18 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         Map<String, Organization> organizationMap = new HashMap<String, Organization>();
         Organization organization = null;
         
-        OrganizationType orgTypeHPR = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise.toString());
-        
-        OrganizationType orgTypeStud = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching.toString());
-        
-        OrganizationType orgTypeEmp = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.others.toString());
+        SingleResult<OrganizationType> orgTypeHPRRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise.toString());
+        OrganizationType orgTypeHPR = (orgTypeHPRRes instanceof ValueResult) ?
+        		((ValueResult<OrganizationType>)orgTypeHPRRes).getValue() :
+        			null;
+        SingleResult<OrganizationType> orgTypeStudRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching.toString());
+        OrganizationType orgTypeStud = (orgTypeStudRes instanceof ValueResult) ?
+        		((ValueResult<OrganizationType>)orgTypeStudRes).getValue() :
+        			null;
+        SingleResult<OrganizationType> orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.others.toString());
+        OrganizationType orgTypeEmp = (orgTypeEmpRes instanceof ValueResult) ?
+        		((ValueResult<OrganizationType>)orgTypeEmpRes).getValue() :
+        			null;
         
         boolean hasContactInformationValue = false;
         boolean hasContactPersonValue = false;
@@ -144,15 +156,19 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             }
             found = findNodeByName(n, NODE_DESC);
             if (found != null && found.getTextContent().trim().length() > 0) {
-            	if (organization.getNameList() == null) {
-            		OrganizationName orgName = new OrganizationName();
-                    orgName.setCategory(OrganizationNameCategory.NORMAL);
-                    orgName.setLanguageCode("no");
-            		orgName.setName(found.getTextContent());
-            		List<OrganizationName> orgNameList = new ArrayList<OrganizationName>();
-            		orgNameList.add(orgName);
-            		organization.setNameList(orgNameList);
+            	// FIXME: Ok with only Norwegian name in import?
+            	if(organization.getNameNorwegian() == null){
+            		organization.setNameNorwegianNormal(found.getTextContent());
             	}
+//            	if (organization.getNameList() == null) {
+//            		OrganizationName orgName = new OrganizationName();
+//                    orgName.setCategory(OrganizationNameCategory.NORMAL);
+//                    orgName.setLanguageCode("no");
+//            		orgName.setName(found.getTextContent());
+//            		List<OrganizationName> orgNameList = new ArrayList<OrganizationName>();
+//            		orgNameList.add(orgName);
+//            		organization.setNameList(orgNameList);
+//            	}
             } 
             found = findNodeByName(n, NODE_FROM);
             if (found != null && found.getTextContent().trim().length() > 0) {
@@ -165,7 +181,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
                 	addressTo = null;
                 }
                 addressFrom.replace("/", "");
-                IpRange range = new IpRange(addressFrom, addressTo);
+                IpRange range = new IpRange(new IpAddress(addressFrom), new IpAddress(addressTo));
                 if (organization.getIpRangeList() == null) {
                 	organization.setIpRangeList(new ArrayList<IpRange>());
                 }

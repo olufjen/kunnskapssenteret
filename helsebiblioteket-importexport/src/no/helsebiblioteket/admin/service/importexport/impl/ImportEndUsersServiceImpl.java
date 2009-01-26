@@ -87,7 +87,9 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 		}
 		
 		for (User user : allEndUsersAsHelsebibliotekUsers) {
-			userService.createUser(user);
+			// FIXME: Are they unique or check for existing?
+//			userService.createUser(user);
+			userService.insertUser(user);
 		}
 	}
 	
