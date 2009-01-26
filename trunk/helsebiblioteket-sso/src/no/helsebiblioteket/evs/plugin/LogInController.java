@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,11 +11,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
-import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public final class LogInController extends HttpControllerPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
@@ -25,9 +26,6 @@ public final class LogInController extends HttpControllerPlugin {
 	private Map<String, String> parameterNames;
 	private LoggedInFunction loggedInFunction;
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
-
-		this.logger.info("LogInController RUNNING");
     	// TODO: Real parsing of query string
 //    	String prefix = "&" + this.parameterNames.get("resultName") + "=" +
 //    		this.parameterNames.get("resultValue");
@@ -50,27 +48,26 @@ public final class LogInController extends HttpControllerPlugin {
     	String password = request.getParameter(this.parameterNames.get("password"));
     	if(username == null) { username = ""; }
     	if(password == null) { password = ""; }
-    	User user = null;
        	if(username.length() != 0 && password.length() != 0){
-       		user = new User();
-       		user.setUsername(username);
-           	user.setPassword(password);
-        	user = this.loginService.logInUser(user);
-       	}
-    	if(user != null){
-    		// Found user!
-    		element.appendChild(result.createElement("success"));
-    		loggedInFunction.logIn(user);
-    		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
-//        	this.logger.info("Goto: " + gotoUrl);
-    		response.sendRedirect(gotoUrl);
-    	} else {
+       		SingleResult<User> sResult = this.loginService.loginUserByUsernamePassword(username, password);
+       		if(sResult instanceof EmptyResult){
+        		makeXML(username, password, result, element);
+        		String referer = request.getParameter(this.parameterNames.get("from"));
+        		response.sendRedirect(referer);
+       		} else {
+	       		// Found user!
+	           	User user = ((ValueResult<User>)sResult).getValue();
+	       		element.appendChild(result.createElement("success"));
+	       		loggedInFunction.logInUser(user);
+	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+	       		response.sendRedirect(gotoUrl);
+        	}
+       	} else {
     		// Return!
     		makeXML(username, password, result, element);
     		String referer = request.getParameter(this.parameterNames.get("from"));
-//        	this.logger.info("From: " + referer);
     		response.sendRedirect(referer);
-    	}
+       	}
 		result.appendChild(element);
     	loggedInFunction.setResult(this.resultSessionVarName, result);
 	}

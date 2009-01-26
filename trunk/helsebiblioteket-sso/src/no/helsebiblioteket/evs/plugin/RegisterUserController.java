@@ -10,10 +10,11 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
@@ -36,7 +37,7 @@ public final class RegisterUserController extends ProfileController {
 		User user = new User();
 		// TODO: Should not need to init here!
 		user.setRoleList(new ArrayList<Role>());
-		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
+//		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
 		
 		
@@ -70,7 +71,7 @@ public final class RegisterUserController extends ProfileController {
 		User user = new User();
 		user.setPerson(new Person());
 		user.setRoleList(new ArrayList<Role>());
-		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
+//		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		
 		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
 		if(hprNumber == null) { hprNumber = "";}
@@ -95,7 +96,7 @@ public final class RegisterUserController extends ProfileController {
 			user.getPerson().setHprNumber(hprNumber);
 			// TODO: Saving may fail though!
 	    	boolean saved = true;
-	    	this.userService.createUser(user);
+	    	this.userService.insertUser(user);
 	    	if( ! saved){
 	    		summary = "USER_NOT_REGISTERED";
 	    	} else {
@@ -133,13 +134,8 @@ public final class RegisterUserController extends ProfileController {
 		}
 	}
 	private boolean userExists(String username) {
-		// FIXME: Write this!
-		User test = new User();
-		test.setUsername(username);
-		// TODO: no,no,no
-		test.setRoleList(new ArrayList<Role>());
-		test.getOrganization().setNameList(new ArrayList<OrganizationName>());
-		return this.userService.findUserByUsername(test) != null;
+		SingleResult<User> result = this.userService.findUserByUsername(username);
+		return (result instanceof ValueResult);
 	}
 	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
 		super.userXML(user, hprNumber, document, element);

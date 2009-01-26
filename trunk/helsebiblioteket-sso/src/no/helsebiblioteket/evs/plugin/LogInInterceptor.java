@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.Organization;
 
@@ -28,31 +32,17 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-
-		
-		
-		Object sessionVar = loggedInFunction.loggedIn();
-//			request.getSession().getAttribute(this.sessionVarName);
-		
-		if(false) sessionVar = null;
-		
-    	if(sessionVar != null){
-    		return true;
-    	}
-    	IpAddress ipAddress = new IpAddress();
-    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
-    	Organization organization = this.loginService.logInIpAddress(ipAddress);
-
-    	if(false) organization = null;
-    	
-    	if(organization != null){
-    		loggedInFunction.logIn(organization);
-//        	request.getSession().setAttribute(this.sessionVarName, organization);
-//        	logger.info("organization: " + organization.getName());
-    	} else {
-//    		LoggedInFunction.logOut(this.sessionVarName, request.getSession());
-    	}
+		Organization organization = this.loggedInFunction.loggedInOrganization();
+		User user = this.loggedInFunction.loggedInUser();
+		if(organization == null && user == null){
+			IpAddress ipAddress = new IpAddress();
+	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
+	    	SingleResult<Organization> result = this.loginService.loginOrganizationByIpAddress(ipAddress);
+	    	if(result instanceof ValueResult){
+	    	    organization = ((ValueResult<Organization>)result).getValue();
+	    		loggedInFunction.logInOrganization(organization);
+	    	}
+		}
 		return true;
 	}
     public static String getXforwardedForOrRemoteAddress(HttpServletRequest request) {

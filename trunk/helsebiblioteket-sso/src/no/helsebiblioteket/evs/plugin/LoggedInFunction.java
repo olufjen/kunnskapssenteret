@@ -3,9 +3,7 @@ package no.helsebiblioteket.evs.plugin;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -21,7 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.PositionToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -35,24 +33,34 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public class LoggedInFunction{
 	// TODO: Set in bean, but global?
-	private String sessionLoggedInVarName = "hbloggedin";
+	private String sessionLoggedInUserVarName = "hbloggedinuser";
+	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	private String sessionResultsVarName = "hbresults";
-	private OrganizationService organizationService;
+	private UserService userService;
 
-	public void logIn(Object user){
+	public void logInUser(User user){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-		session.setAttribute(sessionLoggedInVarName, user);
+		session.setAttribute(sessionLoggedInUserVarName, user);
 	}
-	public void logOut(){
+	public User loggedInUser() {
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-		session.setAttribute(sessionLoggedInVarName, null);
+		return (User) session.getAttribute(sessionLoggedInUserVarName);
 	}
-	public Object loggedIn() {
+	public void logOutUser(){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-		return session.getAttribute(sessionLoggedInVarName);
+		session.setAttribute(sessionLoggedInUserVarName, null);
+	}
+	public void logInOrganization(Organization organization){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
+	}
+	public Organization loggedInOrganization() {
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		return (Organization) session.getAttribute(sessionLoggedInOrganizationVarName);
 	}
 	public Document getUserAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
-		return translate(printUser());
+		// TODO: Rename this, but then also in XML for EVS.
+		return translate(printLoggedIn());
 	}
 	public Document getPositionsAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		return translate(printPositions());
@@ -94,12 +102,12 @@ public class LoggedInFunction{
 		result.appendChild(element);
 		return result;
 	}
-	public org.w3c.dom.Document printPositions() throws ParserConfigurationException {
+	private org.w3c.dom.Document printPositions() throws ParserConfigurationException {
 		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
 		PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
 		org.w3c.dom.Document document = userTranslator.newDocument();
 		Element element = document.createElement("positions");
-		Position[] positions = this.organizationService.getAllPositions("").getList();
+		Position[] positions = this.userService.getPositionListAll("").getList();
 		for (Position position : positions) {
 			positionToXMLTranslator.translate(position, document, element);
 		}
@@ -107,27 +115,25 @@ public class LoggedInFunction{
 		return document;
 	}
 
-	public org.w3c.dom.Document printUser() throws ParserConfigurationException {
-	    	// Not like this anymore.
-	//    	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
-	    	Object sessionVar = loggedIn();
-			UserToXMLTranslator userTranslator = new UserToXMLTranslator();
-	//    	buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			org.w3c.dom.Document result = userTranslator.newDocument();
-			Element loggedinElement = result.createElement("loggedin");
-	    	if(sessionVar instanceof Organization){
-	        	Organization organization = (Organization) sessionVar;
-	    		OrganizationToXMLTranslator translator = new OrganizationToXMLTranslator();
-	    		translator.translate(organization, result, loggedinElement);
-	    	} else if (sessionVar instanceof User){
-	        	User user = (User) sessionVar;
-	        	userTranslator.translate(user, result, loggedinElement);
-	    	} else {
-	    		loggedinElement.appendChild(result.createElement("none"));
-	    	}
-			result.appendChild(loggedinElement);
-			return result;
-		}
+	private org.w3c.dom.Document printLoggedIn() throws ParserConfigurationException {
+		User user = this.loggedInUser();
+		Organization organization = this.loggedInOrganization();
+		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
+		org.w3c.dom.Document result = userTranslator.newDocument();
+		Element loggedinElement = result.createElement("loggedin");
+    	if(organization != null){
+    		OrganizationToXMLTranslator translator = new OrganizationToXMLTranslator();
+    		translator.translate(organization, result, loggedinElement);
+    	}
+    	if(user != null){
+        	userTranslator.translate(user, result, loggedinElement);
+    	}
+    	if(organization == null && user == null){
+    		loggedinElement.appendChild(result.createElement("none"));
+    	}
+		result.appendChild(loggedinElement);
+		return result;
+	}
 	private Document translate(org.w3c.dom.Document document) throws TransformerException, JDOMException, IOException {
 		// TODO: Different JDOM classes. Fix!
 		Source source = new DOMSource(document);
@@ -143,7 +149,7 @@ public class LoggedInFunction{
 		return doc;
 		
 	}
-	public void setOrganizationService(OrganizationService organizationService) {
-		this.organizationService = organizationService;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

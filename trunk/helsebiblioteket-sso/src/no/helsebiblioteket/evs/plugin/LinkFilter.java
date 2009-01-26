@@ -20,6 +20,9 @@ import org.jdom.xpath.XPath;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.URLService;
 
 import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
@@ -143,7 +146,14 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		// TODO: Cache as much as possible, but flush at some set interval!
 		Url myurl = new Url();
 		myurl.setValue(url.toExternalForm());
-		return new URL(this.urlService.translate(user, organization, myurl).getValue());
+		SingleResult<Url> result = this.urlService.translate(user, organization, myurl);
+		if(result instanceof EmptyResult){
+			// TODO: What to do here?
+			return url;
+		} else {
+			ValueResult<Url> value = (ValueResult<Url>) result;
+			return new URL(value.getValue().getValue());
+		}
 	}
 
 	public void setSessionVarName(String sessionVarName) {

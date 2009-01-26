@@ -12,6 +12,9 @@ import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -41,7 +44,6 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		String requestedUrlText = request.getParameter(this.urlParamName);
-        Object loggedin = loggedInFunction.loggedIn();
         String redirectUrl;
 		Url requestedUrl = new Url();
 		requestedUrl.setValue(requestedUrlText);
@@ -49,14 +51,16 @@ public class ProxyLoginController extends HttpControllerPlugin {
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
-    	if(loggedin == null){
+		User user = this.loggedInFunction.loggedInUser();
+		Organization organization = this.loggedInFunction.loggedInOrganization();
+    	if(user == null && organization == null){
     		if(this.urlService.isAffected(requestedUrl)){
-        		createXML(false, loggedin, requestedUrl, document, element);
+        		createXML(false, user, organization, requestedUrl, document, element);
         		redirectUrl = logUpUrl;
     		} else {
     			// TODO: What does it mean to not be affected.
     			// When everyone has access?
-        		createXML(true, loggedin, requestedUrl, document, element);
+        		createXML(true, user, organization, requestedUrl, document, element);
 
         		// TODO: Go ahead!
 	    		redirectUrl = logUpUrl;
@@ -64,19 +68,23 @@ public class ProxyLoginController extends HttpControllerPlugin {
     		}
     	} else {
     		if(this.urlService.isAffected(requestedUrl)){
-    			User user = null;
-    			Organization organization = null;
-    			if(loggedin instanceof User) { user = (User) loggedin; }
-    			if(loggedin instanceof Organization) { organization = (Organization) loggedin; }
+    			boolean hasAcces = false;
     			if(this.urlService.hasAccess(user, organization, requestedUrl)){
-    				String group = this.urlService.group(requestedUrl);
+    				SingleResult<String> result = this.urlService.group(requestedUrl);
+    				String group;
+    				if(result instanceof EmptyResult){
+    					// TODO: What to do here?
+    					group = null;
+    				} else {
+    					group = ((ValueResult<String>)result).getValue();
+    				}
     				if(this.createProxySession(response, requestedUrlText, group)){
         				// Great, done!
-    	        		createXML(true, loggedin, requestedUrl, document, element);
+    	        		createXML(true, user, organization, requestedUrl, document, element);
 
     	        		redirectUrl = "";
     				} else {
-    	        		createXML(false, loggedin, requestedUrl, document, element);
+    	        		createXML(false, user, organization, requestedUrl, document, element);
     	        		element.appendChild(document.createElement("proxysessionerror"));
     		    		redirectUrl = logUpUrl;
     				}
@@ -84,19 +92,11 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				// Add organization for IP!
     		    	IpAddress ipAddress = new IpAddress();
     		    	ipAddress.setAddress(LogInInterceptor.getXforwardedForOrRemoteAddress(request));
-    		    	
-    		    	// FIXME: Get from session. Both user and organization
-    		    	
-    		    	Organization altOrganization = null;//this.loginService.logInIpAddress(ipAddress);
-    		    	if(altOrganization != null) {
-    	        		createXML(false, loggedin, requestedUrl, altOrganization, document, element);
-    		    	} else {
-    		    		createXML(false, loggedin, requestedUrl, document, element);
-    		    	}
+   	        		createXML(false, user, organization, requestedUrl, document, element);
     				redirectUrl = logUpUrl;
     			}
     		} else {
-        		createXML(true, loggedin, requestedUrl, document, element);
+        		createXML(true, user, organization, requestedUrl, document, element);
         		
         		// TODO: Go ahead!
 	    		redirectUrl = logUpUrl;
@@ -109,19 +109,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
             redirect(response, redirectUrl);
     	}
     }
-    private void createXML(boolean hasAccess, Object loggedinUser, Url requestedUrl, Organization altOrganization, Document document, Element element) throws ParserConfigurationException {
-    	this.createXML(hasAccess, loggedinUser, requestedUrl, document, element);
-//		proxyresult/altorganization
-    	Element altorganization = document.createElement("altorganization");
-		OrganizationToXMLTranslator organizationTranslator = new OrganizationToXMLTranslator();
-		organizationTranslator.translate(altOrganization, document, altorganization);
-		element.appendChild(altorganization);
-    }
-    private void createXML(boolean hasAccess, Object loggedinUser, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
-		User user = null;
-		Organization organization = null;
-		if(loggedinUser instanceof User) { user = (User) loggedinUser; }
-		if(loggedinUser instanceof Organization) { organization = (Organization) loggedinUser; }
+    private void createXML(boolean hasAccess, User user, Organization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
 		Element loggedin = document.createElement("loggedin");
 		if(user != null){
 //			proxyresult/loggedin/user
@@ -131,7 +119,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
 //			proxyresult/loggedin/organization
 			OrganizationToXMLTranslator organizationTranslator = new OrganizationToXMLTranslator();
 			organizationTranslator.translate(organization, document, loggedin);
-		} else {
+	} else {
 //			proxyresult/loggedin/none
     		loggedin.appendChild(document.createElement("none"));
 		}
