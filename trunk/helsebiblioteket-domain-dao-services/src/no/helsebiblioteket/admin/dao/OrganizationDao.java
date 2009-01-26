@@ -10,14 +10,38 @@ package no.helsebiblioteket.admin.dao;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.SupplierOrganization;
 
 public interface OrganizationDao {
-	public List<Organization> getAllOrganizations();
-	public Organization getOrganization(Integer organizationId);
-	public List<SupplierOrganization> getSupplierList();
-	public void saveOrganization(Organization organization);
+	
+	// organization
+	
+	public Organization getOrganizationById(Integer organizationId);
+	
+	public List<Organization> getOrganizationList();
+	
+	public void updateOrganization(Organization organization);
+	
+	public void insertOrganization(Organization organization);
+	
+
+	// organization type
+	
 	public OrganizationType getOrganizationTypeById(Integer organizationTypeId);
+	
 	public OrganizationType getOrganizationTypeByKey(String organizationTypeKey);
+	
+	
+	// organization name
+	
+	public void saveOrganizationName(OrganizationName organizationName);
+	
+	public void insertOrganizationName(OrganizationName organizationName);
+	
+	public void updateOrganizationName(OrganizationName organizationName);
+	
+	public void deleteOrganizationName(OrganizationName organizationName);
+	
+	public List<OrganizationName> getOrganizationNameListByOrganizationId(Integer organizationId);
 }

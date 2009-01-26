@@ -22,11 +22,11 @@
 		from tbl_resource
 	</select>
 	<insert id="insertResource" parameterClass="resource">
-		<selectKey resultClass="int" keyProperty="id">
-			SELECT nextval('tbl_resource_resource_id_seq') as id;
+		<selectKey resultClass="int" keyProperty="resourceId">
+			SELECT nextval('tbl_resource_resource_id_seq') as resourceId;
 		</selectKey>
 		insert into tbl_resource (resource_id, resource_type_id, supplier_source_id, org_unit_id, last_changed) 
-		values (#id#, #type.id#, #supplierSourceId#, #organizationId#, now());
+		values (#resourceId#, #resourceType.id#, #supplierSourceId#, #organizationId#, now());
 	</insert>
 	<delete id="deleteResource" parameterClass="resource">
 		delete from tbl_resource
@@ -34,7 +34,7 @@
 	</delete>
 	<update id="updateResource" parameterClass="resource">
 		update tbl_resource set
-      	resource_type_id = #type.id#,
+      	resource_type_id = #resourceType.id#,
       	supplier_source_id = #supplierSourceId#,
       	org_unit_id = #organizationId#,
       	last_changed = now()

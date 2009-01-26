@@ -18,14 +18,15 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.importexport.ImportMemberOrganizationsService;
 
 import org.w3c.dom.Node;
@@ -50,7 +51,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     private Map<String, Organization> organizationMap;
     private String xmlDoc;
 
-    private OrganizationDao organizationDao;
+    private OrganizationService organizationService;
     
     private static final Logger logger = Logger.getLogger(ImportMemberOrganizationsServiceImpl.class.getName());
 
@@ -64,14 +65,14 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         organizationMap = new HashMap<String, Organization>();
     }
 
-    public void setOrganizationDao(OrganizationDao organizationDao) {
-    	this.organizationDao = organizationDao;
+    public void setOrganizationService(OrganizationService organizationService) {
+    	this.organizationService = organizationService;
     }
     
     public void importAllMemberOrganizations() {
     	Collection<Organization> memberOrganizationList = getAllMemberOrganizations().values();
     	for (Organization organization : memberOrganizationList) {
-    		organizationDao.saveOrganization(organization);
+    		organizationService.saveOrganization(organization);
     	}
     }
     
@@ -111,11 +112,11 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         Map<String, Organization> organizationMap = new HashMap<String, Organization>();
         Organization organization = null;
         
-        OrganizationType orgTypeHPR = organizationDao.getOrganizationTypeByKey("health_enterprise");
+        OrganizationType orgTypeHPR = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise.toString());
         
-        OrganizationType orgTypeStud = organizationDao.getOrganizationTypeByKey("teaching");
+        OrganizationType orgTypeStud = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching.toString());
         
-        OrganizationType orgTypeEmp = organizationDao.getOrganizationTypeByKey("others");
+        OrganizationType orgTypeEmp = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.others.toString());
         
         boolean hasContactInformationValue = false;
         boolean hasContactPersonValue = false;

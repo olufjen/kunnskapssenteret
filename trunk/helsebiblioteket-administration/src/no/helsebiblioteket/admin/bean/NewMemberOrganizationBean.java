@@ -13,11 +13,10 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class NewMemberOrganizationBean extends NewOrganizationBean {
@@ -25,7 +24,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 	
 	private OrganizationService organizationService = null;
 	
-	private MemberOrganization memberOrganization;
+	private Organization memberOrganization;
 
 	private String ipAddressSingle = null;
 	private String ipAddressFrom = null;
@@ -117,9 +116,9 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		this.organizationService = organizationService;
 	}
 
-	public MemberOrganization getMemberOrganization() {
+	public Organization getMemberOrganization() {
 		if (this.memberOrganization == null) {
-			this.memberOrganization = new MemberOrganization();
+			this.memberOrganization = new Organization();
 		}
 		if (this.memberOrganization.getContactInformation() == null) {
 			this.memberOrganization.setContactInformation(new ContactInformation());
@@ -139,7 +138,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		return this.memberOrganization;
 	}
 	
-	public void setOrganization(MemberOrganization memberOrganization) {
+	public void setOrganization(Organization memberOrganization) {
 		this.memberOrganization = memberOrganization;
 	}
 	
@@ -157,8 +156,9 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
-		// FIXME: Save in a different way?
-		this.memberOrganization = new MemberOrganization();
+		// TODO: use same bindings as used in NewSupplierOrganizationBean
+		// Requires all org props to be initiates first, see getSupplierOrganization()
+		this.memberOrganization = new Organization();
 //		private String organizationName;
 		this.memberOrganization.setName(this.getOrganizationName());
 		ContactInformation contactInformationOrganization = new ContactInformation();
@@ -183,11 +183,8 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		this.memberOrganization.setContactInformation(contactInformationOrganization);
 		this.memberOrganization.setContactPerson(contactPerson);
 		
-
-		
-		
 		memberOrganization.setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		this.organizationService.createOrganization(this.memberOrganization);
+		this.organizationService.saveOrganization(this.memberOrganization);
 	}
 	
 	public void actionAddSingleIp() {
@@ -221,7 +218,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 	
 	public String actionEditOrganization() {
 		Integer orgId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("organizationId");
-		this.memberOrganization = organizationService.getMemberOrganization(orgId);
+		this.memberOrganization = organizationService.getOrganizationById(orgId);
 		//setContactPersonEmail(organization.getContactPerson())
 		return "new_member_organization";
 	}
@@ -235,8 +232,9 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		return (ipRangeList != null && ipRangeList.size() > 0) ? true : false;
 	}
 	
-	public List<SupplierOrganization> getSuppliersWithSourcesList() {
-		return organizationService.getSupplierList();
+	public List<Organization> getSuppliersWithSourcesList() {
+		// TODO fetch supplier organization list based on type
+		return new ArrayList<Organization>();
 	}
 	
 	public List<String> getSelectedSourceList() {

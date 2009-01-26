@@ -16,6 +16,8 @@ public interface AccessDao {
 	
 	public List<Access> getAccessListByOrganizationTypeId(Integer organizationTypeId);
 	
+	public List<Access> getAccessListByOrganizationId(Integer organizationId);
+	
 	public void insertAccess(Access access);
 	
 	public void deleteAccess(Access access);

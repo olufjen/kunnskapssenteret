@@ -15,9 +15,10 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.SupplierOrganization;
 
-public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements OrganizationDao {
+// TODO: Remove class
+
+public class JdbcOrganizationDao extends SimpleJdbcDaoSupport  {
     protected final Log logger = LogFactory.getLog(getClass());
 	public List<Organization> getAllOrganizations() {
 		logger.info("fetching all organizations");
@@ -53,7 +54,7 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport implements Organiz
             return org;
         }
     }
-	public List<SupplierOrganization> getSupplierList() {
+	public List<Organization> getSupplierList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -6,10 +6,10 @@ public class Resource {
 	private Integer resourceId = null;
 	private ResourceType resourceType = null;
 	private Date lastChanged = null;
+	private Integer supplierSourceId;
 	
 	// foreign keys
 	private Integer organizationId;
-	private Integer supplierSourceId;
 	
 	public Integer getResourceId() {
 		return resourceId;

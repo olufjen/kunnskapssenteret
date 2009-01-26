@@ -17,6 +17,7 @@ public class Organization {
 	private List<Access> accessList = null;
 	private Date lastChanged = null;
 	private List<OrganizationName> nameList = null;
+	private List<SupplierSource> supplierSourceList = null;
 	
 	public static String findName(Organization organization, String language, OrganizationNameCategory category){
 		if (organization.nameList != null) {
@@ -204,6 +205,14 @@ public class Organization {
 		return name;
 	}
 	
+	public List<SupplierSource> getSupplierSourceList() {
+		return supplierSourceList;
+	}
+
+	public void setSupplierSourceList(List<SupplierSource> supplierSourceList) {
+		this.supplierSourceList = supplierSourceList;
+	}
+
 	public int hashCode() {
         int result;
         result = (parent != null ? parent.hashCode() : 0);

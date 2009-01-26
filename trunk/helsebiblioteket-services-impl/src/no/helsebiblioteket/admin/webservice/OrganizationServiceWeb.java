@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.webservice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.namespace.QName;
@@ -12,12 +11,9 @@ import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.PositionList;
-import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.request.PageRequest;
 import no.helsebiblioteket.admin.request.PageResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -42,10 +38,7 @@ public class OrganizationServiceWeb implements OrganizationService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public List<Organization> getAllOrganizations() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	public PositionList getAllPositions(String dummy) {
 		Object[] args = new Object[] { dummy  };
 		Class[] returnTypes = new Class[] { PositionList.class };
@@ -61,19 +54,9 @@ public class OrganizationServiceWeb implements OrganizationService {
 			return new PositionList();
 		}
 	}
-	public MemberOrganization getMemberOrganization(Integer organizationId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public Organization getOrganization(Integer organizationId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 	public List<OrganizationType> getOrganizationTypeList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public List<SupplierOrganization> getSupplierList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -100,5 +83,24 @@ public class OrganizationServiceWeb implements OrganizationService {
 	public OrganizationType getOrganizationTypeByKey(String key) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Organization getOrganizationById(Integer organizationId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Organization> getOrganizationList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveOrganization(Organization changedOrganization,
+			Organization originalOrganization) {
+		// TODO Auto-generated method stub
+		
 	}
 }
