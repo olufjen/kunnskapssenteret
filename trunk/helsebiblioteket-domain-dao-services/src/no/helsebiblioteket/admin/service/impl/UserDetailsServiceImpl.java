@@ -1,12 +1,13 @@
 package no.helsebiblioteket.admin.service.impl;
 
-import java.util.ArrayList;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetailsService;
-import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
+import no.helsebiblioteket.admin.service.UserService;
 
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.GrantedAuthorityImpl;
@@ -15,24 +16,24 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 
 
 public class UserDetailsServiceImpl implements UserDetailsService {
-	private UserDao userDao  ;
-	
-	public UserDetailsServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+	private UserService userService;
+	public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
 	}
-		
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		User user=  userDao.findUser(username);
-		// TODO: Should this not allready have been fetched?
-		// Must set it here or makeAcegiUser will crash!
-		if(user.getRoleList() == null){
-			user.setRoleList(new ArrayList<Role>());
-		}
-		if(user !=null){
-//			user.setPassword("qaa");
+		SingleResult<User> lookup = this.userService.findUserByUsername(username);
+		if(lookup instanceof EmptyResult){
+			throw new UsernameNotFoundException("User not found: ");
+		} else {
+			ValueResult<User> value = (ValueResult<User>)lookup;
+			User user = value.getValue();
+			// TODO: Should this not already have been fetched?
+			// Must set it here or makeAcegiUser will crash!
+//			if(user.getRoleList() == null){
+//				user.setRoleList(new ArrayList<Role>());
+//			}
 			return makeAcegiUser(user);
 		}
-		else throw new UsernameNotFoundException("User not found: " );
 	}
 
 	private org.springframework.security.userdetails.User makeAcegiUser(User user) {
@@ -42,7 +43,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	private GrantedAuthority[] makeGrantedAuthorities(User user) {
-	
 		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().size()];
 		int i = 0;
 		for (Role role : user.getRoleList()) {
@@ -54,5 +54,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //		result[1]= new GrantedAuthorityImpl("ROLE_URLACCESS");
 //		return result;
 	}
-
 }

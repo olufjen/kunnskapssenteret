@@ -3,10 +3,10 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class IpRange {
-	private Integer id = null;
-	private String ipAddressFrom = null;
-	private String ipAddressTo = null;
-	private Date lastChanged = null;
+	private Integer id;
+	private IpAddress ipAddressFrom;
+	private IpAddress ipAddressTo;
+	private Date lastChanged;
 	
 	// foreign keys
 	private Integer organizationId;
@@ -22,7 +22,7 @@ public class IpRange {
 	public IpRange() {	
 	}
 	
-	public IpRange(String ipAddressFrom, String ipAddressTo) {
+	public IpRange(IpAddress ipAddressFrom, IpAddress ipAddressTo) {
 		this.ipAddressFrom = ipAddressFrom;
 		this.ipAddressTo = ipAddressTo;
 	}
@@ -33,16 +33,16 @@ public class IpRange {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getIpAddressFrom() {
+	public IpAddress getIpAddressFrom() {
 		return ipAddressFrom;
 	}
-	public void setIpAddressFrom(String ipAddressFrom) {
+	public void setIpAddressFrom(IpAddress ipAddressFrom) {
 		this.ipAddressFrom = ipAddressFrom;
 	}
-	public String getIpAddressTo() {
+	public IpAddress getIpAddressTo() {
 		return ipAddressTo;
 	}
-	public void setIpAddressTo(String ipAddressTo) {
+	public void setIpAddressTo(IpAddress ipAddressTo) {
 		this.ipAddressTo = ipAddressTo;
 	}
 

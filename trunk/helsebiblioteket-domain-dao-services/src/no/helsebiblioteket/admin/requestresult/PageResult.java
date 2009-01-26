@@ -1,4 +1,4 @@
-package no.helsebiblioteket.admin.request;
+package no.helsebiblioteket.admin.requestresult;
 
 import java.util.List;
 

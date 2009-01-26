@@ -3,9 +3,9 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Resource {
-	private Integer resourceId = null;
-	private ResourceType resourceType = null;
-	private Date lastChanged = null;
+	private Integer resourceId;
+	private ResourceType resourceType;
+	private Date lastChanged;
 	private Integer supplierSourceId;
 	
 	// foreign keys

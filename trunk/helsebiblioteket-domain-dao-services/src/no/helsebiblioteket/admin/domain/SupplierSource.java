@@ -1,7 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
 public class SupplierSource extends Resource {
-	// id moved to parent
+
 	private String url = null;
 	private String name = null;
 	

@@ -6,28 +6,25 @@ package no.helsebiblioteket.admin.service;
  */
 
 import java.io.Serializable;
-import java.util.List;
-
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.PositionList;
-import no.helsebiblioteket.admin.request.PageRequest;
-import no.helsebiblioteket.admin.request.PageResult;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
 
 public interface OrganizationService extends Serializable {
-	public OrganizationType getOrganizationTypeByKey(String key);
+	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY);
+	public SingleResult<OrganizationType> getOrganizationTypeByKey(String key);
+
+	// TODO: Remove this and use findOrganizationsBySearchStringRoles with empty string?
+	public PageResult<Organization> getOrganizationListAll(PageRequest<Organization> request);
+	// TODO: Use OrganizationListItem as the result here.
+	public PageResult<Organization> findOrganizationsBySearchString(String searchString, PageRequest<Organization> request);
+
+	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem);
 	
-	public void saveOrganization(Organization organization);
-	
-	public List<Organization> getOrganizationList();
-	
-	public void saveOrganization(Organization changedOrganization, Organization originalOrganization);
-	
-	public Organization getOrganizationById(Integer organizationId);
-	
-	public List<OrganizationType> getOrganizationTypeList();
-	
-	public PageResult<Organization> findOrganizationsBySearchStringRoles( String searchString, PageRequest<Organization> request);
-	
-	public PositionList getAllPositions(String dummy);
+	public Boolean insertOrganization(Organization organization);
+	public Boolean updateOrganization(Organization organization);
 }

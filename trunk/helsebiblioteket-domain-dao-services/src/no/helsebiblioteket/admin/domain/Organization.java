@@ -1,58 +1,26 @@
 package no.helsebiblioteket.admin.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Organization {
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+
+public class Organization implements OrganizationListItem{
 	private Integer id;
-	private Organization parent = null;
-	private String description = null;
-	private OrganizationType type = null;
-	private List<IpRange> ipRangeList = null;
-	private Person contactPerson = null;
-	private ContactInformation contactInformation = null;
-	private List<Access> accessList = null;
-	private Date lastChanged = null;
-	private List<OrganizationName> nameList = null;
-	private List<SupplierSource> supplierSourceList = null;
+	private Organization parent;
+	private String description;
+	private OrganizationType type;
+	private List<IpRange> ipRangeList;
+	private Person contactPerson;
+	private ContactInformation contactInformation;
+	private List<Access> accessList;
+	private Date lastChanged;
+	private List<SupplierSource> supplierSourceList;
+	private String nameEnglishNormal;
+	private String nameEnglishShort;
+	private String nameNorwegianNormal;
+	private String nameNorwegianShort;
 	
-	public static String findName(Organization organization, String language, OrganizationNameCategory category){
-		if (organization.nameList != null) {
-			for (OrganizationName name : organization.nameList) {
-				if(name.getLanguageCode().equals(language) &&
-						name.getCategory().equals(category)){
-					return name.getName();
-				}
-			}
-		}
-		// TODO: How to handle error here?
-		return "";
-	}
-
-	public static void insertName(Organization organization, String language, OrganizationNameCategory category, String name){
-		boolean set = false;
-		organization.setNameList(organization.getNameList() == null ? new ArrayList<OrganizationName>() : organization.getNameList());
-		for (OrganizationName organizationName : organization.nameList) {
-			if(organizationName.getLanguageCode().equals(language) &&
-					organizationName.getCategory().equals(category)){
-				organizationName.setName(name);
-				set = true;
-			}
-		}
-		// TODO: This should probably _never_ happen?
-		// LTG - this occurs when a new organizationname is created (i.a: when a new organization is created)
-		if( ! set ) {
-			OrganizationName newOrganizationName = new OrganizationName();
-			newOrganizationName.setLanguageCode(language);
-			newOrganizationName.setCategory(category);
-			newOrganizationName.setName(name);
-			organization.nameList.add(newOrganizationName);
-		}
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -112,97 +80,19 @@ public class Organization {
 		this.lastChanged = lastChanged;
 	}
 
-	public List<OrganizationName> getNameList() {
-		return nameList;
-	}
-
-	public void setNameList(List<OrganizationName> nameList) {
-		this.nameList = nameList;
-	}
-	
-	/**
-	 * @deprecated
-	 */
-	public String getName() {
-		return "Deprecated";
-	}
-	
-	/**
-	 * @deprecated
-	 */
-	public void setName(String name) {
-		// deprecated
-	}
-	
-	/*
-	 * Creates a map of "organization names" for a given category.
-	 * Examples: a map of short names indexed on locale or a map of normal names indexed on locale.
-	 */
-	public Map<String, OrganizationName> getNameMap(OrganizationNameCategory orgNameCat) {
-		Map<String, OrganizationName> orgNameMap = new HashMap<String, OrganizationName>();
-		for (OrganizationName orgName: nameList) {
-			if (orgName.getCategory().equals(orgNameCat)) {
-				orgNameMap.put(orgName.getLocale().toString(), orgName);
-			}
-		}
-		return orgNameMap;
-	}
-	
 	public String getNameEnglish() {
-		// TODO: isn't this enough?
-		return findName(this, "en", OrganizationNameCategory.NORMAL);
-		
-//		String name = null;
-//		if (nameList != null) {
-//			for (OrganizationName orgName : nameList) {
-//				if ("en".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.toString().equals(orgName.getCategory())) {
-//					name = orgName.getName();
-//					break;
-//				}
-//			}
-//		}
-//		return name;
+		return this.nameEnglishNormal;
 	}
 	
 	public String getNameNorwegian() {
-		// TODO: isn't this enough?
-		return findName(this, "no", OrganizationNameCategory.NORMAL);
-//		String name = null;
-//		if (nameList != null) {
-//			for (OrganizationName orgName : nameList) {
-//				if ("no".equals(orgName.getLanguageCode()) && OrganizationNameCategory.NORMAL.equals(orgName.getCategory())) {
-//					name = orgName.getName();
-//					break;
-//				}
-//			}
-//		}
-//		return name;
+		return this.nameNorwegianNormal;
 	}
-	
 	public String getNameShortEnglish() {
-		String name = null;
-		if (nameList != null) {
-			for (OrganizationName orgName : nameList) {
-				if ("en".equals(orgName.getLanguageCode()) && OrganizationNameCategory.SHORT.toString().equals(orgName.getCategory())) {
-					name = orgName.getName();
-					break;
-				}
-			}
-		}
-		return name;
+		return nameEnglishShort;
 	}
 	
 	public String getNameShortNorwegian() {
-		String name = null;
-		if (nameList != null) {
-			for (OrganizationName orgName : nameList) {
-				if ("no".equals(orgName.getLanguageCode()) && OrganizationNameCategory.SHORT.toString().equals(orgName.getCategory())) {
-					name = orgName.getName();
-					break;
-				}
-			}
-		}
-		return name;
+		return nameNorwegianShort;
 	}
 	
 	public List<SupplierSource> getSupplierSourceList() {
@@ -217,7 +107,7 @@ public class Organization {
         int result;
         result = (parent != null ? parent.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (nameList != null ? nameList.hashCode() : 0);
+        // TODO: Include names here!
         return result;
     }
 	
@@ -225,7 +115,19 @@ public class Organization {
         if (this == org) return true;
         if (parent != null ? !parent.equals(org.parent) : org.parent != null) return false;
         if (type != null ? !type.equals(org.type) : org.type != null) return false;
-        if (nameList != null ? !nameList.equals(org.nameList) : org.nameList != null) return false;
+        // TODO: Compare names here!
         return true;
     }
+	public void setNameEnglishNormal(String nameEnglishNormal) {
+		this.nameEnglishNormal = nameEnglishNormal;
+	}
+	public void setNameEnglishShort(String nameEnglishShort) {
+		this.nameEnglishShort = nameEnglishShort;
+	}
+	public void setNameNorwegianNormal(String nameNorwegianNormal) {
+		this.nameNorwegianNormal = nameNorwegianNormal;
+	}
+	public void setNameNorwegianShort(String nameNorwegianShort) {
+		this.nameNorwegianShort = nameNorwegianShort;
+	}
 }

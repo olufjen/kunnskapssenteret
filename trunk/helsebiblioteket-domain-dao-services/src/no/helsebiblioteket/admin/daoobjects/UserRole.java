@@ -1,8 +1,8 @@
-package no.helsebiblioteket.admin.domain;
+package no.helsebiblioteket.admin.daoobjects;
 
 import java.util.Date;
 
-public class UserRoleLine {
+public class UserRole {
 	private Integer userRoleId;
 	private Integer userId;
 	private Date lastChanged = null;

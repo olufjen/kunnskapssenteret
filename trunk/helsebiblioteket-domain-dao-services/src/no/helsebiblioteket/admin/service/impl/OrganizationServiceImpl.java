@@ -8,29 +8,38 @@ import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
+import no.helsebiblioteket.admin.dao.OrganizationListDao;
+import no.helsebiblioteket.admin.dao.OrganizationNameDao;
 import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
+import no.helsebiblioteket.admin.daoobjects.OrganizationName;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.PositionList;
 import no.helsebiblioteket.admin.domain.SupplierSource;
-import no.helsebiblioteket.admin.request.PageRequest;
-import no.helsebiblioteket.admin.request.PageResult;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class OrganizationServiceImpl implements OrganizationService {
 	private static final long serialVersionUID = 1L;
 	private OrganizationDao organizationDao;
+	private OrganizationListDao organizationListDao;
 	private OrganizationTypeDao organizationTypeDao;
+	private OrganizationNameDao organizationNameDao;
 	private PositionDao positionDao;
 	private PersonDao personDao;
 	private AccessDao accessDao;
@@ -38,68 +47,141 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private IpRangeDao ipRangeDao;
 	private ResourceDao resourceDao;
 	private SupplierSourceDao supplierSourceDao;
-	
-	
-	// daos
-	
-	public void setOrganizationDao(OrganizationDao organizationDao) {
-		this.organizationDao = organizationDao;
-	}
 
-	public void setOrganizationTypeDao(OrganizationTypeDao organizationTypeDao) {
-		this.organizationTypeDao = organizationTypeDao;
-	}
-
-	public void setPositionDao(PositionDao positionDao) {
-		this.positionDao = positionDao;
-	}
-
-	public void setPersonDao(PersonDao personDao) {
-		this.personDao = personDao;
-	}
-
-	public void setAccessDao(AccessDao accessDao) {
-		this.accessDao = accessDao;
-	}
-
-	public void setContactInformationDao(ContactInformationDao contactInformationDao) {
-		this.contactInformationDao = contactInformationDao;
-	}
-
-	public void setIpRangeDao(IpRangeDao ipRangeDao) {
-		this.ipRangeDao = ipRangeDao;
-	}
-
-	public void setResourceDao(ResourceDao resourceDao) {
-		this.resourceDao = resourceDao;
-	}
-
-	public void setSupplierSourceDao(SupplierSourceDao supplierSourceDao) {
-		this.supplierSourceDao = supplierSourceDao;
-	}
-	
-	
 	// service methods
 
-	public OrganizationType getOrganizationTypeByKey(String key) {
-		return this.organizationDao.getOrganizationTypeByKey(key);
+	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY) {
+		List<OrganizationType> all = this.organizationTypeDao.getOrganizationTypeListAll();
+		OrganizationType[] list = new OrganizationType[all.size()];
+		int i=0;
+		for (OrganizationType organizationType : all) {
+			list[i++]=organizationType;
+		}
+		return new ListResult<OrganizationType>(list);
 	}
-	
-	public void saveOrganization(Organization organization) {
-		saveOrganization(organization, organizationDao.getOrganizationById(organization.getId()));
+	public SingleResult<OrganizationType> getOrganizationTypeByKey(String key){
+		OrganizationType organizationType = this.organizationTypeDao.getOrganizationTypeByKey(key);
+		if(organizationType == null){
+			return new EmptyResult<OrganizationType>();
+		} else {
+			return new ValueResult<OrganizationType>(organizationType);
+		}
 	}
-	
-	public List<Organization> getOrganizationList() {
+	public PageResult<Organization> getOrganizationListAll(PageRequest<Organization> request) {
 		List<Organization> organizationList = null;
-		organizationList = organizationDao.getOrganizationList();
+		organizationList = organizationListDao.getOrganizationListAll();
 		List<Organization> organizationListPopulated = new ArrayList<Organization>();
 		for (Organization organization : organizationList) {
 			organizationListPopulated.add(populateOrganization(organization));
 		}
-		return organizationListPopulated;
+		PageResult<Organization> result = new PageResult<Organization>();
+		result.result = organizationListPopulated;
+		result.from = 0;
+		result.total = organizationListPopulated.size();
+		return result;
 	}
+	public PageResult<Organization> findOrganizationsBySearchString( String searchString, PageRequest<Organization> request){
+		List<Organization> allOrganizations = this.organizationListDao.getOrganizationListAll();
+		
+		// TODO: Do this search in the database!
+		List<Organization> someOrganizations = new ArrayList<Organization>();
+		for (Organization organization : allOrganizations) {
+			if(organization.getNameEnglish().toLowerCase().contains(searchString.toLowerCase())){
+				someOrganizations.add(organization);
+			} else if(organization.getNameShortEnglish().toLowerCase().contains(searchString.toLowerCase())){
+				someOrganizations.add(organization);
+			} else if(organization.getNameNorwegian().toLowerCase().contains(searchString.toLowerCase())){
+				someOrganizations.add(organization);
+			} else if(organization.getNameShortNorwegian().toLowerCase().contains(searchString.toLowerCase())){
+				someOrganizations.add(organization);
+			}
+		}
+		List<Organization> organizationListPopulated = new ArrayList<Organization>();
+		for (Organization organization : someOrganizations) {
+			organizationListPopulated.add(populateOrganization(organization));
+		}
+		PageResult<Organization> result = new PageResult<Organization>();
+		result.from = 0;
+		result.result = organizationListPopulated;
+		result.total = organizationListPopulated.size();
+		return result;
+	}
+	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem) {
+		Organization organization = null;
+		organization = organizationDao.getOrganizationById(organizationListItem.getId());
+		if(organization != null){
+			organization = populateOrganization(organization);
+			return new ValueResult<Organization>(organization);
+		} else {
+			return new EmptyResult<Organization>();
+		}
+	}
+	public Boolean insertOrganization(Organization organization) {
+		if (organization.getContactPerson() != null) {
+			if (organization.getContactPerson().getContactInformation() != null) {
+				contactInformationDao.insertContactInformation(organization.getContactPerson().getContactInformation());
+			}
+			personDao.insertPerson(organization.getContactPerson());
+		}
+		
+		if (organization.getContactInformation() != null) {
+			contactInformationDao.insertContactInformation(organization.getContactInformation());
+		}
+		
+		organizationDao.insertOrganization(organization);
+		setForeignKeysForOrganization(organization);
+		
+		if (organization.getIpRangeList() != null) {
+			for (IpRange ipRange : organization.getIpRangeList()) {
+				ipRangeDao.insertIpRange(ipRange);
+			}
+		}
+		return Boolean.TRUE;
+	}
+	public Boolean updateOrganization(Organization organization) {
+		// TODO: Rewrite this!
+		this.updateOrganization(organization, organizationDao.getOrganizationById(organization.getId()));
+		return Boolean.TRUE;
+	}
+
+
 	
-	public void saveOrganization(Organization changedOrganization, Organization originalOrganization) {
+	private Organization populateOrganization(Organization organization) {
+		// TODO: Rewrite this!
+		
+		//organization = (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
+		if (organization.getParent() != null) {
+			organization.setParent(organizationDao.getOrganizationById(organization.getParent().getId()));
+		}
+		if (organization.getContactInformation() != null) {
+			organization.setContactInformation(contactInformationDao.getContactInformationByOrganization(organization));
+		}
+		if (organization.getContactPerson() != null) {
+			if (organization.getContactPerson().getContactInformation() != null) {
+				organization.getContactPerson().setContactInformation(contactInformationDao.getContactInformationByPerson(organization.getContactPerson()));
+			}
+			organization.setContactPerson(personDao.getPersonByOrganization(organization));
+		}
+		organization.setIpRangeList(ipRangeDao.getIpRangeListByOrganization(organization));
+		organization.setAccessList(accessDao.getAccessListByOrganization(organization));
+		List<OrganizationName> nameList = organizationNameDao.getOrganizationNameListByOrganization(organization);
+		// FIXME: Set the names of the organization!
+//		organization.setNameList();
+		return organization;
+	}
+
+	
+	
+	
+	
+
+	
+	private void saveOrganization(Organization organization) {
+		// TODO: Remove!
+//		saveOrganization(organization, organizationDao.getOrganizationById(organization.getId()));
+	}
+	private void saveOrganization(Organization changedOrganization, Organization originalOrganization) {
+		// TODO: Remove!
 		if (changedOrganization.getId() != null) {
 			// TODO: Handle optimistic locking.
 			//if (originalOrganization == null || (originalOrganization != null && !originalOrganization.getLastChanged().equals(changedOrganization.getLastChanged()))) {
@@ -110,60 +192,30 @@ public class OrganizationServiceImpl implements OrganizationService {
 			insertOrganization(changedOrganization);
 		}
 	}
-	
-	public Organization getOrganizationById(Integer organizationId) {
-		Organization organization = null;
-		organization = organizationDao.getOrganizationById(organizationId);
-		organization = populateOrganization(organization);
-		return organization;
-	}
-	
-	public List<OrganizationType> getOrganizationTypeList() {
-		return this.organizationTypeDao.getOrganizationTypeList();
-	}
-	
-	public PageResult<Organization> findOrganizationsBySearchStringRoles( String searchString, PageRequest<Organization> request) {
-		List<Organization> allOrganizations = this.organizationDao.getOrganizationList();
-		
-		// TODO: Must set the value here!
-		for (Organization organization : allOrganizations) {
-			if(organization.getNameList() == null){
-				ArrayList<OrganizationName> list = new ArrayList<OrganizationName>();
-				organization.setNameList(list);
-			}
-		}
-		
-		
-		List<Organization> someOrganizations = new ArrayList<Organization>();
-		for (Organization organization : allOrganizations) {
-			if(organization.getName().toLowerCase().contains(searchString.toLowerCase())){
-				someOrganizations.add(organization);
-			}
-		}
-		PageResult<Organization> result = new PageResult<Organization>();
-		result.from = 0; result.result = someOrganizations; result.total = someOrganizations.size();
-		return result;
-	}
-	
-	public PositionList getAllPositions(String dummy) {
+	private PositionList getAllPositions(String dummy) {
+		// TODO: Remove!
 		PositionList list = new PositionList();
-		List<Position> res = this.positionDao.getAllPositions();
-		Position arr[] = new Position[res.size()];
-		int i=0;
-		for (Position position : res) {
-			arr[i++] = position;
-		}
-		list.setList(arr);
+//		List<Position> res = this.positionDao.getAllPositions();
+//		Position arr[] = new Position[res.size()];
+//		int i=0;
+//		for (Position position : res) {
+//			arr[i++] = position;
+//		}
+//		list.setList(arr);
 		return list;
 	}
 	
 	private void updateOrganization(Organization changedOrganization, Organization originalOrganization) {		
+		// TODO: Rewrite this!
 		organizationDao.updateOrganization(changedOrganization);
 		setForeignKeysForOrganization(changedOrganization);
 		savePerson(changedOrganization.getContactPerson(), changedOrganization.getContactPerson());
 		saveContactInformation(changedOrganization.getContactInformation(), originalOrganization.getContactInformation());
 		saveIpRangeList(changedOrganization.getIpRangeList(), originalOrganization.getIpRangeList());
-		saveOrganizationNameList(changedOrganization.getNameList(), originalOrganization.getNameList());
+		
+		// TODO: Rewrite saveOrganizationNameList
+//		saveOrganizationNameList(changedOrganization.getNameList(), originalOrganization.getNameList());
+
 		saveAccessList(changedOrganization.getAccessList(), originalOrganization.getAccessList());
 		saveSupplierSourceList(changedOrganization.getSupplierSourceList(), originalOrganization.getSupplierSourceList());
 	}
@@ -207,7 +259,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		if (insertAndUpdateList != null) {
 			for (IpRange ipRange : insertAndUpdateList) {
-				ipRangeDao.saveIpRange(ipRange);
+				// FIXME: Insert or update!
+//				ipRangeDao.saveIpRange(ipRange);
 			}
 		}
 	}
@@ -218,12 +271,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 		List<OrganizationName> insertAndUpdateList = listHelper.getInsertAndUpdateList(changedOrganizationNameList, originalOrganizationNameList);
 		if (deleteList != null) {
 			for (OrganizationName organizationName : deleteList) {
-				organizationDao.deleteOrganizationName(organizationName);
+				// FIXME: Insert or update!
+//				organizationDao.deleteOrganizationName(organizationName);
 			}
 		}
 		if (insertAndUpdateList != null) {
 			for (OrganizationName organizationName : insertAndUpdateList) {
-				organizationDao.saveOrganizationName(organizationName);
+				// FIXME: Insert or update!
+//			organizationDao.saveOrganizationName(organizationName);
 			}
 		}
 	}
@@ -244,7 +299,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 	}
 	
-	private void insertOrganization(Organization organization) {
+	private void insertOrganization2(Organization organization) {
+		// TODO: Remove
 		if (organization.getContactPerson() != null) {
 			if (organization.getContactPerson().getContactInformation() != null) {
 				contactInformationDao.insertContactInformation(organization.getContactPerson().getContactInformation());
@@ -259,11 +315,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 		organizationDao.insertOrganization(organization);
 		setForeignKeysForOrganization(organization);
 		
-		if (organization.getNameList() != null) {
-			for (OrganizationName organizationName : organization.getNameList()) {		
-				organizationDao.insertOrganizationName(organizationName);
-			}
-		}
+		// FIXME: Insert name list!
+//		if (organization.getNameList() != null) {
+//			for (OrganizationName organizationName : organization.getNameList()) {		
+//				organizationDao.insertOrganizationName(organizationName);
+//			}
+//		}
 		if (organization.getIpRangeList() != null) {
 			for (IpRange ipRange : organization.getIpRangeList()) {
 				ipRangeDao.insertIpRange(ipRange);
@@ -271,25 +328,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 	}
 	
-	private Organization populateOrganization(Organization organization) {
-		//organization = (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
-		if (organization.getParent() != null) {
-			organization.setParent(organizationDao.getOrganizationById(organization.getParent().getId()));
-		}
-		if (organization.getContactInformation() != null) {
-			organization.setContactInformation(contactInformationDao.getContactInformationById(organization.getContactInformation().getId()));
-		}
-		if (organization.getContactPerson() != null) {
-			if (organization.getContactPerson().getContactInformation() != null) {
-				organization.getContactPerson().setContactInformation(contactInformationDao.getContactInformationById(organization.getContactPerson().getContactInformation().getId()));
-			}
-			organization.setContactPerson(personDao.getPersonById(organization.getContactPerson().getId()));
-		}
-		organization.setIpRangeList(ipRangeDao.getIpRangeListByOrganizationId(organization.getId()));
-		organization.setAccessList(accessDao.getAccessListByOrganizationId(organization.getId()));
-		organization.setNameList(organizationDao.getOrganizationNameListByOrganizationId(organization.getId()));	
-		return organization;
-	}
 	
 	private void saveSupplierSourceList(List<SupplierSource> changedSupplierSourceList, List<SupplierSource> originalSupplierSourceList) {
 		ModifiedListHelper<SupplierSource> listHelper = new ModifiedListHelper<SupplierSource>();
@@ -327,11 +365,51 @@ public class OrganizationServiceImpl implements OrganizationService {
 					ipRange.setOrganizationId(organization.getId());
 				}
 			}
-			if (organization.getNameList() != null) {
-				for (OrganizationName organizationName: organization.getNameList()) {
-					organizationName.setOrganizationId(organization.getId());
-				}
-			}
+			// FIXME: Insert name list!
+//			if (organization.getNameList() != null) {
+//				for (OrganizationName organizationName: organization.getNameList()) {
+//					organizationName.setOrganizationId(organization.getId());
+//				}
+//			}
 		}
+	}
+	
+	
+	
+	
+	
+	
+	
+
+
+
+	// Set DAOs
+
+	public void setOrganizationDao(OrganizationDao organizationDao) {
+		this.organizationDao = organizationDao;
+	}
+	public void setOrganizationTypeDao(OrganizationTypeDao organizationTypeDao) {
+		this.organizationTypeDao = organizationTypeDao;
+	}
+	public void setPositionDao(PositionDao positionDao) {
+		this.positionDao = positionDao;
+	}
+	public void setPersonDao(PersonDao personDao) {
+		this.personDao = personDao;
+	}
+	public void setAccessDao(AccessDao accessDao) {
+		this.accessDao = accessDao;
+	}
+	public void setContactInformationDao(ContactInformationDao contactInformationDao) {
+		this.contactInformationDao = contactInformationDao;
+	}
+	public void setIpRangeDao(IpRangeDao ipRangeDao) {
+		this.ipRangeDao = ipRangeDao;
+	}
+	public void setResourceDao(ResourceDao resourceDao) {
+		this.resourceDao = resourceDao;
+	}
+	public void setSupplierSourceDao(SupplierSourceDao supplierSourceDao) {
+		this.supplierSourceDao = supplierSourceDao;
 	}
 }

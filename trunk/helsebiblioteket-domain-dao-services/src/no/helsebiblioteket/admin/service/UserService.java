@@ -11,17 +11,23 @@ import java.util.List;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.request.PageRequest;
-import no.helsebiblioteket.admin.request.PageResult;
+import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
 
 public interface UserService extends Serializable {
-	public User createUser(User user);
-	public User saveUser(User user);
-	public User findUserByUsername(User user);
+	public ListResult<Role> getRoleListAll(String DUMMY);
+	public ListResult<Position> getPositionListAll(String DUMMY);
+	public SingleResult<Role> getRoleByKey(String key);
+
+	// TODO: Remove this and use findUsersBySearchStringRoles with empty string and list?
+	public PageResult<User> getUserListAll(PageRequest<User> request);
+	// TODO: Use UserListItem as the result here.
 	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request);
-	public PageResult<User> getAllUsers(PageRequest<User> request);
-	public List<Role> getAllUserRoles();
-	public Role getRoleByKey(Role role);
-	// TODO: Denne finnes også i OrganizationService?
-	public List<Position> getAllUserPositions();
+
+	public SingleResult<User> findUserByUsername(String username);
+
+	public Boolean insertUser(User user);
+	public Boolean updateUser(User user);
 }

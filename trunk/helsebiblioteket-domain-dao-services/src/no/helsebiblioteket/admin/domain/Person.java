@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class Person {
 	private Integer id;
-	private String firstName = "";
-	private String lastName = "";
-	private String employer = "";
-	private Position position = new Position();
+	private String firstName;
+	private String lastName;
+	private String employer;
+	private Position position;
 	private boolean isStudent;
 	private String studentNumber;
 	private String hprNumber;
-	private ContactInformation contactInformation = new ContactInformation();
-	private Profile profile = new Profile();
+	private ContactInformation contactInformation;
+	private Profile profile;
 	private User user;
-	private Date lastChanged = null;
+	private Date lastChanged;
 	
 	public String getName() {
 		return this.firstName + " " + lastName;
@@ -91,8 +91,4 @@ public class Person {
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-	// FIXME: Hva i alle dager er dette? Skaper problemer for Axis!
-//	public void setStudent(boolean isStudent) {
-//		this.isStudent = isStudent;
-//	}
 }

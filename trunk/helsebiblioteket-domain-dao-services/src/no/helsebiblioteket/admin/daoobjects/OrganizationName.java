@@ -1,7 +1,7 @@
-package no.helsebiblioteket.admin.domain;
+package no.helsebiblioteket.admin.daoobjects;
 
 import java.util.Date;
-import java.util.Locale;
+
 
 public class OrganizationName {
 	private Integer id = null;

@@ -3,19 +3,14 @@ package no.helsebiblioteket.admin.dao;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.Organization;
 
 public interface IpRangeDao {
-	public IpRange getIpRangeById(Integer ipRangeId);
-	
+	// Edit
+	public void insertIpRange(IpRange ipRange);
+	public void updateIpRange(IpRange ipRange);
 	public void deleteIpRange(IpRange ipRange);
 	
-	public void insertIpRange(IpRange ipRange);
-	
-	public void updateIpRange(IpRange ipRange);
-	
-	public void saveIpRange(IpRange changedIpRange, IpRange originalIpRange);
-	
-	public void saveIpRange(IpRange ipRange);
-	
-	public List<IpRange> getIpRangeListByOrganizationId(Integer organizationId);
+	// Fetch
+	public List<IpRange> getIpRangeListByOrganization(Organization organization);
 }

@@ -1,10 +1,10 @@
 package no.helsebiblioteket.admin.domain;
 
 public class ResourceType {
-	private Integer id = null;
-	private String description = null;
-	private String name = null;
-	private String key = null;
+	private Integer id;
+	private String description;
+	private String name;
+	private String key;
 	
 	public Integer getId() {
 		return id;

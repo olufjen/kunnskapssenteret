@@ -11,6 +11,12 @@ import java.util.List;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 
 public interface OrganizationTypeDao {
-	public List<OrganizationType> getOrganizationTypeList();
-	public OrganizationType getOrganizationType(String organizationTypeKey);
+	// Edit
+	public void insertOrganizationTypeDao(OrganizationTypeDao organizationTypeDao);
+	public void updateOrganizationTypeDao(OrganizationTypeDao organizationTypeDao);
+	public void deleteOrganizationTypeDao(OrganizationTypeDao organizationTypeDao);
+
+	// Fetch
+	public OrganizationType getOrganizationTypeByKey(String organizationTypeKey);
+	public List<OrganizationType> getOrganizationTypeListAll();
 }

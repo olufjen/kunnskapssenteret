@@ -1,7 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
 /**
- * @author Leif Torger Gr�ndahl, nokc.no
+ * @author Leif Torger Grøndahl, nokc.no
  * Class represents the link between requestor and resource
  * Typical usage: A user, an organization, a role or a type of organization
  * contains lists of objects of type Access. The access object contains the
@@ -11,22 +11,15 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Access {
-	private Integer id = null;
-	private SupplierSource supplierSource = null;
-	private Organization organization = null;
-	private Organization organizationAsResource = null;
-	private AccessType type = null;
-	private Organization providedBy = null;
-	private Date validFrom = null;
-	private Date validTo = null;
-	private Date lastChanged = null;
-	
-	// foreign keys
-	private Integer accessTypeId;
-	private Integer userId;
-	private Integer userRoleId;
-	private Integer organizationTypeId;
-	private Integer organizationId;
+	private Integer id;
+	private SupplierSource supplierSource;
+	private Organization organization;
+	private Organization organizationAsResource;
+	private AccessType type;
+	private Organization providedBy;
+	private Date validFrom;
+	private Date validTo;
+	private Date lastChanged;
 	
 	public Organization getOrganization() {
 		return organization;
@@ -77,41 +70,4 @@ public class Access {
 		this.providedBy = providedBy;
 	}
 	
-	// foreign keys
-	public Integer getAccessTypeId() {
-		return accessTypeId;
-	}
-	public void setAccessTypeId(Integer accessTypeId) {
-		this.accessTypeId = accessTypeId;
-	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-	public Integer getUserRoleId() {
-		return userRoleId;
-	}
-	public void setUserRoleId(Integer userRoleId) {
-		this.userRoleId = userRoleId;
-	}
-	public Integer getOrgTypeId() {
-		return organizationTypeId;
-	}
-	public void setOrgTypeId(Integer orgTypeId) {
-		this.organizationTypeId = orgTypeId;
-	}
-	public Organization getOrganizationAsResource() {
-		return organizationAsResource;
-	}
-	public void setOrganizationAsResource(Organization organizationAsResource) {
-		this.organizationAsResource = organizationAsResource;
-	}
-	public Integer getOrganizationId() {
-		return organizationId;
-	}
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
-	}
 }

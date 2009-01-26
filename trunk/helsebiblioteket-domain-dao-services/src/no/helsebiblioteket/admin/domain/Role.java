@@ -3,11 +3,11 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Role {
-	private String key = "";
-	private String name = "";
+	private String key;
+	private String name;
 	private int roleId;
-	private Date lastChanged = null;
-	private String description = null;
+	private Date lastChanged;
+	private String description;
 	
 	public String getName() {
 		return name;
