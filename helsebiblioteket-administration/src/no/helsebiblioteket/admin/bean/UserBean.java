@@ -274,7 +274,7 @@ public class UserBean {
 							"user_details_no_employer"));
 			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getName(), "", false);
 			this.availableEmployers.add(dummyOption);
-			for (Organization organization : this.organizationService.getAllOrganizations()) {
+			for (Organization organization : this.organizationService.getOrganizationList()) {
 				SelectItem option = new SelectItem(""+organization.getId(), organization.getName(), "", false);
 				this.availableEmployers.add(option);
 			}

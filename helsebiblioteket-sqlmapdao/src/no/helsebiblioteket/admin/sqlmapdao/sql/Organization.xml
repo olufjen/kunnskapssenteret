@@ -32,7 +32,7 @@
 		values (#id#, #parent.id#, #description#, #type.id#, #contactInformation.id#, #contactPerson.id#, now());
 	</insert>
 	<update id="updateOrganization" parameterClass="organization">
-		update organization set
+		update tbl_organization set
 		org_unit_parent_id = #parent.id#,
       	descr = #description#,
       	org_type_id = #type.id#,

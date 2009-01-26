@@ -12,6 +12,7 @@
 		<result property="name" column="name" />
 		<result property="description" column="descr" />
 		<!-- TODO: Denne finnes vel ikke?-->
+		<!-- TODO: Leif Torger sier: det stemmer nok, usikker på om den trengs også-->
 		<!--<result property="lastChanged" column="last_changed" />-->
 	</resultMap>
 	<select id="getUserRoleListByUserId" resultMap="getRoleResultMap" parameterClass="integer">

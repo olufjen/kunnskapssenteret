@@ -49,7 +49,7 @@ public class OrganizationBean {
 	}
 	public List<Organization> getOrganizations() {
 		//if(this.organizations == null){
-			this.organizations = this.organizationService.getAllOrganizations();
+			this.organizations = this.organizationService.getOrganizationList();
 		//}
 		return this.organizations;
 	}

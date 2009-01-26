@@ -55,7 +55,8 @@
 		where org_unit_id = #organizationId#;
 	</select>
 	
-	<!--  <insert id="insertAccess" parameterClass="access">
+	<!-- TODO: finish  
+	<insert id="insertAccess" parameterClass="access">
 		<selectKey resultClass="int" keyProperty="id">
 			SELECT nextval('tbl_ip_address_ip_address_id_seq') as id;
 		</selectKey>
@@ -74,4 +75,9 @@
 			) 
 		values (#id#, #type.id#, ##, ##, ##, ##, ##, ##, ##, ##, now());
 	</insert>-->
+	<delete id="deleteAccess" parameterClass="access">
+  		delete from tbl_access
+  		where
+  		access_id = #id#;
+  </delete>
 </sqlMap>
