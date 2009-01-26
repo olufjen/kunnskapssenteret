@@ -14,12 +14,37 @@ import no.helsebiblioteket.admin.domain.User;
 
 
 public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
+	// TODO: Go through all!
+	public void insertUser(User user){
+
+		getSqlMapClientTemplate().insert("insertUser", user);		
+
+	}
+	public void updateUser(User user){
+		
+		getSqlMapClientTemplate().update("updateUser", user);
+
+	}
+	public void deleteUser(User user){
+		
+	}
+	public User getUserByUsername(String username){
+		return null;
+	}
+
+	
+	
+	
+	
+	
+	
 	
 	public void setForeignKeysForUser(User user) {
 		if (user != null) {
 			if (user.getAccessList() != null) {
 				for (Access access : user.getAccessList()) {
-					access.setUserId(user.getId());
+					// TODO: What is this?
+//					access.setUserId(user.getId());
 				}
 			}
 		}
@@ -37,13 +62,7 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 		return (User) getSqlMapClientTemplate().queryForObject("getUserByUsername", user.getUsername());
 	}
 
-	public void insertUser(User user) {
-		getSqlMapClientTemplate().insert("insertUser", user);		
-	}
 
-	public void updateUser(User user) {
-		getSqlMapClientTemplate().update("updateUser", user);
-	}
 
 	public List<User> getAllUsers() {
 		List<User> users = (List<User>) getSqlMapClientTemplate().queryForList("getAllUsers");

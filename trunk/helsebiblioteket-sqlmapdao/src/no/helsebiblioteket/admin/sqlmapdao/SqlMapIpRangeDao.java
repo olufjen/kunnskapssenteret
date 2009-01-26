@@ -6,24 +6,49 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.Organization;
 
 public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeDao {
+	// TODO: Go through all!
+	public void insertIpRange(IpRange ipRange){
+		
+		getSqlMapClientTemplate().insert("insertIpRange", ipRange);
+
+	}
+	public void updateIpRange(IpRange ipRange){
+		
+		getSqlMapClientTemplate().update("updateIpRange", ipRange);
+
+	}
+	public void deleteIpRange(IpRange ipRange){
+
+		getSqlMapClientTemplate().delete("deleteIpRange", ipRange);
+
+	}
+	public List<IpRange> getIpRangeListByOrganization(Organization organization){
+		return null;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public IpRange getIpRangeById(Integer ipRangeId) {
 		return (IpRange) getSqlMapClientTemplate().queryForObject("getProfileById", ipRangeId);
 	}
 	
-	public void deleteIpRange(IpRange ipRange) {
-		getSqlMapClientTemplate().delete("deleteIpRange", ipRange);
-	}
 	
-	public void insertIpRange(IpRange ipRange) {
-		getSqlMapClientTemplate().insert("insertIpRange", ipRange);
-	}
 	
-	public void updateIpRange(IpRange ipRange) {
-		getSqlMapClientTemplate().update("updateIpRange", ipRange);
-	}
 	
 	public void saveIpRange(IpRange ipRange) {
 		if (ipRange.getId() == null) {
