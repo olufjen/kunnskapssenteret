@@ -18,7 +18,7 @@ public class LogOutController extends HttpControllerPlugin {
 		String gotoUrl = request.getParameter("goto");
 		if(gotoUrl==null) gotoUrl = this.gotoUrl;
 		
-		loggedInFunction.logOut();
+		loggedInFunction.logOutUser();
 		response.sendRedirect(gotoUrl);
 	}
 	public void setGotoUrl(String gotoUrl) {

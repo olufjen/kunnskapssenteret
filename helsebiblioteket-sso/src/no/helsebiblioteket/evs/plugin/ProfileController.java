@@ -43,13 +43,12 @@ public class ProfileController extends HttpControllerPlugin {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
-		Object loggedIn = loggedInFunction.loggedIn();
-		if((loggedIn == null) || ( ! (loggedIn instanceof User))){
+		User user = loggedInFunction.loggedInUser();
+		if(user == null){
 			element.appendChild(document.createElement("notloggedin"));
     		String referer = request.getParameter(this.parameterNames.get("from"));
     		response.sendRedirect(referer);
 		} else {
-			User user = (User) loggedIn;
 			String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
 			if(hprNumber == null) { hprNumber = "";}
 			// TODO: Check for errors.
@@ -66,7 +65,7 @@ public class ProfileController extends HttpControllerPlugin {
 				user.getPerson().setHprNumber(hprNumber);
 				// TODO: Saving may fail though!
 		    	boolean saved = true;
-		    	this.userService.saveUser(user);
+		    	this.userService.updateUser(user);
 		    	if( ! saved){
 		    		Element values = document.createElement("values");
 		    		userXML(user, hprNumber, document, values);
@@ -218,15 +217,14 @@ public class ProfileController extends HttpControllerPlugin {
 //		result.append("<passwordrepeat></passwordrepeat>");
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Object loggedIn = loggedInFunction.loggedIn();
+		User user = loggedInFunction.loggedInUser();
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
-		if((loggedIn == null) || ( ! (loggedIn instanceof User))){
+		if(user == null){
 			Element notloggedin = document.createElement("notloggedin");
 			element.appendChild(notloggedin);
 		} else {
-			User user = (User) loggedIn;
 			Element values = document.createElement("values");
 			userXML(user, null, document, values);
 			element.appendChild(values);
