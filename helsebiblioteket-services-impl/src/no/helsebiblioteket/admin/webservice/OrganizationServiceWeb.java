@@ -1,10 +1,7 @@
 package no.helsebiblioteket.admin.webservice;
 
-import java.util.List;
-
 import javax.xml.namespace.QName;
 
-import org.apache.axis2.AxisFault;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.rpc.client.RPCServiceClient;
@@ -13,94 +10,81 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.PositionList;
-import no.helsebiblioteket.admin.request.PageRequest;
-import no.helsebiblioteket.admin.request.PageResult;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
-public class OrganizationServiceWeb implements OrganizationService {
+public class OrganizationServiceWeb extends BasicWebService implements OrganizationService {
 	protected static final Log logger = LogFactory.getLog(OrganizationServiceWeb.class);
 	private RPCServiceClient serviceClient;
 	private EndpointReference targetEPR;
 	private Options options;
-	private QName allPositionsName;
+	private QName organizationTypeListAllName;
+	private QName organizationTypeByKeyName;
+	private QName organizationListAllName;
+	private QName findOrganizationsBySearchString;
+	private QName organizationByListItemName;
+	private QName insertOrganizationName;
+	private QName updateOrganizationName;
 	public void init(){
 		options = serviceClient.getOptions();
 	    options.setTo(targetEPR);
 	}
-
-	public void createOrganization(Organization organization) {
-		// TODO Auto-generated method stub
-
+	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY) {
+		Object[] args = new Object[] { DUMMY  };
+		Class[] returnTypes = new Class[] { ListResult.class };
+		return (ListResult<OrganizationType>) invoke(this.organizationTypeListAllName, args, returnTypes);
 	}
-	public PageResult<Organization> findOrganizationsBySearchStringRoles(
-			String searchString, PageRequest<Organization> request) {
-		// TODO Auto-generated method stub
-		return null;
+	public SingleResult<OrganizationType> getOrganizationTypeByKey(String key) {
+		Object[] args = new Object[] { key  };
+		Class[] returnTypes = new Class[] { SingleResult.class };
+		return (SingleResult<OrganizationType>) invoke(this.organizationTypeByKeyName, args, returnTypes);
 	}
-	
-	public PositionList getAllPositions(String dummy) {
-		Object[] args = new Object[] { dummy  };
-		Class[] returnTypes = new Class[] { PositionList.class };
-		try {
-			Object[] response = serviceClient.invokeBlocking(
-					this.allPositionsName, args, returnTypes);
-			PositionList result = (PositionList) response[0];
-			
-			return result;
-		} catch (AxisFault e) {
-			// TODO What do we do here?
-			logger.error(e);
-			return new PositionList();
-		}
+	public PageResult<Organization> getOrganizationListAll(PageRequest<Organization> request) {
+		Object[] args = new Object[] { request  };
+		Class[] returnTypes = new Class[] { PageResult.class };
+		return (PageResult<Organization>) invoke(this.organizationListAllName, args, returnTypes);
 	}
-	
-	
-	public List<OrganizationType> getOrganizationTypeList() {
-		// TODO Auto-generated method stub
-		return null;
+	public PageResult<Organization> findOrganizationsBySearchString(String searchString, PageRequest<Organization> request) {
+		Object[] args = new Object[] { request  };
+		Class[] returnTypes = new Class[] { PageResult.class };
+		return (PageResult<Organization>) invoke(this.findOrganizationsBySearchString, args, returnTypes);
 	}
 
+
+	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem) {
+		Object[] args = new Object[] { organizationListItem  };
+		Class[] returnTypes = new Class[] { PageResult.class };
+		return (SingleResult<Organization>) invoke(this.organizationByListItemName, args, returnTypes);
+	}
+	public Boolean insertOrganization(Organization organization) {
+		Object[] args = new Object[] { organization  };
+		Class[] returnTypes = new Class[] { PageResult.class };
+		return (Boolean) invoke(this.insertOrganizationName, args, returnTypes);
+	}
+	public Boolean updateOrganization(Organization organization) {
+		Object[] args = new Object[] { organization  };
+		Class[] returnTypes = new Class[] { PageResult.class };
+		return (Boolean) invoke(this.updateOrganizationName, args, returnTypes);
+	}
+
+	
+	public Log getLogger() {
+		return this.logger;
+	}
+	public RPCServiceClient getServiceClient() {
+		return serviceClient;
+	}
+
+	
 	public void setServiceClient(RPCServiceClient serviceClient) {
 		this.serviceClient = serviceClient;
 	}
 
 	public void setTargetEPR(EndpointReference targetEPR) {
 		this.targetEPR = targetEPR;
-	}
-
-	public void setAllPositionsName(QName allPositionsName) {
-		this.allPositionsName = allPositionsName;
-	}
-
-	@Override
-	public void saveOrganization(Organization organization) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public OrganizationType getOrganizationTypeByKey(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Organization getOrganizationById(Integer organizationId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Organization> getOrganizationList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void saveOrganization(Organization changedOrganization,
-			Organization originalOrganization) {
-		// TODO Auto-generated method stub
-		
 	}
 }
