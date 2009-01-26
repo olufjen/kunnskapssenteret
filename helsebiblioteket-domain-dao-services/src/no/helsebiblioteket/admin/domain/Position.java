@@ -6,9 +6,6 @@ public class Position {
 	private String name;
 	private String description;
 	
-	// foreign keys
-//	private Integer organizationTypeId;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -17,12 +14,6 @@ public class Position {
 	}
 	public String getKey() { return key; }
 	public void setKey(String key) { this.key = key; }
-//	public Integer getOrganizationTypeId() {
-//		return organizationTypeId;
-//	}
-//	public void setOrganizationTypeId(Integer organizationTypeId) {
-//		this.organizationTypeId = organizationTypeId;
-//	}
 	public String getDescription() {
 		return description;
 	}

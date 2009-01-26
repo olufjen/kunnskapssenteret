@@ -1,11 +1,11 @@
 package no.helsebiblioteket.admin.domain;
 
 public class AccessType {
-	private Integer id = null;
-	private String description = null;
-	private String name = null;
-	private String key = null;
-	private String category = null;
+	private Integer id;
+	private String description;
+	private String name;
+	private String key;
+	private String category;
 	
 	public Integer getId() {
 		return id;

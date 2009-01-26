@@ -3,11 +3,11 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Profile {
-	private Integer id = null;
-	private Boolean receiveNewsletter = false;
-	private Boolean participateSurvey = false;
+	private Integer id;
+	private Boolean receiveNewsletter;
+	private Boolean participateSurvey;
 	private Person person;
-	private Date lastChanged = null;
+	private Date lastChanged;
 	
 	public Boolean getReceiveNewsletter() { return receiveNewsletter; }
 	public void setReceiveNewsletter(Boolean receiveNewsletter) { this.receiveNewsletter = receiveNewsletter; }

@@ -1,20 +1,17 @@
 package no.helsebiblioteket.admin.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class User {
 	protected Integer id;
-	protected String username = "";
-	protected String password = "";
-	protected Organization organization = new Organization();
-//	protected Role role = new Role();
-	protected List<Access> accessList = new ArrayList<Access>();
-	private Person person = new Person();
-	// must be initated to NULL.
-	private List<Role> roleList = null;
-	private Date lastChanged = null;
+	protected String username;
+	protected String password;
+	protected Organization organization;
+	protected List<Access> accessList;
+	private Person person;
+	private List<Role> roleList;
+	private Date lastChanged;
 	
 	public boolean hasRole(Role role){
 		for (Role userRole : this.roleList) {
@@ -24,7 +21,7 @@ public class User {
 		}
 		return false;
 	}
-	// TODO: Now fetching main role with: user.roleList[0].name
+
 	public List<Role> getRoleList(){
 		return roleList;
 	}
@@ -57,13 +54,6 @@ public class User {
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
-//	
-//	public Role getRole() {
-//		return role;
-//	}
-//	public void setRole(Role role) {
-//		this.role = role;
-//	}
 	public List<Access> getAccessList() {
 		return accessList;
 	}

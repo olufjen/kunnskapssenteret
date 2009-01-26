@@ -3,15 +3,14 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class ContactInformation {
-	// Id's most NOT be set this to -1. Initial values for keys is NULL. 
 	private Integer id;
-	private String postalAddress = "";
-	private String postalCode = "";
-	private String telephoneNumber = "";
-	private String postalLocation = "";
-	private String email = "";
-	private Person person = null;
-	private Date lastChanged = null;
+	private String postalAddress;
+	private String postalCode;
+	private String telephoneNumber;
+	private String postalLocation;
+	private String email;
+	private Person person;
+	private Date lastChanged;
 	
 	public Integer getId() {
 		return id;

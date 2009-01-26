@@ -1,16 +1,13 @@
 package no.helsebiblioteket.admin.dao;
 
-import java.util.List;
-
 import no.helsebiblioteket.admin.domain.User;
 
 public interface UserDao {
-	public User findUser(String username);
-	public User getUserByUsername(User user);
-	public User getUserById(Integer userId);
+	// Edit
 	public void insertUser(User user);
 	public void updateUser(User user);
-	public void setForeignKeysForUser(User user);
+	public void deleteUser(User user);
 
-	public List<User> getAllUsers();
+	// Fetch
+	public User getUserByUsername(String username);
 }

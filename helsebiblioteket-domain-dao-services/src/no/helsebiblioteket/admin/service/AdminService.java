@@ -7,5 +7,7 @@ package no.helsebiblioteket.admin.service;
 
 import java.io.Serializable;
 
+// TODO: Remove this!
 public interface AdminService extends Serializable {
+
 }

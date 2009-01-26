@@ -5,9 +5,10 @@ import java.io.Serializable;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
 
 public interface LoginService extends Serializable {
-    public User logInUser(User user);
-    public boolean sendPasswordEmail(User user);
-    public Organization logInIpAddress(IpAddress address);
+    public SingleResult<User> loginUserByUsernamePassword(String username, String password);
+    public SingleResult<Organization> loginOrganizationByIpAddress(IpAddress ipAddress);
+    public Boolean sendPasswordEmail(User user);
 }

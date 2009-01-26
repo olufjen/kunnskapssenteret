@@ -1,10 +1,10 @@
 package no.helsebiblioteket.admin.domain;
 
 public class OrganizationType {
-	private Integer id = null;
-	private String name = null;
-	private String description = null;
-	private String key = null;
+	private Integer id;
+	private String name;
+	private String description;
+	private String key;
 	
 	public OrganizationType() {
 	}

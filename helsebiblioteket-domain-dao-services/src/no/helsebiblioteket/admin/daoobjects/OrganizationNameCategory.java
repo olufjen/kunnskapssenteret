@@ -1,4 +1,4 @@
-package no.helsebiblioteket.admin.domain;
+package no.helsebiblioteket.admin.daoobjects;
 
 public enum OrganizationNameCategory {
 	NORMAL, SHORT
