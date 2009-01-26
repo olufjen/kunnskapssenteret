@@ -76,7 +76,9 @@ public class LocateFaultyUsersMain {
 		}
 		
 		for (User user : allEndUsersAsHelsebibliotekUsers) {
-			userService.createUser(user);
+			// FIXME: Are they unique? Need test?
+//			userService.createUser(user);
+			userService.insertUser(user);
 		}
 	}
 	
