@@ -11,6 +11,33 @@ import no.helsebiblioteket.admin.domain.Resource;
 
 
 public class SqlMapResourceDao extends SqlMapClientDaoSupport implements ResourceDao {
+	// TODO: Go through all!
+	public void insertResource(Resource resource){
+		
+		getSqlMapClientTemplate().insert("insertResource", resource);
+
+	}
+	public void updateResource(Resource resource){
+		
+		getSqlMapClientTemplate().update("updateResource", resource);
+
+	}
+	public void deleteResource(Resource resource){
+		
+		getSqlMapClientTemplate().delete("deleteResource", resource);
+
+	}
+	public List<Resource> getResourceListAll(){
+		return null;
+	}
+
+
+	
+	
+	
+	
+	
+	
 	
 	public Resource getResourceById(Integer resourceId) {
 		return (Resource) getSqlMapClientTemplate().queryForObject("getResourceById", resourceId);
@@ -20,15 +47,6 @@ public class SqlMapResourceDao extends SqlMapClientDaoSupport implements Resourc
 		return (List<Resource>) getSqlMapClientTemplate().queryForList("getResourceList");
 	}
 	
-	public void insertResource(Resource resource) {
-		getSqlMapClientTemplate().insert("insertResource", resource);
-	}
 	
-	public void updateResource(Resource resource) {
-		getSqlMapClientTemplate().update("updateResource", resource);
-	}
 	
-	public void deleteResource(Resource resource) {
-		getSqlMapClientTemplate().delete("deleteResource", resource);
-	}
 }

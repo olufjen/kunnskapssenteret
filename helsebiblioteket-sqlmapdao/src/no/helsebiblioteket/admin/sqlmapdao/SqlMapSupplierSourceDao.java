@@ -12,6 +12,28 @@ import no.helsebiblioteket.admin.domain.SupplierSource;
 
 
 public class SqlMapSupplierSourceDao extends SqlMapClientDaoSupport implements SupplierSourceDao {
+	// TODO: Go through all!
+	public void insertSupplierSource(SupplierSource supplierSource){
+		
+		getSqlMapClientTemplate().insert("insertSupplierSource", supplierSource);
+
+	}
+	public void updateSupplierSource(SupplierSource supplierSource){
+		
+		getSqlMapClientTemplate().update("updateSupplierSource", supplierSource);
+
+	}
+	public void deleteSupplierSource(SupplierSource supplierSource){
+		
+		getSqlMapClientTemplate().delete("deleteSupplierSource", supplierSource);
+
+	}
+	public List<SupplierSource> getSupplierSourceListAll(){
+		return null;
+	}
+
+	
+	
 	
 	public Resource getSupplierSourceById(Integer supplierSourceId) {
 		return (Resource) getSqlMapClientTemplate().queryForObject("getSupplierSourceById", supplierSourceId);
@@ -21,15 +43,5 @@ public class SqlMapSupplierSourceDao extends SqlMapClientDaoSupport implements S
 		return (List<SupplierSource>) getSqlMapClientTemplate().queryForList("getSupplierSourceList");
 	}
 	
-	public void insertSupplierSource(SupplierSource supplierSource) {
-		getSqlMapClientTemplate().insert("insertSupplierSource", supplierSource);
-	}
 	
-	public void updateSupplierSource(SupplierSource supplierSource) {
-		getSqlMapClientTemplate().update("updateSupplierSource", supplierSource);
-	}
-	
-	public void deleteSupplierSource(SupplierSource supplierSource) {
-		getSqlMapClientTemplate().delete("deleteSupplierSource", supplierSource);
-	}
 }

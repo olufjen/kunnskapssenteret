@@ -7,9 +7,43 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.domain.Access;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.User;
 
 public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao {
+	// TODO: Go through all!
+	public void insertAccess(Access access){
+		
+	}
+	public void updateAccess(Access access){
+		
+	}
+	public void deleteAccess(Access access){
+		
+		getSqlMapClientTemplate().delete("deleteAccess", access);
 
+	}
+	public List<Access> getAccessListByUser(User user){
+		return null;
+	}
+	public List<Access> getAccessListByOrganization(Organization organization){
+		return null;
+	}
+	public List<Access> getAccessListByOrganizationType(OrganizationType organizationType){
+		return null;
+	}
+
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
 	public Access getAccessById(Integer accessId) {
 		return (Access) getSqlMapClientTemplate().queryForObject("getAccessById", accessId);
 	}
@@ -26,24 +60,7 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 		return (List<Access>) getSqlMapClientTemplate().queryForList("getAccessListByRoleId", userRoleId);
 	}
 
-	@Override
-	public void deleteAccess(Access access) {
-		getSqlMapClientTemplate().delete("deleteAccess", access);
-	}
 
-	@Override
-	public void insertAccess(Access access) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateAccess(Access access) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public List<Access> getAccessListByOrganizationId(Integer organizationId) {
 		return (List<Access>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organizationId);
 	}
