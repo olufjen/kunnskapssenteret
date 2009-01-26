@@ -17,6 +17,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 
@@ -68,11 +71,10 @@ public class LoginBean {
 	}
 	public String login() {
 		logger.info("method 'actionLogin' invoked");
-		User user = new User();
-		user.setUsername(this.getEmail());
-		user.setPassword(this.getPassword());
-		user = this.loginService.logInUser(user);
-		if( user == null ){
+		String username = this.getEmail();
+		String password = this.getPassword();
+		SingleResult<User> result = this.loginService.loginUserByUsernamePassword(username, password);
+		if(result instanceof EmptyResult){
 			this.failed = true;
 			return "back_to_login";
 		} else {

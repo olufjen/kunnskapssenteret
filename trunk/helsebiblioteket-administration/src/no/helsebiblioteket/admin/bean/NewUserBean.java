@@ -54,10 +54,11 @@ public class NewUserBean {
     	user.setPerson(person);
     	user.setUsername(this.username);
     	user.setPassword(this.password);
-    	Role role = new Role();
-    	role.setKey("ADM");
-    	user.getRoleList().add((this.userService.getRoleByKey(role)));
-    	this.userService.createUser(user);
+    	// TODO: Set admin role differently?
+//    	Role role = new Role();
+//    	role.setKey("ADM");
+//    	user.getRoleList().add((this.userService.getRoleByKey(role)));
+    	this.userService.insertUser(user);
     	
     	// FIXME: Reload
 //    	user = this.userService.findUserByUsername(user);

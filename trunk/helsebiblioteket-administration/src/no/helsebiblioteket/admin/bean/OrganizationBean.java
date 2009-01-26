@@ -8,7 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.request.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class OrganizationBean {
@@ -31,26 +32,23 @@ public class OrganizationBean {
 	public String actionDetails(){
 		this.organization = (Organization) this.organizationsTable.getRowData();
 		// FIXME: Pass this on to the edit bean!
-		logger.info("ORGANIZATION: " + this.organization.getName());
 		return "organization_details";
 //		else "organizations_overview";
 	}
 	public String actionEdit(){
 		this.organization = (Organization) this.organizationsTable.getRowData();
 		// FIXME: Pass this on to the edit bean!
-		logger.info("ORGANIZATION: " + this.organization.getName());
 		return "organization_edit";
 //		else "organizations_overview";
 	}
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }
 		PageRequest<Organization> request = new PageRequest<Organization>();
-		this.organizations = this.organizationService.findOrganizationsBySearchStringRoles(this.searchinput, request).result;
+		this.organizations = this.organizationService.findOrganizationsBySearchString(this.searchinput, request).result;
 	}
 	public List<Organization> getOrganizations() {
-		//if(this.organizations == null){
-			this.organizations = this.organizationService.getOrganizationList();
-		//}
+		PageResult<Organization> pageResult = this.organizationService.getOrganizationListAll(null);
+		this.organizations = pageResult.result;
 		return this.organizations;
 	}
 	public String getSearchinput() { return searchinput; }

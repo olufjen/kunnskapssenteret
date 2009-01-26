@@ -19,7 +19,7 @@ public class AdminBean {
 	public List<SelectItem> getOrganizationTypeSelectItemList() {
 		if (this.organizationTypeSelectItemList == null) {
 			organizationTypeSelectItemList = new ArrayList<SelectItem>();
-			List<OrganizationType> organizationTypeList = this.organizationService.getOrganizationTypeList();
+			OrganizationType[] organizationTypeList = this.organizationService.getOrganizationTypeListAll("").getList();
 			SelectItem selectItem = null;
 			for (OrganizationType orgType: organizationTypeList) {
 				selectItem = new SelectItem(String.valueOf(orgType.getId()),

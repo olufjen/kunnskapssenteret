@@ -11,12 +11,16 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.daoobjects.OrganizationName;
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class NewMemberOrganizationBean extends NewOrganizationBean {
@@ -132,9 +136,10 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		if (this.memberOrganization.getIpRangeList() == null) {
 			this.memberOrganization.setIpRangeList(new ArrayList<IpRange>());
 		}
-		if(this.memberOrganization.getNameList() == null){
-			this.memberOrganization.setNameList(new ArrayList<OrganizationName>());
-		}
+		// TODO: Not use!
+//		if(this.memberOrganization.getNameList() == null){
+//			this.memberOrganization.setNameList(new ArrayList<OrganizationName>());
+//		}
 		return this.memberOrganization;
 	}
 	
@@ -160,7 +165,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		// Requires all org props to be initiates first, see getSupplierOrganization()
 		this.memberOrganization = new Organization();
 //		private String organizationName;
-		this.memberOrganization.setName(this.getOrganizationName());
+//		this.memberOrganization.setName(this.getOrganizationName());
 		ContactInformation contactInformationOrganization = new ContactInformation();
 //		private String orgAddress;
 		contactInformationOrganization.setPostalAddress(this.getOrgAddress());
@@ -184,7 +189,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		this.memberOrganization.setContactPerson(contactPerson);
 		
 		memberOrganization.setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		this.organizationService.saveOrganization(this.memberOrganization);
+		this.organizationService.insertOrganization(this.memberOrganization);
 	}
 	
 	public void actionAddSingleIp() {
@@ -193,7 +198,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		if (this.ipRangeList == null) {
 			this.ipRangeList = new ArrayList<IpRange>();
 		}
-		this.ipRangeList.add(new IpRange(getIpAddressSingle(), null));
+		this.ipRangeList.add(new IpRange(new IpAddress(getIpAddressSingle()), null));
 	}
 	
 	public void actionAddIpRange() {
@@ -203,7 +208,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		if (this.ipRangeList == null) {
 			this.ipRangeList = new ArrayList<IpRange>();
 		}
-		this.ipRangeList.add(new IpRange(getIpAddressFrom(), getIpAddressTo()));
+		this.ipRangeList.add(new IpRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
 	}
 	
 	public void actionDeleteIpRange() {
@@ -218,8 +223,13 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 	
 	public String actionEditOrganization() {
 		Integer orgId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("organizationId");
-		this.memberOrganization = organizationService.getOrganizationById(orgId);
-		//setContactPersonEmail(organization.getContactPerson())
+		Organization organization = new Organization();
+		organization.setId(orgId);
+		SingleResult<Organization> result = organizationService.getOrganizationByListItem(organization);
+		if(result instanceof ValueResult){
+			this.memberOrganization = ((ValueResult<Organization>)result).getValue();
+			//setContactPersonEmail(organization.getContactPerson())
+		}
 		return "new_member_organization";
 	}
 	
