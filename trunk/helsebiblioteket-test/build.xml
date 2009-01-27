@@ -71,7 +71,7 @@
         <delete includeemptydirs="true"> <fileset dir="${project.build.dir}" includes="**/*"/> </delete>
     </target>
         
-    <target name="buildtests" description="Compile test tree java files">
+    <target name="buildtests" depends="prepare-dependencies" description="Compile test tree java files">
     	<!-- TODO: Fix this -->
         <mkdir dir="${project.classes.dir}"/>
         <javac destdir="${project.classes.dir}" source="1.5" target="1.5" debug="true"
@@ -87,7 +87,7 @@
     </target>
 
 
-    <target name="tests" depends="prepare-dependencies, buildtests" description="Run tests">
+    <target name="tests" depends="buildtests" description="Run tests">
         <junit printsummary="on"
             fork="true"
             haltonfailure="false"
