@@ -6,6 +6,8 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.PersonService;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.test.dao.AccessDaoTests;
+import no.helsebiblioteket.admin.test.service.LoginServiceTests;
 
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -27,8 +29,8 @@ public class BeanFactory {
 		//       And replace these values in the list 'propertyConfigurer.locations'
 	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/application.properties</value>
 	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/jdbc.properties</value>
-
-		res = new FileSystemResource("..\\helsebiblioteket-administration-web\\WebRoot\\WEB-INF\\applicationContext.xml");
+		res = new FileSystemResource("..\\helsebiblioteket-services-impl\\desc\\applicationContext.xml");
+//		res = new FileSystemResource("..\\helsebiblioteket-administration-web\\WebRoot\\WEB-INF\\applicationContext.xml");
 		factory = new XmlBeanFactory(res);
 	}
 	// Load DAOs
@@ -40,4 +42,16 @@ public class BeanFactory {
 	public OrganizationService getOrganizationService() { return (OrganizationService)this.factory.getBean("organizationService");}
 	public PersonService getPersonService() { return (PersonService)this.factory.getBean("personService");}
 	public URLService getURLService() { return (URLService)this.factory.getBean("urlService");}
+	
+	// Main method when not using ant.
+	public static void main(String[] args) {
+		AccessDaoTests accessDaoTests = new AccessDaoTests();
+		accessDaoTests.testInsertAccess();
+		LoginServiceTests loginServiceTests = new LoginServiceTests();
+		loginServiceTests.testLoginOrganizationByIpAddress();
+		loginServiceTests.testLoginUserByUsernamePassword();
+		loginServiceTests.testSendPasswordEmail();
+	
+		System.out.println("OK");
+	}
 }
