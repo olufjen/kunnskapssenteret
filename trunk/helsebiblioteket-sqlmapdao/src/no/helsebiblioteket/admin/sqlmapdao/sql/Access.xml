@@ -9,12 +9,13 @@
 		<result property="id" column="access_id" />
 		<result property="supplierSource.resourceId" column="resource_id" />
 		<result property="type.id" column="access_type_id" />
-		<result property="userId" column="user_id" />
-		<result property="userRoleId" column="user_role_id" />
+		<!--<result property="userId" column="user_id" />-->
+		<!--<result property="userRoleId" column="user_role_id" />-->
 		<result property="validFrom" column="valid_from" />
 		<result property="validTo" column="valid_to" />
-		<result property="orgTypeId" column="org_type_id" />
-		<result property="organization.id" column="org_unit_id" />
+		
+		<!--<result property="orgTypeId" column="org_type_id" />-->
+		<!--<result property="organization.id" column="org_unit_id" />-->
 		<result property="organizationAsResource.id" column="org_unit_as_resource_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
