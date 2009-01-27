@@ -14,7 +14,7 @@ public class OrganizationToXMLTranslator {
 		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "namenorwegianshort", organization.getNameShortNorwegian()));
 		
 		// TODO Complete this!
-		organization.getAccessList();
+//		organization.getAccessList();
 		organization.getContactInformation();
 		organization.getContactPerson();
 		organization.getDescription();
@@ -23,7 +23,7 @@ public class OrganizationToXMLTranslator {
 		organization.getLastChanged();
 //		organization.getNameList();
 //		organization.getNameMap()
-		organization.getParent();
+//		organization.getParent();
 		organization.getType();
 		
 		
