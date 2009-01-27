@@ -18,13 +18,14 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.ValueReference;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
 
 public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements OrganizationDao {
 	// TODO: Go through all!
 	public void insertOrganization(Organization organization){
 		
 		getSqlMapClientTemplate().insert("insertOrganization", organization);
-
 	}
 	public void updateOrganization(Organization organization){
 		
@@ -41,6 +42,15 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 		Organization organization = null;
 		organization = (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", id);
 		return organization;
+	}
+	public Organization getOrganizationByListItem(
+			OrganizationListItem organizationListItem) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Organization getOrganizationByReference(ValueReference<Organization> organizationReference) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

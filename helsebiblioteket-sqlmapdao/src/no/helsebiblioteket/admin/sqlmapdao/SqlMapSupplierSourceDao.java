@@ -7,6 +7,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 
@@ -31,7 +32,16 @@ public class SqlMapSupplierSourceDao extends SqlMapClientDaoSupport implements S
 	public List<SupplierSource> getSupplierSourceListAll(){
 		return null;
 	}
+	public List<SupplierSource> getSupplierSourceListByOrganization(Organization organization) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	
+	
+	
+	
+	
 	
 	
 	

@@ -41,12 +41,12 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	
 	public void setForeignKeysForUser(User user) {
 		if (user != null) {
-			if (user.getAccessList() != null) {
-				for (Access access : user.getAccessList()) {
-					// TODO: What is this?
-//					access.setUserId(user.getId());
-				}
-			}
+//			if (user.getAccessList() != null) {
+//				for (Access access : user.getAccessList()) {
+//					// TODO: What is this?
+////					access.setUserId(user.getId());
+//				}
+//			}
 		}
 	}
 	

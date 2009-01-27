@@ -11,10 +11,10 @@ import no.helsebiblioteket.admin.domain.User;
 
 public class SqlMapPersonDao extends SqlMapClientDaoSupport implements PersonDao {
 	// TODO: Go through all!
-	public void insertPerson(Person person){
+	public Person insertPerson(Person person){
 
 		getSqlMapClientTemplate().insert("insertPerson", person);
-
+		return null;
 	}
 	public void updatePerson(Person person){
 		
