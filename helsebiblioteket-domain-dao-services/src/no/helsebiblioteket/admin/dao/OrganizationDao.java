@@ -17,6 +17,6 @@ public interface OrganizationDao {
 
 	// Fetch
 	public Organization getOrganizationByChild(Organization child);
-	// TODO: Should not us id.
+	// TODO: Should not us id. Check where it is used!
 	public Organization getOrganizationById(Integer id);
 }

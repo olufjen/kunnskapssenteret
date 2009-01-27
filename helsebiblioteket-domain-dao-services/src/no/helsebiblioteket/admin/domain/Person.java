@@ -7,14 +7,14 @@ public class Person {
 	private String firstName;
 	private String lastName;
 	private String employer;
-	private Position position;
 	private boolean isStudent;
 	private String studentNumber;
 	private String hprNumber;
+	private Date lastChanged;
+
+	private Position position;
 	private ContactInformation contactInformation;
 	private Profile profile;
-	private User user;
-	private Date lastChanged;
 	
 	public String getName() {
 		return this.firstName + " " + lastName;
@@ -78,12 +78,6 @@ public class Person {
 	}
 	public void setProfile(Profile profile) {
 		this.profile = profile;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	public Date getLastChanged() {
 		return lastChanged;
