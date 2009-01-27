@@ -8,8 +8,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 
 public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements OrganizationTypeDao {
+
+	// TODO: Remove class
 
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
@@ -21,12 +24,12 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
         OrganizationType orgType = null;
         orgType = new OrganizationType();
         orgType.setId(1);
-        orgType.setKey("health_institution");
+//        orgType.setKey("health_institution");
         orgType.setName("fallbackname for org_type_health_institution");
         orgTypes.add(orgType);
         orgType = new OrganizationType();
         orgType.setId(2);
-        orgType.setKey("health_education_institution");
+//        orgType.setKey("health_education_institution");
         orgType.setName("fallbackname for org_type_health_education_institution");
         orgTypes.add(orgType);
         return orgTypes;
@@ -35,4 +38,37 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
 	public OrganizationType getOrganizationType(String organizationTypeKey) {
 		return null;
 	}
+
+	@Override
+	public void deleteOrganizationType(OrganizationType organizationType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public OrganizationType getOrganizationTypeByKey(
+			OrganizationTypeKey organizationTypeKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrganizationType> getOrganizationTypeListAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertOrganizationType(OrganizationType organizationType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrganizationType(OrganizationType organizationType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

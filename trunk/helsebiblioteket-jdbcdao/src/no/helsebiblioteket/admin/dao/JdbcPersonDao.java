@@ -17,7 +17,10 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
-    protected final Log logger = LogFactory.getLog(getClass());
+  
+	// TODO: Remove class
+
+	protected final Log logger = LogFactory.getLog(getClass());
 	public int insertContactInformation(ContactInformation contactInformation) {
 		String sql ="insert into tbl_contact_information (postal_address, postal_code, " +
 		"telephone_number, postal_location, org_unit_id, " +
@@ -26,7 +29,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		sql = "insert into tbl_contact_information (person_id, email) values (:person_id, :email)";
 
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
-		sqlParameters.addValue("person_id", contactInformation.getPerson().getId());
+//		sqlParameters.addValue("person_id", contactInformation.getPerson().getId());
 		sqlParameters.addValue("email", contactInformation.getEmail());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 		return getSimpleJdbcTemplate().queryForInt("select currval('tbl_contact_information_contact_information_id_seq');");
@@ -48,7 +51,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 //		sqlParameters.addValue("person_id", profile.getPerson().getId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
-	public void insertPerson(Person person) {
+	public Person insertPerson(Person person) {
 		String sql = "insert into tbl_person (first_name, last_name, " +
 		"student_number, hpr_number "+//, org_unit_id=:org_unit_id, " +
 		") values (" +
@@ -62,7 +65,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		sqlParameters.addValue("hpr_number", person.getHprNumber());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 //		return getSimpleJdbcTemplate().queryForInt("select currval('tbl_person_person_id_seq');");
-		
+		return null;
 		
 //		// TODO Auto-generated method stub
 //		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -190,6 +193,16 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 
 	public Person getPersonById(Integer personId) {
 		// FIXME: We should not do this! Username is unique.
+		return null;
+	}
+	@Override
+	public Person getPersonByOrganization(Organization organization) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Person getPersonByUser(User user) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

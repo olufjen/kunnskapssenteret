@@ -42,7 +42,7 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport  {
         	//select org_unit_id, name, descr, name_short, org_type_key, org_unit_parent_id from tbl_org_unit
             Organization org = new Organization();
             org.setId(rs.getInt("org_unit_id"));
-            org.setName(rs.getString("name"));
+//            org.setName(rs.getString("name"));
             org.setDescription(rs.getString("descr"));
             
             // TODO: Is this the right way to do this!

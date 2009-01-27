@@ -20,8 +20,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
-public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserCompositeDao {
-    protected final Log logger = LogFactory.getLog(getClass());
+public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserListDao {
+   
+	// TODO: Remove class
+
+	
+	protected final Log logger = LogFactory.getLog(getClass());
 	public User getUserByUsername(User user) {
         logger.info("finding user with username '" + ((user != null) ? user.getUsername() : "") + "'");
         List<User> users = getSimpleJdbcTemplate().query(
@@ -79,7 +83,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserCo
     private static class UserPersonRoleOrgMapper extends UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = super.mapRow(rs, rowNum);
-            user.getOrganization().setName(rs.getString("org_name"));
+//            user.getOrganization().setName(rs.getString("org_name"));
             Person person = new Person();
             person.setFirstName(rs.getString("first_name"));
             person.setLastName(rs.getString("last_name"));
@@ -109,4 +113,9 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserCo
             return user;
         }
     }
+	@Override
+	public List<User> getUserListAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
