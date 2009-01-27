@@ -16,6 +16,7 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -128,7 +129,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		logger.debug("Method 'actionAddSupplierSource' invoked");
 		setSourceName((getSourceNameUIInput().getSubmittedValue() != null) ? getSourceNameUIInput().getSubmittedValue().toString() : null);
 		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
-		this.organization.getSupplierSourceList().add(new SupplierSource(getSourceName(), getSourceUrl()));
+		this.organization.getSupplierSourceList().add(new SupplierSource(getSourceName(), new Url(getSourceUrl())));
 	}
 	
 	public void actionDeleteSource() {
