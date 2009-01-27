@@ -6,7 +6,7 @@ import no.helsebiblioteket.admin.domain.User;
 
 public interface PersonDao {
 	// Edit
-	public void insertPerson(Person person);
+	public Person insertPerson(Person person);
 	public void updatePerson(Person person);
 	public void deletePerson(Person person);
 	

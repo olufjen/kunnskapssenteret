@@ -11,6 +11,7 @@ import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.service.PersonService;
 
 public class PersonServiceImpl implements PersonService {
+	// TODO: Remove this class!
 	private PersonDao personDao;
 	private PositionDao positionDao;
 	private ContactInformationDao contactInformationDao;
@@ -19,12 +20,13 @@ public class PersonServiceImpl implements PersonService {
 		// TODO: What more?
 		this.personDao.deletePerson(person);
 	}
-	public void insertPerson(Person person) {
+	public Person insertPerson(Person person) {
 		// TODO: What more?
 		this.profileDao.insertProfile(person.getProfile());
 		this.positionDao.insertPosition(person.getPosition());
 		this.contactInformationDao.insertContactInformation(person.getContactInformation());
 		this.personDao.insertPerson(person);
+		return null;
 	}
 	public void updatePerson(Person person) {
 		// TODO: What more?

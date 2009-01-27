@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-public class IpRange {
+public class IpRange implements Unique{
 	private Integer id;
 	private Date lastChanged;
 	private IpAddress ipAddressFrom;

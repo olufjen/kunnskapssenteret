@@ -10,7 +10,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-public class Access {
+public class Access implements Unique{
 	private Integer id;
 	private Date validFrom;
 	private Date validTo;

@@ -10,7 +10,8 @@ import java.io.Serializable;
 import no.helsebiblioteket.admin.domain.Person;
 
 public interface PersonService extends Serializable {
-	public void insertPerson(Person person);
+	// TODO: Remove this!
+	public Person insertPerson(Person person);
 	public void updatePerson(Person person);
 	public void deletePerson(Person person);
 }

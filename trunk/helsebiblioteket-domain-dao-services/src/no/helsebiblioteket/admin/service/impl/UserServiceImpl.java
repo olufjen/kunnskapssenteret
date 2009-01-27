@@ -1,11 +1,13 @@
 package no.helsebiblioteket.admin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.ModifiedListHelper;
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
@@ -18,11 +20,18 @@ import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.daoobjects.UserRole;
 import no.helsebiblioteket.admin.domain.Access;
+import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.factory.PersonFactory;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.listobjects.UserListItem;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.MorePageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -38,14 +47,15 @@ public class UserServiceImpl implements UserService {
 	private RoleDao roleDao;
 	private UserRoleDao userRoleDao;
 	private PersonDao personDao;
-	private ProfileDao profileDao;
 	private PositionDao positionDao;
-	private ContactInformationDao contactInformationDao;
     private OrganizationDao organizationDao;
-    private PersonService personService;
-    private AccessDao accessDao;
 
+    /**
+     * Fetches all the roles from the database. Delegates the task to
+	 * RoleDao. The variable DUMMY is never used.
+     */
 	public ListResult<Role> getRoleListAll(String DUMMY) {
+		// TODO: Set role key with ENUM?
 		List<Role> roleList = this.roleDao.getRoleListAll();
 		Role[] roles = new Role[roleList.size()];
 		int i = 0;
@@ -54,6 +64,10 @@ public class UserServiceImpl implements UserService {
 		}
 		return new ListResult<Role>(roles);
 	}
+    /**
+     * Fetches all the positions from the database. Delegates the task to
+	 * PositionDao. The variable DUMMY is never used.
+     */
 	public ListResult<Position> getPositionListAll(String DUMMY) {
 		List<Position> all = this.positionDao.getPositionListAll();
 		Position[] positions = new Position[all.size()];
@@ -63,6 +77,11 @@ public class UserServiceImpl implements UserService {
 		}
 		return new ListResult<Position>(positions);
 	}
+	/**
+	 * Fetches the Role with the given key. If none is found
+	 * EmptyResult is returned. Delegates the task to RoleDao.
+	 * RoleDao.getRoleByKey(..) returns null if no Role is found.
+	 */
 	public SingleResult<Role> getRoleByKey(String key) {
 		Role role = this.roleDao.getRoleByKey(key);
 		if(role==null){
@@ -71,94 +90,154 @@ public class UserServiceImpl implements UserService {
 			return new ValueResult<Role>(role);
 		}
 	}
-	public PageResult<User> getUserListAll(PageRequest<User> request) {
-		PageResult<User> result = new PageResult<User>();
-		result.result = this.userListDao.getUserListAll();
-		result.from = 0;
-		result.total = result.result.size();
-		return result;
-	}
-	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request) {
-		// FIXME: Cache and page results
-	
-		PageResult<User> all = this.getUserListAll(request);
-		List<User> some = new ArrayList<User>();
-		for (User user : all.result) {
-			if(user.getPerson().getName().toLowerCase().contains(searchString.toLowerCase()) ||
-					user.getUsername().toLowerCase().contains(searchString.toLowerCase())){
-				for (Role role : roles) {
-					if(user.hasRole(role)) { some.add(user); break; }
-				}
-			}
+	/**
+	 * Finds all the users in the database. This method uses a page request
+	 * and only fetches the next X objects from the last one fetched. This can be used
+	 * for a paged view. Delegates the task to UserListDao.
+	 * It only fetches the most important values needed in a list, like names, etc.
+	 * These are the values in the UserListItem object.
+	 */
+	public PageResult<UserListItem> getUserListAll(PageRequest<UserListItem> request) {
+		// TODO: Should we use Id for request.from?
+		int from;
+		if(request instanceof FirstPageRequest){
+			from = 0;
+		} else {
+			from = ((MorePageRequest<UserListItem>)request).last + 1;
 		}
-
-		PageResult<User> result = new PageResult<User>();
-		result.result = some;//this.userCompositeDao.getgetAllUsers(searchString, roles);
-		result.from = 0;
+		PageResult<UserListItem> result = new PageResult<UserListItem>();
+		result.result = this.userListDao.getUserListPaged(from, request.maxResult);
+		result.from = from;
 		result.total = result.result.size();
 		return result;
 	}
+	/**
+	 * Finds all the users in the database that have at least one
+	 * of the roles and has the search string in the name or user
+	 * name. This method uses a page request and only fetches the
+	 * next X objects from the last one fetched. This can be used
+	 * for a paged view. Delegates the task to UserListDao. It
+	 * only fetches the most important values needed in a list,
+	 * like names, etc. These are the values in the UserListItem
+	 * object.
+	 * 
+	 * TODO: There is probably room for optimizations here.
+	 * 
+	 */
+	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<UserListItem> request) {
+		// TODO: Should we use Id for request.from?
+		int from;
+		if(request instanceof FirstPageRequest){
+			from = 0;
+		} else {
+			from = ((MorePageRequest<UserListItem>)request).last + 1;
+		}
+		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roles, from, request.maxResult);
+		PageResult<UserListItem> result = new PageResult<UserListItem>();
+		result.result = some;
+		result.from = from;
+		result.total = result.result.size();
+		return result;
+	}
+	/**
+	 * Fetches the whole user object. Every property of the user
+	 * and of those properties will be initialized. Nothing is null.
+	 * If something is missing default values will be created in the
+	 * database. This helps clients by avoiding null-check and also
+	 * makes it easier to update the user.
+	 * 
+	 * TODO: What do we do with users without an organization?
+	 *       Is that allowed?
+	 * 
+	 */
     public SingleResult<User> findUserByUsername(String username) {
 		User user = this.userDao.getUserByUsername(username);
 		if(user == null){
 			return new EmptyResult<User>();
 		} else {
-			// TODO: Add more data here!
+			Organization organization = this.organizationDao.getOrganizationById(user.getOrganization().getId());
+			// TODO: Really?
+			if(organization == null){ throw new NullPointerException("No organization for user"); }
+			user.setOrganization(organization);
+
+			Person person = this.personDao.getPersonByUser(user);
+			if(person == null){ person = PersonFactory.factory.createPerson(); }
+			user.setPerson(person);
+
 			List<UserRole> userRoleList = this.userRoleDao.getUserRoleListByUser(user);
 			List<Role> roleList = new ArrayList<Role>();
 			for (UserRole userRole : userRoleList) {
 				roleList.add(this.roleDao.getRoleByKey(userRole.getUserRole().getKey()));
 			}
-			user.setRoleList(roleList);
-			user.setOrganization(this.organizationDao.getOrganizationById(user.getOrganization().getId()));
-			user.setPerson(this.personDao.getPersonByUser(user));
-			user.setAccessList(this.accessDao.getAccessListByUser(user));
 			return new ValueResult<User>(user);
 		}
 	}
+    /**
+     * Inserts a new User into the database. All properties must
+     * be set. No NULL. Use UserFactory and PersonFactory if needed.
+     * Inserts the user roles, but roles must exist.
+     * The organization is not inserted and must be inserted
+     * _separately_.
+     * The roles are either not inserted and must be inserted
+     * _separately_.
+     * 
+     */
 	public Boolean insertUser(User user) {
-		this.organizationDao.insertOrganization(user.getOrganization());
 		this.personDao.insertPerson(user.getPerson());
-		for (Access access : user.getAccessList()) {
-			this.accessDao.insertAccess(access);
-		}
-		for (Role role : user.getRoleList()) {
-			this.roleDao.insertRole(role);
+		List<UserRole> userRoleList = translateRoles(user.getId(), user.getRoleList());
+		for (UserRole userRole : userRoleList) {
+			this.userRoleDao.insertUserRole(userRole);
 		}
 		this.userDao.insertUser(user);
 		return Boolean.TRUE;
 	}
+	/**
+	 * Updates an existing user in the database. Throws an exception
+	 * if it is does not exist. Since we initailize everything at
+	 * load time (findUserByUsername) we assume that all values are
+	 * set.
+	 * 
+	 */
 	public Boolean updateUser(User user) {
-		this.organizationDao.updateOrganization(user.getOrganization());
-		this.personDao.updatePerson(user.getPerson());
-		for (Access access : user.getAccessList()) {
-			this.accessDao.updateAccess(access);
+		SingleResult<User> oldResult = this.findUserByUsername(user.getUsername());
+		if(oldResult instanceof EmptyResult){
+			throw new NullPointerException("User does not exist.");
 		}
-		for (Role role : user.getRoleList()) {
-			this.roleDao.updateRole(role);
+		User old = ((ValueResult<User>)oldResult).getValue();
+
+		this.personDao.updatePerson(user.getPerson());
+
+		List<UserRole> newUserRoleList = translateRoles(user.getId(), user.getRoleList());
+		List<UserRole> oldUserRoleList = translateRoles(old.getId(), old.getRoleList());
+		// TODO: Do this a little smarter without deleting all.
+		//       Improve ModifiedListHelper.
+		for (UserRole userRole : oldUserRoleList) {
+			this.userRoleDao.deleteUserRole(userRole);
+		}
+		for (UserRole userRole : newUserRoleList) {
+			this.userRoleDao.deleteUserRole(userRole);
 		}
 		this.userDao.updateUser(user);
 		return Boolean.TRUE;
-//		// TODO: How to get users without person object!
-//		// TODO: Does it fetch everything now?
+
+		
+
+		
+		
+//		// FIXME: Remove this.
 //		User old = null;// this.userDao.getUserByUsername(user);
-//		
 //		if(user.getAccessList() != null){
 //			for (Access access : user.getAccessList()) {
-//				// FIXME: Save access.
 //				AccessType accessType = access.getType();
 //				SupplierSource supplierSource = access.getSupplierSource();
 //				ResourceType resourceType = supplierSource.getResourceType();
 //			}
 //		}
-//		// TODO: Assume that these are saved?
 //		Organization organization = user.getOrganization();
 //		if(organization==null) { user.setOrganization(old.getOrganization()); }
 //		for (Role role : user.getRoleList()) {
 ////			if(role==null) { user.setRole(old.getRole()); }
 //		}
-//		
-//		// FIXME: Save person.
 //		Person person = user.getPerson();
 //		if(person==null) {
 //			user.setPerson(old.getPerson());
@@ -172,7 +251,6 @@ public class UserServiceImpl implements UserService {
 //		}
 //
 //		if(user.getPerson()==null) {
-//			// TODO: How to save users without person object!
 //			return null;
 //		} 
 //		// Move backwards
@@ -183,16 +261,12 @@ public class UserServiceImpl implements UserService {
 //			// TODO: Should all persons have a profile?
 //			//	this.personDao.updateProfile(user.getPerson().getProfile());
 //		}
-//		// TODO: What to do here?
 ////		user.getPerson().setUser(user);
 //		this.personDao.updatePerson(user.getPerson());
 //		this.userDao.updateUser(user);
-//
-//		// TODO: Write this.
 //		
 //		return Boolean.TRUE;
 //		
-//		// TODO: Use this from UserServiceImpl2 instead???
 ////		if (changedUser.getId() != null) {
 ////			if (originalUser == null || (originalUser != null && !originalUser.getLastChanged().equals(changedUser.getLastChanged()))) {
 ////				throw new OptimisticLockingFailureException("User has been changed since last time loaded from datastore");
@@ -213,7 +287,16 @@ public class UserServiceImpl implements UserService {
 ////		return changedUser;
 //
 	}
-	
+	private List<UserRole> translateRoles(Integer id, List<Role> roleList){
+		List<UserRole> result = new ArrayList<UserRole>();
+		for (Role role : roleList) {
+			UserRole userRole = new UserRole();
+			userRole.setUserRole(role);
+			userRole.setUserId(id);
+			userRole.setLastChanged(new Date());
+		}
+		return result;
+	}
 	
 	
 	
@@ -228,13 +311,16 @@ public class UserServiceImpl implements UserService {
 	public void setPersonDao(PersonDao personDao) {
 		this.personDao = personDao;
 	}
-	public void setProfileDao(ProfileDao profileDao) {
-		this.profileDao = profileDao;
-	}
-	public void setContactInformationDao(ContactInformationDao contactInformationDao) {
-		this.contactInformationDao = contactInformationDao;
-	}
 	public void setOrganizationDao(OrganizationDao organizationDao) {
 		this.organizationDao = organizationDao;
+	}
+	public void setUserListDao(UserListDao userListDao) {
+		this.userListDao = userListDao;
+	}
+	public void setUserRoleDao(UserRoleDao userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+	public void setPositionDao(PositionDao positionDao) {
+		this.positionDao = positionDao;
 	}
 }

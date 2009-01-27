@@ -2,8 +2,10 @@ package no.helsebiblioteket.admin.daoobjects;
 
 import java.util.Date;
 
+import no.helsebiblioteket.admin.domain.Unique;
 
-public class OrganizationName {
+
+public class OrganizationName implements Unique{
 	private Integer id = null;
 	private String name = null;
 	private LanguageCategory languageCode = null;

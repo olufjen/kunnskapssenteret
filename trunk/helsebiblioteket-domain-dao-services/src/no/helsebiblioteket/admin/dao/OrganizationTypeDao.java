@@ -9,14 +9,15 @@ package no.helsebiblioteket.admin.dao;
 
 import java.util.List;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 
 public interface OrganizationTypeDao {
 	// Edit
-	public void insertOrganizationTypeDao(OrganizationTypeDao organizationTypeDao);
-	public void updateOrganizationTypeDao(OrganizationTypeDao organizationTypeDao);
-	public void deleteOrganizationTypeDao(OrganizationTypeDao organizationTypeDao);
+	public void insertOrganizationType(OrganizationType organizationType);
+	public void updateOrganizationType(OrganizationType organizationType);
+	public void deleteOrganizationType(OrganizationType organizationType);
 
 	// Fetch
-	public OrganizationType getOrganizationTypeByKey(String organizationTypeKey);
+	public OrganizationType getOrganizationTypeByKey(OrganizationTypeKey organizationTypeKey);
 	public List<OrganizationType> getOrganizationTypeListAll();
 }

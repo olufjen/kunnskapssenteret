@@ -23,22 +23,26 @@ import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.PositionList;
+import no.helsebiblioteket.admin.domain.Supplier;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.factory.ContactInformationFactory;
+import no.helsebiblioteket.admin.factory.PersonFactory;
 import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.MorePageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
-import no.helsebiblioteket.admin.service.PersonService;
 
 public class OrganizationServiceImpl implements OrganizationService {
 	private static final long serialVersionUID = 1L;
-	private PersonService personService;
 	private OrganizationDao organizationDao;
 	private OrganizationListDao organizationListDao;
 	private OrganizationTypeDao organizationTypeDao;
@@ -50,6 +54,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private ResourceDao resourceDao;
 	private SupplierSourceDao supplierSourceDao;
 
+	/**
+	 * Fetches all OrganizationType in the database. Delegates the task to
+	 * OrganizationTypeDao. The variable DUMMY is never used.
+	 */
 	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY) {
 		List<OrganizationType> all = this.organizationTypeDao.getOrganizationTypeListAll();
 		OrganizationType[] list = new OrganizationType[all.size()];
@@ -59,7 +67,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		return new ListResult<OrganizationType>(list);
 	}
-	public SingleResult<OrganizationType> getOrganizationTypeByKey(String key){
+	/**
+	 * Fetches the OrganizationType with the given key.
+	 * If none is found EmptyResult is returned.
+	 * Delegates the task to OrganizationTypeDao.
+	 * OrganizationTypeDao.getOrganizationTypeByKey(..) returns
+	 * null if no OrganizationType is found.
+	 */
+	public SingleResult<OrganizationType> getOrganizationTypeByKey(OrganizationTypeKey key){
 		OrganizationType organizationType = this.organizationTypeDao.getOrganizationTypeByKey(key);
 		if(organizationType == null){
 			return new EmptyResult<OrganizationType>();
@@ -67,46 +82,71 @@ public class OrganizationServiceImpl implements OrganizationService {
 			return new ValueResult<OrganizationType>(organizationType);
 		}
 	}
-	public PageResult<Organization> getOrganizationListAll(PageRequest<Organization> request) {
-		List<Organization> organizationList = organizationListDao.getOrganizationListAll();
-		for (Organization organization : organizationList) {
-			populateOrganizationNames(organization);
-			populateOrganizationRest(organization);
+	/**
+	 * Finds all the organizations in the database. This method uses a page request
+	 * and only fetches the next X objects from the last one fetched. This can be used
+	 * for a paged view. Delegates the task to OrganizationListDao.
+	 * It only fetches the most important values needed in a list, like names, etc.
+	 * These are the values in the OrganizationListItem object.
+	 */
+	public PageResult<OrganizationListItem> getOrganizationListAll(PageRequest<OrganizationListItem> request) {
+		// TODO: Do we need more values in OrganizationListItem?
+		// TODO: Should we use Id for request.from?
+		int from;
+		if(request instanceof FirstPageRequest){
+			from = 0;
+		} else {
+			from = ((MorePageRequest<OrganizationListItem>)request).last + 1;
 		}
-		PageResult<Organization> result = new PageResult<Organization>();
+		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(from, request.maxResult);
+		PageResult<OrganizationListItem> result = new PageResult<OrganizationListItem>();
 		result.result = organizationList;
-		result.from = 0;
+		result.from = from;
 		result.total = organizationList.size();
 		return result;
 	}
-	public PageResult<Organization> findOrganizationsBySearchString( String searchString, PageRequest<Organization> request){
-		List<Organization> allOrganizations = this.organizationListDao.getOrganizationListAll();
-		// TODO: Do this search in the database!
-		List<Organization> someOrganizations = new ArrayList<Organization>();
-		for (Organization organization : allOrganizations) {
-			if(organization.getNameEnglish().toLowerCase().contains(searchString.toLowerCase())){
-				someOrganizations.add(organization);
-			} else if(organization.getNameShortEnglish().toLowerCase().contains(searchString.toLowerCase())){
-				someOrganizations.add(organization);
-			} else if(organization.getNameNorwegian().toLowerCase().contains(searchString.toLowerCase())){
-				someOrganizations.add(organization);
-			} else if(organization.getNameShortNorwegian().toLowerCase().contains(searchString.toLowerCase())){
-				someOrganizations.add(organization);
-			}
+	/**
+	 * Finds all the organizations in the database. This method uses a page request
+	 * and only fetches the next X objects from the last one fetched. This can be used
+	 * for a paged view. Delegates the task of finding the organizations to
+	 * OrganizationListDao. The search string is used to match against the name in
+	 * any language. This may result in something the users perceive as 'strange
+	 * behavior': The names of organizations in the list do not contain the search
+	 * string.
+	 * It only fetches the most important values needed in a list, like names, etc.
+	 * These are the values in the OrganizationListItem object.
+	 */
+	public PageResult<OrganizationListItem> findOrganizationsBySearchString( String searchString, PageRequest<OrganizationListItem> request){
+		// TODO: Do we need more values in OrganizationListItem?
+		// TODO: Should we use Id for request.from?
+		// TODO: Search for the search string in all names or do this by locale?
+		int from;
+		if(request instanceof FirstPageRequest){
+			from = 0;
+		} else {
+			from = ((MorePageRequest<OrganizationListItem>)request).last + 1;
 		}
-		for (Organization organization : someOrganizations) {
-			populateOrganizationNames(organization);
-			populateOrganizationRest(organization);
-		}
-		PageResult<Organization> result = new PageResult<Organization>();
-		result.from = 0;
-		result.result = someOrganizations;
-		result.total = someOrganizations.size();
+		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString, from, request.maxResult);
+		PageResult<OrganizationListItem> result = new PageResult<OrganizationListItem>();
+		result.from = from;
+		result.result = allOrganizations;
+		result.total = allOrganizations.size();
 		return result;
 	}
+	/**
+	 * Finds an Organization from an OrganizationListItem. This is used to
+	 * load all the data for an organization when a detailed view is needed
+	 * and for editing the organization. All the properties of Organization
+	 * and all the objects it refers to are initialized, recursively. There
+	 * are _no_ null pointers in the result.
+	 * OrganizationDao fetches the basic organization object. The lists
+	 * and the names and missing objects are initialized by the populate
+	 * methods. See comments there.
+	 */
 	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem) {
-		Organization organization = null;
-		organization = organizationDao.getOrganizationById(organizationListItem.getId());
+		// TODO: Log when some properties are missing in an organization?
+		//       Useful to locate errors and to see if what values have been set in import, etc.
+		Organization organization = organizationDao.getOrganizationByListItem(organizationListItem);
 		if(organization != null){
 			populateOrganizationNames(organization);
 			populateOrganizationRest(organization);
@@ -115,48 +155,109 @@ public class OrganizationServiceImpl implements OrganizationService {
 			return new EmptyResult<Organization>();
 		}
 	}
+	/**
+	 * Inserts a new organization. Checks all values for null first.
+	 * Saves one and one of the sub-objects of organization and
+	 * the lists. After each sub object is saved, the organization is
+	 * updated with the saved objects that have the new foreign keys.
+	 * OrganizationType is not inserted. Error if not exists.
+	 * Error is the organization has parent reference and the
+	 * parent does not exist.
+	 * Do not use this for suppliers. Throws error.
+	 * 
+	 */
 	public Boolean insertOrganization(Organization organization) {
-
+		if(organization instanceof Supplier){ throw new NullPointerException("Use insertSupplier"); }
 		checkNull(organization);
 		
-		for (Access access : organization.getAccessList()) {
-			this.accessDao.insertAccess(access);
+		Integer parentReference = organization.getParent();
+		if(parentReference != null){
+			Organization parent = this.organizationDao.getOrganizationById(parentReference);
+			if(parent == null) throw new NullPointerException("Invalid parent reference");
 		}
-		this.contactInformationDao.insertContactInformation(organization.getContactInformation());
-		this.personService.insertPerson(organization.getContactPerson());
+		
+		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
+		if(type == null) throw new NullPointerException("Invalid type reference");
+		
+		Person contactPerson = organization.getContactPerson();
+		Person insertedPerson = this.personDao.insertPerson(contactPerson);
+		organization.setContactPerson(insertedPerson);
+		
+		ContactInformation contactInformation = organization.getContactInformation();
+		ContactInformation insertedContactInformation = this.contactInformationDao.insertContactInformation(contactInformation);
+		organization.setContactInformation(insertedContactInformation);
+		
 		for (IpRange ipRange : organization.getIpRangeList()) {
+			// TODO: Remove this. Better solution is on its way!
+			this.setForeignKeysForOrganization(organization);
 			this.ipRangeDao.insertIpRange(ipRange);
 		}
 		List<OrganizationName> orgNameList = createNameList(organization);
 		for (OrganizationName organizationName : orgNameList) {
-			this.organizationNameDao.insertOrganizationName(organizationName);
+			this.organizationNameDao.insertOrganizationName(organization, organizationName);
 		}
 		for (SupplierSource supplierSource : organization.getSupplierSourceList()) {
 			this.supplierSourceDao.insertSupplierSource(supplierSource);
 		}
-		// TODO: Set foreign keys!
 		this.organizationDao.insertOrganization(organization);
 		return Boolean.TRUE;
 	}
+	/**
+	 * Updates an existing organization. If the organization does not
+	 * exist an exception is thrown. It first checks for null on all
+	 * values. The contact person and contact information must exist
+	 * and it should have been created at load time. Otherwise: Huge
+	 * error! :-). Changes to the ip list and name list are saved by
+	 * methods saveIpRangeList and saveOrganizationNameList. See them.
+	 * 
+	 * TODO: The lists should not be updated here. There should be
+	 * addName and addRange methods at the service level.
+	 */
 	public Boolean updateOrganization(Organization organization) {
 		checkNull(organization);
-		Organization old = this.organizationDao.getOrganizationById(organization.getId());
-
-		saveAccessList(organization.getAccessList(), old.getAccessList());
+		OrganizationListItem organizationListItem = new OrganizationListItem();
+		organizationListItem.setId(organization.getId());
+		SingleResult<Organization> result = this.getOrganizationByListItem(organizationListItem);
+		if(result instanceof EmptyResult){
+			throw new NullPointerException("Tried to update non-existing organization");
+		}
+		Organization old = ((ValueResult<Organization>)result).getValue();
+		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
+		if(type == null) throw new NullPointerException("Invalid type reference");
+		this.personDao.updatePerson(organization.getContactPerson());
 		this.contactInformationDao.updateContactInformation(organization.getContactInformation());
-		this.personService.updatePerson(organization.getContactPerson());
+
 		saveIpRangeList(organization.getIpRangeList(), old.getIpRangeList());
 		List<OrganizationName> newOrgNameList = createNameList(organization);
 		List<OrganizationName> oldOrgNameList = createNameList(old);
-		saveOrganizationNameList(newOrgNameList, oldOrgNameList);
-		saveSupplierSourceList(organization.getSupplierSourceList(), old.getSupplierSourceList());
-		// TODO: Set foreign keys!
+		saveOrganizationNameList(organization, newOrgNameList, oldOrgNameList);
+
+		List<SupplierSource> newSupplierSourceList = organization.getSupplierSourceList();
+		List<SupplierSource> oldSupplierSourceList = old.getSupplierSourceList();
+		saveSupplierSourceList(newSupplierSourceList, oldSupplierSourceList);
+		
 		this.organizationDao.updateOrganization(organization);
-//		this.updateOrganization(organization, organizationDao.getOrganizationById(organization.getId()));
 		return Boolean.TRUE;
 	}
+	/**
+	 * TODO: Will be removed!
+	 */
+	private void setForeignKeysForOrganization(Organization organization) {
+		if (organization != null) {
+			if (organization.getIpRangeList() != null) {
+				for (IpRange ipRange : organization.getIpRangeList()) {
+					ipRange.setOrganizationId(organization.getId());
+				}
+			}
+		}
+	}
+
+	/**
+	 * Checks all values of the object for null.
+	 * @param organization
+	 */
 	private void checkNull(Organization organization) {
-		if(organization.getAccessList() == null){ throw new NullPointerException("accessList==null"); }
+//		if(organization.getAccessList() == null){ throw new NullPointerException("accessList==null"); }
 		if(organization.getContactInformation()==null){ throw new NullPointerException("contactInformation==null"); }
 		if(organization.getContactPerson()==null){ throw new NullPointerException("contactPerson==null"); }
 		if(organization.getDescription()==null){ throw new NullPointerException("description==null"); }
@@ -166,92 +267,214 @@ public class OrganizationServiceImpl implements OrganizationService {
 		if(organization.getNameNorwegian()==null){ throw new NullPointerException("nameNorwegianNormal==null"); }
 		if(organization.getNameShortEnglish()==null){ throw new NullPointerException("nameEnglishShort==null"); }
 		if(organization.getNameShortNorwegian()==null){ throw new NullPointerException("nameNorwegianShort==null"); }
-		// TODO: What to do with no parent?
 		if(organization.getParent()==null){ throw new NullPointerException("parent==null"); }
 		if(organization.getSupplierSourceList()==null){ throw new NullPointerException("supplierSourceList==null"); }
 		if(organization.getType()==null){ throw new NullPointerException("type==null"); }
 	}
-	private String findName(List<OrganizationName> nameList, LanguageCategory language, OrganizationNameCategory category) {
-		// TODO: In the longer term we should use the name list in the UI also!
+	/**
+	 * Creates the list with the four language and categories of names.
+	 * EN-SHORT, EN-NORMAL, NO-SHORT, NO-NORMAL.
+	 * 
+	 * @param organization
+	 * @return
+	 */
+	private List<OrganizationName> createNameList(Organization organization) {
+		List<OrganizationName> list = new ArrayList<OrganizationName>();
+		list.add(createName(LanguageCategory.en, OrganizationNameCategory.NORMAL, organization.getNameEnglish()));
+		list.add(createName(LanguageCategory.en, OrganizationNameCategory.SHORT, organization.getNameShortEnglish()));
+		list.add(createName(LanguageCategory.no, OrganizationNameCategory.NORMAL, organization.getNameNorwegian()));
+		list.add(createName(LanguageCategory.no, OrganizationNameCategory.SHORT, organization.getNameShortNorwegian()));
+		return list;
+	}
+	/**
+	 * Simply creates a OrganizationName object. 
+	 * 
+	 * @param language
+	 * @param category
+	 * @param name
+	 * @return
+	 */
+	private OrganizationName createName(LanguageCategory language, OrganizationNameCategory category, String name) {
+		OrganizationName organizationName = new OrganizationName();
+		organizationName.setCategory(category);
+		organizationName.setLanguageCode(language);
+		organizationName.setLastChanged(new Date());
+		organizationName.setName(name);
+//		organizationName.setOrganizationId(organizationId);
+		return organizationName;
+	}
+	/**
+	 * Loads organization names from the database. If they do not exist there,
+	 * findCreateName will insert them into the database.
+	 * 
+	 * @param organization
+	 */
+	private void populateOrganizationNames(Organization organization) {
+		List<OrganizationName> nameList = organizationNameDao.getOrganizationNameListByOrganization(organization);
+		organization.setNameEnglishNormal(findCreateName(organization, nameList, LanguageCategory.en, OrganizationNameCategory.NORMAL).getName());
+		organization.setNameEnglishShort(findCreateName(organization, nameList, LanguageCategory.en, OrganizationNameCategory.SHORT).getName());
+		organization.setNameNorwegianNormal(findCreateName(organization, nameList, LanguageCategory.no, OrganizationNameCategory.NORMAL).getName());
+		organization.setNameNorwegianShort(findCreateName(organization, nameList, LanguageCategory.no, OrganizationNameCategory.SHORT).getName());
+	}
+	/**
+	 * This checks if a name for a certain language and category is
+	 * in the list. If it is not, it is inserted. It is also inserted
+	 * into the database.
+	 * 
+	 * TODO: In the longer term we should use the name list in the UI also.
+	 * 
+	 * @param organization
+	 * @param nameList
+	 * @param language
+	 * @param category
+	 * @return
+	 */
+	private OrganizationName findCreateName(Organization organization, List<OrganizationName> nameList, LanguageCategory language, OrganizationNameCategory category) {
 		for (OrganizationName organizationName : nameList) {
 			if(organizationName.getCategory().equals(language) &&
 					organizationName.getLanguageCode().equals(language)){
-				return organizationName.getName();
+				return organizationName;
 			}
 		}
-		return "";
+		OrganizationName created = createName(language, category, "");
+		this.organizationNameDao.insertOrganizationName(organization, created);
+		return created;
 	}
-	private List<OrganizationName> createNameList(Organization organization) {
-		List<OrganizationName> list = new ArrayList<OrganizationName>();
-		{
-			OrganizationName name = new OrganizationName();
-			name.setName(organization.getNameEnglish());
-			name.setCategory(OrganizationNameCategory.NORMAL);
-			name.setLanguageCode(LanguageCategory.en);
-			name.setLastChanged(new Date());
-			list.add(name);
-		}
-		{
-			OrganizationName name = new OrganizationName();
-			name.setName(organization.getNameNorwegian());
-			name.setCategory(OrganizationNameCategory.NORMAL);
-			name.setLanguageCode(LanguageCategory.no);
-			name.setLastChanged(new Date());
-			list.add(name);
-		}
-		{
-			OrganizationName name = new OrganizationName();
-			name.setName(organization.getNameShortEnglish());
-			name.setCategory(OrganizationNameCategory.SHORT);
-			name.setLanguageCode(LanguageCategory.en);
-			name.setLastChanged(new Date());
-			list.add(name);
-		}
-		{
-			OrganizationName name = new OrganizationName();
-			name.setName(organization.getNameShortNorwegian());
-			name.setCategory(OrganizationNameCategory.SHORT);
-			name.setLanguageCode(LanguageCategory.no);
-			name.setLastChanged(new Date());
-			list.add(name);
-		}
-		return list;
-	}
-	private void populateOrganizationNames(Organization organization) {
-		List<OrganizationName> nameList = organizationNameDao.getOrganizationNameListByOrganization(organization);
-		organization.setNameEnglishNormal(findName(nameList, LanguageCategory.en, OrganizationNameCategory.NORMAL));
-		organization.setNameEnglishShort(findName(nameList, LanguageCategory.en, OrganizationNameCategory.SHORT));
-		organization.setNameNorwegianNormal(findName(nameList, LanguageCategory.no, OrganizationNameCategory.NORMAL));
-		organization.setNameNorwegianShort(findName(nameList, LanguageCategory.no, OrganizationNameCategory.SHORT));
-	}
+	/**
+	 * This method loads the type, contact person, contact information
+	 * and ip-range list from the database and sets the properties
+	 * on the object. If the values (other than type) do not exist in
+	 * the database, they are inserted. If the type is missing or is
+	 * invalid an exception it thrown.
+	 * 
+	 * TODO: Also log when values are missing?
+	 * 
+	 * @param organization
+	 */
 	private void populateOrganizationRest(Organization organization) {
+		OrganizationTypeKey typeKey = organization.getType().getKey();
+		// TODO: Set default type and log the incident?
+		if(typeKey == null){ throw new NullPointerException("Organization has no type"); }
+		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
+		if(type==null){ throw new NullPointerException("Organization type is not valid"); }
+		organization.setType(type);
+
+		if(organization.getContactPerson() == null ||
+				organization.getContactPerson().getId() == null){throw new NullPointerException("Organization has no contact person");}
+		Person contactPerson = this.personDao.getPersonByOrganization(organization);
+		if(contactPerson==null){
+			// TODO: Create an empty contact person and log the incident?
+			contactPerson = PersonFactory.factory.createPerson();
+//			throw new NullPointerException("Contact person not found");
+		}
+		organization.setContactPerson(contactPerson);
+
+		if(organization.getContactInformation() == null ||
+				organization.getContactInformation().getId() == null){ throw new NullPointerException("Organization has no contact information");}
+		ContactInformation contactInformation = this.contactInformationDao.getContactInformationByOrganization(organization);
+		if(contactInformation==null){
+			// TODO: Create empty contact information and log the incident?
+			contactInformation = ContactInformationFactory.factory.createContactInformation();
+//			throw new NullPointerException("Contact information not found");
+		}
+		organization.setContactInformation(contactInformation);
+
 		List<IpRange> ipRangeList = this.ipRangeDao.getIpRangeListByOrganization(organization);
 		organization.setIpRangeList(ipRangeList);
-		List<Access> accessList = this.accessDao.getAccessListByOrganization(organization);
-		organization.setAccessList(accessList);
-		// TODO: How to deal with supplierSourceList?
-		List<SupplierSource> supplierSourceList = new ArrayList<SupplierSource>();
+
+		List<SupplierSource> supplierSourceList = this.supplierSourceDao.getSupplierSourceListByOrganization(organization);
 		organization.setSupplierSourceList(supplierSourceList);
-		// TODO: How to deal with those that have no parent?
-		// TODO: And infinite loops!
-		Organization parent = this.organizationDao.getOrganizationById(organization.getId());
-		organization.setParent(parent);
-		
-		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
-		organization.setType(type);
-		
-		// TODO: How to deal with those that have no contact person?
-		Person contactPerson = this.personDao.getPersonByOrganization(organization);
-		organization.setContactPerson(contactPerson);
-		
-		ContactInformation contactInformation = this.contactInformationDao.getContactInformationByOrganization(organization);
-		organization.setContactInformation(contactInformation);
 	}
+	/**
+	 * Adds new ranges and deletes old ones.
+	 * 
+	 * @param changedIpRangeList
+	 * @param originalIpRangeList
+	 */
+	private void saveIpRangeList(List<IpRange> changedIpRangeList, List<IpRange> originalIpRangeList) {
+		// TODO: Rewrite this!
+		ModifiedListHelper<IpRange> listHelper = new ModifiedListHelper<IpRange>();
+		List<IpRange> deleteList = listHelper.getDeleteList(changedIpRangeList, originalIpRangeList);
+		List<IpRange> insertList = listHelper.getInsertList(changedIpRangeList, originalIpRangeList);
+		List<IpRange> updateList = listHelper.getUpdateList(changedIpRangeList, originalIpRangeList);
+		for (IpRange ipRange : deleteList) {
+			ipRangeDao.deleteIpRange(ipRange);
+		}
+		for (IpRange ipRange : insertList) {
+			ipRangeDao.insertIpRange(ipRange);
+		}
+		for (IpRange ipRange : updateList) {
+			ipRangeDao.updateIpRange(ipRange);			
+		}
+	}
+	/**
+	 * Adds new names and deletes old ones.
+	 * 
+	 * @param organization
+	 * @param changedOrganizationNameList
+	 * @param originalOrganizationNameList
+	 */
+	private void saveOrganizationNameList(Organization organization, List<OrganizationName> changedOrganizationNameList, List<OrganizationName> originalOrganizationNameList) {
+		ModifiedListHelper<OrganizationName> listHelper = new ModifiedListHelper<OrganizationName>();
+		List<OrganizationName> deleteList = listHelper.getDeleteList(changedOrganizationNameList, originalOrganizationNameList);;
+		List<OrganizationName> insertList = listHelper.getInsertList(changedOrganizationNameList, originalOrganizationNameList);
+		List<OrganizationName> updateList = listHelper.getUpdateList(changedOrganizationNameList, originalOrganizationNameList);
+		for (OrganizationName organizationName : deleteList) {
+			organizationNameDao.deleteOrganizationName(organization, organizationName);
+		}
+		for (OrganizationName organizationName : insertList) {
+			organizationNameDao.insertOrganizationName(organization, organizationName);
+		}
+		for (OrganizationName organizationName : updateList) {
+			organizationNameDao.updateOrganizationName(organization, organizationName);
+		}
+	}
+	/**
+	 * Adds new sources and deletes old ones
+	 * 
+	 * @param changedSupplierSourceList
+	 * @param originalSupplierSourceList
+	 */
+	private void saveSupplierSourceList(List<SupplierSource> changedSupplierSourceList, List<SupplierSource> originalSupplierSourceList) {
+		ModifiedListHelper<SupplierSource> listHelper = new ModifiedListHelper<SupplierSource>();
+		List<SupplierSource> deleteList = listHelper.getDeleteList(changedSupplierSourceList, originalSupplierSourceList);
+		List<SupplierSource> insertList = listHelper.getInsertList(changedSupplierSourceList, originalSupplierSourceList);
+		List<SupplierSource> updateList = listHelper.getUpdateList(changedSupplierSourceList, originalSupplierSourceList);
+		for (SupplierSource supplierSource : deleteList) {
+			supplierSourceDao.deleteSupplierSource(supplierSource);
+			resourceDao.deleteResource(supplierSource);
+		}
+		for (SupplierSource supplierSource : insertList) {
+			supplierSourceDao.insertSupplierSource(supplierSource);
+			resourceDao.insertResource(supplierSource);
+		}
+		for (SupplierSource supplierSource : updateList) {
+			supplierSourceDao.updateSupplierSource(supplierSource);
+			resourceDao.updateResource(supplierSource);
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	private void saveAccessList(List<Access> changedAccessList, List<Access> originalAccessList) {
 		// TODO: Rewrite this!
 		ModifiedListHelper<Access> listHelper = new ModifiedListHelper<Access>();
 		List<Access> deleteList = listHelper.getDeleteList(changedAccessList, originalAccessList);
-		List<Access> insertAndUpdateList = listHelper.getInsertAndUpdateList(changedAccessList, originalAccessList);
+		List<Access> insertAndUpdateList = null;//listHelper.getInsertAndUpdateList(changedAccessList, originalAccessList);
 		if (deleteList != null) {
 			for (Access access : deleteList) {
 				accessDao.deleteAccess(access);
@@ -263,78 +486,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 	}
-	private void saveIpRangeList(List<IpRange> changedIpRangeList, List<IpRange> originalIpRangeList) {
-		// TODO: Rewrite this!
-		ModifiedListHelper<IpRange> listHelper = new ModifiedListHelper<IpRange>();
-		List<IpRange> deleteList = listHelper.getDeleteList(changedIpRangeList, originalIpRangeList);
-		List<IpRange> insertAndUpdateList = listHelper.getInsertAndUpdateList(changedIpRangeList, originalIpRangeList);
-		if (deleteList != null) {
-			for (IpRange ipRange : deleteList) {
-				ipRangeDao.deleteIpRange(ipRange);
-			}
-		}
-		if (insertAndUpdateList != null) {
-			for (IpRange ipRange : insertAndUpdateList) {
-				// FIXME: Insert or update!
-//				ipRangeDao.saveIpRange(ipRange);
-			}
-		}
-	}
-	private void saveOrganizationNameList(List<OrganizationName> changedOrganizationNameList, List<OrganizationName> originalOrganizationNameList) {
-		// TODO: Rewrite this!
-		ModifiedListHelper<OrganizationName> listHelper = new ModifiedListHelper<OrganizationName>();
-		List<OrganizationName> deleteList = listHelper.getDeleteList(changedOrganizationNameList, originalOrganizationNameList);;
-		List<OrganizationName> insertAndUpdateList = listHelper.getInsertAndUpdateList(changedOrganizationNameList, originalOrganizationNameList);
-		if (deleteList != null) {
-			for (OrganizationName organizationName : deleteList) {
-				// FIXME: Insert or update!
-//				organizationDao.deleteOrganizationName(organizationName);
-			}
-		}
-		if (insertAndUpdateList != null) {
-			for (OrganizationName organizationName : insertAndUpdateList) {
-				// FIXME: Insert or update!
-//			organizationDao.saveOrganizationName(organizationName);
-			}
-		}
-	}
-	private void saveSupplierSourceList(List<SupplierSource> changedSupplierSourceList, List<SupplierSource> originalSupplierSourceList) {
-		// TODO: Rewrite this!
-		ModifiedListHelper<SupplierSource> listHelper = new ModifiedListHelper<SupplierSource>();
-		List<SupplierSource> deleteList = listHelper.getDeleteList(changedSupplierSourceList, originalSupplierSourceList);
-		List<SupplierSource> insertAndUpdateList = listHelper.getInsertAndUpdateList(changedSupplierSourceList, originalSupplierSourceList);
-		if (deleteList != null) {
-			for (SupplierSource supplierSource : deleteList) {
-				supplierSourceDao.deleteSupplierSource(supplierSource);
-				resourceDao.deleteResource(supplierSource);
-			}
-		}
-		if (insertAndUpdateList != null) {
-			for (SupplierSource supplierSource : insertAndUpdateList) {
-				saveSupplierSource(supplierSource);
-			}
-		}
-	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-
-	
-	
-	
-	
-
-	
 	private void saveOrganization(Organization organization) {
 		// TODO: Remove!
 //		saveOrganization(organization, organizationDao.getOrganizationById(organization.getId()));
@@ -346,9 +498,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 			//if (originalOrganization == null || (originalOrganization != null && !originalOrganization.getLastChanged().equals(changedOrganization.getLastChanged()))) {
 			//	throw new OptimisticLockingFailureException("Organization has been changed by another caller since last time it was loaded from datastore");
 			//}
-			updateOrganization(changedOrganization, originalOrganization);
+			// TODO: Not use.
+//			updateOrganization(changedOrganization, originalOrganization);
 		} else {
-			insertOrganization(changedOrganization);
+//			insertOrganization(changedOrganization);
 		}
 	}
 	private PositionList getAllPositions(String dummy) {
@@ -368,19 +521,19 @@ public class OrganizationServiceImpl implements OrganizationService {
 		// TODO: Rewrite this!
 		organizationDao.updateOrganization(changedOrganization);
 		setForeignKeysForOrganization(changedOrganization);
-		savePerson(changedOrganization.getContactPerson(), changedOrganization.getContactPerson());
-		saveContactInformation(changedOrganization.getContactInformation(), originalOrganization.getContactInformation());
+//		savePerson(changedOrganization.getContactPerson(), changedOrganization.getContactPerson());
+//		saveContactInformation(changedOrganization.getContactInformation(), originalOrganization.getContactInformation());
 		saveIpRangeList(changedOrganization.getIpRangeList(), originalOrganization.getIpRangeList());
 		
 		// TODO: Rewrite saveOrganizationNameList
 //		saveOrganizationNameList(changedOrganization.getNameList(), originalOrganization.getNameList());
 
-		saveAccessList(changedOrganization.getAccessList(), originalOrganization.getAccessList());
-		saveSupplierSourceList(changedOrganization.getSupplierSourceList(), originalOrganization.getSupplierSourceList());
+//		saveAccessList(changedOrganization.getAccessList(), originalOrganization.getAccessList());
+//		saveSupplierSourceList(changedOrganization.getSupplierSourceList(), originalOrganization.getSupplierSourceList());
 	}
 	
 	private void savePerson(Person person, Person originalPerson) {
-		saveContactInformation(person.getContactInformation(), originalPerson.getContactInformation());
+//		saveContactInformation(person.getContactInformation(), originalPerson.getContactInformation());
 		
 		if (person.getId() != null) {
 			personDao.updatePerson(person);
@@ -400,16 +553,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 	}
-	
 	private void saveAccess(Access access) {
 		
 	}
-	
-	
-	
-	
-	
-	
 	private void insertOrganization2(Organization organization) {
 		// TODO: Remove
 		if (organization.getContactPerson() != null) {
@@ -453,21 +599,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 	
 	
 	// helper methods
-	private void setForeignKeysForOrganization(Organization organization) {
-		if (organization != null) {
-			if (organization.getIpRangeList() != null) {
-				for (IpRange ipRange : organization.getIpRangeList()) {
-					ipRange.setOrganizationId(organization.getId());
-				}
-			}
-			// FIXME: Insert name list!
-//			if (organization.getNameList() != null) {
-//				for (OrganizationName organizationName: organization.getNameList()) {
-//					organizationName.setOrganizationId(organization.getId());
-//				}
-//			}
-		}
-	}
 	
 	
 	
@@ -503,5 +634,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	public void setSupplierSourceDao(SupplierSourceDao supplierSourceDao) {
 		this.supplierSourceDao = supplierSourceDao;
+	}
+	public OrganizationDao getOrganizationDao() {
+		return organizationDao;
+	}
+	public void setOrganizationListDao(OrganizationListDao organizationListDao) {
+		this.organizationListDao = organizationListDao;
+	}
+	public void setOrganizationNameDao(OrganizationNameDao organizationNameDao) {
+		this.organizationNameDao = organizationNameDao;
 	}
 }

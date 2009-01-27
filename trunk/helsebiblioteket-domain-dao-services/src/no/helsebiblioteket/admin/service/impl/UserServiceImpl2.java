@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.listobjects.UserListItem;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
@@ -35,24 +36,6 @@ public class UserServiceImpl2 implements UserService {
 		return null;
 	}
 
-	@Override
-	public PageResult<User> findUsersBySearchStringRoles(String searchString,
-			List<Role> roles, PageRequest<User> request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public SingleResult<Role> getRoleByKey(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PageResult<User> getUserListAll(PageRequest<User> request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ListResult<Position> getPositionListAll(String DUMMY) {
@@ -74,6 +57,30 @@ public class UserServiceImpl2 implements UserService {
 
 	@Override
 	public Boolean updateUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public PageResult<UserListItem> findUsersBySearchStringRoles(
+			String searchString, List<Role> roles,
+			PageRequest<UserListItem> request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public SingleResult<Role> getRoleByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public PageResult<UserListItem> getUserListAll(
+			PageRequest<UserListItem> request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
