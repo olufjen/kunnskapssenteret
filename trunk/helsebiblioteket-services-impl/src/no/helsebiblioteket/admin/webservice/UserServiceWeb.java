@@ -10,6 +10,7 @@ import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.listobjects.UserListItem;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
@@ -54,15 +55,15 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<Role>)invoke(this.roleByKeyName, args, returnTypes);
 	}
-	public PageResult<User> getUserListAll(PageRequest<User> request){
+	public PageResult<UserListItem> getUserListAll(PageRequest<UserListItem> request){
 		Object[] args = new Object[] { request };
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult<User>)invoke(this.userListAllName, args, returnTypes);
+		return (PageResult<UserListItem>)invoke(this.userListAllName, args, returnTypes);
 	}
-	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request){
+	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<UserListItem> request){
 		Object[] args = new Object[] { searchString, roles, request};
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult<User>)invoke(this.findUsersBySearchStringRolesName, args, returnTypes);
+		return (PageResult<UserListItem>)invoke(this.findUsersBySearchStringRolesName, args, returnTypes);
 	}
 	public SingleResult<User> findUserByUsername(String username){
 		Object[] args = new Object[] { username };
