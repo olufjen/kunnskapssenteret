@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
@@ -38,36 +39,36 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { ListResult.class };
 		return (ListResult<OrganizationType>) invoke(this.organizationTypeListAllName, args, returnTypes);
 	}
-	public SingleResult<OrganizationType> getOrganizationTypeByKey(String key) {
+	public SingleResult<OrganizationType> getOrganizationTypeByKey(OrganizationTypeKey key) {
 		Object[] args = new Object[] { key  };
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<OrganizationType>) invoke(this.organizationTypeByKeyName, args, returnTypes);
 	}
-	public PageResult<Organization> getOrganizationListAll(PageRequest<Organization> request) {
+	public PageResult<OrganizationListItem> getOrganizationListAll(PageRequest<OrganizationListItem> request) {
 		Object[] args = new Object[] { request  };
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult<Organization>) invoke(this.organizationListAllName, args, returnTypes);
+		return (PageResult<OrganizationListItem>) invoke(this.organizationListAllName, args, returnTypes);
 	}
-	public PageResult<Organization> findOrganizationsBySearchString(String searchString, PageRequest<Organization> request) {
+	public PageResult<OrganizationListItem> findOrganizationsBySearchString(String searchString, PageRequest<OrganizationListItem> request) {
 		Object[] args = new Object[] { request  };
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult<Organization>) invoke(this.findOrganizationsBySearchString, args, returnTypes);
+		return (PageResult<OrganizationListItem>) invoke(this.findOrganizationsBySearchString, args, returnTypes);
 	}
 
 
 	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem) {
 		Object[] args = new Object[] { organizationListItem  };
-		Class[] returnTypes = new Class[] { PageResult.class };
+		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<Organization>) invoke(this.organizationByListItemName, args, returnTypes);
 	}
 	public Boolean insertOrganization(Organization organization) {
 		Object[] args = new Object[] { organization  };
-		Class[] returnTypes = new Class[] { PageResult.class };
+		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.insertOrganizationName, args, returnTypes);
 	}
 	public Boolean updateOrganization(Organization organization) {
 		Object[] args = new Object[] { organization  };
-		Class[] returnTypes = new Class[] { PageResult.class };
+		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.updateOrganizationName, args, returnTypes);
 	}
 
