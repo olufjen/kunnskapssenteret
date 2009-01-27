@@ -1,9 +1,12 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.dao.EmailDAO;
+import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -19,6 +22,7 @@ public class LoginServiceImpl implements LoginService {
 	private static final long serialVersionUID = 1L;
 	private UserDao userDao;
 	private EmailDAO emailDao;
+	private IpRangeDao ipRangeDao;
 	public SingleResult<User> loginUserByUsernamePassword(String username, String password){
 		User loggedIn = this.userDao.getUserByUsername(username);
 		if(loggedIn != null && loggedIn.getPassword().equals(password)){
@@ -28,21 +32,17 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 	public SingleResult<Organization> loginOrganizationByIpAddress(IpAddress ipAddress) {
-		// TODO: Remove logging!
-		logger.info("LOGGING IN WITH IP :" + ipAddress.getAddress());
-		
-		// TODO: Complete this!
-		Organization organization = new Organization();
-		organization.setNameNorwegianNormal("Universitetssykehuset i Oslo");
-		organization.setNameEnglishNormal("University Hospital of Oslo");
-		organization.setNameNorwegianShort("UH i Oslo");
-		organization.setNameEnglishShort("UH in Oslo");
-		
-		return new ValueResult<Organization>(organization);
+		List<Organization> list = this.ipRangeDao.getOrganizationListByIpAdress(ipAddress);
+		if(list.size() == 0){
+			return new EmptyResult<Organization>();
+		} else {
+			// TODO: Log incidents of more than one organization per IP Address?
+			return new ValueResult<Organization>(list.get(0));
+		}
 	}
 	public Boolean sendPasswordEmail(User user) {
 		logger.info("Sends email to :" + user.getUsername());
-		// TODO: Complete this!
+		// TODO: What should the email contain and how will it be sent?
 		Email email = new Email();
 		email.setFromName("Helsebiblioteket");
 		email.setFromEmail("test@example.org");
@@ -61,5 +61,8 @@ public class LoginServiceImpl implements LoginService {
 	}
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+	public void setIpRangeDao(IpRangeDao ipRangeDao) {
+		this.ipRangeDao = ipRangeDao;
 	}
 }

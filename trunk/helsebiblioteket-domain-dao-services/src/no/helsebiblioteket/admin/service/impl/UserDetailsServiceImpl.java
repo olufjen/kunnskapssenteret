@@ -27,11 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		} else {
 			ValueResult<User> value = (ValueResult<User>)lookup;
 			User user = value.getValue();
-			// TODO: Should this not already have been fetched?
-			// Must set it here or makeAcegiUser will crash!
-//			if(user.getRoleList() == null){
-//				user.setRoleList(new ArrayList<Role>());
-//			}
 			return makeAcegiUser(user);
 		}
 	}
@@ -48,7 +43,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		for (Role role : user.getRoleList()) {
 			result[i++] = new GrantedAuthorityImpl(role.getName());
 		}
-		return result; 
+		return result;
+		// TODO: Use ROLE_ALLACCESS?
 //		GrantedAuthority[] result = new GrantedAuthority[2];
 //		result[0]= new GrantedAuthorityImpl("ROLE_ALLACCESS");
 //		result[1]= new GrantedAuthorityImpl("ROLE_URLACCESS");
