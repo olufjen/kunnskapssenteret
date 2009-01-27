@@ -1,12 +1,7 @@
 package no.helsebiblioteket.admin.test.dao;
 
-import java.util.List;
-
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.factory.AccessFactory;
 import no.helsebiblioteket.admin.test.BeanFactory;
 
@@ -19,7 +14,7 @@ public class AccessDaoTests {
 		AccessDao accessDao = this.beanFactory.getAccessDao();
 		Access insertAccess = AccessFactory.factory.createAccess();
 		accessDao.insertAccess(insertAccess);
-		Access lookUpAccess = null;
+//		Access lookUpAccess = accessDao.getAccessListByUser(user);
 		
 		accessDao.deleteAccess(insertAccess);
 		Assert.notNull(accessDao, "Should be something!");

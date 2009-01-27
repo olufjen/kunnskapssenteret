@@ -10,7 +10,10 @@ import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -34,19 +37,20 @@ public class OrganizationServiceTests {
 	@org.junit.Test
 	public void testGetOrganizationTypeByKey(){
 		SingleResult<OrganizationType> result = beanFactory.getOrganizationService().getOrganizationTypeByKey(
-				OrganizationTypeKey.content_supplier.toString());
+				OrganizationTypeKey.content_supplier);
 		Assert.assertNotNull("No result", result);
 	}
 	@org.junit.Test
 	public void testGetOrganizationListAll(){
-		PageResult<Organization> result = beanFactory.getOrganizationService().getOrganizationListAll(null);
+		PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
+		PageResult<OrganizationListItem> result = beanFactory.getOrganizationService().getOrganizationListAll(request);
 		Assert.assertNotNull("No result", result);
 	}
 	@org.junit.Test
 	public void testFindOrganizationsBySearchString(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 		organizationService.insertOrganization(testOrganization());
-		PageResult<Organization> result = organizationService.findOrganizationsBySearchString(findMeName, null);
+		PageResult<OrganizationListItem> result = organizationService.findOrganizationsBySearchString(findMeName, null);
 		Assert.assertNotNull("No result", result);
 		Assert.assertTrue("Empty result", result.result.size()>0);
 		Assert.assertEquals("Not the same", result.result.get(0).getNameEnglish(), findMeName);
@@ -55,7 +59,10 @@ public class OrganizationServiceTests {
 	public void testGetOrganizationByListItem(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 		organizationService.insertOrganization(testOrganization());
-		SingleResult<Organization> result = organizationService.getOrganizationByListItem(testOrganization());
+		OrganizationListItem listItem = new OrganizationListItem();
+		Organization organization = testOrganization();
+		listItem.setId(organization.getId());
+		SingleResult<Organization> result = organizationService.getOrganizationByListItem(listItem);
 		Assert.assertNotNull("No result", result);
 		Assert.assertTrue("No result", result instanceof ValueResult);
 	}
