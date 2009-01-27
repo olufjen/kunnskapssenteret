@@ -8,10 +8,10 @@ import no.helsebiblioteket.admin.domain.Person;
 
 public class SqlMapContactInformationDao extends SqlMapClientDaoSupport implements ContactInformationDao {
 	// TODO: Go through all!
-	public void insertContactInformation(ContactInformation contactInformation){
+	public ContactInformation insertContactInformation(ContactInformation contactInformation){
 	
 		getSqlMapClientTemplate().insert("insertContactInformation", contactInformation);
-	
+		return null;
 	}
 	public void updateContactInformation(ContactInformation contactInformation){
 
