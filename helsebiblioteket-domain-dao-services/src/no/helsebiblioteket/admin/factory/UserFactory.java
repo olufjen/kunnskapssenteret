@@ -18,7 +18,7 @@ public class UserFactory {
 		User user = new User();
 		user.setUsername("");
 		user.setPassword("");
-		user.setAccessList(new ArrayList<Access>());
+//		user.setAccessList(new ArrayList<Access>());
 		user.setRoleList(new ArrayList<Role>());
 		user.setLastChanged(new Date());
 //		protected Organization organization;

@@ -20,6 +20,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
 	}
+	/**
+	 * Loads the user object using UserService. Is the implementation
+	 * required by org.springframework.security.userdetails.UserDetailsService
+	 * 
+	 * Creates a org.springframework.security.userdetails.UserDetails object.
+	 * 
+	 * The other methods are helpers for this.
+	 * 
+	 */
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		SingleResult<User> lookup = this.userService.findUserByUsername(username);
 		if(lookup instanceof EmptyResult){

@@ -9,6 +9,7 @@ import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.URLService;
+import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.Organization;
@@ -20,18 +21,35 @@ public class URLServiceImpl implements URLService {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static final long serialVersionUID = 1L;
 	private SupplierSourceDao supplierSourceDao;
+	private AccessDao accessDao;
 	private String proxyPrefix;
+	/**
+	 * This checks if a URL is relevant(affected) for the proxy
+	 * server. If the URL is found in the supplier sources table,
+	 * it may  be relevant for the proxy, but only if ...
+	 * 
+	 *  TODO: What are the criteria here?
+	 * 
+	 */
 	public Boolean isAffected(Url url) {
 		// TODO: Improve efficiency by not fetching all!
 		List<SupplierSource> list = this.supplierSourceDao.getSupplierSourceListAll();
 		for (SupplierSource supplierSource : list) {
 			if(supplierSource.getUrl().getValue().equals(url.getValue())){
 				// TODO: How is the correct way to check this?
+				//       We will hopefull not need to parse it
+				//       and do all kinds of stuff.
 				return Boolean.TRUE;
 			}
 		}
 		return Boolean.FALSE;
 	}
+	/**
+	 * Translates a URL. If the user has Access he will
+	 * be sent to the proxy. Otherwise there must be a
+	 * page with information about what to do.
+	 * 
+	 */
 	public SingleResult<Url> translate(User user, Url url) {
 		Url newUrl = new Url();
 		if(this.hasAccess(user, url)){
@@ -43,6 +61,14 @@ public class URLServiceImpl implements URLService {
 		}
 		return new ValueResult<Url>(newUrl);
 	}
+	/**
+	 * Translates a URL for an organization. If the organization
+	 * has access it may be sent to the proxy, but not if it 
+	 * can be sent directly.
+	 * 
+	 * TODO: When to send an organization directly?
+	 * 
+	 */
 	public SingleResult<Url> translate(Organization organization, Url url) {
 		Url newUrl = new Url();
 		if(hasAccess(organization, url)){
@@ -54,6 +80,18 @@ public class URLServiceImpl implements URLService {
 		}
 		return new ValueResult<Url>(newUrl);
 	}
+	/**
+	 * Translates a URL for either organization of user.
+	 * If the organization has access, it will be used
+	 * because that may go around the proxy and relive
+	 * it from traffic.
+	 * 
+	 * TODO: An important question (since we do not have
+	 *       the lock symbol on the links yet) is whether
+	 *       someone who dosn't have access will be sent
+	 *       to the proxy or directly to the server?
+	 *       Sometimes one and sometimes the other?
+	 */
 	public SingleResult<Url> translate(User user, Organization organization, Url url){
 		Url newUrl = new Url();
 		if(hasAccess(organization, url)){
@@ -66,24 +104,43 @@ public class URLServiceImpl implements URLService {
 		}
 		return new ValueResult<Url>(newUrl);
 	}
+	/**
+	 * Loads the Access list for a user and checks if the URL
+	 * is in the list.
+	 * 
+	 * TODO: I think we must check for Access type and resource
+	 *       type. 
+	 */
     public Boolean hasAccess(User user, Url url) {
-    	for (Access access : user.getAccessList()) {
+    	List<Access> accessList = this.accessDao.getAccessListByUser(user);
+    	for (Access access : accessList) {
     		if(url.getValue().equals(access.getSupplierSource().getUrl().getValue())){
-    			// TODO: Is this all?
     			return Boolean.TRUE;
     		}
 		}
 		return Boolean.FALSE;
 	}
+	/**
+	 * Loads the Access list for an organization and checks if the URL
+	 * is in the list.
+	 * 
+	 * TODO: I think we must check for Access type and resource
+	 *       type.
+	 */
 	public Boolean hasAccess(Organization organization, Url url) {
-    	for (Access access : organization.getAccessList()) {
+    	List<Access> accessList = this.accessDao.getAccessListByOrganization(organization);
+    	for (Access access : accessList) {
     		if(url.getValue().equals(access.getSupplierSource().getUrl().getValue())){
-    			// TODO: Is this all?
     			return Boolean.TRUE;
     		}
 		}
 		return Boolean.FALSE;
 	}
+	/**
+	 * Checks if an organization has access first, then check the user.
+	 * If none of them have, the URL and the resource it identifies
+	 * is not available to the user or the organization.
+	 */
 	public Boolean hasAccess(User user, Organization organization, Url url) {
 		if(hasAccess(organization, url)){
 			return Boolean.TRUE;
@@ -93,6 +150,14 @@ public class URLServiceImpl implements URLService {
 			return Boolean.FALSE;
 		}
 	}
+	/**
+	 * Finds the group value for a URL. Loads the resources, finds
+	 * the URL and the group name for it.
+	 * 
+	 * TODO: The database will be extended with a new field.
+	 *       Do not use supplierSource.getName().
+	 *  
+	 */
 	public SingleResult<String> group(Url url){
 		List<SupplierSource> list = this.supplierSourceDao.getSupplierSourceListAll();
 		for (SupplierSource supplierSource : list) {
@@ -102,5 +167,14 @@ public class URLServiceImpl implements URLService {
 			}
 		}
 		return new EmptyResult<String>();
+	}
+	public void setSupplierSourceDao(SupplierSourceDao supplierSourceDao) {
+		this.supplierSourceDao = supplierSourceDao;
+	}
+	public void setAccessDao(AccessDao accessDao) {
+		this.accessDao = accessDao;
+	}
+	public void setProxyPrefix(String proxyPrefix) {
+		this.proxyPrefix = proxyPrefix;
 	}
 }

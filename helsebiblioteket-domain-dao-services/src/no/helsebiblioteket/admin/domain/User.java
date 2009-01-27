@@ -3,34 +3,17 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 import java.util.List;
 
-public class User {
-	protected Integer id;
-	protected String username;
-	protected String password;
+public class User  {
+	private Integer id;
+	private String username;
+	private String password;
 	private Date lastChanged;
-	
-	protected Organization organization;
+
+	private Organization organization;
 	private Person person;
 
-	protected List<Access> accessList;
+//	private List<Access> accessList;
 	private List<Role> roleList;
-	
-	public boolean hasRole(Role role){
-		for (Role userRole : this.roleList) {
-			if(userRole.getKey().equals(role.getKey())){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public List<Role> getRoleList(){
-		return roleList;
-	}
-	
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	} 
 	
 	public Integer getId() {
 		return id;
@@ -50,17 +33,17 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
+	}
 	public Organization getOrganization() {
 		return organization;
 	}
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
-	}
-	public List<Access> getAccessList() {
-		return accessList;
-	}
-	public void setAccessList(List<Access> accessList) {
-		this.accessList = accessList;
 	}
 	public Person getPerson() {
 		return person;
@@ -68,10 +51,21 @@ public class User {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	public Date getLastChanged() {
-		return lastChanged;
+
+	public boolean hasRole(Role role){
+		for (Role userRole : this.roleList) {
+			if(userRole.getKey().equals(role.getKey())){
+				return true;
+			}
+		}
+		return false;
 	}
-	public void setLastChanged(Date lastChanged) {
-		this.lastChanged = lastChanged;
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
 }

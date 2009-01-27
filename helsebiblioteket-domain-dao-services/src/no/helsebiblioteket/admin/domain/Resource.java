@@ -1,13 +1,15 @@
 package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Resource {
 	private Integer resourceId;
 	private ResourceType resourceType;
 	private Date lastChanged;
 	private Integer supplierSourceId;
-	
+	private List<SupplierSource> supplierSourceList;
+
 	// foreign keys
 	private Integer organizationId;
 	

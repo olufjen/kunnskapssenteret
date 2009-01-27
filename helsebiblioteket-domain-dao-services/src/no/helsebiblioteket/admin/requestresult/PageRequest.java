@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.requestresult;
 
-public class PageRequest<T> {
+public abstract class PageRequest<T> {
 	public int maxResult;
-	public int from;
+	public PageRequest(int maxResult) {
+		this.maxResult = maxResult;
+	}
 }

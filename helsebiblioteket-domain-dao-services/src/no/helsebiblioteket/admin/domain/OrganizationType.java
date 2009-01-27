@@ -4,8 +4,8 @@ public class OrganizationType {
 	private Integer id;
 	private String name;
 	private String description;
-	private String key;
-	
+	private OrganizationTypeKey key;
+
 	public OrganizationType() {
 	}
 	
@@ -31,10 +31,10 @@ public class OrganizationType {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getKey() {
+	public OrganizationTypeKey getKey() {
 		return key;
 	}
-	public void setKey(String key) {
+	public void setKey(OrganizationTypeKey key) {
 		this.key = key;
 	}
 	

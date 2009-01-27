@@ -8,6 +8,9 @@ package no.helsebiblioteket.admin.dao;
  */
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.Reference;
+import no.helsebiblioteket.admin.domain.ValueReference;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
 
 public interface OrganizationDao {
 	// Edit
@@ -17,6 +20,8 @@ public interface OrganizationDao {
 
 	// Fetch
 	public Organization getOrganizationByChild(Organization child);
+	public Organization getOrganizationByListItem(OrganizationListItem organizationListItem);
+	
 	// TODO: Should not us id. Check where it is used!
 	public Organization getOrganizationById(Integer id);
 }

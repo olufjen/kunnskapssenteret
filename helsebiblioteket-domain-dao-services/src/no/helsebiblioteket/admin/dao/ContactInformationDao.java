@@ -6,7 +6,7 @@ import no.helsebiblioteket.admin.domain.Person;
 
 public interface ContactInformationDao {
 	// Edit
-	public void insertContactInformation(ContactInformation contactInformation);
+	public ContactInformation insertContactInformation(ContactInformation contactInformation);
 	public void updateContactInformation(ContactInformation contactInformation);
 	public void deleteContactInformation(ContactInformation contactInformation);
 	

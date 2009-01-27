@@ -1,10 +1,17 @@
 package no.helsebiblioteket.admin.domain;
 
-public class SupplierSource extends Resource {
+public class SupplierSource extends Resource implements Unique{
 	private Url url = null;
 	private String name = null;
 	
 	public SupplierSource() {
+	}
+	
+	public Integer getId(){
+		return getSupplierSourceId();
+	}
+	public void setId(Integer id){
+		this.setSupplierSourceId(id);
 	}
 	
 	public SupplierSource(String name, Url url) {

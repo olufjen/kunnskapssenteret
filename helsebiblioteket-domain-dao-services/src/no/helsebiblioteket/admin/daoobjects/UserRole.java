@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.daoobjects;
 import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.Unique;
 
 public class UserRole {
 	private Role userRole;
