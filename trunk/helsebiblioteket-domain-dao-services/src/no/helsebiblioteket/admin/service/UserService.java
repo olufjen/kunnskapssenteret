@@ -22,6 +22,7 @@ public interface UserService extends Serializable {
 	public SingleResult<Role> getRoleByKey(String key);
 
 	// TODO: Remove this and use findUsersBySearchStringRoles with empty string and list?
+	// TODO: Or use UserListItem as the result here.
 	public PageResult<User> getUserListAll(PageRequest<User> request);
 	// TODO: Use UserListItem as the result here.
 	public PageResult<User> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<User> request);

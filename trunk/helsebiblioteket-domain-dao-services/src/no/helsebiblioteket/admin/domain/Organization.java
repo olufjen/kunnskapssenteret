@@ -7,19 +7,21 @@ import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
 
 public class Organization implements OrganizationListItem{
 	private Integer id;
-	private Organization parent;
 	private String description;
-	private OrganizationType type;
-	private List<IpRange> ipRangeList;
-	private Person contactPerson;
-	private ContactInformation contactInformation;
-	private List<Access> accessList;
 	private Date lastChanged;
-	private List<SupplierSource> supplierSourceList;
 	private String nameEnglishNormal;
 	private String nameEnglishShort;
 	private String nameNorwegianNormal;
 	private String nameNorwegianShort;
+
+	private List<IpRange> ipRangeList;
+	private List<Access> accessList;
+	private List<SupplierSource> supplierSourceList;
+
+	private Organization parent;
+	private OrganizationType type;
+	private Person contactPerson;
+	private ContactInformation contactInformation;
 	
 	public Integer getId() {
 		return id;

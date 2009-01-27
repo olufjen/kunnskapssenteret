@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class IpRange {
 	private Integer id;
+	private Date lastChanged;
 	private IpAddress ipAddressFrom;
 	private IpAddress ipAddressTo;
-	private Date lastChanged;
 	
 	// foreign keys
 	private Integer organizationId;

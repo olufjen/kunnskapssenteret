@@ -2,16 +2,18 @@ package no.helsebiblioteket.admin.daoobjects;
 
 import java.util.Date;
 
+import no.helsebiblioteket.admin.domain.Role;
+
 public class UserRole {
-	private Integer userRoleId;
+	private Role userRole;
 	private Integer userId;
 	private Date lastChanged = null;
 	
-	public Integer getUserRoleId() {
-		return userRoleId;
+	public Role getUserRole() {
+		return userRole;
 	}
-	public void setUserRoleId(Integer userRoleId) {
-		this.userRoleId = userRoleId;
+	public void setUserRole(Role userRole) {
+		this.userRole = userRole;
 	}
 	public Integer getUserId() {
 		return userId;

@@ -6,7 +6,7 @@ import java.util.Date;
 public class OrganizationName {
 	private Integer id = null;
 	private String name = null;
-	private String languageCode = null;
+	private LanguageCategory languageCode = null;
 	private OrganizationNameCategory category = null;
 	private Date lastChanged = null;
 	
@@ -25,10 +25,10 @@ public class OrganizationName {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getLanguageCode() {
+	public LanguageCategory getLanguageCode() {
 		return this.languageCode;
 	}
-	public void setLanguageCode(String languageCode) {
+	public void setLanguageCode(LanguageCategory languageCode) {
 		this.languageCode = languageCode;
 	}
 	public OrganizationNameCategory getCategory() {

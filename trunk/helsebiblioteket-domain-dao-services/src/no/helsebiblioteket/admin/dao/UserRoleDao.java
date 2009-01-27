@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.dao;
 import java.util.List;
 
 import no.helsebiblioteket.admin.daoobjects.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 public interface UserRoleDao {

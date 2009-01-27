@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.dao;
 
 import java.util.List;
 
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 
@@ -13,4 +14,5 @@ public interface IpRangeDao {
 	
 	// Fetch
 	public List<IpRange> getIpRangeListByOrganization(Organization organization);
+	public List<Organization> getOrganizationListByIpAdress(IpAddress ipAddress);
 }

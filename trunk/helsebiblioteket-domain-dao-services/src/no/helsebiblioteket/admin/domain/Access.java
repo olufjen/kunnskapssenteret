@@ -12,21 +12,15 @@ import java.util.Date;
 
 public class Access {
 	private Integer id;
-	private SupplierSource supplierSource;
-	private Organization organization;
-	private Organization organizationAsResource;
-	private AccessType type;
-	private Organization providedBy;
 	private Date validFrom;
 	private Date validTo;
 	private Date lastChanged;
 	
-	public Organization getOrganization() {
-		return organization;
-	}
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-	}
+	private SupplierSource supplierSource;
+	private Organization organizationAsResource;
+	private AccessType type;
+	private Organization providedBy;
+	
 	public Date getLastChanged() {
 		return lastChanged;
 	}
@@ -68,6 +62,12 @@ public class Access {
 	}
 	public void setProvidedBy(Organization providedBy) {
 		this.providedBy = providedBy;
+	}
+	public Organization getOrganizationAsResource() {
+		return organizationAsResource;
+	}
+	public void setOrganizationAsResource(Organization organizationAsResource) {
+		this.organizationAsResource = organizationAsResource;
 	}
 	
 }

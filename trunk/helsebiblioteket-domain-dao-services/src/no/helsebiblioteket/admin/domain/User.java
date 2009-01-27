@@ -7,11 +7,13 @@ public class User {
 	protected Integer id;
 	protected String username;
 	protected String password;
-	protected Organization organization;
-	protected List<Access> accessList;
-	private Person person;
-	private List<Role> roleList;
 	private Date lastChanged;
+	
+	protected Organization organization;
+	private Person person;
+
+	protected List<Access> accessList;
+	private List<Role> roleList;
 	
 	public boolean hasRole(Role role){
 		for (Role userRole : this.roleList) {
