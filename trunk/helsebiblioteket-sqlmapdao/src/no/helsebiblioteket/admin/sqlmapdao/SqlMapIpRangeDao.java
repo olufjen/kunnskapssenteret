@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.IpRangeDao;
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 
@@ -28,7 +29,9 @@ public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeD
 	public List<IpRange> getIpRangeListByOrganization(Organization organization){
 		return null;
 	}
-
+	public List<Organization> getOrganizationListByIpAdress(IpAddress ipAddress) {
+		return null;
+	}
 	
 	
 	
