@@ -13,6 +13,7 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.listobjects.UserListItem;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -113,8 +114,12 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
             return user;
         }
     }
-	@Override
-	public List<User> getUserListAll() {
+	public List<UserListItem> getUserListPaged(int from, int max) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public List<UserListItem> getUserListPagedSearchStringRoles(
+			String searchString, List<Role> roles, int from, int max) {
 		// TODO Auto-generated method stub
 		return null;
 	}
