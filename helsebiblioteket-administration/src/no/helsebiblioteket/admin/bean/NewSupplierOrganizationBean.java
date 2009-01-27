@@ -15,6 +15,7 @@ import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Supplier;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -33,7 +34,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	
 	private OrganizationService organizationService = null;
 	
-	private Organization organization = null;
+	private Supplier organization = null;
 	
 	private String sourceName = null;
 	private String sourceUrl = null;
@@ -84,7 +85,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 
 	public Organization getSupplierOrganization() {
 		if (this.organization == null) {
-			this.organization = new Organization();
+			this.organization = new Supplier();
 		}
 		// TODO: Should not be nessecary
 //		if (this.organization.getNameList() == null) {
@@ -97,18 +98,18 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 			this.organization.setContactPerson(new Person());
 		}
 		if (this.organization.getType() == null) {
-			SingleResult<OrganizationType> res = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier.toString());
+			SingleResult<OrganizationType> res = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
 			if(res instanceof ValueResult){
 				this.organization.setType(((ValueResult<OrganizationType>)res).getValue());
 			}
 		}
-		if (this.organization.getSupplierSourceList() == null) {
-			this.organization.setSupplierSourceList(new ArrayList<SupplierSource>());
-		}
+//		if (this.organization.getSupplierSourceList() == null) {
+//			this.organization.setSupplierSourceList(new ArrayList<SupplierSource>());
+//		}
 		return this.organization;
 	}
 	
-	public void setOrganization(Organization supplierOrganization) {
+	public void setOrganization(Supplier supplierOrganization) {
 		this.organization = supplierOrganization;
 	}
 
@@ -146,7 +147,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		return (organization.getSupplierSourceList() != null && organization.getSupplierSourceList().size() > 0) ? true : false;
 	}
 
-	public void setSupplierOrganization(Organization supplierOrganization) {
+	public void setSupplierOrganization(Supplier supplierOrganization) {
 		this.organization = supplierOrganization;
 	}
 }

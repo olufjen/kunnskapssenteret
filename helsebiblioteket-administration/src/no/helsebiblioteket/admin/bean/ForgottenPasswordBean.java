@@ -6,6 +6,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.LoginService;
 
@@ -30,7 +32,12 @@ public class ForgottenPasswordBean {
 		
 		logger.info("method 'send' invoked");
 		User user = new User();
-		user.setUsername(getEmail());
+		Person person = new Person();
+		ContactInformation contactInformation = new ContactInformation();
+		contactInformation.setEmail(getEmail());
+		person.setContactInformation(contactInformation);
+		user.setPerson(person);
+		user.setUsername("");
 		this.loginService.sendPasswordEmail(user);
 		
 		// TODO: Use message from Resource Bundle
