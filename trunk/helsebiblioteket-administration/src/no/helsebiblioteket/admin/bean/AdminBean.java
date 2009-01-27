@@ -23,7 +23,7 @@ public class AdminBean {
 			SelectItem selectItem = null;
 			for (OrganizationType orgType: organizationTypeList) {
 				selectItem = new SelectItem(String.valueOf(orgType.getId()),
-						MessageResourceReader.getMessageResourceString(organizationTypesBundle, orgType.getKey(), orgType.getName()));
+						MessageResourceReader.getMessageResourceString(organizationTypesBundle, orgType.getKey().toString(), orgType.getName()));
 				organizationTypeSelectItemList.add(selectItem);
 			}
 		}

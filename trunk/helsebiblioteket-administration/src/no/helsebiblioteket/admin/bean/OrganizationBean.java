@@ -8,6 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -16,7 +18,7 @@ public class OrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private OrganizationService organizationService;
 	private String searchinput;
-	private List<Organization> organizations;
+	private List<OrganizationListItem> organizations;
 	private Organization organization;
 	private HtmlDataTable organizationsTable;
 	
@@ -43,11 +45,12 @@ public class OrganizationBean {
 	}
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }
-		PageRequest<Organization> request = new PageRequest<Organization>();
+		PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
 		this.organizations = this.organizationService.findOrganizationsBySearchString(this.searchinput, request).result;
 	}
-	public List<Organization> getOrganizations() {
-		PageResult<Organization> pageResult = this.organizationService.getOrganizationListAll(null);
+	public List<OrganizationListItem> getOrganizations() {
+		PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
+		PageResult<OrganizationListItem> pageResult = this.organizationService.getOrganizationListAll(request);
 		this.organizations = pageResult.result;
 		return this.organizations;
 	}

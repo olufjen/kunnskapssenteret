@@ -18,6 +18,7 @@ import no.helsebiblioteket.admin.domain.IpRange;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -223,7 +224,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 	
 	public String actionEditOrganization() {
 		Integer orgId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("organizationId");
-		Organization organization = new Organization();
+		OrganizationListItem organization = new OrganizationListItem();
 		organization.setId(orgId);
 		SingleResult<Organization> result = organizationService.getOrganizationByListItem(organization);
 		if(result instanceof ValueResult){

@@ -21,7 +21,10 @@ import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.listobjects.UserListItem;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
+import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -46,7 +49,7 @@ public class UserBean {
 	private List<Position> allPositions;
 	private Map<String, Position> allPositionsMap;
 	// FIXME: Use caching?
-	private List<User> users;
+	private List<UserListItem> users;
 	private User user;
 	
 	private boolean showHprNumber;
@@ -241,7 +244,7 @@ public class UserBean {
 		}
 		// FIXME: Handle paged result!
 		this.users = this.userService.findUsersBySearchStringRoles(this.searchinput, this.getSelectedRolesRoleList(),
-				new PageRequest<User>()).result;
+				new FirstPageRequest<UserListItem>(Integer.MAX_VALUE)).result;
 		return "users_overview";
 	}
 	public List<SelectItem> getAvailableIsStudent() {
@@ -289,8 +292,9 @@ public class UserBean {
 			dummy.setNameNorwegianShort(name);
 			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getNameEnglish(), "", false);
 			this.availableEmployers.add(dummyOption);
-			PageResult<Organization> orgs = this.organizationService.getOrganizationListAll(null);
-			for (Organization organization : orgs.result) {
+			PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
+			PageResult<OrganizationListItem> orgs = this.organizationService.getOrganizationListAll(request);
+			for (OrganizationListItem organization : orgs.result) {
 				// TODO: How to find right name here?
 				SelectItem option = new SelectItem(""+organization.getId(), organization.getNameEnglish(), "", false);
 				this.availableEmployers.add(option);
@@ -354,9 +358,9 @@ public class UserBean {
 		}
 		return this.allPositions;
 	}
-	public List<User> getUsers() {
+	public List<UserListItem> getUsers() {
 		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest<User>()).result; }
+		if(this.users == null) { this.users = userService.getUserListAll(new FirstPageRequest<no.helsebiblioteket.admin.listobjects.UserListItem>(Integer.MAX_VALUE)).result; }
 		return this.users;
 	}
 	public String getSelectedIsStudent() {
