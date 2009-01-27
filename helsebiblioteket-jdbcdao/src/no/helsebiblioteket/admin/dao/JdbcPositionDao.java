@@ -12,7 +12,12 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcPositionDao extends SimpleJdbcDaoSupport implements PositionDao {
-    protected final Log logger = LogFactory.getLog(getClass());
+	
+	
+	// TODO: Remove class
+
+	
+	protected final Log logger = LogFactory.getLog(getClass());
 	public List<Position> getAllPositions() {
         logger.info("fetching all roles");
         List<Position> positions = getSimpleJdbcTemplate().query(
@@ -29,4 +34,24 @@ public class JdbcPositionDao extends SimpleJdbcDaoSupport implements PositionDao
             return position;
         }
     }
+	@Override
+	public void deletePosition(Position position) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public List<Position> getPositionListAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void insertPosition(Position position) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void updatePosition(Position position) {
+		// TODO Auto-generated method stub
+		
+	}
 }

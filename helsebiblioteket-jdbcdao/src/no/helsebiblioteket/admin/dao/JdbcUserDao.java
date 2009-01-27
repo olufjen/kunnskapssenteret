@@ -16,7 +16,11 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
-    protected final Log logger = LogFactory.getLog(getClass());
+   
+	// TODO: Remove class
+
+	
+	protected final Log logger = LogFactory.getLog(getClass());
 	public User getUserByUsername(User user) {
         logger.info("finding user with username '" + ((user != null) ? user.getUsername() : "") + "'");
         List<User> users = getSimpleJdbcTemplate().query(
@@ -100,8 +104,12 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 		// TODO: Not a nice solution.
 		
 	}
+	public void deleteUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
 	@Override
-	public List<User> getAllUsers() {
+	public User getUserByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}

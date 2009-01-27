@@ -10,8 +10,11 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 
 public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements OrganizationTypeDao {
+
+	// TODO: Remove class
 
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
@@ -37,8 +40,40 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
             OrganizationType orgType = new OrganizationType();
             orgType.setId(rs.getInt("org_type_id"));
             orgType.setName(rs.getString("name"));
-            orgType.setKey(rs.getString("key"));
+//            orgType.setKey(rs.getString("key"));
             return orgType;
         }
     }
+
+
+	public List<OrganizationType> getOrganizationTypeListAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteOrganizationType(OrganizationType organizationType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public OrganizationType getOrganizationTypeByKey(
+			OrganizationTypeKey organizationTypeKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertOrganizationType(OrganizationType organizationType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrganizationType(OrganizationType organizationType) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

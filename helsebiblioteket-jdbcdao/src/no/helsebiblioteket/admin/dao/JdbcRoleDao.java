@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import no.helsebiblioteket.admin.daoobjects.UserRole;
 import no.helsebiblioteket.admin.domain.Role;
-import no.helsebiblioteket.admin.domain.UserRoleLine;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,7 +13,11 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
-    protected final Log logger = LogFactory.getLog(getClass());
+    
+	// TODO: Remove class
+
+	
+	protected final Log logger = LogFactory.getLog(getClass());
 	public List<Role> getAllRoles() {
         logger.info("fetching all roles");
         List<Role> roles = getSimpleJdbcTemplate().query(
@@ -32,7 +36,7 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
         }
     }
 
-	public void deleteUserRoleLine(UserRoleLine userRoleLine) {
+	public void deleteUserRoleLine(UserRole userRoleLine) {
 		// TODO: Need not be implemented!
 		
 	}
@@ -47,7 +51,37 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
 		return null;
 	}
 
-	public void insertUserRoleLine(UserRoleLine userRoleLine) {
+	public void insertUserRoleLine(UserRole userRoleLine) {
 		// TODO: Need not be implemented!		
+	}
+
+	@Override
+	public void deleteRole(Role role) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Role getRoleByKey(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Role> getRoleListAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertRole(Role role) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateRole(Role role) {
+		// TODO Auto-generated method stub
+		
 	}
 }
