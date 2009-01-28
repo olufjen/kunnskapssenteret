@@ -3,7 +3,9 @@ package no.helsebiblioteket.admin.test.service;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.test.BeanFactory;
@@ -15,16 +17,16 @@ public class URLServiceTests {
 		URLService urlService = beanFactory.getURLService();
 		
 		Access access = new Access();
-		Organization supplier = new Organization();
+		SupplierOrganization supplier = new SupplierOrganization();
 		access.setProvidedBy(supplier);
-		Resource resource = new Resource();
+		SupplierSourceResource resource = new SupplierSourceResource();
 		
 		
 		Url url = new Url();
-		url.setValue("http://www.google.no/firefox");
+		url.setStringValue("http://www.google.no/firefox");
 		SupplierSource supplierSource = new SupplierSource();
 		supplierSource.setUrl(url);
-		resource.setSupplierSourceId(null);
+		resource.setSupplierSource(supplierSource);
 		
 		// TODO: Write tests.
 //	    public Boolean isAffected(Url url);

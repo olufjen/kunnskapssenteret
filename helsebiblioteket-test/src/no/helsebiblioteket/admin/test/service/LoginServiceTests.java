@@ -6,7 +6,9 @@ import java.util.List;
 import org.junit.Assert;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.factory.UserFactory;
@@ -45,12 +47,12 @@ public class LoginServiceTests {
 
 		IpAddress ipAddress = new IpAddress();
 		ipAddress.setAddress("192.101.1.2");
-		IpRange ipRange = new IpRange();
+		IpAddressRange ipRange = new IpAddressRange();
 		ipRange.setIpAddressFrom(new IpAddress("192.101.1.1"));
 		ipRange.setIpAddressTo(new IpAddress("192.101.1.3"));
-		Organization organization = new Organization();
-		List<IpRange> ipRangeList = new ArrayList<IpRange>();
-		organization.setIpRangeList(ipRangeList);
+		MemberOrganization organization = new MemberOrganization();
+		List<IpAddressSet> ipRangeList = new ArrayList<IpAddressSet>();
+		organization.setIpAddressSetList(ipRangeList);
 		
 		organizationService.insertOrganization(organization);
 		loginService.loginOrganizationByIpAddress(ipAddress);

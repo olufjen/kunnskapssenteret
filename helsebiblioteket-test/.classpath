@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/commons-dbcp-1.2.2.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/commons-pool-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.5.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-services-impl"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/postgresql-8.2-508.jdbc3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

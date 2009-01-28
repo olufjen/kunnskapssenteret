@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.test.dao;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.domain.Access;
+import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.factory.AccessFactory;
 import no.helsebiblioteket.admin.test.BeanFactory;
 
@@ -12,7 +13,7 @@ public class AccessDaoTests {
 	@org.junit.Test
 	public void testInsertAccess() {
 		AccessDao accessDao = this.beanFactory.getAccessDao();
-		Access insertAccess = AccessFactory.factory.createAccess();
+		ResourceAccess insertAccess = null;//AccessFactory.factory.createAccess();
 		accessDao.insertAccess(insertAccess);
 //		Access lookUpAccess = accessDao.getAccessListByUser(user);
 		
