@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 
 public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements OrganizationTypeDao {
 
@@ -38,7 +38,7 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 	private static class OrgTypeMapper implements ParameterizedRowMapper<OrganizationType> {
         public OrganizationType mapRow(ResultSet rs, int rowNum) throws SQLException {
             OrganizationType orgType = new OrganizationType();
-            orgType.setId(rs.getInt("org_type_id"));
+            orgType.setOrgTypeId(rs.getInt("org_type_id"));
             orgType.setName(rs.getString("name"));
 //            orgType.setKey(rs.getString("key"));
             return orgType;

@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 
@@ -20,15 +21,15 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 
 public class JdbcOrganizationDao extends SimpleJdbcDaoSupport  {
     protected final Log logger = LogFactory.getLog(getClass());
-	public List<Organization> getAllOrganizations() {
+	public List<MemberOrganization> getAllOrganizations() {
 		logger.info("fetching all organizations");
-		List<Organization> orgs = getSimpleJdbcTemplate().query(
+		List<MemberOrganization> orgs = getSimpleJdbcTemplate().query(
 				"select org_unit_id, name, descr, name_short, org_type_key, org_unit_parent_id, org_type_id from tbl_org_unit",
                 new OrgMapper());
         return orgs;
 	}
-	public Organization getOrganization(Integer organizationId) {
-		List<Organization> orgs = getSimpleJdbcTemplate().query(
+	public MemberOrganization getOrganization(Integer organizationId) {
+		List<MemberOrganization> orgs = getSimpleJdbcTemplate().query(
 		        "org_unit_id, org_unit_parent_id, name, name_short, descr, org_type_id from tbl_org_unit where org_unit_id = :org_unit_id", 
 		        new OrgMapper(),
 		        new MapSqlParameterSource().addValue("org_unit_id", organizationId)
@@ -37,11 +38,11 @@ public class JdbcOrganizationDao extends SimpleJdbcDaoSupport  {
 	}
 	
 	
-	private static class OrgMapper implements ParameterizedRowMapper<Organization> {
-        public Organization mapRow(ResultSet rs, int rowNum) throws SQLException {
+	private static class OrgMapper implements ParameterizedRowMapper<MemberOrganization> {
+        public MemberOrganization mapRow(ResultSet rs, int rowNum) throws SQLException {
         	//select org_unit_id, name, descr, name_short, org_type_key, org_unit_parent_id from tbl_org_unit
-            Organization org = new Organization();
-            org.setId(rs.getInt("org_unit_id"));
+        	MemberOrganization org = new MemberOrganization();
+            org.setOrgUnitId(rs.getInt("org_unit_id"));
 //            org.setName(rs.getString("name"));
             org.setDescription(rs.getString("descr"));
             

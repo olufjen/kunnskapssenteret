@@ -29,7 +29,7 @@ public class JdbcPositionDao extends SimpleJdbcDaoSupport implements PositionDao
         public Position mapRow(ResultSet rs, int rowNum) throws SQLException {
         	Position position = new Position();
         	position.setDescription(rs.getString("descr"));
-        	position.setKey(rs.getString("key"));
+//        	position.setKey(rs.getString("key"));
         	position.setName(rs.getString("name"));
             return position;
         }

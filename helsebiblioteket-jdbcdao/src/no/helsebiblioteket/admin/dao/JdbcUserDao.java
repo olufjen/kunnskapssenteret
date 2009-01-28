@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
 
 import org.apache.commons.logging.Log;
@@ -37,31 +37,31 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
 		sqlParameters.addValue("username", user.getUsername());
 		sqlParameters.addValue("password", user.getPassword());
-		sqlParameters.addValue("org_unit_id", user.getOrganization().getId());
+		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public void updateUser(User user) {
 		String sql = "update tbl_user set username=:username, org_unit_id=:org_unit_id, password=:password " +
 			"where user_id=:user_id";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
-		sqlParameters.addValue("user_id", user.getId());
+		sqlParameters.addValue("user_id", user.getUserId());
 		sqlParameters.addValue("username", user.getUsername());
 		sqlParameters.addValue("password", user.getPassword());
-		sqlParameters.addValue("org_unit_id", user.getOrganization().getId());
+		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
 		
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setId(rs.getInt("user_id"));
+            user.setUserId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
             if(user.getUsername() == null) { user.setUsername(""); }
             user.setPassword(rs.getString("password"));
             if(user.getPassword() == null) { user.setPassword(""); }
-            Organization organization = new Organization();
-            user.setOrganization(organization);
-            user.getOrganization().setId((rs.getInt("org_unit_id")));
+//            Organization organization = new Organization();
+//            user.setOrganization(organization);
+//            user.getOrganization().setOrgUnitId((rs.getInt("org_unit_id")));
             return user;
         }
     }
@@ -83,10 +83,10 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
         	user.setPassword(password);
         	
      
-        	Role role = new Role();
-        	List<Role> roleList = new ArrayList<Role>();
+        	UserRole role = new UserRole();
+        	List<UserRole> roleList = new ArrayList<UserRole>();
             
-        	role.setRoleId(1);
+        	role.setUserRoleId(1);
         	role.setName("ROLE_ALLACCESS");
         	roleList.add(role); 
         	user.setRoleList(roleList) ; 

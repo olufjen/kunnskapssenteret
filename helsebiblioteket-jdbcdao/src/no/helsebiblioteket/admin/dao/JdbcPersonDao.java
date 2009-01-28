@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -114,7 +115,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		sql = "update tbl_contact_information set email=:email where contact_information_id=:contact_information_id";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
 		sqlParameters.addValue("email", contactInformation.getEmail());
-		sqlParameters.addValue("contact_information_id", contactInformation.getId());
+		sqlParameters.addValue("contact_information_id", contactInformation.getContactInformationId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public void updateProfile(Profile profile) {
@@ -126,7 +127,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
 //		sqlParameters.addValue("receive_newsletter", null);
 //		sqlParameters.addValue("participate_survey", null);
-		sqlParameters.addValue("profile_id", profile.getId());
+		sqlParameters.addValue("profile_id", profile.getProfileId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public void updatePerson(Person person) {
@@ -134,7 +135,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 				"student_number=:student_number, hpr_number=:hpr_number "+//, org_unit_id=:org_unit_id, " +
 				"where person_id=:person_id";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
-		sqlParameters.addValue("person_id", person.getId());
+		sqlParameters.addValue("person_id", person.getPersonId());
 		sqlParameters.addValue("first_name", person.getFirstName());
 		sqlParameters.addValue("last_name", person.getLastName());
 		sqlParameters.addValue("student_number", person.getStudentNumber());
@@ -158,9 +159,9 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		String sql = "insert into tbl_user (username, org_unit_id, password) value (" +
 				":username, :org_unit_id, :password)";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
-		sqlParameters.addValue("username", user.getOrganization().getId());
+		sqlParameters.addValue("username", user.getOrganization().getOrgUnitId());
 		sqlParameters.addValue("org_unit_id", user.getPassword());
-		sqlParameters.addValue("password", user.getPerson().getId());
+		sqlParameters.addValue("password", user.getPerson().getPersonId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public void updateUser(User user) {
@@ -168,20 +169,20 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 			"where user_id=:user_id";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
 		sqlParameters.addValue("user_id", user.getUsername());
-		sqlParameters.addValue("username", user.getOrganization().getId());
+		sqlParameters.addValue("username", user.getOrganization().getOrgUnitId());
 		sqlParameters.addValue("org_unit_id", user.getPassword());
-		sqlParameters.addValue("password", user.getPerson().getId());
+		sqlParameters.addValue("password", user.getPerson().getPersonId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setId(rs.getInt("user_id"));
+            user.setUserId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
-            Organization organization = new Organization();
+            MemberOrganization organization = new MemberOrganization();
             user.setOrganization(organization);
-            user.getOrganization().setId((rs.getInt("org_unit_id")));
+            user.getOrganization().setOrgUnitId((rs.getInt("org_unit_id")));
             return user;
         }
     }
