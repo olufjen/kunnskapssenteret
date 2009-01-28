@@ -3,16 +3,17 @@ package no.helsebiblioteket.admin.dao;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 
 public interface IpRangeDao {
 	// Edit
-	public void insertIpRange(IpRange ipRange);
-	public void updateIpRange(IpRange ipRange);
-	public void deleteIpRange(IpRange ipRange);
+	public void insertIpRange(IpAddressSet ipRange);
+	public void updateIpRange(IpAddressSet ipRange);
+	public void deleteIpRange(IpAddressSet ipRange);
 	
 	// Fetch
-	public List<IpRange> getIpRangeListByOrganization(Organization organization);
-	public List<Organization> getOrganizationListByIpAdress(IpAddress ipAddress);
+	public List<IpAddressSet> getIpRangeListByOrganization(MemberOrganization organization);
+	public List<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress);
 }

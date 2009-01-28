@@ -9,7 +9,7 @@ package no.helsebiblioteket.admin.dao;
 
 import java.util.List;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 
 public interface OrganizationTypeDao {
 	// Edit
