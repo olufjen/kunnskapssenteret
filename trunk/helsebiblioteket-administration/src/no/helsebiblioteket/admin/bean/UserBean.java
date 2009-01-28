@@ -16,13 +16,16 @@ import javax.faces.model.SelectItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
-import no.helsebiblioteket.admin.listobjects.UserListItem;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
@@ -40,14 +43,14 @@ public class UserBean {
 	private List<SelectItem> availablePositions;
 	private List<SelectItem> availableEmployers;
 	private List<SelectItem> availableIsStudent;
-	private List<String> selectedRoles;
-	private String selectedUserRole;
+	private List<UserRoleKey> selectedRoles;
+	private UserRoleKey selectedUserRole;
 	private String selectedIsStudent;
 
-	private List<Role> allRoles;
-	private Map<String, Role> allRolesMap;
+	private List<UserRole> allRoles;
+	private Map<UserRoleKey, UserRole> allRolesMap;
 	private List<Position> allPositions;
-	private Map<String, Position> allPositionsMap;
+	private Map<PositionTypeKey, Position> allPositionsMap;
 	// FIXME: Use caching?
 	private List<UserListItem> users;
 	private User user;
@@ -72,11 +75,11 @@ public class UserBean {
 	private UIData usersTable;
     protected final Log logger = LogFactory.getLog(getClass());
 
-    private boolean isNew(){ return this.user.getId() == null; }
+    private boolean isNew(){ return this.user.getUserId() == null; }
 	// TODO: Now fetching main role with: user.roleList[0].name
     // TODO: Place in User class?
-    private Role mainRole(){ return this.user.getRoleList().get(0); }
-    private void mainRole(Role role){ this.user.setRoleList(new ArrayList<Role>()); this.user.getRoleList().add(role); }
+    private UserRole mainRole(){ return this.user.getRoleList().get(0); }
+    private void mainRole(UserRole role){ this.user.setRoleList(new ArrayList<UserRole>()); this.user.getRoleList().add(role); }
     
     public void initSelectedIsStudent(){
 //		if(this.availableIsStudent == null){
@@ -229,17 +232,17 @@ public class UserBean {
 		this.user.getPerson().setIsStudent(true);
 		return details();
 	}
-	public List<Role> getSelectedRolesRoleList(){
-		List<Role> selectedRoles = new ArrayList<Role>();
+	public List<UserRole> getSelectedRolesRoleList(){
+		List<UserRole> selectedRoles = new ArrayList<UserRole>();
 		if(this.allRolesMap == null) {getAllRoles();}
-		for (String string : this.getSelectedRoles()) {
+		for (UserRoleKey string : this.getSelectedRoles()) {
 			selectedRoles.add(this.allRolesMap.get(string));
 		}
 		return selectedRoles;
 	}
 	public String actionSearch(){
 		logger.info("method 'search' invoked");
-		for (String role : this.selectedRoles) {
+		for (UserRoleKey role : this.selectedRoles) {
 			logger.info("SELECTED ROLE: " + role);
 		}
 		// FIXME: Handle paged result!
@@ -257,7 +260,7 @@ public class UserBean {
 			this.availableRoles = new ArrayList<SelectItem>();
 			logger.info("STARTROLES");
 			this.logger.info("this.userService=" + this.userService);
-			for (Role role : this.getAllRoles()) {
+			for (UserRole role : this.getAllRoles()) {
 				logger.info("role: " + role.getKey());
 				SelectItem option = new SelectItem(role.getKey(), role.getName(), "", false);
 				this.availableRoles.add(option);
@@ -280,17 +283,17 @@ public class UserBean {
 	public List<SelectItem> getavailableEmployers() {
 		if(this.availableEmployers == null) {
 			this.availableEmployers = new ArrayList<SelectItem>();
-			Organization dummy = new Organization();
-			dummy.setId(-999);
+			MemberOrganization dummy = new MemberOrganization();
+			dummy.setOrgUnitId(-999);
 			String name = ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
 					"user_details_no_employer");
 			// TODO: How to find right name here?
-			dummy.setNameEnglishNormal(name);
-			dummy.setNameEnglishShort(name);
-			dummy.setNameNorwegianNormal(name);
-			dummy.setNameNorwegianShort(name);
-			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getNameEnglish(), "", false);
+			dummy.setNameEnglish(name);
+			dummy.setNameShortEnglish(name);
+			dummy.setNameNorwegian(name);
+			dummy.setNameShortNorwegian(name);
+			SelectItem dummyOption = new SelectItem(""+dummy.getOrgUnitId(), dummy.getNameEnglish(), "", false);
 			this.availableEmployers.add(dummyOption);
 			PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
 			PageResult<OrganizationListItem> orgs = this.organizationService.getOrganizationListAll(request);
@@ -302,17 +305,17 @@ public class UserBean {
 		}
 		return this.availableEmployers;
 	}
-	public List<String> getSelectedRoles() {
+	public List<UserRoleKey> getSelectedRoles() {
 		// FIXME: All must be selected!
 		if(this.selectedRoles == null){
-			this.selectedRoles = new ArrayList<String>();
-			for (Role role : this.getAllRoles()) {
+			this.selectedRoles = new ArrayList<UserRoleKey>();
+			for (UserRole role : this.getAllRoles()) {
 				this.selectedRoles.add(role.getKey());
 			}
 		}
 		return this.selectedRoles;
 	}
-	public String getSelectedUserRole() {
+	public UserRoleKey getSelectedUserRole() {
 		if(this.selectedUserRole == null){
 //			this.selectedUserRole = new ArrayList<String>();
 			if(this.user != null){ 
@@ -323,12 +326,12 @@ public class UserBean {
 		}
 		return this.selectedUserRole;
 	}
-	public List<Role> getAllRoles() {
+	public List<UserRole> getAllRoles() {
 		if(this.allRoles == null){
-			Role[] roles = this.userService.getRoleListAll("").getList();
-			this.allRoles = new ArrayList<Role>();
-			this.allRolesMap = new HashMap<String, Role>();
-			for (Role role : roles) {
+			UserRole[] roles = this.userService.getRoleListAll("").getList();
+			this.allRoles = new ArrayList<UserRole>();
+			this.allRolesMap = new HashMap<UserRoleKey, UserRole>();
+			for (UserRole role : roles) {
 				this.allRoles.add(role);
 				this.allRolesMap.put(role.getKey(), role);
 			}
@@ -341,7 +344,7 @@ public class UserBean {
 
 			// TODO: Right way to add DUMMY?
 			Position dummy = new Position();
-			dummy.setKey("-999");
+			dummy.setKey(PositionTypeKey.none);
 			dummy.setName(ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
 							"user_details_no_position"));
@@ -351,7 +354,7 @@ public class UserBean {
 			for (Position loadedPos : positions) {
 				this.allPositions.add(loadedPos);
 			}
-			this.allPositionsMap = new HashMap<String, Position>();
+			this.allPositionsMap = new HashMap<PositionTypeKey, Position>();
 			for (Position position : this.allPositions) {
 				this.allPositionsMap.put(position.getKey(), position);
 			}
@@ -360,7 +363,7 @@ public class UserBean {
 	}
 	public List<UserListItem> getUsers() {
 		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getUserListAll(new FirstPageRequest<no.helsebiblioteket.admin.listobjects.UserListItem>(Integer.MAX_VALUE)).result; }
+		if(this.users == null) { this.users = userService.getUserListAll(new FirstPageRequest<no.helsebiblioteket.admin.domain.list.UserListItem>(Integer.MAX_VALUE)).result; }
 		return this.users;
 	}
 	public String getSelectedIsStudent() {
@@ -377,8 +380,8 @@ public class UserBean {
 	public void setUserRolesSelectOne(UISelectOne userRolesSelectOne) { this.userRolesSelectOne = userRolesSelectOne; }
 	public UISelectOne getIsStudentSelectOne() { return isStudentSelectOne; }
 	public void setIsStudentSelectOne(UISelectOne isStudentSelectOne) { this.isStudentSelectOne = isStudentSelectOne; }
-	public void setSelectedRoles(List<String> selectedRoles) { this.selectedRoles = selectedRoles; }
-	public void setSelectedUserRole(String selectedUserRole) { this.selectedUserRole = selectedUserRole; }
+	public void setSelectedRoles(List<UserRoleKey> selectedRoles) { this.selectedRoles = selectedRoles; }
+	public void setSelectedUserRole(UserRoleKey selectedUserRole) { this.selectedUserRole = selectedUserRole; }
 	public String getSearchinput() { return searchinput; }
 	public void setSearchinput(String searchinput) { this.searchinput = searchinput; }
 	public User getUser() { return user; }

@@ -9,15 +9,18 @@ import org.apache.myfaces.component.html.ext.HtmlDataTable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.daoobjects.OrganizationName;
+import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Supplier;
+import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -34,7 +37,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	
 	private OrganizationService organizationService = null;
 	
-	private Supplier organization = null;
+	private SupplierOrganization organization = null;
 	
 	private String sourceName = null;
 	private String sourceUrl = null;
@@ -83,11 +86,11 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		this.organizationService = organizationService;
 	}
 
-	public Organization getSupplierOrganization() {
+	public SupplierOrganization getSupplierOrganization() {
 		if (this.organization == null) {
-			this.organization = new Supplier();
+			this.organization = new SupplierOrganization();
 		}
-		// TODO: Should not be nessecary
+		// TODO: Should not be necessary
 //		if (this.organization.getNameList() == null) {
 //			this.organization.setNameList(new ArrayList<OrganizationName>());
 //		}
@@ -109,7 +112,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		return this.organization;
 	}
 	
-	public void setOrganization(Supplier supplierOrganization) {
+	public void setOrganization(SupplierOrganization supplierOrganization) {
 		this.organization = supplierOrganization;
 	}
 
@@ -130,13 +133,18 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		logger.debug("Method 'actionAddSupplierSource' invoked");
 		setSourceName((getSourceNameUIInput().getSubmittedValue() != null) ? getSourceNameUIInput().getSubmittedValue().toString() : null);
 		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
-		this.organization.getSupplierSourceList().add(new SupplierSource(getSourceName(), new Url(getSourceUrl())));
+		SupplierSource supplierSource = new SupplierSource(getSourceName(), new Url(getSourceUrl()));
+		SupplierSourceResource resource = new SupplierSourceResource();
+		resource.setSupplierSource(supplierSource);
+		// TODO: Use services to add!
+		this.organization.getResourceList().add(resource);
 	}
 	
 	public void actionDeleteSource() {
 		logger.debug("Method 'actionDeleteSource' invoked");
 		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
-		organization.getSupplierSourceList().remove((SupplierSource) this.supplierSourceListHtmlDataTable.getRowData());
+		// TODO: Use services to remove!
+		organization.getResourceList().remove((SupplierSource) this.supplierSourceListHtmlDataTable.getRowData());
 	}
 
 	public String actionNewSupplierOrganization() {
@@ -144,10 +152,10 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 	}
 
 	public boolean isShowSourceList() {
-		return (organization.getSupplierSourceList() != null && organization.getSupplierSourceList().size() > 0) ? true : false;
+		return (organization.getResourceList() != null && organization.getResourceList().size() > 0) ? true : false;
 	}
 
-	public void setSupplierOrganization(Supplier supplierOrganization) {
+	public void setSupplierOrganization(SupplierOrganization supplierOrganization) {
 		this.organization = supplierOrganization;
 	}
 }

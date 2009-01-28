@@ -22,7 +22,7 @@ public class AdminBean {
 			OrganizationType[] organizationTypeList = this.organizationService.getOrganizationTypeListAll("").getList();
 			SelectItem selectItem = null;
 			for (OrganizationType orgType: organizationTypeList) {
-				selectItem = new SelectItem(String.valueOf(orgType.getId()),
+				selectItem = new SelectItem(String.valueOf(orgType.getOrgTypeId()),
 						MessageResourceReader.getMessageResourceString(organizationTypesBundle, orgType.getKey().toString(), orgType.getName()));
 				organizationTypeSelectItemList.add(selectItem);
 			}
