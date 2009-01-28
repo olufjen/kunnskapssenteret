@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
@@ -46,13 +47,13 @@ public class ProxyLoginController extends HttpControllerPlugin {
 		String requestedUrlText = request.getParameter(this.urlParamName);
         String redirectUrl;
 		Url requestedUrl = new Url();
-		requestedUrl.setValue(requestedUrlText);
+		requestedUrl.setStringValue(requestedUrlText);
 		
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
 		User user = this.loggedInFunction.loggedInUser();
-		Organization organization = this.loggedInFunction.loggedInOrganization();
+		MemberOrganization organization = this.loggedInFunction.loggedInOrganization();
     	if(user == null && organization == null){
     		if(this.urlService.isAffected(requestedUrl)){
         		createXML(false, user, organization, requestedUrl, document, element);
@@ -127,9 +128,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
 		// TODO: Use resource class here! Fetch from service!
 		Element resource = document.createElement("resource");
 //		proxyresult/resource/name
-		resource.appendChild(UserToXMLTranslator.cDataElement(document, "name", requestedUrl.getValue()));
+		resource.appendChild(UserToXMLTranslator.cDataElement(document, "name", requestedUrl.getStringValue()));
 //		proxyresult/resource/url
-		resource.appendChild(UserToXMLTranslator.cDataElement(document, "url", requestedUrl.getValue()));
+		resource.appendChild(UserToXMLTranslator.cDataElement(document, "url", requestedUrl.getStringValue()));
 		element.appendChild(resource);
 		
 		if(hasAccess){

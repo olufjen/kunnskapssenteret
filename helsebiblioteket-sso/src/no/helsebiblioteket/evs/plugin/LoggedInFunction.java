@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
@@ -54,9 +55,9 @@ public class LoggedInFunction{
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
 	}
-	public Organization loggedInOrganization() {
+	public MemberOrganization loggedInOrganization() {
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-		return (Organization) session.getAttribute(sessionLoggedInOrganizationVarName);
+		return (MemberOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
 	}
 	public Document getUserAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		// TODO: Rename this, but then also in XML for EVS.
