@@ -8,9 +8,11 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.UserDao;
+import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 
 
 public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
@@ -68,7 +70,7 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 		List<User> users = (List<User>) getSqlMapClientTemplate().queryForList("getAllUsers");
 		for (User user : users) {
 			if (user.getRoleList() == null){
-				user.setRoleList(new ArrayList<Role>());
+				user.setRoleList(new ArrayList<UserRole>());
 			}
 		}
 		return users;

@@ -6,30 +6,31 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 
 public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeDao {
 	// TODO: Go through all!
-	public void insertIpRange(IpRange ipRange){
+	public void insertIpRange(IpAddressSet ipRange){
 		
 		getSqlMapClientTemplate().insert("insertIpRange", ipRange);
 
 	}
-	public void updateIpRange(IpRange ipRange){
+	public void updateIpRange(IpAddressSet ipRange){
 		
 		getSqlMapClientTemplate().update("updateIpRange", ipRange);
 
 	}
-	public void deleteIpRange(IpRange ipRange){
+	public void deleteIpRange(IpAddressSet ipRange){
 
 		getSqlMapClientTemplate().delete("deleteIpRange", ipRange);
 
 	}
-	public List<IpRange> getIpRangeListByOrganization(Organization organization){
+	public List<IpAddressSet> getIpRangeListByOrganization(MemberOrganization organization){
 		return null;
 	}
-	public List<Organization> getOrganizationListByIpAdress(IpAddress ipAddress) {
+	public List<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress) {
 		return null;
 	}
 	
@@ -46,14 +47,14 @@ public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeD
 	
 	
 	
-	public IpRange getIpRangeById(Integer ipRangeId) {
-		return (IpRange) getSqlMapClientTemplate().queryForObject("getProfileById", ipRangeId);
+	public IpAddressSet getIpRangeById(Integer ipRangeId) {
+		return (IpAddressSet) getSqlMapClientTemplate().queryForObject("getProfileById", ipRangeId);
 	}
 	
 	
 	
 	
-	public void saveIpRange(IpRange ipRange) {
+	public void saveIpRange(IpAddressSet ipRange) {
 		if (ipRange.getId() == null) {
 			insertIpRange(ipRange);
 		} else {
@@ -61,7 +62,7 @@ public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeD
 		}
 	}
 	
-	public void saveIpRange(IpRange changedIpRange, IpRange originalIpRange) {
+	public void saveIpRange(IpAddressSet changedIpRange, IpAddressSet originalIpRange) {
 		if (changedIpRange.getId() == null) {
 			insertIpRange(changedIpRange);
 		} else {
@@ -69,7 +70,7 @@ public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeD
 		}	
 	}
 	
-	public List<IpRange> getIpRangeListByOrganizationId(Integer organizationId) {
-		return (List<IpRange>) getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organizationId);
+	public List<IpAddressSet> getIpRangeListByOrganizationId(Integer organizationId) {
+		return (List<IpAddressSet>) getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organizationId);
 	}
 }

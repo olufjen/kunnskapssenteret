@@ -1,11 +1,7 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
-
 import java.util.List;
-
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
-
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.domain.Resource;
 
