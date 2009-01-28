@@ -9,28 +9,32 @@ import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.User;
 
 public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao {
-	// TODO: Go through all!
-	public void insertAccess(Access access){
+	/**
+	 * 
+	 */
+	public void insertAccess(ResourceAccess access){
+		// TODO: Go through all!
 		
 	}
-	public void updateAccess(Access access){
+	public void updateAccess(ResourceAccess access){
 		
 	}
-	public void deleteAccess(Access access){
+	public void deleteAccess(ResourceAccess access){
 		
 		getSqlMapClientTemplate().delete("deleteAccess", access);
 
 	}
-	public List<Access> getAccessListByUser(User user){
+	public List<ResourceAccess> getAccessListByUser(User user){
 		return null;
 	}
-	public List<Access> getAccessListByOrganization(Organization organization){
+	public List<ResourceAccess> getAccessListByOrganization(Organization organization){
 		return null;
 	}
-	public List<Access> getAccessListByOrganizationType(OrganizationType organizationType){
+	public List<ResourceAccess> getAccessListByOrganizationType(OrganizationType organizationType){
 		return null;
 	}
 

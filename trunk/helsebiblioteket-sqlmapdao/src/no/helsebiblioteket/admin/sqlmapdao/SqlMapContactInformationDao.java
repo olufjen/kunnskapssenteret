@@ -38,7 +38,7 @@ public class SqlMapContactInformationDao extends SqlMapClientDaoSupport implemen
 	
 	
 	public void saveContactInformation(ContactInformation changedContactInformation, ContactInformation originalContactInformation) {
-		if (changedContactInformation.getId() == null) {
+		if (changedContactInformation.getContactInformationId() == null) {
 			insertContactInformation(changedContactInformation);
 		} else {
 			updateContactInformation(changedContactInformation);
