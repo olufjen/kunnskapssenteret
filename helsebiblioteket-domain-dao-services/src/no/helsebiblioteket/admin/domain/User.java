@@ -4,22 +4,37 @@ import java.util.Date;
 import java.util.List;
 
 public class User  {
-	private Integer id;
+	// Primary key
+	private Integer userId;
+	
+	// Local value
 	private String username;
 	private String password;
 	private Date lastChanged;
 
+	// References
 	private Organization organization;
 	private Person person;
 
-//	private List<Access> accessList;
-	private List<Role> roleList;
+	// Values loaded with UserRoleLine
+	private List<UserRole> roleList;
 	
-	public Integer getId() {
-		return id;
+	// Helpers
+	public boolean hasRole(UserRole role){
+		for (UserRole userRole : this.roleList) {
+			if(userRole.getKey().equals(role.getKey())){
+				return true;
+			}
+		}
+		return false;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+
+	// GET/SET
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getUsername() {
 		return username;
@@ -52,20 +67,11 @@ public class User  {
 		this.person = person;
 	}
 
-	public boolean hasRole(Role role){
-		for (Role userRole : this.roleList) {
-			if(userRole.getKey().equals(role.getKey())){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public List<Role> getRoleList() {
+	public List<UserRole> getRoleList() {
 		return roleList;
 	}
 
-	public void setRoleList(List<Role> roleList) {
+	public void setRoleList(List<UserRole> roleList) {
 		this.roleList = roleList;
 	}
 }

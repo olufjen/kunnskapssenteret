@@ -1,23 +1,42 @@
 package no.helsebiblioteket.admin.domain;
 
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+
 public class OrganizationType {
-	private Integer id;
+	// Primary key
+	private Integer orgTypeId;
+	
+	// Local values
 	private String name;
 	private String description;
+	
+	// References
 	private OrganizationTypeKey key;
 
-	public OrganizationType() {
-	}
+	// Helpers
+	public boolean equals(OrganizationType orgType) {
+        if (this == orgType) return true;
+        if (key != null ? !key.equals(orgType.key) : orgType.key != null) return false;
+        return true;
+    }
 	
+	public int hashCode() {
+        int result;
+        result = (key != null ? key.hashCode() : 0);
+        return result;
+    }
+
+	// Constructors
+	public OrganizationType() { }
 	public OrganizationType(Integer id) {
-		this.id = id;
+		this.orgTypeId = id;
 	}
 	
-	public Integer getId() {
-		return id;
+	public Integer getOrgTypeId() {
+		return orgTypeId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setOrgTypeId(Integer id) {
+		this.orgTypeId = id;
 	}
 	public String getName() {
 		return name;
@@ -37,16 +56,4 @@ public class OrganizationType {
 	public void setKey(OrganizationTypeKey key) {
 		this.key = key;
 	}
-	
-	public boolean equals(OrganizationType orgType) {
-        if (this == orgType) return true;
-        if (key != null ? !key.equals(orgType.key) : orgType.key != null) return false;
-        return true;
-    }
-	
-	public int hashCode() {
-        int result;
-        result = (key != null ? key.hashCode() : 0);
-        return result;
-    }
 }

@@ -1,17 +1,24 @@
 package no.helsebiblioteket.admin.domain;
 
+import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+
 public class AccessType {
-	private Integer id;
+	// Primary key
+	private Integer accessTypeid;
+
+	// Unique key
+	private AccessTypeKey key;
+	
+	// Local values
 	private String description;
 	private String name;
-	private String key;
 	private String category;
 	
-	public Integer getId() {
-		return id;
+	public Integer getAccessTypeId() {
+		return accessTypeid;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setAccessTypeId(Integer id) {
+		this.accessTypeid = id;
 	}
 	public String getDescription() {
 		return description;
@@ -25,10 +32,10 @@ public class AccessType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getKey() {
+	public AccessTypeKey getKey() {
 		return key;
 	}
-	public void setKey(String key) {
+	public void setKey(AccessTypeKey key) {
 		this.key = key;
 	}
 	public String getCategory() {

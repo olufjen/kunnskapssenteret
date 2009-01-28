@@ -1,6 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
 public class Email {
+	// Not in database, yet.
 	private String toName;
 	private String fromName;
 	private String toEmail;

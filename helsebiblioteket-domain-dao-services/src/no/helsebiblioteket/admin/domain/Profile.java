@@ -3,28 +3,25 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Profile {
-	private Integer id;
+	// Primary key
+	private Integer profileId;
+	
+	// Local values
 	private Boolean receiveNewsletter;
 	private Boolean participateSurvey;
-	private Person person;
 	private Date lastChanged;
-	
+
+	// GET/SET
 	public Boolean getReceiveNewsletter() { return receiveNewsletter; }
 	public void setReceiveNewsletter(Boolean receiveNewsletter) { this.receiveNewsletter = receiveNewsletter; }
 	public Boolean getParticipateSurvey() { return participateSurvey; }
 	public void setParticipateSurvey(Boolean participateSurvey) { this.participateSurvey = participateSurvey; }
 	
-	public void setId(Integer id) {
-		this.id = id;
+	public void setProfileId(Integer id) {
+		this.profileId = id;
 	}
-	public Integer getId() {
-		return this.id;
-	}
-	public Person getPerson() {
-		return person;
-	}
-	public void setPerson(Person person) {
-		this.person = person;
+	public Integer getProfileId() {
+		return this.profileId;
 	}
 	public Date getLastChanged() {
 		return lastChanged;

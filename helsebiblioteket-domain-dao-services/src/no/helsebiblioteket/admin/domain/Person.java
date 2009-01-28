@@ -3,7 +3,10 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class Person {
-	private Integer id;
+	// Primary key
+	private Integer personId;
+	
+	// Local values
 	private String firstName;
 	private String lastName;
 	private String employer;
@@ -12,18 +15,22 @@ public class Person {
 	private String hprNumber;
 	private Date lastChanged;
 
+	// References
 	private Position position;
 	private ContactInformation contactInformation;
 	private Profile profile;
 	
+	// Helpers
 	public String getName() {
 		return this.firstName + " " + lastName;
 	}
-	public Integer getId() {
-		return id;
+	
+	// GET/SET
+	public Integer getPersonId() {
+		return personId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPersonId(Integer id) {
+		this.personId = id;
 	}
 	public String getFirstName() {
 		return firstName;
