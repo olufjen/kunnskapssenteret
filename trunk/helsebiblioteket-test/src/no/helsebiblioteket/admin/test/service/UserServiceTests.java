@@ -6,15 +6,15 @@ import java.util.List;
 import org.junit.Assert;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;

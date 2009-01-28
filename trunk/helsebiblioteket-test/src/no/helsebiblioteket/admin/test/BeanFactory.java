@@ -3,7 +3,7 @@ package no.helsebiblioteket.admin.test;
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
-import no.helsebiblioteket.admin.service.PersonService;
+import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.test.dao.AccessDaoTests;
@@ -29,7 +29,7 @@ public class BeanFactory {
 		//       And replace these values in the list 'propertyConfigurer.locations'
 	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/application.properties</value>
 	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/jdbc.properties</value>
-		res = new FileSystemResource("..\\helsebiblioteket-services-impl\\desc\\applicationContext.xml");
+		res = new FileSystemResource(".\\desc\\applicationContext.xml");
 //		res = new FileSystemResource("..\\helsebiblioteket-administration-web\\WebRoot\\WEB-INF\\applicationContext.xml");
 		factory = new XmlBeanFactory(res);
 	}
@@ -40,7 +40,7 @@ public class BeanFactory {
 	public LoginService getLoginService() { return (LoginService)this.factory.getBean("loginService");}
 	public UserService getUserService() { return (UserService)this.factory.getBean("userService");}
 	public OrganizationService getOrganizationService() { return (OrganizationService)this.factory.getBean("organizationService");}
-	public PersonService getPersonService() { return (PersonService)this.factory.getBean("personService");}
+	public AccessService getPersonService() { return (AccessService)this.factory.getBean("personService");}
 	public URLService getURLService() { return (URLService)this.factory.getBean("urlService");}
 	
 	// Main method when not using ant.

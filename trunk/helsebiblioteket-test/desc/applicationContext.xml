@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  	<bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
+  	<!-- TODO: Not working here?
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>./desc/jdbc.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	-->
+
+	<!-- Web services - Shared beans -->
+	<bean name="serviceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="loginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+	</bean>
+
+
+	<!-- Data source -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+    	<property name="configLocation" value="file:./desc/sqlmap-config.xml"/>
+    	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
+   	</bean>
+	<bean id="jdbcTemplateHelsebiblioteket" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
+	</bean>
+	<bean id="dataSourceHelsebiblioteket" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<!-- TODO: Not working here?
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+		-->
+		<property name="driverClassName" value="org.postgresql.Driver"></property>
+		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin_dump"></property>
+		<property name="username" value="helsebiblioteket"></property>
+		<property name="password" value="helsebiblioteket"></property>
+	</bean>
+
+
+	<!-- Services -->
+  	<bean id="accessService" class="no.helsebiblioteket.admin.webservice.AccessServiceWeb" init-method="init">
+		<property name="serviceClient" ref="serviceClient" />
+		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		
+		<property name="getAccessListByUser" ref="getAccessListByUser" />
+		<property name="getAccessListByOrganization" ref="getAccessListByOrganization" />
+		<property name="getAccessListByOrganizationType" ref="getAccessListByOrganizationType" />
+	</bean>
+  	<bean id="loginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
+		<property name="serviceClient" ref="serviceClient" />
+		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		
+		<property name="logInIpAddress" ref="logInIpAddress" />
+		<property name="logInUser" ref="logInUser" />
+		<property name="sendPasswordEmail" ref="sendPasswordEmail" />
+	</bean>
+  	<bean id="organizationService" class="no.helsebiblioteket.admin.webservice.OrganizationServiceWeb" init-method="init">
+		<property name="serviceClient" ref="serviceClient" />
+		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		
+		<property name="organizationTypeListAllName" ref="organizationTypeListAllName" />
+		<property name="organizationTypeByKeyName" ref="organizationTypeByKeyName" />
+		<property name="organizationListAllName" ref="organizationListAllName" />
+		<property name="findOrganizationsBySearchString" ref="findOrganizationsBySearchString" />
+		<property name="organizationByListItemName" ref="organizationByListItemName" />
+		<property name="insertOrganizationName" ref="insertOrganizationName" />
+		<property name="updateOrganizationName" ref="updateOrganizationName" />
+  	</bean>
+  	<bean id="urlService" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
+		<property name="serviceClient" ref="serviceClient" />
+		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		
+		<property name="isAffectedName" ref="isAffectedName" />
+		<property name="translateName" ref="translateName" />
+		<property name="hasAccessName" ref="hasAccessName" />
+		<property name="groupName" ref="groupName" />
+  	</bean>
+  	<bean id="userService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
+		<property name="serviceClient" ref="serviceClient" />
+		<property name="targetEPR" ref="loginServiceTargetEPR" />
+  	
+  		<property name="roleListAllName" ref="roleListAllName"></property>
+  		<property name="positionListAllName" ref="positionListAllName"></property>
+  		<property name="roleByKeyName" ref="roleByKeyName"></property>
+  		<property name="userListAllName" ref="userListAllName"></property>
+  		<property name="findUsersBySearchStringRolesName" ref="findUsersBySearchStringRolesName"></property>
+  		<property name="findUserByUsernameName" ref="findUserByUsernameName"></property>
+  		<property name="insertUserName" ref="insertUserName"></property>
+  		<property name="updateUserName" ref="updateUserName"></property>
+  	</bean>
+
+
+	<!-- QNames -->
+	<bean name="getAccessListByUser" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessListByUser" />
+	</bean>
+	<bean name="getAccessListByOrganization" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessListByOrganization" />
+	</bean>
+	<bean name="getAccessListByOrganizationType" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessListByOrganizationType" />
+	</bean>
+
+	<bean name="logInIpAddress" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="loginOrganizationByIpAddress" />
+	</bean>
+	<bean name="logInUser" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="loginUserByUsernamePassword" />
+	</bean>
+	<bean name="sendPasswordEmail" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="sendPasswordEmail" />
+	</bean>
+
+	<bean name="organizationTypeListAllName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getOrganizationTypeListAll" />
+	</bean>
+	<bean name="organizationTypeByKeyName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getOrganizationTypeByKey" />
+	</bean>
+	<bean name="organizationListAllName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getOrganizationListAll" />
+	</bean>
+	<bean name="findOrganizationsBySearchString" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="findOrganizationsBySearchString" />
+	</bean>
+	<bean name="organizationByListItemName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getOrganizationByListItem" />
+	</bean>
+	<bean name="insertOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertOrganization" />
+	</bean>
+	<bean name="updateOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="updateOrganization" />
+	</bean>
+
+	<bean name="isAffectedName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="isAffected" />
+	</bean>
+	<bean name="translateName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="translate" />
+	</bean>
+	<bean name="hasAccessName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="hasAccess" />
+	</bean>
+	<bean name="groupName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="group" />
+	</bean>
+
+	<bean name="roleListAllName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getRoleListAll" />
+	</bean>
+	<bean name="positionListAllName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getPositionListAll" />
+	</bean>
+	<bean name="roleByKeyName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getRoleByKey" />
+	</bean>
+	<bean name="userListAllName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getUserListAll" />
+	</bean>
+	<bean name="findUsersBySearchStringRolesName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="findUsersBySearchStringRoles" />
+	</bean>
+	<bean name="findUserByUsernameName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="findUserByUsername" />
+	</bean>
+	<bean name="insertUserName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertUser" />
+	</bean>
+	<bean name="updateUserName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="updateUser" />
+	</bean>
+
+
+	<!-- DAO -->
+	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	
+</beans>

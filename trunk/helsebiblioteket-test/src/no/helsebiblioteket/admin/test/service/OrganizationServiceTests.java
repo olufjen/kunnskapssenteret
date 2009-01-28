@@ -6,11 +6,13 @@ import java.util.List;
 import org.junit.Assert;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
-import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
@@ -24,9 +26,9 @@ import no.helsebiblioteket.admin.test.BeanFactory;
 public class OrganizationServiceTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
 	private String findMeName = "findMe123999";
-	private Organization testOrganization(){
-		Organization organization = new Organization();
-		organization.setNameEnglishNormal(findMeName);
+	private MemberOrganization testOrganization(){
+		MemberOrganization organization = new MemberOrganization();
+		organization.setNameEnglish(findMeName);
 		return organization;
 	}
 	@org.junit.Test
@@ -61,7 +63,7 @@ public class OrganizationServiceTests {
 		organizationService.insertOrganization(testOrganization());
 		OrganizationListItem listItem = new OrganizationListItem();
 		Organization organization = testOrganization();
-		listItem.setId(organization.getId());
+		listItem.setId(organization.getOrgUnitId());
 		SingleResult<Organization> result = organizationService.getOrganizationByListItem(listItem);
 		Assert.assertNotNull("No result", result);
 		Assert.assertTrue("No result", result instanceof ValueResult);
@@ -71,20 +73,20 @@ public class OrganizationServiceTests {
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 		LoginService loginService = beanFactory.getLoginService();
 
-		Organization organization = testOrganization();
+		MemberOrganization organization = testOrganization();
 		IpAddress ipAddress = new IpAddress();
 		ipAddress.setAddress("192.101.1.2");
-		IpRange ipRange = new IpRange();
+		IpAddressRange ipRange = new IpAddressRange();
 		ipRange.setIpAddressFrom(new IpAddress("192.101.1.1"));
 		ipRange.setIpAddressTo(new IpAddress("192.101.1.3"));
-		List<IpRange> ipRangeList = new ArrayList<IpRange>();
-		organization.setIpRangeList(ipRangeList);
+		List<IpAddressSet> ipRangeList = new ArrayList<IpAddressSet>();
+		organization.setIpAddressSetList(ipRangeList);
 
 		organizationService.insertOrganization(organization);
 		
-		SingleResult<Organization> result = loginService.loginOrganizationByIpAddress(ipAddress);
-		organization = ((ValueResult<Organization>)result).getValue();
-		organization.setNameEnglishNormal("changedName123");
+		SingleResult<MemberOrganization> result = loginService.loginOrganizationByIpAddress(ipAddress);
+		organization = ((ValueResult<MemberOrganization>)result).getValue();
+		organization.setNameEnglish("changedName123");
 		
 		organizationService.updateOrganization(organization);
 		
