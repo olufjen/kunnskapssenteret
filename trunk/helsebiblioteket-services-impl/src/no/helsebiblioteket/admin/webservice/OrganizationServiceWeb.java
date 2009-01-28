@@ -10,14 +10,15 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
-import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
+@SuppressWarnings("serial")
 public class OrganizationServiceWeb extends BasicWebService implements OrganizationService {
 	protected static final Log logger = LogFactory.getLog(OrganizationServiceWeb.class);
 	private RPCServiceClient serviceClient;
@@ -79,13 +80,32 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	public RPCServiceClient getServiceClient() {
 		return serviceClient;
 	}
-
-	
 	public void setServiceClient(RPCServiceClient serviceClient) {
 		this.serviceClient = serviceClient;
 	}
-
 	public void setTargetEPR(EndpointReference targetEPR) {
 		this.targetEPR = targetEPR;
+	}
+	public void setOrganizationTypeListAllName(QName organizationTypeListAllName) {
+		this.organizationTypeListAllName = organizationTypeListAllName;
+	}
+	public void setOrganizationTypeByKeyName(QName organizationTypeByKeyName) {
+		this.organizationTypeByKeyName = organizationTypeByKeyName;
+	}
+	public void setOrganizationListAllName(QName organizationListAllName) {
+		this.organizationListAllName = organizationListAllName;
+	}
+	public void setOrganizationByListItemName(QName organizationByListItemName) {
+		this.organizationByListItemName = organizationByListItemName;
+	}
+	public void setUpdateOrganizationName(QName updateOrganizationName) {
+		this.updateOrganizationName = updateOrganizationName;
+	}
+	public void setFindOrganizationsBySearchString(
+			QName findOrganizationsBySearchString) {
+		this.findOrganizationsBySearchString = findOrganizationsBySearchString;
+	}
+	public void setInsertOrganizationName(QName insertOrganizationName) {
+		this.insertOrganizationName = insertOrganizationName;
 	}
 }
