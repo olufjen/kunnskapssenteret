@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import no.helsebiblioteket.admin.domain.Unique;
+import no.helsebiblioteket.admin.domain.base.Identifiable;
 
-public class ModifiedListHelper<T extends Unique> {
+public class ModifiedListHelper<T extends Identifiable> {
 	public List<T> getDeleteList(List<T> changedList, List<T> originalList) {
 		List<T> deleteList = new ArrayList<T>(originalList);
 		deleteList = removeAll(deleteList, changedList);

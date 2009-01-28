@@ -8,9 +8,7 @@ package no.helsebiblioteket.admin.dao;
  */
 
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.Reference;
-import no.helsebiblioteket.admin.domain.ValueReference;
-import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 
 public interface OrganizationDao {
 	// Edit

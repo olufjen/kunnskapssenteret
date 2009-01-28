@@ -1,15 +1,15 @@
 package no.helsebiblioteket.admin.dao;
 
 import java.util.List;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 
 public interface RoleDao {
 	// Edit
-	public void insertRole(Role role);
-	public void updateRole(Role role);
-	public void deleteRole(Role role);
+	public void insertRole(UserRole role);
+	public void updateRole(UserRole role);
+	public void deleteRole(UserRole role);
 
 	// Fetch
-	public Role getRoleByKey(String key);
-	public List<Role> getRoleListAll();
+	public UserRole getRoleByKey(String key);
+	public List<UserRole> getRoleListAll();
 }
