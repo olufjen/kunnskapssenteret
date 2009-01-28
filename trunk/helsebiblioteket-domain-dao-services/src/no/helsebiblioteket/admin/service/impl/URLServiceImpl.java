@@ -8,20 +8,28 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
+import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.URLService;
-import no.helsebiblioteket.admin.dao.AccessDao;
-import no.helsebiblioteket.admin.dao.SupplierSourceDao;
-import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 
+/**
+ * Service used to rewrite URLs on websites. The results
+ * from this should be cahced on clients. The services
+ * uses no DAOs, but uses other services to perform its
+ * tasks.
+ * 
+ * @author Fredrik S.
+ */
 public class URLServiceImpl implements URLService {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static final long serialVersionUID = 1L;
-	private SupplierSourceDao supplierSourceDao;
-	private AccessDao accessDao;
+	private AccessService accessService;
 	private String proxyPrefix;
 	/**
 	 * This checks if a URL is relevant(affected) for the proxy
@@ -33,11 +41,11 @@ public class URLServiceImpl implements URLService {
 	 */
 	public Boolean isAffected(Url url) {
 		// TODO: Improve efficiency by not fetching all!
-		List<SupplierSource> list = this.supplierSourceDao.getSupplierSourceListAll();
+		List<SupplierSource> list = this.accessService.getSupplierSourceListAll();
 		for (SupplierSource supplierSource : list) {
-			if(supplierSource.getUrl().getValue().equals(url.getValue())){
+			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
 				// TODO: How is the correct way to check this?
-				//       We will hopefull not need to parse it
+				//       We will hopefully not need to parse it
 				//       and do all kinds of stuff.
 				return Boolean.TRUE;
 			}
@@ -54,10 +62,10 @@ public class URLServiceImpl implements URLService {
 		Url newUrl = new Url();
 		if(this.hasAccess(user, url)){
 			// TODO: When to send through proxy?
-			newUrl.setValue(this.proxyPrefix + url.getValue());
+			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		} else {
 			// TODO: When to send directly?
-			newUrl.setValue(url.getValue());
+			newUrl.setStringValue(url.getStringValue());
 		}
 		return new ValueResult<Url>(newUrl);
 	}
@@ -69,14 +77,14 @@ public class URLServiceImpl implements URLService {
 	 * TODO: When to send an organization directly?
 	 * 
 	 */
-	public SingleResult<Url> translate(Organization organization, Url url) {
+	public SingleResult<Url> translate(MemberOrganization organization, Url url) {
 		Url newUrl = new Url();
 		if(hasAccess(organization, url)){
 			// TODO: When to send through proxy?
-			newUrl.setValue(this.proxyPrefix + url.getValue());
+			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		} else {
 			// TODO: When to send directly?
-			newUrl.setValue(url.getValue());
+			newUrl.setStringValue(url.getStringValue());
 		}
 		return new ValueResult<Url>(newUrl);
 	}
@@ -92,7 +100,7 @@ public class URLServiceImpl implements URLService {
 	 *       to the proxy or directly to the server?
 	 *       Sometimes one and sometimes the other?
 	 */
-	public SingleResult<Url> translate(User user, Organization organization, Url url){
+	public SingleResult<Url> translate(User user, MemberOrganization organization, Url url){
 		Url newUrl = new Url();
 		if(hasAccess(organization, url)){
 			return this.translate(organization, url);
@@ -100,7 +108,7 @@ public class URLServiceImpl implements URLService {
 			return this.translate(user, url);
 		} else {
 			// TODO: When to send directly?
-			newUrl.setValue(url.getValue());
+			newUrl.setStringValue(url.getStringValue());
 		}
 		return new ValueResult<Url>(newUrl);
 	}
@@ -112,10 +120,13 @@ public class URLServiceImpl implements URLService {
 	 *       type. 
 	 */
     public Boolean hasAccess(User user, Url url) {
-    	List<Access> accessList = this.accessDao.getAccessListByUser(user);
-    	for (Access access : accessList) {
-    		if(url.getValue().equals(access.getSupplierSource().getUrl().getValue())){
-    			return Boolean.TRUE;
+    	List<ResourceAccess> accessList = this.accessService.getAccessListByUser(user);
+    	for (ResourceAccess access : accessList) {
+    		Resource resource = access.getResource();
+    		if(resource instanceof SupplierSourceResource){
+        		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
+        			return Boolean.TRUE;
+        		}
     		}
 		}
 		return Boolean.FALSE;
@@ -127,11 +138,14 @@ public class URLServiceImpl implements URLService {
 	 * TODO: I think we must check for Access type and resource
 	 *       type.
 	 */
-	public Boolean hasAccess(Organization organization, Url url) {
-    	List<Access> accessList = this.accessDao.getAccessListByOrganization(organization);
-    	for (Access access : accessList) {
-    		if(url.getValue().equals(access.getSupplierSource().getUrl().getValue())){
-    			return Boolean.TRUE;
+	public Boolean hasAccess(MemberOrganization organization, Url url) {
+    	List<ResourceAccess> accessList = this.accessService.getAccessListByOrganization(organization);
+    	for (ResourceAccess access : accessList) {
+    		Resource resource = access.getResource();    		
+    		if(resource instanceof SupplierSourceResource){
+        		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
+        			return Boolean.TRUE;
+        		}
     		}
 		}
 		return Boolean.FALSE;
@@ -141,7 +155,7 @@ public class URLServiceImpl implements URLService {
 	 * If none of them have, the URL and the resource it identifies
 	 * is not available to the user or the organization.
 	 */
-	public Boolean hasAccess(User user, Organization organization, Url url) {
+	public Boolean hasAccess(User user, MemberOrganization organization, Url url) {
 		if(hasAccess(organization, url)){
 			return Boolean.TRUE;
 		} else if(hasAccess(user, url)){
@@ -159,20 +173,17 @@ public class URLServiceImpl implements URLService {
 	 *  
 	 */
 	public SingleResult<String> group(Url url){
-		List<SupplierSource> list = this.supplierSourceDao.getSupplierSourceListAll();
+		List<SupplierSource> list = this.accessService.getSupplierSourceListAll();
 		for (SupplierSource supplierSource : list) {
-			if(supplierSource.getUrl().getValue().equals(url.getValue())){
+			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
     			// TODO: Is this all?
-				return new ValueResult<String>(supplierSource.getName());
+				return new ValueResult<String>(supplierSource.getSupplierSourceName());
 			}
 		}
 		return new EmptyResult<String>();
 	}
-	public void setSupplierSourceDao(SupplierSourceDao supplierSourceDao) {
-		this.supplierSourceDao = supplierSourceDao;
-	}
-	public void setAccessDao(AccessDao accessDao) {
-		this.accessDao = accessDao;
+	public void setAccessService(AccessService accessService) {
+		this.accessService = accessService;
 	}
 	public void setProxyPrefix(String proxyPrefix) {
 		this.proxyPrefix = proxyPrefix;

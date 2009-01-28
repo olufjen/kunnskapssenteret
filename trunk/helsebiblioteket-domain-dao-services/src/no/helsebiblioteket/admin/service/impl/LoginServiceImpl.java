@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
 
@@ -47,13 +48,13 @@ public class LoginServiceImpl implements LoginService {
 	 * delegated to IpRangeDao.
 	 * Returns the first found if there are more than one macth.
 	 */
-	public SingleResult<Organization> loginOrganizationByIpAddress(IpAddress ipAddress) {
-		List<Organization> list = this.ipRangeDao.getOrganizationListByIpAdress(ipAddress);
+	public SingleResult<MemberOrganization> loginOrganizationByIpAddress(IpAddress ipAddress) {
+		List<MemberOrganization> list = this.ipRangeDao.getOrganizationListByIpAdress(ipAddress);
 		if(list.size() == 0){
-			return new EmptyResult<Organization>();
+			return new EmptyResult<MemberOrganization>();
 		} else {
 			// TODO: Log incidents of more than one organization per IP Address?
-			return new ValueResult<Organization>(list.get(0));
+			return new ValueResult<MemberOrganization>(list.get(0));
 		}
 	}
 	/**

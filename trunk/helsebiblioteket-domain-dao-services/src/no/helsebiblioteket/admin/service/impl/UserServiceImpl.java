@@ -18,16 +18,16 @@ import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
-import no.helsebiblioteket.admin.daoobjects.UserRole;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.line.UserRoleLine;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.factory.PersonFactory;
-import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
-import no.helsebiblioteket.admin.listobjects.UserListItem;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
@@ -36,7 +36,7 @@ import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
-import no.helsebiblioteket.admin.service.PersonService;
+import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -54,15 +54,15 @@ public class UserServiceImpl implements UserService {
      * Fetches all the roles from the database. Delegates the task to
 	 * RoleDao. The variable DUMMY is never used.
      */
-	public ListResult<Role> getRoleListAll(String DUMMY) {
+	public ListResult<UserRole> getRoleListAll(String DUMMY) {
 		// TODO: Set role key with ENUM?
-		List<Role> roleList = this.roleDao.getRoleListAll();
-		Role[] roles = new Role[roleList.size()];
+		List<UserRole> roleList = this.roleDao.getRoleListAll();
+		UserRole[] roles = new UserRole[roleList.size()];
 		int i = 0;
-		for (Role role : roleList) {
+		for (UserRole role : roleList) {
 			roles[i++] = role;
 		}
-		return new ListResult<Role>(roles);
+		return new ListResult<UserRole>(roles);
 	}
     /**
      * Fetches all the positions from the database. Delegates the task to
@@ -82,12 +82,12 @@ public class UserServiceImpl implements UserService {
 	 * EmptyResult is returned. Delegates the task to RoleDao.
 	 * RoleDao.getRoleByKey(..) returns null if no Role is found.
 	 */
-	public SingleResult<Role> getRoleByKey(String key) {
-		Role role = this.roleDao.getRoleByKey(key);
+	public SingleResult<UserRole> getRoleByKey(String key) {
+		UserRole role = this.roleDao.getRoleByKey(key);
 		if(role==null){
-			return new EmptyResult<Role>();
+			return new EmptyResult<UserRole>();
 		} else {
-			return new ValueResult<Role>(role);
+			return new ValueResult<UserRole>(role);
 		}
 	}
 	/**
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
 	 * TODO: There is probably room for optimizations here.
 	 * 
 	 */
-	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<UserListItem> request) {
+	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<UserRole> roles, PageRequest<UserListItem> request) {
 		// TODO: Should we use Id for request.from?
 		int from;
 		if(request instanceof FirstPageRequest){
@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService {
 		if(user == null){
 			return new EmptyResult<User>();
 		} else {
-			Organization organization = this.organizationDao.getOrganizationById(user.getOrganization().getId());
+			Organization organization = this.organizationDao.getOrganizationById(user.getOrganization().getOrgUnitId());
 			// TODO: Really?
 			if(organization == null){ throw new NullPointerException("No organization for user"); }
 			user.setOrganization(organization);
@@ -164,10 +164,11 @@ public class UserServiceImpl implements UserService {
 			if(person == null){ person = PersonFactory.factory.createPerson(); }
 			user.setPerson(person);
 
-			List<UserRole> userRoleList = this.userRoleDao.getUserRoleListByUser(user);
-			List<Role> roleList = new ArrayList<Role>();
-			for (UserRole userRole : userRoleList) {
-				roleList.add(this.roleDao.getRoleByKey(userRole.getUserRole().getKey()));
+			List<UserRoleLine> userRoleList = this.userRoleDao.getUserRoleListByUser(user);
+			List<UserRole> roleList = new ArrayList<UserRole>();
+			for (UserRoleLine userRole : userRoleList) {
+				// TODO: Load using line object!
+//				roleList.add(this.roleDao.getRoleByKey(userRole.getUserRole().getKey()));
 			}
 			return new ValueResult<User>(user);
 		}
@@ -184,8 +185,8 @@ public class UserServiceImpl implements UserService {
      */
 	public Boolean insertUser(User user) {
 		this.personDao.insertPerson(user.getPerson());
-		List<UserRole> userRoleList = translateRoles(user.getId(), user.getRoleList());
-		for (UserRole userRole : userRoleList) {
+		List<UserRoleLine> userRoleList = translateRoles(user.getUserId(), user.getRoleList());
+		for (UserRoleLine userRole : userRoleList) {
 			this.userRoleDao.insertUserRole(userRole);
 		}
 		this.userDao.insertUser(user);
@@ -207,14 +208,14 @@ public class UserServiceImpl implements UserService {
 
 		this.personDao.updatePerson(user.getPerson());
 
-		List<UserRole> newUserRoleList = translateRoles(user.getId(), user.getRoleList());
-		List<UserRole> oldUserRoleList = translateRoles(old.getId(), old.getRoleList());
+		List<UserRoleLine> newUserRoleList = translateRoles(user.getUserId(), user.getRoleList());
+		List<UserRoleLine> oldUserRoleList = translateRoles(old.getUserId(), old.getRoleList());
 		// TODO: Do this a little smarter without deleting all.
 		//       Improve ModifiedListHelper.
-		for (UserRole userRole : oldUserRoleList) {
+		for (UserRoleLine userRole : oldUserRoleList) {
 			this.userRoleDao.deleteUserRole(userRole);
 		}
-		for (UserRole userRole : newUserRoleList) {
+		for (UserRoleLine userRole : newUserRoleList) {
 			this.userRoleDao.deleteUserRole(userRole);
 		}
 		this.userDao.updateUser(user);
@@ -287,11 +288,12 @@ public class UserServiceImpl implements UserService {
 ////		return changedUser;
 //
 	}
-	private List<UserRole> translateRoles(Integer id, List<Role> roleList){
-		List<UserRole> result = new ArrayList<UserRole>();
-		for (Role role : roleList) {
-			UserRole userRole = new UserRole();
-			userRole.setUserRole(role);
+	private List<UserRoleLine> translateRoles(Integer id, List<UserRole> roleList){
+		List<UserRoleLine> result = new ArrayList<UserRoleLine>();
+		for (UserRole role : roleList) {
+			UserRoleLine userRole = new UserRoleLine();
+			// TODO: User line object!
+//			userRole.setUserRole(role);
 			userRole.setUserId(id);
 			userRole.setLastChanged(new Date());
 		}

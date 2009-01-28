@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
 
 public class UserToXMLTranslator {
@@ -32,7 +32,7 @@ public class UserToXMLTranslator {
 		userElement.appendChild(cDataElement(document, "username", user.getUsername()));
 
 		Element rolesElement = document.createElement("roles");
-		for (Role role : user.getRoleList()) {
+		for (UserRole role : user.getRoleList()) {
 			this.roleToXMLTranslator.translate(role, document, rolesElement);
 		}
 		userElement.appendChild(rolesElement);

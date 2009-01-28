@@ -12,7 +12,7 @@ public class ContactInformationToXMLTranslator {
 		contactElement.appendChild(UserToXMLTranslator.cDataElement(document, "email", contactInformation.getEmail()));
 		
 		// TODO: Complete this!
-		contactInformation.getId();
+		contactInformation.getContactInformationId();
 		contactInformation.getLastChanged();
 		contactInformation.getPostalAddress();
 		contactInformation.getPostalCode();
