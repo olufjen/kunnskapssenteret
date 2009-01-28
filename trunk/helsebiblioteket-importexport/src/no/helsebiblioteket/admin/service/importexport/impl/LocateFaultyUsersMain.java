@@ -15,6 +15,7 @@ import no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil;
 import no.helsebiblioteket.admin.service.importexport.ldap.domain.LDAPUser;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -109,7 +110,8 @@ public class LocateFaultyUsersMain {
         person.setProfile(userProfile);
         person.setContactInformation(contactInformation);
         user.setPerson(person);
-        user.setOrganization(new Organization());
+        //TODO: User member organization here?
+        user.setOrganization(new MemberOrganization());
         //TODO
         /*user.setDn(ldapUser.getDn());
         user.setUid(ldapUser.getUid());
