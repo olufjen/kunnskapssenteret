@@ -15,7 +15,7 @@ import no.helsebiblioteket.admin.service.importexport.ldap.domain.LDAPUser;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
 
 /**
@@ -31,21 +31,21 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 	LDAPLookupUtil ldapLookupUtil;
 	UserService userService;
 	
-	static List<Role> roleOtherList = new ArrayList<Role>();
-	static List<Role> roleHealthPersonellList = new ArrayList<Role>();
-	static List<Role> roleStudentList = new ArrayList<Role>();
+	static List<UserRole> roleOtherList = new ArrayList<UserRole>();
+	static List<UserRole> roleHealthPersonellList = new ArrayList<UserRole>();
+	static List<UserRole> roleStudentList = new ArrayList<UserRole>();
 	
 	static {
-		Role roleOther = new Role();
-		roleOther.setRoleId(4);
+		UserRole roleOther = new UserRole();
+		roleOther.setUserRoleId(4);
 		roleOtherList.add(roleOther);
 		
-		Role roleHealthPersonell = new Role();
-		roleHealthPersonell.setRoleId(2);
+		UserRole roleHealthPersonell = new UserRole();
+		roleHealthPersonell.setUserRoleId(2);
 		roleHealthPersonellList.add(roleHealthPersonell);
 		
-		Role roleStudent = new Role();
-		roleStudent.setRoleId(3);
+		UserRole roleStudent = new UserRole();
+		roleStudent.setUserRoleId(3);
 		roleStudentList.add(roleStudent);
 	}
 

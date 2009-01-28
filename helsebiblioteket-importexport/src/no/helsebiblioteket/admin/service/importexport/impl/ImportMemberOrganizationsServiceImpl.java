@@ -18,15 +18,17 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import no.helsebiblioteket.admin.daoobjects.OrganizationName;
-import no.helsebiblioteket.admin.daoobjects.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -51,7 +53,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     private static final String XPATH_EXPR = "/iprange/range";
     private static final String XML_DOC = "IpRangeDaoXml.xml";
 
-    private Map<String, Organization> organizationMap;
+    private Map<String, MemberOrganization> organizationMap;
     private String xmlDoc;
 
     private OrganizationService organizationService;
@@ -60,12 +62,12 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
 
     public ImportMemberOrganizationsServiceImpl() {
         xmlDoc = XML_DOC;
-        organizationMap = new HashMap<String, Organization>();
+        organizationMap = new HashMap<String, MemberOrganization>();
     }
 
     public ImportMemberOrganizationsServiceImpl(String xml) {
         xmlDoc = xml;
-        organizationMap = new HashMap<String, Organization>();
+        organizationMap = new HashMap<String, MemberOrganization>();
     }
 
     public void setOrganizationService(OrganizationService organizationService) {
@@ -73,15 +75,16 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     }
     
     public void importAllMemberOrganizations() {
-    	Collection<Organization> memberOrganizationList = getAllMemberOrganizations().values();
+    	Collection<MemberOrganization> memberOrganizationList = getAllMemberOrganizations().values();
     	for (Organization organization : memberOrganizationList) {
     		// FIXME: Are they unique or check for existing?
 //    		organizationService.saveOrganization(organization);
+    		// TODO: Use insertSupplier for suppliers!
     		organizationService.insertOrganization(organization);
     	}
     }
     
-    private Map<String, Organization> getAllMemberOrganizations() {
+    private Map<String, MemberOrganization> getAllMemberOrganizations() {
 
         XPath xpath = XPathFactory.newInstance().newXPath();
         NodeList rangeNodes = null;
@@ -113,19 +116,19 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         return organizationMap;
     }
 
-    private Map<String, Organization> populateIpRangeList(NodeList nodeList) {
-        Map<String, Organization> organizationMap = new HashMap<String, Organization>();
-        Organization organization = null;
+    private Map<String, MemberOrganization> populateIpRangeList(NodeList nodeList) {
+        Map<String, MemberOrganization> organizationMap = new HashMap<String, MemberOrganization>();
+        MemberOrganization organization = null;
         
-        SingleResult<OrganizationType> orgTypeHPRRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise.toString());
+        SingleResult<OrganizationType> orgTypeHPRRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
         OrganizationType orgTypeHPR = (orgTypeHPRRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeHPRRes).getValue() :
         			null;
-        SingleResult<OrganizationType> orgTypeStudRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching.toString());
+        SingleResult<OrganizationType> orgTypeStudRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching);
         OrganizationType orgTypeStud = (orgTypeStudRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeStudRes).getValue() :
         			null;
-        SingleResult<OrganizationType> orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.others.toString());
+        SingleResult<OrganizationType> orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.others);
         OrganizationType orgTypeEmp = (orgTypeEmpRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeEmpRes).getValue() :
         			null;
@@ -141,7 +144,8 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             	organization = organizationMap.get(orgNameNorwegian);
             } else {
             	logger.log(Level.FINE, "\nAdding organization: " + orgNameNorwegian);
-            	organization = new Organization();
+            	// TODO: User member organization here?
+            	organization = new MemberOrganization();
             }            
             Node found = null;
             found = findNodeByName(n, NODE_GROUP);
@@ -158,7 +162,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             if (found != null && found.getTextContent().trim().length() > 0) {
             	// FIXME: Ok with only Norwegian name in import?
             	if(organization.getNameNorwegian() == null){
-            		organization.setNameNorwegianNormal(found.getTextContent());
+            		organization.setNameNorwegian(found.getTextContent());
             	}
 //            	if (organization.getNameList() == null) {
 //            		OrganizationName orgName = new OrganizationName();
@@ -181,12 +185,12 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
                 	addressTo = null;
                 }
                 addressFrom.replace("/", "");
-                IpRange range = new IpRange(new IpAddress(addressFrom), new IpAddress(addressTo));
-                if (organization.getIpRangeList() == null) {
-                	organization.setIpRangeList(new ArrayList<IpRange>());
+                IpAddressSet range = new IpAddressRange(new IpAddress(addressFrom), new IpAddress(addressTo));
+                if (organization.getIpAddressSetList() == null) {
+                	organization.setIpAddressSetList(new ArrayList<IpAddressSet>());
                 }
-            	if (!organization.getIpRangeList().contains(range)) {
-            		organization.getIpRangeList().add(range);
+            	if (!organization.getIpAddressSetList().contains(range)) {
+            		organization.getIpAddressSetList().add(range);
             		logger.log(Level.ALL, "Adding range: " + addressFrom + " - " + addressTo);
             	}
             }
