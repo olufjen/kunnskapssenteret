@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.URLService;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
@@ -40,12 +41,12 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<Url>)invoke(this.translateName, args, returnTypes);
     }
-    public SingleResult<Url> translate(Organization organization, Url url){
+    public SingleResult<Url> translate(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<Url>)invoke(this.translateName, args, returnTypes);
     }
-    public SingleResult<Url> translate(User user, Organization organization, Url url){
+    public SingleResult<Url> translate(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<Url>)invoke(this.translateName, args, returnTypes);
@@ -55,12 +56,12 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.hasAccessName, args, returnTypes);
     }
-    public Boolean hasAccess(Organization organization, Url url){
+    public Boolean hasAccess(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.hasAccessName, args, returnTypes);
     }
-    public Boolean hasAccess(User user, Organization organization, Url url){
+    public Boolean hasAccess(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.hasAccessName, args, returnTypes);
@@ -108,11 +109,11 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		loginService.init();
 		
 		User user = new User();
-		Organization organization = new Organization();
+		MemberOrganization organization = new MemberOrganization();
 		Url url1 = new Url();
-		url1.setValue("http://proxy.helsebiblioteket.no/login?url=http://www.legehandboka.no");
+		url1.setStringValue("http://proxy.helsebiblioteket.no/login?url=http://www.legehandboka.no");
 		Url url2 = new Url();
-		url2.setValue("http://www.g-i-n.net.proxy.helsebiblioteket.no/");
+		url2.setStringValue("http://www.g-i-n.net.proxy.helsebiblioteket.no/");
 		Boolean isAffected1 = loginService.isAffected(url1);
 		Boolean isAffected2 = loginService.isAffected(url2);
 		SingleResult<Url> translatedResult1 = loginService.translate(user, organization, url1);
@@ -121,7 +122,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		Url translated2 = null;
     	System.out.println("isAffected1: " + isAffected1);
     	System.out.println("isAffected2: " + isAffected2);
-    	System.out.println("translated1: " + translated1.getValue());
-    	System.out.println("translated2: " + translated2.getValue());
+    	System.out.println("translated1: " + translated1.getStringValue());
+    	System.out.println("translated2: " + translated2.getStringValue());
 	}
 }

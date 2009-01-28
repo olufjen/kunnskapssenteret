@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
 @SuppressWarnings("serial")
@@ -32,10 +33,10 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<User>)invoke(this.logInUser, args, returnTypes);
 	}
-	public SingleResult<Organization> loginOrganizationByIpAddress(IpAddress ipAddress) {
+	public SingleResult<MemberOrganization> loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResult<Organization>)invoke(this.logInIpAddress, args, returnTypes);
+		return (SingleResult<MemberOrganization>)invoke(this.logInIpAddress, args, returnTypes);
 	}
 	public Boolean sendPasswordEmail(User user) {
 		Object[] args = new Object[] { user };
@@ -71,7 +72,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	
 	public static void main(String[] args) throws Exception {
 		// TODO: Move to unit test package!
-		QName logInIpAddress = new QName("http://service.admin.helsebiblioteket.no", "logInIpAddress");
+		QName logInIpAddress = new QName("http://service.admin.helsebiblioteket.no", "loginOrganizationByIpAddress");
 		EndpointReference targetEPR = new EndpointReference("http://localhost:8080/axis2/services/loginService");
 		LoginServiceWeb loginService = new LoginServiceWeb();
 		RPCServiceClient serviceClient = new RPCServiceClient();
@@ -82,7 +83,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		
     	IpAddress ipAddress = new IpAddress();
     	ipAddress.setAddress("111.222.333");
-    	SingleResult<Organization> result = loginService.loginOrganizationByIpAddress(ipAddress);
+    	SingleResult<MemberOrganization> result = loginService.loginOrganizationByIpAddress(ipAddress);
 //    	Organization organization = null;
 //    	System.out.println("organization: " + organization.getName());
 	}
