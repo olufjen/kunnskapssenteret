@@ -17,6 +17,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
 
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
@@ -33,17 +34,12 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private URLService urlService;
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
-
-    	// FIXME: Remove!
-    	if(true) return response;
-    	
-    	
-    	
+    	// TODO: Used loggefinuser and loggedinorganization
     	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
-    	Organization organization = null;
+    	MemberOrganization organization = null;
     	User user = null; 
-    	if(sessionVar instanceof Organization){
-    		organization = (Organization) sessionVar;
+    	if(sessionVar instanceof MemberOrganization){
+    		organization = (MemberOrganization) sessionVar;
     	} else if (sessionVar instanceof User){
     		user = (User) sessionVar;
     	}
@@ -139,20 +135,20 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private boolean isAffected(URL url) {
 		// TODO: Cache as much as possible, but flush at some set interval!
 		Url myurl = new Url();
-		myurl.setValue(url.toExternalForm());
+		myurl.setStringValue(url.toExternalForm());
 		return this.urlService.isAffected(myurl);
 	}
-	private URL translate(User user, Organization organization, URL url) throws MalformedURLException {
+	private URL translate(User user, MemberOrganization organization, URL url) throws MalformedURLException {
 		// TODO: Cache as much as possible, but flush at some set interval!
 		Url myurl = new Url();
-		myurl.setValue(url.toExternalForm());
+		myurl.setStringValue(url.toExternalForm());
 		SingleResult<Url> result = this.urlService.translate(user, organization, myurl);
 		if(result instanceof EmptyResult){
 			// TODO: What to do here?
 			return url;
 		} else {
 			ValueResult<Url> value = (ValueResult<Url>) result;
-			return new URL(value.getValue().getValue());
+			return new URL(value.getValue().getStringValue());
 		}
 	}
 

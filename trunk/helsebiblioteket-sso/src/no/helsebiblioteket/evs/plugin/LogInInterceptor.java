@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -37,9 +38,9 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		if(organization == null && user == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
-	    	SingleResult<Organization> result = this.loginService.loginOrganizationByIpAddress(ipAddress);
+	    	SingleResult<MemberOrganization> result = this.loginService.loginOrganizationByIpAddress(ipAddress);
 	    	if(result instanceof ValueResult){
-	    	    organization = ((ValueResult<Organization>)result).getValue();
+	    	    organization = ((ValueResult<MemberOrganization>)result).getValue();
 	    		loggedInFunction.logInOrganization(organization);
 	    	}
 		}
