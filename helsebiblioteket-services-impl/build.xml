@@ -14,7 +14,7 @@
 	<property name="project.lib.dir" value="${project.home.dir}/lib"/>
 	<property name="helsebiblioteket-administration-web-lib.dir" value="${helsebiblioteket-administration-web-home.dir}/lib"/>
 	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
-	<property name="helsebiblioteket-jdbcdao-target.dir" value="${helsebiblioteket-jdbcdao-home.dir}/target"/>
+	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/target"/>
 	<!-- Web Services -->
 	<property name="webservices.build.dir" value="${project.build.dir}/webservices"/>
 	<property name="webservices.classes.dir" value="${webservices.build.dir}/classes" />
@@ -62,7 +62,7 @@
 
 	<target name="prepare-dependencies" description="Compile main source tree java files">
 		<ant dir="${helsebiblioteket-domain-dao-services-home.dir}" inheritAll="false" target="package"/>
-		<ant dir="${helsebiblioteket-jdbcdao-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-sqlmapdao-home.dir}" inheritAll="false" target="package"/>
 	</target>
 
 	<target name="build" description="Compile main source tree java files" depends="prepare-dependencies">
@@ -122,6 +122,7 @@
 		<copy file="desc/services.xml" tofile="${webservices.metainf.dir}/services.xml" overwrite="true" />
 		<copy file="desc/applicationContext.xml" tofile="${webservices.classes.dir}/applicationContext.xml" overwrite="true" />
 		<copy file="desc/jdbc.properties" tofile="${webservices.classes.dir}/jdbc.properties" overwrite="true" />
+		<copy file="desc/sqlmap-config.xml" tofile="${webservices.classes.dir}/sqlmap-config.xml" overwrite="true" />
 
 
 		<!-- TODO: Include jars in aar-file
@@ -144,7 +145,7 @@
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
 				<include name="**/*.jar"/>
 			</fileset>
-			<fileset dir="${helsebiblioteket-jdbcdao-target.dir}">
+			<fileset dir="${helsebiblioteket-sqlmapdao-target.dir}">
 				<include name="**/*.jar"/>
 			</fileset>
 		</copy>
