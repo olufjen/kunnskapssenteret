@@ -13,13 +13,13 @@ import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.UserDao;
-import no.helsebiblioteket.admin.daoobjects.UserRole;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.listobjects.UserListItem;
+import no.helsebiblioteket.admin.domain.line.UserRoleLine;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
@@ -44,7 +44,7 @@ public class UserServiceImpl2 implements UserService {
 	}
 
 	@Override
-	public ListResult<Role> getRoleListAll(String DUMMY) {
+	public ListResult<UserRole> getRoleListAll(String DUMMY) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -64,7 +64,7 @@ public class UserServiceImpl2 implements UserService {
 
 	@Override
 	public PageResult<UserListItem> findUsersBySearchStringRoles(
-			String searchString, List<Role> roles,
+			String searchString, List<UserRole> roles,
 			PageRequest<UserListItem> request) {
 		// TODO Auto-generated method stub
 		return null;
@@ -72,7 +72,7 @@ public class UserServiceImpl2 implements UserService {
 
 
 	@Override
-	public SingleResult<Role> getRoleByKey(String key) {
+	public SingleResult<UserRole> getRoleByKey(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}

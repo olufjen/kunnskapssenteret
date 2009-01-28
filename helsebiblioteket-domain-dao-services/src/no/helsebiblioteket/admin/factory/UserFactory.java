@@ -8,7 +8,7 @@ import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
 
 public class UserFactory {
@@ -19,7 +19,7 @@ public class UserFactory {
 		user.setUsername("");
 		user.setPassword("");
 //		user.setAccessList(new ArrayList<Access>());
-		user.setRoleList(new ArrayList<Role>());
+		user.setRoleList(new ArrayList<UserRole>());
 		user.setLastChanged(new Date());
 //		protected Organization organization;
 //		private Person person;
