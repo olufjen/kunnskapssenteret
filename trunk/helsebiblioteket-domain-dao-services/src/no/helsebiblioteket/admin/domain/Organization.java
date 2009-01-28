@@ -1,29 +1,58 @@
 package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
-import java.util.List;
 
-public class Organization {
-	private Integer id;
+public abstract class Organization {
+	// Primary key
+	private Integer orgUnitId;
+	
+	// Local values
 	private String description;
 	private Date lastChanged;
-
-	private Integer parent;
-	private OrganizationType type;
-	private Person contactPerson;
-	private ContactInformation contactInformation;
-
-	private List<IpRange> ipRangeList;
-	private List<SupplierSource> supplierSourceList;
-	// Also loaded from lists:
+	// These are set directly. Actually loaded from OrganizationName.
 	private String nameEnglishNormal;
 	private String nameEnglishShort;
 	private String nameNorwegianNormal;
 	private String nameNorwegianShort;
-	
-	
-	public Integer getId() {
-		return id;
+
+	// References
+	private OrganizationType type;
+	private Person contactPerson;
+	private ContactInformation contactInformation;
+
+	// Helpers
+	public int hashCode() {
+        int result;
+        // TODO: What was this important for? Use Id
+//        result = (parent != null ? parent.hashCode() : 0);
+//        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = (type != null ? type.hashCode() : 0);
+        // TODO: Include names here!
+        return result;
+    }
+	public boolean equals(Organization org) {
+        if (this == org) return true;
+        // TODO: What was this important for? Use Id
+//        if (parent != null ? !parent.equals(org.parent) : org.parent != null) return false;
+        if (type != null ? !type.equals(org.type) : org.type != null) return false;
+        // TODO: Compare names here!
+        return true;
+    }
+
+	// If we want to use parent, this can be inserted
+	// Should instead be an organization. Watch out for
+	// loops and NullPointers!
+//	private Integer parent;
+//	public Integer getParent() {
+//		return parent;
+//	}
+//	public void setParent(Integer parent) {
+//		this.parent = parent;
+//	}
+
+	// GET/SET
+	public Integer getOrgUnitId() {
+		return orgUnitId;
 	}
 	public String getNameEnglish() {
 		return this.nameEnglishNormal;
@@ -40,16 +69,16 @@ public class Organization {
 		return nameNorwegianShort;
 	}
 	
-	public void setNameEnglishNormal(String nameEnglishNormal) {
+	public void setNameEnglish(String nameEnglishNormal) {
 		this.nameEnglishNormal = nameEnglishNormal;
 	}
-	public void setNameEnglishShort(String nameEnglishShort) {
+	public void setNameShortEnglish(String nameEnglishShort) {
 		this.nameEnglishShort = nameEnglishShort;
 	}
-	public void setNameNorwegianNormal(String nameNorwegianNormal) {
+	public void setNameNorwegian(String nameNorwegianNormal) {
 		this.nameNorwegianNormal = nameNorwegianNormal;
 	}
-	public void setNameNorwegianShort(String nameNorwegianShort) {
+	public void setNameShortNorwegian(String nameNorwegianShort) {
 		this.nameNorwegianShort = nameNorwegianShort;
 	}
 	public String getDescription() {
@@ -64,16 +93,8 @@ public class Organization {
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	
-	public List<IpRange> getIpRangeList() {
-		return ipRangeList;
-	}
-	public void setIpRangeList(List<IpRange> ipRangeList) {
-		this.ipRangeList = ipRangeList;
+	public void setOrgUnitId(Integer id) {
+		this.orgUnitId = id;
 	}
 	public OrganizationType getType() {
 		return type;
@@ -92,34 +113,5 @@ public class Organization {
 	}
 	public void setContactInformation(ContactInformation contactInformation) {
 		this.contactInformation = contactInformation;
-	}
-	public int hashCode() {
-        int result;
-        // TODO: What was this important for? Use Id
-//        result = (parent != null ? parent.hashCode() : 0);
-//        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = (type != null ? type.hashCode() : 0);
-        // TODO: Include names here!
-        return result;
-    }
-	public boolean equals(Organization org) {
-        if (this == org) return true;
-        // TODO: What was this important for? Use Id
-//        if (parent != null ? !parent.equals(org.parent) : org.parent != null) return false;
-        if (type != null ? !type.equals(org.type) : org.type != null) return false;
-        // TODO: Compare names here!
-        return true;
-    }
-	public Integer getParent() {
-		return parent;
-	}
-	public void setParent(Integer parent) {
-		this.parent = parent;
-	}
-	public List<SupplierSource> getSupplierSourceList() {
-		return supplierSourceList;
-	}
-	public void setSupplierSourceList(List<SupplierSource> supplierSourceList) {
-		this.supplierSourceList = supplierSourceList;
 	}
 }

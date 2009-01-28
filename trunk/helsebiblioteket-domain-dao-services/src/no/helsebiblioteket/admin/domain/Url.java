@@ -1,22 +1,18 @@
 package no.helsebiblioteket.admin.domain;
 
 public class Url {
-	private String value;
-	
-	public Url() {
-		super();
-	}
+	// setStringValue is used by database!
+	private String stringValue;
+	public Url() { super(); }
 
 	public Url(String value) {
-		super();
-		this.value = value;
+		this();
+		this.stringValue = value;
 	}
-
-	public String getValue() {
-		return value;
+	public String getStringValue() {
+		return stringValue;
 	}
-
-	public void setValue(String value) {
-		this.value = value;
+	public void setStringValue(String value) {
+		this.stringValue = value;
 	}
 }

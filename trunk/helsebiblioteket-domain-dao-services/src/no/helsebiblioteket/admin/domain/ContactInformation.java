@@ -3,20 +3,22 @@ package no.helsebiblioteket.admin.domain;
 import java.util.Date;
 
 public class ContactInformation {
-	private Integer id;
+	// Primary key
+	private Integer contactInformationId;
+	
+	// Local values
 	private String postalAddress;
 	private String postalCode;
 	private String telephoneNumber;
 	private String postalLocation;
 	private String email;
-//	private Person person;
 	private Date lastChanged;
 	
-	public Integer getId() {
-		return id;
+	public Integer getContactInformationId() {
+		return contactInformationId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setContactInformationId(Integer contactInformationId) {
+		this.contactInformationId = contactInformationId;
 	}
 	public String getPostalAddress() {
 		return postalAddress;

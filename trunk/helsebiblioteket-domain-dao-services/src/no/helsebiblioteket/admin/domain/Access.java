@@ -10,40 +10,32 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-public class Access implements Unique{
-	private Integer id;
+import no.helsebiblioteket.admin.domain.base.Identifiable;
+
+public class Access implements Identifiable{
+	// Primary key
+	private Integer accessId;
+	
+	// Local values
 	private Date validFrom;
 	private Date validTo;
 	private Date lastChanged;
-	
-	private SupplierSource supplierSource;
-	private Organization organizationAsResource;
-	private AccessType type;
+
+	// References
+	private AccessType accessType;
 	private Organization providedBy;
-	
-	public Date getLastChanged() {
-		return lastChanged;
-	}
-	public void setLastChanged(Date lastChanged) {
-		this.lastChanged = lastChanged;
-	}
+
+	// Helpers
 	public Integer getId() {
-		return id;
+		return getAccessId();
 	}
-	public void setId(Integer id) {
-		this.id = id;
+
+	// GET/SET
+	public Integer getAccessId() {
+		return accessId;
 	}
-	public SupplierSource getSupplierSource() {
-		return supplierSource;
-	}
-	public void setSupplierSource(SupplierSource supplierSource) {
-		this.supplierSource = supplierSource;
-	}
-	public AccessType getType() {
-		return type;
-	}
-	public void setType(AccessType accessType) {
-		this.type = accessType;
+	public void setAccessId(Integer accessId) {
+		this.accessId = accessId;
 	}
 	public Date getValidFrom() {
 		return validFrom;
@@ -57,17 +49,22 @@ public class Access implements Unique{
 	public void setValidTo(Date validTo) {
 		this.validTo = validTo;
 	}
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+	public AccessType getAccessType() {
+		return accessType;
+	}
+	public void setAccessType(AccessType accessType) {
+		this.accessType = accessType;
+	}
 	public Organization getProvidedBy() {
 		return providedBy;
 	}
 	public void setProvidedBy(Organization providedBy) {
 		this.providedBy = providedBy;
 	}
-	public Organization getOrganizationAsResource() {
-		return organizationAsResource;
-	}
-	public void setOrganizationAsResource(Organization organizationAsResource) {
-		this.organizationAsResource = organizationAsResource;
-	}
-	
 }

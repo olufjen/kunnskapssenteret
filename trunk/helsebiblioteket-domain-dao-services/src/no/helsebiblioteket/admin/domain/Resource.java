@@ -1,18 +1,18 @@
 package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
-import java.util.List;
 
 public class Resource {
+	// Primary key
 	private Integer resourceId;
-	private ResourceType resourceType;
-	private Date lastChanged;
-	private Integer supplierSourceId;
-	private List<SupplierSource> supplierSourceList;
-
-	// foreign keys
-	private Integer organizationId;
 	
+	// Local values
+	private Date lastChanged;
+	
+	// References
+	private ResourceType resourceType;
+
+	// GET/SET
 	public Integer getResourceId() {
 		return resourceId;
 	}
@@ -30,17 +30,5 @@ public class Resource {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
-	}
-	public Integer getOrganizationId() {
-		return organizationId;
-	}
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
-	}
-	public Integer getSupplierSourceId() {
-		return supplierSourceId;
-	}
-	public void setSupplierSourceId(Integer supplierSourceId) {
-		this.supplierSourceId = supplierSourceId;
 	}
 }

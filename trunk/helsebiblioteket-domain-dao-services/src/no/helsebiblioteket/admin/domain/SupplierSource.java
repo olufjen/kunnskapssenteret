@@ -1,29 +1,34 @@
 package no.helsebiblioteket.admin.domain;
 
-public class SupplierSource extends Resource implements Unique{
-	private Url url = null;
-	private String name = null;
+import java.util.Date;
+
+import no.helsebiblioteket.admin.domain.base.Identifiable;
+
+public class SupplierSource implements Identifiable{
+	// Primary key
+	private Integer supplierSourceId;
 	
-	public SupplierSource() {
-	}
-	
-	public Integer getId(){
-		return getSupplierSourceId();
-	}
-	public void setId(Integer id){
-		this.setSupplierSourceId(id);
-	}
-	
+	// Local values
+	private String supplierSourceName;
+	// url from database table is set to url.stringValue
+	private Url url;
+	private Date lastChanged;
+
+	// Constructors
+	public SupplierSource() { }
 	public SupplierSource(String name, Url url) {
-		this.name = name;
+		this.supplierSourceName = name;
 		this.url = url;
 	}
-	
 	public SupplierSource(Integer id, String name, Url url) {
 		setSupplierSourceId(id);
-		this.name = name;
+		this.supplierSourceName = name;
 		this.url = url;
 	}
+
+	// Helpers
+	public Integer getId(){ return getSupplierSourceId(); }
+	public void setId(Integer id){ this.setSupplierSourceId(id); }
 	
 	public Url getUrl() {
 		return this.url;
@@ -31,10 +36,23 @@ public class SupplierSource extends Resource implements Unique{
 	public void setUrl(Url url) {
 		this.url = url;
 	}
-	public String getName() {
-		return this.name;
+	public String getSupplierSourceName() {
+		return this.supplierSourceName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setSupplierSourceName(String supplierSourceName) {
+		this.supplierSourceName = supplierSourceName;
+	}
+	public Integer getSupplierSourceId() {
+		return supplierSourceId;
+	}
+
+	public void setSupplierSourceId(Integer supplierSourceId) {
+		this.supplierSourceId = supplierSourceId;
+	}
+	public Date getLastChanged() {
+		return lastChanged;
+	}
+	public void setLastChanged(Date lastChanged) {
+		this.lastChanged = lastChanged;
 	}
 }

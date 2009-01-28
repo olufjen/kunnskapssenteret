@@ -1,16 +1,24 @@
 package no.helsebiblioteket.admin.domain;
 
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+
 public class ResourceType {
-	private Integer id;
+	// Primary key
+	private Integer resourceTypeId;
+
+	// Unique value
+	private ResourceTypeKey key;
+
+	// Local values
 	private String description;
 	private String name;
-	private String key;
 	
+	// GET/SET
 	public Integer getId() {
-		return id;
+		return resourceTypeId;
 	}
 	public void setId(Integer id) {
-		this.id = id;
+		this.resourceTypeId = id;
 	}
 	public String getDescription() {
 		return description;
@@ -24,10 +32,10 @@ public class ResourceType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getKey() {
+	public ResourceTypeKey getKey() {
 		return key;
 	}
-	public void setKey(String key) {
+	public void setKey(ResourceTypeKey key) {
 		this.key = key;
 	}
 }
