@@ -11,14 +11,16 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.daoobjects.OrganizationName;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpRange;
+import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.listobjects.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -29,7 +31,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 	
 	private OrganizationService organizationService = null;
 	
-	private Organization memberOrganization;
+	private MemberOrganization memberOrganization;
 
 	private String ipAddressSingle = null;
 	private String ipAddressFrom = null;
@@ -40,7 +42,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 	
 	private String selectedOrganizationTypeId = null;
 	
-	private List<IpRange> ipRangeList = null;
+	private List<IpAddressSet> ipRangeList = null;
 	
 	
 	
@@ -123,7 +125,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 
 	public Organization getMemberOrganization() {
 		if (this.memberOrganization == null) {
-			this.memberOrganization = new Organization();
+			this.memberOrganization = new MemberOrganization();
 		}
 		if (this.memberOrganization.getContactInformation() == null) {
 			this.memberOrganization.setContactInformation(new ContactInformation());
@@ -134,8 +136,8 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		if (this.memberOrganization.getContactPerson().getContactInformation() == null) {
 			this.memberOrganization.getContactPerson().setContactInformation(new ContactInformation());
 		}
-		if (this.memberOrganization.getIpRangeList() == null) {
-			this.memberOrganization.setIpRangeList(new ArrayList<IpRange>());
+		if (this.memberOrganization.getIpAddressSetList() == null) {
+			this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
 		}
 		// TODO: Not use!
 //		if(this.memberOrganization.getNameList() == null){
@@ -144,11 +146,11 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		return this.memberOrganization;
 	}
 	
-	public void setOrganization(Organization memberOrganization) {
+	public void setOrganization(MemberOrganization memberOrganization) {
 		this.memberOrganization = memberOrganization;
 	}
 	
-	public List<IpRange> getIpRangeList() {
+	public List<IpAddressSet> getIpRangeList() {
 		return this.ipRangeList;
 	}
 
@@ -164,7 +166,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		logger.debug("Method 'actionSaveOrganization' invoked");
 		// TODO: use same bindings as used in NewSupplierOrganizationBean
 		// Requires all org props to be initiates first, see getSupplierOrganization()
-		this.memberOrganization = new Organization();
+		this.memberOrganization = new MemberOrganization();
 //		private String organizationName;
 //		this.memberOrganization.setName(this.getOrganizationName());
 		ContactInformation contactInformationOrganization = new ContactInformation();
@@ -197,9 +199,9 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		logger.debug("Method 'actionAddSingleIp' invoked");
 		setIpAddressSingle((getIpAddressSingleUIInput().getSubmittedValue() != null) ? getIpAddressSingleUIInput().getSubmittedValue().toString() : null);
 		if (this.ipRangeList == null) {
-			this.ipRangeList = new ArrayList<IpRange>();
+			this.ipRangeList = new ArrayList<IpAddressSet>();
 		}
-		this.ipRangeList.add(new IpRange(new IpAddress(getIpAddressSingle()), null));
+		this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressSingle()), null));
 	}
 	
 	public void actionAddIpRange() {
@@ -207,15 +209,15 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		setIpAddressFrom((getIpAddressFromUIInput().getSubmittedValue() != null) ? getIpAddressFromUIInput().getSubmittedValue().toString() : null);
 		setIpAddressTo((getIpAddressToUIInput().getSubmittedValue() != null) ? getIpAddressToUIInput().getSubmittedValue().toString() : null);
 		if (this.ipRangeList == null) {
-			this.ipRangeList = new ArrayList<IpRange>();
+			this.ipRangeList = new ArrayList<IpAddressSet>();
 		}
-		this.ipRangeList.add(new IpRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
+		this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
 	}
 	
 	public void actionDeleteIpRange() {
 		logger.debug("Method 'actionDeleteIpRange' invoked");
 		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
-		this.ipRangeList.remove((IpRange) this.ipRangeListHtmlDataTable.getRowData());
+		this.ipRangeList.remove((IpAddressSet) this.ipRangeListHtmlDataTable.getRowData());
 	}
 	
 	public String actionNewMemberOrganization() {
@@ -228,7 +230,12 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		organization.setId(orgId);
 		SingleResult<Organization> result = organizationService.getOrganizationByListItem(organization);
 		if(result instanceof ValueResult){
-			this.memberOrganization = ((ValueResult<Organization>)result).getValue();
+			Organization tmp = ((ValueResult<Organization>)result).getValue();
+			if(tmp instanceof MemberOrganization){
+				this.memberOrganization = (MemberOrganization)tmp;
+			} else {
+				// TODO: Made to edit suppliers?
+			}
 			//setContactPersonEmail(organization.getContactPerson())
 		}
 		return "new_member_organization";

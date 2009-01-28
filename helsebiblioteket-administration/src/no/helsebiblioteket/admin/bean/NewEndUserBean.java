@@ -8,7 +8,8 @@ import java.util.Map;
 import javax.faces.component.UISelectOne;
 import javax.faces.model.SelectItem;
 
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
@@ -31,25 +32,25 @@ public class NewEndUserBean extends NewUserBean {
     private String selectedUserRole;
 	private UISelectOne userRolesSelectOne;
 	private List<SelectItem> availableRoles;
-	private List<Role> allRoles;
-	private Map<String, Role> allRolesMap;
+	private List<UserRole> allRoles;
+	private Map<UserRoleKey, UserRole> allRolesMap;
 
 	public List<SelectItem> getAvailableRoles() {
 		if(this.availableRoles == null) {
 			this.availableRoles = new ArrayList<SelectItem>();
-			for (Role role : this.getAllRoles()) {
+			for (UserRole role : this.getAllRoles()) {
 				SelectItem option = new SelectItem(role.getKey(), role.getName(), "", false);
 				this.availableRoles.add(option);
 			}
 		}
 		return this.availableRoles;
 	}
-	public List<Role> getAllRoles() {
+	public List<UserRole> getAllRoles() {
 		if(this.allRoles == null){
-			Role[] roles = this.userService.getRoleListAll("").getList();
-			this.allRoles = new ArrayList<Role>();
-			this.allRolesMap = new HashMap<String, Role>();
-			for (Role role : roles) {
+			UserRole[] roles = this.userService.getRoleListAll("").getList();
+			this.allRoles = new ArrayList<UserRole>();
+			this.allRolesMap = new HashMap<UserRoleKey, UserRole>();
+			for (UserRole role : roles) {
 				this.allRoles.add(role);
 				this.allRolesMap.put(role.getKey(), role);
 			}
