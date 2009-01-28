@@ -11,9 +11,9 @@ import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.listobjects.UserListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,24 +60,24 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
         Map<String, User> userMap = new HashMap<String, User>();
         List<User> uniqueUsers = new ArrayList<User>();
         for (User user : users) {
-        	if(userMap.containsKey(""+user.getId())) {
-        		ArrayList<Role> list = new ArrayList<Role>();
+        	if(userMap.containsKey(""+user.getUserId())) {
+        		ArrayList<UserRole> list = new ArrayList<UserRole>();
         		list.add(user.getRoleList().get(0));
-        		userMap.get(""+user.getId()).setRoleList(list);
+        		userMap.get(""+user.getUserId()).setRoleList(list);
         	}
-        	else { userMap.put(""+user.getId(), user); uniqueUsers.add(user); }
+        	else { userMap.put(""+user.getUserId(), user); uniqueUsers.add(user); }
 		}
         return uniqueUsers;
     }
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setId(rs.getInt("user_id"));
+            user.setUserId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
-            Organization organization = new Organization();
-            user.setOrganization(organization);
-            user.getOrganization().setId((rs.getInt("org_unit_id")));
+//            Organization organization = new Organization();
+//            user.setOrganization(organization);
+//            user.getOrganization().setOrgUnitId((rs.getInt("org_unit_id")));
             return user;
         }
     }
@@ -88,13 +88,13 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
             Person person = new Person();
             person.setFirstName(rs.getString("first_name"));
             person.setLastName(rs.getString("last_name"));
-            person.setId(rs.getInt("person_id"));
+            person.setPersonId(rs.getInt("person_id"));
             user.setPerson(person);
             
             int profileId = rs.getInt("profile_id");
             if(profileId != 0){
             	Profile profile = new Profile();
-            	profile.setId(profileId);
+            	profile.setProfileId(profileId);
             	profile.setReceiveNewsletter(rs.getBoolean("receive_newsletter"));
             	profile.setParticipateSurvey(rs.getBoolean("participate_survey"));
             }
@@ -104,11 +104,11 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
             contactInformation.setEmail(rs.getString("username"));
             person.setContactInformation(contactInformation);
             
-            ArrayList<Role> list = new ArrayList<Role>();
-    		Role role = new Role();
-            role.setKey(rs.getString("key"));
+            ArrayList<UserRole> list = new ArrayList<UserRole>();
+    		UserRole role = new UserRole();
+//            role.setKey(rs.getString("key"));
             role.setName(rs.getString("role_name"));
-            role.setRoleId(rs.getInt("user_role_id"));
+            role.setUserRoleId(rs.getInt("user_role_id"));
             list.add(role);
             user.setRoleList(list);
             return user;
@@ -119,7 +119,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
 		return null;
 	}
 	public List<UserListItem> getUserListPagedSearchStringRoles(
-			String searchString, List<Role> roles, int from, int max) {
+			String searchString, List<UserRole> roles, int from, int max) {
 		// TODO Auto-generated method stub
 		return null;
 	}

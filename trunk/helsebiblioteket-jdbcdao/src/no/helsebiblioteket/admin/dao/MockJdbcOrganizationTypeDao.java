@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 
 public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements OrganizationTypeDao {
 
@@ -23,12 +23,12 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
         List<OrganizationType> orgTypes = new ArrayList<OrganizationType>();
         OrganizationType orgType = null;
         orgType = new OrganizationType();
-        orgType.setId(1);
+        orgType.setOrgTypeId(1);
 //        orgType.setKey("health_institution");
         orgType.setName("fallbackname for org_type_health_institution");
         orgTypes.add(orgType);
         orgType = new OrganizationType();
-        orgType.setId(2);
+        orgType.setOrgTypeId(2);
 //        orgType.setKey("health_education_institution");
         orgType.setName("fallbackname for org_type_health_education_institution");
         orgTypes.add(orgType);

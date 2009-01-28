@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import no.helsebiblioteket.admin.daoobjects.UserRole;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.line.UserRoleLine;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,69 +18,69 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
 
 	
 	protected final Log logger = LogFactory.getLog(getClass());
-	public List<Role> getAllRoles() {
+	public List<UserRole> getAllRoles() {
         logger.info("fetching all roles");
-        List<Role> roles = getSimpleJdbcTemplate().query(
+        List<UserRole> roles = getSimpleJdbcTemplate().query(
                 "select name, descr, user_role_id, key from tbl_user_role_reg", 
                 new RoleMapper());
         return roles;
 	}
 
-    private static class RoleMapper implements ParameterizedRowMapper<Role> {
-        public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
-        	Role role = new Role();
-            role.setRoleId(rs.getInt("user_role_id"));
+    private static class RoleMapper implements ParameterizedRowMapper<UserRole> {
+        public UserRole mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	UserRole role = new UserRole();
+            role.setUserRoleId(rs.getInt("user_role_id"));
             role.setName(rs.getString("name"));
-            role.setKey(rs.getString("key"));
+//            role.setKey(rs.getString("key"));
             return role;
         }
     }
 
-	public void deleteUserRoleLine(UserRole userRoleLine) {
+	public void deleteUserRoleLine(UserRoleLine userRoleLine) {
 		// TODO: Need not be implemented!
 		
 	}
 
-	public Role getUserRoleById(Integer userRoleId) {
+	public UserRole getUserRoleById(Integer userRoleId) {
 		// FIXME: Should not use ID! Key is unique.
 		return null;
 	}
 
-	public List<Role> getUserRoleListByUserId(Integer userId) {
+	public List<UserRole> getUserRoleListByUserId(Integer userId) {
 		// FIXME: Should not use ID! Key is unique.
 		return null;
 	}
 
-	public void insertUserRoleLine(UserRole userRoleLine) {
+	public void insertUserRoleLine(UserRoleLine userRoleLine) {
 		// TODO: Need not be implemented!		
 	}
 
 	@Override
-	public void deleteRole(Role role) {
+	public void deleteRole(UserRole role) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Role getRoleByKey(String key) {
+	public UserRole getRoleByKey(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Role> getRoleListAll() {
+	public List<UserRole> getRoleListAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void insertRole(Role role) {
+	public void insertRole(UserRole role) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateRole(Role role) {
+	public void updateRole(UserRole role) {
 		// TODO Auto-generated method stub
 		
 	}
