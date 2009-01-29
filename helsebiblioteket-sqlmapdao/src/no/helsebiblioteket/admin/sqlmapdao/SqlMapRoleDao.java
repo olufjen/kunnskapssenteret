@@ -9,6 +9,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
 
 
@@ -23,7 +24,7 @@ public class SqlMapRoleDao extends SqlMapClientDaoSupport implements RoleDao {
 	public void deleteRole(UserRole role){
 		
 	}
-	public UserRole getRoleByKey(String key){
+	public UserRole getRoleByKey(UserRoleKey key){
 		return null;
 	}
 	public List<UserRole> getRoleListAll(){

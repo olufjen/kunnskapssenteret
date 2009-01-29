@@ -7,48 +7,20 @@ import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 
 public class SqlMapContactInformationDao extends SqlMapClientDaoSupport implements ContactInformationDao {
-	// TODO: Go through all!
 	public ContactInformation insertContactInformation(ContactInformation contactInformation){
-	
 		getSqlMapClientTemplate().insert("insertContactInformation", contactInformation);
-		return null;
+		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", contactInformation.getId());
 	}
 	public void updateContactInformation(ContactInformation contactInformation){
-
 		getSqlMapClientTemplate().update("updateContactInformation", contactInformation);
-		
 	}
 	public void deleteContactInformation(ContactInformation contactInformation){
-		
-		getSqlMapClientTemplate().delete("deleteContactInformation", contactInformation);
-
+		getSqlMapClientTemplate().delete("deleteContactInformation", contactInformation.getId());
 	}
 	public ContactInformation getContactInformationByPerson(Person person){
-		return null;
+		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationByPerson", person.getId());
 	}
 	public ContactInformation getContactInformationByOrganization(Organization organization){
-		return null;
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	public void saveContactInformation(ContactInformation changedContactInformation, ContactInformation originalContactInformation) {
-		if (changedContactInformation.getContactInformationId() == null) {
-			insertContactInformation(changedContactInformation);
-		} else {
-			updateContactInformation(changedContactInformation);
-		}
-	}
-	
-	
-	
-	
-	public ContactInformation getContactInformationById(Integer contactInformationId) {
-		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", contactInformationId);
+		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationByOrganization", organization.getId());
 	}
 }

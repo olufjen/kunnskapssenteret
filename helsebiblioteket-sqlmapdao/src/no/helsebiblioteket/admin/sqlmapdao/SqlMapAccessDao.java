@@ -1,71 +1,49 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 
 import no.helsebiblioteket.admin.dao.AccessDao;
+import no.helsebiblioteket.admin.daoobjects.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.Access;
+import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.UserRole;
 
+/**
+ * Used to insert, update, load and delete ResourceAccess
+ * objects in the database.
+ * 
+ * Should also be extended for OrganizationAccess.
+ */
 public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao {
-	/**
-	 * 
-	 */
-	public void insertAccess(ResourceAccess access){
-		// TODO: Go through all!
-		
+	public void insertResourceAccessForeignKeys(ResourceAccessForeignKeys access) {
+		getSqlMapClientTemplate().insert("insertResourceAccessForeignKeys", access);
 	}
-	public void updateAccess(ResourceAccess access){
-		
+	public void updateResourceAccessForeignKeys(ResourceAccessForeignKeys access) {
+		getSqlMapClientTemplate().update("updateResourceAccessForeignKeys", access);
 	}
-	public void deleteAccess(ResourceAccess access){
-		
-		getSqlMapClientTemplate().delete("deleteAccess", access);
-
-	}
-	public List<ResourceAccess> getAccessListByUser(User user){
-		return null;
-	}
-	public List<ResourceAccess> getAccessListByOrganization(Organization organization){
-		return null;
-	}
-	public List<ResourceAccess> getAccessListByOrganizationType(OrganizationType organizationType){
-		return null;
+	public void deleteResourceAccessForeignKeys(ResourceAccessForeignKeys access) {
+		getSqlMapClientTemplate().delete("deleteResourceAccessForeignKeys", access);
 	}
 
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	public Access getAccessById(Integer accessId) {
-		return (Access) getSqlMapClientTemplate().queryForObject("getAccessById", accessId);
+	public List<ResourceAccessForeignKeys> getAccessListByUser(User user){
+		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserId", user.getId());
 	}
-
-	public List<Access> getAccessListByOrganizationTypeId(Integer organizationTypeId) {
-		return (List<Access>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationTypeId", organizationTypeId);
+	public List<ResourceAccessForeignKeys> getAccessListByUserRole(UserRole userRole){
+		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getUserRoleId());
 	}
-
-	public List<Access> getAccessListByUserId(Integer userId) {
-		return (List<Access>) getSqlMapClientTemplate().queryForList("getAccessListByUserId", userId);
+	public List<ResourceAccessForeignKeys> getAccessListByOrganization(Organization organization){
+		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId());
 	}
-	
-	public List<Access> getAccessListByUserRoleId(Integer userRoleId) {
-		return (List<Access>) getSqlMapClientTemplate().queryForList("getAccessListByRoleId", userRoleId);
-	}
-
-
-	public List<Access> getAccessListByOrganizationId(Integer organizationId) {
-		return (List<Access>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organizationId);
+	public List<ResourceAccessForeignKeys> getAccessListByOrganizationType(OrganizationType organizationType){
+		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
 	}
 }
