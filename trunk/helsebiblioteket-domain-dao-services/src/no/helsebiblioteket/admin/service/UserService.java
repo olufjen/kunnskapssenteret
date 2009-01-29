@@ -11,6 +11,7 @@ import java.util.List;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
@@ -20,7 +21,7 @@ import no.helsebiblioteket.admin.requestresult.SingleResult;
 public interface UserService extends Serializable {
 	public ListResult<UserRole> getRoleListAll(String DUMMY);
 	public ListResult<Position> getPositionListAll(String DUMMY);
-	public SingleResult<UserRole> getRoleByKey(String key);
+	public SingleResult<UserRole> getRoleByKey(UserRoleKey key);
 
 	// TODO: Remove this and use findUsersBySearchStringRoles with empty string and list?
 	// TODO: Or use UserListItem as the result here.

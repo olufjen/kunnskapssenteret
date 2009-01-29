@@ -16,7 +16,16 @@ public class ContactInformationFactory {
 	public static ContactInformationFactory factory = new ContactInformationFactory();
 	private ContactInformationFactory(){}
 	public ContactInformation createContactInformation(){
-		return null;
-		
+		ContactInformation contactInformation = new ContactInformation();
+		contactInformation.setEmail("");
+		contactInformation.setLastChanged(new Date());
+		contactInformation.setPostalAddress("");
+		contactInformation.setPostalCode("");
+		contactInformation.setPostalLocation("");
+		contactInformation.setTelephoneNumber("");
+		return contactInformation;
+	}
+	public ContactInformation completeContactInformation(){
+		return createContactInformation();
 	}
 }

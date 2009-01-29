@@ -2,12 +2,10 @@ package no.helsebiblioteket.admin.factory;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.AccessType;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
 
@@ -18,13 +16,16 @@ public class UserFactory {
 		User user = new User();
 		user.setUsername("");
 		user.setPassword("");
-//		user.setAccessList(new ArrayList<Access>());
-		user.setRoleList(new ArrayList<UserRole>());
 		user.setLastChanged(new Date());
-//		protected Organization organization;
-//		private Person person;
-//		private Date lastChanged;
-
+		user.setRoleList(new ArrayList<UserRole>());
+		
+		user.setPerson(PersonFactory.factory.createPerson());
+		return user;
+	}
+	public User completeUser(Organization organization){
+		User user = createUser();
+		user.setOrganization(organization);
+		user.setPerson(PersonFactory.factory.completePerson(organization.getType()));
 		return user;
 	}
 }

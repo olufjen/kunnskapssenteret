@@ -18,7 +18,7 @@ public class OrganizationToXMLTranslator {
 		organization.getContactInformation();
 		organization.getContactPerson();
 		organization.getDescription();
-		organization.getOrgUnitId();
+//		organization.getOrgUnitId();
 //		organization.getIpAddressSetList();
 		organization.getLastChanged();
 //		organization.getNameList();
