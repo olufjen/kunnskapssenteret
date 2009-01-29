@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.service.UserService;
@@ -24,9 +24,9 @@ public class NewUserBean {
     public String actionNewEndUser() {
 		logger.info("method 'newEndUser' invoked");
 		User user = new User();
-		UserRole role = new UserRole();
+		Role role = new Role();
 		role.setKey(UserRoleKey.none);
-		user.setRoleList(new ArrayList<UserRole>());
+		user.setRoleList(new ArrayList<Role>());
 		user.getRoleList().add(role);
 		user.setPerson(new Person());
 		this.userBean.setUser(user);
