@@ -2,36 +2,68 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
-
-import no.helsebiblioteket.admin.ModifiedListHelper;
-import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
-import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.ContactInformation;
-import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.dao.join.OrgUnitNameJoin;
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationName;
-import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Profile;
-import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.category.LanguageCategory;
+import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 
 public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements OrganizationListDao {
-	// TODO: Go through all!
-
 	public List<OrganizationListItem> getOrganizationListPaged(int from, int max) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO: Loads all four names. What to do?
+		if(max == Integer.MAX_VALUE) max = Integer.MAX_VALUE/4;
+		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListAll", from, max*4);
+		List<OrganizationListItem> result = translateList(list);
+		return result;
 	}
-
+	private List<OrganizationListItem> translateList(List<OrgUnitNameJoin> list){
+		List<OrganizationListItem> result = new ArrayList<OrganizationListItem>();
+		if(list.size()==0){ return result; }
+		OrgUnitNameJoin join = list.get(0);
+		OrganizationListItem working = init(join);
+		insertName(join, working);
+		for (int i=1; i<list.size(); i++) {
+			join = list.get(i);
+			if(working.getId() != join.getOrgUnitId()){
+				result.add(working);
+				working = init(join);
+			}
+			insertName(join, working);
+		}
+		result.add(working);
+		return result;
+	}
+	private OrganizationListItem init(OrgUnitNameJoin join){
+		OrganizationListItem working = new OrganizationListItem();
+		working.setId(join.getOrgUnitId());
+		working.setKey(join.getOrganizationTypeKey());
+		working.setNameEnglish("");
+		working.setNameNorwegian("");
+		working.setNameShortEnglish("");
+		working.setNameShortNorwegian("");
+		return working;
+	}
+	private void insertName(OrgUnitNameJoin join, OrganizationListItem working){
+		if(join.getNameCategory()==OrganizationNameCategory.NORMAL && join.getNameLanguage()==LanguageCategory.en){
+			working.setNameEnglish(join.getOrganizationName());
+		}
+		if(join.getNameCategory()==OrganizationNameCategory.NORMAL && join.getNameLanguage()==LanguageCategory.no){
+			working.setNameNorwegian(join.getOrganizationName());
+		}
+		if(join.getNameCategory()==OrganizationNameCategory.SHORT && join.getNameLanguage()==LanguageCategory.en){
+			working.setNameShortEnglish(join.getOrganizationName());
+		}
+		if(join.getNameCategory()==OrganizationNameCategory.SHORT && join.getNameLanguage()==LanguageCategory.no){
+			working.setNameShortNorwegian(join.getOrganizationName());
+		}
+	}
 	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max) {
 		// TODO: Do this search in the database!
-		ArrayList<OrganizationListItem> allOrganizations = null;
+		// TODO: Pages will be of different sizes!
+		List<OrganizationListItem> allOrganizations = this.getOrganizationListPaged(from, max);
 		List<OrganizationListItem> someOrganizations = new ArrayList<OrganizationListItem>();
 		for (OrganizationListItem organization : allOrganizations) {
 			if(organization.getNameEnglish().toLowerCase().contains(searchString.toLowerCase())){
@@ -44,7 +76,10 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 				someOrganizations.add(organization);
 			}
 		}
-		return null;
+		return someOrganizations;
 	}
-	
+	public List<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress) {
+		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListByIpAdress", ipAddress);
+		return translateList(list);
+	}
 }

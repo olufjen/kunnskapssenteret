@@ -8,18 +8,10 @@
 	<resultMap id="getProfileResultMap" class="profile">
 		<result property="id" column="profile_id" />
 		<result property="receiveNewsletter" column="receive_newsletter" />
-		<result property="participateSurvey" column="participateSurvey" />
+		<result property="participateSurvey" column="participate_survey" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
-	<select id="getProfileById" resultMap="getProfileResultMap" parameterClass="integer">
-		select profile_id, receive_newsletter, participate_survey, last_changed
-		from tbl_profile
-		where profile_id = #profileId#;
-	</select>
-	<select id="getProfileList" resultMap="getProfileResultMap" parameterClass="integer">
-		select profile_id, receive_newsletter, participate_survey, last_changed
-		from tbl_profile;
-	</select>
+
 	<insert id="insertProfile" parameterClass="profile">
 		<selectKey resultClass="int" keyProperty="id">
 			SELECT nextval('tbl_profile_profile_id_seq') as id;
@@ -30,11 +22,18 @@
 		(#id#, #receiveNewsletter#, #participateSurvey#, now());
 	</insert>
 	<update id="updateProfile" parameterClass="profile">
-		update tbl_profile
-		set receive_newsletter = #receiveNewsletter#
-		participate_survey = #participateSurvey#
-		last_changed = now()
-		where profile_id = #id# and 
-    	last_changed = #lastChanged#;
+		update tbl_profile set
+			receive_newsletter = #receiveNewsletter#,
+			participate_survey = #participateSurvey#,
+			last_changed = now()
+		where profile_id = #id# and last_changed = #lastChanged#;
 	</update>
+	<delete id="deleteProfile" parameterClass="integer">
+  		delete from tbl_profile where profile_id = #id#;
+    </delete>
+	<select id="getProfileById" resultMap="getProfileResultMap" parameterClass="integer">
+		select profile_id, receive_newsletter, participate_survey, last_changed
+		from tbl_profile
+		where profile_id = #id#;
+	</select>
 </sqlMap>
