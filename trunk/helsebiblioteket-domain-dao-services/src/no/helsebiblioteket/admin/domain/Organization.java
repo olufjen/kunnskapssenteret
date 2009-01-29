@@ -54,10 +54,12 @@ public abstract class Organization {
 	public Integer getId() {
 		return orgUnitId;
 	}
+	public void setId(Integer id) {
+		this.orgUnitId = id;
+	}
 	public String getNameEnglish() {
 		return this.nameEnglishNormal;
 	}
-	
 	public String getNameNorwegian() {
 		return this.nameNorwegianNormal;
 	}
@@ -92,9 +94,6 @@ public abstract class Organization {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
-	}
-	public void setId(Integer id) {
-		this.orgUnitId = id;
 	}
 	public OrganizationType getType() {
 		return type;

@@ -6,8 +6,6 @@ package no.helsebiblioteket.admin.service;
  */
 
 import java.io.Serializable;
-import java.util.List;
-
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
@@ -24,14 +22,12 @@ public interface OrganizationService extends Serializable {
 	public SingleResult<OrganizationType> getOrganizationTypeByKey(OrganizationTypeKey key);
 
 	// TODO: Remove this and use findOrganizationsBySearchStringRoles with empty string?
-	// TODO: Or use OrganizationListItem as the result here.
 	public PageResult<OrganizationListItem> getOrganizationListAll(PageRequest<OrganizationListItem> request);
-	// TODO: Use OrganizationListItem as the result here.
 	public PageResult<OrganizationListItem> findOrganizationsBySearchString(String searchString, PageRequest<OrganizationListItem> request);
 
 	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem);
 
-	public ListResult<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress);
+	public ListResult<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress);
 
 	public Boolean insertOrganization(Organization organization);
 	public Boolean updateOrganization(Organization organization);

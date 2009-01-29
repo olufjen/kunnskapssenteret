@@ -16,7 +16,17 @@ public class OrganizationName implements Identifiable{
 	private OrganizationNameCategory category = null;
 	private Date lastChanged = null;
 	
+	// Foreign key
+	private Integer orgUnitId = null;
+	
+	// toString
+	public String toString() {
+		return "[" + orgUnitNameId + "] " + name + ", " + orgUnitId + ", "+ languageCode + "_" + category;
+	}
+	
 	// Helpers
+	public Integer getMyId() { return getId(); }
+	public void setMyId(Integer id) { setId(id); }
 	public boolean equals(OrganizationName orgName) {
         if (this == orgName) return true;
         if (name != null ? !name.equals(orgName.name) : orgName.name != null) return false;
@@ -24,7 +34,6 @@ public class OrganizationName implements Identifiable{
         if (category != null ? !category.equals(orgName.category) : orgName.category!= null) return false;
         return true;
     }
-	
 	public int hashCode() {
         int result;
         result = (name != null ? name.hashCode() : 0);
@@ -33,6 +42,7 @@ public class OrganizationName implements Identifiable{
         return result;
     }
 
+	// GET/SET
 	public void setId(Integer orgUnitNameId) {
 		this.orgUnitNameId = orgUnitNameId;
 	}
@@ -60,8 +70,13 @@ public class OrganizationName implements Identifiable{
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-
 	public Integer getId() {
 		return orgUnitNameId;
+	}
+	public Integer getOrgUnitId() {
+		return orgUnitId;
+	}
+	public void setOrgUnitId(Integer orgUnitId) {
+		this.orgUnitId = orgUnitId;
 	}
 }

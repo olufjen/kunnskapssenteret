@@ -17,11 +17,11 @@ public class User  {
 	private Person person;
 
 	// Values loaded with UserRoleLine
-	private List<UserRole> roleList;
+	private List<Role> roleList;
 	
 	// Helpers
-	public boolean hasRole(UserRole role){
-		for (UserRole userRole : this.roleList) {
+	public boolean hasRole(Role role){
+		for (Role userRole : this.roleList) {
 			if(userRole.getKey().equals(role.getKey())){
 				return true;
 			}
@@ -67,11 +67,11 @@ public class User  {
 		this.person = person;
 	}
 
-	public List<UserRole> getRoleList() {
+	public List<Role> getRoleList() {
 		return roleList;
 	}
 
-	public void setRoleList(List<UserRole> roleList) {
+	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
 }

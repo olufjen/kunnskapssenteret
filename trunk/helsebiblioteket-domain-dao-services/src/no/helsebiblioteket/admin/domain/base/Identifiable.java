@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.domain.base;
 
 public interface Identifiable {
-	public Integer getId();
+	public Integer getMyId();
+	public void setMyId(Integer id);
 }

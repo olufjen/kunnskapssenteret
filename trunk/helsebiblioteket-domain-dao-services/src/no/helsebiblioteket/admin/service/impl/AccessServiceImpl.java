@@ -13,7 +13,7 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.service.AccessService;
 
 @SuppressWarnings(value={"serial"})
@@ -25,7 +25,7 @@ public class AccessServiceImpl implements AccessService {
 		keys.setUserId(user.getId());
 		this.accessDao.insertResourceAccessForeignKeys(keys);
 	}
-	public void insertUserRoleAccess(UserRole userRole, Access access) {
+	public void insertUserRoleAccess(Role userRole, Access access) {
 		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
 		keys.setUserRoleId(userRole.getUserRoleId());
 		this.accessDao.insertResourceAccessForeignKeys(keys);

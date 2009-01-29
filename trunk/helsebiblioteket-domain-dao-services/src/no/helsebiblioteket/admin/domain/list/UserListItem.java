@@ -1,6 +1,6 @@
 package no.helsebiblioteket.admin.domain.list;
 
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 
 public interface UserListItem {
 
@@ -8,6 +8,6 @@ public interface UserListItem {
 
 	public String getUsername();
 
-	public boolean hasRole(UserRole role);
+	public boolean hasRole(Role role);
 
 }

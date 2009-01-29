@@ -97,16 +97,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public PageResult<OrganizationListItem> getOrganizationListAll(PageRequest<OrganizationListItem> request) {
 		// TODO: Do we need more values in OrganizationListItem?
 		// TODO: Should we use Id for request.from?
-		int from;
+		int skip;
 		if(request instanceof FirstPageRequest){
-			from = 0;
+			skip = 0;
 		} else {
-			from = ((MorePageRequest<OrganizationListItem>)request).last + 1;
+			skip = ((MorePageRequest<OrganizationListItem>)request).skip;
 		}
-		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(from, request.maxResult);
+		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(skip, request.maxResult);
 		PageResult<OrganizationListItem> result = new PageResult<OrganizationListItem>();
 		result.result = organizationList;
-		result.from = from;
+		result.skipped = skip;
 		result.total = organizationList.size();
 		return result;
 	}
@@ -125,15 +125,15 @@ public class OrganizationServiceImpl implements OrganizationService {
 		// TODO: Do we need more values in OrganizationListItem?
 		// TODO: Should we use Id for request.from?
 		// TODO: Search for the search string in all names or do this by locale?
-		int from;
+		int skip;
 		if(request instanceof FirstPageRequest){
-			from = 0;
+			skip = 0;
 		} else {
-			from = ((MorePageRequest<OrganizationListItem>)request).last + 1;
+			skip = ((MorePageRequest<OrganizationListItem>)request).skip;
 		}
-		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString, from, request.maxResult);
+		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString, skip, request.maxResult);
 		PageResult<OrganizationListItem> result = new PageResult<OrganizationListItem>();
-		result.from = from;
+		result.skipped = skip;
 		result.result = allOrganizations;
 		result.total = allOrganizations.size();
 		return result;
@@ -151,7 +151,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem) {
 		// TODO: Log when some properties are missing in an organization?
 		//       Useful to locate errors and to see if what values have been set in import, etc.
-		Organization organization = organizationDao.getOrganizationByListItem(organizationListItem);
+		// TODO: Deal with Supp/Member
+		Organization organization = organizationDao.getMemberOrganizationById(organizationListItem.getId());
 		if(organization != null){
 			populateOrganizationNames(organization);
 			// TODO: Supplier and member!
@@ -259,14 +260,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 	/**
 	 * Fetches all the organizations that have this IPAddress.
 	 */
-	public ListResult<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress) {
-		List<MemberOrganization> all = this.ipRangeDao.getOrganizationListByIpAdress(ipAddress);
-		MemberOrganization[] list = new MemberOrganization[all.size()];
+	public ListResult<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress) {
+		List<OrganizationListItem> all = this.organizationListDao.getOrganizationListByIpAdress(ipAddress);
+		OrganizationListItem[] list = new OrganizationListItem[all.size()];
 		int i=0;
-		for (MemberOrganization memberOrganization : all) {
+		for (OrganizationListItem memberOrganization : all) {
 			list[i++]=memberOrganization;
 		}
-		return new ListResult<MemberOrganization>(list);
+		return new ListResult<OrganizationListItem>(list);
 	}
 	/**
 	 * TODO: Will be removed!
@@ -457,13 +458,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 		List<OrganizationName> insertList = listHelper.getInsertList(changedOrganizationNameList, originalOrganizationNameList);
 		List<OrganizationName> updateList = listHelper.getUpdateList(changedOrganizationNameList, originalOrganizationNameList);
 		for (OrganizationName organizationName : deleteList) {
-			organizationNameDao.deleteOrganizationName(organization, organizationName);
+			organizationNameDao.deleteOrganizationName(organizationName);
 		}
 		for (OrganizationName organizationName : insertList) {
 			organizationNameDao.insertOrganizationName(organization, organizationName);
 		}
 		for (OrganizationName organizationName : updateList) {
-			organizationNameDao.updateOrganizationName(organization, organizationName);
+			organizationNameDao.updateOrganizationName(organizationName);
 		}
 	}
 	/**

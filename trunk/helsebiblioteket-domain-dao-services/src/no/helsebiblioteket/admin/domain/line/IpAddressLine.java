@@ -12,6 +12,10 @@ public class IpAddressLine {
 	private Integer orgUnitId;
 	private Date lastChanged;
 
+	// toString
+	public String toString() {
+		return "[" + ipAddressId + "] " + ipAddressFrom + "->" + ipAddressTo;
+	}
 	// GET/SET
 	public Integer getIpAddressId() {
 		return ipAddressId;

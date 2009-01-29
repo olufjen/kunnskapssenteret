@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.service.impl;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetailsService;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -49,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private GrantedAuthority[] makeGrantedAuthorities(User user) {
 		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().size()];
 		int i = 0;
-		for (UserRole role : user.getRoleList()) {
+		for (Role role : user.getRoleList()) {
 			result[i++] = new GrantedAuthorityImpl(role.getName());
 		}
 		return result;

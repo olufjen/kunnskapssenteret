@@ -9,4 +9,5 @@ public interface ProfileDao {
 	public void deleteProfile(Profile profile);
 
 	// Fetch
+	public Profile getProfileById(Integer profileId);
 }
