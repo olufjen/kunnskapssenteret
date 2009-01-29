@@ -75,7 +75,7 @@ public class UserBean {
 	private UIData usersTable;
     protected final Log logger = LogFactory.getLog(getClass());
 
-    private boolean isNew(){ return this.user.getUserId() == null; }
+    private boolean isNew(){ return this.user.getId() == null; }
 	// TODO: Now fetching main role with: user.roleList[0].name
     // TODO: Place in User class?
     private UserRole mainRole(){ return this.user.getRoleList().get(0); }
@@ -284,7 +284,7 @@ public class UserBean {
 		if(this.availableEmployers == null) {
 			this.availableEmployers = new ArrayList<SelectItem>();
 			MemberOrganization dummy = new MemberOrganization();
-			dummy.setOrgUnitId(-999);
+			dummy.setId(-999);
 			String name = ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
 					"user_details_no_employer");
@@ -293,7 +293,7 @@ public class UserBean {
 			dummy.setNameShortEnglish(name);
 			dummy.setNameNorwegian(name);
 			dummy.setNameShortNorwegian(name);
-			SelectItem dummyOption = new SelectItem(""+dummy.getOrgUnitId(), dummy.getNameEnglish(), "", false);
+			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getNameEnglish(), "", false);
 			this.availableEmployers.add(dummyOption);
 			PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
 			PageResult<OrganizationListItem> orgs = this.organizationService.getOrganizationListAll(request);
