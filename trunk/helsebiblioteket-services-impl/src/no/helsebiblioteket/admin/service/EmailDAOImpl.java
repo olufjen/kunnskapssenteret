@@ -13,10 +13,9 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.dao.EmailDAO;
 import no.helsebiblioteket.admin.domain.Email;
 
-public class EmailDAOImpl implements EmailDAO {
+public class EmailDAOImpl implements EmailService {
 	private Log logger = LogFactory.getLog(getClass());
 	private String host;
 	public void sendEmail(Email email) {

@@ -25,15 +25,25 @@
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	 	<property name="locations">
 	 		<list>
-	 			<value>/jdbc.properties</value>
+	 			<value>./jdbc.properties</value>
 	 		</list>
 		</property>
 	</bean>
   	<bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
+
+  	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
+  		<property name="accessDao" ref="accessDao"></property>
+  		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userDao" ref="userDao"></property>
   		<property name="emailDao" ref="emailDao"></property>
   		<property name="ipRangeDao" ref="ipRangeDao"></property>
+    	<!-- TODO: Set these values! -->
+    	<property name="emailFromName" value=""></property>
+    	<property name="emailFromEmail" value=""></property>
+    	<property name="emailSubject" value=""></property>
+    	<property name="emailMessage" value=""></property>
   	</bean>
   	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
     	<property name="organizationDao" ref="organizationDao"></property>
@@ -48,8 +58,7 @@
     	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
   	</bean>
   	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
-    	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
-    	<property name="accessDao" ref="accessDao"></property>
+    	<property name="accessService" ref="accessService"></property>
     	<!-- TODO: Set this value! -->
     	<property name="proxyPrefix" value=""></property>
   	</bean>
@@ -106,12 +115,18 @@
 	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	<bean id="userListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	
 	
 	
 	
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-    	<property name="configLocation" value="file:C:\Data\Eclipse-Workspaces\Diverse-prosjekter-SWAT\helsebiblioteket-services-impl\desc\sqlmap-config.xml"/>
+    	<property name="configLocation" value="/sqlmap-config.xml"/>
     	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
    	</bean>
 	
@@ -119,9 +134,9 @@
 		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
 	</bean>
 	<bean id="dataSourceHelsebiblioteket" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="org.postgresql.Driver"></property>
-		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin_dump"></property>
-		<property name="username" value="helsebiblioteket"></property>
-		<property name="password" value="helsebiblioteket"></property>
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
 	</bean>
 </beans>

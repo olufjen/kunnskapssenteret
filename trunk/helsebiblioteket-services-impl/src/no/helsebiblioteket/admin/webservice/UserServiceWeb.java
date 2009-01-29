@@ -18,6 +18,7 @@ import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 @SuppressWarnings("serial")
 
@@ -50,7 +51,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Class[] returnTypes = new Class[] { ListResult.class };
 		return (ListResult<Position>)invoke(this.positionListAllName, args, returnTypes);
 	}
-	public SingleResult<UserRole> getRoleByKey(String key){
+	public SingleResult<UserRole> getRoleByKey(UserRoleKey key){
 		Object[] args = new Object[] { key };
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<UserRole>)invoke(this.roleByKeyName, args, returnTypes);
