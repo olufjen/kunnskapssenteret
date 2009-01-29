@@ -17,10 +17,10 @@ public class Profile {
 	public Boolean getParticipateSurvey() { return participateSurvey; }
 	public void setParticipateSurvey(Boolean participateSurvey) { this.participateSurvey = participateSurvey; }
 	
-	public void setProfileId(Integer id) {
+	public void setId(Integer id) {
 		this.profileId = id;
 	}
-	public Integer getProfileId() {
+	public Integer getId() {
 		return this.profileId;
 	}
 	public Date getLastChanged() {

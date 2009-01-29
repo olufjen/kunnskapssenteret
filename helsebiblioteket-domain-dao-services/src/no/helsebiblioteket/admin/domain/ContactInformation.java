@@ -14,10 +14,10 @@ public class ContactInformation {
 	private String email;
 	private Date lastChanged;
 	
-	public Integer getContactInformationId() {
+	public Integer getId() {
 		return contactInformationId;
 	}
-	public void setContactInformationId(Integer contactInformationId) {
+	public void setId(Integer contactInformationId) {
 		this.contactInformationId = contactInformationId;
 	}
 	public String getPostalAddress() {

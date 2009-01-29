@@ -6,6 +6,9 @@ public class IpAddress {
 	public IpAddress(){ }
 	public IpAddress(String address){ this.address = address; }
 
+	// TODO: Create normalized string here: 192.001.101.002
+	//       with all number of size 3! Used for alphabetic
+	//       search!
 	public String getAddress() {
 		return address;
 	}

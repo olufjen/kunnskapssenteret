@@ -21,14 +21,14 @@ public class SupplierSource implements Identifiable{
 		this.url = url;
 	}
 	public SupplierSource(Integer id, String name, Url url) {
-		setSupplierSourceId(id);
+		setId(id);
 		this.supplierSourceName = name;
 		this.url = url;
 	}
 
 	// Helpers
-	public Integer getId(){ return getSupplierSourceId(); }
-	public void setId(Integer id){ this.setSupplierSourceId(id); }
+	public Integer getId(){ return supplierSourceId; }
+	public void setId(Integer id){ this.supplierSourceId = id; }
 	
 	public Url getUrl() {
 		return this.url;
@@ -41,13 +41,6 @@ public class SupplierSource implements Identifiable{
 	}
 	public void setSupplierSourceName(String supplierSourceName) {
 		this.supplierSourceName = supplierSourceName;
-	}
-	public Integer getSupplierSourceId() {
-		return supplierSourceId;
-	}
-
-	public void setSupplierSourceId(Integer supplierSourceId) {
-		this.supplierSourceId = supplierSourceId;
 	}
 	public Date getLastChanged() {
 		return lastChanged;

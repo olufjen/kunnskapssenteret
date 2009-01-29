@@ -6,14 +6,15 @@ import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.line.IpAddressLine;
 
 public interface IpRangeDao {
 	// Edit
-	public void insertIpRange(IpAddressSet ipRange);
-	public void updateIpRange(IpAddressSet ipRange);
-	public void deleteIpRange(IpAddressSet ipRange);
+	public void insertIpRange(IpAddressLine ipRange);
+	public void updateIpRange(IpAddressLine ipRange);
+	public void deleteIpRange(IpAddressLine ipRange);
 	
 	// Fetch
-	public List<IpAddressSet> getIpRangeListByOrganization(MemberOrganization organization);
+	public List<IpAddressLine> getIpRangeListByOrganization(MemberOrganization organization);
 	public List<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress);
 }

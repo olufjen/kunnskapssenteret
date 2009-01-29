@@ -26,10 +26,10 @@ public class Person {
 	}
 	
 	// GET/SET
-	public Integer getPersonId() {
+	public Integer getId() {
 		return personId;
 	}
-	public void setPersonId(Integer id) {
+	public void setId(Integer id) {
 		this.personId = id;
 	}
 	public String getFirstName() {

@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.dao;
 
 import java.util.List;
 import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
 public interface RoleDao {
 	// Edit
@@ -10,6 +11,6 @@ public interface RoleDao {
 	public void deleteRole(UserRole role);
 
 	// Fetch
-	public UserRole getRoleByKey(String key);
+	public UserRole getRoleByKey(UserRoleKey key);
 	public List<UserRole> getRoleListAll();
 }

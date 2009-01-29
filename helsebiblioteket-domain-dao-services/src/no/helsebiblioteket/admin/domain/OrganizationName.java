@@ -33,8 +33,7 @@ public class OrganizationName implements Identifiable{
         return result;
     }
 
-	public Integer getId() { return getOrgUnitNameId(); }
-	public void setOrgUnitNameId(Integer orgUnitNameId) {
+	public void setId(Integer orgUnitNameId) {
 		this.orgUnitNameId = orgUnitNameId;
 	}
 	public String getName() {
@@ -62,7 +61,7 @@ public class OrganizationName implements Identifiable{
 		this.lastChanged = lastChanged;
 	}
 
-	public Integer getOrgUnitNameId() {
+	public Integer getId() {
 		return orgUnitNameId;
 	}
 }

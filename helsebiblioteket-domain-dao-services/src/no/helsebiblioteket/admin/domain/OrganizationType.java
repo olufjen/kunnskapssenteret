@@ -32,10 +32,10 @@ public class OrganizationType {
 		this.orgTypeId = id;
 	}
 	
-	public Integer getOrgTypeId() {
+	public Integer getId() {
 		return orgTypeId;
 	}
-	public void setOrgTypeId(Integer id) {
+	public void setId(Integer id) {
 		this.orgTypeId = id;
 	}
 	public String getName() {

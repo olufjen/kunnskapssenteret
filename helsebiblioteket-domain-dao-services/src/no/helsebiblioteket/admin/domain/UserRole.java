@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
+// TODO: Rename to Role
 public class UserRole {
 	// Primary key
 	private Integer userRoleId;

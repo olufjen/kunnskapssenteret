@@ -12,7 +12,7 @@ import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.base.Identifiable;
 
-public class Access implements Identifiable{
+public abstract class Access implements Identifiable{
 	// Primary key
 	private Integer accessId;
 	

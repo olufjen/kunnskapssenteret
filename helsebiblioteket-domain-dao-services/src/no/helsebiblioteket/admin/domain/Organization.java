@@ -51,7 +51,7 @@ public abstract class Organization {
 //	}
 
 	// GET/SET
-	public Integer getOrgUnitId() {
+	public Integer getId() {
 		return orgUnitId;
 	}
 	public String getNameEnglish() {
@@ -93,7 +93,7 @@ public abstract class Organization {
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-	public void setOrgUnitId(Integer id) {
+	public void setId(Integer id) {
 		this.orgUnitId = id;
 	}
 	public OrganizationType getType() {

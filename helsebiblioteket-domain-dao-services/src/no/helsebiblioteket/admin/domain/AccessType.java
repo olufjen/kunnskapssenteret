@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.domain;
 
+import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 
 public class AccessType {
@@ -12,7 +13,7 @@ public class AccessType {
 	// Local values
 	private String description;
 	private String name;
-	private String category;
+	private AccessTypeCategory category;
 	
 	public Integer getAccessTypeId() {
 		return accessTypeid;
@@ -38,10 +39,10 @@ public class AccessType {
 	public void setKey(AccessTypeKey key) {
 		this.key = key;
 	}
-	public String getCategory() {
+	public AccessTypeCategory getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(AccessTypeCategory category) {
 		this.category = category;
 	}
 }
