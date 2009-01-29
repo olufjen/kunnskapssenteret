@@ -20,9 +20,10 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
@@ -47,8 +48,8 @@ public class UserBean {
 	private UserRoleKey selectedUserRole;
 	private String selectedIsStudent;
 
-	private List<UserRole> allRoles;
-	private Map<UserRoleKey, UserRole> allRolesMap;
+	private List<Role> allRoles;
+	private Map<UserRoleKey, Role> allRolesMap;
 	private List<Position> allPositions;
 	private Map<PositionTypeKey, Position> allPositionsMap;
 	// FIXME: Use caching?
@@ -78,8 +79,8 @@ public class UserBean {
     private boolean isNew(){ return this.user.getId() == null; }
 	// TODO: Now fetching main role with: user.roleList[0].name
     // TODO: Place in User class?
-    private UserRole mainRole(){ return this.user.getRoleList().get(0); }
-    private void mainRole(UserRole role){ this.user.setRoleList(new ArrayList<UserRole>()); this.user.getRoleList().add(role); }
+    private Role mainRole(){ return this.user.getRoleList().get(0); }
+    private void mainRole(Role role){ this.user.setRoleList(new ArrayList<Role>()); this.user.getRoleList().add(role); }
     
     public void initSelectedIsStudent(){
 //		if(this.availableIsStudent == null){
@@ -232,8 +233,8 @@ public class UserBean {
 		this.user.getPerson().setIsStudent(true);
 		return details();
 	}
-	public List<UserRole> getSelectedRolesRoleList(){
-		List<UserRole> selectedRoles = new ArrayList<UserRole>();
+	public List<Role> getSelectedRolesRoleList(){
+		List<Role> selectedRoles = new ArrayList<Role>();
 		if(this.allRolesMap == null) {getAllRoles();}
 		for (UserRoleKey string : this.getSelectedRoles()) {
 			selectedRoles.add(this.allRolesMap.get(string));
@@ -260,7 +261,7 @@ public class UserBean {
 			this.availableRoles = new ArrayList<SelectItem>();
 			logger.info("STARTROLES");
 			this.logger.info("this.userService=" + this.userService);
-			for (UserRole role : this.getAllRoles()) {
+			for (Role role : this.getAllRoles()) {
 				logger.info("role: " + role.getKey());
 				SelectItem option = new SelectItem(role.getKey(), role.getName(), "", false);
 				this.availableRoles.add(option);
@@ -309,7 +310,7 @@ public class UserBean {
 		// FIXME: All must be selected!
 		if(this.selectedRoles == null){
 			this.selectedRoles = new ArrayList<UserRoleKey>();
-			for (UserRole role : this.getAllRoles()) {
+			for (Role role : this.getAllRoles()) {
 				this.selectedRoles.add(role.getKey());
 			}
 		}
@@ -326,12 +327,13 @@ public class UserBean {
 		}
 		return this.selectedUserRole;
 	}
-	public List<UserRole> getAllRoles() {
+	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
-			UserRole[] roles = this.userService.getRoleListAll("").getList();
-			this.allRoles = new ArrayList<UserRole>();
-			this.allRolesMap = new HashMap<UserRoleKey, UserRole>();
-			for (UserRole role : roles) {
+			Role[] roles = this.userService.getRoleListBySystem(
+					this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getList();
+			this.allRoles = new ArrayList<Role>();
+			this.allRolesMap = new HashMap<UserRoleKey, Role>();
+			for (Role role : roles) {
 				this.allRoles.add(role);
 				this.allRolesMap.put(role.getKey(), role);
 			}
