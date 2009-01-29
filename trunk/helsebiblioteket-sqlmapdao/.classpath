@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-domain-dao-services"/>
 	<classpathentry kind="lib" path="lib/spring.jar"/>
+	<classpathentry kind="lib" path="lib/ibatis-2.3.4.726.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
