@@ -128,7 +128,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         OrganizationType orgTypeStud = (orgTypeStudRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeStudRes).getValue() :
         			null;
-        SingleResult<OrganizationType> orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.others);
+        SingleResult<OrganizationType> orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.other);
         OrganizationType orgTypeEmp = (orgTypeEmpRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeEmpRes).getValue() :
         			null;
