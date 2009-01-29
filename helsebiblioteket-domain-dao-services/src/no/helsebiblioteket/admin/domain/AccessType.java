@@ -7,13 +7,13 @@ public class AccessType {
 	// Primary key
 	private Integer accessTypeid;
 
-	// Unique key
+	// Unique key is key & category in combination
 	private AccessTypeKey key;
+	private AccessTypeCategory category;
 	
 	// Local values
 	private String description;
 	private String name;
-	private AccessTypeCategory category;
 	
 	public Integer getAccessTypeId() {
 		return accessTypeid;

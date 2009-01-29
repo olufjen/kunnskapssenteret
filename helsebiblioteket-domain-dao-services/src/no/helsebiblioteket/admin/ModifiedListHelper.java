@@ -30,7 +30,7 @@ public class ModifiedListHelper<T extends Identifiable> {
 	public List<T> removeAll(List<T> from, List<T> remove) {
 		// TODO: This must be rewritten to use Id.
 		HashSet<Integer> ids = new HashSet<Integer>();
-		for (T unique : remove) { ids.add(unique.getId()); }
+		for (T unique : remove) { ids.add(unique.getMyId()); }
 		List<T> result = new ArrayList<T>();
 		for (T unique : from) {
 			if( ! ids.contains(unique)){

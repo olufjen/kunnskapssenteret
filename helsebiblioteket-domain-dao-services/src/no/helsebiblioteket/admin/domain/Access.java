@@ -23,12 +23,11 @@ public abstract class Access implements Identifiable{
 
 	// References
 	private AccessType accessType;
-	private Organization providedBy;
+	private SupplierOrganization providedBy;
 
 	// Helpers
-	public Integer getId() {
-		return getAccessId();
-	}
+	public Integer getMyId() { return getAccessId(); }
+	public void setMyId(Integer id) { setAccessId(id); }
 
 	// GET/SET
 	public Integer getAccessId() {
@@ -61,10 +60,10 @@ public abstract class Access implements Identifiable{
 	public void setAccessType(AccessType accessType) {
 		this.accessType = accessType;
 	}
-	public Organization getProvidedBy() {
+	public SupplierOrganization getProvidedBy() {
 		return providedBy;
 	}
-	public void setProvidedBy(Organization providedBy) {
+	public void setProvidedBy(SupplierOrganization providedBy) {
 		this.providedBy = providedBy;
 	}
 }

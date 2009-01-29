@@ -16,8 +16,10 @@ import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
@@ -45,12 +47,6 @@ public class UserServiceImpl2 implements UserService {
 	}
 
 	@Override
-	public ListResult<UserRole> getRoleListAll(String DUMMY) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Boolean insertUser(User user) {
 		// TODO Auto-generated method stub
 		return null;
@@ -65,7 +61,7 @@ public class UserServiceImpl2 implements UserService {
 
 	@Override
 	public PageResult<UserListItem> findUsersBySearchStringRoles(
-			String searchString, List<UserRole> roles,
+			String searchString, List<Role> roles,
 			PageRequest<UserListItem> request) {
 		// TODO Auto-generated method stub
 		return null;
@@ -82,8 +78,24 @@ public class UserServiceImpl2 implements UserService {
 	}
 
 
+
 	@Override
-	public SingleResult<UserRole> getRoleByKey(UserRoleKey key) {
+	public ListResult<Role> getRoleListBySystem(System system) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public System getSystemByKey(SystemKey key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system) {
 		// TODO Auto-generated method stub
 		return null;
 	}

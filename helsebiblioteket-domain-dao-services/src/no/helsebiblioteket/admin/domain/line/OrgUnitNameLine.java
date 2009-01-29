@@ -4,32 +4,12 @@ import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 
 public class OrgUnitNameLine {
-	// Primary key
 	private Integer orgUnitNameid;
-
-	// Table values
 	private Integer orgUnitId;
 	private LanguageCategory languageCode;
 	private String name;
 	private OrganizationNameCategory orgUnitNameCategory;
-	
-	// Helpers
-	// TODO: Remove?
-	public boolean equals(OrgUnitNameLine orgName) {
-        if (this == orgName) return true;
-        if (name != null ? !name.equals(orgName.name) : orgName.name != null) return false;
-        if (languageCode != null ? !languageCode.equals(orgName.languageCode) : orgName.languageCode != null) return false;
-        if (orgUnitNameCategory != null ? !orgUnitNameCategory.equals(orgName.orgUnitNameCategory) : orgName.orgUnitNameCategory!= null) return false;
-        return true;
-    }
-	public int hashCode() {
-        int result;
-        result = (name != null ? name.hashCode() : 0);
-        result = 31 * result + (languageCode != null ? languageCode.hashCode() : 0);
-        result = 31 * result + (orgUnitNameCategory != null ? orgUnitNameCategory.hashCode() : 0);
-        return result;
-    }
-	
+
 	// GET/SET
 	public Integer getOrgUnitNameid() {
 		return orgUnitNameid;

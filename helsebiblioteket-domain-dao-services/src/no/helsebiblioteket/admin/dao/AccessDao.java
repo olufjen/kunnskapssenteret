@@ -7,7 +7,7 @@ import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 
 public interface AccessDao {
 	// Edit
@@ -17,7 +17,7 @@ public interface AccessDao {
 
 	// Fetch
 	public List<ResourceAccessForeignKeys> getAccessListByUser(User user);
-	public List<ResourceAccessForeignKeys> getAccessListByUserRole(UserRole userRole);
+	public List<ResourceAccessForeignKeys> getAccessListByUserRole(Role userRole);
 	public List<ResourceAccessForeignKeys> getAccessListByOrganization(Organization organization);
 	public List<ResourceAccessForeignKeys> getAccessListByOrganizationType(OrganizationType organizationType);
 }

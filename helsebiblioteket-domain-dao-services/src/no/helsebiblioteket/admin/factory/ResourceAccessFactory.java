@@ -7,6 +7,7 @@ import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 
 public class ResourceAccessFactory {
@@ -19,7 +20,7 @@ public class ResourceAccessFactory {
 		access.setValidTo(new Date());
 		return access;
 	}
-	public ResourceAccess completeResourceAccess(Resource resource, AccessType accessType, Organization providedBy){
+	public ResourceAccess completeResourceAccess(Resource resource, AccessType accessType, SupplierOrganization providedBy){
 		ResourceAccess access = createResourceAccess();
 		access.setAccessType(accessType);
 		access.setProvidedBy(providedBy);

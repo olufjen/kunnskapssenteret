@@ -12,7 +12,9 @@ public abstract class IpAddressSet implements Identifiable{
 	private Date lastChanged;
 	
 	// Helpers
-	public Integer getId() { return getIpAddressId(); }
+	public Integer getMyId() { return getIpAddressId(); }
+	public void setMyId(Integer id) { setIpAddressId(id); }
+	
 
 	// GET/SET
 	public Integer getIpAddressId() {

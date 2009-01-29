@@ -15,12 +15,12 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 
 public interface AccessService extends Serializable {
 	// TODO: Not in use yet. Define methods as needed by clients.
 	public void insertUserAccess(User user, Access access);
-	public void insertUserRoleAccess(UserRole userRole, Access access);
+	public void insertUserRoleAccess(Role userRole, Access access);
 	public void insertOrganizationAccess(Organization organization, Access access);
 	public void insertOrganizationTypeAccess(OrganizationType organizationType, Access access);
 

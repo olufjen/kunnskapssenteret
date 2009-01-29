@@ -13,10 +13,10 @@ public abstract class Resource {
 	private ResourceType resourceType;
 
 	// GET/SET
-	public Integer getId() {
+	public Integer getResourceId() {
 		return resourceId;
 	}
-	public void setId(Integer id) {
+	public void setResourceId(Integer id) {
 		this.resourceId = id;
 	}
 	public ResourceType getResourceType() {

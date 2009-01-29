@@ -13,6 +13,11 @@ public class OrganizationType {
 	// References
 	private OrganizationTypeKey key;
 
+	// toString
+	public String toString() {
+		return "[" + orgTypeId + "], " + key + ", " + name;
+	}
+	
 	// Helpers
 	public boolean equals(OrganizationType orgType) {
         if (this == orgType) return true;

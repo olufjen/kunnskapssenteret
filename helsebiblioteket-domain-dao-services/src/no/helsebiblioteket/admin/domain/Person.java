@@ -9,7 +9,9 @@ public class Person {
 	// Local values
 	private String firstName;
 	private String lastName;
+	// TODO: Does not exist in the database
 	private String employer;
+	// TODO: Does not exist in the database
 	private boolean isStudent;
 	private String studentNumber;
 	private String hprNumber;

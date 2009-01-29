@@ -20,6 +20,7 @@ import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 
 public class LoginServiceImpl implements LoginService {
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -54,14 +55,17 @@ public class LoginServiceImpl implements LoginService {
 	 * Returns the first found if there are more than one macth.
 	 */
 	public SingleResult<MemberOrganization> loginOrganizationByIpAddress(IpAddress ipAddress) {
-		ListResult<MemberOrganization> result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
-		MemberOrganization[] list = result.getList();
-		if(list.length == 0){
-			return new EmptyResult<MemberOrganization>();
-		} else {
+		ListResult<OrganizationListItem> result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
+		OrganizationListItem[] list = result.getList();
+		if(list.length >= 1){
 			// TODO: Log incidents of more than one organization per IP Address?
-			return new ValueResult<MemberOrganization>(list[0]);
+			SingleResult<Organization> memberResult = this.organizationService.getOrganizationByListItem(list[0]);
+			if(memberResult instanceof ValueResult){
+				MemberOrganization memberOrganization = (MemberOrganization) ((ValueResult<Organization>)memberResult).getValue();
+				return new ValueResult<MemberOrganization>(memberOrganization);
+			}
 		}
+		return new EmptyResult<MemberOrganization>();
 	}
 	/**
 	 * Sends an email to the user. This is delegated to EmailDAO.

@@ -27,9 +27,13 @@ public class SupplierSource implements Identifiable{
 	}
 
 	// Helpers
+	// Helpers
+	public Integer getMyId() { return getId(); }
+	public void setMyId(Integer id) { setId(id); }
+
+	// GET/SET
 	public Integer getId(){ return supplierSourceId; }
 	public void setId(Integer id){ this.supplierSourceId = id; }
-	
 	public Url getUrl() {
 		return this.url;
 	}
