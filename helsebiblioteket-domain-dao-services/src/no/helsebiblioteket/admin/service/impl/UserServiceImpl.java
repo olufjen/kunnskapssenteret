@@ -24,6 +24,7 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.UserRole;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
 	 * EmptyResult is returned. Delegates the task to RoleDao.
 	 * RoleDao.getRoleByKey(..) returns null if no Role is found.
 	 */
-	public SingleResult<UserRole> getRoleByKey(String key) {
+	public SingleResult<UserRole> getRoleByKey(UserRoleKey key) {
 		UserRole role = this.roleDao.getRoleByKey(key);
 		if(role==null){
 			return new EmptyResult<UserRole>();
@@ -155,7 +156,7 @@ public class UserServiceImpl implements UserService {
 		if(user == null){
 			return new EmptyResult<User>();
 		} else {
-			Organization organization = this.organizationDao.getOrganizationById(user.getOrganization().getOrgUnitId());
+			Organization organization = this.organizationDao.getOrganizationById(user.getOrganization().getId());
 			// TODO: Really?
 			if(organization == null){ throw new NullPointerException("No organization for user"); }
 			user.setOrganization(organization);
@@ -185,7 +186,7 @@ public class UserServiceImpl implements UserService {
      */
 	public Boolean insertUser(User user) {
 		this.personDao.insertPerson(user.getPerson());
-		List<UserRoleLine> userRoleList = translateRoles(user.getUserId(), user.getRoleList());
+		List<UserRoleLine> userRoleList = translateRoles(user.getId(), user.getRoleList());
 		for (UserRoleLine userRole : userRoleList) {
 			this.userRoleDao.insertUserRole(userRole);
 		}
@@ -208,8 +209,8 @@ public class UserServiceImpl implements UserService {
 
 		this.personDao.updatePerson(user.getPerson());
 
-		List<UserRoleLine> newUserRoleList = translateRoles(user.getUserId(), user.getRoleList());
-		List<UserRoleLine> oldUserRoleList = translateRoles(old.getUserId(), old.getRoleList());
+		List<UserRoleLine> newUserRoleList = translateRoles(user.getId(), user.getRoleList());
+		List<UserRoleLine> oldUserRoleList = translateRoles(old.getId(), old.getRoleList());
 		// TODO: Do this a little smarter without deleting all.
 		//       Improve ModifiedListHelper.
 		for (UserRoleLine userRole : oldUserRoleList) {

@@ -27,7 +27,7 @@ public class PersonToXMLTranslator {
 		
 		
 		// TODO: Complete this!
-		person.getPersonId();
+		person.getId();
 		person.getIsStudent();
 		person.getLastChanged();
 		

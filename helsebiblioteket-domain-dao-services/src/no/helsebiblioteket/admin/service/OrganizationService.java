@@ -6,6 +6,10 @@ package no.helsebiblioteket.admin.service;
  */
 
 import java.io.Serializable;
+import java.util.List;
+
+import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
@@ -26,7 +30,9 @@ public interface OrganizationService extends Serializable {
 	public PageResult<OrganizationListItem> findOrganizationsBySearchString(String searchString, PageRequest<OrganizationListItem> request);
 
 	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem);
-	
+
+	public ListResult<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress);
+
 	public Boolean insertOrganization(Organization organization);
 	public Boolean updateOrganization(Organization organization);
 }
