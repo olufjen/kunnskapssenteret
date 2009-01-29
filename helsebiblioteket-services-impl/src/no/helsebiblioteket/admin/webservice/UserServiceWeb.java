@@ -16,8 +16,10 @@ import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 @SuppressWarnings("serial")
@@ -27,7 +29,8 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private RPCServiceClient serviceClient;
 	private EndpointReference targetEPR;
 	private Options options;
-	private QName roleListAllName;
+	private QName systemByKey;
+	private QName roleListBySystem;
 	private QName positionListAllName;
 	private QName roleByKeyName;
 	private QName userListAllName;
@@ -40,28 +43,32 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		options = serviceClient.getOptions();
 	    options.setTo(targetEPR);
 	}
-
-	public ListResult<UserRole> getRoleListAll(String DUMMY){
-		Object[] args = new Object[] { DUMMY };
+	public System getSystemByKey(SystemKey key) {
+		Object[] args = new Object[] { key };
+		Class[] returnTypes = new Class[] { System.class };
+		return (System)invoke(this.systemByKey, args, returnTypes);
+	}
+	public ListResult<Role> getRoleListBySystem(System system) {
+		Object[] args = new Object[] { system };
 		Class[] returnTypes = new Class[] { ListResult.class };
-		return (ListResult<UserRole>)invoke(this.roleListAllName, args, returnTypes);
+		return (ListResult<Role>)invoke(this.roleListBySystem, args, returnTypes);
 	}
 	public ListResult<Position> getPositionListAll(String DUMMY){
 		Object[] args = new Object[] { DUMMY };
 		Class[] returnTypes = new Class[] { ListResult.class };
 		return (ListResult<Position>)invoke(this.positionListAllName, args, returnTypes);
 	}
-	public SingleResult<UserRole> getRoleByKey(UserRoleKey key){
-		Object[] args = new Object[] { key };
+	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system) {
+		Object[] args = new Object[] { key, system };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResult<UserRole>)invoke(this.roleByKeyName, args, returnTypes);
+		return (SingleResult<Role>)invoke(this.roleByKeyName, args, returnTypes);
 	}
 	public PageResult<UserListItem> getUserListAll(PageRequest<UserListItem> request){
 		Object[] args = new Object[] { request };
 		Class[] returnTypes = new Class[] { PageResult.class };
 		return (PageResult<UserListItem>)invoke(this.userListAllName, args, returnTypes);
 	}
-	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<UserRole> roles, PageRequest<UserListItem> request){
+	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<UserListItem> request){
 		Object[] args = new Object[] { searchString, roles, request};
 		Class[] returnTypes = new Class[] { PageResult.class };
 		return (PageResult<UserListItem>)invoke(this.findUsersBySearchStringRolesName, args, returnTypes);
@@ -96,10 +103,6 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setTargetEPR(EndpointReference targetEPR) {
 		this.targetEPR = targetEPR;
-	}
-
-	public void setRoleListAllName(QName roleListAllName) {
-		this.roleListAllName = roleListAllName;
 	}
 
 	public void setPositionListAllName(QName positionListAllName) {
