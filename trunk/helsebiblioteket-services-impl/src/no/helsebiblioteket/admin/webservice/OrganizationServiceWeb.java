@@ -76,10 +76,10 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.updateOrganizationName, args, returnTypes);
 	}
-	public ListResult<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress) {
+	public ListResult<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress  };
 		Class[] returnTypes = new Class[] { ListResult.class };
-		return (ListResult<MemberOrganization>) invoke(this.updateOrganizationName, args, returnTypes);
+		return (ListResult<OrganizationListItem>) invoke(this.updateOrganizationName, args, returnTypes);
 	}
 
 	
