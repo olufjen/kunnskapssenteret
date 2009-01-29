@@ -60,19 +60,21 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
         Map<String, User> userMap = new HashMap<String, User>();
         List<User> uniqueUsers = new ArrayList<User>();
         for (User user : users) {
-        	if(userMap.containsKey(""+user.getUserId())) {
+//        	if(userMap.containsKey(""+user.getUserId())) {
         		ArrayList<UserRole> list = new ArrayList<UserRole>();
         		list.add(user.getRoleList().get(0));
-        		userMap.get(""+user.getUserId()).setRoleList(list);
-        	}
-        	else { userMap.put(""+user.getUserId(), user); uniqueUsers.add(user); }
+//        		userMap.get(""+user.getUserId()).setRoleList(list);
+//        	}
+//        	else { 
+////        		userMap.put(""+user.getUserId(), user); uniqueUsers.add(user); 
+//        		}
 		}
         return uniqueUsers;
     }
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setUserId(rs.getInt("user_id"));
+//            user.setUserId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
 //            Organization organization = new Organization();
@@ -88,13 +90,13 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
             Person person = new Person();
             person.setFirstName(rs.getString("first_name"));
             person.setLastName(rs.getString("last_name"));
-            person.setPersonId(rs.getInt("person_id"));
+//            person.setPersonId(rs.getInt("person_id"));
             user.setPerson(person);
             
             int profileId = rs.getInt("profile_id");
             if(profileId != 0){
             	Profile profile = new Profile();
-            	profile.setProfileId(profileId);
+//            	profile.setProfileId(profileId);
             	profile.setReceiveNewsletter(rs.getBoolean("receive_newsletter"));
             	profile.setParticipateSurvey(rs.getBoolean("participate_survey"));
             }

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
 
 import org.apache.commons.logging.Log;
@@ -62,7 +63,7 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
 	}
 
 	@Override
-	public UserRole getRoleByKey(String key) {
+	public UserRole getRoleByKey(UserRoleKey key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
