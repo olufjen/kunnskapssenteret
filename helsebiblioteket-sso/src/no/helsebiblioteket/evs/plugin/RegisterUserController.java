@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -36,7 +36,7 @@ public final class RegisterUserController extends ProfileController {
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = new User();
 		// TODO: Should not need to init here!
-		user.setRoleList(new ArrayList<UserRole>());
+		user.setRoleList(new ArrayList<Role>());
 //		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
 		
@@ -70,7 +70,7 @@ public final class RegisterUserController extends ProfileController {
 		// TODO: How to initialize person?
 		User user = new User();
 		user.setPerson(new Person());
-		user.setRoleList(new ArrayList<UserRole>());
+		user.setRoleList(new ArrayList<Role>());
 //		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		
 		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
