@@ -11,7 +11,7 @@ import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 
@@ -61,7 +61,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
         List<User> uniqueUsers = new ArrayList<User>();
         for (User user : users) {
 //        	if(userMap.containsKey(""+user.getUserId())) {
-        		ArrayList<UserRole> list = new ArrayList<UserRole>();
+        		ArrayList<Role> list = new ArrayList<Role>();
         		list.add(user.getRoleList().get(0));
 //        		userMap.get(""+user.getUserId()).setRoleList(list);
 //        	}
@@ -106,8 +106,8 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
             contactInformation.setEmail(rs.getString("username"));
             person.setContactInformation(contactInformation);
             
-            ArrayList<UserRole> list = new ArrayList<UserRole>();
-    		UserRole role = new UserRole();
+            ArrayList<Role> list = new ArrayList<Role>();
+    		Role role = new Role();
 //            role.setKey(rs.getString("key"));
             role.setName(rs.getString("role_name"));
             role.setUserRoleId(rs.getInt("user_role_id"));
@@ -121,7 +121,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
 		return null;
 	}
 	public List<UserListItem> getUserListPagedSearchStringRoles(
-			String searchString, List<UserRole> roles, int from, int max) {
+			String searchString, List<Role> roles, int from, int max) {
 		// TODO Auto-generated method stub
 		return null;
 	}
