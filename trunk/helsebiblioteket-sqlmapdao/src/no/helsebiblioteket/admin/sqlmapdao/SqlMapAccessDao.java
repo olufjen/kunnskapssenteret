@@ -15,7 +15,7 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 
 /**
  * Used to insert, update, load and delete ResourceAccess
@@ -31,13 +31,13 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 		getSqlMapClientTemplate().update("updateResourceAccessForeignKeys", access);
 	}
 	public void deleteResourceAccessForeignKeys(ResourceAccessForeignKeys access) {
-		getSqlMapClientTemplate().delete("deleteResourceAccessForeignKeys", access);
+		getSqlMapClientTemplate().delete("deleteResourceAccessForeignKeys", access.getResourceAccess().getAccessId());
 	}
 
 	public List<ResourceAccessForeignKeys> getAccessListByUser(User user){
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserId", user.getId());
 	}
-	public List<ResourceAccessForeignKeys> getAccessListByUserRole(UserRole userRole){
+	public List<ResourceAccessForeignKeys> getAccessListByUserRole(Role userRole){
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getUserRoleId());
 	}
 	public List<ResourceAccessForeignKeys> getAccessListByOrganization(Organization organization){

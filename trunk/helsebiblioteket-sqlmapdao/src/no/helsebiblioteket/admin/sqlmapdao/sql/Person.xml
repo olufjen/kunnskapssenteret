@@ -6,7 +6,7 @@
 <sqlMap namespace="Person">
 	<typeAlias alias="person" type="no.helsebiblioteket.admin.domain.Person"/>
 	<resultMap id="getPersonResultMap" class="person">
-		<result property="id" column="person_id" />
+		<result property="personId" column="person_id" />
 		<result property="firstName" column="first_name" />
 		<result property="lastName" column="last_name" />
 		<result property="studentNumber" column="student_number" />
@@ -16,36 +16,39 @@
 		<result property="position.id" column="position_type_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
-	<select id="getPersonById" resultMap="getPersonResultMap" parameterClass="integer">
-		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
-		from tbl_person
-		where person_id = #personId#;
-	</select>
-	<select id="getPersonList" resultMap="getPersonResultMap">
-		select 
-		person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
-		from tbl_person;
-	</select>
 	<insert id="insertPerson" parameterClass="person">
-		<selectKey resultClass="int" keyProperty="id">
-			SELECT nextval('tbl_person_person_id_seq') as id;
+		<selectKey resultClass="int" keyProperty="personId">
+			SELECT nextval('tbl_person_person_id_seq') as personId;
 		</selectKey>
 		insert into tbl_person
-		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed) 
+		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed)
 		values 
-		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, now());
+		(#personId#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, now());
 	</insert>
 	<update id="updatePerson" parameterClass="person">
-		update tbl_person
-		set first_name = #firstName#
-		last_name = #lastName#
-		student_number = #studentNumber#
-		hpr_number = #hprNumber#
-		contact_information_id = #contactInformation.id#
-		profile_id = #profile.id#
-		position_type_id = #position.id#
-		last_changed = now()
-		where person_id = #id# and 
-    	last_changed = #lastChanged#;
+		update tbl_person set
+			first_name = #firstName#,
+			last_name = #lastName#,
+			student_number = #studentNumber#,
+			hpr_number = #hprNumber#,
+			contact_information_id = #contactInformation.id#,
+			profile_id = #profile.id#,
+			position_type_id = #position.id#,
+			last_changed = now()
+		where
+			person_id = #personId# and last_changed = #lastChanged#;
 	</update>
+	<delete id="deletePerson" parameterClass="integer">
+  		delete from tbl_person where person_id = #personId#
+    </delete>
+	<select id="getPersonByUserId" resultMap="getPersonResultMap" parameterClass="integer">
+		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
+		from tbl_person
+		where person_id = (select person_id from tbl_user where user_id = #userId#);
+	</select>
+	<select id="getPersonByOrganizationId" resultMap="getPersonResultMap" parameterClass="integer">
+		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
+		from tbl_person
+		where person_id = (select person_id from tbl_org_unit where org_unit_id = #orgUnitId#);
+	</select>
 </sqlMap>

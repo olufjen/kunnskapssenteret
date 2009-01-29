@@ -9,50 +9,35 @@
 		<result property="id" column="user_id" />
 		<result property="username" column="username" />
 		<result property="password" column="password" />
-		<result property="lastChanged" column="last_changed" />
-	</resultMap>
-	<resultMap id="allUserResultMap" class="user">
-		<result property="id" column="user_id" />
-		<result property="username" column="username" />
-		<result property="password" column="password" />
-		<result property="lastChanged" column="last_changed" />
 		<result property="organization.id" column="org_unit_id" />
+		<result property="person.id" column="person_id" />
+		<result property="lastChanged" column="last_changed" />
 	</resultMap>
-	<select id="getAllUsers" resultMap="allUserResultMap">
-		select user_id, username, password, org_unit_id, person_id, last_changed
-		from tbl_user where user_id &lt; 20
-	</select>
-	<select id="getUserById" resultMap="getUserResultMap" parameterClass="integer">
-		select user_id, username, password, org_unit_id, person_id, last_changed
-		from tbl_user
-		where user_id = #userId#;
-	</select>
-	<select id="getUserByUsername" resultMap="getUserResultMap" parameterClass="string">
-		select user_id, username, password, org_unit_id, person_id, last_changed
-		from tbl_user
-		where username = #userName#;
-	</select>
-	<select id="getUserList" resultMap="getUserResultMap">
-		select user_id, username, password, org_unit_id, person_id, last_changed
-		from tbl_user;
-	</select>
+	
 	<insert id="insertUser" parameterClass="user">
 		<selectKey resultClass="int" keyProperty="id">
 			SELECT nextval('tbl_user_user_id_seq') as id;
 		</selectKey>
 		insert into tbl_user
-		(user_id, username, password, org_unit_id, person_id, last_changed) 
+			(user_id, username, password, org_unit_id, person_id, last_changed)
 		values 
-		(#id#, #username#, #password#, #organization.id#, #person.id#, now());
+			(#id#, #username#, #password#, #organization.orgUnitId#, #person.id#, now());
 	</insert>
 	<update id="updateUser" parameterClass="user">
-		update tbl_user
-		set username = #username#
-		password = #password#
-		org_unit_id = #organization.id#
-		person_id = #person.id#
-		last_changed = now()
-		where user_id = #id# and 
-    	last_changed = #lastChanged#;
+		update tbl_user set
+			username = #username#
+			password = #password#
+			org_unit_id = #organization.id#
+			person_id = #person.id#
+			last_changed = now()
+		where user_id = #id# and last_changed = #lastChanged#;
 	</update>
+	<delete id="deleteUser" parameterClass="integer">
+  		delete from tbl_user where user_id = #id#
+    </delete>
+	<select id="getUserByUsername" resultMap="getUserResultMap" parameterClass="string">
+		select user_id, username, password, org_unit_id, person_id, last_changed
+		from tbl_user
+		where username = #userName#;
+	</select>
 </sqlMap>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Position">
+	<typeAlias alias="Position" type="no.helsebiblioteket.admin.domain.Position"/>
+	<resultMap id="PositionResultMap" class="Position">
+		<result property="positionTypeId" column="position_type_id" />
+		<result property="description" column="descr" />
+		<result property="name" column="name" />
+		<result property="key" column="key" />
+		<result property="organizationType.orgTypeId" column="org_type_id" />
+	</resultMap>
+	<insert id="insertPosition" parameterClass="Position">
+		<selectKey resultClass="int" keyProperty="positionTypeId">
+			SELECT nextval('tbl_position_type_reg_position_type_id_seq') as positionTypeId;
+		</selectKey>
+		insert into tbl_position_type_reg(
+			position_type_id,
+			descr,
+			name,
+			key,
+			org_type_id
+		)values (#positionTypeId#, #description#, #name#, #key#, #organizationType.orgTypeId#);
+	</insert>
+	<update id="updatePosition" parameterClass="Position">
+		update tbl_position_type_reg set
+			position_type_id = #positionTypeId#
+			descr = #description#
+			name = #name#
+			key = #key#
+			org_type_id = #organizationType.orgTypeId#
+  		where
+  			position_type_id = #positionTypeId#
+	</update>
+	<delete id="deletePosition" parameterClass="integer">
+  		delete from tbl_position_type_reg where position_type_id = #positionTypeId#
+    </delete>
+	<select id="getPositionByKey" resultMap="PositionResultMap" parameterClass="string">
+		select position_type_id, descr, name, key, org_type_id
+		from tbl_position_type_reg
+		where key = #key#
+	</select>
+	<select id="getPositionListAll" resultMap="PositionResultMap">
+		select position_type_id, descr, name, key, org_type_id
+		from tbl_position_type_reg
+	</select>
+</sqlMap>

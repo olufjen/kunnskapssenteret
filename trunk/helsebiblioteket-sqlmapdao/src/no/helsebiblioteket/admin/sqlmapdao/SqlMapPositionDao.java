@@ -6,23 +6,22 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 
 public class SqlMapPositionDao extends SqlMapClientDaoSupport implements PositionDao {
-	public void deletePosition(Position position) {
-		// TODO Auto-generated method stub
-		
-	}
-	public List<Position> getPositionListAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	public void insertPosition(Position position) {
-		// TODO Auto-generated method stub
-		
+		getSqlMapClientTemplate().insert("insertPosition", position);
 	}
 	public void updatePosition(Position position) {
-		// TODO Auto-generated method stub
-		
+		getSqlMapClientTemplate().update("updatePosition", position);
 	}
-
+	public void deletePosition(Position position) {
+		getSqlMapClientTemplate().delete("deletePosition", position);
+	}
+	public Position getPositionByKey(PositionTypeKey key) {
+		return (Position) getSqlMapClientTemplate().queryForObject("getPositionByKey", key.toString());
+	}
+	public List<Position> getPositionListAll() {
+		return (List<Position>)getSqlMapClientTemplate().queryForList("getPositionListAll");
+	}
 }

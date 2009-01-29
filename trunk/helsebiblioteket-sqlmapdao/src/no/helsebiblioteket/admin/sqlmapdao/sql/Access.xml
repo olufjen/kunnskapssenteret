@@ -15,14 +15,14 @@
 		<result property="resourceAccess.accessId" column="access_id" />
 		<result property="resourceAccess.resource.resourceId" column="resource_id" />
 		<result property="orgTypeId" column="org_type_id" />
-		<result property="resourceAccess.providedBy.orgUnitId" column="provided_by_org_unit" />
+		<result property="resourceAccess.providedBy.id" column="provided_by_org_unit" />
 		<result property="orgUnitId" column="org_unit_id" />
 		<result property="resourceAccess.lastChanged" column="last_changed" />
 	</resultMap>
 
 	<insert id="insertResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
-		<selectKey resultClass="int" keyProperty="access_id">
-			SELECT nextval('tbl_ip_address_ip_address_id_seq') as resourceAccess.accessId;
+		<selectKey resultClass="int" keyProperty="resourceAccess.accessId">
+			SELECT nextval('tbl_ip_address_ip_address_id_seq') as access_id;
 		</selectKey>
 		insert into tbl_access (
 			access_type_id, 
@@ -39,7 +39,7 @@
 			) 
 		values (#resourceAccess.accessType.accessTypeid#, #userId#, #userRoleId#,
 				#resourceAccess.validFrom#, #resourceAccess.validTo#, #resourceAccess.accessId#,
-				#resourceAccess.resource.resourceId#, #orgTypeId#, #resourceAccess.providedBy.orgUnitId#,
+				#resourceAccess.resource.resourceId#, #orgTypeId#, #resourceAccess.providedBy.id#,
 				#orgUnitId#, now());
 	</insert>
 	<update id="updateResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
@@ -52,7 +52,7 @@
 			access_id = #resourceAccess.accessId#,
 			resource_id = #resourceAccess.resource.resourceId#,
 			org_type_id = #orgTypeId#,
-			provided_by_org_unit = #resourceAccess.providedBy.orgUnitId#,
+			provided_by_org_unit = #resourceAccess.providedBy.id#,
 			org_unit_id = #orgUnitId#, 
 			last_changed = now()
 		where access_id = #resourceAccess.accessId#

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="AccessType">
+	<typeAlias alias="AccessType" type="no.helsebiblioteket.admin.domain.AccessType"/>
+	<typeAlias alias="AccessTypeCompositeKey" type="no.helsebiblioteket.admin.daoobjects.AccessTypeCompositeKey"/>
+	
+	<resultMap id="AccessTypeResultMap" class="AccessType">
+		<result property="accessTypeid" column="access_type_id" />
+		<result property="description" column="descr" />
+		<result property="name" column="name" />
+		<result property="key" column="key" />
+		<result property="category" column="category" />
+	</resultMap>
+	<select id="getAccessTypeByKey" resultMap="AccessTypeResultMap" parameterClass="AccessTypeCompositeKey">
+		select
+			access_type_id,
+			descr,
+			name,
+			key,
+			category
+		from tbl_access_type_reg
+		where key = #key# and category = #category#;
+	</select>
+	<select id="getAccessTypeListAll" resultMap="AccessTypeResultMap">
+		select
+			access_type_id,
+			descr,
+			name,
+			key,
+			category
+		from tbl_access_type_reg
+	</select>
+</sqlMap>
