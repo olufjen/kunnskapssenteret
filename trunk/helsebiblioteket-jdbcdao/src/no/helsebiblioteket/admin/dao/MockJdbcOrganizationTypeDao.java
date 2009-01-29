@@ -23,12 +23,12 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
         List<OrganizationType> orgTypes = new ArrayList<OrganizationType>();
         OrganizationType orgType = null;
         orgType = new OrganizationType();
-        orgType.setOrgTypeId(1);
+//        orgType.setOrgTypeId(1);
 //        orgType.setKey("health_institution");
         orgType.setName("fallbackname for org_type_health_institution");
         orgTypes.add(orgType);
         orgType = new OrganizationType();
-        orgType.setOrgTypeId(2);
+//        orgType.setOrgTypeId(2);
 //        orgType.setKey("health_education_institution");
         orgType.setName("fallbackname for org_type_health_education_institution");
         orgTypes.add(orgType);
@@ -37,12 +37,6 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
 	
 	public OrganizationType getOrganizationType(String organizationTypeKey) {
 		return null;
-	}
-
-	@Override
-	public void deleteOrganizationType(OrganizationType organizationType) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -60,12 +54,6 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
 
 	@Override
 	public void insertOrganizationType(OrganizationType organizationType) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateOrganizationType(OrganizationType organizationType) {
 		// TODO Auto-generated method stub
 		
 	}

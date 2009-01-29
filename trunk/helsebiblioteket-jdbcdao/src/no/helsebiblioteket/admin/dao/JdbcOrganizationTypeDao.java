@@ -38,7 +38,7 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 	private static class OrgTypeMapper implements ParameterizedRowMapper<OrganizationType> {
         public OrganizationType mapRow(ResultSet rs, int rowNum) throws SQLException {
             OrganizationType orgType = new OrganizationType();
-            orgType.setOrgTypeId(rs.getInt("org_type_id"));
+//            orgType.setOrgTypeId(rs.getInt("org_type_id"));
             orgType.setName(rs.getString("name"));
 //            orgType.setKey(rs.getString("key"));
             return orgType;
@@ -51,11 +51,6 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 		return null;
 	}
 
-	@Override
-	public void deleteOrganizationType(OrganizationType organizationType) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public OrganizationType getOrganizationTypeByKey(
@@ -70,10 +65,5 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 		
 	}
 
-	@Override
-	public void updateOrganizationType(OrganizationType organizationType) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -37,24 +37,24 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
 		sqlParameters.addValue("username", user.getUsername());
 		sqlParameters.addValue("password", user.getPassword());
-		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
+//		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public void updateUser(User user) {
 		String sql = "update tbl_user set username=:username, org_unit_id=:org_unit_id, password=:password " +
 			"where user_id=:user_id";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
-		sqlParameters.addValue("user_id", user.getUserId());
+//		sqlParameters.addValue("user_id", user.getUserId());
 		sqlParameters.addValue("username", user.getUsername());
 		sqlParameters.addValue("password", user.getPassword());
-		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
+//		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
 		
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setUserId(rs.getInt("user_id"));
+//            user.setUserId(rs.getInt("user_id"));
             user.setUsername(rs.getString("username"));
             if(user.getUsername() == null) { user.setUsername(""); }
             user.setPassword(rs.getString("password"));
