@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,5 +54,10 @@ public class JdbcPositionDao extends SimpleJdbcDaoSupport implements PositionDao
 	public void updatePosition(Position position) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public Position getPositionByKey(PositionTypeKey key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

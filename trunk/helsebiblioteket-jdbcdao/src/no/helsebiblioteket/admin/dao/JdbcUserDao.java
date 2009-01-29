@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 import org.apache.commons.logging.Log;
@@ -83,8 +83,8 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
         	user.setPassword(password);
         	
      
-        	UserRole role = new UserRole();
-        	List<UserRole> roleList = new ArrayList<UserRole>();
+        	Role role = new Role();
+        	List<Role> roleList = new ArrayList<Role>();
             
         	role.setUserRoleId(1);
         	role.setName("ROLE_ALLACCESS");
