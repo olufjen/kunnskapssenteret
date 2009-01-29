@@ -1,34 +1,36 @@
 package no.helsebiblioteket.admin.test.dao;
 
 import java.util.List;
+import java.util.Random;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
-import no.helsebiblioteket.admin.dao.ContactInformationDao;
-import no.helsebiblioteket.admin.dao.OrganizationDao;
+import no.helsebiblioteket.admin.dao.AccessTypeDao;
 import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
-import no.helsebiblioteket.admin.dao.ResourceTypeDao;
+import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
-import no.helsebiblioteket.admin.dao.UserDao;
-import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.daoobjects.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.AccessType;
-import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.ResourceType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.UserRole;
+import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
+import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
-import no.helsebiblioteket.admin.factory.AccessTypeFactory;
-import no.helsebiblioteket.admin.factory.ContactInformationFactory;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
 import no.helsebiblioteket.admin.factory.ResourceAccessFactory;
 import no.helsebiblioteket.admin.factory.ResourceTypeFactory;
+import no.helsebiblioteket.admin.factory.SupplierOrganizationFactory;
 import no.helsebiblioteket.admin.factory.SupplierSourceFactory;
 import no.helsebiblioteket.admin.factory.SupplierSourceResourceFactory;
 import no.helsebiblioteket.admin.factory.UserFactory;
@@ -36,64 +38,84 @@ import no.helsebiblioteket.admin.test.BeanFactory;
 
 import org.springframework.util.Assert;
 
+
 public class AccessDaoTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
 	@org.junit.Test
 	public void testAccess() {
-		// DAO
+		// TODO: Load system from DAO!
+		System system = new System(); system.setKey(SystemKey.helsebiblioteket_admin); system.setSystemId(1);
+
+		// Test classes
+		ResourceTypeDaoTest resourceTypeDaoTest = new ResourceTypeDaoTest();
+		OrganizationDaoTests organizationDaoTests = new OrganizationDaoTests();
+		UserDaoTests userDaoTests = new UserDaoTests();
+
+		// DAOs for 'static' data
 		OrganizationTypeDao organizationTypeDao = beanFactory.getOrganizationTypeDao();
-		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
-		UserDao userDao = beanFactory.getUserDao();
-		AccessDao accessDao = beanFactory.getAccessDao();
-		ContactInformationDao contactInformationDao = beanFactory.getContactInformationDao();
-		ResourceTypeDao resourceTypeDao = beanFactory.getResourceTypeDao();
 		RoleDao roleDao = beanFactory.getRoleDao();
-		
-		// TEST
+		PositionDao positionDao = beanFactory.getPositionDao();
+		AccessTypeDao accessTypeDao = beanFactory.getAccessTypeDao();
+
+		// Fetch 'static data'
 		OrganizationType organizationType = organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
-		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType);
-		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
-		contactInformationDao.insertContactInformation(contactInformation);
-		organizationDao.insertOrganization(organization);
-		User user = UserFactory.factory.completeUser(organization);
-		userDao.insertUser(user);
+		Position position = positionDao.getPositionByKey(PositionTypeKey.ambulansearbeider);
+		Role userRole = roleDao.getRoleByKeySystem(UserRoleKey.student, system);
+		AccessType accessType = accessTypeDao.getAccessTypeByKey(AccessTypeKey.general, AccessTypeCategory.GRANT);
+
+		// DAOs for regular data
+		AccessDao accessDao = beanFactory.getAccessDao();
+		
+		
 		ResourceType resourceType = ResourceTypeFactory.factory.completeSupplierResourceType();
-		resourceTypeDao.insertResourceType(resourceType);
+		resourceTypeDaoTest.insertResourceType(resourceType);
 		SupplierSource supplierSource = SupplierSourceFactory.factory.completeSupplierSource();
 		SupplierSourceResource resource = SupplierSourceResourceFactory.factory.completeSupplierSourceResource(resourceType, supplierSource);
-		AccessType accessType = AccessTypeFactory.factory.completeSupplierResourceType();
-		ResourceAccess resourceAccess = ResourceAccessFactory.factory.completeResourceAccess(resource, accessType, organization);
+
+		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
+//		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
+		organizationDaoTests.insertMemberOrganization(organization);
+		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(organizationType, position);
+		organizationDaoTests.insertSupplierOrganization(supplierOrganization);
+
+		User user = UserFactory.factory.completeUser(organization, position);
+		user.setUsername("RandomUser" + new Random().nextInt(1000000));
+		userDaoTests.insertUser(user);
+		
 		
 		// Access for user
+		ResourceAccess resourceAccessForUser = ResourceAccessFactory.factory.completeResourceAccess(resource, accessType, supplierOrganization);
 		ResourceAccessForeignKeys accessForUserKeys = new ResourceAccessForeignKeys();
 		accessForUserKeys.setUserId(user.getId());
-		accessForUserKeys.setResourceAccess(resourceAccess);
+		accessForUserKeys.setResourceAccess(resourceAccessForUser);
 		accessDao.insertResourceAccessForeignKeys(accessForUserKeys);
 		accessDao.updateResourceAccessForeignKeys(accessForUserKeys);
 		List<ResourceAccessForeignKeys> userAccessList = accessDao.getAccessListByUser(user);
 		Assert.notEmpty(userAccessList, "No access for user!");
 
 		// Access for user roles
-		UserRole userRole = roleDao.getRoleByKey(UserRoleKey.student);
+		ResourceAccess resourceAccessForUserRole = ResourceAccessFactory.factory.completeResourceAccess(resource, accessType, supplierOrganization);
 		ResourceAccessForeignKeys accessForUserRoleKeys = new ResourceAccessForeignKeys();
 		accessForUserRoleKeys.setUserRoleId(userRole.getUserRoleId());
-		accessForUserRoleKeys.setResourceAccess(resourceAccess);
+		accessForUserRoleKeys.setResourceAccess(resourceAccessForUserRole);
 		accessDao.insertResourceAccessForeignKeys(accessForUserRoleKeys);
 		List<ResourceAccessForeignKeys> userRoleAccessList = accessDao.getAccessListByUserRole(userRole);
 		Assert.notEmpty(userRoleAccessList, "No access for user role!");
 
 		// Access for organization
+		ResourceAccess resourceAccessForOrg = ResourceAccessFactory.factory.completeResourceAccess(resource, accessType, supplierOrganization);
 		ResourceAccessForeignKeys accessForOrganizationKeys = new ResourceAccessForeignKeys();
 		accessForOrganizationKeys.setOrgUnitId(organization.getId());
-		accessForOrganizationKeys.setResourceAccess(resourceAccess);
+		accessForOrganizationKeys.setResourceAccess(resourceAccessForOrg);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationKeys);
 		List<ResourceAccessForeignKeys> organizationAccessList = accessDao.getAccessListByOrganization(organization);
 		Assert.notEmpty(organizationAccessList, "No access for organization!");
 		
 		// Access for organization type
+		ResourceAccess resourceAccessForOrgType = ResourceAccessFactory.factory.completeResourceAccess(resource, accessType, supplierOrganization);
 		ResourceAccessForeignKeys accessForOrganizationTypeKeys = new ResourceAccessForeignKeys();
 		accessForOrganizationTypeKeys.setOrgTypeId(organizationType.getId());
-		accessForOrganizationTypeKeys.setResourceAccess(resourceAccess);
+		accessForOrganizationTypeKeys.setResourceAccess(resourceAccessForOrgType);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationTypeKeys);
 		List<ResourceAccessForeignKeys> organizationTypeAccessList = accessDao.getAccessListByOrganizationType(organizationType);
 		Assert.notEmpty(organizationTypeAccessList, "No access for organization type!");
@@ -103,15 +125,9 @@ public class AccessDaoTests {
 		accessDao.deleteResourceAccessForeignKeys(accessForOrganizationKeys);
 		accessDao.deleteResourceAccessForeignKeys(accessForUserRoleKeys);
 		accessDao.deleteResourceAccessForeignKeys(accessForUserKeys);
-		resourceTypeDao.deleteResourceType(resourceType);
-		userDao.deleteUser(user);
-		organizationDao.deleteOrganization(organization);
-		contactInformationDao.deleteContactInformation(contactInformation);
-//		
+		userDaoTests.removeUser(user);
+		organizationDaoTests.removeSupplierOrganization(supplierOrganization);
+		organizationDaoTests.removeMemberOrganization(organization);
+		resourceTypeDaoTest.removeResourceType(resourceType);
 	}
-//	public List<ResourceAccessForeignKeys> getAccessListByUser(User user);
-//	public List<ResourceAccessForeignKeys> getAccessListByUserRole(UserRole userRole);
-//	public List<ResourceAccessForeignKeys> getAccessListByOrganization(Organization organization);
-//	public List<ResourceAccessForeignKeys> getAccessListByOrganizationType(OrganizationType organizationType);
-
 }

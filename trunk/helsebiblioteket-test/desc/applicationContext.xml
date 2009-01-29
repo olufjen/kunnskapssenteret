@@ -218,5 +218,32 @@
 	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	<bean id="ipRangeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapIpRangeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="resourceTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="positionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPositionDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationNameDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	
 </beans>
