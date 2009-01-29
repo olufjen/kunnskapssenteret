@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.webservice;
 
+import java.util.List;
+
 import javax.xml.namespace.QName;
 
 import org.apache.axis2.addressing.EndpointReference;
@@ -8,6 +10,8 @@ import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
@@ -71,6 +75,11 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Object[] args = new Object[] { organization  };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.updateOrganizationName, args, returnTypes);
+	}
+	public ListResult<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress) {
+		Object[] args = new Object[] { ipAddress  };
+		Class[] returnTypes = new Class[] { ListResult.class };
+		return (ListResult<MemberOrganization>) invoke(this.updateOrganizationName, args, returnTypes);
 	}
 
 	
