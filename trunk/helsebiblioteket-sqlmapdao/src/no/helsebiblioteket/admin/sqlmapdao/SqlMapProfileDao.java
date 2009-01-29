@@ -28,7 +28,7 @@ public class SqlMapProfileDao extends SqlMapClientDaoSupport implements ProfileD
 		return (Profile) getSqlMapClientTemplate().queryForObject("getProfileById", profileId);
 	}
 	public void saveProfile(Profile changedProfile, Profile originalProfile) {
-		if (changedProfile.getProfileId() == null) {
+		if (changedProfile.getId() == null) {
 			insertProfile(changedProfile);
 		} else {
 			updateProfile(changedProfile);

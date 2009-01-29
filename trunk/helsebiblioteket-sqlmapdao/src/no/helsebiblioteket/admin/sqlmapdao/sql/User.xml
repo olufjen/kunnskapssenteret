@@ -20,7 +20,7 @@
 	</resultMap>
 	<select id="getAllUsers" resultMap="allUserResultMap">
 		select user_id, username, password, org_unit_id, person_id, last_changed
-		from tbl_user
+		from tbl_user where user_id &lt; 20
 	</select>
 	<select id="getUserById" resultMap="getUserResultMap" parameterClass="integer">
 		select user_id, username, password, org_unit_id, person_id, last_changed

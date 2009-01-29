@@ -9,68 +9,30 @@ import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.line.IpAddressLine;
 
 public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeDao {
 	// TODO: Go through all!
-	public void insertIpRange(IpAddressSet ipRange){
+	public void insertIpRange(IpAddressLine ipRange){
 		
 		getSqlMapClientTemplate().insert("insertIpRange", ipRange);
 
 	}
-	public void updateIpRange(IpAddressSet ipRange){
+	public void updateIpRange(IpAddressLine ipRange){
 		
 		getSqlMapClientTemplate().update("updateIpRange", ipRange);
 
 	}
-	public void deleteIpRange(IpAddressSet ipRange){
+	public void deleteIpRange(IpAddressLine ipRange){
 
 		getSqlMapClientTemplate().delete("deleteIpRange", ipRange);
 
 	}
-	public List<IpAddressSet> getIpRangeListByOrganization(MemberOrganization organization){
-		return null;
+	public List<IpAddressLine> getIpRangeListByOrganization(MemberOrganization organization){
+		return (List<IpAddressLine>)getSqlMapClientTemplate().queryForList("", organization.getId());
+//		return (List<IpAddressSet>) getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organizationId);
 	}
 	public List<MemberOrganization> getOrganizationListByIpAdress(IpAddress ipAddress) {
-		return null;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public IpAddressSet getIpRangeById(Integer ipRangeId) {
-		return (IpAddressSet) getSqlMapClientTemplate().queryForObject("getProfileById", ipRangeId);
-	}
-	
-	
-	
-	
-	public void saveIpRange(IpAddressSet ipRange) {
-		if (ipRange.getId() == null) {
-			insertIpRange(ipRange);
-		} else {
-			updateIpRange(ipRange);
-		}
-	}
-	
-	public void saveIpRange(IpAddressSet changedIpRange, IpAddressSet originalIpRange) {
-		if (changedIpRange.getId() == null) {
-			insertIpRange(changedIpRange);
-		} else {
-			updateIpRange(changedIpRange);
-		}	
-	}
-	
-	public List<IpAddressSet> getIpRangeListByOrganizationId(Integer organizationId) {
-		return (List<IpAddressSet>) getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organizationId);
+		return (List<MemberOrganization>)getSqlMapClientTemplate().queryForList("", ipAddress);
 	}
 }

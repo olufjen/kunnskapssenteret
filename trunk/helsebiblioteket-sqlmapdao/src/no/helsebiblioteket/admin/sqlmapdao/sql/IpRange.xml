@@ -4,6 +4,14 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="IpRange">
+
+insertIpRange
+updateIpRange
+deleteIpRange
+getIpRangeListByOrganization
+getOrganizationListByIpAdress
+
+
 	<typeAlias alias="ipRange" type="no.helsebiblioteket.admin.domain.IpRange"/>
 	<resultMap id="getIpRangeResultMap" class="ipRange">
 		<result property="id" column="ip_address_id" />
