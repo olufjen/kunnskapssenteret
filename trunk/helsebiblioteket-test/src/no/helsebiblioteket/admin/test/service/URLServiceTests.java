@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.test.service;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
@@ -16,7 +17,7 @@ public class URLServiceTests {
 	public void testIsAffected(){
 		URLService urlService = beanFactory.getURLService();
 		
-		Access access = new Access();
+		Access access = new ResourceAccess();
 		SupplierOrganization supplier = new SupplierOrganization();
 		access.setProvidedBy(supplier);
 		SupplierSourceResource resource = new SupplierSourceResource();

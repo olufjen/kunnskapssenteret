@@ -63,7 +63,7 @@ public class OrganizationServiceTests {
 		organizationService.insertOrganization(testOrganization());
 		OrganizationListItem listItem = new OrganizationListItem();
 		Organization organization = testOrganization();
-		listItem.setId(organization.getOrgUnitId());
+//		listItem.setId(organization.getOrgUnitId());
 		SingleResult<Organization> result = organizationService.getOrganizationByListItem(listItem);
 		Assert.assertNotNull("No result", result);
 		Assert.assertTrue("No result", result instanceof ValueResult);

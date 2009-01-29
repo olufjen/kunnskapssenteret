@@ -1,6 +1,13 @@
 package no.helsebiblioteket.admin.test;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
+import no.helsebiblioteket.admin.dao.ContactInformationDao;
+import no.helsebiblioteket.admin.dao.OrganizationDao;
+import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
+import no.helsebiblioteket.admin.dao.ResourceTypeDao;
+import no.helsebiblioteket.admin.dao.RoleDao;
+import no.helsebiblioteket.admin.dao.UserDao;
+import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.AccessService;
@@ -35,7 +42,13 @@ public class BeanFactory {
 	}
 	// Load DAOs
 	public AccessDao getAccessDao() { return (AccessDao)this.factory.getBean("accessDao");}
-
+	public UserDao getUserDao() { return (UserDao)this.factory.getBean("userDao");}
+	public OrganizationDao getOrganizationDao() { return (OrganizationDao)this.factory.getBean("organizationDao");}
+	public OrganizationTypeDao getOrganizationTypeDao() { return (OrganizationTypeDao)this.factory.getBean("organizationTypeDao");}
+	public ContactInformationDao getContactInformationDao() { return (ContactInformationDao)this.factory.getBean("contactInformationDao");}
+	public ResourceTypeDao getResourceTypeDao() { return (ResourceTypeDao)this.factory.getBean("resourceTypeDao");}
+	public RoleDao getRoleDao() { return (RoleDao)this.factory.getBean("roleDao");}
+	
 	// Load Services
 	public LoginService getLoginService() { return (LoginService)this.factory.getBean("loginService");}
 	public UserService getUserService() { return (UserService)this.factory.getBean("userService");}
@@ -46,12 +59,13 @@ public class BeanFactory {
 	// Main method when not using ant.
 	public static void main(String[] args) {
 		AccessDaoTests accessDaoTests = new AccessDaoTests();
-		accessDaoTests.testInsertAccess();
-		LoginServiceTests loginServiceTests = new LoginServiceTests();
-		loginServiceTests.testLoginOrganizationByIpAddress();
-		loginServiceTests.testLoginUserByUsernamePassword();
-		loginServiceTests.testSendPasswordEmail();
-	
+		accessDaoTests.testAccess();
+
+//		LoginServiceTests loginServiceTests = new LoginServiceTests();
+//		loginServiceTests.testLoginOrganizationByIpAddress();
+//		loginServiceTests.testLoginUserByUsernamePassword();
+//		loginServiceTests.testSendPasswordEmail();
+//	
 		System.out.println("OK");
 	}
 }

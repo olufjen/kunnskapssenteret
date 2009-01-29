@@ -206,6 +206,17 @@
 	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
+	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	
 </beans>
