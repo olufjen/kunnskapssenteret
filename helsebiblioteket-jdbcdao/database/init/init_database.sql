@@ -8,11 +8,11 @@ INSERT INTO tbl_user_role_reg (name, descr, system_id, key) VALUES ('Health pers
 INSERT INTO tbl_access_type_reg (descr, name, key, category) VALUES ('general access permission', 'general', 'general', 'GRANT');
 INSERT INTO tbl_access_type_reg (descr, name, key, category) VALUES ('general denial of access', 'general', 'general', 'DENY');
 
-INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (nextval('tbl_org_type_reg_org_type_id_seq'), 'Health enterprise', 'health enterprise', 'health_enterprise');
-INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (nextval('tbl_org_type_reg_org_type_id_seq'), 'Public administration', 'public administration', 'public_administration');
-INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (nextval('tbl_org_type_reg_org_type_id_seq'), 'Teaching', 'teaching', 'teaching');
-INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (nextval('tbl_org_type_reg_org_type_id_seq'), 'Others', 'others', 'others');
-INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES (nextval('tbl_org_type_reg_org_type_id_seq'), 'Content supplier', 'content supplier', 'content_supplier');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES ((select nextval('tbl_org_type_reg_org_type_id_seq')), 'Health enterprise', 'health enterprise', 'health_enterprise');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES ((select nextval('tbl_org_type_reg_org_type_id_seq')), 'Public administration', 'public administration', 'public_administration');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES ((select nextval('tbl_org_type_reg_org_type_id_seq')), 'Teaching', 'teaching', 'teaching');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES ((select nextval('tbl_org_type_reg_org_type_id_seq')), 'Other', 'other', 'other');
+INSERT INTO tbl_org_type_reg (org_type_id, descr, name, key) VALUES ((select nextval('tbl_org_type_reg_org_type_id_seq')), 'Content supplier', 'content supplier', 'content_supplier');
 
 INSERT INTO tbl_resource_type_reg (descr, name, key) VALUES ('Supplier source', 'supplier source', 'supplier_source');
 
