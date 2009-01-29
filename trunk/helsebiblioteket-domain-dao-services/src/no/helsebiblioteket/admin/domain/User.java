@@ -30,10 +30,10 @@ public class User  {
 	}
 
 	// GET/SET
-	public Integer getUserId() {
+	public Integer getId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setId(Integer userId) {
 		this.userId = userId;
 	}
 	public String getUsername() {

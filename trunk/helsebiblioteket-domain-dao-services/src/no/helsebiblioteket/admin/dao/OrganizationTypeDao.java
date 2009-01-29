@@ -14,8 +14,9 @@ import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 public interface OrganizationTypeDao {
 	// Edit
 	public void insertOrganizationType(OrganizationType organizationType);
-	public void updateOrganizationType(OrganizationType organizationType);
-	public void deleteOrganizationType(OrganizationType organizationType);
+	// Not in use and not implemented
+//	public void updateOrganizationType(OrganizationType organizationType);
+//	public void deleteOrganizationType(OrganizationType organizationType);
 
 	// Fetch
 	public OrganizationType getOrganizationTypeByKey(OrganizationTypeKey organizationTypeKey);

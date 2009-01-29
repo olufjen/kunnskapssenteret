@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-public class Resource {
+public abstract class Resource {
 	// Primary key
 	private Integer resourceId;
 	
@@ -13,10 +13,10 @@ public class Resource {
 	private ResourceType resourceType;
 
 	// GET/SET
-	public Integer getResourceId() {
+	public Integer getId() {
 		return resourceId;
 	}
-	public void setResourceId(Integer id) {
+	public void setId(Integer id) {
 		this.resourceId = id;
 	}
 	public ResourceType getResourceType() {

@@ -1,6 +1,6 @@
 package no.helsebiblioteket.admin.domain;
 
-public class OrganizationAccess {
+public class OrganizationAccess extends Access {
 	// References
 	private Organization organization;
 

@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 
+// TODO: Should this be named position type?
 public class Position {
 	// Primary key
 	private Integer positionTypeId;
@@ -19,10 +20,10 @@ public class Position {
 	// GET/SET
 	public PositionTypeKey getKey() { return key; }
 	public void setKey(PositionTypeKey key) { this.key = key; }
-	public Integer getPositionTypeId() {
+	public Integer getId() {
 		return positionTypeId;
 	}
-	public void setPositionTypeId(Integer id) {
+	public void setId(Integer id) {
 		this.positionTypeId = id;
 	}
 	public String getDescription() {
