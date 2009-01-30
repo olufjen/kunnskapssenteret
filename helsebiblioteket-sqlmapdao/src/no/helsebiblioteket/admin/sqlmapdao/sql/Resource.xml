@@ -4,41 +4,43 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="Resource">
-	<typeAlias alias="resource" type="no.helsebiblioteket.admin.domain.Resource" />
-	<resultMap id="getResourceResultMap" class="resource">
+	<typeAlias alias="SupplierSourceResource" type="no.helsebiblioteket.admin.domain.SupplierSourceResource" />
+	<resultMap id="SupplierSourceResourceResultMap" class="SupplierSourceResource">
 		<result property="resourceId" column="resource_id" />
+		<result property="supplierSource.id" column="supplier_source_id" />
 		<result property="resourceType.id" column="resource_type_id" />
-		<result property="supplierSourceId" column="supplier_source_id" />
-		<result property="organizationId" column="org_unit_id" />
+		<result property="offeredBy.id" column="org_unit_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
-	<select id="getResourceById" resultMap="getResourceResultMap" parameterClass="integer">
-		select resource_id, resource_type_id, supplier_source_id, org_unit_id, last_changed
+	<insert id="insertSupplierSourceResource" parameterClass="SupplierSourceResource">
+		<selectKey resultClass="int" keyProperty="resourceId">
+			SELECT nextval('tbl_resource_resource_id_seq') as resourceId;
+		</selectKey>
+		insert into tbl_resource (resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed)
+		values (#resourceId#, #supplierSource.id#, #resourceType.id#, #offeredBy.id#, now());
+	</insert>
+	<update id="updateSupplierSourceResource" parameterClass="SupplierSourceResource">
+		update tbl_resource set
+      		supplier_source_id = #supplierSource.id#,
+      		resource_type_id = #resourceType.id#,
+	      	org_unit_id = #offeredBy.id#,
+    	  	last_changed = now()
+    	where resource_id = #resourceId# and last_changed = #lastChanged#;
+	</update>
+	<delete id="deleteSupplierSourceResource" parameterClass="integer">
+		delete from tbl_resource
+		where resource_id = #resourceId# 
+	</delete>
+	<select id="getSupplierSourceResourceById" resultMap="SupplierSourceResourceResultMap" parameterClass="integer">
+		select resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed
 		from tbl_resource
 		where resource_id = #resourceId#;
 	</select>
+	<!--  Not in use -->
+	<!--
 	<select id="getResourceList" resultMap="getResourceResultMap">
 		select resource_id, resource_type_id, descr, supplier_source_id, org_unit_id, last_changed
 		from tbl_resource
 	</select>
-	<insert id="insertResource" parameterClass="resource">
-		<selectKey resultClass="int" keyProperty="resourceId">
-			SELECT nextval('tbl_resource_resource_id_seq') as resourceId;
-		</selectKey>
-		insert into tbl_resource (resource_id, resource_type_id, supplier_source_id, org_unit_id, last_changed) 
-		values (#resourceId#, #resourceType.id#, #supplierSourceId#, #organizationId#, now());
-	</insert>
-	<delete id="deleteResource" parameterClass="resource">
-		delete from tbl_resource
-		where resource_id = #resourceId# 
-	</delete>
-	<update id="updateResource" parameterClass="resource">
-		update tbl_resource set
-      	resource_type_id = #resourceType.id#,
-      	supplier_source_id = #supplierSourceId#,
-      	org_unit_id = #organizationId#,
-      	last_changed = now()
-    	where resource_id = #resourceId# and
-    	last_changed = #lastChanged#;
-  </update>
+   -->
 </sqlMap>

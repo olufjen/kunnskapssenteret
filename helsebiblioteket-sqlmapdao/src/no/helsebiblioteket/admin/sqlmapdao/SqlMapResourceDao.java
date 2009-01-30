@@ -1,48 +1,29 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
-import java.util.List;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
 
 public class SqlMapResourceDao extends SqlMapClientDaoSupport implements ResourceDao {
-	// TODO: Go through all!
-	public void insertResource(Resource resource){
-		
-		getSqlMapClientTemplate().insert("insertResource", resource);
-
+	public Resource getResourceById(Integer resourceId, ResourceTypeKey typeKey) {
+		// Only supports supplier_source
+		if(typeKey==ResourceTypeKey.supplier_source){
+			return (SupplierSourceResource) getSqlMapClientTemplate().queryForObject("getSupplierSourceResourceById", resourceId);
+		} else {
+			// Ooops!
+			return null;
+		}
 	}
-	public void updateResource(Resource resource){
-		
-		getSqlMapClientTemplate().update("updateResource", resource);
-
+	public void insertSupplierSourceResource(SupplierSourceResource resource) {
+		getSqlMapClientTemplate().insert("insertSupplierSourceResource", resource);
 	}
-	public void deleteResource(Resource resource){
-		
-		getSqlMapClientTemplate().delete("deleteResource", resource);
-
+	public void updateSupplierSourceResource(SupplierSourceResource resource) {
+		getSqlMapClientTemplate().update("updateSupplierSourceResource", resource);
 	}
-	public List<Resource> getResourceListAll(){
-		return null;
+	public void deleteSupplierSourceResource(SupplierSourceResource resource) {
+		getSqlMapClientTemplate().delete("deleteSupplierSourceResource", resource.getResourceId());
 	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	public Resource getResourceById(Integer resourceId) {
-		return (Resource) getSqlMapClientTemplate().queryForObject("getResourceById", resourceId);
-	}
-	
-	public List<Resource> getResourceList() {
-		return (List<Resource>) getSqlMapClientTemplate().queryForList("getResourceList");
-	}
-	
-	
-	
 }
