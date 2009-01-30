@@ -12,6 +12,6 @@ public interface PositionDao {
 	public void deletePosition(Position position);
 	
 	// Fetch
-	public Position getPositionByKey(PositionTypeKey key);
+	public Position getPositionByKey(PositionTypeKey positionTypeKey);
 	public List<Position> getPositionListAll();
 }

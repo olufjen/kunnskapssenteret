@@ -8,6 +8,6 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 public interface RoleDao {
 	// Edit not implemented
 	// Fetch
-	public Role getRoleByKeySystem(UserRoleKey roleKey, System system);
+	public Role getRoleByKeySystem(UserRoleKey userRoleKey, System system);
 	public List<Role> getRoleListBySystem(System system);
 }
