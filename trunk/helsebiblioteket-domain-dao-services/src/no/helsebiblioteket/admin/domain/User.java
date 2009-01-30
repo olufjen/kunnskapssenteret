@@ -13,7 +13,9 @@ public class User  {
 	private Date lastChanged;
 
 	// References
-	private Organization organization;
+	// This is the only one we know that need to be initialized.
+	// May drop initialization when we learn more about Ibatis.
+	private Organization organization = new UnknownOrganization();
 	private Person person;
 
 	// Values loaded with UserRoleLine

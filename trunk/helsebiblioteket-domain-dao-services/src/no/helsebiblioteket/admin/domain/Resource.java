@@ -11,6 +11,7 @@ public abstract class Resource {
 	
 	// References
 	private ResourceType resourceType;
+	private SupplierOrganization offeredBy;
 
 	// GET/SET
 	public Integer getResourceId() {
@@ -30,5 +31,11 @@ public abstract class Resource {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+	public SupplierOrganization getOfferedBy() {
+		return offeredBy;
+	}
+	public void setOfferedBy(SupplierOrganization supplierOrganization) {
+		this.offeredBy = supplierOrganization;
 	}
 }

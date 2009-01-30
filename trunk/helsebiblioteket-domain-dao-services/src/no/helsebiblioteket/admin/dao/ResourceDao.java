@@ -1,15 +1,15 @@
 package no.helsebiblioteket.admin.dao;
 
-import java.util.List;
-
 import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
 public interface ResourceDao {
-	// Edit
-	public void insertResource(Resource resource);
-	public void updateResource(Resource resource);
-	public void deleteResource(Resource resource);
+	// Edit not implemented
+	public void insertSupplierSourceResource(SupplierSourceResource resource);
+	public void updateSupplierSourceResource(SupplierSourceResource resource);
+	public void deleteSupplierSourceResource(SupplierSourceResource resource);
 
 	// Fetch
-	public List<Resource> getResourceListAll();
+	public Resource getResourceById(Integer id, ResourceTypeKey typeKey);
 }

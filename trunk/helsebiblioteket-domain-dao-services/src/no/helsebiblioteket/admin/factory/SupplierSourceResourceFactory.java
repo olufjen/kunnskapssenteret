@@ -1,17 +1,11 @@
 package no.helsebiblioteket.admin.factory;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.ResourceType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
-import no.helsebiblioteket.admin.domain.Url;
-import no.helsebiblioteket.admin.domain.Role;
-import no.helsebiblioteket.admin.domain.User;
 
 public class SupplierSourceResourceFactory {
 	public static SupplierSourceResourceFactory factory = new SupplierSourceResourceFactory();
@@ -21,10 +15,11 @@ public class SupplierSourceResourceFactory {
 		resource.setLastChanged(new Date());
 		return resource;
 	}
-	public SupplierSourceResource completeSupplierSourceResource(ResourceType resourceType, SupplierSource supplierSource){
+	public SupplierSourceResource completeSupplierSourceResource(ResourceType resourceType, SupplierSource supplierSource, SupplierOrganization supplierOrganization){
 		SupplierSourceResource resource = createSupplierSourceResource();
 		resource.setResourceType(resourceType);
 		resource.setSupplierSource(supplierSource);
+		resource.setOfferedBy(supplierOrganization);
 		return resource;
 	}
 }
