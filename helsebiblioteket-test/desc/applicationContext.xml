@@ -245,5 +245,20 @@
 	<bean id="organizationNameDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
+	<bean id="resourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+
 </beans>

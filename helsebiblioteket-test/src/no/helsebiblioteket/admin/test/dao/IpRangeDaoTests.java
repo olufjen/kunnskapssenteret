@@ -6,7 +6,6 @@ import java.util.List;
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
-import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;

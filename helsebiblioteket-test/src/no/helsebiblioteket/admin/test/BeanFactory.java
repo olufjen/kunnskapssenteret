@@ -11,9 +11,14 @@ import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.ProfileDao;
+import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.ResourceTypeDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
+import no.helsebiblioteket.admin.dao.SupplierSourceDao;
+import no.helsebiblioteket.admin.dao.SystemDao;
 import no.helsebiblioteket.admin.dao.UserDao;
+import no.helsebiblioteket.admin.dao.UserListDao;
+import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.AccessService;
@@ -30,6 +35,14 @@ import no.helsebiblioteket.admin.test.dao.OrganizationTypeDaoTests;
 import no.helsebiblioteket.admin.test.dao.PersonDaoTests;
 import no.helsebiblioteket.admin.test.dao.PositionDaoTests;
 import no.helsebiblioteket.admin.test.dao.ProfileDaoTests;
+import no.helsebiblioteket.admin.test.dao.ResourceDaoTests;
+import no.helsebiblioteket.admin.test.dao.ResourceTypeDaoTest;
+import no.helsebiblioteket.admin.test.dao.RoleDaoTests;
+import no.helsebiblioteket.admin.test.dao.SupplierSourceDaoTests;
+import no.helsebiblioteket.admin.test.dao.SystemDaoTests;
+import no.helsebiblioteket.admin.test.dao.UserDaoTests;
+import no.helsebiblioteket.admin.test.dao.UserListDaoTests;
+import no.helsebiblioteket.admin.test.dao.UserRoleDaoTests;
 
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -70,6 +83,11 @@ public class BeanFactory {
 	public AccessTypeDao getAccessTypeDao() { return (AccessTypeDao)this.factory.getBean("accessTypeDao");}
 	public OrganizationListDao getOrganizationListDao() { return (OrganizationListDao)this.factory.getBean("organizationListDao");}
 	public OrganizationNameDao getOrganizationNameDao() { return (OrganizationNameDao)this.factory.getBean("organizationNameDao");}
+	public ResourceDao getResourceDao() { return (ResourceDao)this.factory.getBean("resourceDao");}
+	public SupplierSourceDao getSupplierSourceDao() { return (SupplierSourceDao)this.factory.getBean("supplierSourceDao");}
+	public SystemDao getSystemDao() { return (SystemDao)this.factory.getBean("systemDao");}
+	public UserListDao getUserListDao() { return (UserListDao)this.factory.getBean("userListDao");}
+	public UserRoleDao getUserRoleDao() { return (UserRoleDao)this.factory.getBean("userRoleDao");}
 	
 	// Load Services
 	public LoginService getLoginService() { return (LoginService)this.factory.getBean("loginService");}
@@ -102,6 +120,22 @@ public class BeanFactory {
 		positionDaoTests.testPosition();
 		ProfileDaoTests profileDaoTests = new ProfileDaoTests();
 		profileDaoTests.testProfile();
+		ResourceDaoTests resourceDaoTests = new ResourceDaoTests();
+		resourceDaoTests.testResource();
+		ResourceTypeDaoTest resourceTypeDaoTest = new ResourceTypeDaoTest();
+		resourceTypeDaoTest.testResourceType();
+		RoleDaoTests roleDaoTests = new RoleDaoTests();
+		roleDaoTests.testRole();
+		SupplierSourceDaoTests supplierSourceDaoTests = new SupplierSourceDaoTests();
+		supplierSourceDaoTests.testSupplierSource();
+		SystemDaoTests systemDaoTests = new SystemDaoTests();
+		systemDaoTests.testSystem();
+		UserDaoTests userDaoTests = new UserDaoTests();
+		userDaoTests.testUser();
+		UserListDaoTests userListDaoTests = new UserListDaoTests();
+		userListDaoTests.testUserList();
+		UserRoleDaoTests userRoleDaoTests = new UserRoleDaoTests();
+		userRoleDaoTests.testUserRole();
 		
 //		LoginServiceTests loginServiceTests = new LoginServiceTests();
 //		loginServiceTests.testLoginOrganizationByIpAddress();

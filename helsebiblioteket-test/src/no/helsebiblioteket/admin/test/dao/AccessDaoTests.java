@@ -25,11 +25,11 @@ import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
 import no.helsebiblioteket.admin.factory.ResourceAccessFactory;
-import no.helsebiblioteket.admin.factory.ResourceTypeFactory;
 import no.helsebiblioteket.admin.factory.SupplierOrganizationFactory;
 import no.helsebiblioteket.admin.factory.SupplierSourceFactory;
 import no.helsebiblioteket.admin.factory.SupplierSourceResourceFactory;
@@ -43,11 +43,9 @@ public class AccessDaoTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
 	@org.junit.Test
 	public void testAccess() {
-		// TODO: Load system from DAO!
-		System system = new System(); system.setKey(SystemKey.helsebiblioteket_admin); system.setSystemId(1);
+		System system = beanFactory.getSystemDao().getSystemByKey(SystemKey.helsebiblioteket_admin);
 
 		// Test classes
-		ResourceTypeDaoTest resourceTypeDaoTest = new ResourceTypeDaoTest();
 		OrganizationDaoTests organizationDaoTests = new OrganizationDaoTests();
 		UserDaoTests userDaoTests = new UserDaoTests();
 
@@ -66,17 +64,16 @@ public class AccessDaoTests {
 		// DAOs for regular data
 		AccessDao accessDao = beanFactory.getAccessDao();
 		
-		
-		ResourceType resourceType = ResourceTypeFactory.factory.completeSupplierResourceType();
-		resourceTypeDaoTest.insertResourceType(resourceType);
+		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(organizationType, position);
+		organizationDaoTests.insertSupplierOrganization(supplierOrganization);
+
+		ResourceType resourceType = beanFactory.getResourceTypeDao().getResourceTypeByKey(ResourceTypeKey.supplier_source);
 		SupplierSource supplierSource = SupplierSourceFactory.factory.completeSupplierSource();
-		SupplierSourceResource resource = SupplierSourceResourceFactory.factory.completeSupplierSourceResource(resourceType, supplierSource);
+		SupplierSourceResource resource = SupplierSourceResourceFactory.factory.completeSupplierSourceResource(resourceType, supplierSource, supplierOrganization);
 
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 //		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
 		organizationDaoTests.insertMemberOrganization(organization);
-		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(organizationType, position);
-		organizationDaoTests.insertSupplierOrganization(supplierOrganization);
 
 		User user = UserFactory.factory.completeUser(organization, position);
 		user.setUsername("RandomUser" + new Random().nextInt(1000000));
@@ -128,6 +125,5 @@ public class AccessDaoTests {
 		userDaoTests.removeUser(user);
 		organizationDaoTests.removeSupplierOrganization(supplierOrganization);
 		organizationDaoTests.removeMemberOrganization(organization);
-		resourceTypeDaoTest.removeResourceType(resourceType);
 	}
 }
