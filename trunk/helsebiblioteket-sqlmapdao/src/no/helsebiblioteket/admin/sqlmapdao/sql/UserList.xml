@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="UserList">
+	<typeAlias alias="UserListLine" type="no.helsebiblioteket.admin.domain.line.UserListLine"/>
+	<resultMap id="UserListLineMap" class="UserListLine">
+		<result property="username" column="username" />
+		<result property="firstName" column="first_name" />
+		<result property="lastName" column="last_name" />
+		<result property="roleName" column="role_name" />
+		<result property="roleKey" column="role_key" />
+	</resultMap>
+	<select id="getUserListPaged" resultMap="UserListLineMap" >
+		select
+			tuser.username,
+			tperson.first_name,
+			tperson.last_name,
+			trole.name as role_name,
+			trole.key as role_key
+		from
+			tbl_user as tuser
+			inner join tbl_person as tperson on tperson.person_id = tuser.person_id
+			inner join tbl_user_role as userrole on userrole.user_id = tuser.user_id
+			inner join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
+		order by
+			tuser.username
+	</select>
+</sqlMap>

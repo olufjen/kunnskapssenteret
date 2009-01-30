@@ -25,10 +25,10 @@
 	</insert>
 	<update id="updateUser" parameterClass="user">
 		update tbl_user set
-			username = #username#
-			password = #password#
-			org_unit_id = #organization.id#
-			person_id = #person.id#
+			username = #username#,
+			password = #password#,
+			org_unit_id = #organization.id#,
+			person_id = #person.id#,
 			last_changed = now()
 		where user_id = #id# and last_changed = #lastChanged#;
 	</update>
