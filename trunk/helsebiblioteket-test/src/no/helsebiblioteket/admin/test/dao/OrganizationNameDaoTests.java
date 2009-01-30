@@ -32,13 +32,15 @@ public class OrganizationNameDaoTests {
 		OrganizationName name = new OrganizationName();
 		name.setCategory(OrganizationNameCategory.NORMAL);
 		name.setLanguageCode(LanguageCategory.en);
-		String nameText = "EnglishNormal" +new Random().nextInt(1000000);
+		String nameText = "EnglishNormal" +new Random().nextInt(100000000);
 		name.setName(nameText);
-		name.setLastChanged(new Date());
 		organizationNameDao.insertOrganizationName(organization, name);
+		
 		List<OrganizationName> list = organizationNameDao.getOrganizationNameListByOrganization(organization);
 		Assert.notEmpty(list, "Name not saved.");
 		Assert.isTrue(list.get(0).getName().equals(nameText), "Name wrong");
+		
+		name = list.get(0);
 		
 		String newNameText = nameText + "CHANGED";
 		name.setName(newNameText);

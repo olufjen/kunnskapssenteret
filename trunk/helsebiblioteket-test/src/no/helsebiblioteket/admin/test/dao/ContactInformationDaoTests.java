@@ -18,14 +18,6 @@ import no.helsebiblioteket.admin.test.BeanFactory;
 
 public class ContactInformationDaoTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
-	public void insertContactInformation(ContactInformation contactInformation){
-		ContactInformationDao contactInformationDao = beanFactory.getContactInformationDao();
-		contactInformationDao.insertContactInformation(contactInformation);
-	}
-	public void removeContactInformation(ContactInformation contactInformation){
-		ContactInformationDao contactInformationDao = beanFactory.getContactInformationDao();
-		contactInformationDao.deleteContactInformation(contactInformation);
-	}
 	@org.junit.Test
 	public void testContactInformation() {
 		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
@@ -51,5 +43,13 @@ public class ContactInformationDaoTests {
 		
 		ContactInformation orgContactInformation = contactInformationDao.getContactInformationByOrganization(organization);
 		Assert.notNull(orgContactInformation, "No contact information for organization");
+	}
+	public void insertContactInformation(ContactInformation contactInformation){
+		ContactInformationDao contactInformationDao = beanFactory.getContactInformationDao();
+		contactInformationDao.insertContactInformation(contactInformation);
+	}
+	public void removeContactInformation(ContactInformation contactInformation){
+		ContactInformationDao contactInformationDao = beanFactory.getContactInformationDao();
+		contactInformationDao.deleteContactInformation(contactInformation);
 	}
 }
