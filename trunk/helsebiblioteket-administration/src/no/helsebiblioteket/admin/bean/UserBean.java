@@ -17,17 +17,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
-import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
@@ -330,7 +329,8 @@ public class UserBean {
 	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
 			Role[] roles = this.userService.getRoleListBySystem(
-					this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getList();
+					((ValueResult<System>)
+							this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue()).getList();
 			this.allRoles = new ArrayList<Role>();
 			this.allRolesMap = new HashMap<UserRoleKey, Role>();
 			for (Role role : roles) {

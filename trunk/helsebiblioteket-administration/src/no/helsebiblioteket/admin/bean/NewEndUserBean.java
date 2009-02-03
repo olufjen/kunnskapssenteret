@@ -9,8 +9,10 @@ import javax.faces.component.UISelectOne;
 import javax.faces.model.SelectItem;
 
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
@@ -49,7 +51,8 @@ public class NewEndUserBean extends NewUserBean {
 	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
 			Role[] roles = this.userService.getRoleListBySystem(
-					this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getList();
+					((ValueResult<System>)
+							this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue()).getList();
 			this.allRoles = new ArrayList<Role>();
 			this.allRolesMap = new HashMap<UserRoleKey, Role>();
 			for (Role role : roles) {
