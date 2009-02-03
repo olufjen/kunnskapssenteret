@@ -61,3 +61,6 @@ logon [Used in Position: right, as default, etc]
   logOutServletPage: LoggUtServlet
   loginServletPage: LoggInnServlet
   datasource: logon.xsl
+registreringFlereTrinn 
+  passportPage: Passord
+  datasource: registerUser
