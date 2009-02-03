@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Email;
 
-public class EmailDAOImpl implements EmailService {
+public class EmailServiceSMTPImpl implements EmailService {
 	private Log logger = LogFactory.getLog(getClass());
 	private String host;
 	public void sendEmail(Email email) {

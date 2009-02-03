@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
@@ -38,15 +39,16 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName findUserByUsernameName;
 	private QName insertUserName;
 	private QName updateUserName;
+	private QName positionByKey;
 
 	public void init(){
 		options = serviceClient.getOptions();
 	    options.setTo(targetEPR);
 	}
-	public System getSystemByKey(SystemKey key) {
+	public SingleResult<System> getSystemByKey(SystemKey key) {
 		Object[] args = new Object[] { key };
-		Class[] returnTypes = new Class[] { System.class };
-		return (System)invoke(this.systemByKey, args, returnTypes);
+		Class[] returnTypes = new Class[] { SingleResult.class };
+		return (SingleResult<System>)invoke(this.systemByKey, args, returnTypes);
 	}
 	public ListResult<Role> getRoleListBySystem(System system) {
 		Object[] args = new Object[] { system };
@@ -87,6 +89,11 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.updateUserName, args, returnTypes);
+	}
+	public SingleResult<Position> getPositionByKey(PositionTypeKey positionTypeKey) {
+		Object[] args = new Object[] { positionTypeKey };
+		Class[] returnTypes = new Class[] { SingleResult.class };
+		return (SingleResult<Position>)invoke(this.positionByKey, args, returnTypes);
 	}
 
 	
@@ -132,5 +139,8 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 
 	public void setUpdateUserName(QName updateUserName) {
 		this.updateUserName = updateUserName;
+	}
+	public void setPositionByKey(QName positionByKey) {
+		this.positionByKey = positionByKey;
 	}
 }
