@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.dao.SystemDao;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
+import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.AccessService;
@@ -43,6 +44,12 @@ import no.helsebiblioteket.admin.test.dao.SystemDaoTests;
 import no.helsebiblioteket.admin.test.dao.UserDaoTests;
 import no.helsebiblioteket.admin.test.dao.UserListDaoTests;
 import no.helsebiblioteket.admin.test.dao.UserRoleDaoTests;
+import no.helsebiblioteket.admin.test.service.AccessServiceTests;
+import no.helsebiblioteket.admin.test.service.EmailServiceTests;
+import no.helsebiblioteket.admin.test.service.LoginServiceTests;
+import no.helsebiblioteket.admin.test.service.OrganizationServiceTests;
+import no.helsebiblioteket.admin.test.service.URLServiceTests;
+import no.helsebiblioteket.admin.test.service.UserServiceTests;
 
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -90,11 +97,12 @@ public class BeanFactory {
 	public UserRoleDao getUserRoleDao() { return (UserRoleDao)this.factory.getBean("userRoleDao");}
 	
 	// Load Services
-	public LoginService getLoginService() { return (LoginService)this.factory.getBean("loginService");}
-	public UserService getUserService() { return (UserService)this.factory.getBean("userService");}
-	public OrganizationService getOrganizationService() { return (OrganizationService)this.factory.getBean("organizationService");}
 	public AccessService getAccessService() { return (AccessService)this.factory.getBean("accessService");}
+	public EmailService getEmailService() { return (EmailService)this.factory.getBean("emailService");}
+	public LoginService getLoginService() { return (LoginService)this.factory.getBean("loginService");}
+	public OrganizationService getOrganizationService() { return (OrganizationService)this.factory.getBean("organizationService");}
 	public URLService getURLService() { return (URLService)this.factory.getBean("urlService");}
+	public UserService getUserService() { return (UserService)this.factory.getBean("userService");}
 	
 	// Main method when not using ant.
 	public static void main(String[] args) {
@@ -137,11 +145,18 @@ public class BeanFactory {
 		UserRoleDaoTests userRoleDaoTests = new UserRoleDaoTests();
 		userRoleDaoTests.testUserRole();
 		
-//		LoginServiceTests loginServiceTests = new LoginServiceTests();
-//		loginServiceTests.testLoginOrganizationByIpAddress();
-//		loginServiceTests.testLoginUserByUsernamePassword();
-//		loginServiceTests.testSendPasswordEmail();
-//	
+		AccessServiceTests accessServiceTests = new AccessServiceTests();
+		accessServiceTests.testInsertAccess();
+		
+		EmailServiceTests emailServiceTests = new EmailServiceTests();
+		emailServiceTests.testSendMail();
+		
+		
+		LoginServiceTests loginServiceTests = new LoginServiceTests();
+		OrganizationServiceTests organizationServiceTests = new OrganizationServiceTests();
+		URLServiceTests urlServiceTests = new URLServiceTests();
+		UserServiceTests userServiceTests = new UserServiceTests();
+		
 		System.out.println("OK");
 	}
 }
