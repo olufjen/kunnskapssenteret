@@ -20,6 +20,7 @@ import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
@@ -52,13 +53,13 @@ public class UserServiceImpl implements UserService {
      * 
      * TODO: Fetch from DB!
      */
-	public System getSystemByKey(SystemKey key){
+	public SingleResult<System> getSystemByKey(SystemKey key){
 		System system = new System();
 		system.setDescription("");
 		system.setKey(key);
 		system.setName(key.toString());
 		system.setSystemId(1);
-		return system;
+		return new ValueResult<System>(system);
 	}
     /**
      * Fetches all the roles from the database for the given
@@ -69,7 +70,8 @@ public class UserServiceImpl implements UserService {
 		Role[] roles = new Role[roleList.size()];
 		int i = 0;
 		for (Role role : roleList) {
-			role.setSystem(this.getSystemByKey(role.getSystem().getKey()));
+			role.setSystem(((ValueResult<System>)
+					this.getSystemByKey(role.getSystem().getKey())).getValue());
 			roles[i++] = role;
 		}
 		return new ListResult<Role>(roles);
@@ -101,7 +103,8 @@ public class UserServiceImpl implements UserService {
 		if(role==null){
 			return new EmptyResult<Role>();
 		} else {
-			role.setSystem(this.getSystemByKey(role.getSystem().getKey()));
+			role.setSystem(((ValueResult<System>)
+					this.getSystemByKey(role.getSystem().getKey())).getValue());
 			return new ValueResult<Role>(role);
 		}
 	}
@@ -340,5 +343,9 @@ public class UserServiceImpl implements UserService {
 	}
 	public void setPositionDao(PositionDao positionDao) {
 		this.positionDao = positionDao;
+	}
+	public SingleResult<Position> getPositionByKey(PositionTypeKey positionTypeKey) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

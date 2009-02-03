@@ -7,7 +7,6 @@ package no.helsebiblioteket.admin.service;
 
 import java.io.Serializable;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;

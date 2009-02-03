@@ -7,6 +7,7 @@ import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.daoobjects.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.Access;
+import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -14,6 +15,9 @@ import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
+import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.AccessService;
 
 @SuppressWarnings(value={"serial"})
@@ -65,5 +69,14 @@ public class AccessServiceImpl implements AccessService {
 	}
 	public void setSupplierSourceDao(SupplierSourceDao supplierSourceDao) {
 		this.supplierSourceDao = supplierSourceDao;
+	}
+	public List<ResourceAccess> getAccessListByRole(Role role) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public SingleResult<AccessType> getAccessTypeByTypeCategory(
+			AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

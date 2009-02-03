@@ -58,7 +58,7 @@ public class LoginServiceImpl implements LoginService {
 		ListResult<OrganizationListItem> result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
 		OrganizationListItem[] list = result.getList();
 		if(list.length >= 1){
-			// TODO: Log incidents of more than one organization per IP Address?
+			// Later: Log incidents of more than one organization per IP Address?
 			SingleResult<Organization> memberResult = this.organizationService.getOrganizationByListItem(list[0]);
 			if(memberResult instanceof ValueResult){
 				MemberOrganization memberOrganization = (MemberOrganization) ((ValueResult<Organization>)memberResult).getValue();

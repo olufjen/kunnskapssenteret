@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
@@ -86,16 +87,24 @@ public class UserServiceImpl2 implements UserService {
 	}
 
 
+
 	@Override
-	public System getSystemByKey(SystemKey key) {
+	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
+	@Override
+	public SingleResult<Position> getPositionByKey(
+			PositionTypeKey positionTypeKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	@Override
-	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system) {
+	public SingleResult<System> getSystemByKey(SystemKey key) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -12,6 +12,7 @@ import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
@@ -21,9 +22,10 @@ import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 
 public interface UserService extends Serializable {
-	public System getSystemByKey(SystemKey key);
+	public SingleResult<System> getSystemByKey(SystemKey key);
 	public ListResult<Role> getRoleListBySystem(System system);
 	public ListResult<Position> getPositionListAll(String DUMMY);
+	public SingleResult<Position> getPositionByKey(PositionTypeKey positionTypeKey);
 	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system);
 
 	// TODO: Remove this and use findUsersBySearchStringRoles with empty string and list?
