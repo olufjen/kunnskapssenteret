@@ -98,7 +98,7 @@
 	<target name="clean-target" description="Clean output directories">
 		<delete includeemptydirs="true">
 	       	<fileset dir="${project.target.dir}">
-				<include name="**/*.jar"/>
+	       		<include name="**/*"/>
             </fileset>
         </delete>
     </target>
@@ -122,6 +122,8 @@
 		<copy file="desc/services.xml" tofile="${webservices.metainf.dir}/services.xml" overwrite="true" />
 		<copy file="desc/applicationContext.xml" tofile="${webservices.classes.dir}/applicationContext.xml" overwrite="true" />
 		<copy file="desc/jdbc.properties" tofile="${webservices.classes.dir}/jdbc.properties" overwrite="true" />
+		<copy file="desc/mail.properties" tofile="${webservices.classes.dir}/mail.properties" overwrite="true" />
+		<copy file="desc/proxy.properties" tofile="${webservices.classes.dir}/proxy.properties" overwrite="true" />
 		<copy file="desc/sqlmap-config.xml" tofile="${webservices.classes.dir}/sqlmap-config.xml" overwrite="true" />
 
 
@@ -136,11 +138,25 @@
             <classpath refid="master-classpath"/>
 		</javac>
 
-		<jar basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}" />
+		<!-- 
+		-  deploying exploded, not jared
+		-  crating aar-file, then unziping the file.
+		-  todo: consider a better approach. 
+		-->
+		<jar compress="false" basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}_tmp" />
+		<unwar 
+			src="${webservices.target.dir}/${webservices.target.filename}_tmp"
+			dest="${webservices.target.dir}/${webservices.target.filename}"
+		/>
+		<delete file="${webservices.target.dir}/${webservices.target.filename}_tmp" />
 	</target>
 	
 	<target name="deploy-service" depends="generate-service">
-		<copy file="${webservices.target.dir}/${webservices.target.filename}" todir="${webservices.tomcat.services.dir}" />
+		<!-- copying exploded directory -->
+		<mkdir dir="${webservices.tomcat.services.dir}/${webservices.target.filename}" />
+		<copy todir="${webservices.tomcat.services.dir}/${webservices.target.filename}">
+			<fileset dir="${webservices.target.dir}/${webservices.target.filename}" />
+		</copy>
 		<copy todir="${webservices.tomcat.lib.dir}">
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
 				<include name="**/*.jar"/>
@@ -159,5 +175,5 @@
 			</fileset>
 		</copy>
 	</target>
-
+	
 </project>
