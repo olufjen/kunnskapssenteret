@@ -92,13 +92,12 @@
     </target>
 	
 	<target name="deploy" depends="package">
-		<copy todir="${evs.deploy.dir}">
+		<copy todir="${evs.plugin.deploy.dir}">
 			<fileset file="${project.target.dir}/${project.target.filename}" />
 			<fileset dir="${project.plugin.config.dir}" includes="*-plugin.xml"/>
 			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
 			
-
 			<!-- TODO: Copy all from folders. Make sure all are include from right source! -->
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/XmlSchema-1.4.2.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/neethi-2.0.4.jar" />
@@ -108,9 +107,13 @@
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-adb-1.4.1.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-api-1.2.7.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-impl-1.2.7.jar" />
-			
 		</copy>
-			
+		<copy todir="${evs.cms.deploy.dir}/WEB-INF/classes">
+			<fileset 
+				dir="${project.plugin.config.dir}"
+				includes="*.properties" 
+			/>
+		</copy>
 	</target>
 
 </project>

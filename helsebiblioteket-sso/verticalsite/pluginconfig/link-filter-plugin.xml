@@ -2,6 +2,13 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>classpath:environment.properties</value>
+	 		</list>
+		</property>
+	</bean>
 	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="urlService" ref="urlService" />
@@ -15,14 +22,14 @@
 	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	<bean name="urlTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="http://localhost:8080/axis2/services/urlService" />
+		<constructor-arg value="${webservice.service.url.prefix}/urlService" />
 	</bean>
 	<bean name="isAffectedName" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="isAffected" />
 	</bean>
 	<bean name="translateName" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="translate" />
 	</bean>
 </beans>
