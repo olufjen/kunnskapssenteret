@@ -26,25 +26,25 @@
 	 	<property name="locations">
 	 		<list>
 	 			<value>./jdbc.properties</value>
+	 			<value>./mail.properties</value>
+	 			<value>./proxy.properties</value>
 	 		</list>
 		</property>
 	</bean>
   	<bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
-
+	
   	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
   		<property name="accessDao" ref="accessDao"></property>
   		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
   	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
-  		<property name="userDao" ref="userDao"></property>
-  		<property name="emailDao" ref="emailDao"></property>
-  		<property name="ipRangeDao" ref="ipRangeDao"></property>
-    	<!-- TODO: Set these values! -->
-    	<property name="emailFromName" value=""></property>
-    	<property name="emailFromEmail" value=""></property>
-    	<property name="emailSubject" value=""></property>
-    	<property name="emailMessage" value=""></property>
+  		<property name="userService" ref="userService"></property>
+    	<property name="emailFromName" value="redaksjonen@helsebiblioteket.no"></property>
+    	<property name="emailFromEmail" value="redaksjonen@helsebiblioteket.no"></property>
+    	<property name="emailSubject" value="tilgangsinformasjon for helsebiblioteket.no"></property>
+    	<property name="emailMessage" value="Her er ditt nye passord for tilgang til http://www.helsebiblioteket.no: ##password##"></property>
   	</bean>
+  	
   	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
     	<property name="organizationDao" ref="organizationDao"></property>
     	<property name="organizationListDao" ref="organizationListDao"></property>
@@ -59,8 +59,7 @@
   	</bean>
   	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
     	<property name="accessService" ref="accessService"></property>
-    	<!-- TODO: Set this value! -->
-    	<property name="proxyPrefix" value=""></property>
+    	<property name="proxyPrefix" value="${proxy.prefix}"></property>
   	</bean>
   	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
   		<property name="userDao" ref="userDao"></property>
@@ -71,8 +70,11 @@
   		<property name="positionDao" ref="positionDao"></property>
   		<property name="organizationDao" ref="organizationDao"></property>
   	</bean>
-
-
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
+    	<property name="host" value="${mail.smtp.host}"></property>
+    	<property name="debug" value="${mail.debug}"></property>
+  	</bean>
+  	
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
@@ -81,9 +83,6 @@
 	</bean>
 	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
-	</bean>
-	<bean id="emailDao" class="no.helsebiblioteket.admin.service.EmailDAOImpl">
-		<property name="host" value="smtp.example.org"></property>
 	</bean>
 	<bean id="positionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPositionDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
@@ -121,10 +120,8 @@
 	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
-	
-	
-	
+
+
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="/sqlmap-config.xml"/>
     	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
