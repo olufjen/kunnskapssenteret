@@ -26,6 +26,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName organizationByListItemName;
 	private QName insertOrganizationName;
 	private QName updateOrganizationName;
+	private QName allPositionsName;
 	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY  };
 		Class[] returnTypes = new Class[] { ListResult.class };
@@ -94,5 +95,8 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	public void setInsertOrganizationName(QName insertOrganizationName) {
 		this.insertOrganizationName = insertOrganizationName;
+	}
+	public void setAllPositionsName(QName allPositionsName) {
+		this.allPositionsName = allPositionsName;
 	}
 }
