@@ -20,6 +20,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.PositionToXMLTranslator;
@@ -38,6 +39,7 @@ public class LoggedInFunction{
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	private String sessionResultsVarName = "hbresults";
 	private UserService userService;
+	private OrganizationService organizationService;
 
 	public void logInUser(User user){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
@@ -152,5 +154,8 @@ public class LoggedInFunction{
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
 	}
 }
