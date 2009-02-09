@@ -3,6 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>classpath:environment.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	
     <!-- Configure the function library to respond at extension "example". -->
     <bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
         <property name="name" value="loggedinuser"/>
@@ -21,10 +29,10 @@
 	<bean name="loggedInServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	<bean name="loggedInTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="http://localhost:8080/axis2/services/organizationService" />
+		<constructor-arg value="${webservice.service.url.prefix}/organizationService" />
 	</bean>
 	<bean name="loggedInAllPositionsName" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="getAllPositions" />
 	</bean>
 </beans>

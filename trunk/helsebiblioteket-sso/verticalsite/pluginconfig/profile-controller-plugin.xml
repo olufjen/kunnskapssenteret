@@ -2,6 +2,14 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>classpath:environment.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	
 	<bean class="no.helsebiblioteket.evs.plugin.ProfileController">
  		<property name="urlPattern" value="/site/2/RedigerProfilServlet" />
  		<property name="userService" ref="profileUserService" />
@@ -38,14 +46,14 @@
 	<bean name="profileServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	<bean name="profileTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="http://localhost:8080/axis2/services/userService" />
+		<constructor-arg value="${webservice.service.url.prefix}/userService" />
 	</bean>
 	<bean name="profileSaveUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="saveUser" />
 	</bean>
 	<bean name="profileFindUser" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="findUserByUsername" />
 	</bean>
 </beans>

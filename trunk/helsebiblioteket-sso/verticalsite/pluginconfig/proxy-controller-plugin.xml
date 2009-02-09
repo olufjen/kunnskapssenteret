@@ -2,14 +2,22 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>classpath:environment.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	
 	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
  		<property name="urlPattern" value="/site/2/ProxyServlet" />
  		<property name="priority" value="9998" />
  		<property name="resultSessionVarName" value="hbproxyresult" />
- 		<property name="proxyPassword" value="mypassword" />
+ 		<property name="proxyPassword" value="${proxy.password}" />
  		<property name="urlParamName" value="url" />
- 		<property name="proxyUrl" value="http://localhost:2048/login" />
- 		<property name="logUpUrl" value="http://localhost:8080/cms/site/2/Logg+inn" />
+ 		<property name="proxyUrl" value="${proxy.url}" />
+ 		<property name="logUpUrl" value="${proxy.logup.url}" />
 
  		<property name="urlService" ref="proxyUrlServiceWeb" />
  		
@@ -23,10 +31,10 @@
 	<bean name="proxyControllerLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	<bean name="proxyControllerLoginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+		<constructor-arg value="${webservice.service.url.prefix}/loginService" />
 	</bean>
 	<bean name="proxyControllerIsAffected" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="logInUser" />
 	</bean>
 </beans>

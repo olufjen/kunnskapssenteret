@@ -2,6 +2,14 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>classpath:environment.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	
 	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="priority" value="9999" />
@@ -19,11 +27,11 @@
 	</bean>
 
 	<bean name="interceptorLoginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+		<constructor-arg value="${webservice.service.url.prefix}/loginService" />
 	</bean>
 	
 	<bean name="interceptorLogInIpAddress" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="logInIpAddress" />
 	</bean>
 </beans>
