@@ -1,17 +1,11 @@
 package no.helsebiblioteket.admin.webservice;
 
-import java.util.List;
-
 import javax.xml.namespace.QName;
 
-import org.apache.axis2.addressing.EndpointReference;
-import org.apache.axis2.client.Options;
-import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
@@ -25,9 +19,6 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 @SuppressWarnings("serial")
 public class OrganizationServiceWeb extends BasicWebService implements OrganizationService {
 	protected static final Log logger = LogFactory.getLog(OrganizationServiceWeb.class);
-	private RPCServiceClient serviceClient;
-	private EndpointReference targetEPR;
-	private Options options;
 	private QName organizationTypeListAllName;
 	private QName organizationTypeByKeyName;
 	private QName organizationListAllName;
@@ -35,10 +26,6 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName organizationByListItemName;
 	private QName insertOrganizationName;
 	private QName updateOrganizationName;
-	public void init(){
-		options = serviceClient.getOptions();
-	    options.setTo(targetEPR);
-	}
 	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY  };
 		Class[] returnTypes = new Class[] { ListResult.class };
@@ -85,15 +72,6 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	
 	public Log getLogger() {
 		return this.logger;
-	}
-	public RPCServiceClient getServiceClient() {
-		return serviceClient;
-	}
-	public void setServiceClient(RPCServiceClient serviceClient) {
-		this.serviceClient = serviceClient;
-	}
-	public void setTargetEPR(EndpointReference targetEPR) {
-		this.targetEPR = targetEPR;
 	}
 	public void setOrganizationTypeListAllName(QName organizationTypeListAllName) {
 		this.organizationTypeListAllName = organizationTypeListAllName;

@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.apache.axis2.addressing.EndpointReference;
-import org.apache.axis2.client.Options;
-import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -27,9 +24,6 @@ import no.helsebiblioteket.admin.domain.list.UserListItem;
 
 public class UserServiceWeb extends BasicWebService implements UserService {
 	protected static final Log logger = LogFactory.getLog(UserServiceWeb.class);
-	private RPCServiceClient serviceClient;
-	private EndpointReference targetEPR;
-	private Options options;
 	private QName systemByKey;
 	private QName roleListBySystem;
 	private QName positionListAllName;
@@ -41,10 +35,6 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName updateUserName;
 	private QName positionByKey;
 
-	public void init(){
-		options = serviceClient.getOptions();
-	    options.setTo(targetEPR);
-	}
 	public SingleResult<System> getSystemByKey(SystemKey key) {
 		Object[] args = new Object[] { key };
 		Class[] returnTypes = new Class[] { SingleResult.class };
@@ -99,17 +89,6 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	
 	public Log getLogger() {
 		return this.logger;
-	}
-	public RPCServiceClient getServiceClient() {
-		return this.serviceClient;
-	}
-
-
-	public void setServiceClient(RPCServiceClient serviceClient) {
-		this.serviceClient = serviceClient;
-	}
-	public void setTargetEPR(EndpointReference targetEPR) {
-		this.targetEPR = targetEPR;
 	}
 
 	public void setPositionListAllName(QName positionListAllName) {
