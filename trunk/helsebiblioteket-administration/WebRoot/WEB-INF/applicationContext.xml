@@ -27,6 +27,7 @@ xmlns="http://www.springframework.org/schema/beans"
 	 		<list>
 	 			<value>/WEB-INF/application.properties</value>
 	 			<value>/WEB-INF/jdbc.properties</value>
+	 			<value>/WEB-INF/mail.properties</value>
 	 		</list>
 		</property>
 	</bean>
@@ -139,14 +140,15 @@ xmlns="http://www.springframework.org/schema/beans"
 	 	<property name="profileDao" ref="profileDao"></property>
 	 	<property name="contactInformationDao" ref="contactInformationDao"></property>
 	</bean>
+	
+	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
+    	<property name="host" value="${mail.smtp.host}"></property>
+    	<property name="debug" value="${mail.debug}"></property>
+  	</bean>
 
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
 	 	<property name="userDao" ref="userDao"></property>
-	 	<property name="emailDao" ref="emailDao"></property>
-	</bean>
-
-	<bean id="emailDao" class="no.helsebiblioteket.admin.service.EmailDAOImpl">
-		<property name="host" value="smtp.example.org"></property>
+	 	<property name="emailService" ref="emailService"></property>
 	</bean>
 	
 <!--  Spring security bean classes start    -->
