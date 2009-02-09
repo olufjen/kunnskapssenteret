@@ -1,12 +1,8 @@
 package no.helsebiblioteket.admin.service.impl;
 
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.dao.IpRangeDao;
-import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
