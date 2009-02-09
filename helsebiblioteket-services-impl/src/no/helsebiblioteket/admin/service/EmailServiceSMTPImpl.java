@@ -18,12 +18,13 @@ import no.helsebiblioteket.admin.domain.Email;
 public class EmailServiceSMTPImpl implements EmailService {
 	private Log logger = LogFactory.getLog(getClass());
 	private String host;
+	private boolean debug;
 	public void sendEmail(Email email) {
 		String to = email.getToName() + "<" + email.getToEmail() + ">";
 		String from = email.getFromName() + "<" + email.getFromEmail() + ">";
         Properties props = new Properties();
         props.put("mail.smtp.host", this.host);
-        props.put("mail.debug", "true");
+        props.put("mail.debug", this.debug);
         Session session = Session.getInstance(props);
         try {
             Message msg = new MimeMessage(session);
@@ -40,5 +41,8 @@ public class EmailServiceSMTPImpl implements EmailService {
 	}
 	public void setHost(String host) {
 		this.host = host;
+	}
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 }
