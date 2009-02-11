@@ -76,6 +76,9 @@ ALTER TABLE tbl_org_unit_name
 	ADD CHECK (category in ('SHORT', 'NORMAL'));
 
 ALTER TABLE tbl_org_unit_name
+	ADD CHECK (language_code in ('en', 'no'));
+
+ALTER TABLE tbl_org_unit_name
   ADD CONSTRAINT tbl_org_unit_name_unique UNIQUE (language_code, name, org_unit_id, category);
 
 
