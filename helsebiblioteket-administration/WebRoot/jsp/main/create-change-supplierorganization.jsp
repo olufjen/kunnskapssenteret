@@ -8,6 +8,7 @@
 <f:verbatim><h2></f:verbatim><h:outputText value="#{msg_headings.supplier_organization_new}" /><f:verbatim></h2></f:verbatim>
 <hr />
 <h:form>
+	<h:inputHidden id="init" value="#{createAndChangeSupplierOrganizationBean.init}"></h:inputHidden>
 	<table>
 		<tr>
 			<td>
@@ -15,7 +16,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.supplierOrganization.nameEnglish}"
+					value="#{createAndChangeSupplierOrganizationBean.organization.nameEnglish}"
 					id="organizationNameEnglish" 
 					required="true"
 					>
@@ -29,7 +30,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.supplierOrganization.nameShortEnglish}"
+					value="#{createAndChangeSupplierOrganizationBean.organization.nameShortEnglish}"
 					id="organizationNameEnglishShort" 
 					required="true"
 					>
@@ -43,7 +44,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.supplierOrganization.nameNorwegian}"
+					value="#{createAndChangeSupplierOrganizationBean.organization.nameNorwegian}"
 					id="organizationNameNorwegian" 
 					required="true"
 					>
@@ -57,7 +58,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.supplierOrganization.nameShortNorwegian}"
+					value="#{createAndChangeSupplierOrganizationBean.organization.nameShortNorwegian}"
 					id="organizationNameShortNorwegian" 
 					required="true"
 					>
@@ -71,7 +72,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.supplierOrganization.description}"
+					value="#{createAndChangeSupplierOrganizationBean.organization.description}"
 					id="organizationDescription" 
 					required="true"
 					>
@@ -89,21 +90,21 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.sourceName}"
+					value="#{createAndChangeSupplierOrganizationBean.sourceName}"
 					id="sourceName" 
 					required="false"
-					binding="#{newSupplierOrganizationBean.sourceNameUIInput}"
+					binding="#{createAndChangeSupplierOrganizationBean.sourceNameUIInput}"
 					>
 				</h:inputText>
 				<h:outputText value=" - " />
 				<h:inputText 
-					value="#{newSupplierOrganizationBean.sourceUrl}"
+					value="#{createAndChangeSupplierOrganizationBean.sourceUrl}"
 					id="sourceUrl" 
 					required="false"
-					binding="#{newSupplierOrganizationBean.sourceUrlUIInput}"
+					binding="#{createAndChangeSupplierOrganizationBean.sourceUrlUIInput}"
 					>
 				</h:inputText>
-				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{newSupplierOrganizationBean.actionAddSupplierSource}" />
+				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeSupplierOrganizationBean.actionAddSupplierSource}" />
 				<h:message for="sourceName" styleClass="error" />
 				<h:message for="sourceUrl" styleClass="error" />
 			</td>
@@ -113,22 +114,22 @@
 				<h:outputText value="#{msg_main.chosen} #{msg_main.sources}:" />
 			</td>
 			<td valign="top">
-				<t:dataTable rendered="#{newSupplierOrganizationBean.showSourceList}" var="source" value="#{newSupplierOrganizationBean.supplierOrganization.sourceList}" binding="#{newSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
+				<t:dataTable rendered="#{createAndChangeSupplierOrganizationBean.showSourceList}" var="source" value="#{createAndChangeSupplierOrganizationBean.organization.sourceList}" binding="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
 					<t:column>
 			      		<t:outputText id="source" value="#{source.name} #{source.url}" />
 			    	</t:column>
 			    	<t:column style="vertical-align:top">
-			      		<t:commandLink id="sourceDeleteLink" action="#{newSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">
-			      			<f:param id="sourceDeleteParam" name="sourceDeleteTableRowIndex" value="#{newSupplierOrganizationBean.supplierSourceListHtmlDataTable.rowIndex}"/>
+			      		<t:commandLink id="sourceDeleteLink" action="#{createAndChangeSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">
+			      			<f:param id="sourceDeleteParam" name="sourceDeleteTableRowIndex" value="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable.rowIndex}"/>
 			      		</t:commandLink>
 			    	</t:column>
 				</t:dataTable>
-				<t:outputText rendered="#{not newSupplierOrganizationBean.showSourceList}" value="#{msg_main.none_chosen}"/>
+				<t:outputText rendered="#{not createAndChangeSupplierOrganizationBean.showSourceList}" value="#{msg_main.none_chosen}"/>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="right">
-				<h:commandButton value="#{msg_main.save}" action="#{newSupplierOrganizationBean.actionSaveOrganization}" />
+				<h:commandButton value="#{msg_main.save}" action="#{createAndChangeSupplierOrganizationBean.actionSaveOrganization}" />
 			</td>
 		</tr>
 	</table>

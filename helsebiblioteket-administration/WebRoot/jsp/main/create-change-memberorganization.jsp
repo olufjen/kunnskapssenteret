@@ -8,6 +8,7 @@
 <f:verbatim><h2></f:verbatim><h:outputText value="#{msg_headings.member_organization_new}" /><f:verbatim></h2></f:verbatim>
 <hr />
 <h:form>
+	<h:inputHidden id="init" value="#{createAndChangeMemberOrganizationBean.init}"></h:inputHidden>
 	<table>
 		<tr>
 			<td>
@@ -15,7 +16,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.nameEnglish}"
+					value="#{createAndChangeMemberOrganizationBean.organization.nameEnglish}"
 					id="organizationNameEnglish" 
 					required="true"
 					>
@@ -29,7 +30,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.nameShortEnglish}"
+					value="#{createAndChangeMemberOrganizationBean.organization.nameShortEnglish}"
 					id="organizationNameEnglishShort" 
 					required="true"
 					>
@@ -43,7 +44,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.nameNorwegian}"
+					value="#{createAndChangeMemberOrganizationBean.organization.nameNorwegian}"
 					id="organizationNameNorwegian" 
 					required="true"
 					>
@@ -57,7 +58,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.nameShortNorwegian}"
+					value="#{createAndChangeMemberOrganizationBean.organization.nameShortNorwegian}"
 					id="organizationNameShortNorwegian" 
 					required="true"
 					>
@@ -71,7 +72,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.description}"
+					value="#{createAndChangeMemberOrganizationBean.organization.description}"
 					id="organizationDescription" 
 					required="true"
 					>
@@ -86,7 +87,7 @@
 			</td>
 			<td>
 				<h:selectOneListbox 
-					value="#{newMemberOrganizationBean.selectedOrganizationTypeId}"
+					value="#{createAndChangeMemberOrganizationBean.selectedOrganizationTypeId}"
 					id="organizationType" 
 					required="true"
 					size="1"
@@ -106,7 +107,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.contactInformation.postalAddress}"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactInformation.postalAddress}"
 					id="orgAddress" 
 					required="false"
 					>
@@ -119,7 +120,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.contactInformation.postalCode}"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactInformation.postalCode}"
 					id="orgPostalCode" 
 					required="false"
 					>
@@ -132,7 +133,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.contactInformation.postalLocation}"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactInformation.postalLocation}"
 					id="orgPostalLocation" 
 					required="false"
 					>
@@ -149,7 +150,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.firstName}"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.firstName}"
 					id="contactPersonFirstName" 
 					required="false"
 					>
@@ -162,7 +163,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.lastName}"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.lastName}"
 					id="contactPersonLastName" 
 					required="false"
 					>
@@ -175,7 +176,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.contactInformation.telephoneNumber}"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.contactInformation.telephoneNumber}"
 					id="contactPersonTelephoneNumber" 
 					required="false"
 					>
@@ -188,7 +189,7 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.memberOrganization.contactPerson.contactInformation.email}"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.contactInformation.email}"
 					id="contactPersonEmail" 
 					required="false"
 					>
@@ -205,21 +206,21 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.ipAddressFrom}"
+					value="#{createAndChangeMemberOrganizationBean.ipAddressFrom}"
 					id="ipAddressFrom" 
 					required="false"
-					binding="#{newMemberOrganizationBean.ipAddressFromUIInput}"
+					binding="#{createAndChangeMemberOrganizationBean.ipAddressFromUIInput}"
 					>
 				</h:inputText>
 				<h:outputText value=" - " />
 				<h:inputText 
-					value="#{newMemberOrganizationBean.ipAddressTo}"
+					value="#{createAndChangeMemberOrganizationBean.ipAddressTo}"
 					id="ipAddressTo" 
 					required="false"
-					binding="#{newMemberOrganizationBean.ipAddressToUIInput}"
+					binding="#{createAndChangeMemberOrganizationBean.ipAddressToUIInput}"
 					>
 				</h:inputText>
-				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{newMemberOrganizationBean.actionAddIpRange}" actionListener="#{newMemberOrganizationBean.addIpRangeActionListener }" />
+				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeMemberOrganizationBean.actionAddIpRange}" actionListener="#{createAndChangeMemberOrganizationBean.addIpRangeActionListener }" />
 				<br /><h:message for="ipAddressTo" styleClass="error" />
 			</td>
 		</tr>
@@ -229,13 +230,13 @@
 			</td>
 			<td>
 				<h:inputText 
-					value="#{newMemberOrganizationBean.ipAddressSingle}"
+					value="#{createAndChangeMemberOrganizationBean.ipAddressSingle}"
 					id="ipAddressSingle" 
 					required="false"
-					binding="#{newMemberOrganizationBean.ipAddressSingleUIInput}"
+					binding="#{createAndChangeMemberOrganizationBean.ipAddressSingleUIInput}"
 					>
 				</h:inputText>
-				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{newMemberOrganizationBean.actionAddSingleIp}" />
+				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeMemberOrganizationBean.actionAddSingleIp}" />
 				<br /><h:message for="ipAddressSingle" styleClass="error" />
 			</td>
 		</tr>
@@ -244,17 +245,17 @@
 				<h:outputText value="#{msg_main.chosen}" />
 			</td>
 			<td >
-				<h:dataTable rendered="#{newMemberOrganizationBean.showIpRangeList}" var="ipRange" value="#{newMemberOrganizationBean.ipRangeList}" binding="#{newMemberOrganizationBean.ipRangeListHtmlDataTable}">
+				<h:dataTable rendered="#{createAndChangeMemberOrganizationBean.showIpRangeList}" var="ipRange" value="#{createAndChangeMemberOrganizationBean.ipRangeList}" binding="#{createAndChangeMemberOrganizationBean.ipRangeListHtmlDataTable}">
 					<h:column>
 			      		<h:outputText id="ipRange" value="#{ipRange.ipAddressFrom} #{ipRange.ipAddressTo}" />
 			    	</h:column>
 			    	<h:column>
-			      		<h:commandLink id="ipRangeDeleteLink" action="#{newMemberOrganizationBean.actionDeleteIpRange}" value="#{msg_main.delete}" immediate="true">
-			      			<f:param id="ipRangeDeleteParam" name="ipRangeDeleteTableRowIndex" value="#{newMemberOrganizationBean.ipRangeListHtmlDataTable.rowIndex}"/>
+			      		<h:commandLink id="ipRangeDeleteLink" action="#{createAndChangeMemberOrganizationBean.actionDeleteIpRange}" value="#{msg_main.delete}" immediate="true">
+			      			<f:param id="ipRangeDeleteParam" name="ipRangeDeleteTableRowIndex" value="#{createAndChangeMemberOrganizationBean.ipRangeListHtmlDataTable.rowIndex}"/>
 			      		</h:commandLink>
 			    	</h:column>
 				</h:dataTable>
-				<h:outputText rendered="#{not newMemberOrganizationBean.showIpRangeList}" value="#{msg_main.none_chosen}"/>
+				<h:outputText rendered="#{not createAndChangeMemberOrganizationBean.showIpRangeList}" value="#{msg_main.none_chosen}"/>
 			</td>
 		</tr>
 		<tr>
@@ -262,14 +263,14 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<t:dataTable newspaperColumns="3" var="supplier" value="#{newMemberOrganizationBean.suppliersWithSourcesList}">
+				<t:dataTable newspaperColumns="3" var="supplier" value="#{createAndChangeMemberOrganizationBean.suppliersWithSourcesList}">
 					<t:column style="vertical-align:top">
 			      		<t:outputText id="supplierName" value="#{supplier.name}" />
 			    	</t:column>
 			    	<t:column>
 			      		<t:dataTable var="source" value="#{supplier.sourceList}">
 			      			<t:column>
-			      				<t:selectManyCheckbox id="suppliersources" layout="pageDirection" value="#{newMemberOrganizationBean.selectedSourceList}">
+			      				<t:selectManyCheckbox id="suppliersources" layout="pageDirection" value="#{createAndChangeMemberOrganizationBean.selectedSourceList}">
 				      				<f:selectItem id="suppliersource" itemLabel="#{source.name}" itemValue="#{source.id}"/>
 			      				</t:selectManyCheckbox>
 			      			</t:column>
@@ -281,7 +282,7 @@
 		
 		<tr>
 			<td colspan="2" align="right">
-				<h:commandButton value="#{msg_main.save}" action="#{newMemberOrganizationBean.actionSaveOrganization}" />
+				<h:commandButton value="#{msg_main.save}" action="#{createAndChangeMemberOrganizationBean.actionSaveOrganization}" />
 			</td>
 		</tr>
 	</table>

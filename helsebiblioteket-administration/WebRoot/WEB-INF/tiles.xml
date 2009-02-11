@@ -63,6 +63,10 @@
    		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
    		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
    	</definition>
+   	<definition name="basicFrame" path="/jsp/layout-basic.jsp">
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
    	
 	<!-- INDEX -->
    	<definition name="index.tiles" extends="standardFrame">
@@ -103,12 +107,12 @@
 		<put name="main" value="/jsp/main/new-organization.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
-   	<definition name="new-supplierorganization.tiles" extends="standardFrame">
-		<put name="main" value="/jsp/main/new-supplierorganization.jsp" type="page" />
+   	<definition name="create-change-supplierorganization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/create-change-supplierorganization.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
-   	<definition name="new-memberorganization.tiles" extends="standardFrame">
-		<put name="main" value="/jsp/main/new-memberorganization.jsp" type="page" />
+   	<definition name="create-change-memberorganization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/create-change-memberorganization.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	
@@ -146,9 +150,14 @@
 		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
    	</definition>
 
+	<!-- Import and export og initial data -->
+	<definition name="importexport.tiles" extends="basicFrame">
+		<put name="main" value="/jsp/main/importexport.jsp" type="page" />
+   	</definition>
+   	
 	<!--OLD USER TODO: Remove? -->
    	<definition name="user.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/user.jsp" type="page" />
    	</definition>
-   	   	
+   	
 </tiles-definitions>
