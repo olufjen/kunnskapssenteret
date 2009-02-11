@@ -26,8 +26,10 @@
     	</h:column>
 	    <h:column id="changeColumn">
 	    	<f:facet name="header" />
-   			<h:commandLink value="#{msg_main.organization_overview_edit}"
-				action="#{organizationBean.actionEdit}" immediate="true" />
+   			<h:commandLink 
+   				value="#{msg_main.organization_overview_edit}"
+				action="#{organizationBean.actionEdit}" 
+				immediate="true" />
     	</h:column>
   	</h:dataTable>
 </h:form>

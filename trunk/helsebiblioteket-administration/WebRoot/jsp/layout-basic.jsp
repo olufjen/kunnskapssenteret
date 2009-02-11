@@ -1,0 +1,81 @@
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<%@ taglib prefix="tiles" uri="http://struts.apache.org/tags-tiles"%>
+
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Helsebiblioteket - Administration</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <!--  <link rel="stylesheet" type="text/css" href="css/reset.css" />--> <!--stilsett som nuller ut alle marger, paddings, borders osv-->
+        <link href="css/hb-adm/layout_vertical_listnav.css" rel="stylesheet" type="text/css"/>
+    </head>
+	<body>
+		<f:view>
+			<div id="page_margins">
+				<div id="page">
+					<div id="header">
+						<div id="topnav">
+						<!-- start: skip link navigation -->
+						<!-- end: skip link navigation -->
+						</div>
+						<f:facet name="top">
+							<f:subview id="top">
+								<tiles:insert attribute="topheading" flush="false" />
+							</f:subview>
+						</f:facet>
+					</div>
+					<!-- begin: main navigation #nav -->
+					<div id="nav">
+						<div id="nav_main">
+						</div>
+					</div>
+					<!-- end: main navigation -->
+					<!-- begin: main content area #main -->
+					<div id="main">
+						<!-- begin: #col1 - first float column -->
+						<div id="col1">
+							<div id="col1_content" class="clearfix">
+							</div>
+						</div>
+						<!-- end: #col1 -->
+						<!-- begin: #col2 second float column -->
+						<div id="col2">
+							<div id="col2_content" class="clearfix">
+								<f:facet name="right">
+								</f:facet>
+							</div>
+						</div>
+						<!-- end: #col2 -->
+						<!-- begin: #col3 static column -->
+						<div id="col3">
+							<div id="col3_content" class="clearfix">
+								<a id="content" name="content"></a>
+								<f:facet name="main">
+								<f:subview id="main">  
+										<tiles:insert attribute="main" flush="false" />
+								</f:subview>  
+								</f:facet>
+							</div>
+							<div id="ie_clearing">&nbsp;</div>
+						</div>
+						<!-- end: #col3 -->
+					</div>
+					<!-- end: #main -->
+					<!-- begin: #footer -->
+					<div id="footer">
+						<f:facet name="bottom">
+							<f:subview id="bottom">
+								<tiles:insert attribute="bottom" flush="false" />
+							</f:subview>
+						</f:facet>
+					<!-- end: #footer -->
+					</div>
+				</div>
+			</div>
+		</f:view>
+	
+	</body>
+</html>

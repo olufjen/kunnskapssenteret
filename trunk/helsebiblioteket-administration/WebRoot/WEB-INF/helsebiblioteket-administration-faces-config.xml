@@ -48,6 +48,12 @@
 </navigation-rule>
 	
 	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.faces</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	
 	<navigation-rule>
 		<navigation-case>
@@ -65,15 +71,15 @@
 	
 	<navigation-rule>
 		<navigation-case>
-			<from-outcome>new_supplier_organization</from-outcome>
-			<to-view-id>/new-supplierorganization.faces</to-view-id>
+			<from-outcome>create_change_supplier_organization</from-outcome>
+			<to-view-id>/create-change-supplierorganization.faces</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
 		<navigation-case>
-			<from-outcome>new_member_organization</from-outcome>
-			<to-view-id>/new-memberorganization.faces</to-view-id>
+			<from-outcome>create_change_member_organization</from-outcome>
+			<to-view-id>/create-change-memberorganization.faces</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -139,9 +145,15 @@
 		    <from-outcome>back_to_login</from-outcome>
 		    <to-view-id>/login.faces</to-view-id>
 		</navigation-case>
-	</navigation-rule> 
+	</navigation-rule>
 
-	
+	<managed-bean>
+    	<description>Organization domain object</description>
+        <display-name>Orgnization domain object</display-name>
+        <managed-bean-name>organization</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.domain.Organization</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	
 	<managed-bean>
     	<description>Backingbean the welcome page</description>
@@ -157,8 +169,23 @@
     		<property-name>importMemberOrganizationsService</property-name>
         	<value>#{importMemberOrganizationsService}</value>
 		</managed-property>
-	</managed-bean> 
+	</managed-bean>	
 	
+	<managed-bean>
+    	<description>Backingbean import and export</description>
+        <display-name>import and export</display-name>
+        <managed-bean-name>importExportBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.ImportExportBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    	<managed-property>
+    		<property-name>importEndUsersService</property-name>
+        	<value>#{importEndUsersService}</value>
+		</managed-property>
+		<managed-property>
+    		<property-name>importMemberOrganizationsService</property-name>
+        	<value>#{importMemberOrganizationsService}</value>
+		</managed-property>
+	</managed-bean>	
 	 
     <managed-bean>
     	<description>Backingbean related to "user"</description>
@@ -253,24 +280,32 @@
 	<managed-bean>
     	<description>Backingbean related to creating a new member organization</description>
         <display-name>New member organization Bean</display-name>
-        <managed-bean-name>newMemberOrganizationBean</managed-bean-name>
-        <managed-bean-class>no.helsebiblioteket.admin.bean.NewMemberOrganizationBean</managed-bean-class>
+        <managed-bean-name>createAndChangeMemberOrganizationBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.CreateAndChangeMemberOrganizationBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
         <managed-property>
     		<property-name>organizationService</property-name>
         	<value>#{organizationService}</value>
 		</managed-property>
+		<managed-property>
+    		<property-name>organizationBean</property-name>
+        	<value>#{organizationBean}</value>
+		</managed-property>
 	</managed-bean>
-	 
+	
 	<managed-bean>
     	<description>Backingbean related to creating a new supplier organization</description>
         <display-name>New supplier Bean</display-name>
-        <managed-bean-name>newSupplierOrganizationBean</managed-bean-name>
-        <managed-bean-class>no.helsebiblioteket.admin.bean.NewSupplierOrganizationBean</managed-bean-class>
+        <managed-bean-name>createAndChangeSupplierOrganizationBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.CreateAndChangeSupplierOrganizationBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
         <managed-property>
     		<property-name>organizationService</property-name>
         	<value>#{organizationService}</value>
+		</managed-property>
+		<managed-property>
+    		<property-name>organizationBean</property-name>
+        	<value>#{organizationBean}</value>
 		</managed-property>
 	</managed-bean> 
 	 
@@ -296,8 +331,12 @@
     		<property-name>organizationService</property-name>
         	<value>#{organizationService}</value>
 		</managed-property>
+		<managed-property>
+    		<property-name>organization</property-name>
+        	<value>#{organization}</value>
+		</managed-property>
 	</managed-bean>
-	  
+	
 	<!-- <managed-bean>
     	<description>Backingbean related to "xxxx"</description>
         <display-name>xxxx</display-name>
