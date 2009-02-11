@@ -18,21 +18,22 @@
     </bean>
     
     <bean name="loggedInFunction" class="no.helsebiblioteket.evs.plugin.LoggedInFunction">
-    	<property name="organizationService" ref="loggedInFunctionOrganizationService" />
+    	<property name="userService" ref="loggedInFunctionUserService" />
     </bean>
-
-    <bean name="loggedInFunctionOrganizationService" class="no.helsebiblioteket.admin.webservice.OrganizationServiceWeb" init-method="init">
+	
+	<bean name="loggedInFunctionUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="loggedInServiceClient" />
 		<property name="targetEPR" ref="loggedInTargetEPR" />
-		<property name="allPositionsName" ref="loggedInAllPositionsName" />
+		<property name="positionListAllName" ref="loggedInAllPositionsName" />
 	</bean>
+	
 	<bean name="loggedInServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	<bean name="loggedInTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="${webservice.service.url.prefix}/organizationService" />
+		<constructor-arg value="${webservice.service.url.prefix}/userService" />
 	</bean>
 	<bean name="loggedInAllPositionsName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="getAllPositions" />
+		<constructor-arg value="getPositionListAll" />
 	</bean>
 </beans>
