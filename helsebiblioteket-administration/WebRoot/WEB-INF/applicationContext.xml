@@ -124,7 +124,6 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
 	 	<property name="organizationDao" ref="organizationDao"></property>
 	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
-	 	<property name="positionDao" ref="positionDao"></property>
 	 	<property name="personDao" ref="personDao"></property>
 	 	<property name="accessDao" ref="accessDao"></property>
 	 	<property name="contactInformationDao" ref="contactInformationDao"></property>
@@ -137,8 +136,6 @@ xmlns="http://www.springframework.org/schema/beans"
 	 	<property name="userDao" ref="userDao"></property>
 	 	<property name="roleDao" ref="roleDao"></property>
 	 	<property name="personDao" ref="personDao"></property>
-	 	<property name="profileDao" ref="profileDao"></property>
-	 	<property name="contactInformationDao" ref="contactInformationDao"></property>
 	</bean>
 	
 	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
@@ -147,7 +144,7 @@ xmlns="http://www.springframework.org/schema/beans"
   	</bean>
 
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
-	 	<property name="userDao" ref="userDao"></property>
+	 	<property name="userService" ref="userService"></property>
 	 	<property name="emailService" ref="emailService"></property>
 	</bean>
 	
@@ -286,7 +283,7 @@ xmlns="http://www.springframework.org/schema/beans"
             
             
      <bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl">
-          <constructor-arg  ref="userDao" />
+          <constructor-arg ref="userService" />
      </bean>
         
  <!--    <bean id="userRepository"  class="no.helsebiblioteket.admin.dao.JdbcUserDao"></bean>  --> 
