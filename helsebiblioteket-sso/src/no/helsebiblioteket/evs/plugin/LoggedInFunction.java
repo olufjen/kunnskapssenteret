@@ -39,7 +39,6 @@ public class LoggedInFunction{
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	private String sessionResultsVarName = "hbresults";
 	private UserService userService;
-	private OrganizationService organizationService;
 
 	public void logInUser(User user){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
@@ -154,8 +153,5 @@ public class LoggedInFunction{
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-	public void setOrganizationService(OrganizationService organizationService) {
-		this.organizationService = organizationService;
 	}
 }
