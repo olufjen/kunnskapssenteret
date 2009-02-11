@@ -46,52 +46,46 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
-	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao">
-		<property name="sqlMapClient" ref="sqlMapClient"/>
-	</bean>
-
-	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao">
-		<property name="sqlMapClient" ref="sqlMapClient"/>
-	</bean>
-
-	<bean id="userCompositeDao" class="no.helsebiblioteket.admin.dao.JdbcUserCompositeDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
-	</bean>
-
 	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
 	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
-	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.dao.JdbcOrganizationTypeDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
-	</bean>
-
-	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao">
+	<bean id="positionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPositionDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
-	<bean id="positionDao" class="no.helsebiblioteket.admin.dao.JdbcPositionDao">
-		<property name="jdbcTemplate" ref="jdbcTemplateHelsebiblioteket"></property>
-	</bean>
-	
 	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationNameDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	<bean id="ipRangeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapIpRangeDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
 	<bean id="resourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
 	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
@@ -121,32 +115,44 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="adminService" class="no.helsebiblioteket.admin.service.impl.AdminServiceImpl">
 	</bean>
 
-	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
-	 	<property name="organizationDao" ref="organizationDao"></property>
-	 	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
-	 	<property name="personDao" ref="personDao"></property>
-	 	<property name="accessDao" ref="accessDao"></property>
-	 	<property name="contactInformationDao" ref="contactInformationDao"></property>
-	 	<property name="ipRangeDao" ref="ipRangeDao"></property>
-	 	<property name="resourceDao" ref="resourceDao"></property>
-	 	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
-	</bean>
-
-	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
-	 	<property name="userDao" ref="userDao"></property>
-	 	<property name="roleDao" ref="roleDao"></property>
-	 	<property name="personDao" ref="personDao"></property>
-	</bean>
-	
-	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
+	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
+  		<property name="accessDao" ref="accessDao"></property>
+  		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  	</bean>
+  	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
+  		<property name="userService" ref="userService"></property>
+    	<property name="emailFromName" value="redaksjonen@helsebiblioteket.no"></property>
+    	<property name="emailFromEmail" value="redaksjonen@helsebiblioteket.no"></property>
+    	<property name="emailSubject" value="tilgangsinformasjon for helsebiblioteket.no"></property>
+    	<property name="emailMessage" value="Her er ditt nye passord for tilgang til http://www.helsebiblioteket.no: ##password##"></property>
+  	</bean>
+  	
+  	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
+    	<property name="organizationDao" ref="organizationDao"></property>
+    	<property name="organizationListDao" ref="organizationListDao"></property>
+    	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
+    	<property name="organizationNameDao" ref="organizationNameDao"></property>
+    	<property name="personDao" ref="personDao"></property>
+    	<property name="accessDao" ref="accessDao"></property>
+    	<property name="contactInformationDao" ref="contactInformationDao"></property>
+    	<property name="ipRangeDao" ref="ipRangeDao"></property>
+    	<property name="resourceDao" ref="resourceDao"></property>
+    	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  	</bean>
+ 
+  	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
+  		<property name="userDao" ref="userDao"></property>
+  		<property name="userListDao" ref="userListDao"></property>
+  		<property name="roleDao" ref="roleDao"></property>
+  		<property name="userRoleDao" ref="userRoleDao"></property>
+  		<property name="personDao" ref="personDao"></property>
+  		<property name="positionDao" ref="positionDao"></property>
+  		<property name="organizationDao" ref="organizationDao"></property>
+  	</bean>
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
     	<property name="host" value="${mail.smtp.host}"></property>
     	<property name="debug" value="${mail.debug}"></property>
   	</bean>
-
-	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
-	 	<property name="userService" ref="userService"></property>
-	 	<property name="emailService" ref="emailService"></property>
-	</bean>
 	
 <!--  Spring security bean classes start    -->
 
