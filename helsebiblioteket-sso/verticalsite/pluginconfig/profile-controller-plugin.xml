@@ -50,10 +50,10 @@
 	</bean>
 	<bean name="profileSaveUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="saveUser" />
+		<constructor-arg value="updateUser" />
 	</bean>
 	<bean name="profileFindUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="findUserByUsername" />
+		<constructor-arg value="findUserByUsernameWS" />
 	</bean>
 </beans>
