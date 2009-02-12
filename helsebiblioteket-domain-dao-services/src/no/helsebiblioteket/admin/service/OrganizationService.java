@@ -1,8 +1,7 @@
 package no.helsebiblioteket.admin.service;
 
 /**
- * Purpose of this class is to retrieve and store static values used for 
- * drop down lists, checkbox groups etc.
+ * Organization service
  */
 
 import java.io.Serializable;
@@ -26,8 +25,8 @@ public interface OrganizationService extends Serializable {
 
 	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem);
 
-	public ListResult<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress);
-
+	public ListResult<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress);
+	
 	public Boolean insertOrganization(Organization organization);
 	public Boolean updateOrganization(Organization organization);
 }
