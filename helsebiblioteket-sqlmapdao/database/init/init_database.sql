@@ -46,3 +46,9 @@ insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'V
 insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'Provisorfarmasøyt', 'provisorfarmasoyt', (select org_type_id from tbl_org_type_reg where key = 'health_enterprise'));
 insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'Reseptarfarmasøyt', 'reseptarfarmasoyt', (select org_type_id from tbl_org_type_reg where key = 'health_enterprise'));
 --select * from tbl_position_type_reg
+
+insert into tbl_person (first_name, last_name, last_changed) values ('Kjell', 'Tjensvoll',now());
+insert into tbl_org_unit (org_type_id, org_unit_parent_id,contact_information_id,person_id, last_changed) values ((select org_type_id from tbl_org_type_reg where key = 'health_enterprise'),NULL,NULL,(select currval('tbl_person_person_id_seq')),now());
+insert into tbl_org_unit_name (language_code, name, category, org_unit_id, last_changed) values('no','Helsebiblioteket', 'NORMAL',(select currval('tbl_org_unit_org_unit_id_seq')),now() );
+insert into tbl_user (username, password, person_id, org_unit_id, last_changed) values ('kjelltjensvoll', 'kjshfkwebfkb23d', (select currval('tbl_person_person_id_seq')), (select currval('tbl_org_unit_org_unit_id_seq')),now());
+insert into tbl_user_role (user_role_id,user_id, last_changed) values(1,(select currval('tbl_user_user_id_seq')),now())
