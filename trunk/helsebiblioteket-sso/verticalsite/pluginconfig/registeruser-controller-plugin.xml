@@ -41,7 +41,7 @@
 		<property name="targetEPR" ref="registerTargetEPR" />
 		<property name="saveUser" ref="registerSaveUser" />
 		<property name="findUser" ref="registerFindUser" />
-		<property name="createUser" ref="registerCreateUser" />
+		<property name="insertUser" ref="registerInsertUser" />
 	</bean>
 	<bean name="registerServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
@@ -49,15 +49,15 @@
 		<constructor-arg value="${webservice.service.url.prefix}/userService" />
 	</bean>
 	<bean name="registerSaveUser" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="saveUser" />
 	</bean>
 	<bean name="registerFindUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="findUserByUsername" />
+		<constructor-arg value="findUserByUsernameWS" />
 	</bean>
-	<bean name="registerCreateUser" class="javax.xml.namespace.QName">
+	<bean name="registerInsertUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="createUser" />
+		<constructor-arg value="insertUser" />
 	</bean>
 </beans>
