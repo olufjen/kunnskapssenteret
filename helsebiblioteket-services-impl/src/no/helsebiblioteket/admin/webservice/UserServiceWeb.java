@@ -35,8 +35,6 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName updateUserName;
 	private QName positionByKey;
 	private QName findUser;
-	private QName saveUser;
-	private QName createUser;
 
 	public SingleResult<System> getSystemByKey(SystemKey key) {
 		Object[] args = new Object[] { key };
@@ -133,12 +131,6 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setFindUser(QName findUser) {
 		this.findUser = findUser;
-	}
-	public void setSaveUser(QName saveUser) {
-		this.saveUser = saveUser;
-	}
-	public void setCreateUser(QName createUser) {
-		this.createUser = createUser;
 	}
 	@Override
 	public User findUserByUsernameWS(String username) {
