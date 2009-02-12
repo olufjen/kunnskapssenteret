@@ -39,6 +39,7 @@
   	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userService" ref="userService"></property>
+  		<property name="organizationService" ref="organizationService"></property>
     	<property name="emailFromName" value="redaksjonen@helsebiblioteket.no"></property>
     	<property name="emailFromEmail" value="redaksjonen@helsebiblioteket.no"></property>
     	<property name="emailSubject" value="tilgangsinformasjon for helsebiblioteket.no"></property>
