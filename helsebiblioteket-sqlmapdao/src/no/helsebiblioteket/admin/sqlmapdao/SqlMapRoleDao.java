@@ -21,4 +21,7 @@ public class SqlMapRoleDao extends SqlMapClientDaoSupport implements RoleDao {
 	public List<Role> getRoleListBySystem(System system) {
 		return (List<Role>) getSqlMapClientTemplate().queryForList("getRoleListBySystemId", system.getSystemId());
 	}
+	public Role getRoleById(Integer roleId) {
+		return (Role) getSqlMapClientTemplate().queryForObject("getRoleById", roleId);
+	}
 }
