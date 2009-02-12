@@ -186,9 +186,9 @@ public class UserServiceImpl implements UserService {
 			List<UserRoleLine> userRoleList = this.userRoleDao.getUserRoleListByUser(user);
 			List<Role> roleList = new ArrayList<Role>();
 			for (UserRoleLine userRole : userRoleList) {
-				// TODO: Load using line object!
-//				roleList.add(this.roleDao.getRoleByKey(userRole.getUserRole().getKey()));
+				roleList.add(this.roleDao.getRoleById(userRole.getUserRoleId()));
 			}
+			user.setRoleList(roleList);
 			return new ValueResult<User>(user);
 		}
 	}
