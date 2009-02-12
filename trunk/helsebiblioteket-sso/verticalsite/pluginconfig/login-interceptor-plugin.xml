@@ -32,6 +32,6 @@
 	
 	<bean name="interceptorLogInIpAddress" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="logInIpAddress" />
+		<constructor-arg value="loginOrganizationByIpAddressWS" />
 	</bean>
 </beans>
