@@ -65,11 +65,11 @@ public class OrganizationListDaoTests {
 		ipRangeDao.insertIpRange(addressLine);
 
 		IpAddress ipAddress = new IpAddress(random + "004");
-		organizationList = organizationListDao.getOrganizationListByIpAdress(ipAddress);
+		organizationList = organizationListDao.getOrganizationListByIpAddress(ipAddress);
 		Assert.notEmpty(organizationList, "Should have found IP");
 		
 		ipAddress.setAddress(random + "005");
-		organizationList = organizationListDao.getOrganizationListByIpAdress(ipAddress);
+		organizationList = organizationListDao.getOrganizationListByIpAddress(ipAddress);
 		Assert.isTrue(organizationList.size()==0, "Should have been out of range");
 	}
 }
