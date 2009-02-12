@@ -8,5 +8,5 @@ import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 public interface OrganizationListDao {
 	public List<OrganizationListItem> getOrganizationListPaged(int from, int max);
 	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max);
-	public List<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress);
+	public List<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress);
 }

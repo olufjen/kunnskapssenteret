@@ -24,10 +24,10 @@ public class LoginServiceImpl implements LoginService {
 	private UserService userService;
 	private EmailService emailService;
 	private OrganizationService organizationService;
-	private String emailFromName = "Helsebiblioteket";
-	private String emailFromEmail = "test@example.org";
-	private String emailSubject = "Here is your new password: jHHns908";
-	private String emailMessage = "Lost password";
+	private String emailFromName = "";
+	private String emailFromEmail = "";
+	private String emailSubject = "";
+	private String emailMessage = "";
 	
 	/**
 	 * Loads the user from the database and compares the passwords.
@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 	 * Returns the first found if there are more than one macth.
 	 */
 	public SingleResult<MemberOrganization> loginOrganizationByIpAddress(IpAddress ipAddress) {
-		ListResult<OrganizationListItem> result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
+		ListResult<OrganizationListItem> result = this.organizationService.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = result.getList();
 		if(list.length >= 1){
 			// TODO: Later: Log incidents of more than one organization per IP Address?
@@ -106,16 +106,11 @@ public class LoginServiceImpl implements LoginService {
 	}
 	
 	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
-		ListResult<OrganizationListItem> result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
-		OrganizationListItem[] list = result.getList();
-		if(list.length >= 1){
-			// TODO: Later: Log incidents of more than one organization per IP Address?
-			SingleResult<Organization> memberResult = this.organizationService.getOrganizationByListItem(list[0]);
-			if(memberResult instanceof ValueResult){
-				return (MemberOrganization) ((ValueResult<Organization>)memberResult).getValue();
-			}
+		SingleResult<MemberOrganization> result = loginOrganizationByIpAddress(ipAddress);
+		if(result instanceof ValueResult) {
+        	return (MemberOrganization) ((ValueResult<MemberOrganization>)result).getValue();
 		}
-		return null;
+        return null;
 	}
 	public User loginUserByUsernamePasswordWS(String username, String password) {
 		SingleResult<User> result = this.userService.findUserByUsername(username);
