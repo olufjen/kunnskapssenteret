@@ -20,7 +20,7 @@
 	<bean name="interceptorLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
 		<property name="serviceClient" ref="interceptorLoginServiceClient" />
 		<property name="targetEPR" ref="interceptorLoginServiceTargetEPR" />
-		<property name="logInIpAddress" ref="interceptorLogInIpAddress" />
+		<property name="logInIpAddressName" ref="interceptorLogInIpAddress" />
 	</bean>
 	
 	<bean name="interceptorLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">

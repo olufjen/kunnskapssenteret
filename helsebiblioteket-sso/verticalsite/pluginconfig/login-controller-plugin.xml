@@ -27,7 +27,7 @@
 	<bean name="loginControllerLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
 		<property name="serviceClient" ref="loginControllerLoginServiceClient" />
 		<property name="targetEPR" ref="loginControllerLoginServiceTargetEPR" />
-		<property name="logInUser" ref="loginControllerLoginUser" />
+		<property name="logInUserName" ref="loginControllerLoginUser" />
 	</bean>
 	<bean name="loginControllerLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
