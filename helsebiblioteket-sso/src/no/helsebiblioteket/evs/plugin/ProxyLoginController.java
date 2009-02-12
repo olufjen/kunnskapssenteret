@@ -33,9 +33,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private String resultSessionVarName = "hbproxyresult";
 	private String proxyPassword = "mypassword";
 	private String urlParamName = "url";
-	// TODO: Include these in X-plugin.xml
-	private String proxyUrl = "http://localhost:2048/login";
-	private String logUpUrl = "http://localhost:8080/cms/site/2/Logg+inn";
+	// proxyUrl and logUpUrl are configured in spring(plugin)conf.xml+environment.properties
+	private String proxyUrl;
+	private String logUpUrl;
 	private boolean proxyUseGroup = true;
 	private int proxyTimeout = 0;
 
@@ -71,13 +71,13 @@ public class ProxyLoginController extends HttpControllerPlugin {
     		if(this.urlService.isAffected(requestedUrl)){
     			boolean hasAcces = false;
     			if(this.urlService.hasAccess(user, organization, requestedUrl)){
-    				SingleResult<String> result = this.urlService.group(requestedUrl);
+    				String result = this.urlService.groupWS(requestedUrl);
     				String group;
-    				if(result instanceof EmptyResult){
+    				if(result == null){
     					// TODO: What to do here?
     					group = null;
     				} else {
-    					group = ((ValueResult<String>)result).getValue();
+    					group = result;
     				}
     				if(this.createProxySession(response, requestedUrlText, group)){
         				// Great, done!

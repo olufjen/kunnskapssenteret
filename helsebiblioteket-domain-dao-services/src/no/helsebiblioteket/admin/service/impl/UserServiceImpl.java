@@ -97,15 +97,14 @@ public class UserServiceImpl implements UserService {
 	 * PositionDao. The variable DUMMY is never used.
 	 * Only for webservice client calls
      */
-	public ListResultPosition getPositionListAllWS(String DUMMY) {
+	public Position[] getPositionListAllWS(String DUMMY) {
 		List<Position> all = this.positionDao.getPositionListAll();
 		Position[] positions = new Position[all.size()];
 		int i = 0;
 		for (Position position : all) {
 			positions[i++]=position;
-		}
-		ListResultPosition result = new ListResultPosition(positions);
-		return result;
+		}	
+		return positions;
 	}
 	
 	/**
@@ -364,6 +363,11 @@ public class UserServiceImpl implements UserService {
 		this.positionDao = positionDao;
 	}
 	public SingleResult<Position> getPositionByKey(PositionTypeKey positionTypeKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public User findUserByUsernameWS(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}

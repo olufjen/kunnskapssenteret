@@ -15,7 +15,9 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
+import no.helsebiblioteket.admin.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.Organization;
 
@@ -38,10 +40,9 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		if(organization == null && user == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
-	    	SingleResult<MemberOrganization> result = this.loginService.loginOrganizationByIpAddress(ipAddress);
-	    	if(result instanceof ValueResult){
-	    	    organization = ((ValueResult<MemberOrganization>)result).getValue();
-	    		loggedInFunction.logInOrganization(organization);
+	    	MemberOrganization resultOrganization = this.loginService.loginOrganizationByIpAddressWS(ipAddress);
+	    	if(resultOrganization != null){
+	    		loggedInFunction.logInOrganization(resultOrganization);
 	    	}
 		}
 		return true;

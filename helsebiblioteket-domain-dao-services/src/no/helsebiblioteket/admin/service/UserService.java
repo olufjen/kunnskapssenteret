@@ -31,7 +31,7 @@ public interface UserService extends Serializable {
 	 * PositionDao. The variable DUMMY is never used.
 	 * Only for webservice client calls
      */
-	public ListResultPosition getPositionListAllWS(String DUMMY);
+	public Position[] getPositionListAllWS(String DUMMY);
 	public SingleResult<Position> getPositionByKey(PositionTypeKey positionTypeKey);
 	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system);
 
@@ -40,6 +40,7 @@ public interface UserService extends Serializable {
 	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest<UserListItem> request);
 
 	public SingleResult<User> findUserByUsername(String username);
+	public User findUserByUsernameWS(String username);
 
 	public Boolean insertUser(User user);
 	public Boolean updateUser(User user);

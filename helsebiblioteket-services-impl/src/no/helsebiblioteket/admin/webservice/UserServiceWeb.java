@@ -55,11 +55,10 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Object result = invoke(this.positionListAllName, args, returnTypes);
 		return (ListResult<Position>) result;
 	}
-	public ListResultPosition getPositionListAllWS(String DUMMY){
+	public Position[] getPositionListAllWS(String DUMMY){
 		Object[] args = new Object[] { DUMMY };
-		Class[] returnTypes = new Class[] { ListResultPosition.class };
-		Object result = invoke(this.positionListAllName, args, returnTypes);
-		return (ListResultPosition) result;
+		Class[] returnTypes = new Class[] { Position[].class };
+		return (Position[]) invoke(this.positionListAllName, args, returnTypes);
 	}
 	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system) {
 		Object[] args = new Object[] { key, system };
@@ -141,5 +140,11 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setCreateUser(QName createUser) {
 		this.createUser = createUser;
+	}
+	@Override
+	public User findUserByUsernameWS(String username) {
+		Object[] args = new Object[] { username };
+		Class[] returnTypes = new Class[] { User.class };
+		return (User) invoke(this.findUserByUsernameName, args, returnTypes);
 	}
 }
