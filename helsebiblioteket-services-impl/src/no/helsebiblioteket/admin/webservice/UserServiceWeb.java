@@ -34,7 +34,6 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName insertUserName;
 	private QName updateUserName;
 	private QName positionByKey;
-	private QName findUser;
 
 	public SingleResult<System> getSystemByKey(SystemKey key) {
 		Object[] args = new Object[] { key };
@@ -92,6 +91,11 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<Position>)invoke(this.positionByKey, args, returnTypes);
 	}
+	public User findUserByUsernameWS(String username) {
+		Object[] args = new Object[] { username };
+		Class[] returnTypes = new Class[] { User.class };
+		return (User) invoke(this.findUserByUsernameName, args, returnTypes);
+	}
 
 	
 	public Log getLogger() {
@@ -128,14 +132,5 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setPositionByKey(QName positionByKey) {
 		this.positionByKey = positionByKey;
-	}
-	public void setFindUser(QName findUser) {
-		this.findUser = findUser;
-	}
-	@Override
-	public User findUserByUsernameWS(String username) {
-		Object[] args = new Object[] { username };
-		Class[] returnTypes = new Class[] { User.class };
-		return (User) invoke(this.findUserByUsernameName, args, returnTypes);
 	}
 }
