@@ -40,19 +40,19 @@
 	<bean name="profileUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="profileServiceClient" />
 		<property name="targetEPR" ref="profileTargetEPR" />
-		<property name="saveUser" ref="profileSaveUser" />
-		<property name="findUser" ref="profileFindUser" />
+		<property name="updateUserName" ref="profileUpdateUser" />
+		<property name="findUserByUsernameName" ref="findUserByUsername" />
 	</bean>
 	<bean name="profileServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	<bean name="profileTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
 		<constructor-arg value="${webservice.service.url.prefix}/userService" />
 	</bean>
-	<bean name="profileSaveUser" class="javax.xml.namespace.QName">
+	<bean name="profileUpdateUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="updateUser" />
 	</bean>
-	<bean name="profileFindUser" class="javax.xml.namespace.QName">
+	<bean name="findUserByUsername" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="findUserByUsernameWS" />
 	</bean>
