@@ -27,6 +27,7 @@
 	<bean name="proxyUrlServiceWeb" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
 		<property name="serviceClient" ref="proxyControllerLoginServiceClient" />
 		<property name="targetEPR" ref="proxyControllerLoginServiceTargetEPR" />
+		<property name="isAffectedName" ref="proxyControllerIsAffected" />
 	</bean>
 	<bean name="proxyControllerLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
