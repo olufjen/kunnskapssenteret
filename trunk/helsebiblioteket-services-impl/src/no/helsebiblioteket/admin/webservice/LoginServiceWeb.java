@@ -67,4 +67,16 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 //    	Organization organization = null;
 //    	System.out.println("organization: " + organization.getName());
 	}
+	@Override
+	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
+		Object[] args = new Object[] { ipAddress };
+		Class[] returnTypes = new Class[] { MemberOrganization.class };
+		return (MemberOrganization) invoke(this.logInIpAddress, args, returnTypes);
+	}
+	@Override
+	public User loginUserByUsernamePasswordWS(String username, String password) {
+		Object[] args = new Object[] { username, password };
+		Class[] returnTypes = new Class[] { User.class };
+		return (User) invoke(this.logInUser, args, returnTypes);
+	}
 }

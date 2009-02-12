@@ -20,9 +20,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.ListResultPosition;
-import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.PositionToXMLTranslator;
@@ -111,8 +109,7 @@ public class LoggedInFunction{
 		PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
 		org.w3c.dom.Document document = userTranslator.newDocument();
 		Element element = document.createElement("positions");
-		ListResultPosition resultPositionList = this.userService.getPositionListAllWS("");
-		Position[] positions = resultPositionList.getList();
+		Position[] positions = this.userService.getPositionListAllWS("");
 		for (Position position : positions) {
 			positionToXMLTranslator.translate(position, document, element);
 		}

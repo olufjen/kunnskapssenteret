@@ -54,7 +54,7 @@ public class LoginServiceImpl implements LoginService {
 		ListResult<OrganizationListItem> result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
 		OrganizationListItem[] list = result.getList();
 		if(list.length >= 1){
-			// Later: Log incidents of more than one organization per IP Address?
+			// TODO: Later: Log incidents of more than one organization per IP Address?
 			SingleResult<Organization> memberResult = this.organizationService.getOrganizationByListItem(list[0]);
 			if(memberResult instanceof ValueResult){
 				MemberOrganization memberOrganization = (MemberOrganization) ((ValueResult<Organization>)memberResult).getValue();
@@ -103,5 +103,28 @@ public class LoginServiceImpl implements LoginService {
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
+	}
+	
+	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
+		ListResult<OrganizationListItem> result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
+		OrganizationListItem[] list = result.getList();
+		if(list.length >= 1){
+			// TODO: Later: Log incidents of more than one organization per IP Address?
+			SingleResult<Organization> memberResult = this.organizationService.getOrganizationByListItem(list[0]);
+			if(memberResult instanceof ValueResult){
+				return (MemberOrganization) ((ValueResult<Organization>)memberResult).getValue();
+			}
+		}
+		return null;
+	}
+	public User loginUserByUsernamePasswordWS(String username, String password) {
+		SingleResult<User> result = this.userService.findUserByUsername(username);
+		if(result instanceof ValueResult){
+			User loggedIn = ((ValueResult<User>)result).getValue();
+			if(loggedIn.getPassword().equals(password)){
+				return loggedIn;
+			}
+		}
+		return null;
 	}
 }

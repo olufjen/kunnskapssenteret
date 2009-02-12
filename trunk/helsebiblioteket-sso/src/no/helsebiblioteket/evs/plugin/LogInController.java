@@ -11,9 +11,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.requestresult.EmptyResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
@@ -49,14 +46,13 @@ public final class LogInController extends HttpControllerPlugin {
     	if(username == null) { username = ""; }
     	if(password == null) { password = ""; }
        	if(username.length() != 0 && password.length() != 0){
-       		SingleResult<User> sResult = this.loginService.loginUserByUsernamePassword(username, password);
-       		if(sResult instanceof EmptyResult){
+       		User user = this.loginService.loginUserByUsernamePasswordWS(username, password);
+       		if(null == user){
         		makeXML(username, password, result, element);
         		String referer = request.getParameter(this.parameterNames.get("from"));
         		response.sendRedirect(referer);
        		} else {
 	       		// Found user!
-	           	User user = ((ValueResult<User>)sResult).getValue();
 	       		element.appendChild(result.createElement("success"));
 	       		loggedInFunction.logInUser(user);
 	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));

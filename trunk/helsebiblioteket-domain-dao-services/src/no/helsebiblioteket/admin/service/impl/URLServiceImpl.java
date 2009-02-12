@@ -188,4 +188,15 @@ public class URLServiceImpl implements URLService {
 	public void setProxyPrefix(String proxyPrefix) {
 		this.proxyPrefix = proxyPrefix;
 	}
+	
+	public String groupWS(Url url) {
+		List<SupplierSource> list = this.accessService.getSupplierSourceListAll();
+		for (SupplierSource supplierSource : list) {
+			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
+    			// TODO: Is this all?
+				return supplierSource.getSupplierSourceName();
+			}
+		}
+		return null;
+	}
 }
