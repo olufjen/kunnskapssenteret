@@ -78,8 +78,8 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 		}
 		return someOrganizations;
 	}
-	public List<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress) {
-		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListByIpAdress", ipAddress);
+	public List<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress) {
+		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListByIpAddress", ipAddress);
 		return translateList(list);
 	}
 }
