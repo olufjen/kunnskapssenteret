@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -51,7 +52,14 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public ListResult<Position> getPositionListAll(String DUMMY){
 		Object[] args = new Object[] { DUMMY };
 		Class[] returnTypes = new Class[] { ListResult.class };
-		return (ListResult<Position>)invoke(this.positionListAllName, args, returnTypes);
+		Object result = invoke(this.positionListAllName, args, returnTypes);
+		return (ListResult<Position>) result;
+	}
+	public ListResultPosition getPositionListAllWS(String DUMMY){
+		Object[] args = new Object[] { DUMMY };
+		Class[] returnTypes = new Class[] { ListResultPosition.class };
+		Object result = invoke(this.positionListAllName, args, returnTypes);
+		return (ListResultPosition) result;
 	}
 	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system) {
 		Object[] args = new Object[] { key, system };

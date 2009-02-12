@@ -17,6 +17,7 @@ import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
@@ -25,6 +26,12 @@ public interface UserService extends Serializable {
 	public SingleResult<System> getSystemByKey(SystemKey key);
 	public ListResult<Role> getRoleListBySystem(System system);
 	public ListResult<Position> getPositionListAll(String DUMMY);
+	/**
+     * Fetches all the positions from the database. Delegates the task to
+	 * PositionDao. The variable DUMMY is never used.
+	 * Only for webservice client calls
+     */
+	public ListResultPosition getPositionListAllWS(String DUMMY);
 	public SingleResult<Position> getPositionByKey(PositionTypeKey positionTypeKey);
 	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system);
 
