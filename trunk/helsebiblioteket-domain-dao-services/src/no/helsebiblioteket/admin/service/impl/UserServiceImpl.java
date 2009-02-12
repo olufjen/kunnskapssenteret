@@ -29,7 +29,6 @@ import no.helsebiblioteket.admin.factory.PersonFactory;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
-import no.helsebiblioteket.admin.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.requestresult.MorePageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;

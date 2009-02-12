@@ -14,9 +14,7 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
-import no.helsebiblioteket.admin.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {

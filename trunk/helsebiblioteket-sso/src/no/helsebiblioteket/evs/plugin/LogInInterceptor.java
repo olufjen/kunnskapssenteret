@@ -15,9 +15,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
-import no.helsebiblioteket.admin.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.Organization;
 
