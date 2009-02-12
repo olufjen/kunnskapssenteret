@@ -18,9 +18,7 @@
  		<property name="urlParamName" value="url" />
  		<property name="proxyUrl" value="${proxy.url}" />
  		<property name="logUpUrl" value="${proxy.logup.url}" />
-
  		<property name="urlService" ref="proxyUrlServiceWeb" />
- 		
  		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
 	
@@ -36,6 +34,6 @@
 	</bean>
 	<bean name="proxyControllerIsAffected" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="logInUser" />
+		<constructor-arg value="isAffected" />
 	</bean>
 </beans>

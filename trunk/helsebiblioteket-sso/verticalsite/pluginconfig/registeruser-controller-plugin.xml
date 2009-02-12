@@ -39,16 +39,16 @@
 	<bean name="registerUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="registerServiceClient" />
 		<property name="targetEPR" ref="registerTargetEPR" />
-		<property name="saveUser" ref="registerSaveUser" />
-		<property name="findUser" ref="registerFindUser" />
-		<property name="insertUser" ref="registerInsertUser" />
+		<property name="updateUserName" ref="registerUpdateUser" />
+		<property name="findUserByUsernameName" ref="registerFindUser" />
+		<property name="insertUserName" ref="registerInsertUser" />
 	</bean>
 	<bean name="registerServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	<bean name="registerTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
 		<constructor-arg value="${webservice.service.url.prefix}/userService" />
 	</bean>
-	<bean name="registerSaveUser" class="javax.xml.namespace.QName">
+	<bean name="registerUpdateUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="saveUser" />
 	</bean>
