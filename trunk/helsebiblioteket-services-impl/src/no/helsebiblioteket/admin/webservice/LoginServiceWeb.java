@@ -16,37 +16,37 @@ import no.helsebiblioteket.admin.domain.User;
 
 public class LoginServiceWeb extends BasicWebService implements LoginService {
 	protected static final Log logger = LogFactory.getLog(LoginServiceWeb.class);
-	private QName logInIpAddress;
-	private QName logInUser;
-	private QName sendPasswordEmail;
+	private QName logInIpAddressName;
+	private QName logInUserName;
+	private QName sendPasswordEmailName;
 	public SingleResult<User> loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResult<User>)invoke(this.logInUser, args, returnTypes);
+		return (SingleResult<User>)invoke(this.logInUserName, args, returnTypes);
 	}
 	public SingleResult<MemberOrganization> loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResult<MemberOrganization>)invoke(this.logInIpAddress, args, returnTypes);
+		return (SingleResult<MemberOrganization>)invoke(this.logInIpAddressName, args, returnTypes);
 	}
 	public Boolean sendPasswordEmail(User user) {
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { Boolean.class  };
-		return (Boolean)invoke(this.sendPasswordEmail, args, returnTypes);
+		return (Boolean)invoke(this.sendPasswordEmailName, args, returnTypes);
 	}
 
 	
 	public Log getLogger() {
 		return this.logger;
 	}
-	public void setLogInIpAddress(QName logInIpAddress) {
-		this.logInIpAddress = logInIpAddress;
+	public void setLogInIpAddressName(QName logInIpAddressName) {
+		this.logInIpAddressName = logInIpAddressName;
 	}
-	public void setLogInUser(QName logInUser) {
-		this.logInUser = logInUser;
+	public void setLogInUserName(QName logInUserName) {
+		this.logInUserName = logInUserName;
 	}
-	public void setSendPasswordEmail(QName sendPasswordEmail) {
-		this.sendPasswordEmail = sendPasswordEmail;
+	public void setSendPasswordEmailName(QName sendPasswordEmailName) {
+		this.sendPasswordEmailName = sendPasswordEmailName;
 	}
 
 	
@@ -58,7 +58,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		RPCServiceClient serviceClient = new RPCServiceClient();
 		loginService.setServiceClient(serviceClient);
 		loginService.setTargetEPR(targetEPR);
-		loginService.setLogInIpAddress(logInIpAddress);
+		loginService.setLogInIpAddressName(logInIpAddress);
 		loginService.init();
 		
     	IpAddress ipAddress = new IpAddress();
@@ -71,12 +71,12 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
 		Class[] returnTypes = new Class[] { MemberOrganization.class };
-		return (MemberOrganization) invoke(this.logInIpAddress, args, returnTypes);
+		return (MemberOrganization) invoke(this.logInIpAddressName, args, returnTypes);
 	}
 	@Override
 	public User loginUserByUsernamePasswordWS(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { User.class };
-		return (User) invoke(this.logInUser, args, returnTypes);
+		return (User) invoke(this.logInUserName, args, returnTypes);
 	}
 }
