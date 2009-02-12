@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 @SuppressWarnings("serial")
@@ -64,7 +65,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.updateOrganizationName, args, returnTypes);
 	}
-	public ListResult<OrganizationListItem> getOrganizationListByIpAdress(IpAddress ipAddress) {
+	public ListResult<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress  };
 		Class[] returnTypes = new Class[] { ListResult.class };
 		return (ListResult<OrganizationListItem>) invoke(this.updateOrganizationName, args, returnTypes);
