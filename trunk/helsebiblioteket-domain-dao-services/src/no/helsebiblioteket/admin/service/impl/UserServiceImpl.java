@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
@@ -367,7 +368,10 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public User findUserByUsernameWS(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		SingleResult<User> result = findUserByUsername(username);
+		if (result instanceof EmptyResult) {
+			return null;
+		}
+		return (User) ((ValueResult<User>)result).getValue();
 	}
 }
