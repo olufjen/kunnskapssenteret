@@ -29,6 +29,7 @@ import no.helsebiblioteket.admin.factory.PersonFactory;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.requestresult.MorePageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
@@ -87,8 +88,26 @@ public class UserServiceImpl implements UserService {
 		for (Position position : all) {
 			positions[i++]=position;
 		}
-		return new ListResult<Position>(positions);
+		ListResult<Position> result = new ListResult<Position>(positions);
+		return result;
 	}
+	
+	/**
+     * Fetches all the positions from the database. Delegates the task to
+	 * PositionDao. The variable DUMMY is never used.
+	 * Only for webservice client calls
+     */
+	public ListResultPosition getPositionListAllWS(String DUMMY) {
+		List<Position> all = this.positionDao.getPositionListAll();
+		Position[] positions = new Position[all.size()];
+		int i = 0;
+		for (Position position : all) {
+			positions[i++]=position;
+		}
+		ListResultPosition result = new ListResultPosition(positions);
+		return result;
+	}
+	
 	/**
 	 * Fetches the Role with the given key for the given system.
 	 * If none is found EmptyResult is returned. Delegates the
