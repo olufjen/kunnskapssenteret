@@ -110,6 +110,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public String groupWS(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { String.class };
-		return (String) invoke(this.groupName, args, returnTypes);
+		Object result = invoke(this.groupName, args, returnTypes);
+		return (result != null) ? (String) result : null;
 	}
 }
