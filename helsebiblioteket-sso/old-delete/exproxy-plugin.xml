@@ -11,7 +11,7 @@
 	<bean name="proxyLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
 		<property name="serviceClient" ref="proxyLoginServiceClient" />
 		<property name="targetEPR" ref="proxyLoginServiceTargetEPR" />
-		<property name="logInIpAddress" ref="proxyLogInIpAddress" />
+		<property name="logInIpAddressName" ref="proxyLogInIpAddress" />
 	</bean>
 	
 	<bean name="proxyLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
