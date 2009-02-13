@@ -104,15 +104,18 @@ public class LoggedInFunction{
 		return result;
 	}
 	private org.w3c.dom.Document printPositions() throws ParserConfigurationException {
-		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
-		PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
-		org.w3c.dom.Document document = userTranslator.newDocument();
-		Element element = document.createElement("positions");
 		Position[] positions = this.userService.getPositionListAllWS("");
-		for (Position position : positions) {
-			positionToXMLTranslator.translate(position, document, element);
+		org.w3c.dom.Document document = null;
+		if (positions != null) {
+			UserToXMLTranslator userTranslator = new UserToXMLTranslator();
+			PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
+			document = userTranslator.newDocument();
+			Element element = document.createElement("positions");
+			for (Position position : positions) {
+				positionToXMLTranslator.translate(position, document, element);
+			}
+			document.appendChild(element);
 		}
-		document.appendChild(element);
 		return document;
 	}
 
