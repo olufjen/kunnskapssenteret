@@ -54,7 +54,8 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public Position[] getPositionListAllWS(String DUMMY){
 		Object[] args = new Object[] { DUMMY };
 		Class[] returnTypes = new Class[] { Position[].class };
-		return (Position[]) invoke(this.positionListAllName, args, returnTypes);
+		Object result = invoke(this.positionListAllName, args, returnTypes);
+		return (result != null) ? (Position[]) result : null;
 	}
 	public SingleResult<Role> getRoleByKeySystem(UserRoleKey key, System system) {
 		Object[] args = new Object[] { key, system };
@@ -94,7 +95,8 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public User findUserByUsernameWS(String username) {
 		Object[] args = new Object[] { username };
 		Class[] returnTypes = new Class[] { User.class };
-		return (User) invoke(this.findUserByUsernameName, args, returnTypes);
+		Object result = invoke(this.findUserByUsernameName, args, returnTypes);
+		return (result != null) ? (User) result : null;
 	}
 
 	
