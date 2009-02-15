@@ -1,19 +1,15 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 
 import no.helsebiblioteket.admin.dao.AccessDao;
-import no.helsebiblioteket.admin.daoobjects.ResourceAccessForeignKeys;
-import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.AccessType;
+import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.Resource;
-import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.Role;
 
@@ -40,8 +36,8 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 	public List<ResourceAccessForeignKeys> getAccessListByUserRole(Role userRole){
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getUserRoleId());
 	}
-	public List<ResourceAccessForeignKeys> getAccessListByOrganization(Organization organization){
-		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId());
+	public List<ResourceAccessForeignKeys> getAccessListByOrganization(MemberOrganization organization){
+		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getOrganization().getId());
 	}
 	public List<ResourceAccessForeignKeys> getAccessListByOrganizationType(OrganizationType organizationType){
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
