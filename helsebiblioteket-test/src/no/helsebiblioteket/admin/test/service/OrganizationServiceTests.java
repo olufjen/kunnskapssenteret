@@ -13,6 +13,14 @@ import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
@@ -28,45 +36,45 @@ public class OrganizationServiceTests {
 	private String findMeName = "findMe123999";
 	private MemberOrganization testOrganization(){
 		MemberOrganization organization = new MemberOrganization();
-		organization.setNameEnglish(findMeName);
+		organization.getOrganization().setNameEnglish(findMeName);
 		return organization;
 	}
 	@org.junit.Test
 	public void testGetOrganizationTypeListAll(){
-		ListResult<OrganizationType> list = beanFactory.getOrganizationService().getOrganizationTypeListAll("");
+		ListResultOrganizationType list = beanFactory.getOrganizationService().getOrganizationTypeListAll("");
 		Assert.assertNotNull("No result", list);
 	}
 	@org.junit.Test
 	public void testGetOrganizationTypeByKey(){
-		SingleResult<OrganizationType> result = beanFactory.getOrganizationService().getOrganizationTypeByKey(
+		SingleResultOrganizationType result = beanFactory.getOrganizationService().getOrganizationTypeByKey(
 				OrganizationTypeKey.content_supplier);
 		Assert.assertNotNull("No result", result);
 	}
 	@org.junit.Test
 	public void testGetOrganizationListAll(){
-		PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
-		PageResult<OrganizationListItem> result = beanFactory.getOrganizationService().getOrganizationListAll(request);
+		PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
+		PageResultOrganizationListItem result = beanFactory.getOrganizationService().getOrganizationListAll(request);
 		Assert.assertNotNull("No result", result);
 	}
 	@org.junit.Test
 	public void testFindOrganizationsBySearchString(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organizationService.insertOrganization(testOrganization());
-		PageResult<OrganizationListItem> result = organizationService.findOrganizationsBySearchString(findMeName, null);
+		organizationService.insertMemberOrganization(testOrganization());
+		PageResultOrganizationListItem result = organizationService.findOrganizationsBySearchString(findMeName, null);
 		Assert.assertNotNull("No result", result);
-		Assert.assertTrue("Empty result", result.result.size()>0);
-		Assert.assertEquals("Not the same", result.result.get(0).getNameEnglish(), findMeName);
+		Assert.assertTrue("Empty result", result.result.length>0);
+		Assert.assertEquals("Not the same", result.result[0].getNameEnglish(), findMeName);
 	}
 	@org.junit.Test
 	public void testGetOrganizationByListItem(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organizationService.insertOrganization(testOrganization());
+		organizationService.insertMemberOrganization(testOrganization());
 		OrganizationListItem listItem = new OrganizationListItem();
-		Organization organization = testOrganization();
+		MemberOrganization organization = testOrganization();
 //		listItem.setId(organization.getOrgUnitId());
-		SingleResult<Organization> result = organizationService.getOrganizationByListItem(listItem);
+		SingleResultOrganization result = organizationService.getOrganizationByListItem(listItem);
 		Assert.assertNotNull("No result", result);
-		Assert.assertTrue("No result", result instanceof ValueResult);
+		Assert.assertTrue("No result", result instanceof ValueResultOrganization);
 	}
 	@org.junit.Test
 	public void testUpdateOrganization(){
@@ -79,19 +87,19 @@ public class OrganizationServiceTests {
 		IpAddressRange ipRange = new IpAddressRange();
 		ipRange.setIpAddressFrom(new IpAddress("192.101.1.1"));
 		ipRange.setIpAddressTo(new IpAddress("192.101.1.3"));
-		List<IpAddressSet> ipRangeList = new ArrayList<IpAddressSet>();
+		IpAddressSet[] ipRangeList = new IpAddressSet[0];
 		organization.setIpAddressSetList(ipRangeList);
 
-		organizationService.insertOrganization(organization);
+		organizationService.insertMemberOrganization(organization);
 		
-		SingleResult<MemberOrganization> result = loginService.loginOrganizationByIpAddress(ipAddress);
-		organization = ((ValueResult<MemberOrganization>)result).getValue();
-		organization.setNameEnglish("changedName123");
+		SingleResultMemberOrganization result = loginService.loginOrganizationByIpAddress(ipAddress);
+		organization = ((ValueResultMemberOrganization)result).getValue();
+		organization.getOrganization().setNameEnglish("changedName123");
 		
-		organizationService.updateOrganization(organization);
+		organizationService.updateMemberOrganization(organization);
 		
 		result = loginService.loginOrganizationByIpAddress(ipAddress);
 		Assert.assertNotNull("No result", result);
-		Assert.assertEquals("Not the same", organization.getNameEnglish(), "changedName123");
+		Assert.assertEquals("Not the same", organization.getOrganization().getNameEnglish(), "changedName123");
 	}
 }
