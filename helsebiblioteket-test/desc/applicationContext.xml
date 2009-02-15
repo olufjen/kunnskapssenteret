@@ -12,14 +12,6 @@
 	</bean>
 	-->
 
-	<!-- Web services - Shared beans -->
-	<bean name="serviceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
-	</bean>
-	<bean name="loginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
-	</bean>
-
-
 	<!-- Data source -->
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="file:./desc/sqlmap-config.xml"/>
@@ -44,47 +36,81 @@
 
 	<!-- Services -->
   	<bean id="accessService" class="no.helsebiblioteket.admin.webservice.AccessServiceWeb" init-method="init">
-		<property name="serviceClient" ref="serviceClient" />
-		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		<property name="serviceClient" ref="accessServiceClient" />
+		<property name="targetEPR" ref="accessServiceTargetEPR" />
 		
-		<property name="getAccessListByUser" ref="getAccessListByUser" />
-		<property name="getAccessListByOrganization" ref="getAccessListByOrganization" />
-		<property name="getAccessListByOrganizationType" ref="getAccessListByOrganizationType" />
+		<property name="insertUserAccess" ref="insertUserAccessName" />
+		<property name="insertUserRoleAccess" ref="insertUserRoleAccessName" />
+		<property name="insertOrganizationAccess" ref="insertOrganizationAccessName" />
+		<property name="insertOrganizationTypeAccess" ref="insertOrganizationTypeAccessName" />
+		<property name="accessTypeByTypeCategory" ref="accessTypeByTypeCategoryName" />
+		<property name="accessListByUser" ref="accessListByUserName" />
+		<property name="accessListByRole" ref="accessListByRoleName" />
+		<property name="accessListByOrganization" ref="accessListByOrganizationName" />
+		<property name="accessListByOrganizationType" ref="accessListByOrganizationTypeName" />
+		<property name="supplierSourceListAll" ref="supplierSourceListAllName" />
 	</bean>
+	<bean name="accessServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/accessService" />
+	</bean>
+	<bean name="accessServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	
   	<bean id="loginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
-		<property name="serviceClient" ref="serviceClient" />
+		<property name="serviceClient" ref="loginServiceClient" />
 		<property name="targetEPR" ref="loginServiceTargetEPR" />
 		
 		<property name="logInIpAddress" ref="logInIpAddress" />
 		<property name="logInUser" ref="logInUser" />
 		<property name="sendPasswordEmail" ref="sendPasswordEmail" />
 	</bean>
+	<bean name="loginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
+	</bean>
+	<bean name="loginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+
   	<bean id="organizationService" class="no.helsebiblioteket.admin.webservice.OrganizationServiceWeb" init-method="init">
-		<property name="serviceClient" ref="serviceClient" />
-		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		<property name="serviceClient" ref="organizationServiceClient" />
+		<property name="targetEPR" ref="organizationServiceTargetEPR" />
 		
 		<property name="organizationTypeListAllName" ref="organizationTypeListAllName" />
 		<property name="organizationTypeByKeyName" ref="organizationTypeByKeyName" />
 		<property name="organizationListAllName" ref="organizationListAllName" />
 		<property name="findOrganizationsBySearchString" ref="findOrganizationsBySearchString" />
 		<property name="organizationByListItemName" ref="organizationByListItemName" />
-		<property name="insertOrganizationName" ref="insertOrganizationName" />
-		<property name="updateOrganizationName" ref="updateOrganizationName" />
+		<property name="insertMemberOrganizationName" ref="insertMemberOrganizationName" />
+		<property name="updateMemberOrganizationName" ref="updateMemberOrganizationName" />
+		<property name="insertSupplierOrganizationName" ref="insertSupplierOrganizationName" />
+		<property name="updateSupplierOrganizationName" ref="updateSupplierOrganizationName" />
   	</bean>
+  	<bean name="organizationServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/organizationService" />
+	</bean>
+	<bean name="organizationServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+  	
   	<bean id="urlService" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
-		<property name="serviceClient" ref="serviceClient" />
-		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		<property name="serviceClient" ref="urlServiceClient" />
+		<property name="targetEPR" ref="urlServiceTargetEPR" />
 		
 		<property name="isAffectedName" ref="isAffectedName" />
 		<property name="translateName" ref="translateName" />
 		<property name="hasAccessName" ref="hasAccessName" />
 		<property name="groupName" ref="groupName" />
   	</bean>
+  	<bean name="urlServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/urlService" />
+	</bean>
+	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+
   	<bean id="userService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
-		<property name="serviceClient" ref="serviceClient" />
-		<property name="targetEPR" ref="loginServiceTargetEPR" />
+		<property name="serviceClient" ref="userServiceClient" />
+		<property name="targetEPR" ref="userServiceTargetEPR" />
   	
-  		<property name="roleListAllName" ref="roleListAllName"></property>
+  		<property name="roleListBySystem" ref="roleListBySystemName"></property>
+  		<property name="systemByKey" ref="systemByKeyName"></property>
   		<property name="positionListAllName" ref="positionListAllName"></property>
   		<property name="roleByKeyName" ref="roleByKeyName"></property>
   		<property name="userListAllName" ref="userListAllName"></property>
@@ -92,21 +118,56 @@
   		<property name="findUserByUsernameName" ref="findUserByUsernameName"></property>
   		<property name="insertUserName" ref="insertUserName"></property>
   		<property name="updateUserName" ref="updateUserName"></property>
+  		<property name="positionByKey" ref="positionByKeyName"></property>
+  		
   	</bean>
+  	<bean name="userServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/userService" />
+	</bean>
+	<bean name="userServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
 
 
 	<!-- QNames -->
-	<bean name="getAccessListByUser" class="javax.xml.namespace.QName">
+	<bean name="insertUserAccessName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getAccessListByUser" />
+		<constructor-arg value="insertUserAccess" />
 	</bean>
-	<bean name="getAccessListByOrganization" class="javax.xml.namespace.QName">
+	<bean name="insertUserRoleAccessName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getAccessListByOrganization" />
+		<constructor-arg value="insertUserRoleAccess" />
 	</bean>
-	<bean name="getAccessListByOrganizationType" class="javax.xml.namespace.QName">
+	<bean name="insertOrganizationAccessName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getAccessListByOrganizationType" />
+		<constructor-arg value="insertOrganizationAccess" />
+	</bean>
+	<bean name="insertOrganizationTypeAccessName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertOrganizationTypeAccess" />
+	</bean>
+	<bean name="accessTypeByTypeCategoryName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessTypeByTypeCategory" />
+	</bean>
+	<bean name="accessListByUserName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessListByUserName" />
+	</bean>
+	<bean name="accessListByRoleName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessListByRoleName" />
+	</bean>
+	<bean name="accessListByOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessListByOrganizationName" />
+	</bean>
+	<bean name="accessListByOrganizationTypeName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getAccessListByOrganizationTypeName" />
+	</bean>
+	<bean name="supplierSourceListAllName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getSupplierSourceListAllName" />
 	</bean>
 
 	<bean name="logInIpAddress" class="javax.xml.namespace.QName">
@@ -142,13 +203,21 @@
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getOrganizationByListItem" />
 	</bean>
-	<bean name="insertOrganizationName" class="javax.xml.namespace.QName">
+	<bean name="insertMemberOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertOrganization" />
+		<constructor-arg value="insertMemberOrganization" />
 	</bean>
-	<bean name="updateOrganizationName" class="javax.xml.namespace.QName">
+	<bean name="updateMemberOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="updateOrganization" />
+		<constructor-arg value="updateMemberOrganization" />
+	</bean>
+	<bean name="insertSupplierOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertSupplierOrganization" />
+	</bean>
+	<bean name="updateSupplierOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="updateSupplierOrganization" />
 	</bean>
 
 	<bean name="isAffectedName" class="javax.xml.namespace.QName">
@@ -168,17 +237,25 @@
 		<constructor-arg value="group" />
 	</bean>
 
-	<bean name="roleListAllName" class="javax.xml.namespace.QName">
+	<bean name="systemByKeyName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getRoleListAll" />
+		<constructor-arg value="getSystemByKey" />
+	</bean>
+	<bean name="roleListBySystemName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getRoleListBySystem" />
 	</bean>
 	<bean name="positionListAllName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getPositionListAll" />
 	</bean>
+	<bean name="positionByKeyName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getPositionByKey" />
+	</bean>
 	<bean name="roleByKeyName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getRoleByKey" />
+		<constructor-arg value="getRoleByKeySystem" />
 	</bean>
 	<bean name="userListAllName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
