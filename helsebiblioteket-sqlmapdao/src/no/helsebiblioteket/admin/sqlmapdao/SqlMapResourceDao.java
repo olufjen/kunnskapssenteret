@@ -10,7 +10,7 @@ import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 public class SqlMapResourceDao extends SqlMapClientDaoSupport implements ResourceDao {
 	public Resource getResourceById(Integer resourceId, ResourceTypeKey typeKey) {
 		// Only supports supplier_source
-		if(typeKey==ResourceTypeKey.supplier_source){
+		if(typeKey.getValue().equals(ResourceTypeKey.supplier_source.getValue())){
 			return (SupplierSourceResource) getSqlMapClientTemplate().queryForObject("getSupplierSourceResourceById", resourceId);
 		} else {
 			// Ooops!

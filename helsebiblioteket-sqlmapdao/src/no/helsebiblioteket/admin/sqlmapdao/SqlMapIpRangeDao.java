@@ -20,6 +20,6 @@ public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeD
 		getSqlMapClientTemplate().delete("deleteIpRange", ipRange);
 	}
 	public List<IpAddressLine> getIpRangeListByOrganization(MemberOrganization organization){
-		return (List<IpAddressLine>)getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organization.getId());
+		return (List<IpAddressLine>)getSqlMapClientTemplate().queryForList("getIpRangeListByOrganizationId", organization.getOrganization().getId());
 	}
 }

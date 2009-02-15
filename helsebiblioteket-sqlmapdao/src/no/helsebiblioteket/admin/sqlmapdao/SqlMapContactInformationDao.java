@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.sqlmapdao;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 
@@ -20,7 +21,7 @@ public class SqlMapContactInformationDao extends SqlMapClientDaoSupport implemen
 	public ContactInformation getContactInformationByPerson(Person person){
 		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationByPerson", person.getId());
 	}
-	public ContactInformation getContactInformationByOrganization(Organization organization){
-		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationByOrganization", organization.getId());
+	public ContactInformation getContactInformationByOrganization(MemberOrganization organization){
+		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationByOrganization", organization.getOrganization().getId());
 	}
 }
