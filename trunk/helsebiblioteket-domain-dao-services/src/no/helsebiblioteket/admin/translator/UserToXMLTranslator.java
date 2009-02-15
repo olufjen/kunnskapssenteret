@@ -10,6 +10,7 @@ import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
@@ -36,7 +37,7 @@ public class UserToXMLTranslator {
 			this.roleToXMLTranslator.translate(role, document, rolesElement);
 		}
 		userElement.appendChild(rolesElement);
-		Organization organization = user.getOrganization();
+		MemberOrganization organization = user.getOrganization();
 		if(organization != null){
 			this.organizationToXMLTranslator.translate(organization, document, userElement);
 		}
