@@ -108,7 +108,6 @@ public class URLServiceWeb extends BasicWebService implements URLService {
     	System.out.println("translated1: " + translated1.getStringValue());
     	System.out.println("translated2: " + translated2.getStringValue());
 	}
-	@Override
 	public String groupWS(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { String.class };

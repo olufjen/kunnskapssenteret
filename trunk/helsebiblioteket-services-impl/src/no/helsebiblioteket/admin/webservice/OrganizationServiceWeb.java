@@ -22,11 +22,7 @@ import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
-<<<<<<< .mine
 import no.helsebiblioteket.admin.requestresult.ValueResult;
-=======
-import no.helsebiblioteket.admin.domain.MemberOrganization;
->>>>>>> .r549
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 @SuppressWarnings("serial")
@@ -86,7 +82,6 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.updateMemberOrganizationName, args, returnTypes);
 	}
-<<<<<<< .mine
 	@Override
 	public Boolean insertSupplierOrganization(SupplierOrganization organization) {
 		Object[] args = new Object[] { organization  };
@@ -101,9 +96,6 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	@Override
 	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress) {
-=======
-	public ListResult<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress) {
->>>>>>> .r549
 		Object[] args = new Object[] { ipAddress  };
 		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
 		return (ListResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);

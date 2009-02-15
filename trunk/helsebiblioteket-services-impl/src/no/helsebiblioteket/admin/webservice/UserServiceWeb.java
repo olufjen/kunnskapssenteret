@@ -7,13 +7,10 @@ import javax.xml.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-<<<<<<< .mine
-=======
-import no.helsebiblioteket.admin.requestresult.ListResult;
->>>>>>> .r555
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
@@ -142,13 +139,10 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public void setPositionByKey(QName positionByKey) {
 		this.positionByKey = positionByKey;
 	}
-<<<<<<< .mine
 	public void setSystemByKey(QName systemByKey) {
 		this.systemByKey = systemByKey;
 	}
 	public void setRoleListBySystem(QName roleListBySystem) {
 		this.roleListBySystem = roleListBySystem;
 	}
-=======
->>>>>>> .r555
 }
