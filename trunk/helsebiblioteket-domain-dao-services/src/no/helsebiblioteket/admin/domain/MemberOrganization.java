@@ -1,17 +1,21 @@
 package no.helsebiblioteket.admin.domain;
 
-import java.util.List;
-
-public class MemberOrganization extends Organization{
+public class MemberOrganization {
 	// Values loaded by IpAddressLine
-	private List<IpAddressSet> ipAddressSetList;
+	private IpAddressSet[] ipAddressSetList;
+	private Organization organization = new Organization();;
 	
 	// GET/SET
-	public List<IpAddressSet> getIpAddressSetList() {
+	public IpAddressSet[] getIpAddressSetList() {
 		return ipAddressSetList;
 	}
-	public void setIpAddressSetList(List<IpAddressSet> ipAddressSetList) {
+	public void setIpAddressSetList(IpAddressSet[] ipAddressSetList) {
 		this.ipAddressSetList = ipAddressSetList;
 	}
-
+	public Organization getOrganization() {
+		return organization;
+	}
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
 }
