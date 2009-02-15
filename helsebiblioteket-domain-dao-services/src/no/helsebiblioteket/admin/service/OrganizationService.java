@@ -6,27 +6,36 @@ package no.helsebiblioteket.admin.service;
 
 import java.io.Serializable;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
-import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
 
 public interface OrganizationService extends Serializable {
-	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY);
-	public SingleResult<OrganizationType> getOrganizationTypeByKey(OrganizationTypeKey key);
+	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY);
+	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key);
 
 	// TODO: Remove this and use findOrganizationsBySearchStringRoles with empty string?
-	public PageResult<OrganizationListItem> getOrganizationListAll(PageRequest<OrganizationListItem> request);
-	public PageResult<OrganizationListItem> findOrganizationsBySearchString(String searchString, PageRequest<OrganizationListItem> request);
+	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request);
+	public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request);
 
-	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem);
+	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem);
 
+<<<<<<< .mine
+	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress);
+
+=======
 	public ListResult<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress);
 	
-	public Boolean insertOrganization(Organization organization);
-	public Boolean updateOrganization(Organization organization);
+>>>>>>> .r546
+	public Boolean insertMemberOrganization(MemberOrganization organization);
+	public Boolean updateMemberOrganization(MemberOrganization organization);
+	public Boolean insertSupplierOrganization(SupplierOrganization organization);
+	public Boolean updateSupplierOrganization(SupplierOrganization organization);
 }
