@@ -5,7 +5,7 @@ import java.util.List;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
-import no.helsebiblioteket.admin.daoobjects.ResourceAccessForeignKeys;
+import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
@@ -17,6 +17,9 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.AccessService;
 
@@ -24,59 +27,76 @@ import no.helsebiblioteket.admin.service.AccessService;
 public class AccessServiceImpl implements AccessService {
 	private AccessDao accessDao;
 	private SupplierSourceDao supplierSourceDao;
-	public void insertUserAccess(User user, Access access) {
+	public Boolean insertUserAccess(User user, Access access) {
 		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
 		keys.setUserId(user.getId());
 		this.accessDao.insertResourceAccessForeignKeys(keys);
+		return true;
 	}
-	public void insertUserRoleAccess(Role userRole, Access access) {
+	public Boolean insertUserRoleAccess(Role userRole, Access access) {
 		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
 		keys.setUserRoleId(userRole.getUserRoleId());
 		this.accessDao.insertResourceAccessForeignKeys(keys);
+		return true;
 	}
-	public void insertOrganizationAccess(Organization organization, Access access) {
+	public Boolean insertOrganizationAccess(MemberOrganization organization, Access access) {
 		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
-		keys.setOrgUnitId(organization.getId());
+		keys.setOrgUnitId(organization.getOrganization().getId());
 		this.accessDao.insertResourceAccessForeignKeys(keys);
+		return true;
 	}
-	public void insertOrganizationTypeAccess(OrganizationType organizationType, Access access) {
+	public Boolean insertOrganizationTypeAccess(OrganizationType organizationType, Access access) {
 		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
 		keys.setOrgTypeId(organizationType.getId());
 		this.accessDao.insertResourceAccessForeignKeys(keys);
+		return true;
 	}
 	
-	public List<ResourceAccess> getAccessListByUser(User user) {
+	public ListResultResourceAccess getAccessListByUser(User user) {
 		return translateList(this.accessDao.getAccessListByUser(user));
 	}
-	public List<ResourceAccess> getAccessListByOrganization(MemberOrganization organization) {
+	public ListResultResourceAccess getAccessListByOrganization(MemberOrganization organization) {
 		return translateList(this.accessDao.getAccessListByOrganization(organization));
 	}
-	public List<ResourceAccess> getAccessListByOrganizationType(OrganizationType organizationType) {
+	public ListResultResourceAccess getAccessListByOrganizationType(OrganizationType organizationType) {
 		return translateList(this.accessDao.getAccessListByOrganizationType(organizationType));
 	}
-	private List<ResourceAccess> translateList(List<ResourceAccessForeignKeys> keyList) {
-		List<ResourceAccess> result = new ArrayList<ResourceAccess>();
+	private ListResultResourceAccess translateList(List<ResourceAccessForeignKeys> keyList) {
+		ListResultResourceAccess result = new ListResultResourceAccess();
+		ResourceAccess[] list = new ResourceAccess[keyList.size()];
+		int i=0;
 		for (ResourceAccessForeignKeys key : keyList) {
-			result.add(key.getResourceAccess());
+			list[i] = key.getResourceAccess();
+			i++;
 		}
+		result.setList(list);
 		return result;
 	}
+	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY) {
+		List<SupplierSource> all = this.supplierSourceDao.getSupplierSourceListAll();
+		ListResultSupplierSource result = new ListResultSupplierSource();
+		SupplierSource[] list = new SupplierSource[all.size()];
+		int i = 0;
+		for (SupplierSource supplierSource : all) {
+			list[i] = supplierSource;
+			i++;
+		}
+		result.setList(list);
+		return result;
+	}
+	public ListResultResourceAccess getAccessListByRole(Role role) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public SingleResultAccessType getAccessTypeByTypeCategory( AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public void setAccessDao(AccessDao accessDao) {
 		this.accessDao = accessDao;
 	}
-	public List<SupplierSource> getSupplierSourceListAll() {
-		return this.supplierSourceDao.getSupplierSourceListAll();
-	}
 	public void setSupplierSourceDao(SupplierSourceDao supplierSourceDao) {
 		this.supplierSourceDao = supplierSourceDao;
-	}
-	public List<ResourceAccess> getAccessListByRole(Role role) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public SingleResult<AccessType> getAccessTypeByTypeCategory(
-			AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
