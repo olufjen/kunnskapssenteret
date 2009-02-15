@@ -31,7 +31,7 @@ public class PersonDaoTests {
 		this.insertPerson(person);
 
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
-		organization.setContactPerson(person);
+		organization.getOrganization().setContactPerson(person);
 		new OrganizationDaoTests().insertMemberOrganization(organization);
 		User user = UserFactory.factory.completeUser(organization, position);
 		user.setPerson(person);

@@ -13,6 +13,7 @@ import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
 import no.helsebiblioteket.admin.dao.OrganizationNameDao;
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
@@ -41,7 +42,7 @@ public class OrganizationListDaoTests {
 		OrganizationListItem item = organizationList.get(0);
 		OrganizationNameDao organizationNameDao = beanFactory.getOrganizationNameDao();
 		
-		Organization organization = organizationDao.getMemberOrganizationById(item.getId());
+		MemberOrganization organization = organizationDao.getMemberOrganizationById(item.getId());
 		OrganizationName organizationName = new OrganizationName();
 		organizationName.setCategory(OrganizationNameCategory.NORMAL);
 		organizationName.setLanguageCode(LanguageCategory.en);
