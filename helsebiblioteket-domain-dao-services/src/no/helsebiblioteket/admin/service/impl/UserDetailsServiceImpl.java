@@ -4,6 +4,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetailsService;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -30,11 +33,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * 
 	 */
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		SingleResult<User> lookup = this.userService.findUserByUsername(username);
-		if(lookup instanceof EmptyResult){
+		SingleResultUser lookup = this.userService.findUserByUsername(username);
+		if(lookup instanceof EmptyResultUser){
 			throw new UsernameNotFoundException("User not found: ");
 		} else {
-			ValueResult<User> value = (ValueResult<User>)lookup;
+			ValueResultUser value = (ValueResultUser)lookup;
 			User user = value.getValue();
 			return makeAcegiUser(user);
 		}
@@ -47,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	private GrantedAuthority[] makeGrantedAuthorities(User user) {
-		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().size()];
+		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().length];
 		int i = 0;
 		for (Role role : user.getRoleList()) {
 			result[i++] = new GrantedAuthorityImpl(role.getName());
