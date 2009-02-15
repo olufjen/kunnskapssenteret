@@ -17,6 +17,13 @@ import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
 
 /**
  * Service used to rewrite URLs on websites. The results
@@ -41,8 +48,8 @@ public class URLServiceImpl implements URLService {
 	 */
 	public Boolean isAffected(Url url) {
 		// TODO: Improve efficiency by not fetching all!
-		List<SupplierSource> list = this.accessService.getSupplierSourceListAll();
-		for (SupplierSource supplierSource : list) {
+		ListResultSupplierSource list = this.accessService.getSupplierSourceListAll("");
+		for (SupplierSource supplierSource : list.getList()) {
 			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
 				// TODO: How is the correct way to check this?
 				//       We will hopefully not need to parse it
@@ -58,7 +65,7 @@ public class URLServiceImpl implements URLService {
 	 * page with information about what to do.
 	 * 
 	 */
-	public SingleResult<Url> translate(User user, Url url) {
+	public SingleResultUrl translate(User user, Url url) {
 		Url newUrl = new Url();
 		if(this.hasAccess(user, url)){
 			// TODO: When to send through proxy?
@@ -67,7 +74,7 @@ public class URLServiceImpl implements URLService {
 			// TODO: When to send directly?
 			newUrl.setStringValue(url.getStringValue());
 		}
-		return new ValueResult<Url>(newUrl);
+		return new ValueResultUrl(newUrl);
 	}
 	/**
 	 * Translates a URL for an organization. If the organization
@@ -77,7 +84,7 @@ public class URLServiceImpl implements URLService {
 	 * TODO: When to send an organization directly?
 	 * 
 	 */
-	public SingleResult<Url> translate(MemberOrganization organization, Url url) {
+	public SingleResultUrl translate(MemberOrganization organization, Url url) {
 		Url newUrl = new Url();
 		if(hasAccess(organization, url)){
 			// TODO: When to send through proxy?
@@ -86,7 +93,7 @@ public class URLServiceImpl implements URLService {
 			// TODO: When to send directly?
 			newUrl.setStringValue(url.getStringValue());
 		}
-		return new ValueResult<Url>(newUrl);
+		return new ValueResultUrl(newUrl);
 	}
 	/**
 	 * Translates a URL for either organization of user.
@@ -100,7 +107,7 @@ public class URLServiceImpl implements URLService {
 	 *       to the proxy or directly to the server?
 	 *       Sometimes one and sometimes the other?
 	 */
-	public SingleResult<Url> translate(User user, MemberOrganization organization, Url url){
+	public SingleResultUrl translate(User user, MemberOrganization organization, Url url){
 		Url newUrl = new Url();
 		if(hasAccess(organization, url)){
 			return this.translate(organization, url);
@@ -110,7 +117,7 @@ public class URLServiceImpl implements URLService {
 			// TODO: When to send directly?
 			newUrl.setStringValue(url.getStringValue());
 		}
-		return new ValueResult<Url>(newUrl);
+		return new ValueResultUrl(newUrl);
 	}
 	/**
 	 * Loads the Access list for a user and checks if the URL
@@ -120,8 +127,8 @@ public class URLServiceImpl implements URLService {
 	 *       type. 
 	 */
     public Boolean hasAccess(User user, Url url) {
-    	List<ResourceAccess> accessList = this.accessService.getAccessListByUser(user);
-    	for (ResourceAccess access : accessList) {
+    	ListResultResourceAccess accessList = this.accessService.getAccessListByUser(user);
+    	for (ResourceAccess access : accessList.getList()) {
     		Resource resource = access.getResource();
     		if(resource instanceof SupplierSourceResource){
         		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
@@ -139,8 +146,8 @@ public class URLServiceImpl implements URLService {
 	 *       type.
 	 */
 	public Boolean hasAccess(MemberOrganization organization, Url url) {
-    	List<ResourceAccess> accessList = this.accessService.getAccessListByOrganization(organization);
-    	for (ResourceAccess access : accessList) {
+    	ListResultResourceAccess accessList = this.accessService.getAccessListByOrganization(organization);
+    	for (ResourceAccess access : accessList.getList()) {
     		Resource resource = access.getResource();    		
     		if(resource instanceof SupplierSourceResource){
         		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
@@ -172,15 +179,15 @@ public class URLServiceImpl implements URLService {
 	 *       Do not use supplierSource.getName().
 	 *  
 	 */
-	public SingleResult<String> group(Url url){
-		List<SupplierSource> list = this.accessService.getSupplierSourceListAll();
-		for (SupplierSource supplierSource : list) {
+	public SingleResultString group(Url url){
+		ListResultSupplierSource list = this.accessService.getSupplierSourceListAll("");
+		for (SupplierSource supplierSource : list.getList()) {
 			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
     			// TODO: Is this all?
-				return new ValueResult<String>(supplierSource.getSupplierSourceName());
+				return new ValueResultString(supplierSource.getSupplierSourceName());
 			}
 		}
-		return new EmptyResult<String>();
+		return new EmptyResultString();
 	}
 	public void setAccessService(AccessService accessService) {
 		this.accessService = accessService;
