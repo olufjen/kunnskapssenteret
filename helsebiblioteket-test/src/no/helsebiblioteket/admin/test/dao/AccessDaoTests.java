@@ -8,7 +8,7 @@ import no.helsebiblioteket.admin.dao.AccessTypeDao;
 import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
-import no.helsebiblioteket.admin.daoobjects.ResourceAccessForeignKeys;
+import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -102,7 +102,7 @@ public class AccessDaoTests {
 		// Access for organization
 		ResourceAccess resourceAccessForOrg = ResourceAccessFactory.factory.completeResourceAccess(resource, accessType, supplierOrganization);
 		ResourceAccessForeignKeys accessForOrganizationKeys = new ResourceAccessForeignKeys();
-		accessForOrganizationKeys.setOrgUnitId(organization.getId());
+		accessForOrganizationKeys.setOrgUnitId(organization.getOrganization().getId());
 		accessForOrganizationKeys.setResourceAccess(resourceAccessForOrg);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationKeys);
 		List<ResourceAccessForeignKeys> organizationAccessList = accessDao.getAccessListByOrganization(organization);

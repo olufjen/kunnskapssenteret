@@ -38,7 +38,7 @@ public class IpRangeDaoTests {
 		Position position = positionDao.getPositionByKey(PositionTypeKey.ambulansearbeider);
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		organizationDaoTests.insertMemberOrganization(organization);
-		addressLine.setOrgUnitId(organization.getId());
+		addressLine.setOrgUnitId(organization.getOrganization().getId());
 		ipRangeDao.insertIpRange(addressLine);
 		addressLine.setIpAddressTo("999.168.101.003");
 		ipRangeDao.updateIpRange(addressLine);

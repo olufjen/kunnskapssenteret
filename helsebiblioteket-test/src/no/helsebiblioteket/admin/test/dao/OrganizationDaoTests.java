@@ -31,59 +31,59 @@ public class OrganizationDaoTests {
 		// MemberOrganization
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		this.insertMemberOrganization(memberOrganization);
-		MemberOrganization reloadMember = organizationDao.getMemberOrganizationById(memberOrganization.getId());
+		MemberOrganization reloadMember = organizationDao.getMemberOrganizationById(memberOrganization.getOrganization().getId());
 		Assert.notNull(reloadMember, "Did not reload member organization");
 		this.removeMemberOrganization(memberOrganization);
-		reloadMember = organizationDao.getMemberOrganizationById(memberOrganization.getId());
+		reloadMember = organizationDao.getMemberOrganizationById(memberOrganization.getOrganization().getId());
 		Assert.isNull(reloadMember, "Did not delete member organization");
 		
 		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(organizationType, position);
 		this.insertSupplierOrganization(supplierOrganization);
-		SupplierOrganization reloadSupplier = organizationDao.getSupplierOrganizationById(supplierOrganization.getId());
+		SupplierOrganization reloadSupplier = organizationDao.getSupplierOrganizationById(supplierOrganization.getOrganization().getId());
 		Assert.notNull(reloadSupplier, "Did not reload supplier organization");
 		this.removeSupplierOrganization(supplierOrganization);
-		reloadSupplier = organizationDao.getSupplierOrganizationById(supplierOrganization.getId());
+		reloadSupplier = organizationDao.getSupplierOrganizationById(supplierOrganization.getOrganization().getId());
 		Assert.isNull(reloadSupplier, "Did not delete member organization");
 	}
 
 	public void insertMemberOrganization(MemberOrganization memberOrganization){
 		ContactInformationDaoTests contactInformationDaoTests = new ContactInformationDaoTests();
-		contactInformationDaoTests.insertContactInformation(memberOrganization.getContactInformation());
+		contactInformationDaoTests.insertContactInformation(memberOrganization.getOrganization().getContactInformation());
 
 		PersonDaoTests personDaoTests = new PersonDaoTests();
-		personDaoTests.insertPerson(memberOrganization.getContactPerson());
+		personDaoTests.insertPerson(memberOrganization.getOrganization().getContactPerson());
 
 		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
-		organizationDao.insertOrganization(memberOrganization);
+		organizationDao.insertMemberOrganization(memberOrganization);
 	}
 	public void removeMemberOrganization(MemberOrganization  memberOrganization){
 		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
-		organizationDao.deleteOrganization(memberOrganization);
+		organizationDao.deleteMemberOrganization(memberOrganization);
 
 		ContactInformationDaoTests contactInformationDaoTests = new ContactInformationDaoTests();
-		contactInformationDaoTests.removeContactInformation(memberOrganization.getContactInformation());
+		contactInformationDaoTests.removeContactInformation(memberOrganization.getOrganization().getContactInformation());
 		
 		PersonDaoTests personDaoTests = new PersonDaoTests();
-		personDaoTests.removePerson(memberOrganization.getContactPerson());
+		personDaoTests.removePerson(memberOrganization.getOrganization().getContactPerson());
 	}
 	public void insertSupplierOrganization(SupplierOrganization supplierOrganization){
 		ContactInformationDaoTests contactInformationDaoTests = new ContactInformationDaoTests();
-		contactInformationDaoTests.insertContactInformation(supplierOrganization.getContactInformation());
+		contactInformationDaoTests.insertContactInformation(supplierOrganization.getOrganization().getContactInformation());
 		
 		PersonDaoTests personDaoTests = new PersonDaoTests();
-		personDaoTests.insertPerson(supplierOrganization.getContactPerson());
+		personDaoTests.insertPerson(supplierOrganization.getOrganization().getContactPerson());
 
 		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
-		organizationDao.insertOrganization(supplierOrganization);
+		organizationDao.insertSupplierOrganization(supplierOrganization);
 	}
 	public void removeSupplierOrganization(SupplierOrganization supplierOrganization){
 		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
-		organizationDao.deleteOrganization(supplierOrganization);
+		organizationDao.deleteSupplierOrganization(supplierOrganization);
 		
 		ContactInformationDaoTests contactInformationDaoTests = new ContactInformationDaoTests();
-		contactInformationDaoTests.removeContactInformation(supplierOrganization.getContactInformation());
+		contactInformationDaoTests.removeContactInformation(supplierOrganization.getOrganization().getContactInformation());
 
 		PersonDaoTests personDaoTests = new PersonDaoTests();
-		personDaoTests.removePerson(supplierOrganization.getContactPerson());
+		personDaoTests.removePerson(supplierOrganization.getOrganization().getContactPerson());
 	}
 }
