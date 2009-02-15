@@ -18,5 +18,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/User.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserRole.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Resource.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/System.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/SupplierSource.xml" />
 </sqlMapConfig>
