@@ -14,9 +14,12 @@ import no.helsebiblioteket.admin.domain.SupplierOrganization;
 public interface OrganizationDao {
 	// Edit
 	// TODO: Re-factor! One for supplier and one for member. 
-	public void insertOrganization(Organization organization);
-	public void updateOrganization(Organization organization);
-	public void deleteOrganization(Organization organization);
+	public void insertMemberOrganization(MemberOrganization organization);
+	public void updateMemberOrganization(MemberOrganization organization);
+	public void deleteMemberOrganization(MemberOrganization organization);
+	public void insertSupplierOrganization(SupplierOrganization organization);
+	public void updateSupplierOrganization(SupplierOrganization organization);
+	public void deleteSupplierOrganization(SupplierOrganization organization);
 
 	// Fetch
 	// Parents not in use yet.
