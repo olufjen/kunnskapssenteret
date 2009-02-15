@@ -4,7 +4,7 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="Access">
-	<typeAlias alias="ResourceAccessForeignKeys" type="no.helsebiblioteket.admin.daoobjects.ResourceAccessForeignKeys"/>
+	<typeAlias alias="ResourceAccessForeignKeys" type="no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys"/>
 
 	<resultMap id="ResourceAccessResultMap" class="ResourceAccessForeignKeys">
 		<result property="resourceAccess.accessType.accessTypeid" column="access_type_id" />
@@ -15,7 +15,7 @@
 		<result property="resourceAccess.accessId" column="access_id" />
 		<result property="resourceAccess.resource.resourceId" column="resource_id" />
 		<result property="orgTypeId" column="org_type_id" />
-		<result property="resourceAccess.providedBy.id" column="provided_by_org_unit" />
+		<result property="resourceAccess.providedBy.organization.id" column="provided_by_org_unit" />
 		<result property="orgUnitId" column="org_unit_id" />
 		<result property="resourceAccess.lastChanged" column="last_changed" />
 	</resultMap>
@@ -36,10 +36,10 @@
 			provided_by_org_unit,
 			org_unit_id, 
 			last_changed
-			) 
+			)
 		values (#resourceAccess.accessType.accessTypeid#, #userId#, #userRoleId#,
 				#resourceAccess.validFrom#, #resourceAccess.validTo#, #resourceAccess.accessId#,
-				#resourceAccess.resource.resourceId#, #orgTypeId#, #resourceAccess.providedBy.id#,
+				#resourceAccess.resource.resourceId#, #orgTypeId#, #resourceAccess.providedBy.organization.id#,
 				#orgUnitId#, now());
 	</insert>
 	<update id="updateResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
@@ -52,7 +52,7 @@
 			access_id = #resourceAccess.accessId#,
 			resource_id = #resourceAccess.resource.resourceId#,
 			org_type_id = #orgTypeId#,
-			provided_by_org_unit = #resourceAccess.providedBy.id#,
+			provided_by_org_unit = #resourceAccess.providedBy.organization.id#,
 			org_unit_id = #orgUnitId#, 
 			last_changed = now()
 		where access_id = #resourceAccess.accessId#

@@ -11,7 +11,7 @@
 		<result property="organizationDescription" column="org_descr" />
 		<result property="orgUnitId" column="org_unit_id" />
 		<result property="organizationTypeName" column="org_type_name" />
-		<result property="organizationTypeKey" column="org_type_key" />
+		<result property="organizationTypeKey.value" column="org_type_key" />
 		<result property="organizationTypeDescription" column="org_type_descr" />
 		<result property="organizationName" column="org_name" />
 		<result property="nameLanguage" column="language_code" />

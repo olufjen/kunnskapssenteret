@@ -10,7 +10,7 @@
 	<resultMap id="SystemMap" class="System">
 		<result property="name" column="name" />
 		<result property="description" column="descr" />
-		<result property="key" column="key" />
+		<result property="key.value" column="key" />
 		<result property="systemId" column="system_id" />
 	</resultMap>
 	<select id="getSystemByKey" resultMap="SystemMap" parameterClass="SystemKey">
@@ -20,6 +20,6 @@
 			key,
 			system_id
 		from tbl_system_reg
-		where key = #systemKey#;
+		where key = #value#;
 	</select>
 </sqlMap>
