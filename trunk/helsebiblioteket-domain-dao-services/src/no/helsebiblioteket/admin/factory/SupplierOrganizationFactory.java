@@ -13,22 +13,22 @@ public class SupplierOrganizationFactory {
 	private SupplierOrganizationFactory(){}
 	public SupplierOrganization createOrganization(){
 		SupplierOrganization organization = new SupplierOrganization();
-		organization.setDescription("");
-		organization.setLastChanged(new Date());
-		organization.setNameEnglish("");
-		organization.setNameNorwegian("");
-		organization.setNameShortEnglish("");
-		organization.setNameShortNorwegian("");
-		organization.setContactInformation(ContactInformationFactory.factory.createContactInformation());
-		organization.setContactPerson(PersonFactory.factory.createPerson());
-		organization.setResourceList(new ArrayList<Resource>());
+		organization.getOrganization().setDescription("");
+		organization.getOrganization().setLastChanged(new Date());
+		organization.getOrganization().setNameEnglish("");
+		organization.getOrganization().setNameNorwegian("");
+		organization.getOrganization().setNameShortEnglish("");
+		organization.getOrganization().setNameShortNorwegian("");
+		organization.getOrganization().setContactInformation(ContactInformationFactory.factory.createContactInformation());
+		organization.getOrganization().setContactPerson(PersonFactory.factory.createPerson());
+		organization.setResourceList(new Resource[0]);
 		return organization;
 	}
 	public SupplierOrganization completeOrganization(OrganizationType organizationType, Position position){
 		SupplierOrganization organization = new SupplierOrganization();
-		organization.setContactInformation(ContactInformationFactory.factory.completeContactInformation());
-		organization.setContactPerson(PersonFactory.factory.completePerson(position));
-		organization.setType(organizationType);
+		organization.getOrganization().setContactInformation(ContactInformationFactory.factory.completeContactInformation());
+		organization.getOrganization().setContactPerson(PersonFactory.factory.completePerson(position));
+		organization.getOrganization().setType(organizationType);
 		return organization;
 	}
 }

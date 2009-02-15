@@ -18,12 +18,12 @@ public class UserFactory {
 		user.setUsername("");
 		user.setPassword("");
 		user.setLastChanged(new Date());
-		user.setRoleList(new ArrayList<Role>());
+		user.setRoleList(new Role[0]);
 		
 		user.setPerson(PersonFactory.factory.createPerson());
 		return user;
 	}
-	public User completeUser(Organization organization, Position position){
+	public User completeUser(MemberOrganization organization, Position position){
 		User user = createUser();
 		user.setOrganization(organization);
 		user.setPerson(PersonFactory.factory.completePerson(position));
