@@ -21,6 +21,9 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUrl;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -142,12 +145,12 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		// TODO: Cache as much as possible, but flush at some set interval!
 		Url myurl = new Url();
 		myurl.setStringValue(url.toExternalForm());
-		SingleResult<Url> result = this.urlService.translate(user, organization, myurl);
-		if(result instanceof EmptyResult){
+		SingleResultUrl result = this.urlService.translate(user, organization, myurl);
+		if(result instanceof EmptyResultUrl){
 			// TODO: What to do here?
 			return url;
 		} else {
-			ValueResult<Url> value = (ValueResult<Url>) result;
+			ValueResultUrl value = (ValueResultUrl) result;
 			return new URL(value.getValue().getStringValue());
 		}
 	}
