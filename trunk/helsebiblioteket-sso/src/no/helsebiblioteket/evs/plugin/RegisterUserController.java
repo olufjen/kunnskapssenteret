@@ -13,6 +13,8 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -36,7 +38,7 @@ public final class RegisterUserController extends ProfileController {
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = new User();
 		// TODO: Should not need to init here!
-		user.setRoleList(new ArrayList<Role>());
+		user.setRoleList(new Role[0]);
 //		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
 		
@@ -70,7 +72,7 @@ public final class RegisterUserController extends ProfileController {
 		// TODO: How to initialize person?
 		User user = new User();
 		user.setPerson(new Person());
-		user.setRoleList(new ArrayList<Role>());
+		user.setRoleList(new Role[0]);
 //		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		
 		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
@@ -134,8 +136,8 @@ public final class RegisterUserController extends ProfileController {
 		}
 	}
 	private boolean userExists(String username) {
-		User result = this.userService.findUserByUsernameWS(username);
-		return (null != result);
+		SingleResultUser result = this.userService.findUserByUsername(username);
+		return (result instanceof ValueResultUser);
 	}
 	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
 		super.userXML(user, hprNumber, document, element);
