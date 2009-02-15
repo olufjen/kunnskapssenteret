@@ -13,22 +13,22 @@ public class MemberOrganizationFactory {
 	private MemberOrganizationFactory(){}
 	public MemberOrganization createOrganization(){
 		MemberOrganization organization = new MemberOrganization();
-		organization.setDescription("");
-		organization.setLastChanged(new Date());
-		organization.setNameEnglish("");
-		organization.setNameNorwegian("");
-		organization.setNameShortEnglish("");
-		organization.setNameShortNorwegian("");
-		organization.setContactInformation(ContactInformationFactory.factory.createContactInformation());
-		organization.setContactPerson(PersonFactory.factory.createPerson());
-		organization.setIpAddressSetList(new ArrayList<IpAddressSet>());
+		organization.getOrganization().setDescription("");
+		organization.getOrganization().setLastChanged(new Date());
+		organization.getOrganization().setNameEnglish("");
+		organization.getOrganization().setNameNorwegian("");
+		organization.getOrganization().setNameShortEnglish("");
+		organization.getOrganization().setNameShortNorwegian("");
+		organization.getOrganization().setContactInformation(ContactInformationFactory.factory.createContactInformation());
+		organization.getOrganization().setContactPerson(PersonFactory.factory.createPerson());
+		organization.setIpAddressSetList(new IpAddressSet[0]);
 		return organization;
 	}
 	public MemberOrganization completeOrganization(OrganizationType organizationType, Position position){
-		MemberOrganization organization = new MemberOrganization();
-		organization.setContactInformation(ContactInformationFactory.factory.completeContactInformation());
-		organization.setContactPerson(PersonFactory.factory.completePerson(position));
-		organization.setType(organizationType);
+		MemberOrganization organization = createOrganization();
+		organization.getOrganization().setContactInformation(ContactInformationFactory.factory.completeContactInformation());
+		organization.getOrganization().setContactPerson(PersonFactory.factory.completePerson(position));
+		organization.getOrganization().setType(organizationType);
 		return organization;
 	}
 }
