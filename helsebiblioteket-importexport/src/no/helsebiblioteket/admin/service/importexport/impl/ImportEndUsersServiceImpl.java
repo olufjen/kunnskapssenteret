@@ -110,14 +110,14 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         studentOrHprNumber = ldapUser.getEmployeeNumber(); 
         
         if ("Emp".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList(roleOtherList);
+        	user.setRoleList((Role[])roleOtherList.toArray());
         }
         if ("Stud".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList(roleStudentList);
+        	user.setRoleList((Role[])roleStudentList.toArray());
         	person.setStudentNumber(studentOrHprNumber);
         }
         if ("HPR".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList(roleHealthPersonellList);
+        	user.setRoleList((Role[])roleHealthPersonellList.toArray());
         	person.setStudentNumber(studentOrHprNumber);
         }
         
@@ -160,4 +160,5 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         user.setSurvey(null != ldapUser.getPager() ? Boolean.valueOf(ldapUser.getPager()) : null); */
         return user;
     }
+
 }
