@@ -9,7 +9,7 @@
 		<result property="id" column="user_id" />
 		<result property="username" column="username" />
 		<result property="password" column="password" />
-		<result property="organization.id" column="org_unit_id" />
+		<result property="organization.organization.id" column="org_unit_id" />
 		<result property="person.id" column="person_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
@@ -21,13 +21,13 @@
 		insert into tbl_user
 			(user_id, username, password, org_unit_id, person_id, last_changed)
 		values 
-			(#id#, #username#, #password#, #organization.orgUnitId#, #person.id#, now());
+			(#id#, #username#, #password#, #organization.organization.orgUnitId#, #person.id#, now());
 	</insert>
 	<update id="updateUser" parameterClass="user">
 		update tbl_user set
 			username = #username#,
 			password = #password#,
-			org_unit_id = #organization.id#,
+			org_unit_id = #organization.organization.id#,
 			person_id = #person.id#,
 			last_changed = now()
 		where user_id = #id# and last_changed = #lastChanged#;

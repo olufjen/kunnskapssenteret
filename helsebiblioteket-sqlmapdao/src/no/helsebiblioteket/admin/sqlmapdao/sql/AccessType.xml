@@ -5,13 +5,13 @@
 
 <sqlMap namespace="AccessType">
 	<typeAlias alias="AccessType" type="no.helsebiblioteket.admin.domain.AccessType"/>
-	<typeAlias alias="AccessTypeCompositeKey" type="no.helsebiblioteket.admin.daoobjects.AccessTypeCompositeKey"/>
+	<typeAlias alias="AccessTypeCompositeKey" type="no.helsebiblioteket.admin.dao.keys.AccessTypeCompositeKey"/>
 	
 	<resultMap id="AccessTypeResultMap" class="AccessType">
 		<result property="accessTypeid" column="access_type_id" />
 		<result property="description" column="descr" />
 		<result property="name" column="name" />
-		<result property="key" column="key" />
+		<result property="key.value" column="key" />
 		<result property="category" column="category" />
 	</resultMap>
 	<select id="getAccessTypeByKey" resultMap="AccessTypeResultMap" parameterClass="AccessTypeCompositeKey">

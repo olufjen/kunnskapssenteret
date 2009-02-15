@@ -5,14 +5,15 @@
 
 <sqlMap namespace="Role">
 	<typeAlias alias="role" type="no.helsebiblioteket.admin.domain.Role"/>
-	<typeAlias alias="roleSystemCompositeKey" type="no.helsebiblioteket.admin.daoobjects.RoleSystemCompositeKey"/>
+	<typeAlias alias="roleSystemCompositeKey" type="no.helsebiblioteket.admin.dao.keys.RoleSystemCompositeKey"/>
 	
 	<resultMap id="getRoleResultMap" class="role">
 		<result property="name" column="name" />
 		<result property="description" column="descr" />
 		<result property="userRoleId" column="user_role_id" />
 		<result property="system.systemId" column="system_id" />
-		<result property="key" column="key" />
+		<result property="system.key.value" column="system_key" />
+		<result property="key.value" column="role_key" />
 	</resultMap>
 	<select id="getRoleByKeySystem" resultMap="getRoleResultMap" parameterClass="roleSystemCompositeKey">
 		select
@@ -20,7 +21,8 @@
 			role.descr,
 			role.user_role_id,
 			role.system_id,
-			role.key
+			role.key as role_key,
+			system.key as system_key
 		from tbl_user_role_reg as role inner join tbl_system_reg as system on 
 		   role.system_id = system.system_id
 		where role.key = #roleKey# and system.key = #systemKey#;
@@ -31,7 +33,8 @@
 			descr,
 			user_role_id,
 			system_id,
-			key
+			key as role_key,
+			key as system_key
 		from tbl_user_role_reg
 		where system_id = #systemId#;
 	</select>
@@ -41,7 +44,8 @@
 			descr,
 			user_role_id,
 			system_id,
-			key
+			key as role_key,
+			key as system_key
 		from tbl_user_role_reg
 		where user_role_id = #roleId#;
 	</select>

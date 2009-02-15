@@ -11,12 +11,12 @@
 		<result property="id" column="resource_type_id" />
 		<result property="description" column="descr" />
 		<result property="name" column="name" />
-		<result property="key" column="key" />
+		<result property="key.value" column="key" />
 	</resultMap>
 	<select id="getResourceTypeByKey" resultMap="ResourceTypeMap" parameterClass="ResourceTypeKey">
 		select resource_type_id, descr, name, key
 		from tbl_resource_type_reg
-		where key = #resourceTypeKey#;
+		where key = #value#;
 	</select>
 	<select id="getResourceTypeListAll" resultMap="ResourceTypeMap">
 		select resource_type_id, descr, name, key
