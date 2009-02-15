@@ -76,11 +76,11 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     
     public void importAllMemberOrganizations() {
     	Collection<MemberOrganization> memberOrganizationList = getAllMemberOrganizations().values();
-    	for (Organization organization : memberOrganizationList) {
+    	for (MemberOrganization organization : memberOrganizationList) {
     		// FIXME: Are they unique or check for existing?
 //    		organizationService.saveOrganization(organization);
     		// TODO: Use insertSupplier for suppliers!
-    		organizationService.insertOrganization(organization);
+    		organizationService.insertMemberOrganization(organization);
     	}
     }
     
@@ -120,15 +120,16 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         Map<String, MemberOrganization> organizationMap = new HashMap<String, MemberOrganization>();
         MemberOrganization organization = null;
         
-        SingleResult<OrganizationType> orgTypeHPRRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+        // TODO: FIX!
+        SingleResult<OrganizationType> orgTypeHPRRes = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
         OrganizationType orgTypeHPR = (orgTypeHPRRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeHPRRes).getValue() :
         			null;
-        SingleResult<OrganizationType> orgTypeStudRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching);
+        SingleResult<OrganizationType> orgTypeStudRes = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching);
         OrganizationType orgTypeStud = (orgTypeStudRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeStudRes).getValue() :
         			null;
-        SingleResult<OrganizationType> orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.other);
+        SingleResult<OrganizationType> orgTypeEmpRes = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.other);
         OrganizationType orgTypeEmp = (orgTypeEmpRes instanceof ValueResult) ?
         		((ValueResult<OrganizationType>)orgTypeEmpRes).getValue() :
         			null;
@@ -151,18 +152,18 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             found = findNodeByName(n, NODE_GROUP);
             if (found != null) {
             	if ("1".equals(found.getTextContent())) {
-            		organization.setType(orgTypeEmp);
+            		organization.getOrganization().setType(orgTypeEmp);
             	} else if ("2".equals(found.getTextContent())) {
-            		organization.setType(orgTypeStud);
+            		organization.getOrganization().setType(orgTypeStud);
             	} else if ("3".equals(found.getTextContent())) {
-            		organization.setType(orgTypeHPR);
+            		organization.getOrganization().setType(orgTypeHPR);
             	}
             }
             found = findNodeByName(n, NODE_DESC);
             if (found != null && found.getTextContent().trim().length() > 0) {
             	// FIXME: Ok with only Norwegian name in import?
-            	if(organization.getNameNorwegian() == null){
-            		organization.setNameNorwegian(found.getTextContent());
+            	if(organization.getOrganization().getNameNorwegian() == null){
+            		organization.getOrganization().setNameNorwegian(found.getTextContent());
             	}
 //            	if (organization.getNameList() == null) {
 //            		OrganizationName orgName = new OrganizationName();
@@ -187,18 +188,19 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
                 addressFrom.replace("/", "");
                 IpAddressSet range = new IpAddressRange(new IpAddress(addressFrom), new IpAddress(addressTo));
                 if (organization.getIpAddressSetList() == null) {
-                	organization.setIpAddressSetList(new ArrayList<IpAddressSet>());
+                	organization.setIpAddressSetList(new IpAddressSet[0]);
                 }
-            	if (!organization.getIpAddressSetList().contains(range)) {
-            		organization.getIpAddressSetList().add(range);
-            		logger.log(Level.ALL, "Adding range: " + addressFrom + " - " + addressTo);
-            	}
+                // FIXME: Re-insert this!
+//            	if (!organization.getIpAddressSetList().contains(range)) {
+//            		organization.getIpAddressSetList().add(range);
+//            		logger.log(Level.ALL, "Adding range: " + addressFrom + " - " + addressTo);
+//            	}
             }
             found = findNodeByName(n, NODE_CONTACT);
             if (found != null && found.getTextContent().trim().length() > 0) {
             	Person contactPerson = new Person();
             	contactPerson.setFirstName(found.getTextContent());
-            	organization.setContactPerson(contactPerson);
+            	organization.getOrganization().setContactPerson(contactPerson);
             }
             ContactInformation contactInformation = new ContactInformation();
             if ((found = findNodeByName(n, NODE_EMAIL)) != null) {
@@ -232,7 +234,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             	}
             }
             if (hasContactInformationValue) {
-            	organization.setContactInformation(contactInformation);
+            	organization.getOrganization().setContactInformation(contactInformation);
             }
         	organizationMap.put(orgNameNorwegian, organization);
         	
