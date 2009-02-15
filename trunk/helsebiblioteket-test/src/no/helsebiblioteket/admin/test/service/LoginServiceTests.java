@@ -11,6 +11,8 @@ import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.factory.UserFactory;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -37,8 +39,8 @@ public class LoginServiceTests {
 		User user = testUser();
 		userService.insertUser(user);
 		
-		SingleResult<User> result = loginService.loginUserByUsernamePassword(username, password);
-		Assert.assertTrue("User not found", result instanceof ValueResult);
+		SingleResultUser result = loginService.loginUserByUsernamePassword(username, password);
+		Assert.assertTrue("User not found", result instanceof ValueResultUser);
 	}
 	@org.junit.Test
 	public void testLoginOrganizationByIpAddress() {
@@ -51,10 +53,10 @@ public class LoginServiceTests {
 		ipRange.setIpAddressFrom(new IpAddress("192.101.1.1"));
 		ipRange.setIpAddressTo(new IpAddress("192.101.1.3"));
 		MemberOrganization organization = new MemberOrganization();
-		List<IpAddressSet> ipRangeList = new ArrayList<IpAddressSet>();
+		IpAddressSet[] ipRangeList = new IpAddressSet[0];
 		organization.setIpAddressSetList(ipRangeList);
 		
-		organizationService.insertOrganization(organization);
+		organizationService.insertMemberOrganization(organization);
 		loginService.loginOrganizationByIpAddress(ipAddress);
 	}
 	@org.junit.Test
