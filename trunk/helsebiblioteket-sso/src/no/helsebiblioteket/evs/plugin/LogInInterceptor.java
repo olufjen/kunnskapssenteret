@@ -4,20 +4,16 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 
 import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
-import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.requestresult.EmptyResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,14 +29,14 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Organization organization = this.loggedInFunction.loggedInOrganization();
+		MemberOrganization organization = this.loggedInFunction.loggedInOrganization();
 		User user = this.loggedInFunction.loggedInUser();
 		if(organization == null && user == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
-	    	MemberOrganization resultOrganization = this.loginService.loginOrganizationByIpAddressWS(ipAddress);
-	    	if(resultOrganization != null){
-	    		loggedInFunction.logInOrganization(resultOrganization);
+	    	SingleResultMemberOrganization res = this.loginService.loginOrganizationByIpAddress(ipAddress);
+    		if(res instanceof ValueResultMemberOrganization){
+	    		loggedInFunction.logInOrganization(((ValueResultMemberOrganization)res).getValue());
 	    	}
 		}
 		return true;
