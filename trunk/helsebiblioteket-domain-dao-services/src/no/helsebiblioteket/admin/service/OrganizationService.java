@@ -27,13 +27,8 @@ public interface OrganizationService extends Serializable {
 
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem);
 
-<<<<<<< .mine
 	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress);
 
-=======
-	public ListResult<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress);
-	
->>>>>>> .r546
 	public Boolean insertMemberOrganization(MemberOrganization organization);
 	public Boolean updateMemberOrganization(MemberOrganization organization);
 	public Boolean insertSupplierOrganization(SupplierOrganization organization);

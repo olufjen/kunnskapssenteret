@@ -197,8 +197,8 @@ public class URLServiceImpl implements URLService {
 	}
 	
 	public String groupWS(Url url) {
-		List<SupplierSource> list = this.accessService.getSupplierSourceListAll();
-		for (SupplierSource supplierSource : list) {
+		ListResultSupplierSource list = this.accessService.getSupplierSourceListAll("");
+		for (SupplierSource supplierSource : list.getList()) {
 			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
     			// TODO: Is this all?
 				return supplierSource.getSupplierSourceName();

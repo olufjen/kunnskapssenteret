@@ -390,12 +390,11 @@ public class UserServiceImpl implements UserService {
 	public void setSystemDao(SystemDao systemDao) {
 		this.systemDao = systemDao;
 	}
-	@Override
 	public User findUserByUsernameWS(String username) {
-		SingleResult<User> result = findUserByUsername(username);
-		if (result instanceof EmptyResult) {
+		SingleResultUser result = findUserByUsername(username);
+		if (result instanceof EmptyResultUser) {
 			return null;
 		}
-		return (User) ((ValueResult<User>)result).getValue();
+		return (User) ((ValueResultUser)result).getValue();
 	}
 }

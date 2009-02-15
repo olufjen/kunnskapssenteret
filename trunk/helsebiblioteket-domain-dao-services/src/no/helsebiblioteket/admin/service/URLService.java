@@ -17,5 +17,4 @@ public interface URLService extends Serializable {
     public Boolean hasAccess(MemberOrganization organization, Url url);
     public Boolean hasAccess(User user, MemberOrganization organization, Url url);
     public SingleResultString group(Url url);
-    public String groupWS(Url url);
 }
