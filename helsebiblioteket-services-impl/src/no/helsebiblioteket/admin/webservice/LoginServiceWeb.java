@@ -9,9 +9,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.requestresult.SingleResult;
+import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 @SuppressWarnings("serial")
 
 public class LoginServiceWeb extends BasicWebService implements LoginService {
@@ -19,15 +23,24 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	private QName logInIpAddressName;
 	private QName logInUserName;
 	private QName sendPasswordEmailName;
-	public SingleResult<User> loginUserByUsernamePassword(String username, String password) {
+	public SingleResultUser loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { SingleResult.class };
+<<<<<<< .mine
+		return (SingleResultUser)invoke(this.logInUser, args, returnTypes);
+=======
 		return (SingleResult<User>)invoke(this.logInUserName, args, returnTypes);
+>>>>>>> .r555
 	}
-	public SingleResult<MemberOrganization> loginOrganizationByIpAddress(IpAddress ipAddress) {
+	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
+<<<<<<< .mine
+		Class[] returnTypes = new Class[] { SingleResultMemberOrganization.class };
+		return (SingleResultMemberOrganization)invoke(this.logInIpAddress, args, returnTypes);
+=======
 		Class[] returnTypes = new Class[] { SingleResult.class };
 		return (SingleResult<MemberOrganization>)invoke(this.logInIpAddressName, args, returnTypes);
+>>>>>>> .r555
 	}
 	public Boolean sendPasswordEmail(User user) {
 		Object[] args = new Object[] { user };
@@ -63,7 +76,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		
     	IpAddress ipAddress = new IpAddress();
     	ipAddress.setAddress("111.222.333");
-    	SingleResult<MemberOrganization> result = loginService.loginOrganizationByIpAddress(ipAddress);
+    	SingleResultMemberOrganization result = loginService.loginOrganizationByIpAddress(ipAddress);
 //    	Organization organization = null;
 //    	System.out.println("organization: " + organization.getName());
 	}
