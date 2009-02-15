@@ -1,9 +1,15 @@
 package no.helsebiblioteket.admin.domain.key;
 
-public enum AccessTypeKey {
+public class AccessTypeKey {
 	// TODO: Insert something here!
-	dummy,
+	public static final AccessTypeKey dummy = new AccessTypeKey("dummy");
+
 	
-	
-	general,
+	public static final AccessTypeKey general = new AccessTypeKey("general");
+
+	private String value;
+	private AccessTypeKey() { }
+	private AccessTypeKey(String value) { this.value = value; }
+	public String getValue() { return value; }
+	public void setValue(String value) { this.value = value; }
 }
