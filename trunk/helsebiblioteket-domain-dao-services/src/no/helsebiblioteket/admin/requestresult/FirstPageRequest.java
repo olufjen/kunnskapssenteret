@@ -1,6 +1,6 @@
 package no.helsebiblioteket.admin.requestresult;
 
-public class FirstPageRequest<T> extends PageRequest<T>{
+public class FirstPageRequest extends PageRequest{
 	public FirstPageRequest(int maxResult) {
 		super(maxResult);
 	}

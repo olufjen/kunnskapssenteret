@@ -1,6 +1,6 @@
 package no.helsebiblioteket.admin.requestresult;
 
-public class MorePageRequest<T> extends FirstPageRequest<T>{
+public class MorePageRequest extends PageRequest{
 	public int skip;
 	public MorePageRequest(int skip, int maxResult) {
 		super(maxResult);
