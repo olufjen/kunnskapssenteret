@@ -20,6 +20,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.PositionToXMLTranslator;
@@ -104,24 +105,23 @@ public class LoggedInFunction{
 		return result;
 	}
 	private org.w3c.dom.Document printPositions() throws ParserConfigurationException {
-		Position[] positions = this.userService.getPositionListAllWS("");
+		ListResultPosition resultPosition = this.userService.getPositionListAll("");
+		Position[] positions = resultPosition.getList();
 		org.w3c.dom.Document document = null;
-		if (positions != null) {
-			UserToXMLTranslator userTranslator = new UserToXMLTranslator();
-			PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
-			document = userTranslator.newDocument();
-			Element element = document.createElement("positions");
-			for (Position position : positions) {
-				positionToXMLTranslator.translate(position, document, element);
-			}
-			document.appendChild(element);
+		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
+		PositionToXMLTranslator positionToXMLTranslator = new PositionToXMLTranslator();
+		document = userTranslator.newDocument();
+		Element element = document.createElement("positions");
+		for (Position position : positions) {
+			positionToXMLTranslator.translate(position, document, element);
 		}
+		document.appendChild(element);
 		return document;
 	}
 
 	private org.w3c.dom.Document printLoggedIn() throws ParserConfigurationException {
 		User user = this.loggedInUser();
-		Organization organization = this.loggedInOrganization();
+		MemberOrganization organization = this.loggedInOrganization();
 		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
 		org.w3c.dom.Document result = userTranslator.newDocument();
 		Element loggedinElement = result.createElement("loggedin");
