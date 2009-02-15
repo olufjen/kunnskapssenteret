@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-public abstract class Organization {
+public class Organization {
 	// Primary key
 	private Integer orgUnitId;
 	

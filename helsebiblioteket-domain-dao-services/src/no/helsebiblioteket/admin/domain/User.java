@@ -15,11 +15,12 @@ public class User  {
 	// References
 	// This is the only one we know that need to be initialized.
 	// May drop initialization when we learn more about Ibatis.
-	private Organization organization = new UnknownOrganization();
+	// FIXME: Insert something?
+	private MemberOrganization organization = null;//new UnknownOrganization();
 	private Person person;
 
 	// Values loaded with UserRoleLine
-	private List<Role> roleList;
+	private Role[] roleList;
 	
 	// Helpers
 	public boolean hasRole(Role role){
@@ -56,10 +57,10 @@ public class User  {
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-	public Organization getOrganization() {
+	public MemberOrganization getOrganization() {
 		return organization;
 	}
-	public void setOrganization(Organization organization) {
+	public void setOrganization(MemberOrganization organization) {
 		this.organization = organization;
 	}
 	public Person getPerson() {
@@ -69,11 +70,11 @@ public class User  {
 		this.person = person;
 	}
 
-	public List<Role> getRoleList() {
+	public Role[] getRoleList() {
 		return roleList;
 	}
 
-	public void setRoleList(List<Role> roleList) {
+	public void setRoleList(Role[] roleList) {
 		this.roleList = roleList;
 	}
 }
