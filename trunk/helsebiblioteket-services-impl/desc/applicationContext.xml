@@ -70,6 +70,7 @@
   		<property name="personDao" ref="personDao"></property>
   		<property name="positionDao" ref="positionDao"></property>
   		<property name="organizationDao" ref="organizationDao"></property>
+  		<property name="systemDao" ref="systemDao"></property>
   	</bean>
   	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
     	<property name="host" value="${mail.smtp.host}"></property>
@@ -121,7 +122,10 @@
 	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-
+	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
 
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="/sqlmap-config.xml"/>
