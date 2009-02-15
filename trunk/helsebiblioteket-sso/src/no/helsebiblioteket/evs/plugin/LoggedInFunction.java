@@ -52,7 +52,7 @@ public class LoggedInFunction{
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		session.setAttribute(sessionLoggedInUserVarName, null);
 	}
-	public void logInOrganization(Organization organization){
+	public void logInOrganization(MemberOrganization organization){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
 	}
