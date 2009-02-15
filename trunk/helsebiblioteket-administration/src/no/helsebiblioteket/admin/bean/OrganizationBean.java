@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
@@ -19,7 +20,7 @@ public class OrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private OrganizationService organizationService;
 	private String searchinput;
-	private List<OrganizationListItem> organizations;
+	private OrganizationListItem[] organizations;
 	private Organization organization;
 	private HtmlDataTable organizationsTable;
 	
@@ -57,12 +58,12 @@ public class OrganizationBean {
 	}
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }
-		PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
+		PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
 		this.organizations = this.organizationService.findOrganizationsBySearchString(this.searchinput, request).result;
 	}
-	public List<OrganizationListItem> getOrganizations() {
-		PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
-		PageResult<OrganizationListItem> pageResult = this.organizationService.getOrganizationListAll(request);
+	public OrganizationListItem[] getOrganizations() {
+		PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
+		PageResultOrganizationListItem pageResult = this.organizationService.getOrganizationListAll(request);
 		this.organizations = pageResult.result;
 		return this.organizations;
 	}

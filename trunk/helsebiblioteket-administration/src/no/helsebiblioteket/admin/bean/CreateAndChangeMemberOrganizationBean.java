@@ -21,6 +21,8 @@ import no.helsebiblioteket.admin.domain.UnknownOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -123,7 +125,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		this.organizationService = organizationService;
 	}
 
-	public Organization getOrganization() {
+	public MemberOrganization getOrganization() {
 		return this.memberOrganization;
 	}
 	
@@ -169,14 +171,14 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		contactInformationPerson.setEmail(this.getContactPersonEmail());
 		
 		contactPerson.setContactInformation(contactInformationPerson);
-		this.memberOrganization.setContactInformation(contactInformationOrganization);
-		this.memberOrganization.setContactPerson(contactPerson);
+		this.memberOrganization.getOrganization().setContactInformation(contactInformationOrganization);
+		this.memberOrganization.getOrganization().setContactPerson(contactPerson);
 		
-		memberOrganization.setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		if (this.memberOrganization.getId() == null) {
-			this.organizationService.insertOrganization(this.memberOrganization);
+		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
+		if (this.memberOrganization.getOrganization().getId() == null) {
+			this.organizationService.insertMemberOrganization(this.memberOrganization);
 		} else {
-			organizationService.updateOrganization(this.memberOrganization);
+			organizationService.updateMemberOrganization(this.memberOrganization);
 		}
 	}
 	
@@ -215,9 +217,10 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		OrganizationListItem organizationLookup = new OrganizationListItem();
 		organizationLookup.setId(orgId);
 		
-		SingleResult<Organization> result = organizationService.getOrganizationByListItem(organizationLookup);
-    	if(result instanceof ValueResult){
-        	this.memberOrganization = (MemberOrganization) ((ValueResult<Organization>)result).getValue();
+		SingleResultOrganization result = organizationService.getOrganizationByListItem(organizationLookup);
+    	if(result instanceof ValueResultOrganization){
+    		// FIXME: re-insert:
+        	this.memberOrganization = null;// (MemberOrganization) ((ValueResultOrganization)result).getValue();
     	} else {
     		this.memberOrganization = null;
     	}
@@ -249,15 +252,18 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	
 	private void initOrganization() {
 		if (this.organizationBean != null && this.organizationBean.getOrganization() != null && this.organizationBean.getOrganization().getId() != null) {
-			this.memberOrganization = (MemberOrganization) organizationBean.getOrganization();
+			// TODO: Re-insert:
+			this.memberOrganization = null;//(MemberOrganization) organizationBean.getOrganization();
 			this.organizationBean.setOrganization(null);
 			return;
 		}
 		this.memberOrganization = new MemberOrganization();
-		this.memberOrganization.setContactInformation(new ContactInformation());
-		this.memberOrganization.setContactPerson(new Person());
-		this.memberOrganization.getContactPerson().setContactInformation(new ContactInformation());
-		this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
+		this.memberOrganization.getOrganization().setContactInformation(new ContactInformation());
+		this.memberOrganization.getOrganization().setContactPerson(new Person());
+		this.memberOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
+		
+		// TODO: Re-insert
+//		this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
 		//this.organization.setNameList(new ArrayList<OrganizationName>());
 	}
 }
