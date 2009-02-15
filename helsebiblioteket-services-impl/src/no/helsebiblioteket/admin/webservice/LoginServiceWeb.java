@@ -26,21 +26,12 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	public SingleResultUser loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-<<<<<<< .mine
-		return (SingleResultUser)invoke(this.logInUser, args, returnTypes);
-=======
-		return (SingleResult<User>)invoke(this.logInUserName, args, returnTypes);
->>>>>>> .r555
+		return (SingleResultUser)invoke(this.logInUserName, args, returnTypes);
 	}
 	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
-<<<<<<< .mine
 		Class[] returnTypes = new Class[] { SingleResultMemberOrganization.class };
-		return (SingleResultMemberOrganization)invoke(this.logInIpAddress, args, returnTypes);
-=======
-		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResult<MemberOrganization>)invoke(this.logInIpAddressName, args, returnTypes);
->>>>>>> .r555
+		return (SingleResultMemberOrganization)invoke(this.logInIpAddressName, args, returnTypes);
 	}
 	public Boolean sendPasswordEmail(User user) {
 		Object[] args = new Object[] { user };
