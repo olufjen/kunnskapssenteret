@@ -62,7 +62,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
         for (User user : users) {
 //        	if(userMap.containsKey(""+user.getUserId())) {
         		ArrayList<Role> list = new ArrayList<Role>();
-        		list.add(user.getRoleList().get(0));
+        		list.add(user.getRoleList()[0]);
 //        		userMap.get(""+user.getUserId()).setRoleList(list);
 //        	}
 //        	else { 
@@ -106,12 +106,12 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
             contactInformation.setEmail(rs.getString("username"));
             person.setContactInformation(contactInformation);
             
-            ArrayList<Role> list = new ArrayList<Role>();
+            Role[] list = new Role[1];
     		Role role = new Role();
 //            role.setKey(rs.getString("key"));
             role.setName(rs.getString("role_name"));
             role.setUserRoleId(rs.getInt("user_role_id"));
-            list.add(role);
+            list[0] = role;
             user.setRoleList(list);
             return user;
         }
