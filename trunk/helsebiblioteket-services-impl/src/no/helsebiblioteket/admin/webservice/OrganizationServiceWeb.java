@@ -6,15 +6,27 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
+<<<<<<< .mine
+import no.helsebiblioteket.admin.requestresult.ValueResult;
+=======
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+>>>>>>> .r549
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 @SuppressWarnings("serial")
@@ -25,50 +37,76 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName organizationListAllName;
 	private QName findOrganizationsBySearchString;
 	private QName organizationByListItemName;
-	private QName insertOrganizationName;
-	private QName updateOrganizationName;
+	private QName insertMemberOrganizationName;
+	private QName updateMemberOrganizationName;
+	private QName insertSupplierOrganizationName;
+	private QName updateSupplierOrganizationName;
 	private QName allPositionsName;
-	public ListResult<OrganizationType> getOrganizationTypeListAll(String DUMMY) {
+	@Override
+	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY  };
-		Class[] returnTypes = new Class[] { ListResult.class };
-		return (ListResult<OrganizationType>) invoke(this.organizationTypeListAllName, args, returnTypes);
+		Class[] returnTypes = new Class[] { ListResultOrganizationType.class };
+		return (ListResultOrganizationType) invoke(this.organizationTypeListAllName, args, returnTypes);
 	}
-	public SingleResult<OrganizationType> getOrganizationTypeByKey(OrganizationTypeKey key) {
+	@Override
+	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key) {
 		Object[] args = new Object[] { key  };
-		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResult<OrganizationType>) invoke(this.organizationTypeByKeyName, args, returnTypes);
+		Class[] returnTypes = new Class[] { SingleResultOrganizationType.class };
+		return (SingleResultOrganizationType) invoke(this.organizationTypeByKeyName, args, returnTypes);
 	}
-	public PageResult<OrganizationListItem> getOrganizationListAll(PageRequest<OrganizationListItem> request) {
+	@Override
+	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
 		Object[] args = new Object[] { request  };
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult<OrganizationListItem>) invoke(this.organizationListAllName, args, returnTypes);
+		return (PageResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);
 	}
-	public PageResult<OrganizationListItem> findOrganizationsBySearchString(String searchString, PageRequest<OrganizationListItem> request) {
+	@Override
+	public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request) {
 		Object[] args = new Object[] { request  };
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult<OrganizationListItem>) invoke(this.findOrganizationsBySearchString, args, returnTypes);
+		return (PageResultOrganizationListItem) invoke(this.findOrganizationsBySearchString, args, returnTypes);
 	}
 
 
-	public SingleResult<Organization> getOrganizationByListItem(OrganizationListItem organizationListItem) {
+	@Override
+	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem) {
 		Object[] args = new Object[] { organizationListItem  };
-		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResult<Organization>) invoke(this.organizationByListItemName, args, returnTypes);
+		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
+		return (SingleResultOrganization) invoke(this.organizationByListItemName, args, returnTypes);
 	}
-	public Boolean insertOrganization(Organization organization) {
+	@Override
+	public Boolean insertMemberOrganization(MemberOrganization organization) {
 		Object[] args = new Object[] { organization  };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.insertOrganizationName, args, returnTypes);
+		return (Boolean) invoke(this.insertMemberOrganizationName, args, returnTypes);
 	}
-	public Boolean updateOrganization(Organization organization) {
+	@Override
+	public Boolean updateMemberOrganization(MemberOrganization organization) {
 		Object[] args = new Object[] { organization  };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.updateOrganizationName, args, returnTypes);
+		return (Boolean) invoke(this.updateMemberOrganizationName, args, returnTypes);
 	}
+<<<<<<< .mine
+	@Override
+	public Boolean insertSupplierOrganization(SupplierOrganization organization) {
+		Object[] args = new Object[] { organization  };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean) invoke(this.insertSupplierOrganizationName, args, returnTypes);
+	}
+	@Override
+	public Boolean updateSupplierOrganization(SupplierOrganization organization) {
+		Object[] args = new Object[] { organization  };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean) invoke(this.updateSupplierOrganizationName, args, returnTypes);
+	}
+	@Override
+	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress) {
+=======
 	public ListResult<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress) {
+>>>>>>> .r549
 		Object[] args = new Object[] { ipAddress  };
-		Class[] returnTypes = new Class[] { ListResult.class };
-		return (ListResult<OrganizationListItem>) invoke(this.updateOrganizationName, args, returnTypes);
+		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
+		return (ListResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);
 	}
 
 	
@@ -87,17 +125,23 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	public void setOrganizationByListItemName(QName organizationByListItemName) {
 		this.organizationByListItemName = organizationByListItemName;
 	}
-	public void setUpdateOrganizationName(QName updateOrganizationName) {
-		this.updateOrganizationName = updateOrganizationName;
-	}
 	public void setFindOrganizationsBySearchString(
 			QName findOrganizationsBySearchString) {
 		this.findOrganizationsBySearchString = findOrganizationsBySearchString;
 	}
-	public void setInsertOrganizationName(QName insertOrganizationName) {
-		this.insertOrganizationName = insertOrganizationName;
-	}
 	public void setAllPositionsName(QName allPositionsName) {
 		this.allPositionsName = allPositionsName;
+	}
+	public void setInsertMemberOrganizationName(QName insertMemberOrganizationName) {
+		this.insertMemberOrganizationName = insertMemberOrganizationName;
+	}
+	public void setUpdateMemberOrganizationName(QName updateMemberOrganizationName) {
+		this.updateMemberOrganizationName = updateMemberOrganizationName;
+	}
+	public void setInsertSupplierOrganizationName(QName insertSupplierOrganizationName) {
+		this.insertSupplierOrganizationName = insertSupplierOrganizationName;
+	}
+	public void setUpdateSupplierOrganizationName(QName updateSupplierOrganizationName) {
+		this.updateSupplierOrganizationName = updateSupplierOrganizationName;
 	}
 }
