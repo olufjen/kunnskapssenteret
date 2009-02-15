@@ -13,6 +13,9 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -71,13 +74,13 @@ public class ProxyLoginController extends HttpControllerPlugin {
     		if(this.urlService.isAffected(requestedUrl)){
     			boolean hasAcces = false;
     			if(this.urlService.hasAccess(user, organization, requestedUrl)){
-    				String result = this.urlService.groupWS(requestedUrl);
+    				SingleResultString result = this.urlService.group(requestedUrl);
     				String group;
-    				if(result == null){
+    				if(result instanceof EmptyResultString){
     					// TODO: What to do here?
     					group = null;
     				} else {
-    					group = result;
+    					group = ((ValueResultString)result).getValue();
     				}
     				if(this.createProxySession(response, requestedUrlText, group)){
         				// Great, done!
@@ -110,7 +113,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
             redirect(response, redirectUrl);
     	}
     }
-    private void createXML(boolean hasAccess, User user, Organization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
+    private void createXML(boolean hasAccess, User user, MemberOrganization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
 		Element loggedin = document.createElement("loggedin");
 		if(user != null){
 //			proxyresult/loggedin/user
