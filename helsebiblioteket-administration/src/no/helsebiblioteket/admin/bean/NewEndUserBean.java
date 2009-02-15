@@ -12,6 +12,7 @@ import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.UserService;
 
@@ -51,7 +52,7 @@ public class NewEndUserBean extends NewUserBean {
 	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
 			Role[] roles = this.userService.getRoleListBySystem(
-					((ValueResult<System>)
+					((ValueResultSystem)
 							this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue()).getList();
 			this.allRoles = new ArrayList<Role>();
 			this.allRolesMap = new HashMap<UserRoleKey, Role>();

@@ -27,6 +27,10 @@ import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
@@ -78,8 +82,8 @@ public class UserBean {
     private boolean isNew(){ return this.user.getId() == null; }
 	// TODO: Now fetching main role with: user.roleList[0].name
     // TODO: Place in User class?
-    private Role mainRole(){ return this.user.getRoleList().get(0); }
-    private void mainRole(Role role){ this.user.setRoleList(new ArrayList<Role>()); this.user.getRoleList().add(role); }
+    private Role mainRole(){ return this.user.getRoleList()[0]; }
+    private void mainRole(Role role){ this.user.setRoleList(new Role[1]); this.user.getRoleList()[0]=role; }
     
     public void initSelectedIsStudent(){
 //		if(this.availableIsStudent == null){
@@ -207,9 +211,9 @@ public class UserBean {
     	return "user_details";
     }
     public String actionCancel(){
-    	SingleResult<User> result = this.userService.findUserByUsername(this.user.getUsername());
-    	if(result instanceof ValueResult){
-        	this.user = ((ValueResult<User>)result).getValue();
+    	SingleResultUser result = this.userService.findUserByUsername(this.user.getUsername());
+    	if(result instanceof ValueResultUser){
+        	this.user = ((ValueResultUser)result).getValue();
     	} else {
     		this.user = null;
     	}
@@ -247,7 +251,7 @@ public class UserBean {
 		}
 		// FIXME: Handle paged result!
 		this.users = this.userService.findUsersBySearchStringRoles(this.searchinput, this.getSelectedRolesRoleList(),
-				new FirstPageRequest<UserListItem>(Integer.MAX_VALUE)).result;
+				new FirstPageRequest(Integer.MAX_VALUE)).result;
 		return "users_overview";
 	}
 	public List<SelectItem> getAvailableIsStudent() {
@@ -284,19 +288,19 @@ public class UserBean {
 		if(this.availableEmployers == null) {
 			this.availableEmployers = new ArrayList<SelectItem>();
 			MemberOrganization dummy = new MemberOrganization();
-			dummy.setId(-999);
+			dummy.getOrganization().setId(-999);
 			String name = ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
 					"user_details_no_employer");
 			// TODO: How to find right name here?
-			dummy.setNameEnglish(name);
-			dummy.setNameShortEnglish(name);
-			dummy.setNameNorwegian(name);
-			dummy.setNameShortNorwegian(name);
-			SelectItem dummyOption = new SelectItem(""+dummy.getId(), dummy.getNameEnglish(), "", false);
+			dummy.getOrganization().setNameEnglish(name);
+			dummy.getOrganization().setNameShortEnglish(name);
+			dummy.getOrganization().setNameNorwegian(name);
+			dummy.getOrganization().setNameShortNorwegian(name);
+			SelectItem dummyOption = new SelectItem(""+dummy.getOrganization().getId(), dummy.getOrganization().getNameEnglish(), "", false);
 			this.availableEmployers.add(dummyOption);
-			PageRequest<OrganizationListItem> request = new FirstPageRequest<OrganizationListItem>(Integer.MAX_VALUE);
-			PageResult<OrganizationListItem> orgs = this.organizationService.getOrganizationListAll(request);
+			PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
+			PageResultOrganizationListItem orgs = this.organizationService.getOrganizationListAll(request);
 			for (OrganizationListItem organization : orgs.result) {
 				// TODO: How to find right name here?
 				SelectItem option = new SelectItem(""+organization.getId(), organization.getNameEnglish(), "", false);
@@ -329,7 +333,7 @@ public class UserBean {
 	public List<Role> getAllRoles() {
 		if(this.allRoles == null){
 			Role[] roles = this.userService.getRoleListBySystem(
-					((ValueResult<System>)
+					((ValueResultSystem)
 							this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue()).getList();
 			this.allRoles = new ArrayList<Role>();
 			this.allRolesMap = new HashMap<UserRoleKey, Role>();
@@ -365,7 +369,7 @@ public class UserBean {
 	}
 	public List<UserListItem> getUsers() {
 		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getUserListAll(new FirstPageRequest<no.helsebiblioteket.admin.domain.list.UserListItem>(Integer.MAX_VALUE)).result; }
+		if(this.users == null) { this.users = userService.getUserListAll(new FirstPageRequest(Integer.MAX_VALUE)).result; }
 		return this.users;
 	}
 	public String getSelectedIsStudent() {

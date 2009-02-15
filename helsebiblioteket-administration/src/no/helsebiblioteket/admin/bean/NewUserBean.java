@@ -26,8 +26,8 @@ public class NewUserBean {
 		User user = new User();
 		Role role = new Role();
 		role.setKey(UserRoleKey.none);
-		user.setRoleList(new ArrayList<Role>());
-		user.getRoleList().add(role);
+		user.setRoleList(new Role[1]);
+		user.getRoleList()[0] = role;
 		user.setPerson(new Person());
 		this.userBean.setUser(user);
 		

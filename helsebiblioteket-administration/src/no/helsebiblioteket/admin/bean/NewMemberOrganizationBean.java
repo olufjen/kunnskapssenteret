@@ -21,6 +21,8 @@ import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
@@ -123,21 +125,22 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		this.organizationService = organizationService;
 	}
 
-	public Organization getMemberOrganization() {
+	public MemberOrganization getMemberOrganization() {
 		if (this.memberOrganization == null) {
 			this.memberOrganization = new MemberOrganization();
 		}
-		if (this.memberOrganization.getContactInformation() == null) {
-			this.memberOrganization.setContactInformation(new ContactInformation());
+		if (this.memberOrganization.getOrganization().getContactInformation() == null) {
+			this.memberOrganization.getOrganization().setContactInformation(new ContactInformation());
 		}
-		if (this.memberOrganization.getContactPerson() == null) {
-			this.memberOrganization.setContactPerson(new Person());
+		if (this.memberOrganization.getOrganization().getContactPerson() == null) {
+			this.memberOrganization.getOrganization().setContactPerson(new Person());
 		}
-		if (this.memberOrganization.getContactPerson().getContactInformation() == null) {
-			this.memberOrganization.getContactPerson().setContactInformation(new ContactInformation());
+		if (this.memberOrganization.getOrganization().getContactPerson().getContactInformation() == null) {
+			this.memberOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
 		}
 		if (this.memberOrganization.getIpAddressSetList() == null) {
-			this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
+			// TODO: Re-insert:
+//			this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
 		}
 		// TODO: Not use!
 //		if(this.memberOrganization.getNameList() == null){
@@ -188,11 +191,11 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		contactInformationPerson.setEmail(this.getContactPersonEmail());
 		
 		contactPerson.setContactInformation(contactInformationPerson);
-		this.memberOrganization.setContactInformation(contactInformationOrganization);
-		this.memberOrganization.setContactPerson(contactPerson);
+		this.memberOrganization.getOrganization().setContactInformation(contactInformationOrganization);
+		this.memberOrganization.getOrganization().setContactPerson(contactPerson);
 		
-		memberOrganization.setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		this.organizationService.insertOrganization(this.memberOrganization);
+		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
+		this.organizationService.insertMemberOrganization(this.memberOrganization);
 	}
 	
 	public void actionAddSingleIp() {
@@ -228,14 +231,15 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		Integer orgId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("organizationId");
 		OrganizationListItem organization = new OrganizationListItem();
 		organization.setId(orgId);
-		SingleResult<Organization> result = organizationService.getOrganizationByListItem(organization);
-		if(result instanceof ValueResult){
-			Organization tmp = ((ValueResult<Organization>)result).getValue();
-			if(tmp instanceof MemberOrganization){
-				this.memberOrganization = (MemberOrganization)tmp;
-			} else {
-				// TODO: Made to edit suppliers?
-			}
+		SingleResultOrganization result = organizationService.getOrganizationByListItem(organization);
+		if(result instanceof ValueResultOrganization){
+			Organization tmp = ((ValueResultOrganization)result).getValue();
+			// FIXME: Re-insert:
+//			if(tmp instanceof MemberOrganization){
+//				this.memberOrganization = (MemberOrganization)tmp;
+//			} else {
+//				// TODO: Made to edit suppliers?
+//			}
 			//setContactPersonEmail(organization.getContactPerson())
 		}
 		return "new_member_organization";

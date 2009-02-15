@@ -95,7 +95,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.organizationService = organizationService;
 	}
 
-	public Organization getSupplierOrganization() {
+	public SupplierOrganization getSupplierOrganization() {
 		initOrganization();
 		return this.supplierOrganization;
 	}
@@ -104,7 +104,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.supplierOrganization = supplierOrganization;
 	}
 	
-	public Organization getOrganization() {
+	public SupplierOrganization getOrganization() {
 		return this.supplierOrganization;
 	}
 
@@ -118,10 +118,10 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
-		if (supplierOrganization.getId() == null) {
-			organizationService.insertOrganization(supplierOrganization);
+		if (supplierOrganization.getOrganization().getId() == null) {
+			organizationService.insertSupplierOrganization(supplierOrganization);
 		} else {
-			organizationService.updateOrganization(supplierOrganization);
+			organizationService.updateSupplierOrganization(supplierOrganization);
 		}
 	}
 	
@@ -131,14 +131,17 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
 		SupplierSourceResource supplierSourceResource = new SupplierSourceResource();
 		supplierSourceResource.setSupplierSource(new SupplierSource(getSourceName(), new Url(getSourceUrl())));
-		this.supplierOrganization.getResourceList().add(supplierSourceResource);
+		// TODO: Do with services!
+		// FIXME: Re-insert
+//		this.supplierOrganization.getResourceList().add(supplierSourceResource);
 	}
 	
 	public void actionDeleteSource() {
 		logger.debug("Method 'actionDeleteSource' invoked");
 		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
-		
-		supplierOrganization.getResourceList().remove((SupplierSourceResource) this.supplierSourceListHtmlDataTable.getRowData());
+		// TODO: Do with services!
+		// FIXME: Re-insert
+//		supplierOrganization.getResourceList().remove((SupplierSourceResource) this.supplierSourceListHtmlDataTable.getRowData());
 	}
 
 	public String actionNewSupplierOrganization() {
@@ -146,6 +149,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	}
 
 	public boolean isShowSourceList() {
+		// TODO: Do with services!
 		return false;//(supplierOrganization.getSupplierSourceList() != null && supplierOrganization.getSupplierSourceList().size() > 0) ? true : false;
 	}
 	
@@ -160,8 +164,8 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		//if (this.organization.getNameList() == null) {
 		//	this.organization.setNameList(new ArrayList<OrganizationName>());
 		//}		
-		this.supplierOrganization.setContactInformation(new ContactInformation());
-		this.supplierOrganization.setContactPerson(new Person());
+		this.supplierOrganization.getOrganization().setContactInformation(new ContactInformation());
+		this.supplierOrganization.getOrganization().setContactPerson(new Person());
 		//SingleResult<OrganizationType> result = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier.toString());
     	//if(result instanceof ValueResult){
 		//	this.supplierOrganization.setType(((ValueResult<OrganizationType>) result).getValue());
