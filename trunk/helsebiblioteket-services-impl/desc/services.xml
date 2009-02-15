@@ -26,6 +26,17 @@
     <operation name="springInit"> <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/> </operation>
   </service>
 
+  <service name="accessService">
+    <description>Login Service for Helsebiblioteket</description>
+    <parameter name="ServiceClass">no.helsebiblioteket.admin.service.AccessService</parameter>
+    <parameter name="ServiceObjectSupplier" >org.apache.axis2.extensions.spring.receivers.SpringAppContextAwareObjectSupplier</parameter>
+    <parameter name="SpringBeanName" >accessService</parameter>
+    <messageReceivers>
+      <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+      <messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out" class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+    </messageReceivers>
+  </service>
+
   <service name="loginService">
     <description>Login Service for Helsebiblioteket</description>
     <parameter name="ServiceClass">no.helsebiblioteket.admin.service.LoginService</parameter>
