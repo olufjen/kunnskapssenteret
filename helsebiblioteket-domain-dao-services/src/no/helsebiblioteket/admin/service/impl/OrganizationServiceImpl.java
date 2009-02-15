@@ -34,6 +34,14 @@ import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.line.IpAddressLine;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.factory.ContactInformationFactory;
 import no.helsebiblioteket.admin.factory.PersonFactory;
 import no.helsebiblioteket.admin.requestresult.EmptyResult;
@@ -79,10 +87,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * OrganizationTypeDao.getOrganizationTypeByKey(..) returns
 	 * null if no OrganizationType is found.
 	 */
-	public ValueResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key){
+	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key){
 		OrganizationType organizationType = this.organizationTypeDao.getOrganizationTypeByKey(key);
 		if(organizationType == null){
-			return new ValueResultOrganizationType(null);
+			return new EmptyResultOrganizationType();
 		} else {
 			return new ValueResultOrganizationType(organizationType);
 		}
@@ -285,7 +293,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * Fetches all the organizations that have this IPAddress.
 	 */
 	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress) {
-		List<OrganizationListItem> all = this.organizationListDao.getOrganizationListByIpAdress(ipAddress);
+		List<OrganizationListItem> all = this.organizationListDao.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = new OrganizationListItem[all.size()];
 		int i=0;
 		for (OrganizationListItem memberOrganization : all) {

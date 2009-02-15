@@ -116,16 +116,16 @@ public class LoginServiceImpl implements LoginService {
 	}
 	
 	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
-		SingleResult<MemberOrganization> result = loginOrganizationByIpAddress(ipAddress);
-		if(result instanceof ValueResult) {
-        	return (MemberOrganization) ((ValueResult<MemberOrganization>)result).getValue();
+		SingleResultMemberOrganization result = loginOrganizationByIpAddress(ipAddress);
+		if(result instanceof ValueResultMemberOrganization) {
+        	return (MemberOrganization)((ValueResultMemberOrganization)result).getValue();
 		}
         return null;
 	}
 	public User loginUserByUsernamePasswordWS(String username, String password) {
-		SingleResult<User> result = this.userService.findUserByUsername(username);
-		if(result instanceof ValueResult){
-			User loggedIn = ((ValueResult<User>)result).getValue();
+		SingleResultUser result = this.userService.findUserByUsername(username);
+		if(result instanceof ValueResultUser){
+			User loggedIn = ((ValueResultUser)result).getValue();
 			if(loggedIn.getPassword().equals(password)){
 				return loggedIn;
 			}
