@@ -70,4 +70,10 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
 		return null;
 	}
 
+	@Override
+	public Role getRoleById(Integer roleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
