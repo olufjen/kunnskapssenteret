@@ -81,10 +81,10 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Class[] returnTypes = new Class[] { SingleResultUser.class };
 		return (SingleResultUser)invoke(this.findUserByUsernameName, args, returnTypes);
 	}
-	public Boolean insertUser(User user){
+	public SingleResultUser insertUser(User user){
 		Object[] args = new Object[] { user };
-		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.insertUserName, args, returnTypes);
+		Class[] returnTypes = new Class[] { SingleResultUser.class };
+		return (SingleResultUser)invoke(this.insertUserName, args, returnTypes);
 	}
 	public Boolean updateUser(User user){
 		Object[] args = new Object[] { user };

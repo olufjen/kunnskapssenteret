@@ -5,16 +5,20 @@ import javax.xml.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSourceResource;
 import no.helsebiblioteket.admin.service.AccessService;
 
 @SuppressWarnings("serial")
@@ -25,13 +29,35 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	private QName accessListByRole;
 	private QName accessListByUser;
 	private QName accessTypeByTypeCategory;
+	private QName resourceTypeByKey;
 	private QName supplierSourceListAll;
+	private QName insertSupplierSourceResource;
+	private QName deleteSupplierSourceResource;
+	private QName deleteResourceAccess;
 	private QName insertOrganizationAccess;
 	private QName insertOrganizationTypeAccess;
 	private QName insertUserAccess;
 	private QName insertUserRoleAccess;
 	@Override
-	public ListResultResourceAccess getAccessListByOrganization(MemberOrganization organization) {
+	public SingleResultSupplierSourceResource insertSupplierSourceResource(SupplierSourceResource resource) {
+		Object[] args = new Object[] { resource };
+		Class[] returnTypes = new Class[] { SingleResultSupplierSourceResource.class };
+		return (SingleResultSupplierSourceResource)invoke(this.insertSupplierSourceResource, args, returnTypes);
+	}
+	@Override
+	public Boolean deleteSupplierSourceResource(SupplierSourceResource resource) {
+		Object[] args = new Object[] { resource };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean)invoke(this.deleteSupplierSourceResource, args, returnTypes);
+	}
+	@Override
+	public Boolean deleteResourceAccess(ResourceAccess access) {
+		Object[] args = new Object[] { access };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean)invoke(this.deleteResourceAccess, args, returnTypes);
+	}
+	@Override
+	public ListResultResourceAccess getAccessListByOrganization(Organization organization) {
 		Object[] args = new Object[] { organization };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccess)invoke(this.accessListByOrganization, args, returnTypes);
@@ -61,31 +87,37 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 		return (SingleResultAccessType)invoke(this.accessTypeByTypeCategory, args, returnTypes);
 	}
 	@Override
+	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey){
+		Object[] args = new Object[] { resourceTypeKey };
+		Class[] returnTypes = new Class[] { SingleResultResourceType.class };
+		return (SingleResultResourceType)invoke(this.resourceTypeByKey, args, returnTypes);
+	}
+	@Override
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY };
 		Class[] returnTypes = new Class[] { ListResultSupplierSource.class };
 		return (ListResultSupplierSource)invoke(this.supplierSourceListAll, args, returnTypes);
 	}
 	@Override
-	public Boolean insertOrganizationAccess(MemberOrganization organization, Access access) {
+	public Boolean insertOrganizationResourceAccess(Organization organization, ResourceAccess access) {
 		Object[] args = new Object[] { organization, access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertOrganizationAccess, args, returnTypes);
 	}
 	@Override
-	public Boolean insertOrganizationTypeAccess(OrganizationType organizationType, Access access) {
+	public Boolean insertOrganizationTypeResourceAccess(OrganizationType organizationType, ResourceAccess access) {
 		Object[] args = new Object[] { organizationType, access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertOrganizationTypeAccess, args, returnTypes);
 	}
 	@Override
-	public Boolean insertUserAccess(User user, Access access) {
-		Object[] args = new Object[] { user, access };
+	public Boolean insertUserResourceAccess(User user, ResourceAccess access) {
+		Object[] args = new Object[] { user, access};
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertUserAccess, args, returnTypes);
 	}
 	@Override
-	public Boolean insertUserRoleAccess(Role userRole, Access access) {
+	public Boolean insertUserRoleResourceAccess(Role userRole, ResourceAccess access) {
 		Object[] args = new Object[] { userRole, access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertUserRoleAccess, args, returnTypes);
@@ -123,5 +155,17 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	}
 	public void setInsertOrganizationAccess(QName insertOrganizationAccess) {
 		this.insertOrganizationAccess = insertOrganizationAccess;
+	}
+	public void setResourceTypeByKey(QName resourceTypeByKey) {
+		this.resourceTypeByKey = resourceTypeByKey;
+	}
+	public void setInsertSupplierSourceResource(QName insertSupplierSourceResource) {
+		this.insertSupplierSourceResource = insertSupplierSourceResource;
+	}
+	public void setDeleteSupplierSourceResource(QName deleteSupplierSourceResource) {
+		this.deleteSupplierSourceResource = deleteSupplierSourceResource;
+	}
+	public void setDeleteResourceAccess(QName deleteResourceAccess) {
+		this.deleteResourceAccess = deleteResourceAccess;
 	}
 }
