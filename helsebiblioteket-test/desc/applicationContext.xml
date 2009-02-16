@@ -28,22 +28,30 @@
 		<property name="password" value="${database.password}"></property>
 		-->
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
-		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin"></property>
+		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin_dump"></property>
 		<property name="username" value="helsebiblioteket"></property>
 		<property name="password" value="helsebiblioteket"></property>
 	</bean>
 
-
 	<!-- Services -->
+  	<bean id="emailService" class="no.helsebiblioteket.admin.web.services.impl.EmailServiceSMTPImpl" init-method="init">
+		<property name="host" value="smtp.example.org" />
+  	</bean>
+
+	<!-- Web Services -->
   	<bean id="accessService" class="no.helsebiblioteket.admin.webservice.AccessServiceWeb" init-method="init">
 		<property name="serviceClient" ref="accessServiceClient" />
 		<property name="targetEPR" ref="accessServiceTargetEPR" />
 		
+		<property name="insertSupplierSourceResource" ref="insertSupplierSourceResourceName" />
+		<property name="deleteSupplierSourceResource" ref="deleteSupplierSourceResourceName" />
+		<property name="deleteResourceAccess" ref="deleteResourceAccessName" />
 		<property name="insertUserAccess" ref="insertUserAccessName" />
 		<property name="insertUserRoleAccess" ref="insertUserRoleAccessName" />
 		<property name="insertOrganizationAccess" ref="insertOrganizationAccessName" />
 		<property name="insertOrganizationTypeAccess" ref="insertOrganizationTypeAccessName" />
 		<property name="accessTypeByTypeCategory" ref="accessTypeByTypeCategoryName" />
+		<property name="resourceTypeByKey" ref="resourceTypeByKeyName" />
 		<property name="accessListByUser" ref="accessListByUserName" />
 		<property name="accessListByRole" ref="accessListByRoleName" />
 		<property name="accessListByOrganization" ref="accessListByOrganizationName" />
@@ -129,45 +137,61 @@
 
 
 	<!-- QNames -->
+	<bean name="insertSupplierSourceResourceName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertSupplierSourceResource" />
+	</bean>
+	<bean name="deleteSupplierSourceResourceName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="deleteSupplierSourceResource" />
+	</bean>
+	<bean name="deleteResourceAccessName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="deleteResourceAccess" />
+	</bean>
 	<bean name="insertUserAccessName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertUserAccess" />
+		<constructor-arg value="insertUserResourceAccess" />
 	</bean>
 	<bean name="insertUserRoleAccessName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertUserRoleAccess" />
+		<constructor-arg value="insertUserRoleResourceAccess" />
 	</bean>
 	<bean name="insertOrganizationAccessName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertOrganizationAccess" />
+		<constructor-arg value="insertOrganizationResourceAccess" />
 	</bean>
 	<bean name="insertOrganizationTypeAccessName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertOrganizationTypeAccess" />
+		<constructor-arg value="insertOrganizationTypeResourceAccess" />
 	</bean>
 	<bean name="accessTypeByTypeCategoryName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getAccessTypeByTypeCategory" />
 	</bean>
+	<bean name="resourceTypeByKeyName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getResourceTypeByKey" />
+	</bean>
 	<bean name="accessListByUserName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getAccessListByUserName" />
+		<constructor-arg value="getAccessListByUser" />
 	</bean>
 	<bean name="accessListByRoleName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getAccessListByRoleName" />
+		<constructor-arg value="getAccessListByRole" />
 	</bean>
 	<bean name="accessListByOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getAccessListByOrganizationName" />
+		<constructor-arg value="getAccessListByOrganization" />
 	</bean>
 	<bean name="accessListByOrganizationTypeName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getAccessListByOrganizationTypeName" />
+		<constructor-arg value="getAccessListByOrganizationType" />
 	</bean>
 	<bean name="supplierSourceListAllName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="getSupplierSourceListAllName" />
+		<constructor-arg value="getSupplierSourceListAll" />
 	</bean>
 
 	<bean name="logInIpAddress" class="javax.xml.namespace.QName">
@@ -205,11 +229,11 @@
 	</bean>
 	<bean name="insertMemberOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertMemberOrganization" />
+		<constructor-arg value="insertOrganization" />
 	</bean>
 	<bean name="updateMemberOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="updateMemberOrganization" />
+		<constructor-arg value="updateOrganization" />
 	</bean>
 	<bean name="insertSupplierOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
