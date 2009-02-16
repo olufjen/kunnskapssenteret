@@ -34,7 +34,7 @@
 		order by org_unit_id desc
 	</select>
 
-	<select id="getOrganizationListByIpAdress" resultMap="OrgUnitNameJoinMap" parameterClass="IpAddress">
+	<select id="getOrganizationListByIpAddress" resultMap="OrgUnitNameJoinMap" parameterClass="IpAddress">
 	select
 		org.descr as org_descr,
 		org.org_unit_id,

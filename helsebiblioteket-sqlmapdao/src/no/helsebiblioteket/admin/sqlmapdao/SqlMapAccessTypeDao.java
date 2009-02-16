@@ -13,7 +13,7 @@ import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 public class SqlMapAccessTypeDao extends SqlMapClientDaoSupport implements AccessTypeDao {
 	public AccessType getAccessTypeByKey(AccessTypeKey key, AccessTypeCategory category) {
 		AccessTypeCompositeKey compositeKey = new AccessTypeCompositeKey();
-		compositeKey.setCategory(category.toString());
+		compositeKey.setCategory(category.getValue());
 		compositeKey.setKey(key.getValue());
 		return (AccessType) getSqlMapClientTemplate().queryForObject("getAccessTypeByKey", compositeKey);
 	}

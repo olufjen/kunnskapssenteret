@@ -26,8 +26,8 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 	public void updateResourceAccessForeignKeys(ResourceAccessForeignKeys access) {
 		getSqlMapClientTemplate().update("updateResourceAccessForeignKeys", access);
 	}
-	public void deleteResourceAccessForeignKeys(ResourceAccessForeignKeys access) {
-		getSqlMapClientTemplate().delete("deleteResourceAccessForeignKeys", access.getResourceAccess().getAccessId());
+	public void deleteResourceAccessForeignKeys(ResourceAccessForeignKeys keys) {
+		getSqlMapClientTemplate().delete("deleteResourceAccessForeignKeys", keys.getResourceAccess().getAccess().getAccessId());
 	}
 
 	public List<ResourceAccessForeignKeys> getAccessListByUser(User user){
@@ -36,8 +36,8 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 	public List<ResourceAccessForeignKeys> getAccessListByUserRole(Role userRole){
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getUserRoleId());
 	}
-	public List<ResourceAccessForeignKeys> getAccessListByOrganization(MemberOrganization organization){
-		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getOrganization().getId());
+	public List<ResourceAccessForeignKeys> getAccessListByOrganization(Organization organization){
+		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId());
 	}
 	public List<ResourceAccessForeignKeys> getAccessListByOrganizationType(OrganizationType organizationType){
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
