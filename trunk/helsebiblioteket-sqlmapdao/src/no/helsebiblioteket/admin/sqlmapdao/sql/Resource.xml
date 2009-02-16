@@ -6,30 +6,30 @@
 <sqlMap namespace="Resource">
 	<typeAlias alias="SupplierSourceResource" type="no.helsebiblioteket.admin.domain.SupplierSourceResource" />
 	<resultMap id="SupplierSourceResourceResultMap" class="SupplierSourceResource">
-		<result property="resourceId" column="resource_id" />
+		<result property="resource.resourceId" column="resource_id" />
 		<result property="supplierSource.id" column="supplier_source_id" />
-		<result property="resourceType.id" column="resource_type_id" />
-		<result property="offeredBy.organization.id" column="org_unit_id" />
-		<result property="lastChanged" column="last_changed" />
+		<result property="resource.resourceType.id" column="resource_type_id" />
+		<result property="resource.offeredBy.organization.id" column="org_unit_id" />
+		<result property="resource.lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertSupplierSourceResource" parameterClass="SupplierSourceResource">
-		<selectKey resultClass="int" keyProperty="resourceId">
+		<selectKey resultClass="int" keyProperty="resource.resourceId">
 			SELECT nextval('tbl_resource_resource_id_seq') as resourceId;
 		</selectKey>
 		insert into tbl_resource (resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed)
-		values (#resourceId#, #supplierSource.id#, #resourceType.id#, #offeredBy.organization.id#, now());
+		values (#resource.resourceId#, #supplierSource.id#, #resource.resourceType.id#, #resource.offeredBy.organization.id#, now());
 	</insert>
 	<update id="updateSupplierSourceResource" parameterClass="SupplierSourceResource">
 		update tbl_resource set
       		supplier_source_id = #supplierSource.id#,
-      		resource_type_id = #resourceType.id#,
-	      	org_unit_id = #offeredBy.organization.id#,
+      		resource_type_id = #resource.resourceType.id#,
+	      	org_unit_id = #resource.offeredBy.organization.id#,
     	  	last_changed = now()
-    	where resource_id = #resourceId# and last_changed = #lastChanged#;
+    	where resource_id = #resource.resourceId# and last_changed = #resource.lastChanged#;
 	</update>
 	<delete id="deleteSupplierSourceResource" parameterClass="integer">
 		delete from tbl_resource
-		where resource_id = #resourceId# 
+		where resource_id = #resource.resourceId# 
 	</delete>
 	<select id="getSupplierSourceResourceById" resultMap="SupplierSourceResourceResultMap" parameterClass="integer">
 		select resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed

@@ -12,7 +12,7 @@
 		<result property="description" column="descr" />
 		<result property="name" column="name" />
 		<result property="key.value" column="key" />
-		<result property="category" column="category" />
+		<result property="category.value" column="category" />
 	</resultMap>
 	<select id="getAccessTypeByKey" resultMap="AccessTypeResultMap" parameterClass="AccessTypeCompositeKey">
 		select
