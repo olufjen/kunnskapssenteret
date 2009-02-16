@@ -12,14 +12,14 @@ public class SupplierSourceResourceFactory {
 	private SupplierSourceResourceFactory(){}
 	public SupplierSourceResource createSupplierSourceResource(){
 		SupplierSourceResource resource = new SupplierSourceResource();
-		resource.setLastChanged(new Date());
+		resource.getResource().setLastChanged(new Date());
 		return resource;
 	}
 	public SupplierSourceResource completeSupplierSourceResource(ResourceType resourceType, SupplierSource supplierSource, SupplierOrganization supplierOrganization){
 		SupplierSourceResource resource = createSupplierSourceResource();
-		resource.setResourceType(resourceType);
+		resource.getResource().setResourceType(resourceType);
 		resource.setSupplierSource(supplierSource);
-		resource.setOfferedBy(supplierOrganization);
+		resource.getResource().setOfferedBy(supplierOrganization);
 		return resource;
 	}
 }

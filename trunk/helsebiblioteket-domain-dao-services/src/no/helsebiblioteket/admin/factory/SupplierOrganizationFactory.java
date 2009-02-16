@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.factory;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -25,7 +24,7 @@ public class SupplierOrganizationFactory {
 		return organization;
 	}
 	public SupplierOrganization completeOrganization(OrganizationType organizationType, Position position){
-		SupplierOrganization organization = new SupplierOrganization();
+		SupplierOrganization organization = createOrganization();
 		organization.getOrganization().setContactInformation(ContactInformationFactory.factory.completeContactInformation());
 		organization.getOrganization().setContactPerson(PersonFactory.factory.completePerson(position));
 		organization.getOrganization().setType(organizationType);

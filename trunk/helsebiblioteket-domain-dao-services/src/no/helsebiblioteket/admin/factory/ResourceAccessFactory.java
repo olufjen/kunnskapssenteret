@@ -1,30 +1,35 @@
 package no.helsebiblioteket.admin.factory;
 
+import java.util.Calendar;
 import java.util.Date;
 
-import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.AccessType;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
-import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 
 public class ResourceAccessFactory {
 	public static ResourceAccessFactory factory = new ResourceAccessFactory();
 	private ResourceAccessFactory(){}
 	public ResourceAccess createResourceAccess(){
 		ResourceAccess access = new ResourceAccess();
-		access.setLastChanged(new Date());
-		access.setValidFrom(new Date());
-		access.setValidTo(new Date());
+		access.getAccess().setLastChanged(new Date());
+		access.getAccess().setValidFrom(new Date());
+		access.getAccess().setValidTo(new Date());
 		return access;
 	}
-	public ResourceAccess completeResourceAccess(Resource resource, AccessType accessType, SupplierOrganization providedBy){
+	public ResourceAccess completeResourceAccess(SupplierSourceResource resource, AccessType accessType, SupplierOrganization providedBy){
 		ResourceAccess access = createResourceAccess();
-		access.setAccessType(accessType);
-		access.setProvidedBy(providedBy);
+		access.getAccess().setAccessType(accessType);
+		access.getAccess().setProvidedBy(providedBy);
 		access.setResource(resource);
+		Calendar calendar = Calendar.getInstance();
+		Date from = calendar.getTime();
+		calendar.add(Calendar.DAY_OF_MONTH, 5);
+		Date to = calendar.getTime();
+		access.getAccess().setValidFrom(from);
+		access.getAccess().setValidTo(to);
 		return access;
 	}
 }

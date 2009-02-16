@@ -4,7 +4,7 @@ import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.base.Identifiable;
 
-public class SupplierSource implements Identifiable{
+public class SupplierSource {
 	// Primary key
 	private Integer supplierSourceId;
 	

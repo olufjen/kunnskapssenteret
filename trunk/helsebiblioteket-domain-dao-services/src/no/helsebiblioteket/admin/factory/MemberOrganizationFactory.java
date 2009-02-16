@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.factory;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.IpAddressSet;

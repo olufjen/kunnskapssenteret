@@ -10,9 +10,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-import no.helsebiblioteket.admin.domain.base.Identifiable;
-
-public abstract class Access implements Identifiable{
+public class Access {
 	// Primary key
 	private Integer accessId;
 	
