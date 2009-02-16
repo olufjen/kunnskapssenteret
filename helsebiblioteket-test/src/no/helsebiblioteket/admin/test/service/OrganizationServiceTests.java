@@ -59,7 +59,7 @@ public class OrganizationServiceTests {
 	@org.junit.Test
 	public void testFindOrganizationsBySearchString(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organizationService.insertMemberOrganization(testOrganization());
+		organizationService.insertOrganization(testOrganization().getOrganization());
 		PageResultOrganizationListItem result = organizationService.findOrganizationsBySearchString(findMeName, null);
 		Assert.assertNotNull("No result", result);
 		Assert.assertTrue("Empty result", result.result.length>0);
@@ -68,7 +68,7 @@ public class OrganizationServiceTests {
 	@org.junit.Test
 	public void testGetOrganizationByListItem(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organizationService.insertMemberOrganization(testOrganization());
+		organizationService.insertOrganization(testOrganization().getOrganization());
 		OrganizationListItem listItem = new OrganizationListItem();
 		MemberOrganization organization = testOrganization();
 //		listItem.setId(organization.getOrgUnitId());
@@ -90,13 +90,14 @@ public class OrganizationServiceTests {
 		IpAddressSet[] ipRangeList = new IpAddressSet[0];
 		organization.setIpAddressSetList(ipRangeList);
 
-		organizationService.insertMemberOrganization(organization);
+		organizationService.insertOrganization(organization.getOrganization());
+		// FIXME: Insert and update IP-addresses!
 		
 		SingleResultMemberOrganization result = loginService.loginOrganizationByIpAddress(ipAddress);
 		organization = ((ValueResultMemberOrganization)result).getValue();
 		organization.getOrganization().setNameEnglish("changedName123");
 		
-		organizationService.updateMemberOrganization(organization);
+		organizationService.updateOrganization(organization.getOrganization());
 		
 		result = loginService.loginOrganizationByIpAddress(ipAddress);
 		Assert.assertNotNull("No result", result);

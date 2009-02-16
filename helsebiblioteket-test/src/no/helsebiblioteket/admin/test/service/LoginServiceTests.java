@@ -56,7 +56,10 @@ public class LoginServiceTests {
 		IpAddressSet[] ipRangeList = new IpAddressSet[0];
 		organization.setIpAddressSetList(ipRangeList);
 		
-		organizationService.insertMemberOrganization(organization);
+		organizationService.insertOrganization(organization.getOrganization());
+		// FIXME: Insert IP-addresses!
+		organization.getIpAddressSetList();
+		
 		loginService.loginOrganizationByIpAddress(ipAddress);
 	}
 	@org.junit.Test

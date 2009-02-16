@@ -48,7 +48,7 @@ public class ResourceDaoTests {
 		resourceDao.insertSupplierSourceResource(resource);
 		
 		// FIND
-		Resource found = resourceDao.getResourceById(resource.getResourceId(), resource.getResourceType().getKey());
+		SupplierSourceResource found = resourceDao.getResourceById(resource.getResource().getResourceId(), resource.getResource().getResourceType().getKey());
 		Assert.notNull(found, "Should have found");
 		Assert.isInstanceOf(SupplierSourceResource.class, found, "Wrong kind. Impossible!");
 		Assert.isTrue(((SupplierSourceResource)found).getSupplierSource().getId().equals(
@@ -58,7 +58,7 @@ public class ResourceDaoTests {
 		resource.setSupplierSource(supplierSource2);
 		resourceDao.updateSupplierSourceResource(resource);
 
-		found = resourceDao.getResourceById(resource.getResourceId(), resource.getResourceType().getKey());
+		found = resourceDao.getResourceById(resource.getResource().getResourceId(), resource.getResource().getResourceType().getKey());
 		Assert.notNull(found, "Should have found");
 		Assert.isInstanceOf(SupplierSourceResource.class, found, "Wrong kind. Impossible!");
 		Assert.isTrue(((SupplierSourceResource)found).getSupplierSource().getId().equals(
@@ -71,7 +71,7 @@ public class ResourceDaoTests {
 		beanFactory.getSupplierSourceDao().deleteSupplierSource(supplierSource2);
 
 		// Deleted?
-		found = resourceDao.getResourceById(resource.getResourceId(), resource.getResourceType().getKey());
+		found = resourceDao.getResourceById(resource.getResource().getResourceId(), resource.getResource().getResourceType().getKey());
 		Assert.isNull(found, "Should not have found");
 	}
 }

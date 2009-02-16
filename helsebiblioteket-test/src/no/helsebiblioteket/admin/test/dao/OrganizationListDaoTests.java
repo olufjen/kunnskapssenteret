@@ -42,13 +42,14 @@ public class OrganizationListDaoTests {
 		OrganizationListItem item = organizationList.get(0);
 		OrganizationNameDao organizationNameDao = beanFactory.getOrganizationNameDao();
 		
-		MemberOrganization organization = organizationDao.getMemberOrganizationById(item.getId());
+		MemberOrganization organization = new MemberOrganization();
+		organization.setOrganization(organizationDao.getOrganizationById(item.getId()));
 		OrganizationName organizationName = new OrganizationName();
 		organizationName.setCategory(OrganizationNameCategory.NORMAL);
 		organizationName.setLanguageCode(LanguageCategory.en);
 		organizationName.setLastChanged(new Date());
 		organizationName.setName("English name" + new Random(1000000).nextInt());
-		organizationNameDao.insertOrganizationName(organization, organizationName);
+		organizationNameDao.insertOrganizationName(organization.getOrganization(), organizationName);
 
 		int randomaddress1 = new Random().nextInt(1000);
 		int randomaddress2 = new Random().nextInt(1000);

@@ -17,9 +17,9 @@ public class URLServiceTests {
 	public void testIsAffected(){
 		URLService urlService = beanFactory.getURLService();
 		
-		Access access = new ResourceAccess();
+		ResourceAccess access = new ResourceAccess();
 		SupplierOrganization supplier = new SupplierOrganization();
-		access.setProvidedBy(supplier);
+		access.getAccess().setProvidedBy(supplier);
 		SupplierSourceResource resource = new SupplierSourceResource();
 		
 		
