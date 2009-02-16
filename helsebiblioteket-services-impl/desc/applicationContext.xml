@@ -36,6 +36,9 @@
   	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
   		<property name="accessDao" ref="accessDao"></property>
   		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  		<property name="resourceTypeDao" ref="resourceTypeDao"></property>
+  		<property name="accessTypeDao" ref="accessTypeDao"></property>
+  		<property name="resourceDao" ref="resourceDao"></property>
   	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userService" ref="userService"></property>
@@ -52,10 +55,8 @@
     	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
     	<property name="organizationNameDao" ref="organizationNameDao"></property>
     	<property name="personDao" ref="personDao"></property>
-    	<property name="accessDao" ref="accessDao"></property>
     	<property name="contactInformationDao" ref="contactInformationDao"></property>
     	<property name="ipRangeDao" ref="ipRangeDao"></property>
-    	<property name="resourceDao" ref="resourceDao"></property>
     	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
   	</bean>
   	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
@@ -125,7 +126,13 @@
 	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
-	
+	<bean id="resourceTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+		
 
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="/sqlmap-config.xml"/>
