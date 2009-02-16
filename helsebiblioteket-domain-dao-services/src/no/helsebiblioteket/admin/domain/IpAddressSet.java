@@ -4,7 +4,7 @@ import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.base.Identifiable;
 
-public abstract class IpAddressSet implements Identifiable{
+public abstract class IpAddressSet {
 	// Primary key
 	private Integer ipAddressId;
 	

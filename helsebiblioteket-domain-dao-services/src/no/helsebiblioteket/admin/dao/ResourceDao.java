@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.dao;
 
-import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
@@ -11,5 +10,5 @@ public interface ResourceDao {
 	public void deleteSupplierSourceResource(SupplierSourceResource resource);
 
 	// Fetch
-	public Resource getResourceById(Integer id, ResourceTypeKey typeKey);
+	public SupplierSourceResource getResourceById(Integer id, ResourceTypeKey typeKey);
 }

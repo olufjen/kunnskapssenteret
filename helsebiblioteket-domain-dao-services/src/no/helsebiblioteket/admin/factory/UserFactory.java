@@ -25,7 +25,7 @@ public class UserFactory {
 	}
 	public User completeUser(MemberOrganization organization, Position position){
 		User user = createUser();
-		user.setOrganization(organization);
+		user.setOrganization(organization.getOrganization());
 		user.setPerson(PersonFactory.factory.completePerson(position));
 		return user;
 	}

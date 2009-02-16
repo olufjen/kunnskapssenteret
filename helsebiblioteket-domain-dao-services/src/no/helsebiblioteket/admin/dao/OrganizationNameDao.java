@@ -9,16 +9,15 @@ package no.helsebiblioteket.admin.dao;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
 
 public interface OrganizationNameDao {
 	// Edit
-	public void insertOrganizationName(MemberOrganization organization, OrganizationName organizationName);
+	public void insertOrganizationName(Organization organization, OrganizationName organizationName);
 	public void updateOrganizationName(OrganizationName organizationName);
 	public void deleteOrganizationName(OrganizationName organizationName);
 
 	// Fetch
-	public List<OrganizationName> getOrganizationNameListByOrganization(MemberOrganization organization);
+	public List<OrganizationName> getOrganizationNameListByOrganization(Organization organization);
 }

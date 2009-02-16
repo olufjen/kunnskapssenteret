@@ -8,8 +8,8 @@ public class AccessTypeKey {
 	public static final AccessTypeKey general = new AccessTypeKey("general");
 
 	private String value;
-	private AccessTypeKey() { }
-	private AccessTypeKey(String value) { this.value = value; }
+	public AccessTypeKey() { }
+	public AccessTypeKey(String value) { this.value = value; }
 	public String getValue() { return value; }
 	public void setValue(String value) { this.value = value; }
 }

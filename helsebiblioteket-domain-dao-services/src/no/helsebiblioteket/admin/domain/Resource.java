@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-public abstract class Resource {
+public class Resource {
 	// Primary key
 	private Integer resourceId;
 	
