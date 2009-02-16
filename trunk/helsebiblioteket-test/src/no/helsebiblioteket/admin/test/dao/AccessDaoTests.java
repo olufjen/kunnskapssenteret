@@ -105,7 +105,7 @@ public class AccessDaoTests {
 		accessForOrganizationKeys.setOrgUnitId(organization.getOrganization().getId());
 		accessForOrganizationKeys.setResourceAccess(resourceAccessForOrg);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationKeys);
-		List<ResourceAccessForeignKeys> organizationAccessList = accessDao.getAccessListByOrganization(organization);
+		List<ResourceAccessForeignKeys> organizationAccessList = accessDao.getAccessListByOrganization(organization.getOrganization());
 		Assert.notEmpty(organizationAccessList, "No access for organization!");
 		
 		// Access for organization type

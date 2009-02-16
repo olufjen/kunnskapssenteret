@@ -34,9 +34,9 @@ public class OrganizationNameDaoTests {
 		name.setLanguageCode(LanguageCategory.en);
 		String nameText = "EnglishNormal" +new Random().nextInt(100000000);
 		name.setName(nameText);
-		organizationNameDao.insertOrganizationName(organization, name);
+		organizationNameDao.insertOrganizationName(organization.getOrganization(), name);
 		
-		List<OrganizationName> list = organizationNameDao.getOrganizationNameListByOrganization(organization);
+		List<OrganizationName> list = organizationNameDao.getOrganizationNameListByOrganization(organization.getOrganization());
 		Assert.notEmpty(list, "Name not saved.");
 		Assert.isTrue(list.get(0).getName().equals(nameText), "Name wrong");
 		
@@ -45,12 +45,12 @@ public class OrganizationNameDaoTests {
 		String newNameText = nameText + "CHANGED";
 		name.setName(newNameText);
 		organizationNameDao.updateOrganizationName(name);
-		list = organizationNameDao.getOrganizationNameListByOrganization(organization);
+		list = organizationNameDao.getOrganizationNameListByOrganization(organization.getOrganization());
 		Assert.notEmpty(list, "Name disappeard");
 		Assert.isTrue(list.get(0).getName().equals(newNameText), "Name wrong");
 		
 		organizationNameDao.deleteOrganizationName(name);
-		list = organizationNameDao.getOrganizationNameListByOrganization(organization);
+		list = organizationNameDao.getOrganizationNameListByOrganization(organization.getOrganization());
 		Assert.isTrue(list.size() == 0, "Name was not deleted!");
 		
 	}

@@ -148,8 +148,6 @@ public class BeanFactory {
 		AccessServiceTests accessServiceTests = new AccessServiceTests();
 		accessServiceTests.testInsertAccess();
 		
-		
-		
 		EmailServiceTests emailServiceTests = new EmailServiceTests();
 		emailServiceTests.testSendMail();
 		
