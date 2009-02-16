@@ -110,8 +110,8 @@ public class LocateFaultyUsersMain {
         person.setProfile(userProfile);
         person.setContactInformation(contactInformation);
         user.setPerson(person);
-        //TODO: User member organization here?
-        user.setOrganization(new MemberOrganization());
+        //TODO: Use member organization here?
+        user.setOrganization(new MemberOrganization().getOrganization());
         //TODO
         /*user.setDn(ldapUser.getDn());
         user.setUid(ldapUser.getUid());
