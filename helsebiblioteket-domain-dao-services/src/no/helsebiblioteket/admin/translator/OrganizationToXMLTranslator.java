@@ -7,25 +7,25 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 
 public class OrganizationToXMLTranslator {
-	public void translate(MemberOrganization organization, Document document, Element element){
+	public void translate(Organization organization, Document document, Element element){
 		Element orgElement = document.createElement("organization");
-		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "nameenglishnormal", organization.getOrganization().getNameEnglish()));
-		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "namenorwegiannormal", organization.getOrganization().getNameNorwegian()));
-		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "nameenglishshort", organization.getOrganization().getNameShortEnglish()));
-		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "namenorwegianshort", organization.getOrganization().getNameShortNorwegian()));
+		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "nameenglishnormal", organization.getNameEnglish()));
+		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "namenorwegiannormal", organization.getNameNorwegian()));
+		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "nameenglishshort", organization.getNameShortEnglish()));
+		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "namenorwegianshort", organization.getNameShortNorwegian()));
 		
 		// TODO Complete this!
 //		organization.getAccessList();
-		organization.getOrganization().getContactInformation();
-		organization.getOrganization().getContactPerson();
-		organization.getOrganization().getDescription();
+		organization.getContactInformation();
+		organization.getContactPerson();
+		organization.getDescription();
 //		organization.getOrgUnitId();
 //		organization.getIpAddressSetList();
-		organization.getOrganization().getLastChanged();
+		organization.getLastChanged();
 //		organization.getNameList();
 //		organization.getNameMap()
 //		organization.getParent();
-		organization.getOrganization().getType();
+		organization.getType();
 		
 		
 		if(element == null){
