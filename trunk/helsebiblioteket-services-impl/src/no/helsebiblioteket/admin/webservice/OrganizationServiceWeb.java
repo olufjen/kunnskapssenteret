@@ -71,28 +71,16 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		return (SingleResultOrganization) invoke(this.organizationByListItemName, args, returnTypes);
 	}
 	@Override
-	public Boolean insertMemberOrganization(MemberOrganization organization) {
+	public SingleResultOrganization insertOrganization(Organization organization) {
 		Object[] args = new Object[] { organization  };
-		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.insertMemberOrganizationName, args, returnTypes);
+		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
+		return (SingleResultOrganization) invoke(this.insertMemberOrganizationName, args, returnTypes);
 	}
 	@Override
-	public Boolean updateMemberOrganization(MemberOrganization organization) {
+	public Boolean updateOrganization(Organization organization) {
 		Object[] args = new Object[] { organization  };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.updateMemberOrganizationName, args, returnTypes);
-	}
-	@Override
-	public Boolean insertSupplierOrganization(SupplierOrganization organization) {
-		Object[] args = new Object[] { organization  };
-		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.insertSupplierOrganizationName, args, returnTypes);
-	}
-	@Override
-	public Boolean updateSupplierOrganization(SupplierOrganization organization) {
-		Object[] args = new Object[] { organization  };
-		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.updateSupplierOrganizationName, args, returnTypes);
 	}
 	@Override
 	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress) {
