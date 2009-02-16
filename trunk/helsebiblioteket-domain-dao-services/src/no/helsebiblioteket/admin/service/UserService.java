@@ -42,6 +42,6 @@ public interface UserService extends Serializable {
 
 	public SingleResultUser findUserByUsername(String username);
 
-	public Boolean insertUser(User user);
+	public SingleResultUser insertUser(User user);
 	public Boolean updateUser(User user);
 }

@@ -129,7 +129,7 @@ public class URLServiceImpl implements URLService {
     public Boolean hasAccess(User user, Url url) {
     	ListResultResourceAccess accessList = this.accessService.getAccessListByUser(user);
     	for (ResourceAccess access : accessList.getList()) {
-    		Resource resource = access.getResource();
+    		SupplierSourceResource resource = access.getResource();
     		if(resource instanceof SupplierSourceResource){
         		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
         			return Boolean.TRUE;
@@ -146,14 +146,12 @@ public class URLServiceImpl implements URLService {
 	 *       type.
 	 */
 	public Boolean hasAccess(MemberOrganization organization, Url url) {
-    	ListResultResourceAccess accessList = this.accessService.getAccessListByOrganization(organization);
+    	ListResultResourceAccess accessList = this.accessService.getAccessListByOrganization(organization.getOrganization());
     	for (ResourceAccess access : accessList.getList()) {
-    		Resource resource = access.getResource();    		
-    		if(resource instanceof SupplierSourceResource){
-        		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
-        			return Boolean.TRUE;
-        		}
-    		}
+    		SupplierSourceResource resource = access.getResource();    		
+       		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
+       			return Boolean.TRUE;
+       		}
 		}
 		return Boolean.FALSE;
 	}

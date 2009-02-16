@@ -37,7 +37,7 @@ public class UserToXMLTranslator {
 			this.roleToXMLTranslator.translate(role, document, rolesElement);
 		}
 		userElement.appendChild(rolesElement);
-		MemberOrganization organization = user.getOrganization();
+		Organization organization = user.getOrganization();
 		if(organization != null){
 			this.organizationToXMLTranslator.translate(organization, document, userElement);
 		}

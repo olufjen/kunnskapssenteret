@@ -215,10 +215,11 @@ public class UserServiceImpl implements UserService {
 			return new EmptyResultUser();
 		} else {
 			// TODO: Deal with Supp/Member
-			MemberOrganization organization = organizationDao.getMemberOrganizationById(user.getId());
+			MemberOrganization organization = new MemberOrganization();
+			organization.setOrganization(organizationDao.getOrganizationById(user.getId()));
 			// TODO: Really?
 			if(organization == null){ throw new NullPointerException("No organization for user"); }
-			user.setOrganization(organization);
+			user.setOrganization(organization.getOrganization());
 
 			Person person = this.personDao.getPersonByUser(user);
 			if(person == null){ person = PersonFactory.factory.createPerson(); }
@@ -241,18 +242,31 @@ public class UserServiceImpl implements UserService {
      * Inserts the user roles, but roles must exist.
      * The organization is not inserted and must be inserted
      * _separately_.
-     * The roles are either not inserted and must be inserted
+     * The roles are also not inserted and must be inserted
      * _separately_.
      * 
      */
-	public Boolean insertUser(User user) {
-		this.personDao.insertPerson(user.getPerson());
-		List<UserRoleLine> userRoleList = translateRoles(user.getId(), user.getRoleList());
-		for (UserRoleLine userRole : userRoleList) {
-			this.userRoleDao.insertUserRole(userRole);
-		}
+	public SingleResultUser insertUser(User user) {
+		checkNull(user);
+		Person insertedPerson = this.personDao.insertPerson(user.getPerson());
+		user.setPerson(insertedPerson);
+		// FIXME: Roles are not inserted here! Read comment above.
+//		List<UserRoleLine> userRoleList = translateRoles(user.getId(), user.getRoleList());
+//		for (UserRoleLine userRole : userRoleList) {
+//			this.userRoleDao.insertUserRole(userRole);
+//		}
 		this.userDao.insertUser(user);
-		return Boolean.TRUE;
+		return new ValueResultUser(user);
+	}
+	private void checkNull(User user) {
+		if(user.getOrganization() == null) throw new NullPointerException("organization == null");
+		if(user.getOrganization() == null) throw new NullPointerException("organization.organization == null");
+		if(user.getOrganization().getId() == null) throw new NullPointerException("organization.organization.id == null");
+		if(user.getPassword() == null) throw new NullPointerException("password == null");
+		if(user.getPerson() == null) throw new NullPointerException("person == null");
+		// TODO: Insert with other service method.
+//		if(user.getRoleList() == null) throw new NullPointerException("roleList == null");
+		if(user.getUsername() == null) throw new NullPointerException("username == null");
 	}
 	/**
 	 * Updates an existing user in the database. Throws an exception
