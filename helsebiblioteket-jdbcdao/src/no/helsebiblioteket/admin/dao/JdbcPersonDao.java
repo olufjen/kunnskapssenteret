@@ -181,7 +181,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             MemberOrganization organization = new MemberOrganization();
-            user.setOrganization(organization);
+            user.setOrganization(organization.getOrganization());
 //            user.getOrganization().setOrgUnitId((rs.getInt("org_unit_id")));
             return user;
         }
