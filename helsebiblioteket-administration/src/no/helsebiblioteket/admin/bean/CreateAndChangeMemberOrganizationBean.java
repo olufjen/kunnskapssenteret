@@ -176,9 +176,14 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		
 		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
 		if (this.memberOrganization.getOrganization().getId() == null) {
-			this.organizationService.insertMemberOrganization(this.memberOrganization);
+			this.organizationService.insertOrganization(this.memberOrganization.getOrganization());
+			// FIXME: Insert new IP-addresses!
+			this.memberOrganization.getIpAddressSetList();
+			
 		} else {
-			organizationService.updateMemberOrganization(this.memberOrganization);
+			// FIXME: Insert new and delete IP-addresses!
+			organizationService.updateOrganization(this.memberOrganization.getOrganization());
+			this.memberOrganization.getIpAddressSetList();
 		}
 	}
 	

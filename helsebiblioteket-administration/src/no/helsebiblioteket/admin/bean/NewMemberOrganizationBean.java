@@ -195,7 +195,10 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		this.memberOrganization.getOrganization().setContactPerson(contactPerson);
 		
 		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		this.organizationService.insertMemberOrganization(this.memberOrganization);
+		this.organizationService.insertOrganization(this.memberOrganization.getOrganization());
+		// FIXME: Insert new IP-addresses!
+		this.memberOrganization.getIpAddressSetList();
+		
 	}
 	
 	public void actionAddSingleIp() {
