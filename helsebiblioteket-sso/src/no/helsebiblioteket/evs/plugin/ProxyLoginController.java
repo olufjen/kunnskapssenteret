@@ -122,7 +122,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
 		} else if(organization != null){
 //			proxyresult/loggedin/organization
 			OrganizationToXMLTranslator organizationTranslator = new OrganizationToXMLTranslator();
-			organizationTranslator.translate(organization, document, loggedin);
+			organizationTranslator.translate(organization.getOrganization(), document, loggedin);
 	} else {
 //			proxyresult/loggedin/none
     		loggedin.appendChild(document.createElement("none"));
