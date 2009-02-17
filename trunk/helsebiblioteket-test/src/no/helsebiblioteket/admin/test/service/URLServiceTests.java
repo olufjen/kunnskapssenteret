@@ -1,8 +1,5 @@
 package no.helsebiblioteket.admin.test.service;
 
-import no.helsebiblioteket.admin.domain.Access;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
@@ -13,6 +10,9 @@ import no.helsebiblioteket.admin.test.BeanFactory;
 
 public class URLServiceTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
+	public void testAll(){
+		
+	}
 	@org.junit.Test
 	public void testIsAffected(){
 		URLService urlService = beanFactory.getURLService();
