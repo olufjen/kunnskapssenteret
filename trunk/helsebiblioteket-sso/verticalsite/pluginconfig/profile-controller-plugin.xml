@@ -54,6 +54,6 @@
 	</bean>
 	<bean name="findUserByUsername" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="findUserByUsernameWS" />
+		<constructor-arg value="findUserByUsername" />
 	</bean>
 </beans>

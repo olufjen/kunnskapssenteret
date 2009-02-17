@@ -36,6 +36,6 @@
 	</bean>
 	<bean name="loginControllerLoginUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="loginUserByUsernamePasswordWS" />
+		<constructor-arg value="loginUserByUsernamePassword" />
 	</bean>
 </beans>

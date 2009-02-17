@@ -26,7 +26,7 @@
  			<entry key="username" value="username"/>
  			<entry key="password" value="password"/>
  			<entry key="passwordrepeat" value="confirmpassword"/>
- 			
+ 			<entry key="position" value="position"/>
  			<entry key="from" value="from"/>
  			<entry key="goto" value="goto"/>
  			<entry key="saveName" value="save"/>
@@ -54,7 +54,7 @@
 	</bean>
 	<bean name="registerFindUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="findUserByUsernameWS" />
+		<constructor-arg value="findUserByUsername" />
 	</bean>
 	<bean name="registerInsertUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
