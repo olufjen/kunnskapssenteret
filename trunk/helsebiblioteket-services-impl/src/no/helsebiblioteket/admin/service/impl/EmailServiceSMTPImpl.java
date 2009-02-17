@@ -20,6 +20,7 @@ public class EmailServiceSMTPImpl implements EmailService {
 	private Log logger = LogFactory.getLog(getClass());
 	private String host;
 	private boolean noSend;
+	private boolean debug;
 	public Boolean sendEmail(Email email) {
 		String to = email.getToName() + "<" + email.getToEmail() + ">";
 		String from = email.getFromName() + "<" + email.getFromEmail() + ">";
@@ -51,5 +52,8 @@ public class EmailServiceSMTPImpl implements EmailService {
 	}
 	public void setNoSend(boolean noSend) {
 		this.noSend = noSend;
+	}
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 }
