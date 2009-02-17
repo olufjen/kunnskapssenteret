@@ -260,7 +260,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	/**
 	 * Fetches all the organizations that have this IPAddress.
 	 */
-	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress) {
+	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
 		List<OrganizationListItem> all = this.organizationListDao.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = new OrganizationListItem[all.size()];
 		int i=0;
