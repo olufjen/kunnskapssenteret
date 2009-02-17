@@ -27,7 +27,7 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 		insertName(join, working);
 		for (int i=1; i<list.size(); i++) {
 			join = list.get(i);
-			if(working.getId() != join.getOrgUnitId()){
+			if( ! working.getId().equals(join.getOrgUnitId())){
 				result.add(working);
 				working = init(join);
 			}
