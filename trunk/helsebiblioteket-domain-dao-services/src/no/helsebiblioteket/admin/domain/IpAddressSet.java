@@ -2,9 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-import no.helsebiblioteket.admin.domain.base.Identifiable;
-
-public abstract class IpAddressSet {
+public class IpAddressSet {
 	// Primary key
 	private Integer ipAddressId;
 	

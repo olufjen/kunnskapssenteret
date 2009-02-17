@@ -1,4 +1,4 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
-public class SingleResultSupplierSourceResource {
+public class SingleResultSupplierSourceResource extends SingleResultOrganization {
 }

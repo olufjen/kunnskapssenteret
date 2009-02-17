@@ -33,11 +33,13 @@ import no.helsebiblioteket.admin.domain.line.IpAddressLine;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.factory.ContactInformationFactory;
@@ -96,18 +98,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
 		// TODO: Do we need more values in OrganizationListItem?
 		// TODO: Should we use Id for request.from?
-		int skip;
-		if(request instanceof FirstPageRequest){
-			skip = 0;
-		} else {
-			skip = ((MorePageRequest)request).skip;
-		}
-		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(skip, request.maxResult);
+		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(request.skip, request.maxResult);
 		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
-		result.result = (OrganizationListItem[]) organizationList.toArray();
-		result.skipped = skip;
-		result.total = organizationList.size();
+		result.setResult(translateList(organizationList));
+		result.setSkipped(request.skip);
+		result.setTotal(organizationList.size());
 		return result;
+	}
+	private OrganizationListItem[] translateList(List<OrganizationListItem> organizationList) {
+		OrganizationListItem[]items = new OrganizationListItem[organizationList.size()];
+		int i=0;
+		for (OrganizationListItem organizationListItem : organizationList) {
+			items[i] = organizationListItem;
+			i++;
+		}
+		return items;
 	}
 	/**
 	 * Finds all the organizations in the database. This method uses a page request
@@ -124,17 +129,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 		// TODO: Do we need more values in OrganizationListItem?
 		// TODO: Should we use Id for request.from?
 		// TODO: Search for the search string in all names or do this by locale?
-		int skip;
-		if(request instanceof FirstPageRequest){
-			skip = 0;
-		} else {
-			skip = ((MorePageRequest)request).skip;
-		}
-		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString, skip, request.maxResult);
+		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString, request.skip, request.maxResult);
 		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
-		result.skipped = skip;
-		result.result = (OrganizationListItem[]) allOrganizations.toArray();
-		result.total = allOrganizations.size();
+		result.setSkipped( request.skip );
+		result.setResult((OrganizationListItem[]) allOrganizations.toArray());
+		result.setTotal(allOrganizations.size());
 		return result;
 	}
 	/**
@@ -150,16 +149,17 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem) {
 		// TODO: Log when some properties are missing in an organization?
 		//       Useful to locate errors and to see if what values have been set in import, etc.
+		// TODO: Log when organization has no type
 		// TODO: Deal with Supp/Member
 		MemberOrganization organization = new MemberOrganization();
 		organization.setOrganization(organizationDao.getOrganizationById(organizationListItem.getId()));
 		if(organization != null){
 			// FIXME: Re-insert:
-//			populateOrganizationNames(organization);
+			populateOrganizationNames(organization.getOrganization());
 			// TODO: Supplier and member!
 //			populateOrganizationRest(organization);
 			// FIXME: Re-insert:
-			return null; //new ValueResultOrganization(organization);
+			return new ValueResultMemberOrganization(organization);
 		} else {
 			return new EmptyResultOrganization();
 		}
@@ -217,7 +217,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * addName and addRange methods at the service level.
 	 */
 	@Override
-	public Boolean updateOrganization(Organization organization) {
+	public SingleResultOrganization updateOrganization(Organization organization) {
 		// TODO: Write for supplier also:
 		checkNull(organization);
 		
@@ -255,7 +255,51 @@ public class OrganizationServiceImpl implements OrganizationService {
 		
 		// FIXME: Re-insert:
 //		this.organizationDao.updateOrganization(organization);
-		return Boolean.TRUE;
+		return new ValueResultOrganization(organization);
+	}
+	@Override
+	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSingles) {
+		IpAddressSet[] list = new IpAddressSet[ipAddressSingles.length];
+		for (IpAddressSingle addressSingle : ipAddressSingles) {
+			IpAddressLine line = translateIpAddressSingle(addressSingle);
+			line.setOrgUnitId(organization.getId());
+			ipRangeDao.insertIpRange(line);
+		}
+		return new ListResultIpAddressSet(list);
+	}
+	@Override
+	public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges) {
+		IpAddressSet[] list = new IpAddressSet[ipAddressRanges.length];
+		int i = 0;
+		for (IpAddressRange addressRange : ipAddressRanges) {
+			IpAddressLine line = translateIpAddressRange(organization, addressRange);
+			ipRangeDao.insertIpRange(line);
+			list[i] = translateIpAddressLine(line);
+			i++;
+		}
+		return new ListResultIpAddressSet(list);
+	}
+	private IpAddressLine translateIpAddressRange(Organization organization, IpAddressRange addressRange) {
+		IpAddressLine line = new IpAddressLine();
+		line.setIpAddressId(addressRange.getIpAddressSet().getIpAddressId());
+		line.setIpAddressFrom(addressRange.getIpAddressFrom().getAddress());
+		line.setIpAddressTo(addressRange.getIpAddressTo().getAddress());
+		line.setLastChanged(addressRange.getIpAddressSet().getLastChanged());
+		line.setOrgUnitId(organization.getId());
+		return line;
+	}
+	@Override
+	public Boolean deleteIpAddresses(IpAddressSet[] ipAddressSets) {
+		for (IpAddressSet ipRange : ipAddressSets) {
+			IpAddressLine line = translateIpAddressSet(ipRange);
+			ipRangeDao.deleteIpRange(line);
+		}
+		return true;
+	}
+	private IpAddressLine translateIpAddressSet(IpAddressSet ipRange) {
+		IpAddressLine line = new IpAddressLine();
+		line.setIpAddressId(ipRange.getIpAddressId());
+		return line;
 	}
 	/**
 	 * Fetches all the organizations that have this IPAddress.
@@ -274,11 +318,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	private void setForeignKeysForOrganization(MemberOrganization organization) {
 		if (organization != null) {
-			if (organization.getIpAddressSetList() != null) {
-				for (IpAddressSet ipRange : organization.getIpAddressSetList()) {
-					// TODO: User line object!
-//					ipRange.setOrganizationId(organization.getOrgUnitId());
-				}
+			if (organization.getIpAddressRangeList() != null) {
+//				for (IpAddressSet ipRange : organization.getIpAddressRangeList()) {
+//					// TODO: User line object!
+////					ipRange.setOrganizationId(organization.getOrgUnitId());
+//				}
 			}
 		}
 	}
@@ -341,7 +385,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	private void populateOrganizationNames(Organization organization) {
 		// FIXME: Reinsert this:
-		List<OrganizationName> nameList = null;//organizationNameDao.getOrganizationNameListByOrganization(organization);
+		List<OrganizationName> nameList = organizationNameDao.getOrganizationNameListByOrganization(organization);
 		organization.setNameEnglish(findCreateName(organization, nameList, LanguageCategory.en, OrganizationNameCategory.NORMAL).getName());
 		organization.setNameShortEnglish(findCreateName(organization, nameList, LanguageCategory.en, OrganizationNameCategory.SHORT).getName());
 		organization.setNameNorwegian(findCreateName(organization, nameList, LanguageCategory.no, OrganizationNameCategory.NORMAL).getName());
@@ -362,14 +406,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	private OrganizationName findCreateName(Organization organization, List<OrganizationName> nameList, LanguageCategory language, OrganizationNameCategory category) {
 		for (OrganizationName organizationName : nameList) {
-			if(organizationName.getCategory().equals(language) &&
-					organizationName.getLanguageCode().equals(language)){
+			if((organizationName.getCategory() == category) &&
+					organizationName.getLanguageCode() == language){
 				return organizationName;
 			}
 		}
 		OrganizationName created = createName(language, category, "");
 		// FIXME: Re-insert this:
-//		this.organizationNameDao.insertOrganizationName(organization, created);
+		this.organizationNameDao.insertOrganizationName(organization, created);
 		return created;
 	}
 	/**
@@ -505,19 +549,19 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @param ipAddressSet
 	 * @return
 	 */
-	private IpAddressLine translateIpAddressSet(IpAddressSet ipAddressSet){
+	private IpAddressLine translateIpAddressSingle(IpAddressSingle ipAddressSingle){
 		IpAddressLine ipAddressLine = new IpAddressLine();
 		ipAddressLine.setIpAddressId(ipAddressLine.getIpAddressId());
 		ipAddressLine.setOrgUnitId(ipAddressLine.getOrgUnitId());
 		ipAddressLine.setLastChanged(ipAddressLine.getLastChanged());
-		if(ipAddressSet instanceof IpAddressRange){
-			IpAddressRange ipAddressRange = (IpAddressRange) ipAddressSet;
-			ipAddressLine.setIpAddressFrom(ipAddressRange.getIpAddressFrom().getAddress());
-			ipAddressLine.setIpAddressTo(ipAddressRange.getIpAddressTo().getAddress());
-		} else {
-			IpAddressSingle ipAddressSingle = (IpAddressSingle) ipAddressSet;
-			ipAddressLine.setIpAddressFrom(ipAddressSingle.getIpAddressSingle().getAddress());
-		}
+//		if(ipAddressSet instanceof IpAddressRange){
+//			IpAddressRange ipAddressRange = (IpAddressRange) ipAddressSet;
+//			ipAddressLine.setIpAddressFrom(ipAddressRange.getIpAddressFrom().getAddress());
+//			ipAddressLine.setIpAddressTo(ipAddressRange.getIpAddressTo().getAddress());
+//		} else {
+//		IpAddressSingle ipAddressSingle = (IpAddressSingle) ipAddressSet;
+		ipAddressLine.setIpAddressFrom(ipAddressSingle.getIpAddressSingle().getAddress());
+//		}
 		return ipAddressLine;
 	}
 	/**
@@ -527,17 +571,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @return
 	 */
 	private IpAddressSet translateIpAddressLine(IpAddressLine ipAddressLine) {
-		IpAddressSet ipAddressSet;
+		IpAddressSet ipAddressSet = new IpAddressSet();
 		if(ipAddressLine.getIpAddressTo()==null){
 			IpAddressSingle ipAddressSingle = new IpAddressSingle();
 			ipAddressSingle.setIpAddressSingle(new IpAddress(ipAddressLine.getIpAddressFrom()));
-			ipAddressSet = ipAddressSingle;
+			// FIXME: Handle this
+//			ipAddressSet = ipAddressSingle;
 		} else {
 			IpAddressRange ipAddressRange = new IpAddressRange();
 			ipAddressRange.setIpAddressFrom(new IpAddress(ipAddressLine.getIpAddressFrom()));
 			ipAddressRange.setIpAddressTo(new IpAddress(ipAddressLine.getIpAddressTo()));
-			ipAddressSet = ipAddressRange;
+			// FIXME: Handle this
+//			ipAddressSet = ipAddressRange;
 		}
+
+		ipAddressSet.setIpAddressId(ipAddressLine.getIpAddressId());
 		ipAddressSet.setLastChanged(ipAddressLine.getLastChanged());
 		return ipAddressSet;
 	}
