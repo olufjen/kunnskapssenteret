@@ -178,12 +178,14 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		if (this.memberOrganization.getOrganization().getId() == null) {
 			this.organizationService.insertOrganization(this.memberOrganization.getOrganization());
 			// FIXME: Insert new IP-addresses!
-			this.memberOrganization.getIpAddressSetList();
+			this.memberOrganization.getIpAddressRangeList();
+			this.memberOrganization.getIpAddressSingleList();
 			
 		} else {
 			// FIXME: Insert new and delete IP-addresses!
 			organizationService.updateOrganization(this.memberOrganization.getOrganization());
-			this.memberOrganization.getIpAddressSetList();
+			this.memberOrganization.getIpAddressRangeList();
+			this.memberOrganization.getIpAddressSingleList();
 		}
 	}
 	
