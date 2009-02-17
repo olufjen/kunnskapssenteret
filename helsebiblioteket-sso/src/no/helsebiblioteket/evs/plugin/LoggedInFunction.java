@@ -121,7 +121,11 @@ public class LoggedInFunction{
 
 	private org.w3c.dom.Document printLoggedIn() throws ParserConfigurationException {
 		User user = this.loggedInUser();
-		Organization organization = this.loggedInOrganization().getOrganization();
+		MemberOrganization memberOrganization = this.loggedInOrganization();
+		Organization organization = null;
+		if (memberOrganization != null) {
+			organization = memberOrganization.getOrganization();
+		}
 		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
 		org.w3c.dom.Document result = userTranslator.newDocument();
 		Element loggedinElement = result.createElement("loggedin");
