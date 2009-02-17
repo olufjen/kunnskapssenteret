@@ -157,16 +157,9 @@ public class UserServiceImpl implements UserService {
 	 * These are the values in the UserListItem object.
 	 */
 	public PageResult<UserListItem> getUserListAll(PageRequest request) {
-		// TODO: Should we use Id for request.from?
-		int skip;
-		if(request instanceof FirstPageRequest){
-			skip = 0;
-		} else {
-			skip = ((MorePageRequest)request).skip;
-		}
 		PageResult<UserListItem> result = new PageResult<UserListItem>();
-		result.result = this.userListDao.getUserListPaged(skip, request.maxResult);
-		result.skipped = skip;
+		result.result = this.userListDao.getUserListPaged(request.skip, request.maxResult);
+		result.skipped = request.skip;
 		result.total = result.result.size();
 		return result;
 	}
@@ -185,16 +178,10 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest request) {
 		// TODO: Should we use Id for request.from?
-		int skip;
-		if(request instanceof FirstPageRequest){
-			skip = 0;
-		} else {
-			skip = ((MorePageRequest)request).skip;
-		}
-		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roles, skip, request.maxResult);
+		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roles, request.skip, request.maxResult);
 		PageResult<UserListItem> result = new PageResult<UserListItem>();
 		result.result = some;
-		result.skipped = skip;
+		result.skipped = request.skip;
 		result.total = result.result.size();
 		return result;
 	}

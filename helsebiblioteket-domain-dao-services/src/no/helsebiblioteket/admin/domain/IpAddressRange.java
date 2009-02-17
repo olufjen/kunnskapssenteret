@@ -1,11 +1,12 @@
 package no.helsebiblioteket.admin.domain;
 
 
-public class IpAddressRange extends IpAddressSet{
+public class IpAddressRange {
 	// Local values
 	private IpAddress ipAddressFrom;
 	private IpAddress ipAddressTo;
-
+	private IpAddressSet ipAddressSet = new IpAddressSet();
+	
 	// Constructors
 	public IpAddressRange() {	
 	}
@@ -39,5 +40,11 @@ public class IpAddressRange extends IpAddressSet{
 	}
 	public void setIpAddressTo(IpAddress ipAddressTo) {
 		this.ipAddressTo = ipAddressTo;
+	}
+	public IpAddressSet getIpAddressSet() {
+		return ipAddressSet;
+	}
+	public void setIpAddressSet(IpAddressSet ipAddressSet) {
+		this.ipAddressSet = ipAddressSet;
 	}
 }

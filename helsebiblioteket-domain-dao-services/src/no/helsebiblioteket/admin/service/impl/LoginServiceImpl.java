@@ -3,10 +3,6 @@ package no.helsebiblioteket.admin.service.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.requestresult.EmptyResult;
-import no.helsebiblioteket.admin.requestresult.ListResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -14,7 +10,6 @@ import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
@@ -24,7 +19,6 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganiza
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 
 public class LoginServiceImpl implements LoginService {
@@ -65,9 +59,9 @@ public class LoginServiceImpl implements LoginService {
 		if(list.length >= 1){
 			// Later: Log incidents of more than one organization per IP Address?
 			SingleResultOrganization memberResult = this.organizationService.getOrganizationByListItem(list[0]);
-			if(memberResult instanceof ValueResultOrganization){
+			if(memberResult instanceof ValueResultMemberOrganization){
 				// FIXME: re-insert:
-				MemberOrganization memberOrganization = null;//(MemberOrganization) ((ValueResultOrganization)memberResult).getValue();
+				MemberOrganization memberOrganization = ((ValueResultMemberOrganization)memberResult).getValue();
 				return new ValueResultMemberOrganization(memberOrganization);
 			}
 		}
@@ -115,6 +109,8 @@ public class LoginServiceImpl implements LoginService {
 		this.organizationService = organizationService;
 	}
 	
+
+	// TODO: What are these for?
 	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
 		SingleResultMemberOrganization result = loginOrganizationByIpAddress(ipAddress);
 		if(result instanceof ValueResultMemberOrganization) {

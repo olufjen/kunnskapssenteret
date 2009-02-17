@@ -2,7 +2,9 @@ package no.helsebiblioteket.admin.factory;
 
 import java.util.Date;
 
+import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;
@@ -20,7 +22,8 @@ public class MemberOrganizationFactory {
 		organization.getOrganization().setNameShortNorwegian("");
 		organization.getOrganization().setContactInformation(ContactInformationFactory.factory.createContactInformation());
 		organization.getOrganization().setContactPerson(PersonFactory.factory.createPerson());
-		organization.setIpAddressSetList(new IpAddressSet[0]);
+		organization.setIpAddressRangeList(new IpAddressRange[0]);
+		organization.setIpAddressSingleList(new IpAddressSingle[0]);
 		return organization;
 	}
 	public MemberOrganization completeOrganization(OrganizationType organizationType, Position position){
