@@ -33,11 +33,6 @@
 		<property name="password" value="helsebiblioteket"></property>
 	</bean>
 
-	<!-- Services -->
-  	<bean id="emailService" class="no.helsebiblioteket.admin.web.services.impl.EmailServiceSMTPImpl" init-method="init">
-		<property name="host" value="smtp.example.org" />
-  	</bean>
-
 	<!-- Web Services -->
   	<bean id="accessService" class="no.helsebiblioteket.admin.webservice.AccessServiceWeb" init-method="init">
 		<property name="serviceClient" ref="accessServiceClient" />
@@ -64,13 +59,25 @@
 	<bean name="accessServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	
+	<bean id="emailService" class="no.helsebiblioteket.admin.webservice.EmailServiceWeb" init-method="init">
+		<property name="serviceClient" ref="emailServiceClient" />
+		<property name="targetEPR" ref="emailServiceTargetEPR" />
+
+		<property name="sendEmailName" ref="sendEmailName" />
+	</bean>
+	<bean name="emailServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/emailService" />
+	</bean>
+	<bean name="emailServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	
   	<bean id="loginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
 		<property name="serviceClient" ref="loginServiceClient" />
 		<property name="targetEPR" ref="loginServiceTargetEPR" />
 		
-		<property name="logInIpAddress" ref="logInIpAddress" />
-		<property name="logInUser" ref="logInUser" />
-		<property name="sendPasswordEmail" ref="sendPasswordEmail" />
+		<property name="logInIpAddressName" ref="logInIpAddress" />
+		<property name="logInUserName" ref="logInUser" />
+		<property name="sendPasswordEmailName" ref="sendPasswordEmail" />
 	</bean>
 	<bean name="loginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
 		<constructor-arg value="http://localhost:8080/axis2/services/loginService" />
@@ -89,6 +96,9 @@
 		<property name="organizationByListItemName" ref="organizationByListItemName" />
 		<property name="insertMemberOrganizationName" ref="insertMemberOrganizationName" />
 		<property name="updateMemberOrganizationName" ref="updateMemberOrganizationName" />
+		<property name="addIpAddresses" ref="addIpAddressesName" />
+		<property name="addIpAddressRanges" ref="addIpAddressRangesName" />
+		<property name="deleteIpAddresses" ref="deleteIpAddressesName" />
 		<property name="insertSupplierOrganizationName" ref="insertSupplierOrganizationName" />
 		<property name="updateSupplierOrganizationName" ref="updateSupplierOrganizationName" />
   	</bean>
@@ -206,6 +216,11 @@
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="sendPasswordEmail" />
 	</bean>
+	
+	<bean name="sendEmailName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="sendEmail" />
+	</bean>
 
 	<bean name="organizationTypeListAllName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
@@ -234,6 +249,18 @@
 	<bean name="updateMemberOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="updateOrganization" />
+	</bean>
+	<bean name="addIpAddressesName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="addIpAddresses" />
+	</bean>
+	<bean name="addIpAddressRangesName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="addIpAddressRanges" />
+	</bean>
+	<bean name="deleteIpAddressesName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="deleteIpAddresses" />
 	</bean>
 	<bean name="insertSupplierOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
