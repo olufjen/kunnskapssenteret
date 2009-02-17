@@ -5,7 +5,6 @@ import org.springframework.util.Assert;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;

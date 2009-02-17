@@ -101,7 +101,7 @@ public class AccessServiceTests {
 //		TEST: public List<ResourceAccess> getAccessListByRole(Role role);
 		ListResultResourceAccess roleAccessList = accessService.getAccessListByRole(health_personnel_other);
 		Assert.notEmpty(roleAccessList.getList(), "Should have value");
-		ResourceAccess deleteAccess3 = roleAccessList.getList()[roleAccessList.getList().length-1];
+//		ResourceAccess deleteAccess3 = roleAccessList.getList()[roleAccessList.getList().length-1];
 				
 //		TEST: public void insertOrganizationTypeResourceAccess(OrganizationType organizationType, Access access);
 		accessService.insertOrganizationTypeResourceAccess(healthEnterprice, access);
@@ -109,7 +109,7 @@ public class AccessServiceTests {
 //		TEST: public List<ResourceAccess> getAccessListByOrganizationType(OrganizationType organizationType);
 		ListResultResourceAccess organizationTypeAccessList = accessService.getAccessListByOrganizationType(healthEnterprice);
 		Assert.notEmpty(organizationTypeAccessList.getList(), "Should have value");
-		ResourceAccess deleteAccess4 = organizationTypeAccessList.getList()[organizationTypeAccessList.getList().length-1];
+//		ResourceAccess deleteAccess4 = organizationTypeAccessList.getList()[organizationTypeAccessList.getList().length-1];
 		
 //		TEST: public List<SupplierSource> getSupplierSourceListAll();
 		ListResultSupplierSource sourceList = accessService.getSupplierSourceListAll("");
@@ -118,8 +118,12 @@ public class AccessServiceTests {
 //		TEST: public Boolean deleteResourceAccess(ResourceAccess access);
 		accessService.deleteResourceAccess(deleteAccess1);
 		accessService.deleteResourceAccess(deleteAccess2);
-		accessService.deleteResourceAccess(deleteAccess3);
-		accessService.deleteResourceAccess(deleteAccess4);
+		for (ResourceAccess deleteAccessRole : roleAccessList.getList()) {
+			accessService.deleteResourceAccess(deleteAccessRole);
+		}
+		for (ResourceAccess deleteAccessOrganization : organizationTypeAccessList.getList()) {
+			accessService.deleteResourceAccess(deleteAccessOrganization);
+		}
 		
 //		TEST: public Boolean deleteSupplierSourceResource(SupplierSourceResource resource);
 		accessService.deleteSupplierSourceResource(resource);

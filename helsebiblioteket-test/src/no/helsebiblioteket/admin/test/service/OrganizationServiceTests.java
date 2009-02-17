@@ -1,106 +1,198 @@
 package no.helsebiblioteket.admin.test.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
-import org.junit.Assert;
+import org.springframework.util.Assert;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
-import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
-import no.helsebiblioteket.admin.requestresult.ListResult;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
-import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.test.BeanFactory;
 
 public class OrganizationServiceTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
-	private String findMeName = "findMe123999";
-	private MemberOrganization testOrganization(){
-		MemberOrganization organization = new MemberOrganization();
-		organization.getOrganization().setNameEnglish(findMeName);
-		return organization;
+	private String findMeName = "findMe_" + new Random().nextInt(1000000000);
+	public void testAll(){
+		testGetOrganizationTypeListAll();
+		testGetOrganizationTypeByKey();
+		testGetOrganizationListAll();
+		testGetOrganizationTypeByKey();
+		testGetOrganizationListAll();
+		testFindOrganizationsBySearchString();
+		testGetOrganizationByListItem();
+		testGetOrganizationListByIpAddress();
+		testUpdateOrganization();
 	}
 	@org.junit.Test
 	public void testGetOrganizationTypeListAll(){
+//		TEST: public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY);
 		ListResultOrganizationType list = beanFactory.getOrganizationService().getOrganizationTypeListAll("");
-		Assert.assertNotNull("No result", list);
+		Assert.isTrue(list.getList().length == 5, "Wrong number of organization types");
 	}
 	@org.junit.Test
 	public void testGetOrganizationTypeByKey(){
+//		TEST: public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key);
 		SingleResultOrganizationType result = beanFactory.getOrganizationService().getOrganizationTypeByKey(
 				OrganizationTypeKey.content_supplier);
-		Assert.assertNotNull("No result", result);
+		Assert.isTrue(result instanceof ValueResultOrganizationType, "No result");
+		Assert.isTrue(((ValueResultOrganizationType)result).getValue().getKey().getValue().equals(
+				OrganizationTypeKey.content_supplier.getValue()), "Wrong organization type");
 	}
 	@org.junit.Test
 	public void testGetOrganizationListAll(){
-		PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
+//		TEST: public PageResultOrganizationListItem getOrganizationListAll(PageRequest request);
+		int numRes = 5;
+		PageRequest request = new PageRequest(0, numRes);
 		PageResultOrganizationListItem result = beanFactory.getOrganizationService().getOrganizationListAll(request);
-		Assert.assertNotNull("No result", result);
+		Assert.isTrue(result.getResult().length >= numRes, "Returned too few");
+		Assert.isTrue(result.getResult().length <= numRes, "Returned too many");
 	}
 	@org.junit.Test
 	public void testFindOrganizationsBySearchString(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organizationService.insertOrganization(testOrganization().getOrganization());
-		PageResultOrganizationListItem result = organizationService.findOrganizationsBySearchString(findMeName, null);
-		Assert.assertNotNull("No result", result);
-		Assert.assertTrue("Empty result", result.result.length>0);
-		Assert.assertEquals("Not the same", result.result[0].getNameEnglish(), findMeName);
+		organizationService.insertOrganization(createMemberOrganization().getOrganization());
+//		TEST: public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request);
+		PageResultOrganizationListItem result = organizationService.findOrganizationsBySearchString(
+				findMeName.substring(3), new PageRequest(0, 5));
+		Assert.notNull(result, "Null result");
+		Assert.notEmpty(result.getResult(), "Empty result");
+		Assert.isTrue(result.getResult().length == 1, "Too many organizations");
+		Assert.isTrue(result.getResult()[0].getNameEnglish().equals(findMeName), "Not the same");
 	}
 	@org.junit.Test
 	public void testGetOrganizationByListItem(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organizationService.insertOrganization(testOrganization().getOrganization());
+		MemberOrganization organization = createMemberOrganization();
+		organizationService.insertOrganization(organization.getOrganization());
 		OrganizationListItem listItem = new OrganizationListItem();
-		MemberOrganization organization = testOrganization();
-//		listItem.setId(organization.getOrgUnitId());
+		listItem.setId(organization.getOrganization().getId());
+		
+//		TEST: public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem);
 		SingleResultOrganization result = organizationService.getOrganizationByListItem(listItem);
-		Assert.assertNotNull("No result", result);
-		Assert.assertTrue("No result", result instanceof ValueResultOrganization);
+		Assert.notNull(result, "Null result");
+		Assert.isTrue(result instanceof ValueResultOrganization, "No result");
+		Assert.isTrue(((ValueResultOrganization)result).getValue().getNameEnglish().equals(
+				this.findMeName), "Wrong organization");
+	}
+	public void testGetOrganizationListByIpAddress(){
+		String name1 = this.findMeName;
+		String name2 = this.findMeName + "_2";
+
+		MemberOrganization organization1 = createMemberOrganization();
+		MemberOrganization organization2 = createMemberOrganization();
+		organization1.getOrganization().setNameEnglish(name1);
+		organization2.getOrganization().setNameEnglish(name2);
+		
+		String randomIp0 = "" + new Random().nextInt(1000);
+		String randomIp1 = "" + new Random().nextInt(1000);
+		String randomIp2 = "" + new Random().nextInt(1000);
+		
+		IpAddress ipAddress = new IpAddress();
+		String prefix = randomIp0 + "." + randomIp1 + "." + randomIp2 + ".";
+		ipAddress.setAddress(prefix + "027");
+		IpAddressRange ipRange = new IpAddressRange();
+		ipRange.setIpAddressFrom(new IpAddress(prefix + "025"));
+		ipRange.setIpAddressTo(new IpAddress(prefix + "027"));
+		IpAddressSingle ipSingle = new IpAddressSingle();
+		ipSingle.setIpAddressSingle(ipAddress);
+
+		IpAddressRange[] ipRangeList = new IpAddressRange[1];
+		ipRangeList[0] = ipRange;
+		IpAddressSingle[] ipSingleList = new IpAddressSingle[1];
+		ipSingleList[0] = ipSingle;
+
+		organization1.setIpAddressRangeList(ipRangeList);
+		organization2.setIpAddressSingleList(ipSingleList);
+
+		OrganizationService organizationService = beanFactory.getOrganizationService();
+//		TEST: public SingleResultOrganization insertOrganization(Organization organization);
+		organization1.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(
+				organization1.getOrganization())).getValue());
+		organization2.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(
+				organization2.getOrganization())).getValue());
+
+//		TEST: public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges);
+		IpAddressSet[] resIp1 = organizationService.addIpAddressRanges(
+				organization1.getOrganization(), organization1.getIpAddressRangeList()).getList();
+//		TEST: public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSingles);
+		IpAddressSet[] resIp2 = organizationService.addIpAddresses(
+				organization2.getOrganization(), organization2.getIpAddressSingleList()).getList();
+
+//		TEST: public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress);
+		ListResultOrganizationListItem result = organizationService.getOrganizationListByIpAdress(ipAddress);
+		
+		Assert.notNull(result, "Null result");
+		Assert.isTrue(result.getList().length == 1, "Wrong number of results");
+		Assert.isTrue(result.getList()[0].getNameEnglish().equals(name1) ||
+				result.getList()[1].getNameEnglish().equals(name1), "Name 1 not found");
+		Assert.isTrue(result.getList()[0].getNameEnglish().equals(name2) ||
+				result.getList()[1].getNameEnglish().equals(name2), "Name 2 not found");
+
+//		TEST: public Boolean deleteIpAddresses(IpAddressSet[] ipAddressSets);
+		organizationService.deleteIpAddresses(resIp1);
+		organizationService.deleteIpAddresses(resIp2);
 	}
 	@org.junit.Test
 	public void testUpdateOrganization(){
+		MemberOrganization organization = createMemberOrganization();
+		
+		String firstName = this.findMeName + "NO-first";
+		String secondName = this.findMeName + "NO-second";
+		
+		organization.getOrganization().setNameNorwegian(firstName);
+		organization.getOrganization().getContactInformation().setPostalLocation(firstName);
+		organization.getOrganization().getContactPerson().setFirstName(firstName);
+		
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		LoginService loginService = beanFactory.getLoginService();
+		organization.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(
+				organization.getOrganization())).getValue());
+		Assert.isTrue(organization.getOrganization().getNameNorwegian().equals(firstName), "Name NO not saved");
+		Assert.isTrue(organization.getOrganization().getContactInformation().getPostalLocation().equals(firstName), "Post Loc not saved");
+		Assert.isTrue(organization.getOrganization().getContactPerson().getFirstName().equals(firstName), "Contact person not saved");
+		
+		organization.getOrganization().setNameNorwegian(secondName);
+		organization.getOrganization().getContactInformation().setPostalLocation(secondName);
+		organization.getOrganization().getContactPerson().setFirstName(secondName);
+		
+//		TEST: public Boolean updateOrganization(Organization organization);
 
-		MemberOrganization organization = testOrganization();
-		IpAddress ipAddress = new IpAddress();
-		ipAddress.setAddress("192.101.1.2");
-		IpAddressRange ipRange = new IpAddressRange();
-		ipRange.setIpAddressFrom(new IpAddress("192.101.1.1"));
-		ipRange.setIpAddressTo(new IpAddress("192.101.1.3"));
-		IpAddressSet[] ipRangeList = new IpAddressSet[0];
-		organization.setIpAddressSetList(ipRangeList);
+		organization.setOrganization(((ValueResultOrganization)organizationService.updateOrganization(
+				organization.getOrganization())).getValue());
 
-		organizationService.insertOrganization(organization.getOrganization());
-		// FIXME: Insert and update IP-addresses!
-		
-		SingleResultMemberOrganization result = loginService.loginOrganizationByIpAddress(ipAddress);
-		organization = ((ValueResultMemberOrganization)result).getValue();
-		organization.getOrganization().setNameEnglish("changedName123");
-		
-		organizationService.updateOrganization(organization.getOrganization());
-		
-		result = loginService.loginOrganizationByIpAddress(ipAddress);
-		Assert.assertNotNull("No result", result);
-		Assert.assertEquals("Not the same", organization.getOrganization().getNameEnglish(), "changedName123");
+		Assert.isTrue(organization.getOrganization().getNameNorwegian().equals(secondName), "Name NO not updated");
+		Assert.isTrue(organization.getOrganization().getContactInformation().getPostalLocation().equals(secondName), "Post Loc not updated");
+		Assert.isTrue(organization.getOrganization().getContactPerson().getFirstName().equals(secondName), "Contact person not updated");
+	}
+
+	
+	private OrganizationType createOrganizationType(){
+		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
+	}
+	private Position createPosition(){
+		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.ortoptist)).getValue();
+	}
+	private MemberOrganization createMemberOrganization(){
+		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(
+				createOrganizationType(), createPosition());
+		organization.getOrganization().setNameEnglish(findMeName);
+		return organization;
 	}
 }

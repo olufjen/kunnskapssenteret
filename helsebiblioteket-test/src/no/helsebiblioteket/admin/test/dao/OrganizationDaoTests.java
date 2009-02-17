@@ -13,7 +13,6 @@ import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
-import no.helsebiblioteket.admin.factory.SupplierOrganizationFactory;
 import no.helsebiblioteket.admin.test.BeanFactory;
 
 public class OrganizationDaoTests {

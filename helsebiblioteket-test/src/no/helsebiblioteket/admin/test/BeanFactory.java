@@ -151,11 +151,17 @@ public class BeanFactory {
 		EmailServiceTests emailServiceTests = new EmailServiceTests();
 		emailServiceTests.testSendMail();
 		
-		
 		LoginServiceTests loginServiceTests = new LoginServiceTests();
+		loginServiceTests.testAll();
+		
 		OrganizationServiceTests organizationServiceTests = new OrganizationServiceTests();
+		organizationServiceTests.testAll();
+		
 		URLServiceTests urlServiceTests = new URLServiceTests();
+		urlServiceTests.testAll();
+		
 		UserServiceTests userServiceTests = new UserServiceTests();
+		userServiceTests.testAll();
 		
 		System.out.println("OK");
 	}

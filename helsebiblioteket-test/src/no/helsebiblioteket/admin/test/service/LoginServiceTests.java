@@ -1,21 +1,28 @@
 package no.helsebiblioteket.admin.test.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
-import org.junit.Assert;
+import org.springframework.util.Assert;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
+import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
 import no.helsebiblioteket.admin.factory.UserFactory;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
@@ -23,24 +30,31 @@ import no.helsebiblioteket.admin.test.BeanFactory;
 
 public class LoginServiceTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
-	private String username = "heltRandomMaaDetVaere";
+	private String username = "heltRandomMaaDetVaere" + new Random().nextInt(1000000000);
 	private String password = "12QWErthuytSD1";
-	private User testUser(){
-		User user = UserFactory.factory.createUser();
-		user.setUsername(username);
-		user.setPassword(password);
-		return user;
+	private String organizationName = "orgRandomName" + new Random().nextInt(1000000000);
+	private String randomIp0 = "" + new Random().nextInt(1000);
+	private String randomIp1 = "" + new Random().nextInt(1000);
+	private String randomIp2 = "" + new Random().nextInt(1000);
+	public void testAll() {
+		testLoginUserByUsernamePassword();
+		testLoginOrganizationByIpAddress();
+		testSendPasswordEmail();
 	}
 	@org.junit.Test
 	public void testLoginUserByUsernamePassword() {
+		OrganizationService organizationService = beanFactory.getOrganizationService();
 		UserService userService = beanFactory.getUserService();
 		LoginService loginService = beanFactory.getLoginService();
 		
-		User user = testUser();
+		User user = createUser();
+		user.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(user.getOrganization())).getValue());
 		userService.insertUser(user);
 		
+//	    TEST: public SingleResultUser loginUserByUsernamePassword(String username, String password);
 		SingleResultUser result = loginService.loginUserByUsernamePassword(username, password);
-		Assert.assertTrue("User not found", result instanceof ValueResultUser);
+		Assert.isTrue(result instanceof ValueResultUser, "User not found");
+		Assert.isTrue(((ValueResultUser)result).getValue().getUsername().equals(this.username), "Wrong user."); 
 	}
 	@org.junit.Test
 	public void testLoginOrganizationByIpAddress() {
@@ -48,25 +62,59 @@ public class LoginServiceTests {
 		LoginService loginService = beanFactory.getLoginService();
 
 		IpAddress ipAddress = new IpAddress();
-		ipAddress.setAddress("192.101.1.2");
+		String prefix = this.randomIp0 + "." + this.randomIp1 + "." + this.randomIp2 + ".";
+		ipAddress.setAddress(prefix + "002");
 		IpAddressRange ipRange = new IpAddressRange();
-		ipRange.setIpAddressFrom(new IpAddress("192.101.1.1"));
-		ipRange.setIpAddressTo(new IpAddress("192.101.1.3"));
-		MemberOrganization organization = new MemberOrganization();
-		IpAddressSet[] ipRangeList = new IpAddressSet[0];
-		organization.setIpAddressSetList(ipRangeList);
+		ipRange.setIpAddressFrom(new IpAddress(prefix + "001"));
+		ipRange.setIpAddressTo(new IpAddress(prefix + "003"));
+		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(createOrganizationTypeTeaching(), createPositionJordmor());
+		organization.getOrganization().setNameEnglish(this.organizationName);
+		IpAddressRange[] ipRangeList = new IpAddressRange[1];
+		ipRangeList[0] = ipRange;
+		organization.setIpAddressRangeList(ipRangeList);
 		
-		organizationService.insertOrganization(organization.getOrganization());
-		// FIXME: Insert IP-addresses!
-		organization.getIpAddressSetList();
+		organization.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(organization.getOrganization())).getValue());
+		IpAddressSet[] res = organizationService.addIpAddressRanges(organization.getOrganization(), organization.getIpAddressRangeList()).getList();
+		Assert.notEmpty(res, "Should have returned inserted ones");
 		
-		loginService.loginOrganizationByIpAddress(ipAddress);
+//	    TEST: public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress);
+		SingleResultMemberOrganization result = loginService.loginOrganizationByIpAddress(ipAddress);
+		Assert.isTrue(result instanceof ValueResultMemberOrganization, "Organization not found");
+		Assert.isTrue(((ValueResultMemberOrganization)result).getValue().getOrganization().getNameEnglish().equals(
+				this.organizationName), "Wrong organization");
+		
+		organizationService.deleteIpAddresses(res);
+		result = loginService.loginOrganizationByIpAddress(ipAddress);
+		Assert.isTrue(result instanceof EmptyResultMemberOrganization, "Should not have been found");
 	}
 	@org.junit.Test
 	public void testSendPasswordEmail() {
 		LoginService loginService = beanFactory.getLoginService();
-		// TODO: Test with Mock or something!
-		User user = testUser();
-		loginService.sendPasswordEmail(user);
+		User user = createUser();
+
+//	    TEST: public Boolean sendPasswordEmail(User user);
+//		Look in the log for the result of this!
+//		TODO: Test with some kind of mock instead?
+	    Boolean res = loginService.sendPasswordEmail(user);
+	    Assert.notNull(res, "Failed");
+	    Assert.isTrue(res, "Failed");
+	}
+
+	private OrganizationType createOrganizationTypeTeaching(){
+		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.teaching)).getValue();
+	}
+	private Position createPositionJordmor(){
+		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.jordmor)).getValue();
+	}
+	private MemberOrganization createMemberOrganization(){
+		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(
+				createOrganizationTypeTeaching(), createPositionJordmor());
+		return memberOrganization;
+	}
+	private User createUser(){
+		User user = UserFactory.factory.completeUser(createMemberOrganization(), createPositionJordmor());
+		user.setUsername(username);
+		user.setPassword(password);
+		return user;
 	}
 }
