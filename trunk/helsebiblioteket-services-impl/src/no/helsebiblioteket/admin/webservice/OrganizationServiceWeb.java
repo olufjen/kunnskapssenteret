@@ -6,12 +6,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
@@ -35,6 +39,9 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName organizationByListItemName;
 	private QName insertMemberOrganizationName;
 	private QName updateMemberOrganizationName;
+	private QName addIpAddresses;
+	private QName addIpAddressRanges;
+	private QName deleteIpAddresses;
 	private QName insertSupplierOrganizationName;
 	private QName updateSupplierOrganizationName;
 	private QName allPositionsName;
@@ -53,13 +60,13 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
 		Object[] args = new Object[] { request  };
-		Class[] returnTypes = new Class[] { PageResult.class };
+		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
 		return (PageResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);
 	}
 	@Override
 	public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request) {
 		Object[] args = new Object[] { request  };
-		Class[] returnTypes = new Class[] { PageResult.class };
+		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
 		return (PageResultOrganizationListItem) invoke(this.findOrganizationsBySearchString, args, returnTypes);
 	}
 
@@ -77,10 +84,28 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		return (SingleResultOrganization) invoke(this.insertMemberOrganizationName, args, returnTypes);
 	}
 	@Override
-	public Boolean updateOrganization(Organization organization) {
+	public SingleResultOrganization updateOrganization(Organization organization) {
 		Object[] args = new Object[] { organization  };
+		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
+		return (SingleResultOrganization) invoke(this.updateMemberOrganizationName, args, returnTypes);
+	}
+	@Override
+	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSets) {
+		Object[] args = new Object[] { organization, ipAddressSets  };
+		Class[] returnTypes = new Class[] { ListResultIpAddressSet.class };
+		return (ListResultIpAddressSet) invoke(this.addIpAddresses, args, returnTypes);
+	}
+	@Override
+	public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges) {
+		Object[] args = new Object[] { organization, ipAddressRanges  };
+		Class[] returnTypes = new Class[] { ListResultIpAddressSet.class };
+		return (ListResultIpAddressSet) invoke(this.addIpAddressRanges, args, returnTypes);
+	}
+	@Override
+	public Boolean deleteIpAddresses(IpAddressSet[] ipAddressSets) {
+		Object[] args = new Object[] { ipAddressSets  };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.updateMemberOrganizationName, args, returnTypes);
+		return (Boolean) invoke(this.deleteIpAddresses, args, returnTypes);
 	}
 	@Override
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
@@ -123,5 +148,14 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	public void setUpdateSupplierOrganizationName(QName updateSupplierOrganizationName) {
 		this.updateSupplierOrganizationName = updateSupplierOrganizationName;
+	}
+	public void setAddIpAddresses(QName addIpAddresses) {
+		this.addIpAddresses = addIpAddresses;
+	}
+	public void setDeleteIpAddresses(QName deleteIpAddresses) {
+		this.deleteIpAddresses = deleteIpAddresses;
+	}
+	public void setAddIpAddressRanges(QName addIpAddressRanges) {
+		this.addIpAddressRanges = addIpAddressRanges;
 	}
 }
