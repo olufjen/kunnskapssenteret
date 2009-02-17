@@ -43,6 +43,7 @@
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userService" ref="userService"></property>
   		<property name="organizationService" ref="organizationService"></property>
+  		<property name="emailService" ref="emailService"></property>
     	<property name="emailFromName" value="redaksjonen@helsebiblioteket.no"></property>
     	<property name="emailFromEmail" value="redaksjonen@helsebiblioteket.no"></property>
     	<property name="emailSubject" value="tilgangsinformasjon for helsebiblioteket.no"></property>
@@ -73,9 +74,10 @@
   		<property name="organizationDao" ref="organizationDao"></property>
   		<property name="systemDao" ref="systemDao"></property>
   	</bean>
-  	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
     	<property name="host" value="${mail.smtp.host}"></property>
     	<property name="debug" value="${mail.debug}"></property>
+    	<property name="noSend" value="${mail.nosend}"></property>
   	</bean>
   	
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
