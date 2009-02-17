@@ -82,7 +82,9 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     		// TODO: Use insertSupplier for suppliers!
     		organizationService.insertOrganization(organization.getOrganization());
     		// FIXME: Insert new IP-addresses!
-    		organization.getIpAddressSetList();
+    		organization.getIpAddressRangeList();
+    		organization.getIpAddressSingleList();
+
     	}
     }
     
@@ -188,10 +190,12 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
                 	addressTo = null;
                 }
                 addressFrom.replace("/", "");
-                IpAddressSet range = new IpAddressRange(new IpAddress(addressFrom), new IpAddress(addressTo));
-                if (organization.getIpAddressSetList() == null) {
-                	organization.setIpAddressSetList(new IpAddressSet[0]);
+                IpAddressRange range = new IpAddressRange(new IpAddress(addressFrom), new IpAddress(addressTo));
+                if (organization.getIpAddressRangeList() == null) {
+                	organization.setIpAddressRangeList(new IpAddressRange[0]);
                 }
+
+        		organization.getIpAddressSingleList();
                 // FIXME: Re-insert this!
 //            	if (!organization.getIpAddressSetList().contains(range)) {
 //            		organization.getIpAddressSetList().add(range);
