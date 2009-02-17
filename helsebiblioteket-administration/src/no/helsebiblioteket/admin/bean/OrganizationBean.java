@@ -58,13 +58,13 @@ public class OrganizationBean {
 	}
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }
-		PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
-		this.organizations = this.organizationService.findOrganizationsBySearchString(this.searchinput, request).result;
+		PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
+		this.organizations = this.organizationService.findOrganizationsBySearchString(this.searchinput, request).getResult();
 	}
 	public OrganizationListItem[] getOrganizations() {
-		PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
+		PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
 		PageResultOrganizationListItem pageResult = this.organizationService.getOrganizationListAll(request);
-		this.organizations = pageResult.result;
+		this.organizations = pageResult.getResult();
 		return this.organizations;
 	}
 	public String getSearchinput() { return searchinput; }

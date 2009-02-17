@@ -251,7 +251,7 @@ public class UserBean {
 		}
 		// FIXME: Handle paged result!
 		this.users = this.userService.findUsersBySearchStringRoles(this.searchinput, this.getSelectedRolesRoleList(),
-				new FirstPageRequest(Integer.MAX_VALUE)).result;
+				new PageRequest(0, Integer.MAX_VALUE)).result;
 		return "users_overview";
 	}
 	public List<SelectItem> getAvailableIsStudent() {
@@ -299,9 +299,9 @@ public class UserBean {
 			dummy.getOrganization().setNameShortNorwegian(name);
 			SelectItem dummyOption = new SelectItem(""+dummy.getOrganization().getId(), dummy.getOrganization().getNameEnglish(), "", false);
 			this.availableEmployers.add(dummyOption);
-			PageRequest request = new FirstPageRequest(Integer.MAX_VALUE);
+			PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
 			PageResultOrganizationListItem orgs = this.organizationService.getOrganizationListAll(request);
-			for (OrganizationListItem organization : orgs.result) {
+			for (OrganizationListItem organization : orgs.getResult()) {
 				// TODO: How to find right name here?
 				SelectItem option = new SelectItem(""+organization.getId(), organization.getNameEnglish(), "", false);
 				this.availableEmployers.add(option);
@@ -369,7 +369,7 @@ public class UserBean {
 	}
 	public List<UserListItem> getUsers() {
 		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getUserListAll(new FirstPageRequest(Integer.MAX_VALUE)).result; }
+		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest(0, Integer.MAX_VALUE)).result; }
 		return this.users;
 	}
 	public String getSelectedIsStudent() {

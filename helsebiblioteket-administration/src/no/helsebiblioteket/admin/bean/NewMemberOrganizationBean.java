@@ -15,6 +15,7 @@ import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
@@ -44,7 +45,8 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 	
 	private String selectedOrganizationTypeId = null;
 	
-	private List<IpAddressSet> ipRangeList = null;
+	private List<IpAddressRange> ipRangeList = null;
+	private List<IpAddressSingle> ipSingleList = null;
 	
 	
 	
@@ -138,10 +140,15 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		if (this.memberOrganization.getOrganization().getContactPerson().getContactInformation() == null) {
 			this.memberOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
 		}
-		if (this.memberOrganization.getIpAddressSetList() == null) {
+		if (this.memberOrganization.getIpAddressRangeList() == null) {
 			// TODO: Re-insert:
 //			this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
 		}
+		if (this.memberOrganization.getIpAddressSingleList() == null) {
+			// TODO: Re-insert:
+//			this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
+		}
+
 		// TODO: Not use!
 //		if(this.memberOrganization.getNameList() == null){
 //			this.memberOrganization.setNameList(new ArrayList<OrganizationName>());
@@ -153,7 +160,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		this.memberOrganization = memberOrganization;
 	}
 	
-	public List<IpAddressSet> getIpRangeList() {
+	public List<IpAddressRange> getIpRangeList() {
 		return this.ipRangeList;
 	}
 
@@ -197,7 +204,9 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
 		this.organizationService.insertOrganization(this.memberOrganization.getOrganization());
 		// FIXME: Insert new IP-addresses!
-		this.memberOrganization.getIpAddressSetList();
+		this.memberOrganization.getIpAddressRangeList();
+		this.memberOrganization.getIpAddressSingleList();
+
 		
 	}
 	
@@ -205,8 +214,9 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		logger.debug("Method 'actionAddSingleIp' invoked");
 		setIpAddressSingle((getIpAddressSingleUIInput().getSubmittedValue() != null) ? getIpAddressSingleUIInput().getSubmittedValue().toString() : null);
 		if (this.ipRangeList == null) {
-			this.ipRangeList = new ArrayList<IpAddressSet>();
+			this.ipRangeList = new ArrayList<IpAddressRange>();
 		}
+		// FIXME: Create single ip address in this.ipSingleList
 		this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressSingle()), null));
 	}
 	
@@ -215,7 +225,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		setIpAddressFrom((getIpAddressFromUIInput().getSubmittedValue() != null) ? getIpAddressFromUIInput().getSubmittedValue().toString() : null);
 		setIpAddressTo((getIpAddressToUIInput().getSubmittedValue() != null) ? getIpAddressToUIInput().getSubmittedValue().toString() : null);
 		if (this.ipRangeList == null) {
-			this.ipRangeList = new ArrayList<IpAddressSet>();
+			this.ipRangeList = new ArrayList<IpAddressRange>();
 		}
 		this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
 	}
