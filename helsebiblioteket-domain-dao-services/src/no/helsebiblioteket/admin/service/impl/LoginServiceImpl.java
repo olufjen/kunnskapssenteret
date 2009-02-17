@@ -60,7 +60,7 @@ public class LoginServiceImpl implements LoginService {
 	 * Returns the first found if there are more than one macth.
 	 */
 	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
-		ListResultOrganizationListItem result = this.organizationService.getOrganizationListByIpAdress(ipAddress);
+		ListResultOrganizationListItem result = this.organizationService.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = result.getList();
 		if(list.length >= 1){
 			// Later: Log incidents of more than one organization per IP Address?
