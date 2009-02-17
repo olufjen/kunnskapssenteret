@@ -137,7 +137,7 @@ public class OrganizationServiceTests {
 				organization2.getOrganization(), organization2.getIpAddressSingleList()).getList();
 
 //		TEST: public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress);
-		ListResultOrganizationListItem result = organizationService.getOrganizationListByIpAdress(ipAddress);
+		ListResultOrganizationListItem result = organizationService.getOrganizationListByIpAddress(ipAddress);
 		
 		Assert.notNull(result, "Null result");
 		Assert.isTrue(result.getList().length == 1, "Wrong number of results");
