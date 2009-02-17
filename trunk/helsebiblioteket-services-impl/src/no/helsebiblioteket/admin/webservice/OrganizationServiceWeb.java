@@ -83,7 +83,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		return (Boolean) invoke(this.updateMemberOrganizationName, args, returnTypes);
 	}
 	@Override
-	public ListResultOrganizationListItem getOrganizationListByIpAdress(IpAddress ipAddress) {
+	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress  };
 		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
 		return (ListResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);
