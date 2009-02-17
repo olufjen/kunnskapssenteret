@@ -133,10 +133,10 @@ xmlns="http://www.springframework.org/schema/beans"
     	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
     	<property name="organizationNameDao" ref="organizationNameDao"></property>
     	<property name="personDao" ref="personDao"></property>
-    	<property name="accessDao" ref="accessDao"></property>
+    	<!--<property name="accessDao" ref="accessDao"></property>-->
     	<property name="contactInformationDao" ref="contactInformationDao"></property>
     	<property name="ipRangeDao" ref="ipRangeDao"></property>
-    	<property name="resourceDao" ref="resourceDao"></property>
+    	<!--<property name="resourceDao" ref="resourceDao"></property>-->
     	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
   	</bean>
  
