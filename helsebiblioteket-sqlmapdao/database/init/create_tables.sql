@@ -268,6 +268,7 @@ CREATE TABLE tbl_person
     contact_information_id INTEGER           NULL,
     profile_id           INTEGER             NULL,
     position_type_id     INTEGER             NULL,
+    employer			 VARCHAR			 NULL,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( person_id )
 );
