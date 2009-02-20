@@ -208,7 +208,7 @@ xmlns="http://www.springframework.org/schema/beans"
 		class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
 		<property name="key" value="changeThis" />
 		<property name="userAttribute"
-			value="anonymousUser,ROLE_ANONYMOUS" />
+			value="anonymousUser,ROLE_ANONYMOUS,ADMIN" />
 	</bean>
 	 
 	<bean id="exceptionTranslationFilter" class="org.springframework.security.ui.ExceptionTranslationFilter">
@@ -222,7 +222,7 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="accessDeniedHandler">
 			<bean
 				class="org.springframework.security.ui.AccessDeniedHandlerImpl">
-				<property name="errorPage" value="/accessDenied.faces" />
+				<property name="errorPage" value="/login.faces" />
 			</bean>
 		</property>
 	</bean>
@@ -236,8 +236,11 @@ xmlns="http://www.springframework.org/schema/beans"
 			ref="accessDecisionManager" />
 		<property name="objectDefinitionSource">
 			<value>
-				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
-				PATTERN_TYPE_APACHE_ANT
+				
+				
+				<!-- 
+				LOWERCASE
+				ROLE_ADMINISTRATOR
 				/login.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				/welcome.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				/forgotten-password.faces=IS_AUTHENTICATED_ANONYMOUSLY
@@ -256,8 +259,9 @@ xmlns="http://www.springframework.org/schema/beans"
 				/user-new.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				/new-enduser.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				/new-administrator.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/user.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				<!--  /welcome.faces=ROLE_ALLACCESS,ROLE_URLACCESS-->
+				/user.faces=IS_AUTHENTICATED_ANONYMOUSLY 
+				 -->
+				 /welcome.faces=ROLE_administrator
 			</value>
 		</property>
 	</bean>
