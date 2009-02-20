@@ -52,9 +52,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private GrantedAuthority[] makeGrantedAuthorities(User user) {
 		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().length];
 		int i = 0;
-		for (Role role : user.getRoleList()) {
-			result[i++] = new GrantedAuthorityImpl(role.getName());
-		}
+		for (Role role : user.getRoleList()) 
+			result[i++] = new GrantedAuthorityImpl("ROLE_"+role.getKey().toString());
 		return result;
 		// TODO: Use ROLE_ALLACCESS?
 //		GrantedAuthority[] result = new GrantedAuthority[2];
