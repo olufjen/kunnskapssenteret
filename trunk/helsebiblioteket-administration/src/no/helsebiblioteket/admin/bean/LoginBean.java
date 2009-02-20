@@ -24,6 +24,7 @@ import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.validator.EmailValidator;
+import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,6 +37,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("request")
 public class LoginBean {
+	public static final String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
 	
 
 	public LoginBean(){ 
@@ -45,12 +47,14 @@ public class LoginBean {
          .getSessionMap()
          .get(AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY);
          
+		 String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "login_unknown_user", "no property found");
          if (ex != null)
-         FacesContext.getCurrentInstance().addMessage(
-         null,
-         new FacesMessage(FacesMessage.SEVERITY_ERROR, ex
-         .getMessage(), ex.getMessage()));
-         
+         FacesContext.getCurrentInstance().addMessage(null
+         ,
+         new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+        		 messageValue
+        		, ex.getMessage()));
+         //ex.getMessage()
          }
 
 
