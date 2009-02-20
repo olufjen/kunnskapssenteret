@@ -12,10 +12,10 @@
 
 	<h:form >
 		<h:panelGrid columns="2">
-			<h:outputLabel value="User Name" for="j_username" />
+			<h:outputLabel value="#{msg_main.username}" for="j_username" />
 			<t:inputText id="j_username" forceId="true"
-				value="#{loginBean.email}" size="40" maxlength="80"></t:inputText>
-			<h:outputLabel value="Password" for="j_password" />
+				required="true" value="#{loginBean.email}" size="40" maxlength="80"></t:inputText>
+			<h:outputLabel value="#{msg_main.password}" for="j_password" />
 			<t:inputSecret id="j_password" forceId="true"
 				value="#{loginBean.password}" size="40" maxlength="80"
 				redisplay="true"></t:inputSecret>
