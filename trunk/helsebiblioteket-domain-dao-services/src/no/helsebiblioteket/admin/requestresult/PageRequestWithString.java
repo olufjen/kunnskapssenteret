@@ -1,13 +1,15 @@
 package no.helsebiblioteket.admin.requestresult;
 
-public class PageRequest {
+public class PageRequestWithString {
 	private Integer skip;
 	private Integer maxResult;
-	public PageRequest() { }
-	public PageRequest(Integer skip, Integer maxResult) {
+	private String stringValue;
+	public PageRequestWithString(Integer skip, Integer maxResult, String stringValue) {
 		this.skip = skip;
 		this.maxResult = maxResult;
+		this.stringValue = stringValue;
 	}
+	public PageRequestWithString() { }
 	public Integer getSkip() {
 		return skip;
 	}
@@ -19,5 +21,11 @@ public class PageRequest {
 	}
 	public void setMaxResult(Integer maxResult) {
 		this.maxResult = maxResult;
+	}
+	public String getStringValue() {
+		return stringValue;
+	}
+	public void setStringValue(String stringValue) {
+		this.stringValue = stringValue;
 	}
 }
