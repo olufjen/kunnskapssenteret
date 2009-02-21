@@ -5,6 +5,12 @@ public class ResourceAccess {
 	private SupplierSourceResource resource;
 	private Access access = new Access();
 
+	// Helpers
+	@Override
+	public String toString() {
+		return "{ " + resource + "; " + access + "}";
+	}
+
 	// GET/SET
 	public SupplierSourceResource getResource() {
 		return resource;

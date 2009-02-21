@@ -5,7 +5,13 @@ public class IpAddressSingle {
 	// Local values
 	private IpAddress ipAddressSingle;
 	private IpAddressSet ipAddressSet = new IpAddressSet();
-	
+
+	// Helpers
+	@Override
+	public String toString() {
+		return ipAddressSingle + ", " + ipAddressSet;
+	}
+
 	// GET/SET
 	public IpAddress getIpAddressSingle() {
 		return ipAddressSingle;

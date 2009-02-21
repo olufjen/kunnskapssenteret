@@ -5,7 +5,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 // TODO: Should this be named position type?
 public class Position {
 	// Primary key
-	private Integer positionTypeId;
+	private Integer id;
 	
 	// Unique value
 	private PositionTypeKey key;
@@ -16,15 +16,21 @@ public class Position {
 	
 	// References
 	private OrganizationType organizationType;
-	
+
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + id + ", " + key + "]";
+	}
+
 	// GET/SET
 	public PositionTypeKey getKey() { return key; }
 	public void setKey(PositionTypeKey key) { this.key = key; }
 	public Integer getId() {
-		return positionTypeId;
+		return id;
 	}
 	public void setId(Integer id) {
-		this.positionTypeId = id;
+		this.id = id;
 	}
 	public String getDescription() {
 		return description;

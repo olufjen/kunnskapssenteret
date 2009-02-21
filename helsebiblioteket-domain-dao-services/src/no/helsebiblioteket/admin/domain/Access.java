@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class Access {
 	// Primary key
-	private Integer accessId;
+	private Integer id;
 	
 	// Local values
 	private Date validFrom;
@@ -24,16 +24,12 @@ public class Access {
 	private SupplierOrganization providedBy;
 
 	// Helpers
-	public Integer getMyId() { return getAccessId(); }
-	public void setMyId(Integer id) { setAccessId(id); }
+	@Override
+	public String toString() {
+		return id + ", " + accessType;
+	}
 
 	// GET/SET
-	public Integer getAccessId() {
-		return accessId;
-	}
-	public void setAccessId(Integer accessId) {
-		this.accessId = accessId;
-	}
 	public Date getValidFrom() {
 		return validFrom;
 	}
@@ -63,5 +59,13 @@ public class Access {
 	}
 	public void setProvidedBy(SupplierOrganization providedBy) {
 		this.providedBy = providedBy;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

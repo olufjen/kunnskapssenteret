@@ -8,7 +8,7 @@ import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 
 public class OrganizationName implements Identifiable{
 	// Primary key
-	private Integer orgUnitNameId = null;
+	private Integer id = null;
 	
 	// Local values
 	private String name = null;
@@ -21,12 +21,19 @@ public class OrganizationName implements Identifiable{
 	
 	// toString
 	public String toString() {
-		return "[" + orgUnitNameId + "] " + name + ", " + orgUnitId + ", "+ languageCode + "_" + category;
+		return "[" + id + "] " + name + ", " + orgUnitId + ", "+ languageCode + "_" + category;
 	}
 	
 	// Helpers
-	public Integer getMyId() { return getId(); }
-	public void setMyId(Integer id) { setId(id); }
+	@Override
+	public Integer getMyId() {
+		return id;
+	}
+
+	@Override
+	public void setMyId(Integer id) {
+		this.id = id;
+	}
 	public boolean equals(OrganizationName orgName) {
         if (this == orgName) return true;
         if (name != null ? !name.equals(orgName.name) : orgName.name != null) return false;
@@ -43,8 +50,11 @@ public class OrganizationName implements Identifiable{
     }
 
 	// GET/SET
-	public void setId(Integer orgUnitNameId) {
-		this.orgUnitNameId = orgUnitNameId;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getId() {
+		return id;
 	}
 	public String getName() {
 		return name;
@@ -69,9 +79,6 @@ public class OrganizationName implements Identifiable{
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
-	}
-	public Integer getId() {
-		return orgUnitNameId;
 	}
 	public Integer getOrgUnitId() {
 		return orgUnitId;

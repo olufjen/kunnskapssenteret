@@ -5,6 +5,12 @@ public class SupplierSourceResource  {
 	private SupplierSource supplierSource;
 	private Resource resource = new Resource();
 
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + supplierSource + ", " + resource + "]";
+	}
+
 	// GET/SET
 	public SupplierSource getSupplierSource() {
 		return supplierSource;

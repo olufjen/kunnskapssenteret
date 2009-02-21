@@ -2,11 +2,9 @@ package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
 
-import no.helsebiblioteket.admin.domain.base.Identifiable;
-
 public class SupplierSource {
 	// Primary key
-	private Integer supplierSourceId;
+	private Integer id;
 	
 	// Local values
 	private String supplierSourceName;
@@ -27,13 +25,14 @@ public class SupplierSource {
 	}
 
 	// Helpers
-	// Helpers
-	public Integer getMyId() { return getId(); }
-	public void setMyId(Integer id) { setId(id); }
+	@Override
+	public String toString() {
+		return "[" + id + ", " + supplierSourceName + "]";
+	}
 
 	// GET/SET
-	public Integer getId(){ return supplierSourceId; }
-	public void setId(Integer id){ this.supplierSourceId = id; }
+	public Integer getId(){ return id; }
+	public void setId(Integer id){ this.id = id; }
 	public Url getUrl() {
 		return this.url;
 	}

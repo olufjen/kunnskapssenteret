@@ -1,11 +1,10 @@
 package no.helsebiblioteket.admin.domain;
 
 import java.util.Date;
-import java.util.List;
 
 public class User  {
 	// Primary key
-	private Integer userId;
+	private Integer id;
 	
 	// Local value
 	private String username;
@@ -23,6 +22,10 @@ public class User  {
 	private Role[] roleList;
 	
 	// Helpers
+	@Override
+	public String toString() {
+		return "[" + id + ": " + username + "(" + password + ", " + lastChanged + ")]";
+	}
 	public boolean hasRole(Role role){
 		for (Role userRole : this.roleList) {
 			if(userRole.getKey().equals(role.getKey())){
@@ -34,10 +37,10 @@ public class User  {
 
 	// GET/SET
 	public Integer getId() {
-		return userId;
+		return id;
 	}
-	public void setId(Integer userId) {
-		this.userId = userId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getUsername() {
 		return username;

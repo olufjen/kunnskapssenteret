@@ -4,7 +4,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
 public class Role {
 	// Primary key
-	private Integer userRoleId;
+	private Integer id;
 
 	// Unique value
 	// Key in combination with system.key
@@ -16,6 +16,12 @@ public class Role {
 	
 	// References
 	private System system;
+
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + id + ", " + key + ", " + name + ", " + system + "]";
+	}
 	
 	public String getName() {
 		return name;
@@ -23,11 +29,11 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getUserRoleId() {
-		return userRoleId;
+	public Integer getId() {
+		return id;
 	}
-	public void setUserRoleId(Integer roleId) {
-		this.userRoleId = roleId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public UserRoleKey getKey() {
 		return key;

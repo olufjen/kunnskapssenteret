@@ -4,7 +4,7 @@ import no.helsebiblioteket.admin.domain.key.SystemKey;
 
 public class System {
 	// Primary key
-	private Integer systemId;
+	private Integer id;
 
 	// Unique value
 	private SystemKey key;
@@ -13,6 +13,11 @@ public class System {
 	private String name;
 	private String description;
 	
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + id + ", " + key + ", " + name + "]";
+	}
 	
 	// GET/SET
 	public String getName() {
@@ -33,10 +38,10 @@ public class System {
 	public void setKey(SystemKey key) {
 		this.key = key;
 	}
-	public Integer getSystemId() {
-		return systemId;
+	public Integer getId() {
+		return id;
 	}
-	public void setSystemId(Integer systemId) {
-		this.systemId = systemId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

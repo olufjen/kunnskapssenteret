@@ -8,6 +8,13 @@ public class Email {
 	private String fromEmail;
 	private String subject;
 	private String message;
+	
+	// Helpers
+	@Override
+	public String toString() {
+		return toName + "<" + toEmail + ">: " + subject;
+	}
+	
 	public String getToName() {
 		return toName;
 	}

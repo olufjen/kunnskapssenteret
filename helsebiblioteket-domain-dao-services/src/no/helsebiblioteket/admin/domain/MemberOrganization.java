@@ -4,7 +4,15 @@ public class MemberOrganization {
 	// Values loaded by IpAddressLine
 	private IpAddressRange[] ipAddressRangeList;
 	private IpAddressSingle[] ipAddressSingleList;
+	
+	// Organization
 	private Organization organization = new Organization();;
+	
+	// Helpers
+	@Override
+	public String toString() {
+		return "Member: " + organization;
+	}
 	
 	// GET/SET
 	public Organization getOrganization() {

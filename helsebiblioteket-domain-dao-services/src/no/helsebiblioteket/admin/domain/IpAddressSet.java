@@ -4,22 +4,23 @@ import java.util.Date;
 
 public class IpAddressSet {
 	// Primary key
-	private Integer ipAddressId;
+	private Integer id;
 	
 	// Local values
 	private Date lastChanged;
 	
 	// Helpers
-	public Integer getMyId() { return getIpAddressId(); }
-	public void setMyId(Integer id) { setIpAddressId(id); }
-	
+	@Override
+	public String toString() {
+		return id + ", " + lastChanged;
+	}
 
 	// GET/SET
-	public Integer getIpAddressId() {
-		return ipAddressId;
+	public Integer getId() {
+		return id;
 	}
-	public void setIpAddressId(Integer id) {
-		this.ipAddressId = id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public Date getLastChanged() {
 		return lastChanged;

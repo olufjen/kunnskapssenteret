@@ -16,6 +16,10 @@ public class IpAddressRange {
 	}
 
 	// Helpers
+	@Override
+	public String toString() {
+		return ipAddressFrom + ", " + ipAddressTo + ": " + ipAddressSet;
+	}
 	public int hashCode() {
         int result;
         result = (ipAddressFrom != null ? ipAddressFrom.hashCode() : 0);
