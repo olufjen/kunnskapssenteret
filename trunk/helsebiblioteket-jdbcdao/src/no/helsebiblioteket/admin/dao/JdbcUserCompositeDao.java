@@ -110,7 +110,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
     		Role role = new Role();
 //            role.setKey(rs.getString("key"));
             role.setName(rs.getString("role_name"));
-            role.setUserRoleId(rs.getInt("user_role_id"));
+            role.setId(rs.getInt("user_role_id"));
             list[0] = role;
             user.setRoleList(list);
             return user;
