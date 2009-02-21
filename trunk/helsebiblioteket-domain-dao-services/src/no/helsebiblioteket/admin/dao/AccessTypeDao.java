@@ -11,5 +11,6 @@ public interface AccessTypeDao {
 	
 	// Fetch
 	public AccessType getAccessTypeByKey(AccessTypeKey key, AccessTypeCategory category);
+	public AccessType getAccessTypeById(Integer id);
 	public List<AccessType> getAccessTypeListAll();
 }
