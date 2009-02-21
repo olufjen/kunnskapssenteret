@@ -32,12 +32,13 @@
       	email = #email#,
       	last_changed = now()
     	where contact_information_id = #contactInformationId# and
-    	last_changed = #lastChanged#;
+    		last_changed = #lastChanged#;
 	</update>
 	<delete id="deleteContactInformation" parameterClass="integer">
   		delete from tbl_contact_information
   		where
-  		contact_information_id = #contactInformationId#;
+  			contact_information_id = #contactInformationId#
+	  		and last_changed = #lastChanged#
 	</delete>
 	<select id="getContactInformationById" resultMap="getContactInformationResultMap" parameterClass="integer">
 		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed

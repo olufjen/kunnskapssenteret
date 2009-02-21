@@ -19,7 +19,7 @@
 	<delete id="deleteUserRole" parameterClass="UserRoleLine">
 		delete from tbl_user_role
 		where user_role_id = #userRoleId# and 
-    	user_id = #userId#;
+    	user_id = #userId#
 	</delete>
 	<select id="getUserRoleListByUserId" resultMap="UserRoleLineMap" parameterClass="integer">
 		select 

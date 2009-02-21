@@ -33,7 +33,7 @@
 		where user_id = #id# and last_changed = #lastChanged#;
 	</update>
 	<delete id="deleteUser" parameterClass="integer">
-  		delete from tbl_user where user_id = #id#
+  		delete from tbl_user where user_id = #id# and last_changed = #lastChanged#
     </delete>
 	<select id="getUserByUsername" resultMap="getUserResultMap" parameterClass="string">
 		select user_id, username, password, org_unit_id, person_id, last_changed
