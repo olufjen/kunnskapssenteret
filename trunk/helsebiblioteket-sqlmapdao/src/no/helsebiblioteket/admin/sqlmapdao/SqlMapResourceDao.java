@@ -24,6 +24,6 @@ public class SqlMapResourceDao extends SqlMapClientDaoSupport implements Resourc
 		getSqlMapClientTemplate().update("updateSupplierSourceResource", resource);
 	}
 	public void deleteSupplierSourceResource(SupplierSourceResource resource) {
-		getSqlMapClientTemplate().delete("deleteSupplierSourceResource", resource.getResource().getResourceId());
+		getSqlMapClientTemplate().delete("deleteSupplierSourceResource", resource.getResource().getId());
 	}
 }

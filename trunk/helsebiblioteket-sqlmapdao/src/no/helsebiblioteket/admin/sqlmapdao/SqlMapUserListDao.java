@@ -16,7 +16,6 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 		List<UserListLine> lines = getSqlMapClientTemplate().queryForList("getUserListPaged", skip, max);
 		return translateList(lines);
 	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserListItem> getUserListPagedSearchStringRoles(String searchString, List<Role> roles, int skip, int max) {
