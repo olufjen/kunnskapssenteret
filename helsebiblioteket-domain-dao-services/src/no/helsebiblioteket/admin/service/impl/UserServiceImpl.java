@@ -158,8 +158,8 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PageResult<UserListItem> getUserListAll(PageRequest request) {
 		PageResult<UserListItem> result = new PageResult<UserListItem>();
-		result.result = this.userListDao.getUserListPaged(request.skip, request.maxResult);
-		result.skipped = request.skip;
+		result.result = this.userListDao.getUserListPaged(request.getSkip(), request.getMaxResult());
+		result.skipped = request.getSkip();
 		result.total = result.result.size();
 		return result;
 	}
@@ -178,10 +178,10 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest request) {
 		// TODO: Should we use Id for request.from?
-		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roles, request.skip, request.maxResult);
+		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roles, request.getSkip(), request.getMaxResult());
 		PageResult<UserListItem> result = new PageResult<UserListItem>();
 		result.result = some;
-		result.skipped = request.skip;
+		result.skipped = request.getSkip();
 		result.total = result.result.size();
 		return result;
 	}

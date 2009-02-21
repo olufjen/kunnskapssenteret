@@ -24,7 +24,6 @@ import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.PositionList;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
@@ -47,6 +46,7 @@ import no.helsebiblioteket.admin.factory.PersonFactory;
 import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.MorePageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageRequestWithString;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class OrganizationServiceImpl implements OrganizationService {
@@ -64,6 +64,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * Fetches all OrganizationType in the database. Delegates the task to
 	 * OrganizationTypeDao. The variable DUMMY is never used.
 	 */
+	@Override
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY) {
 		List<OrganizationType> all = this.organizationTypeDao.getOrganizationTypeListAll();
 		OrganizationType[] list = new OrganizationType[all.size()];
@@ -80,6 +81,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * OrganizationTypeDao.getOrganizationTypeByKey(..) returns
 	 * null if no OrganizationType is found.
 	 */
+	@Override
 	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key){
 		OrganizationType organizationType = this.organizationTypeDao.getOrganizationTypeByKey(key);
 		if(organizationType == null){
@@ -95,24 +97,17 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * It only fetches the most important values needed in a list, like names, etc.
 	 * These are the values in the OrganizationListItem object.
 	 */
+	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
 		// TODO: Do we need more values in OrganizationListItem?
 		// TODO: Should we use Id for request.from?
-		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(request.skip, request.maxResult);
-		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
-		result.setResult(translateList(organizationList));
-		result.setSkipped(request.skip);
-		result.setTotal(organizationList.size());
-		return result;
-	}
-	private OrganizationListItem[] translateList(List<OrganizationListItem> organizationList) {
-		OrganizationListItem[]items = new OrganizationListItem[organizationList.size()];
-		int i=0;
-		for (OrganizationListItem organizationListItem : organizationList) {
-			items[i] = organizationListItem;
-			i++;
-		}
-		return items;
+		return this.getOrganizationListBySearchString(request, "");
+//		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(request.skip, request.maxResult);
+//		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
+//		result.setResult(translateList(organizationList));
+//		result.setSkipped(request.skip);
+//		result.setTotal(organizationList.size());
+//		return result;
 	}
 	/**
 	 * Finds all the organizations in the database. This method uses a page request
@@ -125,16 +120,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * It only fetches the most important values needed in a list, like names, etc.
 	 * These are the values in the OrganizationListItem object.
 	 */
-	public PageResultOrganizationListItem findOrganizationsBySearchString( String searchString, PageRequest request){
+	@Override
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
 		// TODO: Do we need more values in OrganizationListItem?
 		// TODO: Should we use Id for request.from?
 		// TODO: Search for the search string in all names or do this by locale?
-		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString, request.skip, request.maxResult);
+		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString,
+				request.getSkip(), request.getMaxResult());
 		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
-		result.setSkipped( request.skip );
-		result.setResult((OrganizationListItem[]) allOrganizations.toArray());
+		result.setSkipped( request.getSkip() );
+		result.setResult(translateList(allOrganizations));
 		result.setTotal(allOrganizations.size());
 		return result;
+	}
+	private OrganizationListItem[] translateList(List<OrganizationListItem> organizationList) {
+		OrganizationListItem[]items = new OrganizationListItem[organizationList.size()];
+		int i=0;
+		for (OrganizationListItem organizationListItem : organizationList) {
+			items[i] = organizationListItem;
+			i++;
+		}
+		return items;
 	}
 	/**
 	 * Finds an Organization from an OrganizationListItem. This is used to
@@ -146,6 +152,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * and the names and missing objects are initialized by the populate
 	 * methods. See comments there.
 	 */
+	@Override
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem) {
 		// TODO: Log when some properties are missing in an organization?
 		//       Useful to locate errors and to see if what values have been set in import, etc.
@@ -281,7 +288,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	private IpAddressLine translateIpAddressRange(Organization organization, IpAddressRange addressRange) {
 		IpAddressLine line = new IpAddressLine();
-		line.setIpAddressId(addressRange.getIpAddressSet().getIpAddressId());
+		line.setIpAddressId(addressRange.getIpAddressSet().getId());
 		line.setIpAddressFrom(addressRange.getIpAddressFrom().getAddress());
 		line.setIpAddressTo(addressRange.getIpAddressTo().getAddress());
 		line.setLastChanged(addressRange.getIpAddressSet().getLastChanged());
@@ -298,12 +305,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	private IpAddressLine translateIpAddressSet(IpAddressSet ipRange) {
 		IpAddressLine line = new IpAddressLine();
-		line.setIpAddressId(ipRange.getIpAddressId());
+		line.setIpAddressId(ipRange.getId());
 		return line;
 	}
 	/**
 	 * Fetches all the organizations that have this IPAddress.
 	 */
+	@Override
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
 		List<OrganizationListItem> all = this.organizationListDao.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = new OrganizationListItem[all.size()];
@@ -585,7 +593,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 //			ipAddressSet = ipAddressRange;
 		}
 
-		ipAddressSet.setIpAddressId(ipAddressLine.getIpAddressId());
+		ipAddressSet.setId(ipAddressLine.getIpAddressId());
 		ipAddressSet.setLastChanged(ipAddressLine.getLastChanged());
 		return ipAddressSet;
 	}
@@ -640,18 +648,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 //		} else {
 //			insertOrganization(changedOrganization);
 //		}
-	}
-	private PositionList getAllPositions(String dummy) {
-		// TODO: Remove!
-		PositionList list = new PositionList();
-//		List<Position> res = this.positionDao.getAllPositions();
-//		Position arr[] = new Position[res.size()];
-//		int i=0;
-//		for (Position position : res) {
-//			arr[i++] = position;
-//		}
-//		list.setList(arr);
-		return list;
 	}
 	
 	private void updateOrganization(MemberOrganization changedOrganization, MemberOrganization originalOrganization) {		
