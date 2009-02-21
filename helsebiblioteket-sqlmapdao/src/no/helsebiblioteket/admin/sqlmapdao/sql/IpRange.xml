@@ -30,6 +30,7 @@
 	<delete id="deleteIpRange" parameterClass="ipRange">
 		delete from tbl_ip_address
 		where ip_address_id = #ipAddressId#;
+		 	and last_changed = #lastChanged#
 	</delete>
 	<select id="getIpRangeListByOrganizationId" resultMap="getIpRangeResultMap" parameterClass="integer">
 		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed

@@ -6,6 +6,7 @@
 <sqlMap namespace="OrganizationList">
 	<typeAlias alias="OrgUnitNameJoin" type="no.helsebiblioteket.admin.dao.join.OrgUnitNameJoin"/>
 	<typeAlias alias="IpAddress" type="no.helsebiblioteket.admin.domain.IpAddress"/>
+	<typeAlias alias="SearchStringInput" type="no.helsebiblioteket.admin.sqlmapdao.input.SearchStringInput"/>
 
 	<resultMap id="OrgUnitNameJoinMap" class="OrgUnitNameJoin">
 		<result property="organizationDescription" column="org_descr" />
@@ -31,6 +32,42 @@
 		from tbl_org_unit as org
 			inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 			left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
+		order by org_unit_id desc
+	</select>
+	
+	<select id="getOrganizationIdDistinctSearchString" resultClass="int" parameterClass="string">
+		select distinct org_unit_id as org_unit_id_distint from(
+			select
+				org.descr as org_descr,
+				org.org_unit_id,
+				type.name as org_type_name,
+				type.key as org_type_key,
+				type.descr as org_type_descr,
+				name.name as org_name,
+				name.language_code,
+				name.category
+			from tbl_org_unit as org
+				inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
+				left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
+			where name.name like #value#
+		) as org_unit_id_distint_query
+		order by org_unit_id desc
+	</select>
+	
+	<select id="getOrganizationListSearchString" resultMap="OrgUnitNameJoinMap" parameterClass="SearchStringInput">
+		select
+			org.descr as org_descr,
+			org.org_unit_id,
+			type.name as org_type_name,
+			type.key as org_type_key,
+			type.descr as org_type_descr,
+			name.name as org_name,
+			name.language_code,
+			name.category
+		from tbl_org_unit as org
+			inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
+			left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
+		where name.name like #value# and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId# 
 		order by org_unit_id desc
 	</select>
 

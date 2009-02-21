@@ -29,7 +29,7 @@
 		where profile_id = #id# and last_changed = #lastChanged#;
 	</update>
 	<delete id="deleteProfile" parameterClass="integer">
-  		delete from tbl_profile where profile_id = #id#;
+  		delete from tbl_profile where profile_id = #id# and last_changed = #lastChanged#
     </delete>
 	<select id="getProfileById" resultMap="getProfileResultMap" parameterClass="integer">
 		select profile_id, receive_newsletter, participate_survey, last_changed

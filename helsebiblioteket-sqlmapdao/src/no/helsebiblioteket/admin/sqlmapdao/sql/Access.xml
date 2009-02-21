@@ -61,12 +61,12 @@
 			provided_by_org_unit = #resourceAccess.access.providedBy.organization.id#,
 			org_unit_id = #orgUnitId#, 
 			last_changed = now()
-		where access_id = #resourceAccess.access.accessId#
+		where access_id = #resourceAccess.access.accessId# and last_changed = #lastChanged#
 	</update>
 	<delete id="deleteResourceAccessForeignKeys" parameterClass="integer">
   		delete from tbl_access
   		where
-  		access_id = #id#
+  		access_id = #id# and last_changed = #lastChanged#
     </delete>
 
 	<select id="getAccessListByUserId" resultMap="ResourceAccessResultMap" parameterClass="integer">

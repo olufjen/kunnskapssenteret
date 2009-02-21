@@ -28,7 +28,8 @@
 	</update>
 	<delete id="deleteSupplierSource" parameterClass="SupplierSource">
 		delete from tbl_supplier_source
-		where supplier_source_id = #supplierSourceId# 
+		where supplier_source_id = #supplierSourceId#
+		and last_changed = #lastChanged#
 	</delete>
 	<select id="getSupplierSourceListAll" resultMap="SupplierSourceMap">
 		select supplier_source_name, url, supplier_source_id, last_changed
