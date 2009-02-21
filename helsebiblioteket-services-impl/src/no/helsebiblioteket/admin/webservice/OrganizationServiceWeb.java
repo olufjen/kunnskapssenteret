@@ -64,8 +64,8 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		return (PageResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);
 	}
 	@Override
-	public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request) {
-		Object[] args = new Object[] { request  };
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString) {
+		Object[] args = new Object[] { request, searchString  };
 		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
 		return (PageResultOrganizationListItem) invoke(this.findOrganizationsBySearchString, args, returnTypes);
 	}
