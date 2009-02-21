@@ -21,4 +21,9 @@ public class SqlMapAccessTypeDao extends SqlMapClientDaoSupport implements Acces
 	public List<AccessType> getAccessTypeListAll() {
 		return getSqlMapClientTemplate().queryForList("getAccessTypeListAll");
 	}
+	@Override
+	public AccessType getAccessTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
