@@ -37,15 +37,15 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 	
 	static {
 		Role roleOther = new Role();
-		roleOther.setUserRoleId(4);
+		roleOther.setId(4);
 		roleOtherList.add(roleOther);
 		
 		Role roleHealthPersonell = new Role();
-		roleHealthPersonell.setUserRoleId(2);
+		roleHealthPersonell.setId(2);
 		roleHealthPersonellList.add(roleHealthPersonell);
 		
 		Role roleStudent = new Role();
-		roleStudent.setUserRoleId(3);
+		roleStudent.setId(3);
 		roleStudentList.add(roleStudent);
 	}
 
