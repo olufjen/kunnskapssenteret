@@ -4,7 +4,7 @@ import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
 public class ResourceType {
 	// Primary key
-	private Integer resourceTypeId;
+	private Integer id;
 
 	// Unique value
 	private ResourceTypeKey key;
@@ -12,13 +12,20 @@ public class ResourceType {
 	// Local values
 	private String description;
 	private String name;
+
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + id + ", " + key + ": " + description + "]";
+	}
+
 	
 	// GET/SET
 	public Integer getId() {
-		return resourceTypeId;
+		return id;
 	}
 	public void setId(Integer id) {
-		this.resourceTypeId = id;
+		this.id = id;
 	}
 	public String getDescription() {
 		return description;

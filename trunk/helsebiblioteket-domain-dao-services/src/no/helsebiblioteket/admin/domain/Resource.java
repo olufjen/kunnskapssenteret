@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Resource {
 	// Primary key
-	private Integer resourceId;
+	private Integer id;
 	
 	// Local values
 	private Date lastChanged;
@@ -13,12 +13,18 @@ public class Resource {
 	private ResourceType resourceType;
 	private SupplierOrganization offeredBy;
 
-	// GET/SET
-	public Integer getResourceId() {
-		return resourceId;
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + id + ", " + resourceType + "]";
 	}
-	public void setResourceId(Integer id) {
-		this.resourceId = id;
+
+	// GET/SET
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public ResourceType getResourceType() {
 		return resourceType;

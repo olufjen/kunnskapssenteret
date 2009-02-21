@@ -4,12 +4,18 @@ import java.util.Date;
 
 public class Profile {
 	// Primary key
-	private Integer profileId;
+	private Integer id;
 	
 	// Local values
 	private Boolean receiveNewsletter;
 	private Boolean participateSurvey;
 	private Date lastChanged;
+
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + id + ", " + receiveNewsletter + "; " + participateSurvey + "]";
+	}
 
 	// GET/SET
 	public Boolean getReceiveNewsletter() { return receiveNewsletter; }
@@ -18,10 +24,10 @@ public class Profile {
 	public void setParticipateSurvey(Boolean participateSurvey) { this.participateSurvey = participateSurvey; }
 	
 	public void setId(Integer id) {
-		this.profileId = id;
+		this.id = id;
 	}
 	public Integer getId() {
-		return this.profileId;
+		return this.id;
 	}
 	public Date getLastChanged() {
 		return lastChanged;

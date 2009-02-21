@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Person {
 	// Primary key
-	private Integer personId;
+	private Integer id;
 	
 	// Local values
 	private String firstName;
@@ -23,16 +23,20 @@ public class Person {
 	private Profile profile;
 	
 	// Helpers
+	@Override
+	public String toString() {
+		return id + ": " + firstName + " " + lastName;
+	}
 	public String getName() {
 		return this.firstName + " " + lastName;
 	}
 	
 	// GET/SET
 	public Integer getId() {
-		return personId;
+		return id;
 	}
 	public void setId(Integer id) {
-		this.personId = id;
+		this.id = id;
 	}
 	public String getFirstName() {
 		return firstName;

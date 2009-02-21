@@ -9,6 +9,13 @@ public class Url {
 		this();
 		this.stringValue = value;
 	}
+	
+	// Helpers
+	@Override
+	public String toString() {
+		return "[" + stringValue + "]";
+	}
+
 	public String getStringValue() {
 		return stringValue;
 	}

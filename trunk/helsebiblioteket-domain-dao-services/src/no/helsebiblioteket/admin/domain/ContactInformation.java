@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ContactInformation {
 	// Primary key
-	private Integer contactInformationId;
+	private Integer id;
 	
 	// Local values
 	private String postalAddress;
@@ -14,11 +14,19 @@ public class ContactInformation {
 	private String email;
 	private Date lastChanged;
 	
-	public Integer getId() {
-		return contactInformationId;
+	// Helpers
+	@Override
+	public String toString() {
+		return id + ": " + postalAddress + ", " + postalCode + ", " + email;
 	}
-	public void setId(Integer contactInformationId) {
-		this.contactInformationId = contactInformationId;
+
+	
+	// GET/SET
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id){
+		this.id = id;
 	}
 	public String getPostalAddress() {
 		return postalAddress;

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Organization {
 	// Primary key
-	private Integer orgUnitId;
+	private Integer id;
 	
 	// Local values
 	private String description;
@@ -21,6 +21,10 @@ public class Organization {
 	private ContactInformation contactInformation;
 
 	// Helpers
+	@Override
+	public String toString() {
+		return id + ", " + description + ", " + type;
+	}
 	public int hashCode() {
         int result;
         // TODO: What was this important for? Use Id
@@ -52,10 +56,10 @@ public class Organization {
 
 	// GET/SET
 	public Integer getId() {
-		return orgUnitId;
+		return id;
 	}
 	public void setId(Integer id) {
-		this.orgUnitId = id;
+		this.id = id;
 	}
 	public String getNameEnglish() {
 		return this.nameEnglishNormal;

@@ -5,7 +5,7 @@ import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 
 public class AccessType {
 	// Primary key
-	private Integer accessTypeid;
+	private Integer id;
 
 	// Unique key is key & category in combination
 	private AccessTypeKey key;
@@ -15,12 +15,13 @@ public class AccessType {
 	private String description;
 	private String name;
 	
-	public Integer getAccessTypeId() {
-		return accessTypeid;
+	// Helpers
+	@Override
+	public String toString() {
+		return id + ": " + key + ", " + category;
 	}
-	public void setAccessTypeId(Integer id) {
-		this.accessTypeid = id;
-	}
+	
+	// GET/SET
 	public String getDescription() {
 		return description;
 	}
@@ -44,5 +45,13 @@ public class AccessType {
 	}
 	public void setCategory(AccessTypeCategory category) {
 		this.category = category;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }
