@@ -236,7 +236,7 @@
 	</bean>
 	<bean name="findOrganizationsBySearchString" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="findOrganizationsBySearchString" />
+		<constructor-arg value="getOrganizationListBySearchString" />
 	</bean>
 	<bean name="organizationByListItemName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
