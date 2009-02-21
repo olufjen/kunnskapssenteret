@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationList
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.requestresult.PageRequestWithString;
 
 public interface OrganizationService extends Serializable {
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY);
@@ -26,7 +27,7 @@ public interface OrganizationService extends Serializable {
 
 	// TODO: Remove this and use findOrganizationsBySearchStringRoles with empty string?
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request);
-	public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request);
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString);
 
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem);
 
