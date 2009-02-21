@@ -17,7 +17,7 @@ public class RoleToXMLTranslator {
 		// TODO Complete this!
 //		role.getLastChanged();
 		role.getName();
-		role.getUserRoleId();
+		role.getId();
 		
 		element.appendChild(roleElement);
 	}
