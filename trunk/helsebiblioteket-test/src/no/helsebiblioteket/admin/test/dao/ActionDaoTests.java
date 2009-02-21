@@ -5,14 +5,17 @@ import java.util.Random;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.AccessTypeDao;
+import no.helsebiblioteket.admin.dao.ActionDao;
 import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.ResourceType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -28,6 +31,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.line.ActionLine;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
 import no.helsebiblioteket.admin.factory.ResourceAccessFactory;
 import no.helsebiblioteket.admin.factory.SupplierOrganizationFactory;
@@ -39,10 +43,22 @@ import no.helsebiblioteket.admin.test.BeanFactory;
 import org.springframework.util.Assert;
 
 
-public class AccessDaoTests {
+public class ActionDaoTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
 	@org.junit.Test
-	public void testAccess() {
+	public void testAction() {
+		
+		ActionDao actionDao = beanFactory.getActionDao();
+		
+//		TEST: public void insertAction(ActionLine actionLine);
+//		TEST: public void updateAction(ActionLine actionLine);
+//		TEST: public void deleteAction(ActionLine actionLine);
+//		TEST: public List<ActionLine> getActionListByUser(User user);
+//		TEST: public List<ActionLine> getActionListByOrganization(Organization organization);
+//		TEST: public List<ActionLine> getActionListByResource(Resource resource);
+//		TEST: public List<ActionLine> getActionListByAccessType(AccessType accessType);
+
+		
 		System system = beanFactory.getSystemDao().getSystemByKey(SystemKey.helsebiblioteket_admin);
 
 		// Test classes

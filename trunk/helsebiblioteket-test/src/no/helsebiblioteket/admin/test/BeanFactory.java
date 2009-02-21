@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.test;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.AccessTypeDao;
+import no.helsebiblioteket.admin.dao.ActionDao;
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
@@ -19,6 +20,7 @@ import no.helsebiblioteket.admin.dao.SystemDao;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
+import no.helsebiblioteket.admin.service.ActionService;
 import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -27,6 +29,7 @@ import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.test.dao.AccessDaoTests;
 import no.helsebiblioteket.admin.test.dao.AccessTypeDaoTests;
+import no.helsebiblioteket.admin.test.dao.ActionDaoTests;
 import no.helsebiblioteket.admin.test.dao.ContactInformationDaoTests;
 import no.helsebiblioteket.admin.test.dao.IpRangeDaoTests;
 import no.helsebiblioteket.admin.test.dao.OrganizationDaoTests;
@@ -45,6 +48,7 @@ import no.helsebiblioteket.admin.test.dao.UserDaoTests;
 import no.helsebiblioteket.admin.test.dao.UserListDaoTests;
 import no.helsebiblioteket.admin.test.dao.UserRoleDaoTests;
 import no.helsebiblioteket.admin.test.service.AccessServiceTests;
+import no.helsebiblioteket.admin.test.service.ActionServiceTests;
 import no.helsebiblioteket.admin.test.service.EmailServiceTests;
 import no.helsebiblioteket.admin.test.service.LoginServiceTests;
 import no.helsebiblioteket.admin.test.service.OrganizationServiceTests;
@@ -77,6 +81,7 @@ public class BeanFactory {
 	}
 	// Load DAOs
 	public AccessDao getAccessDao() { return (AccessDao)this.factory.getBean("accessDao");}
+	public ActionDao getActionDao() { return (ActionDao)this.factory.getBean("actionDao");}
 	public UserDao getUserDao() { return (UserDao)this.factory.getBean("userDao");}
 	public OrganizationDao getOrganizationDao() { return (OrganizationDao)this.factory.getBean("organizationDao");}
 	public OrganizationTypeDao getOrganizationTypeDao() { return (OrganizationTypeDao)this.factory.getBean("organizationTypeDao");}
@@ -98,6 +103,7 @@ public class BeanFactory {
 	
 	// Load Services
 	public AccessService getAccessService() { return (AccessService)this.factory.getBean("accessService");}
+	public ActionService getActionService() { return (ActionService)this.factory.getBean("actionService");}
 	public EmailService getEmailService() { return (EmailService)this.factory.getBean("emailService");}
 	public LoginService getLoginService() { return (LoginService)this.factory.getBean("loginService");}
 	public OrganizationService getOrganizationService() { return (OrganizationService)this.factory.getBean("organizationService");}
@@ -110,6 +116,8 @@ public class BeanFactory {
 		accessDaoTests.testAccess();
 		AccessTypeDaoTests accessTypeDaoTests = new AccessTypeDaoTests();
 		accessTypeDaoTests.testAccessType();
+		ActionDaoTests actionDaoTests = new ActionDaoTests();
+		actionDaoTests.testAction();
 		ContactInformationDaoTests contactInformationDaoTests = new ContactInformationDaoTests();
 		contactInformationDaoTests.testContactInformation();
 		IpRangeDaoTests ipRangeDaoTests = new IpRangeDaoTests();
@@ -147,6 +155,14 @@ public class BeanFactory {
 		
 		AccessServiceTests accessServiceTests = new AccessServiceTests();
 		accessServiceTests.testInsertAccess();
+		
+		ActionServiceTests actionServiceTests = new ActionServiceTests();
+		actionServiceTests.testInsertUserAction();
+		actionServiceTests.testInsertOrganizationAction();
+		actionServiceTests.testGetActionListByUser();
+		actionServiceTests.testGetActionListByOrganization();
+		actionServiceTests.testGetActionListByResource();
+		actionServiceTests.testGetActionListByAccessType();
 		
 		EmailServiceTests emailServiceTests = new EmailServiceTests();
 		emailServiceTests.testSendMail();
