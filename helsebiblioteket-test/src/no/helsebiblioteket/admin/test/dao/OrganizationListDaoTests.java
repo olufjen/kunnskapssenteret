@@ -28,18 +28,19 @@ public class OrganizationListDaoTests {
 		OrganizationListDao organizationListDao = beanFactory.getOrganizationListDao();
 		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
 		IpRangeDao ipRangeDao = beanFactory.getIpRangeDao();
-		
-		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(0, 4);
-		Assert.isTrue(organizationList.size()<=16, "Too many orgs");
+
+		// TODO: Removed. Not in use any more.
+//		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(0, 4);
+//		Assert.isTrue(organizationList.size()<=16, "Too many orgs");
 		
 		// Can never find this!
-		organizationList = organizationListDao.getOrganizationListPagedSearchString(""+new Random().nextInt(), 0, Integer.MAX_VALUE);
+		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPagedSearchString(""+new Random().nextInt(), 0, Integer.MAX_VALUE);
 		Assert.isTrue(organizationList.size()==0, "Should find no orgs");
 
-		// Time this?
-		organizationList = organizationListDao.getOrganizationListPaged(0, Integer.MAX_VALUE);
+		organizationList = organizationListDao.getOrganizationListPagedSearchString("", 0, 20);
 		OrganizationListItem item = organizationList.get(0);
 		OrganizationNameDao organizationNameDao = beanFactory.getOrganizationNameDao();
+		Assert.isTrue(organizationList.size()<=20, "Too many orgs");
 		
 		MemberOrganization organization = new MemberOrganization();
 		organization.setOrganization(organizationDao.getOrganizationById(item.getId()));
@@ -47,8 +48,9 @@ public class OrganizationListDaoTests {
 		organizationName.setCategory(OrganizationNameCategory.NORMAL);
 		organizationName.setLanguageCode(LanguageCategory.en);
 		organizationName.setLastChanged(new Date());
-		organizationName.setName("English name" + new Random(1000000).nextInt());
-		organizationNameDao.insertOrganizationName(organization.getOrganization(), organizationName);
+		organizationName.setName("English name" + new Random(1000000000).nextInt());
+		// TODO: Test differently
+//		organizationNameDao.insertOrganizationName(organization.getOrganization(), organizationName);
 
 		int randomaddress1 = new Random().nextInt(1000);
 		int randomaddress2 = new Random().nextInt(1000);

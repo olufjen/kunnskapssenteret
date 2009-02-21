@@ -73,7 +73,7 @@ public class UserRoleDaoTests {
 		UserRoleLine roleLine = new UserRoleLine();
 		roleLine.setLastChanged(null);
 		roleLine.setUserId(user.getId());
-		roleLine.setUserRoleId(role.getUserRoleId());
+		roleLine.setUserRoleId(role.getId());
 		return roleLine;
 	}
 }

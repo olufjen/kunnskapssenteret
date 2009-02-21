@@ -69,9 +69,10 @@ public class OrganizationServiceTests {
 	public void testFindOrganizationsBySearchString(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 		organizationService.insertOrganization(createMemberOrganization().getOrganization());
+		PageRequest request = new PageRequest(0, 5);
+		String sub = findMeName.substring(3);
 //		TEST: public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request);
-		PageResultOrganizationListItem result = organizationService.findOrganizationsBySearchString(
-				findMeName.substring(3), new PageRequest(0, 5));
+		PageResultOrganizationListItem result = organizationService.getOrganizationListBySearchString(request, sub);
 		Assert.notNull(result, "Null result");
 		Assert.notEmpty(result.getResult(), "Empty result");
 		Assert.isTrue(result.getResult().length == 1, "Too many organizations");

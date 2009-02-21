@@ -47,7 +47,7 @@ public class UserListDaoTests {
 		new UserDaoTests().insertUser(user);
 		UserRoleLine userRoleLine = new UserRoleLine();
 		userRoleLine.setUserId(user.getId());
-		userRoleLine.setUserRoleId(role.getUserRoleId());
+		userRoleLine.setUserRoleId(role.getId());
 		userRoleDao.insertUserRole(userRoleLine);
 
 		// GET ALL
