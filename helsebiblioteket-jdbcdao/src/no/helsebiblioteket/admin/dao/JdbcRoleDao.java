@@ -31,7 +31,7 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
     private static class RoleMapper implements ParameterizedRowMapper<Role> {
         public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
         	Role role = new Role();
-            role.setUserRoleId(rs.getInt("user_role_id"));
+            role.setId(rs.getInt("user_role_id"));
             role.setName(rs.getString("name"));
 //            role.setKey(rs.getString("key"));
             return role;
