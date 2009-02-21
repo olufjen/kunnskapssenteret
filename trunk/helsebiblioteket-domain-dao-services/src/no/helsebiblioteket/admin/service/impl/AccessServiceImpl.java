@@ -63,7 +63,7 @@ public class AccessServiceImpl implements AccessService {
 	@Override
 	public Boolean insertUserRoleResourceAccess(Role userRole, ResourceAccess access) {
 		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
-		keys.setUserRoleId(userRole.getUserRoleId());
+		keys.setUserRoleId(userRole.getId());
 		keys.setResourceAccess(access);
 		this.accessDao.insertResourceAccessForeignKeys(keys);
 		return true;
