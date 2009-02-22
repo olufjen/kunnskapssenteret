@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Action">
+	<typeAlias alias="ActionLine" type="no.helsebiblioteket.admin.domain.line.ActionLine"/>
+
+	<resultMap id="ActionLineMap" class="ActionLine">
+		<result property="id" column="action_id" />
+		<result property="userId" column="user_id" />
+		<result property="resourceId" column="resource_id" />
+		<result property="orgUnitId" column="org_unit_id" />
+		<result property="accessTypeId" column="access_type_id" />
+	</resultMap>
+
+	
+	updateAction
+	deleteAction
+	getActionListByUserId
+	getActionListByOrganizationId
+	getActionListByResourceId
+	getActionListByAccessTypeId
+	<insert id="insertAction" parameterClass="ActionLine">
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_ip_address_ip_address_id_seq') as id;
+		</selectKey>
+		insert into tbl_access (
+			access_type_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			access_id, 
+			resource_id, 
+			org_type_id, 
+			provided_by_org_unit,
+			org_unit_id, 
+			last_changed
+			)
+		values (#resourceAccess.access.accessType.accessTypeid#,
+				#userId#,
+				#userRoleId#,
+				#resourceAccess.access.validFrom#,
+				#resourceAccess.access.validTo#,
+				#resourceAccess.access.accessId#,
+				#resourceAccess.resource.resource.resourceId#,
+				#orgTypeId#,
+				#resourceAccess.access.providedBy.organization.id#,
+				#orgUnitId#, now());
+	</insert>
+	<update id="updateResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
+		update tbl_access set
+			access_type_id = #resourceAccess.access.accessType.accessTypeid#,
+			user_id = #userId#, 
+			user_role_id = #userRoleId#, 
+			valid_from = #resourceAccess.access.validFrom#,
+			valid_to = #resourceAccess.access.validTo#,
+			access_id = #resourceAccess.access.accessId#,
+			resource_id = #resourceAccess.resource.resource.resourceId#,
+			org_type_id = #orgTypeId#,
+			provided_by_org_unit = #resourceAccess.access.providedBy.organization.id#,
+			org_unit_id = #orgUnitId#, 
+			last_changed = now()
+		where access_id = #resourceAccess.access.accessId# and last_changed = #lastChanged#
+	</update>
+	<delete id="deleteResourceAccessForeignKeys" parameterClass="integer">
+  		delete from tbl_access
+  		where
+  		access_id = #id# and last_changed = #lastChanged#
+    </delete>
+
+	<select id="getAccessListByUserId" resultMap="ResourceAccessResultMap" parameterClass="integer">
+		select access_type_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			access_id, 
+			resource_id, 
+			org_type_id, 
+			provided_by_org_unit,
+			org_unit_id, 
+			last_changed
+		from tbl_access
+		where user_id = #userId#;
+	</select>
+	<select id="getAccessListByOrganizationId" resultMap="ResourceAccessResultMap" parameterClass="integer">
+		select access_type_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			access_id, 
+			resource_id, 
+			org_type_id, 
+			provided_by_org_unit,
+			org_unit_id, 
+			last_changed
+		from tbl_access
+		where org_unit_id = #organizationId#;
+	</select>
+	<select id="getAccessListByOrganizationType" resultMap="ResourceAccessResultMap" parameterClass="integer">
+		select access_type_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			access_id, 
+			resource_id, 
+			org_type_id, 
+			provided_by_org_unit,
+			org_unit_id, 
+			last_changed
+		from tbl_access
+		where org_type_id = #organizationTypeId#;
+	</select>
+	
+	
+	
+	
+	<select id="getAccessListByUserRole" resultMap="ResourceAccessResultMap" parameterClass="integer">
+		select access_type_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			access_id, 
+			resource_id, 
+			org_type_id, 
+			provided_by_org_unit,
+			org_unit_id, 
+			last_changed
+		from tbl_access
+		where user_role_id = #userRoleId#;
+	</select>
+	
+	
+	<!-- TODO: Remove?
+	<select id="getAccessById" resultMap="getAccessResultMap" parameterClass="integer">
+		select 
+			access_id, 
+			access_type_id, 
+			resource_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			org_type_id, 
+			org_unit_id, 
+			org_unit_as_resource_id,
+			last_changed
+		from tbl_access
+		where access_id = #accessId#;
+	</select>
+	-->
+
+</sqlMap>
