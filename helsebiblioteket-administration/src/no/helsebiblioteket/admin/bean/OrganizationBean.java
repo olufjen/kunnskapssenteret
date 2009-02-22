@@ -59,7 +59,7 @@ public class OrganizationBean {
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }
 		PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
-		this.organizations = this.organizationService.findOrganizationsBySearchString(this.searchinput, request).getResult();
+		this.organizations = this.organizationService.getOrganizationListBySearchString(request, this.searchinput).getResult();
 	}
 	public OrganizationListItem[] getOrganizations() {
 		PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
