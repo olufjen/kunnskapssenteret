@@ -334,6 +334,9 @@
 	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	<bean id="actionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapActionDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
