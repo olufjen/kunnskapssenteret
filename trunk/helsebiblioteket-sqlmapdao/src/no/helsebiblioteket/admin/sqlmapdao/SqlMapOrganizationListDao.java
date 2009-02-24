@@ -6,7 +6,6 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
 import no.helsebiblioteket.admin.dao.join.OrgUnitNameJoin;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
@@ -90,6 +89,7 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 //		}
 //		return someOrganizations;
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress) {
 		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListByIpAddress", ipAddress);

@@ -6,21 +6,23 @@ import no.helsebiblioteket.admin.domain.Organization;
 
 public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements OrganizationDao {
 	@Override
-	public Organization getOrganizationById(Integer id){
-		return (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", id);
-	}
-	@Override
-	public Organization insertOrganization(Organization organization) {
+	public void insertOrganization(Organization organization) {
 		getSqlMapClientTemplate().insert("insertOrganization", organization);
-		return (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
+		Organization tmp = (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
+		organization.setLastChanged(tmp.getLastChanged());
 	}
 	@Override
-	public Organization updateOrganization(Organization organization) {
+	public void updateOrganization(Organization organization) {
 		getSqlMapClientTemplate().update("updateOrganization", organization);
-		return (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
+		Organization tmp = (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", organization.getId());
+		organization.setLastChanged(tmp.getLastChanged());
 	}
 	@Override
 	public void deleteOrganization(Organization organization) {
-		getSqlMapClientTemplate().delete("deleteOrganization", organization.getId());
+		getSqlMapClientTemplate().delete("deleteOrganization", organization);
+	}
+	@Override
+	public Organization getOrganizationById(Integer id){
+		return (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", id);
 	}
 }

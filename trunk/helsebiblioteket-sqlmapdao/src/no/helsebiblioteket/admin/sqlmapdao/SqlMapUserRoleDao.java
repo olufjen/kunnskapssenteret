@@ -10,6 +10,8 @@ public class SqlMapUserRoleDao extends SqlMapClientDaoSupport implements UserRol
 	@Override
 	public void insertUserRole(UserRoleLine userRole) {
 		getSqlMapClientTemplate().insert("insertUserRole", userRole);
+		UserRoleLine tmp = (UserRoleLine) getSqlMapClientTemplate().queryForObject("getUserRoleLineByUserRoleLine", userRole);
+		userRole.setLastChanged(tmp.getLastChanged());
 	}
 	public void deleteUserRole(UserRoleLine userRole) {
 		getSqlMapClientTemplate().delete("deleteUserRole", userRole);

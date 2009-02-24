@@ -7,15 +7,18 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.User;
 
 public class SqlMapPersonDao extends SqlMapClientDaoSupport implements PersonDao {
-	public Person insertPerson(Person person){
+	public void insertPerson(Person person){
 		getSqlMapClientTemplate().insert("insertPerson", person);
-		return (Person) getSqlMapClientTemplate().queryForObject("getPersonById", person.getId());
+		Person tmp = (Person) getSqlMapClientTemplate().queryForObject("getPersonById", person.getId());
+		person.setLastChanged(tmp.getLastChanged());
 	}
 	public void updatePerson(Person person){
 		getSqlMapClientTemplate().update("updatePerson", person);
+		Person tmp = (Person) getSqlMapClientTemplate().queryForObject("getPersonById", person.getId());
+		person.setLastChanged(tmp.getLastChanged());
 	}
 	public void deletePerson(Person person){
-		getSqlMapClientTemplate().delete("deletePerson", person.getId());
+		getSqlMapClientTemplate().delete("deletePerson", person);
 	}
 	public Person getPersonByUser(User user){
 		return (Person) getSqlMapClientTemplate().queryForObject("getPersonByUserId", user.getId());
