@@ -7,15 +7,18 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Person;
 
 public class SqlMapContactInformationDao extends SqlMapClientDaoSupport implements ContactInformationDao {
-	public ContactInformation insertContactInformation(ContactInformation contactInformation){
+	public void insertContactInformation(ContactInformation contactInformation){
 		getSqlMapClientTemplate().insert("insertContactInformation", contactInformation);
-		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", contactInformation.getId());
+		ContactInformation tmp = (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", contactInformation.getId());
+		contactInformation.setLastChanged(tmp.getLastChanged());
 	}
 	public void updateContactInformation(ContactInformation contactInformation){
 		getSqlMapClientTemplate().update("updateContactInformation", contactInformation);
+		ContactInformation tmp = (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", contactInformation.getId());
+		contactInformation.setLastChanged(tmp.getLastChanged());
 	}
 	public void deleteContactInformation(ContactInformation contactInformation){
-		getSqlMapClientTemplate().delete("deleteContactInformation", contactInformation.getId());
+		getSqlMapClientTemplate().delete("deleteContactInformation", contactInformation);
 	}
 	public ContactInformation getContactInformationByPerson(Person person){
 		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationByPerson", person.getId());

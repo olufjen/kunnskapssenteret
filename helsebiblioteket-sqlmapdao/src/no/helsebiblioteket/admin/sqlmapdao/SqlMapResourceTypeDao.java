@@ -10,6 +10,7 @@ public class SqlMapResourceTypeDao extends SqlMapClientDaoSupport implements Res
 	public ResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey) {
 		return (ResourceType) getSqlMapClientTemplate().queryForObject("getResourceTypeByKey", resourceTypeKey);
 	}
+	@SuppressWarnings("unchecked")
 	public List<ResourceType> getResourceTypeListAll() {
 		return getSqlMapClientTemplate().queryForList("getResourceTypeListAll");
 	}

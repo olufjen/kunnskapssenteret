@@ -15,7 +15,12 @@ public class SqlMapOrganizationTypeDao extends SqlMapClientDaoSupport implements
 	public OrganizationType getOrganizationTypeByKey(OrganizationTypeKey organizationTypeKey) {
 		return (OrganizationType)getSqlMapClientTemplate().queryForObject("getOrganizationTypeByKey", organizationTypeKey.getValue());
 	}
+	@SuppressWarnings("unchecked")
 	public List<OrganizationType> getOrganizationTypeListAll() {
 		return (List<OrganizationType>)getSqlMapClientTemplate().queryForList("getOrganizationTypeListAll");
+	}
+	@Override
+	public OrganizationType getOrganizationTypeById(Integer id) {
+		return (OrganizationType)getSqlMapClientTemplate().queryForObject("getOrganizationTypeById", id);
 	}
 }

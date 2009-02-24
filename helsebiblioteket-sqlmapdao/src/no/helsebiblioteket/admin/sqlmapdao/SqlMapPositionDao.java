@@ -21,6 +21,7 @@ public class SqlMapPositionDao extends SqlMapClientDaoSupport implements Positio
 	public Position getPositionByKey(PositionTypeKey key) {
 		return (Position) getSqlMapClientTemplate().queryForObject("getPositionByKey", key.toString());
 	}
+	@SuppressWarnings("unchecked")
 	public List<Position> getPositionListAll() {
 		return (List<Position>)getSqlMapClientTemplate().queryForList("getPositionListAll");
 	}
