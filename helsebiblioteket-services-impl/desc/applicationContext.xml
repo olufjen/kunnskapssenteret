@@ -40,6 +40,16 @@
   		<property name="accessTypeDao" ref="accessTypeDao"></property>
   		<property name="resourceDao" ref="resourceDao"></property>
   	</bean>
+  	<bean id="actionService" class="no.helsebiblioteket.admin.service.impl.ActionServiceImpl">
+  		<property name="actionDao" ref="actionDao"></property>
+  		<property name="accessTypeDao" ref="accessTypeDao"></property>
+  		<property name="resourceDao" ref="resourceDao"></property>
+  	</bean>
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
+    	<property name="host" value="${mail.smtp.host}"></property>
+    	<property name="debug" value="${mail.debug}"></property>
+    	<property name="noSend" value="${mail.nosend}"></property>
+  	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userService" ref="userService"></property>
   		<property name="organizationService" ref="organizationService"></property>
@@ -73,11 +83,6 @@
   		<property name="positionDao" ref="positionDao"></property>
   		<property name="organizationDao" ref="organizationDao"></property>
   		<property name="systemDao" ref="systemDao"></property>
-  	</bean>
-  	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
-    	<property name="host" value="${mail.smtp.host}"></property>
-    	<property name="debug" value="${mail.debug}"></property>
-    	<property name="noSend" value="${mail.nosend}"></property>
   	</bean>
   	
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
@@ -132,6 +137,9 @@
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="actionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapActionDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 		
