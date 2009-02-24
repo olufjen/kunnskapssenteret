@@ -6,6 +6,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 <sqlMapConfig>
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Access.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/AccessType.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Action.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/ContactInformation.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/IpRange.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Organization.xml" />
