@@ -59,6 +59,23 @@
 	<bean name="accessServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 	
+  	<bean id="actionService" class="no.helsebiblioteket.admin.webservice.ActionServiceWeb" init-method="init">
+		<property name="serviceClient" ref="actionServiceClient" />
+		<property name="targetEPR" ref="actionServiceTargetEPR" />
+		
+		<property name="insertUserActionName" ref="insertUserActionName" />
+		<property name="insertOrganizationActionName" ref="insertOrganizationActionName" />
+		<property name="getActionListByUserName" ref="getActionListByUserName" />
+		<property name="getActionListByOrganizationName" ref="getActionListByOrganizationName" />
+		<property name="getActionListByResourceName" ref="getActionListByResourceName" />
+		<property name="getActionListByAccessTypeName" ref="getActionListByAccessTypeName" />
+	</bean>
+	<bean name="actionServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/actionService" />
+	</bean>
+	<bean name="actionServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+
 	<bean id="emailService" class="no.helsebiblioteket.admin.webservice.EmailServiceWeb" init-method="init">
 		<property name="serviceClient" ref="emailServiceClient" />
 		<property name="targetEPR" ref="emailServiceTargetEPR" />
@@ -101,6 +118,7 @@
 		<property name="deleteIpAddresses" ref="deleteIpAddressesName" />
 		<property name="insertSupplierOrganizationName" ref="insertSupplierOrganizationName" />
 		<property name="updateSupplierOrganizationName" ref="updateSupplierOrganizationName" />
+		<property name="organizationListIpAddressName" ref="organizationListIpAddressName" />
   	</bean>
   	<bean name="organizationServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
 		<constructor-arg value="http://localhost:8080/axis2/services/organizationService" />
@@ -204,6 +222,31 @@
 		<constructor-arg value="getSupplierSourceListAll" />
 	</bean>
 
+	<bean name="insertUserActionName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertUserAction" />
+	</bean>
+	<bean name="insertOrganizationActionName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertOrganizationAction" />
+	</bean>
+	<bean name="getActionListByUserName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getActionListByUser" />
+	</bean>
+	<bean name="getActionListByOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getActionListByOrganization" />
+	</bean>
+	<bean name="getActionListByResourceName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getActionListByResource" />
+	</bean>
+	<bean name="getActionListByAccessTypeName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getActionListByAccessType" />
+	</bean>
+
 	<bean name="logInIpAddress" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="loginOrganizationByIpAddress" />
@@ -269,6 +312,10 @@
 	<bean name="updateSupplierOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="updateSupplierOrganization" />
+	</bean>
+	<bean name="organizationListIpAddressName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getOrganizationListByIpAddress" />
 	</bean>
 
 	<bean name="isAffectedName" class="javax.xml.namespace.QName">
