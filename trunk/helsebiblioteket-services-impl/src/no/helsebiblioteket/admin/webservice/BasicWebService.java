@@ -20,6 +20,7 @@ public abstract class BasicWebService {
 	    options.setTo(targetEPR);
 	    options.setProperty(HTTPConstants.CHUNKED, this.chunked);
 	}
+	@SuppressWarnings("unchecked")
 	public Object invoke(QName name, Object[] args, Class[] returnTypes) {
 		try {
 			Object[] response = this.serviceClient.invokeBlocking(name, args, returnTypes);

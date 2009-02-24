@@ -35,6 +35,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName organizationTypeListAllName;
 	private QName organizationTypeByKeyName;
 	private QName organizationListAllName;
+	private QName organizationListIpAddressName;
 	private QName findOrganizationsBySearchString;
 	private QName organizationByListItemName;
 	private QName insertMemberOrganizationName;
@@ -111,7 +112,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress  };
 		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
-		return (ListResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);
+		return (ListResultOrganizationListItem) invoke(this.organizationListIpAddressName, args, returnTypes);
 	}
 
 	
@@ -157,5 +158,8 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	public void setAddIpAddressRanges(QName addIpAddressRanges) {
 		this.addIpAddressRanges = addIpAddressRanges;
+	}
+	public void setOrganizationListIpAddressName(QName organizationListIpAddressName) {
+		this.organizationListIpAddressName = organizationListIpAddressName;
 	}
 }
