@@ -10,5 +10,5 @@ public interface ResourceDao {
 	public void deleteSupplierSourceResource(SupplierSourceResource resource);
 
 	// Fetch
-	public SupplierSourceResource getResourceById(Integer id, ResourceTypeKey typeKey);
+	public SupplierSourceResource getResourceById(Integer id);
 }

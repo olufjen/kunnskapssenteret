@@ -164,7 +164,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			// FIXME: Re-insert:
 			populateOrganizationNames(organization.getOrganization());
 			// TODO: Supplier and member!
-//			populateOrganizationRest(organization);
+			populateOrganizationRest(organization);
 			// FIXME: Re-insert:
 			return new ValueResultMemberOrganization(organization);
 		} else {
@@ -187,21 +187,19 @@ public class OrganizationServiceImpl implements OrganizationService {
 		checkNull(organization);
 
 		Person contactPerson = organization.getContactPerson();
-		Person insertedPerson = this.personDao.insertPerson(contactPerson);
-		organization.setContactPerson(insertedPerson);
+		this.personDao.insertPerson(contactPerson);
 		
 		ContactInformation contactInformation = organization.getContactInformation();
-		ContactInformation insertedContactInformation = this.contactInformationDao.insertContactInformation(contactInformation);
-		organization.setContactInformation(insertedContactInformation);
+		this.contactInformationDao.insertContactInformation(contactInformation);
 
 		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
 		if(type == null) throw new NullPointerException("Invalid type reference");
 
-		Organization insertedOrganization = this.organizationDao.insertOrganization(organization);
+		this.organizationDao.insertOrganization(organization);
 
 		List<OrganizationName> orgNameList = createNameList(organization);
 		for (OrganizationName organizationName : orgNameList) {
-			this.organizationNameDao.insertOrganizationName(insertedOrganization, organizationName);
+			this.organizationNameDao.insertOrganizationName(organization, organizationName);
 		}
 		
 		// No parent
@@ -267,10 +265,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSingles) {
 		IpAddressSet[] list = new IpAddressSet[ipAddressSingles.length];
+		int i = 0;
 		for (IpAddressSingle addressSingle : ipAddressSingles) {
 			IpAddressLine line = translateIpAddressSingle(addressSingle);
 			line.setOrgUnitId(organization.getId());
 			ipRangeDao.insertIpRange(line);
+			list[i] = translateIpAddressLine(line);
+			i++;
 		}
 		return new ListResultIpAddressSet(list);
 	}
@@ -288,7 +289,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	private IpAddressLine translateIpAddressRange(Organization organization, IpAddressRange addressRange) {
 		IpAddressLine line = new IpAddressLine();
-		line.setIpAddressId(addressRange.getIpAddressSet().getId());
+		line.setId(addressRange.getIpAddressSet().getId());
 		line.setIpAddressFrom(addressRange.getIpAddressFrom().getAddress());
 		line.setIpAddressTo(addressRange.getIpAddressTo().getAddress());
 		line.setLastChanged(addressRange.getIpAddressSet().getLastChanged());
@@ -305,7 +306,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	private IpAddressLine translateIpAddressSet(IpAddressSet ipRange) {
 		IpAddressLine line = new IpAddressLine();
-		line.setIpAddressId(ipRange.getId());
+		line.setId(ipRange.getId());
+		line.setLastChanged(ipRange.getLastChanged());
 		return line;
 	}
 	/**
@@ -436,17 +438,17 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @param organization
 	 */
 	private void populateOrganizationRest(MemberOrganization organization) {
-		OrganizationTypeKey typeKey = organization.getOrganization().getType().getKey();
+		Integer typeid = organization.getOrganization().getType().getId();
 		// TODO: Set default type and log the incident?
-		if(typeKey == null){ throw new NullPointerException("Organization has no type"); }
-		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getOrganization().getType().getKey());
+		if(typeid == null){ throw new NullPointerException("Organization has no type"); }
+		OrganizationType type = this.organizationTypeDao.getOrganizationTypeById(typeid);
 		if(type==null){ throw new NullPointerException("Organization type is not valid"); }
 		organization.getOrganization().setType(type);
 
 		if(organization.getOrganization().getContactPerson() == null ||
 				organization.getOrganization().getContactPerson().getId() == null){throw new NullPointerException("Organization has no contact person");}
 		// FIXME: Re-insert:
-		Person contactPerson = null;//this.personDao.getPersonByOrganization(organization);
+		Person contactPerson = this.personDao.getPersonByOrganization(organization);
 		if(contactPerson==null){
 			// TODO: Create an empty contact person and log the incident?
 			contactPerson = PersonFactory.factory.createPerson();
@@ -457,7 +459,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		if(organization.getOrganization().getContactInformation() == null ||
 				organization.getOrganization().getContactInformation().getId() == null){ throw new NullPointerException("Organization has no contact information");}
 		// FIXME: Re-insert:
-		ContactInformation contactInformation = null;//this.contactInformationDao.getContactInformationByOrganization(organization);
+		ContactInformation contactInformation = this.contactInformationDao.getContactInformationByOrganization(organization);
 		if(contactInformation==null){
 			// TODO: Create empty contact information and log the incident?
 			contactInformation = ContactInformationFactory.factory.createContactInformation();
@@ -559,7 +561,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	private IpAddressLine translateIpAddressSingle(IpAddressSingle ipAddressSingle){
 		IpAddressLine ipAddressLine = new IpAddressLine();
-		ipAddressLine.setIpAddressId(ipAddressLine.getIpAddressId());
+		ipAddressLine.setId(ipAddressLine.getId());
 		ipAddressLine.setOrgUnitId(ipAddressLine.getOrgUnitId());
 		ipAddressLine.setLastChanged(ipAddressLine.getLastChanged());
 //		if(ipAddressSet instanceof IpAddressRange){
@@ -569,6 +571,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 //		} else {
 //		IpAddressSingle ipAddressSingle = (IpAddressSingle) ipAddressSet;
 		ipAddressLine.setIpAddressFrom(ipAddressSingle.getIpAddressSingle().getAddress());
+		ipAddressLine.setIpAddressTo(ipAddressSingle.getIpAddressSingle().getAddress());
 //		}
 		return ipAddressLine;
 	}
@@ -580,7 +583,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	private IpAddressSet translateIpAddressLine(IpAddressLine ipAddressLine) {
 		IpAddressSet ipAddressSet = new IpAddressSet();
-		if(ipAddressLine.getIpAddressTo()==null){
+		if(ipAddressLine.getIpAddressTo().equals(ipAddressLine.getIpAddressFrom())){
 			IpAddressSingle ipAddressSingle = new IpAddressSingle();
 			ipAddressSingle.setIpAddressSingle(new IpAddress(ipAddressLine.getIpAddressFrom()));
 			// FIXME: Handle this
@@ -593,7 +596,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 //			ipAddressSet = ipAddressRange;
 		}
 
-		ipAddressSet.setId(ipAddressLine.getIpAddressId());
+		ipAddressSet.setId(ipAddressLine.getId());
 		ipAddressSet.setLastChanged(ipAddressLine.getLastChanged());
 		return ipAddressSet;
 	}

@@ -20,5 +20,6 @@ public interface OrganizationTypeDao {
 
 	// Fetch
 	public OrganizationType getOrganizationTypeByKey(OrganizationTypeKey organizationTypeKey);
+	public OrganizationType getOrganizationTypeById(Integer id);
 	public List<OrganizationType> getOrganizationTypeListAll();
 }

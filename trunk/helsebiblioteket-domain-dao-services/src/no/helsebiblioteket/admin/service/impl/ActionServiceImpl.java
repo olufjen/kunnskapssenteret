@@ -2,7 +2,6 @@ package no.helsebiblioteket.admin.service.impl;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.AccessTypeDao;
 import no.helsebiblioteket.admin.dao.ActionDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
@@ -72,13 +71,21 @@ public class ActionServiceImpl implements ActionService{
 			action.setAccessType(this.accessTypeDao.getAccessTypeById(line.getAccessTypeId()));
 			
 			// TODO: This is not working!
-			action.setResource(this.resourceDao.getResourceById(line.getResourceId(),
-					null).getResource());
+			action.setResource(this.resourceDao.getResourceById(line.getResourceId()).getResource());
 			
 			// TODO: Return user or organization here or load when needed?
 			result[i] = action;
 			i++;
 		}
 		return result;
+	}
+	public void setActionDao(ActionDao actionDao) {
+		this.actionDao = actionDao;
+	}
+	public void setAccessTypeDao(AccessTypeDao accessTypeDao) {
+		this.accessTypeDao = accessTypeDao;
+	}
+	public void setResourceDao(ResourceDao resourceDao) {
+		this.resourceDao = resourceDao;
 	}
 }

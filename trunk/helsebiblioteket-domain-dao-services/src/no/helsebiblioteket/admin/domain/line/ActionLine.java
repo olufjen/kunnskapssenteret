@@ -1,11 +1,14 @@
 package no.helsebiblioteket.admin.domain.line;
 
+import java.util.Date;
+
 public class ActionLine {
 	private Integer id;
 	private Integer userId;
 	private Integer resourceId;
 	private Integer orgUnitId;
 	private Integer accessTypeId;
+	private Date actionPerformed;
 	public Integer getId() {
 		return id;
 	}
@@ -35,5 +38,11 @@ public class ActionLine {
 	}
 	public void setAccessTypeId(Integer accessTypeId) {
 		this.accessTypeId = accessTypeId;
+	}
+	public Date getActionPerformed() {
+		return actionPerformed;
+	}
+	public void setActionPerformed(Date actionPerformed) {
+		this.actionPerformed = actionPerformed;
 	}
 }
