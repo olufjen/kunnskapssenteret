@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class IpAddressLine {
 	// Primary key
-	private Integer ipAddressId;
+	private Integer id;
 
 	// Table values
 	private String ipAddressFrom;
@@ -14,14 +14,14 @@ public class IpAddressLine {
 
 	// toString
 	public String toString() {
-		return "[" + ipAddressId + "] " + ipAddressFrom + "->" + ipAddressTo;
+		return "[" + id + "] " + ipAddressFrom + "->" + ipAddressTo;
 	}
 	// GET/SET
-	public Integer getIpAddressId() {
-		return ipAddressId;
+	public Integer getId() {
+		return id;
 	}
-	public void setIpAddressId(Integer ipAddressId) {
-		this.ipAddressId = ipAddressId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getIpAddressFrom() {
 		return ipAddressFrom;

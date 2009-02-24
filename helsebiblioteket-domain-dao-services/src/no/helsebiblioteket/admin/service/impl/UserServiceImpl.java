@@ -235,8 +235,7 @@ public class UserServiceImpl implements UserService {
      */
 	public SingleResultUser insertUser(User user) {
 		checkNull(user);
-		Person insertedPerson = this.personDao.insertPerson(user.getPerson());
-		user.setPerson(insertedPerson);
+		this.personDao.insertPerson(user.getPerson());
 		// FIXME: Roles are not inserted here! Read comment above.
 //		List<UserRoleLine> userRoleList = translateRoles(user.getId(), user.getRoleList());
 //		for (UserRoleLine userRole : userRoleList) {

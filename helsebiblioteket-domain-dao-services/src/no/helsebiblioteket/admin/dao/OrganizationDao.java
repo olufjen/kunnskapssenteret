@@ -11,8 +11,8 @@ import no.helsebiblioteket.admin.domain.Organization;
 
 public interface OrganizationDao {
 	// Edit
-	public Organization insertOrganization(Organization organization);
-	public Organization updateOrganization(Organization organization);
+	public void insertOrganization(Organization organization);
+	public void updateOrganization(Organization organization);
 	public void deleteOrganization(Organization organization);
 
 	// Fetch
