@@ -104,8 +104,8 @@ public class ActionDaoTests {
 		Assert.isTrue(organizationActionList.size() == 0, "Action not deleted -- organization");
 		resourceActionList = actionDao.getActionListByResource(supplierSourceResource.getResource());
 		Assert.isTrue(resourceActionList.size() == 0, "Action not deleted -- Resource");
-		accessTypeActionList = actionDao.getActionListByAccessType(accessType);
-		Assert.isTrue(accessTypeActionList.size() == 0, "Action not deleted --  Access type");
+		List<ActionLine> afterDeleteAccessTypeActionList = actionDao.getActionListByAccessType(accessType);
+		Assert.isTrue(accessTypeActionList.size() - afterDeleteAccessTypeActionList.size() == 1, "Action not deleted --  Access type");
 	}
 	private ActionLine createActionLine(Organization organization, User user, Resource resource, AccessType accessType){
 		ActionLine actionLine = new ActionLine();

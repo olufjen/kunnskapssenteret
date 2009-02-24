@@ -157,12 +157,7 @@ public class BeanFactory {
 		accessServiceTests.testInsertAccess();
 		
 		ActionServiceTests actionServiceTests = new ActionServiceTests();
-		actionServiceTests.testInsertUserAction();
-		actionServiceTests.testInsertOrganizationAction();
-		actionServiceTests.testGetActionListByUser();
-		actionServiceTests.testGetActionListByOrganization();
-		actionServiceTests.testGetActionListByResource();
-		actionServiceTests.testGetActionListByAccessType();
+		actionServiceTests.testInsertAction();
 		
 		EmailServiceTests emailServiceTests = new EmailServiceTests();
 		emailServiceTests.testSendMail();

@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
@@ -82,15 +83,15 @@ public class OrganizationServiceTests {
 	public void testGetOrganizationByListItem(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 		MemberOrganization organization = createMemberOrganization();
-		organizationService.insertOrganization(organization.getOrganization());
+		organization.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(organization.getOrganization())).getValue());
 		OrganizationListItem listItem = new OrganizationListItem();
 		listItem.setId(organization.getOrganization().getId());
 		
 //		TEST: public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem);
 		SingleResultOrganization result = organizationService.getOrganizationByListItem(listItem);
 		Assert.notNull(result, "Null result");
-		Assert.isTrue(result instanceof ValueResultOrganization, "No result");
-		Assert.isTrue(((ValueResultOrganization)result).getValue().getNameEnglish().equals(
+		Assert.isTrue(result instanceof ValueResultMemberOrganization, "No result");
+		Assert.isTrue(((ValueResultMemberOrganization)result).getValue().getOrganization().getNameEnglish().equals(
 				this.findMeName), "Wrong organization");
 	}
 	public void testGetOrganizationListByIpAddress(){
@@ -141,7 +142,7 @@ public class OrganizationServiceTests {
 		ListResultOrganizationListItem result = organizationService.getOrganizationListByIpAddress(ipAddress);
 		
 		Assert.notNull(result, "Null result");
-		Assert.isTrue(result.getList().length == 1, "Wrong number of results");
+		Assert.isTrue(result.getList().length == 2, "Wrong number of results");
 		Assert.isTrue(result.getList()[0].getNameEnglish().equals(name1) ||
 				result.getList()[1].getNameEnglish().equals(name1), "Name 1 not found");
 		Assert.isTrue(result.getList()[0].getNameEnglish().equals(name2) ||
