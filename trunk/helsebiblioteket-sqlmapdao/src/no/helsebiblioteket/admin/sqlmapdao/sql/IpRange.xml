@@ -6,18 +6,18 @@
 <sqlMap namespace="IpRange">
 	<typeAlias alias="ipRange" type="no.helsebiblioteket.admin.domain.line.IpAddressLine"/>
 	<resultMap id="getIpRangeResultMap" class="ipRange">
-		<result property="ipAddressId" column="ip_address_id" />
+		<result property="id" column="ip_address_id" />
 		<result property="ipAddressFrom" column="ip_address_from" />
 		<result property="ipAddressTo" column="ip_address_to" />
 		<result property="orgUnitId" column="org_unit_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertIpRange" parameterClass="ipRange">
-		<selectKey resultClass="int" keyProperty="ipAddressId">
-			SELECT nextval('tbl_ip_address_ip_address_id_seq') as ipAddressId;
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_ip_address_ip_address_id_seq') as id;
 		</selectKey>
 		insert into tbl_ip_address (ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed) 
-		values (#ipAddressId#, #ipAddressFrom#, #ipAddressTo#, #orgUnitId#, now());
+		values (#id#, #ipAddressFrom#, #ipAddressTo#, #orgUnitId#, now());
 	</insert>
 	<update id="updateIpRange" parameterClass="ipRange">
 		update tbl_ip_address set
@@ -25,13 +25,17 @@
 		ip_address_to = #ipAddressTo#,
 		org_unit_id = #orgUnitId#,
       	last_changed = now()
-    	where ip_address_id = #ipAddressId# and last_changed = #lastChanged#;
+    	where ip_address_id = #id# and last_changed = #lastChanged#;
 	</update>
 	<delete id="deleteIpRange" parameterClass="ipRange">
 		delete from tbl_ip_address
-		where ip_address_id = #ipAddressId#;
-		 	and last_changed = #lastChanged#
+		where ip_address_id = #id#
+		 	and last_changed = #lastChanged#;
 	</delete>
+	<select id="getIpRangeById" resultMap="getIpRangeResultMap" parameterClass="integer">
+		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed
+		from tbl_ip_address where ip_address_id = #id#
+	</select>
 	<select id="getIpRangeListByOrganizationId" resultMap="getIpRangeResultMap" parameterClass="integer">
 		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed
 		from tbl_ip_address where org_unit_id = #orgUnitId#
@@ -40,7 +44,7 @@
 	<select id="getIpRangeById" resultMap="getIpRangeResultMap" parameterClass="integer">
 		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed
 		from tbl_ip_address
-		where ip_address_id = #ipAddressId#;
+		where ip_address_id = #id#;
 	</select>
 	-->
 </sqlMap>

@@ -9,26 +9,26 @@
 	<resultMap id="SupplierSourceMap" class="SupplierSource">
 		<result property="supplierSourceName" column="supplier_source_name" />
 		<result property="url.stringValue" column="url" />
-		<result property="supplierSourceId" column="supplier_source_id" />
+		<result property="id" column="supplier_source_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertSupplierSource" parameterClass="SupplierSource">
-		<selectKey resultClass="int" keyProperty="supplierSourceId">
-			SELECT nextval('tbl_supplier_source_supplier_source_id_seq') as supplierSourceId;
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_supplier_source_supplier_source_id_seq') as id;
 		</selectKey>
 		insert into tbl_supplier_source (supplier_source_name, url, supplier_source_id, last_changed)
-		values (#supplierSourceName#, #url.stringValue#, #supplierSourceId#, now());
+		values (#supplierSourceName#, #url.stringValue#, #id#, now());
 	</insert>
 	<update id="updateSupplierSource" parameterClass="SupplierSource">
 		update tbl_supplier_source set
 	      	supplier_source_name = #supplierSourceName#,
       		url = #url.stringValue#,
     	  	last_changed = now()
-    	where supplier_source_id = #supplierSourceId# and last_changed = #lastChanged#;
+    	where supplier_source_id = #id# and last_changed = #lastChanged#;
 	</update>
 	<delete id="deleteSupplierSource" parameterClass="SupplierSource">
 		delete from tbl_supplier_source
-		where supplier_source_id = #supplierSourceId#
+		where supplier_source_id = #id#
 		and last_changed = #lastChanged#
 	</delete>
 	<select id="getSupplierSourceListAll" resultMap="SupplierSourceMap">
@@ -38,6 +38,6 @@
 	<select id="getSupplierSourceById" resultMap="SupplierSourceMap" parameterClass="integer">
 		select supplier_source_name, url, supplier_source_id, last_changed
 		from tbl_supplier_source
-		where supplier_source_id = #supplierSourceId#;
+		where supplier_source_id = #id#;
 	</select>
 </sqlMap>

@@ -35,14 +35,9 @@
 		select org_type_id, descr, name, key
 		from tbl_org_type_reg
 	</select>
-
-
-
-	<!-- TODO: Not in use.
-	<select id="getOrganizationTypeById" resultMap="getOrganizationTypeResultMap" parameterClass="integer">
+	<select id="getOrganizationTypeById" resultMap="OrganizationTypeResultMap" parameterClass="integer">
 		select org_type_id, descr, name, key
 		from tbl_org_type_reg
-		where org_type_id = #organizationTypeId#;
+		where org_type_id = #id#;
 	</select>
-	-->
 </sqlMap>

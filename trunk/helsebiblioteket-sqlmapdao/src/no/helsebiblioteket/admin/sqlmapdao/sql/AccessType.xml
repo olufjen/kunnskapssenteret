@@ -8,7 +8,7 @@
 	<typeAlias alias="AccessTypeCompositeKey" type="no.helsebiblioteket.admin.dao.keys.AccessTypeCompositeKey"/>
 	
 	<resultMap id="AccessTypeResultMap" class="AccessType">
-		<result property="accessTypeid" column="access_type_id" />
+		<result property="id" column="access_type_id" />
 		<result property="description" column="descr" />
 		<result property="name" column="name" />
 		<result property="key.value" column="key" />

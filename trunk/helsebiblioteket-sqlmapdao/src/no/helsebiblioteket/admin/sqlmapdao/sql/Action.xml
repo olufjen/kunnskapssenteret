@@ -11,148 +11,107 @@
 		<result property="userId" column="user_id" />
 		<result property="resourceId" column="resource_id" />
 		<result property="orgUnitId" column="org_unit_id" />
+		<result property="actionPerformed" column="action_performed" />
 		<result property="accessTypeId" column="access_type_id" />
 	</resultMap>
-
 	
-	updateAction
-	deleteAction
-	getActionListByUserId
-	getActionListByOrganizationId
-	getActionListByResourceId
-	getActionListByAccessTypeId
 	<insert id="insertAction" parameterClass="ActionLine">
 		<selectKey resultClass="int" keyProperty="id">
-			SELECT nextval('tbl_ip_address_ip_address_id_seq') as id;
+			SELECT nextval('tbl_action_action_id_seq') as id;
 		</selectKey>
-		insert into tbl_access (
-			access_type_id, 
-			user_id, 
-			user_role_id, 
-			valid_from, 
-			valid_to, 
-			access_id, 
-			resource_id, 
-			org_type_id, 
-			provided_by_org_unit,
-			org_unit_id, 
-			last_changed
-			)
-		values (#resourceAccess.access.accessType.accessTypeid#,
-				#userId#,
-				#userRoleId#,
-				#resourceAccess.access.validFrom#,
-				#resourceAccess.access.validTo#,
-				#resourceAccess.access.accessId#,
-				#resourceAccess.resource.resource.resourceId#,
-				#orgTypeId#,
-				#resourceAccess.access.providedBy.organization.id#,
-				#orgUnitId#, now());
+		insert into tbl_action (
+			action_id,
+			action_performed,
+			user_id,
+			resource_id,
+			org_unit_id,
+			access_type_id
+		) values (
+			#id#,
+			now(),
+			#userId#,
+			#resourceId#,
+			#orgUnitId#,
+			#accessTypeId#
+		);
 	</insert>
-	<update id="updateResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
-		update tbl_access set
-			access_type_id = #resourceAccess.access.accessType.accessTypeid#,
-			user_id = #userId#, 
-			user_role_id = #userRoleId#, 
-			valid_from = #resourceAccess.access.validFrom#,
-			valid_to = #resourceAccess.access.validTo#,
-			access_id = #resourceAccess.access.accessId#,
-			resource_id = #resourceAccess.resource.resource.resourceId#,
-			org_type_id = #orgTypeId#,
-			provided_by_org_unit = #resourceAccess.access.providedBy.organization.id#,
-			org_unit_id = #orgUnitId#, 
-			last_changed = now()
-		where access_id = #resourceAccess.access.accessId# and last_changed = #lastChanged#
+	<update id="updateAction" parameterClass="ActionLine">
+		update tbl_action set
+			action_id = #id#,
+			action_performed = now(),
+			user_id = #userId#,
+			resource_id = #resourceId#,
+			org_unit_id = #orgUnitId#,
+			access_type_id = #accessTypeId#
+		where
+			action_id = #id# and action_performed = #actionPerformed#
 	</update>
-	<delete id="deleteResourceAccessForeignKeys" parameterClass="integer">
-  		delete from tbl_access
-  		where
-  		access_id = #id# and last_changed = #lastChanged#
+	<delete id="deleteAction" parameterClass="ActionLine">
+  		delete from tbl_action where action_id = #id# and action_performed = #actionPerformed#
     </delete>
-
-	<select id="getAccessListByUserId" resultMap="ResourceAccessResultMap" parameterClass="integer">
-		select access_type_id, 
-			user_id, 
-			user_role_id, 
-			valid_from, 
-			valid_to, 
-			access_id, 
-			resource_id, 
-			org_type_id, 
-			provided_by_org_unit,
-			org_unit_id, 
-			last_changed
-		from tbl_access
-		where user_id = #userId#;
+	<select id="getActionListByActionId" resultMap="ActionLineMap" parameterClass="integer">
+		select
+			action_id,
+			action_performed,
+			user_id,
+			resource_id,
+			org_unit_id,
+			access_type_id
+		from
+			tbl_action
+		where
+			action_id = #id#;
 	</select>
-	<select id="getAccessListByOrganizationId" resultMap="ResourceAccessResultMap" parameterClass="integer">
-		select access_type_id, 
-			user_id, 
-			user_role_id, 
-			valid_from, 
-			valid_to, 
-			access_id, 
-			resource_id, 
-			org_type_id, 
-			provided_by_org_unit,
-			org_unit_id, 
-			last_changed
-		from tbl_access
-		where org_unit_id = #organizationId#;
+	<select id="getActionListByUserId" resultMap="ActionLineMap" parameterClass="integer">
+		select
+			action_id,
+			action_performed,
+			user_id,
+			resource_id,
+			org_unit_id,
+			access_type_id
+		from
+			tbl_action
+		where
+			user_id = #id#;
 	</select>
-	<select id="getAccessListByOrganizationType" resultMap="ResourceAccessResultMap" parameterClass="integer">
-		select access_type_id, 
-			user_id, 
-			user_role_id, 
-			valid_from, 
-			valid_to, 
-			access_id, 
-			resource_id, 
-			org_type_id, 
-			provided_by_org_unit,
-			org_unit_id, 
-			last_changed
-		from tbl_access
-		where org_type_id = #organizationTypeId#;
+	<select id="getActionListByOrganizationId" resultMap="ActionLineMap" parameterClass="integer">
+		select
+			action_id,
+			action_performed,
+			user_id,
+			resource_id,
+			org_unit_id,
+			access_type_id
+		from
+			tbl_action
+		where
+			org_unit_id = #id#;
 	</select>
-	
-	
-	
-	
-	<select id="getAccessListByUserRole" resultMap="ResourceAccessResultMap" parameterClass="integer">
-		select access_type_id, 
-			user_id, 
-			user_role_id, 
-			valid_from, 
-			valid_to, 
-			access_id, 
-			resource_id, 
-			org_type_id, 
-			provided_by_org_unit,
-			org_unit_id, 
-			last_changed
-		from tbl_access
-		where user_role_id = #userRoleId#;
+	<select id="getActionListByResourceId" resultMap="ActionLineMap" parameterClass="integer">
+		select
+			action_id,
+			action_performed,
+			user_id,
+			resource_id,
+			org_unit_id,
+			access_type_id
+		from
+			tbl_action
+		where
+			resource_id = #id#;
 	</select>
-	
-	
-	<!-- TODO: Remove?
-	<select id="getAccessById" resultMap="getAccessResultMap" parameterClass="integer">
-		select 
-			access_id, 
-			access_type_id, 
-			resource_id, 
-			user_id, 
-			user_role_id, 
-			valid_from, 
-			valid_to, 
-			org_type_id, 
-			org_unit_id, 
-			org_unit_as_resource_id,
-			last_changed
-		from tbl_access
-		where access_id = #accessId#;
+	<select id="getActionListByAccessTypeId" resultMap="ActionLineMap" parameterClass="integer">
+		select
+			action_id,
+			action_performed,
+			user_id,
+			resource_id,
+			org_unit_id,
+			access_type_id
+		from
+			tbl_action
+		where
+			access_type_id = #id#;
 	</select>
-	-->
-
 </sqlMap>

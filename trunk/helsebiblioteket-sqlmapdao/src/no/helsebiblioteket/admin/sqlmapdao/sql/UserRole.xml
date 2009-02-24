@@ -18,9 +18,16 @@
 	</insert>
 	<delete id="deleteUserRole" parameterClass="UserRoleLine">
 		delete from tbl_user_role
-		where user_role_id = #userRoleId# and 
-    	user_id = #userId#
+		where user_role_id = #userRoleId# and user_id = #userId#
 	</delete>
+	<select id="getUserRoleLineByUserRoleLine" resultMap="UserRoleLineMap" parameterClass="UserRoleLine">
+		select 
+			user_role_id,
+			user_id,
+			last_changed
+		from tbl_user_role
+		where user_id = #userId# and user_role_id = #userRoleId#;
+	</select>
 	<select id="getUserRoleListByUserId" resultMap="UserRoleLineMap" parameterClass="integer">
 		select 
 			user_role_id, 

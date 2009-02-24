@@ -7,13 +7,13 @@
 	<typeAlias alias="ResourceAccessForeignKeys" type="no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys"/>
 
 	<resultMap id="ResourceAccessResultMap" class="ResourceAccessForeignKeys">
-		<result property="resourceAccess.access.accessType.accessTypeid" column="access_type_id" />
+		<result property="resourceAccess.access.accessType.id" column="access_type_id" />
 		<result property="userId" column="user_id" />
 		<result property="userRoleId" column="user_role_id" />
 		<result property="resourceAccess.access.validFrom" column="valid_from" />
 		<result property="resourceAccess.access.validTo" column="valid_to" />
-		<result property="resourceAccess.access.accessId" column="access_id" />
-		<result property="resourceAccess.resource.resource.resourceId" column="resource_id" />
+		<result property="resourceAccess.access.id" column="access_id" />
+		<result property="resourceAccess.resource.resource.id" column="resource_id" />
 		<result property="orgTypeId" column="org_type_id" />
 		<result property="resourceAccess.access.providedBy.organization.id" column="provided_by_org_unit" />
 		<result property="orgUnitId" column="org_unit_id" />
@@ -21,7 +21,7 @@
 	</resultMap>
 
 	<insert id="insertResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
-		<selectKey resultClass="int" keyProperty="resourceAccess.access.accessId">
+		<selectKey resultClass="int" keyProperty="resourceAccess.access.id">
 			SELECT nextval('tbl_ip_address_ip_address_id_seq') as access_id;
 		</selectKey>
 		insert into tbl_access (
@@ -37,37 +37,53 @@
 			org_unit_id, 
 			last_changed
 			)
-		values (#resourceAccess.access.accessType.accessTypeid#,
+		values (#resourceAccess.access.accessType.id#,
 				#userId#,
 				#userRoleId#,
 				#resourceAccess.access.validFrom#,
 				#resourceAccess.access.validTo#,
-				#resourceAccess.access.accessId#,
-				#resourceAccess.resource.resource.resourceId#,
+				#resourceAccess.access.id#,
+				#resourceAccess.resource.resource.id#,
 				#orgTypeId#,
 				#resourceAccess.access.providedBy.organization.id#,
 				#orgUnitId#, now());
 	</insert>
 	<update id="updateResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
 		update tbl_access set
-			access_type_id = #resourceAccess.access.accessType.accessTypeid#,
+			access_type_id = #resourceAccess.access.accessType.id#,
 			user_id = #userId#, 
 			user_role_id = #userRoleId#, 
 			valid_from = #resourceAccess.access.validFrom#,
 			valid_to = #resourceAccess.access.validTo#,
-			access_id = #resourceAccess.access.accessId#,
-			resource_id = #resourceAccess.resource.resource.resourceId#,
+			access_id = #resourceAccess.access.id#,
+			resource_id = #resourceAccess.resource.resource.id#,
 			org_type_id = #orgTypeId#,
 			provided_by_org_unit = #resourceAccess.access.providedBy.organization.id#,
 			org_unit_id = #orgUnitId#, 
 			last_changed = now()
-		where access_id = #resourceAccess.access.accessId# and last_changed = #lastChanged#
+		where access_id = #resourceAccess.access.id# and last_changed = #resourceAccess.access.lastChanged#
 	</update>
-	<delete id="deleteResourceAccessForeignKeys" parameterClass="integer">
+	<delete id="deleteResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
   		delete from tbl_access
   		where
-  		access_id = #id# and last_changed = #lastChanged#
+  		access_id = #resourceAccess.access.id# and last_changed = #resourceAccess.access.lastChanged#
     </delete>
+
+	<select id="getResourceAccessForeignKeysByAccessId" resultMap="ResourceAccessResultMap" parameterClass="integer">
+		select access_type_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			access_id, 
+			resource_id, 
+			org_type_id, 
+			provided_by_org_unit,
+			org_unit_id, 
+			last_changed
+		from tbl_access
+		where access_id = #id#;
+	</select>
 
 	<select id="getAccessListByUserId" resultMap="ResourceAccessResultMap" parameterClass="integer">
 		select access_type_id, 
@@ -150,7 +166,7 @@
 			org_unit_as_resource_id,
 			last_changed
 		from tbl_access
-		where access_id = #accessId#;
+		where access_id = #id#;
 	</select>
 	-->
 
