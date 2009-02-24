@@ -58,5 +58,11 @@ public class MockJdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements
 		
 	}
 
+	@Override
+	public OrganizationType getOrganizationTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

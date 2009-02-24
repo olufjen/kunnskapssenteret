@@ -65,5 +65,11 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 		
 	}
 
+	@Override
+	public OrganizationType getOrganizationTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

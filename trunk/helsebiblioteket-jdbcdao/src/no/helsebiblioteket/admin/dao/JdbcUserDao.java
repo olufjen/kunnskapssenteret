@@ -39,6 +39,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 		sqlParameters.addValue("password", user.getPassword());
 //		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
+		
 	}
 	public void updateUser(User user) {
 		String sql = "update tbl_user set username=:username, org_unit_id=:org_unit_id, password=:password " +
@@ -50,6 +51,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 //		sqlParameters.addValue("org_unit_id", user.getOrganization().getOrgUnitId());
 		
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
+		
 	}
     private static class UserMapper implements ParameterizedRowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {

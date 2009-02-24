@@ -52,7 +52,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 //		sqlParameters.addValue("person_id", profile.getPerson().getId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
-	public Person insertPerson(Person person) {
+	public void insertPerson(Person person) {
 		String sql = "insert into tbl_person (first_name, last_name, " +
 		"student_number, hpr_number "+//, org_unit_id=:org_unit_id, " +
 		") values (" +
@@ -66,7 +66,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		sqlParameters.addValue("hpr_number", person.getHprNumber());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 //		return getSimpleJdbcTemplate().queryForInt("select currval('tbl_person_person_id_seq');");
-		return null;
+		
 		
 //		// TODO Auto-generated method stub
 //		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -143,6 +143,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 //		sqlParameters.addValue("org_unit_id", person.getXXX);
 //		sqlParameters.addValue("person_id", person.getUser().getId());
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
+		
 	}
 
 	
