@@ -21,7 +21,7 @@
 		insert into tbl_user
 			(user_id, username, password, org_unit_id, person_id, last_changed)
 		values 
-			(#id#, #username#, #password#, #organization.orgUnitId#, #person.id#, now());
+			(#id#, #username#, #password#, #organization.id#, #person.id#, now());
 	</insert>
 	<update id="updateUser" parameterClass="user">
 		update tbl_user set
@@ -32,7 +32,7 @@
 			last_changed = now()
 		where user_id = #id# and last_changed = #lastChanged#;
 	</update>
-	<delete id="deleteUser" parameterClass="integer">
+	<delete id="deleteUser" parameterClass="user">
   		delete from tbl_user where user_id = #id# and last_changed = #lastChanged#
     </delete>
 	<select id="getUserByUsername" resultMap="getUserResultMap" parameterClass="string">

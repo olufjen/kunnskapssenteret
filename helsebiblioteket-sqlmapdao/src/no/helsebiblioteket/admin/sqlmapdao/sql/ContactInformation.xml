@@ -11,17 +11,17 @@
 		<result property="telephoneNumber" column="telephone_number" />
 		<result property="postalLocation" column="postal_location" />
 		<result property="email" column="email" />
-		<result property="contactInformationId" column="contact_information_id" />
+		<result property="id" column="contact_information_id" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertContactInformation" parameterClass="contactInformation">
-		<selectKey resultClass="int" keyProperty="contactInformationId">
-			SELECT nextval('tbl_contact_information_contact_information_id_seq') as contactInformationId;
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_contact_information_contact_information_id_seq') as id;
 		</selectKey>
 		insert into tbl_contact_information 
 		(contact_information_id, postal_address, postal_code, postal_location, telephone_number, email, last_changed) 
 		values 
-		(#contactInformationId#, #postalAddress#, #postalCode#, #postalLocation#, #telephoneNumber#, #email#, now());
+		(#id#, #postalAddress#, #postalCode#, #postalLocation#, #telephoneNumber#, #email#, now());
 	</insert>
 	<update id="updateContactInformation" parameterClass="contactInformation">
 		update tbl_contact_information set
@@ -31,28 +31,27 @@
       	telephone_number = #telephoneNumber#,
       	email = #email#,
       	last_changed = now()
-    	where contact_information_id = #contactInformationId# and
+    	where contact_information_id = #id# and
     		last_changed = #lastChanged#;
 	</update>
-	<delete id="deleteContactInformation" parameterClass="integer">
+	<delete id="deleteContactInformation" parameterClass="contactInformation">
   		delete from tbl_contact_information
   		where
-  			contact_information_id = #contactInformationId#
-	  		and last_changed = #lastChanged#
+  			contact_information_id = #id# and last_changed = #lastChanged#
 	</delete>
 	<select id="getContactInformationById" resultMap="getContactInformationResultMap" parameterClass="integer">
 		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed
 		from tbl_contact_information
-		where contact_information_id = #contactInformationId#;
+		where contact_information_id = #id#;
 	</select>
 	<select id="getContactInformationByPerson" resultMap="getContactInformationResultMap" parameterClass="integer">
 		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed
 		from tbl_contact_information
-		where contact_information_id = (select contact_information_id from tbl_person where person_id = #personId#);
+		where contact_information_id = (select contact_information_id from tbl_person where person_id = #id#);
 	</select>
 	<select id="getContactInformationByOrganization" resultMap="getContactInformationResultMap">
 		select contact_information_id, postal_address, postal_code, telephone_number, postal_location, email, last_changed
 		from tbl_contact_information
-		where contact_information_id = (select contact_information_id from tbl_org_unit where org_unit_id = #orgUnitId#);
+		where contact_information_id = (select contact_information_id from tbl_org_unit where org_unit_id = #id#);
 	</select>
 </sqlMap>

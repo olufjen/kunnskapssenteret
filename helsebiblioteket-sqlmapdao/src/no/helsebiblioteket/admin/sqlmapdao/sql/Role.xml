@@ -10,8 +10,8 @@
 	<resultMap id="getRoleResultMap" class="role">
 		<result property="name" column="name" />
 		<result property="description" column="descr" />
-		<result property="userRoleId" column="user_role_id" />
-		<result property="system.systemId" column="system_id" />
+		<result property="id" column="user_role_id" />
+		<result property="system.id" column="system_id" />
 		<result property="system.key.value" column="system_key" />
 		<result property="key.value" column="role_key" />
 	</resultMap>
@@ -36,7 +36,7 @@
 			key as role_key,
 			key as system_key
 		from tbl_user_role_reg
-		where system_id = #systemId#;
+		where system_id = #id#;
 	</select>
 	<select id="getRoleById" resultMap="getRoleResultMap" parameterClass="integer">
 		select

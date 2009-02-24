@@ -6,7 +6,7 @@
 <sqlMap namespace="Person">
 	<typeAlias alias="person" type="no.helsebiblioteket.admin.domain.Person"/>
 	<resultMap id="getPersonResultMap" class="person">
-		<result property="personId" column="person_id" />
+		<result property="id" column="person_id" />
 		<result property="firstName" column="first_name" />
 		<result property="lastName" column="last_name" />
 		<result property="studentNumber" column="student_number" />
@@ -17,13 +17,13 @@
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertPerson" parameterClass="person">
-		<selectKey resultClass="int" keyProperty="personId">
-			SELECT nextval('tbl_person_person_id_seq') as personId;
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_person_person_id_seq') as id;
 		</selectKey>
 		insert into tbl_person
 		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed)
 		values 
-		(#personId#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, now());
+		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, now());
 	</insert>
 	<update id="updatePerson" parameterClass="person">
 		update tbl_person set
@@ -36,15 +36,15 @@
 			position_type_id = #position.id#,
 			last_changed = now()
 		where
-			person_id = #personId# and last_changed = #lastChanged#;
+			person_id = #id# and last_changed = #lastChanged#;
 	</update>
-	<delete id="deletePerson" parameterClass="integer">
-  		delete from tbl_person where person_id = #personId# and last_changed = #lastChanged#
+	<delete id="deletePerson" parameterClass="person">
+  		delete from tbl_person where person_id = #id#
     </delete>
 	<select id="getPersonById" resultMap="getPersonResultMap" parameterClass="integer">
 		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
 		from tbl_person
-		where person_id = #personId#;
+		where person_id = #id#;
 	</select>
 	<select id="getPersonByUserId" resultMap="getPersonResultMap" parameterClass="integer">
 		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
@@ -54,6 +54,6 @@
 	<select id="getPersonByOrganizationId" resultMap="getPersonResultMap" parameterClass="integer">
 		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
 		from tbl_person
-		where person_id = (select person_id from tbl_org_unit where org_unit_id = #orgUnitId#);
+		where person_id = (select person_id from tbl_org_unit where org_unit_id = #id#);
 	</select>
 </sqlMap>

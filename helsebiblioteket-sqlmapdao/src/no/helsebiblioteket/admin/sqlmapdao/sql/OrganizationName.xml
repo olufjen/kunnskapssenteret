@@ -6,7 +6,7 @@
 <sqlMap namespace="OrganizationName">
 	<typeAlias alias="OrganizationName" type="no.helsebiblioteket.admin.domain.OrganizationName"/>
 	<resultMap id="OrganizationNameMap" class="OrganizationName">
-		<result property="orgUnitNameId" column="org_unit_name_id" />
+		<result property="id" column="org_unit_name_id" />
 		<result property="languageCode" column="language_code" />
 		<result property="name" column="name" />
 		<result property="orgUnitId" column="org_unit_id" />
@@ -14,11 +14,11 @@
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertOrganizationName" parameterClass="OrganizationName">
-		<selectKey resultClass="int" keyProperty="orgUnitNameId">
-			SELECT nextval('tbl_org_unit_name_org_unit_name_id_seq') as orgUnitNameId;
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_org_unit_name_org_unit_name_id_seq') as id;
 		</selectKey>
 		insert into tbl_org_unit_name (org_unit_name_id, language_code, name, org_unit_id, category, last_changed)
-		values (#orgUnitNameId#, #languageCode#, #name#, #orgUnitId#, #category#, now());
+		values (#id#, #languageCode#, #name#, #orgUnitId#, #category#, now());
 	</insert>
 	<update id="updateOrganizationName" parameterClass="OrganizationName">
 		update tbl_org_unit_name set
@@ -27,11 +27,16 @@
 			org_unit_id = #orgUnitId#,
 			category = #category#,
     	  	last_changed = now()
-    	where org_unit_name_id = #orgUnitNameId# and last_changed = #lastChanged#;
+    	where org_unit_name_id = #id# and last_changed = #lastChanged#;
   	</update>
 	<delete id="deleteOrganizationName" parameterClass="OrganizationName">
-  		delete from tbl_org_unit_name where org_unit_name_id = #orgUnitNameId# and last_changed = #lastChanged#
+  		delete from tbl_org_unit_name where org_unit_name_id = #id# and last_changed = #lastChanged#
 	</delete>
+	<select id="getOrganizationNameById" resultMap="OrganizationNameMap" parameterClass="OrganizationName">
+		select org_unit_name_id, language_code, name, org_unit_id, category, last_changed
+		from tbl_org_unit_name
+		where org_unit_name_id = #id#;
+	</select>
 	<select id="getOrganizationNameListByOrganization" resultMap="OrganizationNameMap" parameterClass="integer">
 		select org_unit_name_id, language_code, name, org_unit_id, category, last_changed
 		from tbl_org_unit_name

@@ -28,7 +28,7 @@
 			last_changed = now()
 		where profile_id = #id# and last_changed = #lastChanged#;
 	</update>
-	<delete id="deleteProfile" parameterClass="integer">
+	<delete id="deleteProfile" parameterClass="profile">
   		delete from tbl_profile where profile_id = #id# and last_changed = #lastChanged#
     </delete>
 	<select id="getProfileById" resultMap="getProfileResultMap" parameterClass="integer">
