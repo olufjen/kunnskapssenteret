@@ -7,9 +7,6 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
-import no.helsebiblioteket.admin.requestresult.EmptyResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.UserService;
 
 import org.springframework.security.GrantedAuthority;
@@ -20,6 +17,7 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 	private UserService userService;
+	public UserDetailsServiceImpl() { }
 	public UserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
 	}
@@ -32,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * The other methods are helpers for this.
 	 * 
 	 */
+	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		SingleResultUser lookup = this.userService.findUserByUsername(username);
 		if(lookup instanceof EmptyResultUser){
@@ -42,13 +41,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			return makeAcegiUser(user);
 		}
 	}
-
 	private org.springframework.security.userdetails.User makeAcegiUser(User user) {
 		return new org.springframework.security.userdetails.User(user.getUsername(),
 				user.getPassword(), true, true, true, true,
 				makeGrantedAuthorities(user));
 	}
-
 	private GrantedAuthority[] makeGrantedAuthorities(User user) {
 		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().length];
 		int i = 0;
@@ -60,5 +57,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //		result[0]= new GrantedAuthorityImpl("ROLE_ALLACCESS");
 //		result[1]= new GrantedAuthorityImpl("ROLE_URLACCESS");
 //		return result;
+	}
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }
