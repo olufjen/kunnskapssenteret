@@ -141,6 +141,18 @@
 	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
 
+  	<bean id="userDetailsService" class="no.helsebiblioteket.admin.webservice.UserDetailsServiceWeb" init-method="init">
+		<property name="targetEPR" ref="userDetailsServiceTargetEPR" />
+		<property name="serviceClient" ref="userDetailsServiceClient" />
+  		
+  		<property name="loadUserByUsernameName" ref="loadUserByUsernameName"></property>
+  	</bean>
+  	<bean name="userDetailsServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="http://localhost:8080/axis2/services/userDetailsService" />
+	</bean>
+	<bean name="userDetailsServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+
   	<bean id="userService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="userServiceClient" />
 		<property name="targetEPR" ref="userServiceTargetEPR" />
@@ -333,6 +345,11 @@
 	<bean name="groupName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="group" />
+	</bean>
+	
+	<bean name="loadUserByUsernameName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://userdetails.security.springframework.org" />
+		<constructor-arg value="loadUserByUsername" />
 	</bean>
 
 	<bean name="systemByKeyName" class="javax.xml.namespace.QName">
