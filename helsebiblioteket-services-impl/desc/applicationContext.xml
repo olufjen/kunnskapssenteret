@@ -70,10 +70,16 @@
     	<property name="ipRangeDao" ref="ipRangeDao"></property>
     	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
   	</bean>
+
   	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
     	<property name="accessService" ref="accessService"></property>
     	<property name="proxyPrefix" value="${proxy.prefix}"></property>
   	</bean>
+
+  	<bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl">
+  		<property name="userService" ref="userService"></property>
+  	</bean>
+  
   	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
   		<property name="userDao" ref="userDao"></property>
   		<property name="userListDao" ref="userListDao"></property>
