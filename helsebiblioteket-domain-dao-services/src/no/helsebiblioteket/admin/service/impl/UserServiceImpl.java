@@ -246,8 +246,8 @@ public class UserServiceImpl implements UserService {
 	}
 	private void checkNull(User user) {
 		if(user.getOrganization() == null) throw new NullPointerException("organization == null");
-		if(user.getOrganization() == null) throw new NullPointerException("organization.organization == null");
-		if(user.getOrganization().getId() == null) throw new NullPointerException("organization.organization.id == null");
+//		if(user.getOrganization() == null) throw new NullPointerException("organization.organization == null");
+		if(user.getOrganization().getId() == null) throw new NullPointerException("organization.id == null");
 		if(user.getPassword() == null) throw new NullPointerException("password == null");
 		if(user.getPerson() == null) throw new NullPointerException("person == null");
 		// TODO: Insert with other service method.
