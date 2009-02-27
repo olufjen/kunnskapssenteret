@@ -28,7 +28,7 @@
 		<property name="password" value="${database.password}"></property>
 		-->
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
-		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin_dump"></property>
+		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin"></property>
 		<property name="username" value="helsebiblioteket"></property>
 		<property name="password" value="helsebiblioteket"></property>
 	</bean>
