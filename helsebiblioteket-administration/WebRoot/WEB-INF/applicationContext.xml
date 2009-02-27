@@ -112,8 +112,8 @@ xmlns="http://www.springframework.org/schema/beans"
 		Example: types of organizations, types of roles, types of access etc
 	-->
 	
-	<bean id="adminService" class="no.helsebiblioteket.admin.service.impl.AdminServiceImpl">
-	</bean>
+	<!--  <bean id="adminService" class="no.helsebiblioteket.admin.service.impl.AdminServiceImpl">
+	</bean>-->
 
 	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
   		<property name="accessDao" ref="accessDao"></property>
@@ -149,10 +149,10 @@ xmlns="http://www.springframework.org/schema/beans"
   		<property name="positionDao" ref="positionDao"></property>
   		<property name="organizationDao" ref="organizationDao"></property>
   	</bean>
-  	<bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
+  	<!-- <bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
     	<property name="host" value="${mail.smtp.host}"></property>
     	<property name="debug" value="${mail.debug}"></property>
-  	</bean>
+  	</bean>-->
 	
 <!--  Spring security bean classes start    -->
 
