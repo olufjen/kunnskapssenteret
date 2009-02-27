@@ -53,11 +53,13 @@ import no.helsebiblioteket.admin.test.service.EmailServiceTests;
 import no.helsebiblioteket.admin.test.service.LoginServiceTests;
 import no.helsebiblioteket.admin.test.service.OrganizationServiceTests;
 import no.helsebiblioteket.admin.test.service.URLServiceTests;
+import no.helsebiblioteket.admin.test.service.UserDetailsServiceTests;
 import no.helsebiblioteket.admin.test.service.UserServiceTests;
 
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.userdetails.UserDetailsService;
 
 public class BeanFactory {
 	private Resource res;
@@ -108,6 +110,7 @@ public class BeanFactory {
 	public LoginService getLoginService() { return (LoginService)this.factory.getBean("loginService");}
 	public OrganizationService getOrganizationService() { return (OrganizationService)this.factory.getBean("organizationService");}
 	public URLService getURLService() { return (URLService)this.factory.getBean("urlService");}
+	public UserDetailsService getUserDetailsService() { return (UserDetailsService)this.factory.getBean("userDetailsService");}
 	public UserService getUserService() { return (UserService)this.factory.getBean("userService");}
 	
 	// Main method when not using ant.
@@ -170,6 +173,9 @@ public class BeanFactory {
 		
 		URLServiceTests urlServiceTests = new URLServiceTests();
 		urlServiceTests.testAll();
+		
+		UserDetailsServiceTests userDetailsServiceTests = new UserDetailsServiceTests();
+		userDetailsServiceTests.testloadUserByUsername();
 		
 		UserServiceTests userServiceTests = new UserServiceTests();
 		userServiceTests.testAll();
