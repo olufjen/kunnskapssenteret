@@ -222,7 +222,7 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="accessDeniedHandler">
 			<bean
 				class="org.springframework.security.ui.AccessDeniedHandlerImpl">
-				<property name="errorPage" value="/login.faces" />
+				<property name="errorPage" value="/welcome.faces" />
 			</bean>
 		</property>
 	</bean>
@@ -236,7 +236,8 @@ xmlns="http://www.springframework.org/schema/beans"
 			ref="accessDecisionManager" />
 		<property name="objectDefinitionSource">
 			<value>
-				
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
 				
 				<!-- 
 				LOWERCASE
