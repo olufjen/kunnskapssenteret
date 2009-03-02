@@ -397,4 +397,20 @@ public class UserServiceImpl implements UserService {
 		}
 		return (User) ((ValueResultUser)result).getValue();
 	}
+
+	public SingleResultRole getUserRoleBySystemKeyAndRoleKey(SystemKey systemKey, UserRoleKey userRoleKey) {
+		SingleResultRole resultRole = new EmptyResultRole();
+		SingleResultSystem systemResult = getSystemByKey(systemKey);
+		if (systemResult instanceof EmptyResultSystem) {
+			return resultRole;
+		}
+		Role role = new Role();
+		role.setSystem((System) ((ValueResultSystem) systemResult).getValue());
+		role.setKey(userRoleKey);
+		role = userRoleDao.getUserRoleBySystemIdAndRoleKey(role);
+		if (role == null) {
+			return resultRole;
+		}
+		return new ValueResultRole(role);
+	}
 }
