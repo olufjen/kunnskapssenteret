@@ -49,4 +49,16 @@
 		from tbl_user_role_reg
 		where user_role_id = #roleId#;
 	</select>
+	<select id="getUserRoleBySystemIdAndRoleKey" resultMap="getRoleResultMap" parameterClass="role">
+		select
+			role.name,
+			role.descr,
+			role.user_role_id,
+			role.system_id,
+			role.key as role_key,
+			system.key as system_key
+		from tbl_user_role_reg as role inner join tbl_system_reg as system on 
+		role.system_id = system.system_id
+		where role.key = #key.value# and role.system_id = #system.id#;
+	</select>
 </sqlMap>

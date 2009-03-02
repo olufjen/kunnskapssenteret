@@ -1,6 +1,9 @@
 package no.helsebiblioteket.evs.plugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,13 +13,29 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.key.SystemKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultPosition;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSystem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
@@ -37,13 +56,7 @@ public final class RegisterUserController extends ProfileController {
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = new User();
-		// TODO: Should not need to init here!
-		user.setRoleList(new Role[0]);
-//		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
-		
-		
-		
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
@@ -57,6 +70,7 @@ public final class RegisterUserController extends ProfileController {
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
+	
 	private void cancel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
@@ -68,12 +82,12 @@ public final class RegisterUserController extends ProfileController {
 		String gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		response.sendRedirect(gotoUrl);
 	}
+	
 	private void registerUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO: How to initialize person?
-		User user = new User();
+		User user = createUserFromRequestParams(request);
+		
 		user.setPerson(new Person());
 		user.setRoleList(new Role[0]);
-//		user.getOrganization().setNameList(new ArrayList<OrganizationName>());
 		
 		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
 		if(hprNumber == null) { hprNumber = "";}
@@ -84,7 +98,7 @@ public final class RegisterUserController extends ProfileController {
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
 		Element messages = document.createElement("messages");
-		if(hprNumber.length() == 0 || ! isInteger(hprNumber)){
+		if(hprNumber.length() == 0 || ! isInteger(hprNumber)) {
 			messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NOT_NUMBER"));
 		}
 		this.validateUser(user, request, document, messages);
@@ -124,6 +138,83 @@ public final class RegisterUserController extends ProfileController {
 		loggedInFunction.setResult(this.resultSessionVarName, document);
     	response.sendRedirect(gotoUrl);
 	}
+	private User createUserFromRequestParams(HttpServletRequest request) throws Exception {	
+		ContactInformation contactInformation = new ContactInformation();
+		String email = request.getParameter(this.parameterNames.get("emailaddress"));
+		contactInformation.setEmail(email);
+		
+		Profile profile = new Profile();
+		boolean participateSurvey = false;
+		String participateSurveyString = null;
+		if ((participateSurveyString = request.getParameter(this.parameterNames.get("questionaire"))) != null) {
+			participateSurvey = "checked".equals(participateSurveyString); 
+		}
+		profile.setParticipateSurvey(participateSurvey);
+		boolean receiveNewsletter = false;
+		String receiveNewsletterString = null;
+		if ((receiveNewsletterString = request.getParameter(this.parameterNames.get("newsletter"))) != null) {
+			receiveNewsletter = "checked".equals(receiveNewsletterString); 
+		}
+		profile.setReceiveNewsletter(receiveNewsletter);
+		
+		String positionString = request.getParameter(this.parameterNames.get("position"));
+		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString));
+		if (positionResult instanceof EmptyResultPosition) {
+			throw new Exception("user somehow selected a non-existing role: '" + positionString + "'");
+		}
+		Position position = (Position) ((ValueResultPosition) positionResult).getValue();;
+		
+		Person person = new Person();
+		person.setHprNumber(request.getParameter(this.parameterNames.get("hprno")));
+		person.setFirstName(request.getParameter(this.parameterNames.get("firstname")));
+		person.setLastName(request.getParameter(this.parameterNames.get("lastname")));
+		person.setEmployer(request.getParameter(this.parameterNames.get("employer")));
+		person.setContactInformation(contactInformation);
+		person.setProfile(profile);
+		person.setPosition(position);
+		
+		User user = new User();
+		user.setUsername(request.getParameter(this.parameterNames.get("username")));
+		user.setPassword(request.getParameter(this.parameterNames.get("password")));
+		user.setPerson(person);
+		
+		SingleResultRole roleOtherResult = userService.getUserRoleBySystemKeyAndRoleKey(SystemKey.helsebiblioteket_admin, UserRoleKey.health_personnel_other);
+		if (roleOtherResult instanceof EmptyResultRole) {
+			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel_other + "'");
+		}
+		Role roleOther = (Role) ((ValueResultRole) roleOtherResult).getValue();
+		
+		SingleResultRole roleHealthPersonnelResult = userService.getUserRoleBySystemKeyAndRoleKey(SystemKey.helsebiblioteket_admin, UserRoleKey.health_personnel);
+		if (roleHealthPersonnelResult instanceof EmptyResultRole) {
+			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel + "'");
+		}
+		Role roleHealthPersonell = (Role) ((ValueResultRole) roleHealthPersonnelResult).getValue();
+		
+		SingleResultRole roleStudentResult = userService.getUserRoleBySystemKeyAndRoleKey(SystemKey.helsebiblioteket_admin, UserRoleKey.student);
+		if (roleStudentResult instanceof EmptyResultRole) {
+			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.student + "'");
+		}
+		Role roleStudent = (Role) ((ValueResultRole) roleHealthPersonnelResult).getValue();
+		
+		Role roleOtherArray[] = { roleOther };
+		Role roleHealthPersonellArray[] = { roleHealthPersonell };
+		Role roleStudentArray[] = { roleStudent };
+		
+		String usertype = request.getParameter(this.parameterNames.get("usertype"));
+		if (null == usertype) {
+			throw new Exception("usertype is required but is not set");
+		}
+		if (usertype.equals(UserRoleKey.health_personnel.toString())) {
+			user.setRoleList(roleHealthPersonellArray);
+		} else	if (usertype.equals(UserRoleKey.health_personnel_other.toString())) {
+			user.setRoleList(roleOtherArray);
+		} else if (usertype.equals(UserRoleKey.student.toString())) {
+			user.setRoleList(roleStudentArray);
+		}
+		
+		return user;
+	}
+	
 	protected void validateUser(User user, HttpServletRequest request, Document document, Element element){
 		super.validateUser(user, request, document, element);
 		String username = request.getParameter(this.parameterNames.get("username"));
