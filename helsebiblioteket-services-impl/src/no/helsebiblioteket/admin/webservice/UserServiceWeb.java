@@ -35,9 +35,10 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName userListAllName;
 	private QName findUsersBySearchStringRolesName;
 	private QName findUserByUsernameName;
+	private QName getUserRoleBySystemKeyAndRoleKey;
 	private QName insertUserName;
 	private QName updateUserName;
-	private QName positionByKey;
+	private QName getPositionByKey;
 
 	public SingleResultSystem getSystemByKey(SystemKey key) {
 		Object[] args = new Object[] { key };
@@ -94,7 +95,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey) {
 		Object[] args = new Object[] { positionTypeKey };
 		Class[] returnTypes = new Class[] { SingleResultPosition.class };
-		return (SingleResultPosition)invoke(this.positionByKey, args, returnTypes);
+		return (SingleResultPosition)invoke(this.getPositionByKey, args, returnTypes);
 	}
 	public User findUserByUsernameWS(String username) {
 		Object[] args = new Object[] { username };
@@ -103,6 +104,11 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		return (result != null) ? (User) result : null;
 	}
 
+	public SingleResultRole getUserRoleBySystemKeyAndRoleKey(SystemKey systemKey, UserRoleKey userRoleKey) {
+		Object[] args = new Object[] { systemKey, userRoleKey };
+		Class[] returnTypes = new Class[] { SingleResultRole.class };
+		return (SingleResultRole) invoke(this.getUserRoleBySystemKeyAndRoleKey, args, returnTypes);
+	}
 	
 	public Log getLogger() {
 		return this.logger;
@@ -136,13 +142,16 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public void setUpdateUserName(QName updateUserName) {
 		this.updateUserName = updateUserName;
 	}
-	public void setPositionByKey(QName positionByKey) {
-		this.positionByKey = positionByKey;
+	public void setGetPositionByKey(QName getPositionByKey) {
+		this.getPositionByKey = getPositionByKey;
 	}
 	public void setSystemByKey(QName systemByKey) {
 		this.systemByKey = systemByKey;
 	}
 	public void setRoleListBySystem(QName roleListBySystem) {
 		this.roleListBySystem = roleListBySystem;
+	}
+	public void setGetUserRoleBySystemKeyAndRoleKey(QName getUserRoleBySystemKeyAndRoleKey) {
+		this.getUserRoleBySystemKeyAndRoleKey = getUserRoleBySystemKeyAndRoleKey;
 	}
 }
