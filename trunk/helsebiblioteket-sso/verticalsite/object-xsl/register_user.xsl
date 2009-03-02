@@ -101,15 +101,15 @@
                 </p>                            
                 
                 
-                <input class="radio" id="reg_form_1" name="form_3" type="radio" value="HPR"/>
+                <input class="radio" id="reg_form_1" name="form_3" type="radio" value="health_personnel"/>
                 <label for="reg_form_1">Jeg er registrert i Helsepersonellregisteret</label>
                 <br/>
                 <p>Velg dette dersom du har et helsepersonellnummer. Da får du også tilgang til Norsk Elektronisk Legehåndbok (NEL). Finn helsepersonellnummeret ditt på <a href="http://www.safh.no/hpr/main.php" rel="external">SAFHs nettsider</a>.</p>
-                <input class="radio" id="reg_form_2" name="form_3" type="radio" value="Stud"/>
+                <input class="radio" id="reg_form_2" name="form_3" type="radio" value="student"/>
                 <label for="reg_form_2">Jeg er student eller ansatt ved helsefaglig utdanningslinje</label>
                 <br/>
                 <p>Velg dette dersom du studerer helsefag ved universitet eller høyskole. Du kan bruke studentnummeret ditt i registreringen på neste side.</p>
-                <input class="radio" id="reg_form_3" name="form_3" type="radio" value="Emp"/>
+                <input class="radio" id="reg_form_3" name="form_3" type="radio" value="health_personnel_other"/>
                 <label for="reg_form_3">Jeg har IKKE helsepersonellnummer, men arbeider i helsetjenesten eller offentlig forvaltning</label>
                 <br/>
                 <p>Velg dette dersom du ikke har helsepersonellnummer, men likevel har en jobb knyttet til helsetjenesten, eller den offentlige helseforvaltningen. Du vil ikke få tilgang til Norsk Elektronisk Legehåndbok (NEL), men alle de andre ressursene vil være tilgjengelige.</p>               
@@ -123,8 +123,8 @@
         <div id="steg2av2">
             <div class="wrap">
                 <xsl:choose>
-                    <xsl:when test="$status='HPR'"><h4 class="logon_column_heading">Registrering av ny bruker - helsepersonell</h4></xsl:when>
-                    <xsl:when test="$status='Stud'"><h4 class="logon_column_heading">Registrering av ny bruker - høyskole/universitet</h4></xsl:when>
+                    <xsl:when test="$status='health_personnel'"><h4 class="logon_column_heading">Registrering av ny bruker - helsepersonell</h4></xsl:when>
+                    <xsl:when test="$status='student'"><h4 class="logon_column_heading">Registrering av ny bruker - høyskole/universitet</h4></xsl:when>
                     <xsl:otherwise><h4 class="logon_column_heading">Registrering av ny bruker - andre ansatte</h4></xsl:otherwise>
                 </xsl:choose>
                 
@@ -165,13 +165,13 @@
                             <table cellspacing="0" width="350">
                                 <tr>
                                     <td>
-                                        <xsl:if test="$status='HPR' ">
+                                        <xsl:if test="$status='health_personnel' ">
                                             Helsepersonellnummer:
                                         </xsl:if>
-                                        <xsl:if test="$status='Stud' ">
+                                        <xsl:if test="$status='student' ">
                                             Student/ansattnummer:
                                         </xsl:if>
-                                        <xsl:if test="$status='Emp' ">
+                                        <xsl:if test="$status='health_personnel_other' ">
                                             Fødselsdato:
                                         </xsl:if>
                                         <xsl:if test="$status='' ">
@@ -183,7 +183,7 @@
                                         <input name="uid" size="20" type="text"
                                             value="{$hbresult/values/hprnumber/text()}"/>
                                         <xsl:choose>
-                                            <xsl:when test="$status='HPR'">
+                                            <xsl:when test="$status='health_personnel'">
                                                <a href="http://www.safh.no/hpr/main.php" rel="external">Finn ditt helsepersonellnummer</a>
                                             </xsl:when>
                                             <xsl:otherwise>
@@ -211,7 +211,7 @@
                                     <td><xsl:value-of select="$hbresult/messages/lastname"/></td>
                                 </tr>
                                 <xsl:choose>
-                                    <xsl:when test="$status='HPR'">
+                                    <xsl:when test="$status='health_personnel'">
                                         <tr>  
                                             <td>Arbeidsgiver:</td> 
                                             <td colspan="2">
@@ -223,7 +223,7 @@
                                         <tr>  
                                             <td>Stilling/fagfelt:</td> 
                                             <td colspan="2">
-                                                <select name="stilling">
+                                                <select name="position">
                                                     <option value="choose">Velg</option>
                                                     <xsl:apply-templates select="/verticaldata/positions/position"/>
                                                     <option value="none">Ingen passende</option>
@@ -231,7 +231,7 @@
                                             </td>
                                         </tr>
                                     </xsl:when>
-                                    <xsl:when test="$status='Stud'">
+                                    <xsl:when test="$status='student'">
                                         <tr>  
                                             <td>Skole/arbeidsgiver:</td> 
                                             <td colspan="2">

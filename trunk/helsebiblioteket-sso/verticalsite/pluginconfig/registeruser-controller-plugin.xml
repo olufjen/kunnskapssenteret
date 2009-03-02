@@ -42,6 +42,8 @@
 		<property name="updateUserName" ref="registerUpdateUser" />
 		<property name="findUserByUsernameName" ref="registerFindUser" />
 		<property name="insertUserName" ref="registerInsertUser" />
+		<property name="getUserRoleBySystemKeyAndRoleKey" ref="getUserRoleBySystemKeyAndRoleKey" />
+		<property name="getPositionByKey" ref="getPositionByKey" />
 	</bean>
 	<bean name="registerServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
@@ -59,5 +61,13 @@
 	<bean name="registerInsertUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="insertUser" />
+	</bean>
+	<bean name="getUserRoleBySystemKeyAndRoleKey" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="getUserRoleBySystemKeyAndRoleKey" />
+	</bean>
+	<bean name="getPositionByKey" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="getPositionByKey" />
 	</bean>
 </beans>
