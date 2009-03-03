@@ -33,8 +33,10 @@ public class UserToXMLTranslator {
 		userElement.appendChild(cDataElement(document, "username", user.getUsername()));
 
 		Element rolesElement = document.createElement("roles");
-		for (Role role : user.getRoleList()) {
-			this.roleToXMLTranslator.translate(role, document, rolesElement);
+		if (null != user.getRoleList()) {
+			for (Role role : user.getRoleList()) {
+				this.roleToXMLTranslator.translate(role, document, rolesElement);
+			}
 		}
 		userElement.appendChild(rolesElement);
 		Organization organization = user.getOrganization();

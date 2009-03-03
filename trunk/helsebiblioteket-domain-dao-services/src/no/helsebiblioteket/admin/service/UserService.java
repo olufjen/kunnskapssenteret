@@ -27,6 +27,7 @@ import no.helsebiblioteket.admin.requestresult.PageResult;
 public interface UserService extends Serializable {
 	public SingleResultSystem getSystemByKey(SystemKey key);
 	public ListResultRole getRoleListBySystem(System system);
+	public SingleResultRole getUserRoleBySystemKeyAndRoleKey(SystemKey systemKey, UserRoleKey userRoleKey);
 	public ListResultPosition getPositionListAll(String DUMMY);
 	/**
      * Fetches all the positions from the database. Delegates the task to

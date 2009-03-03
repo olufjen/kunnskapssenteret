@@ -41,7 +41,7 @@ public class PositionTypeKey {
 	public static final PositionTypeKey reseptarfarmasoyt = new PositionTypeKey("reseptarfarmasoyt");
 	
 	// TODO: Remove?
-	public static PositionTypeKey[] values() { return values.clone(); }
+	public static PositionTypeKey[] values() { return PositionTypeKey.values.clone(); }
 	// TODO: Remove?
 	public static PositionTypeKey valueOf(String name) { return (lookup(name)); }
 	
@@ -91,9 +91,11 @@ public class PositionTypeKey {
 	
 	// TODO: Remove?
 	private static PositionTypeKey lookup(String lookupString) {
-		for (PositionTypeKey positionTypeKey : values) {
-			if (lookupString.equals(positionTypeKey.value)) {
-				return positionTypeKey;
+		if (null != lookupString) {
+			for (PositionTypeKey positionTypeKey : PositionTypeKey.values) {
+				if (lookupString.equals(positionTypeKey.value)) {
+					return positionTypeKey;
+				}
 			}
 		}
 		return null;
