@@ -11,8 +11,10 @@ Vis profil                [Page (Enkeltside - Logg Inn)]
   center-top: viewProfile
 Rediger profil            [Page (Enkeltside - Logg Inn)]
   center-top: editProfile
-Registrering av ny bruker [Page (Enkeltside - Logg Inn)]
-  center-top: registerUser
+Registrering av ny bruker del 1[Page (Enkeltside - Logg Inn)]
+  center-top: registerUserPartOne
+Registrering av ny bruker del 2[Page (Enkeltside - Logg Inn)]
+  center-top: registerUserPartTwo
 Logg inn                  [Page (Enkeltside - Logg Inn)]
   center-top: loginUser
 Passord                   [Page (Enkeltside - Logg Inn)]
@@ -30,13 +32,21 @@ editProfile
   editProfilePage: Rediger profil
   editProfileServletPage: RedigerProfilServlet
   datasource: edit_profile.txt
-registerUser
-  Stylesheet: register_user.xsl
+registerUserPartOne
+  Stylesheet: register_user_page_one.xsl
   viewProfilePage: Vis profil
-  registerUserPage: Registrering av ny bruker
+  registerUserPage: Registrering av ny bruker del 2
+  (linjen ovenfor: det skal altså være del 2, ikke 1)
   registerUserServletPage: RegistreringBrukerServlet
   <Other props not set, or default!>
-  datasource: registerUser.txt
+  datasource: registerUserPartOne.txt
+registerUserPartTwo
+  Stylesheet: register_user_page_two.xsl
+  viewProfilePage: Vis profil
+  registerUserPage: Registrering av ny bruker del 2
+  registerUserServletPage: RegistreringBrukerServlet
+  <Other props not set, or default!>
+  datasource: registerUserPartOne.txt
 password
   Stylesheet: password.xsl
   passwordPage: Passord
@@ -61,6 +71,9 @@ logon [Used in Position: right, as default, etc]
   logOutServletPage: LoggUtServlet
   loginServletPage: LoggInnServlet
   datasource: logon.xsl
-registreringFlereTrinn 
+registreringFlereTrinnDel1 
   passportPage: Passord
-  datasource: registerUser
+  datasource: registerUserPartOne
+registreringFlereTrinnDel2 
+  passportPage: Passord
+  datasource: registerUserPartOne
