@@ -36,6 +36,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.translator.RoleToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
@@ -44,6 +45,7 @@ public final class RegisterUserController extends ProfileController {
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String cancel = request.getParameter(this.parameterNames.get("cancelName"));
+		String formId = request.getParameter(this.parameterNames.get("formId"));
     	if(save != null && save.equals(this.parameterNames.get("saveValue"))){
     		if(cancel != null && cancel.equals(this.parameterNames.get("cancelValue"))){
     			this.cancel(request, response);
@@ -57,6 +59,9 @@ public final class RegisterUserController extends ProfileController {
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = new User();
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
+		if (null == usertype || "".equals(usertype)) {
+			usertype = request.getParameter("form_3");
+		}
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
@@ -85,9 +90,6 @@ public final class RegisterUserController extends ProfileController {
 	
 	private void registerUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = createUserFromRequestParams(request);
-		
-		user.setPerson(new Person());
-		user.setRoleList(new Role[0]);
 		
 		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
 		if(hprNumber == null) { hprNumber = "";}
@@ -144,25 +146,27 @@ public final class RegisterUserController extends ProfileController {
 		contactInformation.setEmail(email);
 		
 		Profile profile = new Profile();
-		boolean participateSurvey = false;
-		String participateSurveyString = null;
-		if ((participateSurveyString = request.getParameter(this.parameterNames.get("questionaire"))) != null) {
-			participateSurvey = "checked".equals(participateSurveyString); 
-		}
-		profile.setParticipateSurvey(participateSurvey);
-		boolean receiveNewsletter = false;
-		String receiveNewsletterString = null;
-		if ((receiveNewsletterString = request.getParameter(this.parameterNames.get("newsletter"))) != null) {
-			receiveNewsletter = "checked".equals(receiveNewsletterString); 
-		}
-		profile.setReceiveNewsletter(receiveNewsletter);
 		
-		String positionString = request.getParameter(this.parameterNames.get("position"));
-		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString));
-		if (positionResult instanceof EmptyResultPosition) {
-			throw new Exception("user somehow selected a non-existing role: '" + positionString + "'");
-		}
-		Position position = (Position) ((ValueResultPosition) positionResult).getValue();;
+		String tmpString = null;
+        if ((tmpString = request.getParameter(this.parameterNames.get("newsletter"))) != null && !"".equals(tmpString)) {
+        	profile.setReceiveNewsletter(Boolean.valueOf(tmpString));
+        }
+        if ((tmpString = request.getParameter(this.parameterNames.get("questionaire"))) != null && !"".equals(tmpString)) {
+        	profile.setParticipateSurvey(Boolean.valueOf(tmpString));
+        }
+		
+        Position position = null;
+        String usertype = null;
+        if ((usertype = request.getParameter(this.parameterNames.get("usertype"))) != null && !"".equals(usertype != null)) {
+        	if (UserRoleKey.health_personnel.getValue().equals(usertype)) {
+        		String positionString = request.getParameter(this.parameterNames.get("position"));
+        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString));
+        		if (positionResult instanceof EmptyResultPosition) {
+        			throw new Exception("user somehow selected a non-existing role: '" + positionString + "'");
+        		}
+        		position = (Position) ((ValueResultPosition) positionResult).getValue();;
+        	}
+        }
 		
 		Person person = new Person();
 		person.setHprNumber(request.getParameter(this.parameterNames.get("hprno")));
@@ -194,21 +198,21 @@ public final class RegisterUserController extends ProfileController {
 		if (roleStudentResult instanceof EmptyResultRole) {
 			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.student + "'");
 		}
-		Role roleStudent = (Role) ((ValueResultRole) roleHealthPersonnelResult).getValue();
+		Role roleStudent = (Role) ((ValueResultRole) roleStudentResult).getValue();
 		
 		Role roleOtherArray[] = { roleOther };
 		Role roleHealthPersonellArray[] = { roleHealthPersonell };
 		Role roleStudentArray[] = { roleStudent };
 		
-		String usertype = request.getParameter(this.parameterNames.get("usertype"));
+		usertype = request.getParameter(this.parameterNames.get("usertype"));
 		if (null == usertype) {
 			throw new Exception("usertype is required but is not set");
 		}
-		if (usertype.equals(UserRoleKey.health_personnel.toString())) {
+		if (usertype.equals(UserRoleKey.health_personnel.getValue())) {
 			user.setRoleList(roleHealthPersonellArray);
-		} else	if (usertype.equals(UserRoleKey.health_personnel_other.toString())) {
+		} else	if (usertype.equals(UserRoleKey.health_personnel_other.getValue())) {
 			user.setRoleList(roleOtherArray);
-		} else if (usertype.equals(UserRoleKey.student.toString())) {
+		} else if (usertype.equals(UserRoleKey.student.getValue())) {
 			user.setRoleList(roleStudentArray);
 		}
 		

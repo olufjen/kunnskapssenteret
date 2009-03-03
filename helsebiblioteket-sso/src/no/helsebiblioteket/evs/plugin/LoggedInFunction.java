@@ -87,8 +87,7 @@ public class LoggedInFunction{
 		org.w3c.dom.Document result = null;
 		if(userMap != null){
 			result = userMap.get(key);
-			// TODO: Re-insert this line!
-//			userMap.remove(key);
+			userMap.remove(key);
 		}
 		if(result == null){
 			result = emptyXML(key);

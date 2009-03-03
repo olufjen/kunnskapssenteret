@@ -2,6 +2,8 @@ package no.helsebiblioteket.evs.plugin;
 
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +25,18 @@ public class ProfileController extends HttpControllerPlugin {
 	protected UserService userService;
 	protected Map<String, String> parameterNames;
 	private LoggedInFunction loggedInFunction;
+	protected static String validEmailRegExpString = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,4}$";
+	protected static Pattern validEmailRegExpPattern = null;
+	protected static String validUsernameRegExpString = "/^[a-åA-Å0-9]+$/";
+	protected static Pattern validUsernameRegExpPattern = null;
+	protected static String validPasswordRegExpString = "/^[a-åA-Å0-9]+$/";
+	protected static Pattern validPasswordRegExpPattern = null;
+	static {
+		validEmailRegExpPattern = Pattern.compile(validEmailRegExpString);
+		validPasswordRegExpPattern = Pattern.compile(validPasswordRegExpString);
+		validUsernameRegExpPattern = Pattern.compile(validUsernameRegExpString);
+	}
+	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String delete = request.getParameter(this.parameterNames.get("deleteName"));
@@ -91,6 +105,7 @@ public class ProfileController extends HttpControllerPlugin {
 		loggedInFunction.setResult(this.resultSessionVarName, document);
 	}
 	protected void validateUser(User user, HttpServletRequest request, Document document, Element messages){
+		String username = request.getParameter(this.parameterNames.get("username"));
 		String firstName = request.getParameter(this.parameterNames.get("firstname"));
 		if(firstName == null) { firstName = "";}
 		String lastName = request.getParameter(this.parameterNames.get("lastname"));
@@ -121,9 +136,13 @@ public class ProfileController extends HttpControllerPlugin {
 		if(email.length() == 0 || ! validEmail(email)){
 			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NOT_VALID"));
 		}
-		if(password.length() == 0 || ! validPassword(password)){
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "TOO_SHORT"));
+		if(username.length() == 0 || ! validUsername(username)){
+			messages.appendChild(UserToXMLTranslator.element(document, "username", "NOT_VALID"));
 		}
+		if(password.length() == 0 || ! validPassword(password)){
+			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
+		}
+		
 //		if(passwordRepeat.length() == 0){ }
 		if(! password.equals(passwordRepeat)){
 			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
@@ -143,6 +162,7 @@ public class ProfileController extends HttpControllerPlugin {
 		user.getPerson().getContactInformation().setEmail(email);
 		user.setPassword(password);
 	}
+	
 	private boolean isBoolean(String bool) {
 		if(bool.equals(Boolean.FALSE.toString()) || bool.equals(Boolean.TRUE.toString())){
 			return true;
@@ -150,14 +170,19 @@ public class ProfileController extends HttpControllerPlugin {
 			return false;
 		}
 	}
+	
 	private boolean validPassword(String password) {
-		// TODO Better!
-		return password.length() >= 8;
+		return (validPasswordRegExpPattern.matcher(password).find() && password.length() >= 8);
 	}
+	
 	private boolean validEmail(String email) {
-		// TODO Better!
-		return email.contains("@");
+		return validEmailRegExpPattern.matcher(email).find();
 	}
+	
+	private boolean validUsername(String username) {
+		return validUsernameRegExpPattern.matcher(username).find();
+	}
+	
 	protected boolean isInteger(String integer) {
 		try{Integer.parseInt(integer);} catch (NumberFormatException e) {return false;}
 		return true;
@@ -176,9 +201,15 @@ public class ProfileController extends HttpControllerPlugin {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		translator.translate(user, document, element);
 		if(hprNumber == null){
-			String hpr = user.getPerson().getHprNumber();
-			if(hpr == null) hprNumber = "";
-			else hprNumber = hpr.toString();
+			String hpr = null;
+			if (user.getPerson() != null) {
+				hpr = user.getPerson().getHprNumber();
+			}
+			if(hpr == null) {
+				hprNumber = "";
+			} else {
+				hprNumber = hpr.toString();
+			}
 		}
 		element.appendChild(UserToXMLTranslator.element(document, "hprnumber", hprNumber));
 
