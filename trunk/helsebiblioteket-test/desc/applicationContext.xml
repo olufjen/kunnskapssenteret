@@ -166,7 +166,7 @@
   		<property name="findUserByUsernameName" ref="findUserByUsernameName"></property>
   		<property name="insertUserName" ref="insertUserName"></property>
   		<property name="updateUserName" ref="updateUserName"></property>
-  		<property name="positionByKey" ref="positionByKeyName"></property>
+  		<property name="getPositionByKey" ref="getPositionByKeyName"></property>
   		
   	</bean>
   	<bean name="userServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
@@ -364,7 +364,7 @@
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getPositionListAll" />
 	</bean>
-	<bean name="positionByKeyName" class="javax.xml.namespace.QName">
+	<bean name="getPositionByKeyName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getPositionByKey" />
 	</bean>
