@@ -1,5 +1,6 @@
 INSERT INTO tbl_system_reg (name, descr, key) VALUES ('Helsebiblioteket - administration', 'Administration of organizations, IP-addresses, users and access', 'helsebiblioteket_admin');
 
+INSERT INTO tbl_user_role_reg (name, descr, system_id, key) VALUES ('None', 'No role', (select system_id from tbl_system_reg where key = 'helsebiblioteket_admin'), 'none');
 INSERT INTO tbl_user_role_reg (name, descr, system_id, key) VALUES ('Administrator', 'Administrator with access to all functionality', (select system_id from tbl_system_reg where key = 'helsebiblioteket_admin'), 'administrator');
 INSERT INTO tbl_user_role_reg (name, descr, system_id, key) VALUES ('Health personell', 'Authorized health personell with health personnel number', (select system_id from tbl_system_reg where key = 'helsebiblioteket_admin'), 'health_personnel');
 INSERT INTO tbl_user_role_reg (name, descr, system_id, key) VALUES ('Student', 'Student with valid student number', (select system_id from tbl_system_reg where key = 'helsebiblioteket_admin'), 'student');
@@ -51,4 +52,4 @@ insert into tbl_person (first_name, last_name, last_changed) values ('Kjell', 'T
 insert into tbl_org_unit (org_type_id, org_unit_parent_id,contact_information_id,person_id, last_changed) values ((select org_type_id from tbl_org_type_reg where key = 'health_enterprise'),NULL,NULL,(select currval('tbl_person_person_id_seq')),now());
 insert into tbl_org_unit_name (language_code, name, category, org_unit_id, last_changed) values('no','Helsebiblioteket', 'NORMAL',(select currval('tbl_org_unit_org_unit_id_seq')),now() );
 insert into tbl_user (username, password, person_id, org_unit_id, last_changed) values ('kjelltjensvoll', 'kjshfkwebfkb23d', (select currval('tbl_person_person_id_seq')), (select currval('tbl_org_unit_org_unit_id_seq')),now());
-insert into tbl_user_role (user_role_id,user_id, last_changed) values(1,(select currval('tbl_user_user_id_seq')),now())
+insert into tbl_user_role (user_role_id,user_id, last_changed) values((select user_role_id from tbl_user_role_reg where key='administrator' and system_id=(select system_id from tbl_system_reg where key='helsebiblioteket_admin')),(select currval('tbl_user_user_id_seq')),now())
