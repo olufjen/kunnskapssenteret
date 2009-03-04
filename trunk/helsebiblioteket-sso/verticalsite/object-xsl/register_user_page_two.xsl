@@ -150,7 +150,7 @@
                                             <td>Stilling/fagfelt:</td> 
                                             <td colspan="2">
                                                 <select name="position">
-                                                    <option value="none">Velg</option>
+                                                    <option value="choose">Velg</option>
                                                     <xsl:apply-templates select="/verticaldata/positions/position"/>
                                                     <option value="none">Ingen passende</option>
                                                 </select>
@@ -290,11 +290,11 @@
     
     <xsl:template name="usertype">
             <xsl:choose>
-                <xsl:when test="string-length(/verticaldata/context/querystring/parameter[@name = 'usertype']) > 0">
-                    <xsl:value-of select="/verticaldata/context/querystring/parameter[@name = 'usertype']" />
+                <xsl:when test="string-length($hbresult/values/usertype/text()) > 0">
+                    <xsl:value-of select="$hbresult/values/usertype/text()" />
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$hbresult/values/usertype/text()"/>
+                    <xsl:value-of select="string-length(/verticaldata/context/querystring/parameter[@name = 'usertype'])"/>
                 </xsl:otherwise>
             </xsl:choose>
     </xsl:template>
