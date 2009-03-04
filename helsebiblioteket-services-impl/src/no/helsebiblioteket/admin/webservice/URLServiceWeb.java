@@ -76,8 +76,14 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public void setTranslateName(QName translateName) {
 		this.translateName = translateName;
 	}
+	public void setHasAccessName(QName hasAccessName) {
+		this.hasAccessName = hasAccessName;
+	}
 	
 	
+	public void setGroupName(QName groupName) {
+		this.groupName = groupName;
+	}
 	public static void main(String[] args) throws Exception {
 		// TODO: Move to test project!
 		QName isAffectedName = new QName("http://service.admin.helsebiblioteket.no", "isAffected");
