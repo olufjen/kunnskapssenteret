@@ -27,10 +27,11 @@ public class ProfileController extends HttpControllerPlugin {
 	private LoggedInFunction loggedInFunction;
 	protected static String validEmailRegExpString = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,4}$";
 	protected static Pattern validEmailRegExpPattern = null;
-	protected static String validUsernameRegExpString = "/^[a-åA-Å0-9]+$/";
+	protected static String validUsernameRegExpString = "[0-9A-Åa-å_]{1,}";
 	protected static Pattern validUsernameRegExpPattern = null;
-	protected static String validPasswordRegExpString = "/^[a-åA-Å0-9]+$/";
+	protected static String validPasswordRegExpString = "[0-9A-Åa-å_]{6,}";
 	protected static Pattern validPasswordRegExpPattern = null;
+	protected final static int validPasswordMinLength = 6;
 	static {
 		validEmailRegExpPattern = Pattern.compile(validEmailRegExpString);
 		validPasswordRegExpPattern = Pattern.compile(validPasswordRegExpString);
@@ -105,7 +106,12 @@ public class ProfileController extends HttpControllerPlugin {
 		loggedInFunction.setResult(this.resultSessionVarName, document);
 	}
 	protected void validateUser(User user, HttpServletRequest request, Document document, Element messages){
+		String position = request.getParameter(this.parameterNames.get("position"));
+		if (position==null) {position = "";}
+		String usertype = request.getParameter(this.parameterNames.get("username"));
+		if (usertype==null) {usertype = "";}
 		String username = request.getParameter(this.parameterNames.get("username"));
+		if (username==null) {username = "";}
 		String firstName = request.getParameter(this.parameterNames.get("firstname"));
 		if(firstName == null) { firstName = "";}
 		String lastName = request.getParameter(this.parameterNames.get("lastname"));
@@ -136,13 +142,18 @@ public class ProfileController extends HttpControllerPlugin {
 		if(email.length() == 0 || ! validEmail(email)){
 			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NOT_VALID"));
 		}
+		if (usertype.length() == 0 || !validPosition(position)) {
+			messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));
+		}
 		if(username.length() == 0 || ! validUsername(username)){
 			messages.appendChild(UserToXMLTranslator.element(document, "username", "NOT_VALID"));
 		}
 		if(password.length() == 0 || ! validPassword(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
 		}
-		
+		if (usertype.equals("choose")) {
+			messages.appendChild(UserToXMLTranslator.element(document, "usertype", "NOT_VALID"));
+		}
 //		if(passwordRepeat.length() == 0){ }
 		if(! password.equals(passwordRepeat)){
 			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
@@ -171,8 +182,12 @@ public class ProfileController extends HttpControllerPlugin {
 		}
 	}
 	
+	private boolean validPosition(String position) {
+		return (!"choose".equals(position));
+	}
+	
 	private boolean validPassword(String password) {
-		return (validPasswordRegExpPattern.matcher(password).find() && password.length() >= 8);
+		return (password.length() >= validPasswordMinLength && validPasswordRegExpPattern.matcher(password).find());
 	}
 	
 	private boolean validEmail(String email) {

@@ -160,11 +160,13 @@ public final class RegisterUserController extends ProfileController {
         if ((usertype = request.getParameter(this.parameterNames.get("usertype"))) != null && !"".equals(usertype != null)) {
         	if (UserRoleKey.health_personnel.getValue().equals(usertype)) {
         		String positionString = request.getParameter(this.parameterNames.get("position"));
-        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString));
-        		if (positionResult instanceof EmptyResultPosition) {
-        			throw new Exception("user somehow selected a non-existing role: '" + positionString + "'");
+        		if (!positionString.equals("choose")) {
+	        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString));
+	        		if (positionResult instanceof EmptyResultPosition) {
+	        			throw new Exception("user somehow selected a non-existing position: '" + positionString + "'");
+	        		}
+	        		position = (Position) ((ValueResultPosition) positionResult).getValue();
         		}
-        		position = (Position) ((ValueResultPosition) positionResult).getValue();;
         	}
         }
 		
@@ -208,6 +210,7 @@ public final class RegisterUserController extends ProfileController {
 		if (null == usertype) {
 			throw new Exception("usertype is required but is not set");
 		}
+		
 		if (usertype.equals(UserRoleKey.health_personnel.getValue())) {
 			user.setRoleList(roleHealthPersonellArray);
 		} else	if (usertype.equals(UserRoleKey.health_personnel_other.getValue())) {
@@ -215,6 +218,7 @@ public final class RegisterUserController extends ProfileController {
 		} else if (usertype.equals(UserRoleKey.student.getValue())) {
 			user.setRoleList(roleStudentArray);
 		}
+		
 		
 		return user;
 	}
@@ -227,7 +231,7 @@ public final class RegisterUserController extends ProfileController {
 		if(username.length() == 0){
 			element.appendChild(UserToXMLTranslator.element(document, "username", "NO_VALUE"));
 		} else if(userExists(username)){
-			element.appendChild(UserToXMLTranslator.element(document, "username", "USERNAME_IN_USER"));
+			element.appendChild(UserToXMLTranslator.element(document, "username", "USER_EXISTS"));
 		}
 	}
 	private boolean userExists(String username) {
