@@ -67,7 +67,6 @@ public class ActionServiceImpl implements ActionService{
 			Action action = new Action();
 			action.setId(line.getId());
 
-			// TODO: Use caching when loading access type and resource!
 			action.setAccessType(this.accessTypeDao.getAccessTypeById(line.getAccessTypeId()));
 			
 			// TODO: This is not working!
