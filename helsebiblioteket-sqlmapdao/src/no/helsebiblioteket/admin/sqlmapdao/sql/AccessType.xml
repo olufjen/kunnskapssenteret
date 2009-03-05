@@ -7,6 +7,10 @@
 	<typeAlias alias="AccessType" type="no.helsebiblioteket.admin.domain.AccessType"/>
 	<typeAlias alias="AccessTypeCompositeKey" type="no.helsebiblioteket.admin.dao.keys.AccessTypeCompositeKey"/>
 	
+	<cacheModel id="ActionTypeCache" type="LRU" readOnly="true" serialize="false">
+		<flushInterval hours="24"/>
+		<property name="size" value="50" />
+	</cacheModel>
 	<resultMap id="AccessTypeResultMap" class="AccessType">
 		<result property="id" column="access_type_id" />
 		<result property="description" column="descr" />
@@ -14,7 +18,7 @@
 		<result property="key.value" column="key" />
 		<result property="category.value" column="category" />
 	</resultMap>
-	<select id="getAccessTypeByKey" resultMap="AccessTypeResultMap" parameterClass="AccessTypeCompositeKey">
+	<select id="getAccessTypeByKey" cacheModel="ActionTypeCache" resultMap="AccessTypeResultMap" parameterClass="AccessTypeCompositeKey">
 		select
 			access_type_id,
 			descr,
@@ -24,7 +28,7 @@
 		from tbl_access_type_reg
 		where key = #key# and category = #category#;
 	</select>
-	<select id="getAccessTypeListAll" resultMap="AccessTypeResultMap">
+	<select id="getAccessTypeListAll" cacheModel="ActionTypeCache" resultMap="AccessTypeResultMap">
 		select
 			access_type_id,
 			descr,

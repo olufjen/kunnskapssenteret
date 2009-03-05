@@ -5,7 +5,13 @@
 
 <sqlMap namespace="SupplierSource">
 	<typeAlias alias="SupplierSource" type="no.helsebiblioteket.admin.domain.SupplierSource" />
-	
+	<cacheModel id="SupplierSourceCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertSupplierSource"/>
+		<flushOnExecute statement="updateSupplierSource"/>
+		<flushOnExecute statement="deleteSupplierSource"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="SupplierSourceMap" class="SupplierSource">
 		<result property="supplierSourceName" column="supplier_source_name" />
 		<result property="url.stringValue" column="url" />
@@ -31,11 +37,11 @@
 		where supplier_source_id = #id#
 		and last_changed = #lastChanged#
 	</delete>
-	<select id="getSupplierSourceListAll" resultMap="SupplierSourceMap">
+	<select id="getSupplierSourceListAll" cacheModel="SupplierSourceCache" resultMap="SupplierSourceMap">
 		select supplier_source_name, url, supplier_source_id, last_changed
 		from tbl_supplier_source
 	</select>
-	<select id="getSupplierSourceById" resultMap="SupplierSourceMap" parameterClass="integer">
+	<select id="getSupplierSourceById" cacheModel="SupplierSourceCache" resultMap="SupplierSourceMap" parameterClass="integer">
 		select supplier_source_name, url, supplier_source_id, last_changed
 		from tbl_supplier_source
 		where supplier_source_id = #id#;

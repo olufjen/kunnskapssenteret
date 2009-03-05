@@ -5,6 +5,13 @@
 
 <sqlMap namespace="IpRange">
 	<typeAlias alias="ipRange" type="no.helsebiblioteket.admin.domain.line.IpAddressLine"/>
+	<cacheModel id="IpRangeCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertIpRange"/>
+		<flushOnExecute statement="updateIpRange"/>
+		<flushOnExecute statement="deleteIpRange"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="getIpRangeResultMap" class="ipRange">
 		<result property="id" column="ip_address_id" />
 		<result property="ipAddressFrom" column="ip_address_from" />
@@ -32,19 +39,12 @@
 		where ip_address_id = #id#
 		 	and last_changed = #lastChanged#;
 	</delete>
-	<select id="getIpRangeById" resultMap="getIpRangeResultMap" parameterClass="integer">
+	<select id="getIpRangeById" cacheModel="IpRangeCache" resultMap="getIpRangeResultMap" parameterClass="integer">
 		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed
 		from tbl_ip_address where ip_address_id = #id#
 	</select>
-	<select id="getIpRangeListByOrganizationId" resultMap="getIpRangeResultMap" parameterClass="integer">
+	<select id="getIpRangeListByOrganizationId" cacheModel="IpRangeCache" resultMap="getIpRangeResultMap" parameterClass="integer">
 		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed
 		from tbl_ip_address where org_unit_id = #orgUnitId#
 	</select>
-	<!-- TODO: In use?
-	<select id="getIpRangeById" resultMap="getIpRangeResultMap" parameterClass="integer">
-		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed
-		from tbl_ip_address
-		where ip_address_id = #id#;
-	</select>
-	-->
 </sqlMap>

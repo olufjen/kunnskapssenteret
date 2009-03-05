@@ -5,6 +5,13 @@
 
 <sqlMap namespace="UserList">
 	<typeAlias alias="UserListLine" type="no.helsebiblioteket.admin.domain.line.UserListLine"/>
+	<cacheModel id="UserListCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertUser"/>
+		<flushOnExecute statement="updateUser"/>
+		<flushOnExecute statement="deleteUser"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="UserListLineMap" class="UserListLine">
 		<result property="username" column="username" />
 		<result property="firstName" column="first_name" />
@@ -12,7 +19,7 @@
 		<result property="roleName" column="role_name" />
 		<result property="roleKey.value" column="role_key" />
 	</resultMap>
-	<select id="getUserListPaged" resultMap="UserListLineMap" >
+	<select id="getUserListPaged" cacheModel="UserListCache" resultMap="UserListLineMap" >
 		select
 			tuser.username,
 			tperson.first_name,

@@ -5,6 +5,12 @@
 
 <sqlMap namespace="UserRole">
 	<typeAlias alias="UserRoleLine" type="no.helsebiblioteket.admin.domain.line.UserRoleLine"/>
+	<cacheModel id="UserRoleLineCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertUserRole"/>
+		<flushOnExecute statement="deleteUserRole"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="UserRoleLineMap" class="UserRoleLine">
 		<result property="userRoleId" column="user_role_id" />
 		<result property="userId" column="user_id" />
@@ -20,7 +26,7 @@
 		delete from tbl_user_role
 		where user_role_id = #userRoleId# and user_id = #userId#
 	</delete>
-	<select id="getUserRoleLineByUserRoleLine" resultMap="UserRoleLineMap" parameterClass="UserRoleLine">
+	<select id="getUserRoleLineByUserRoleLine" cacheModel="UserRoleLineCache" resultMap="UserRoleLineMap" parameterClass="UserRoleLine">
 		select 
 			user_role_id,
 			user_id,
@@ -28,7 +34,7 @@
 		from tbl_user_role
 		where user_id = #userId# and user_role_id = #userRoleId#;
 	</select>
-	<select id="getUserRoleListByUserId" resultMap="UserRoleLineMap" parameterClass="integer">
+	<select id="getUserRoleListByUserId" cacheModel="UserRoleLineCache" resultMap="UserRoleLineMap" parameterClass="integer">
 		select 
 			user_role_id, 
 			user_id,

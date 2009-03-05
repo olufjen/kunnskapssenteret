@@ -6,6 +6,14 @@
 <sqlMap namespace="Action">
 	<typeAlias alias="ActionLine" type="no.helsebiblioteket.admin.domain.line.ActionLine"/>
 
+	<cacheModel id="ActionCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertAction"/>
+		<flushOnExecute statement="updateAction"/>
+		<flushOnExecute statement="deleteAction"/>
+		<property name="size" value="1000" />
+	</cacheModel>
+	
 	<resultMap id="ActionLineMap" class="ActionLine">
 		<result property="id" column="action_id" />
 		<result property="userId" column="user_id" />
@@ -49,7 +57,7 @@
 	<delete id="deleteAction" parameterClass="ActionLine">
   		delete from tbl_action where action_id = #id# and action_performed = #actionPerformed#
     </delete>
-	<select id="getActionListByActionId" resultMap="ActionLineMap" parameterClass="integer">
+	<select id="getActionListByActionId" cacheModel="ActionCache" resultMap="ActionLineMap" parameterClass="integer">
 		select
 			action_id,
 			action_performed,
@@ -62,7 +70,7 @@
 		where
 			action_id = #id#;
 	</select>
-	<select id="getActionListByUserId" resultMap="ActionLineMap" parameterClass="integer">
+	<select id="getActionListByUserId" cacheModel="ActionCache" resultMap="ActionLineMap" parameterClass="integer">
 		select
 			action_id,
 			action_performed,
@@ -75,7 +83,7 @@
 		where
 			user_id = #id#;
 	</select>
-	<select id="getActionListByOrganizationId" resultMap="ActionLineMap" parameterClass="integer">
+	<select id="getActionListByOrganizationId" cacheModel="ActionCache" resultMap="ActionLineMap" parameterClass="integer">
 		select
 			action_id,
 			action_performed,
@@ -88,7 +96,7 @@
 		where
 			org_unit_id = #id#;
 	</select>
-	<select id="getActionListByResourceId" resultMap="ActionLineMap" parameterClass="integer">
+	<select id="getActionListByResourceId" cacheModel="ActionCache" resultMap="ActionLineMap" parameterClass="integer">
 		select
 			action_id,
 			action_performed,
@@ -101,7 +109,7 @@
 		where
 			resource_id = #id#;
 	</select>
-	<select id="getActionListByAccessTypeId" resultMap="ActionLineMap" parameterClass="integer">
+	<select id="getActionListByAccessTypeId" cacheModel="ActionCache" resultMap="ActionLineMap" parameterClass="integer">
 		select
 			action_id,
 			action_performed,

@@ -5,7 +5,11 @@
 
 <sqlMap namespace="OrganizationType">
 	<typeAlias alias="OrganizationType" type="no.helsebiblioteket.admin.domain.OrganizationType"/>
-	
+	<cacheModel id="OrganizationTypeCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertOrganizationType"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="OrganizationTypeResultMap" class="OrganizationType">
 		<result property="orgTypeId" column="org_type_id" />
 		<result property="description" column="descr" />
@@ -26,16 +30,16 @@
 			#orgTypeId#, #description#, #name#, #key#
 		);
 	</insert>
-	<select id="getOrganizationTypeByKey" resultMap="OrganizationTypeResultMap" parameterClass="string">
+	<select id="getOrganizationTypeByKey" cacheModel="organizationTypeCache" resultMap="OrganizationTypeResultMap" parameterClass="string">
 		select org_type_id, descr, name, key
 		from tbl_org_type_reg
 		where key = #organizationTypeKey#;
 	</select>
-	<select id="getOrganizationTypeListAll" resultMap="OrganizationTypeResultMap">
+	<select id="getOrganizationTypeListAll" cacheModel="organizationTypeCache" resultMap="OrganizationTypeResultMap">
 		select org_type_id, descr, name, key
 		from tbl_org_type_reg
 	</select>
-	<select id="getOrganizationTypeById" resultMap="OrganizationTypeResultMap" parameterClass="integer">
+	<select id="getOrganizationTypeById" cacheModel="organizationTypeCache" resultMap="OrganizationTypeResultMap" parameterClass="integer">
 		select org_type_id, descr, name, key
 		from tbl_org_type_reg
 		where org_type_id = #id#;

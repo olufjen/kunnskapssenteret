@@ -6,19 +6,22 @@
 <sqlMap namespace="ResourceType">
 	<typeAlias alias="ResourceType" type="no.helsebiblioteket.admin.domain.ResourceType" />
 	<typeAlias alias="ResourceTypeKey" type="no.helsebiblioteket.admin.domain.key.ResourceTypeKey" />
-	
+	<cacheModel id="ResourceTypeCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="ResourceTypeMap" class="ResourceType">
 		<result property="id" column="resource_type_id" />
 		<result property="description" column="descr" />
 		<result property="name" column="name" />
 		<result property="key.value" column="key" />
 	</resultMap>
-	<select id="getResourceTypeByKey" resultMap="ResourceTypeMap" parameterClass="ResourceTypeKey">
+	<select id="getResourceTypeByKey" cacheModel="ResourceTypeCache" resultMap="ResourceTypeMap" parameterClass="ResourceTypeKey">
 		select resource_type_id, descr, name, key
 		from tbl_resource_type_reg
 		where key = #value#;
 	</select>
-	<select id="getResourceTypeListAll" resultMap="ResourceTypeMap">
+	<select id="getResourceTypeListAll" cacheModel="ResourceTypeCache" resultMap="ResourceTypeMap">
 		select resource_type_id, descr, name, key
 		from tbl_resource_type_reg
 	</select>
