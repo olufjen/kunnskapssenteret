@@ -3,6 +3,13 @@
 
 <sqlMap namespace="Position">
 	<typeAlias alias="Position" type="no.helsebiblioteket.admin.domain.Position"/>
+	<cacheModel id="PositionCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertPosition"/>
+		<flushOnExecute statement="updatePosition"/>
+		<flushOnExecute statement="deletePosition"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="PositionResultMap" class="Position">
 		<result property="id" column="position_type_id" />
 		<result property="description" column="descr" />
@@ -35,12 +42,12 @@
 	<delete id="deletePosition" parameterClass="integer">
   		delete from tbl_position_type_reg where position_type_id = #id# and last_changed = #lastChanged#
     </delete>
-	<select id="getPositionByKey" resultMap="PositionResultMap" parameterClass="string">
+	<select id="getPositionByKey" cacheModel="PositionCache" resultMap="PositionResultMap" parameterClass="string">
 		select position_type_id, descr, name, key, org_type_id
 		from tbl_position_type_reg
 		where key = #key#
 	</select>
-	<select id="getPositionListAll" resultMap="PositionResultMap">
+	<select id="getPositionListAll" cacheModel="PositionCache" resultMap="PositionResultMap">
 		select position_type_id, descr, name, key, org_type_id
 		from tbl_position_type_reg
 	</select>

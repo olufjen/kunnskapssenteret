@@ -7,7 +7,15 @@
 	<typeAlias alias="OrgUnitNameJoin" type="no.helsebiblioteket.admin.dao.join.OrgUnitNameJoin"/>
 	<typeAlias alias="IpAddress" type="no.helsebiblioteket.admin.domain.IpAddress"/>
 	<typeAlias alias="SearchStringInput" type="no.helsebiblioteket.admin.sqlmapdao.input.SearchStringInput"/>
-
+	<cacheModel id="OrganizationListCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<flushOnExecute statement="insertOrganization"/>
+		<flushOnExecute statement="updateOrganization"/>
+		<flushOnExecute statement="deleteOrganization"/>
+		<flushOnExecute statement="insertSupplierOrganization"/>
+		<flushOnExecute statement="updateSupplierOrganization"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="OrgUnitNameJoinMap" class="OrgUnitNameJoin">
 		<result property="organizationDescription" column="org_descr" />
 		<result property="orgUnitId" column="org_unit_id" />
@@ -19,7 +27,7 @@
 		<result property="nameCategory" column="category" />
 	</resultMap>
 
-	<select id="getOrganizationListAll" resultMap="OrgUnitNameJoinMap" >
+	<select id="getOrganizationListAll" cacheModel="OrganizationListCache" resultMap="OrgUnitNameJoinMap" >
 		select
 			org.descr as org_descr,
 			org.org_unit_id,
@@ -54,7 +62,7 @@
 		order by org_unit_id desc
 	</select>
 	
-	<select id="getOrganizationListSearchString" resultMap="OrgUnitNameJoinMap" parameterClass="SearchStringInput">
+	<select id="getOrganizationListSearchString" cacheModel="OrganizationListCache" resultMap="OrgUnitNameJoinMap" parameterClass="SearchStringInput">
 		select
 			org.descr as org_descr,
 			org.org_unit_id,
@@ -71,7 +79,7 @@
 		order by org_unit_id desc
 	</select>
 
-	<select id="getOrganizationListByIpAddress" resultMap="OrgUnitNameJoinMap" parameterClass="IpAddress">
+	<select id="getOrganizationListByIpAddress" cacheModel="OrganizationListCache" resultMap="OrgUnitNameJoinMap" parameterClass="IpAddress">
 	select
 		org.descr as org_descr,
 		org.org_unit_id,

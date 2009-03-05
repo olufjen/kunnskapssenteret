@@ -6,7 +6,10 @@
 <sqlMap namespace="Role">
 	<typeAlias alias="role" type="no.helsebiblioteket.admin.domain.Role"/>
 	<typeAlias alias="roleSystemCompositeKey" type="no.helsebiblioteket.admin.dao.keys.RoleSystemCompositeKey"/>
-	
+	<cacheModel id="RoleCache" type="LRU" readOnly="false" serialize="true">
+		<flushInterval hours="24"/>
+		<property name="size" value="1000" />
+	</cacheModel>
 	<resultMap id="getRoleResultMap" class="role">
 		<result property="name" column="name" />
 		<result property="description" column="descr" />
@@ -15,7 +18,7 @@
 		<result property="system.key.value" column="system_key" />
 		<result property="key.value" column="role_key" />
 	</resultMap>
-	<select id="getRoleByKeySystem" resultMap="getRoleResultMap" parameterClass="roleSystemCompositeKey">
+	<select id="getRoleByKeySystem" cacheModel="RoleCache" resultMap="getRoleResultMap" parameterClass="roleSystemCompositeKey">
 		select
 			role.name,
 			role.descr,
@@ -27,7 +30,7 @@
 		   role.system_id = system.system_id
 		where role.key = #roleKey# and system.key = #systemKey#;
 	</select>
-	<select id="getRoleListBySystemId" resultMap="getRoleResultMap" parameterClass="integer">
+	<select id="getRoleListBySystemId" cacheModel="RoleCache" resultMap="getRoleResultMap" parameterClass="integer">
 		select
 			name,
 			descr,
@@ -38,7 +41,7 @@
 		from tbl_user_role_reg
 		where system_id = #id#;
 	</select>
-	<select id="getRoleById" resultMap="getRoleResultMap" parameterClass="integer">
+	<select id="getRoleById" cacheModel="RoleCache" resultMap="getRoleResultMap" parameterClass="integer">
 		select
 			name,
 			descr,
@@ -49,7 +52,7 @@
 		from tbl_user_role_reg
 		where user_role_id = #roleId#;
 	</select>
-	<select id="getUserRoleBySystemIdAndRoleKey" resultMap="getRoleResultMap" parameterClass="role">
+	<select id="getUserRoleBySystemIdAndRoleKey" cacheModel="RoleCache" resultMap="getRoleResultMap" parameterClass="role">
 		select
 			role.name,
 			role.descr,
