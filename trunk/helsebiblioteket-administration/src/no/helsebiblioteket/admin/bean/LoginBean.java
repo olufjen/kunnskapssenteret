@@ -111,11 +111,10 @@ public class LoginBean {
 		String email = (String)newValue;
 		UIInput emailComponent = (UIInput)component;
 		this.logger.debug("email: " + email);
-		EmailValidator emailValidator = new EmailValidator();
 		String msg = "";
 		boolean valid = true;
 //		if(email.length() == 0) { mes = "Email address is required."; valid = false; }
-		if( ! emailValidator.isValidEmailAdress(email)) { msg = "email_not_valid"; valid = false; }
+		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) { msg = "email_not_valid"; valid = false; }
 		if ( ! valid) {
 			emailComponent.setValid(false);
 			// TODO: Set with Spring
