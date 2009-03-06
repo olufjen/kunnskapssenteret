@@ -17,6 +17,7 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.admin.validator.EmailValidator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
@@ -25,15 +26,12 @@ public class ProfileController extends HttpControllerPlugin {
 	protected UserService userService;
 	protected Map<String, String> parameterNames;
 	private LoggedInFunction loggedInFunction;
-	protected static String validEmailRegExpString = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,4}$";
-	protected static Pattern validEmailRegExpPattern = null;
 	protected static String validUsernameRegExpString = "[0-9A-Åa-å_]{1,}";
 	protected static Pattern validUsernameRegExpPattern = null;
 	protected static String validPasswordRegExpString = "[0-9A-Åa-å_]{6,}";
 	protected static Pattern validPasswordRegExpPattern = null;
 	protected final static int validPasswordMinLength = 6;
 	static {
-		validEmailRegExpPattern = Pattern.compile(validEmailRegExpString);
 		validPasswordRegExpPattern = Pattern.compile(validPasswordRegExpString);
 		validUsernameRegExpPattern = Pattern.compile(validUsernameRegExpString);
 	}
@@ -139,7 +137,7 @@ public class ProfileController extends HttpControllerPlugin {
 		if(employer.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "employer", "NO_VALUE"));
 		}
-		if(email.length() == 0 || ! validEmail(email)){
+		if(email.length() == 0 || ! EmailValidator.getInstance().isValidEmailAdress(email)){
 			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NOT_VALID"));
 		}
 		if (usertype.length() == 0 || !validPosition(position)) {
@@ -191,7 +189,7 @@ public class ProfileController extends HttpControllerPlugin {
 	}
 	
 	private boolean validEmail(String email) {
-		return validEmailRegExpPattern.matcher(email).find();
+		return EmailValidator.getInstance().isValidEmailAdress(email);
 	}
 	
 	private boolean validUsername(String username) {
