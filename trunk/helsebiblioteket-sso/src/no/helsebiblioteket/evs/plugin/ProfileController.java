@@ -2,8 +2,6 @@ package no.helsebiblioteket.evs.plugin;
 
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,11 +11,12 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.admin.validator.EmailValidator;
+import no.helsebiblioteket.admin.validator.PasswordValidator;
+import no.helsebiblioteket.admin.validator.UsernameValidator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
@@ -26,15 +25,6 @@ public class ProfileController extends HttpControllerPlugin {
 	protected UserService userService;
 	protected Map<String, String> parameterNames;
 	private LoggedInFunction loggedInFunction;
-	protected static String validUsernameRegExpString = "[0-9A-Åa-å_]{1,}";
-	protected static Pattern validUsernameRegExpPattern = null;
-	protected static String validPasswordRegExpString = "[0-9A-Åa-å_]{6,}";
-	protected static Pattern validPasswordRegExpPattern = null;
-	protected final static int validPasswordMinLength = 6;
-	static {
-		validPasswordRegExpPattern = Pattern.compile(validPasswordRegExpString);
-		validUsernameRegExpPattern = Pattern.compile(validUsernameRegExpString);
-	}
 	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
@@ -143,10 +133,10 @@ public class ProfileController extends HttpControllerPlugin {
 		if (usertype.length() == 0 || !validPosition(position)) {
 			messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));
 		}
-		if(username.length() == 0 || ! validUsername(username)){
+		if(username.length() == 0 || ! UsernameValidator.getInstance().isValidUsername(username)) {
 			messages.appendChild(UserToXMLTranslator.element(document, "username", "NOT_VALID"));
 		}
-		if(password.length() == 0 || ! validPassword(password)){
+		if(password.length() == 0 || ! PasswordValidator.getInstance().isValidPassword(password)) {
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
 		}
 		if (usertype.equals("choose")) {
@@ -182,18 +172,6 @@ public class ProfileController extends HttpControllerPlugin {
 	
 	private boolean validPosition(String position) {
 		return (!"choose".equals(position));
-	}
-	
-	private boolean validPassword(String password) {
-		return (password.length() >= validPasswordMinLength && validPasswordRegExpPattern.matcher(password).find());
-	}
-	
-	private boolean validEmail(String email) {
-		return EmailValidator.getInstance().isValidEmailAdress(email);
-	}
-	
-	private boolean validUsername(String username) {
-		return validUsernameRegExpPattern.matcher(username).find();
 	}
 	
 	protected boolean isInteger(String integer) {
