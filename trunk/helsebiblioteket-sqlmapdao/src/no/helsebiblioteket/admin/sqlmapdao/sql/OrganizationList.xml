@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id="getOrganizationIdDistinctSearchString" resultClass="int" parameterClass="string">
-		select distinct org_unit_id as org_unit_id_distint from(
+		select distinct org_unit_id as org_unit_id_distinct from(
 			select
 				org.descr as org_descr,
 				org.org_unit_id,
@@ -58,7 +58,7 @@
 				inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 				left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
 			where name.name like #value#
-		) as org_unit_id_distint_query
+		) as org_unit_id_distinct_query
 		order by org_unit_id desc
 	</select>
 	
