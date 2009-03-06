@@ -27,10 +27,10 @@ public class LoginServiceImpl implements LoginService {
 	private UserService userService;
 	private EmailService emailService;
 	private OrganizationService organizationService;
-	private String emailFromName = "Helsebiblioteket";
-	private String emailFromEmail = "test@example.org";
-	private String emailSubject = "Here is your new password: jHHns908";
-	private String emailMessage = "Lost password";
+	private String emailFromName;
+	private String emailFromEmail;
+	private String emailSubject;
+	private String emailMessage;
 	
 	/**
 	 * Loads the user from the database and compares the passwords.
@@ -56,10 +56,12 @@ public class LoginServiceImpl implements LoginService {
 	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
 		ListResultOrganizationListItem result = this.organizationService.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = result.getList();
-		if(list.length >= 1){
-			// Later: Log incidents of more than one organization per IP Address?
+		if(list.length >= 1) {			
+			if (list.length > 1) {
+				logger.warn(list.length + " organizations found for IP address '" + ipAddress + "'. Expected only one");
+			}
 			SingleResultOrganization memberResult = this.organizationService.getOrganizationByListItem(list[0]);
-			if(memberResult instanceof ValueResultMemberOrganization){
+			if(memberResult instanceof ValueResultMemberOrganization) {
 				// FIXME: re-insert:
 				MemberOrganization memberOrganization = ((ValueResultMemberOrganization)memberResult).getValue();
 				return new ValueResultMemberOrganization(memberOrganization);
@@ -71,9 +73,7 @@ public class LoginServiceImpl implements LoginService {
 	 * Sends an email to the user. This is delegated to EmailDAO.
 	 */
 	public Boolean sendPasswordEmail(User user) {
-		logger.info("Sends email to :" + user.getUsername());
-		// TODO: What should the email contain and how will it be sent?
-		// TODO: Set properties in application context.
+		logger.info("Sending email to :" + user.getUsername());
 		Email email = new Email();
 		email.setFromName(this.emailFromName);
 		email.setFromEmail(this.emailFromEmail);
@@ -107,25 +107,5 @@ public class LoginServiceImpl implements LoginService {
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
-	}
-	
-
-	// TODO: What are these for?
-	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
-		SingleResultMemberOrganization result = loginOrganizationByIpAddress(ipAddress);
-		if(result instanceof ValueResultMemberOrganization) {
-        	return (MemberOrganization)((ValueResultMemberOrganization)result).getValue();
-		}
-        return null;
-	}
-	public User loginUserByUsernamePasswordWS(String username, String password) {
-		SingleResultUser result = this.userService.findUserByUsername(username);
-		if(result instanceof ValueResultUser){
-			User loggedIn = ((ValueResultUser)result).getValue();
-			if(loggedIn.getPassword().equals(password)){
-				return loggedIn;
-			}
-		}
-		return null;
 	}
 }
