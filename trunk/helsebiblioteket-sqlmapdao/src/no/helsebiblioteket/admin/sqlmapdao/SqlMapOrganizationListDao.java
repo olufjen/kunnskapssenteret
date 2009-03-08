@@ -12,14 +12,6 @@ import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.sqlmapdao.input.SearchStringInput;
 
 public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements OrganizationListDao {
-	// TODO: No longer in use.
-//	public List<OrganizationListItem> getOrganizationListPaged(int from, int max) {
-//		// TODO: Loads all four names. What to do?
-//		if(max == Integer.MAX_VALUE) max = Integer.MAX_VALUE/4;
-//		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListAll", from, max*4);
-//		List<OrganizationListItem> result = translateList(list);
-//		return result;
-//	}
 	private List<OrganizationListItem> translateList(List<OrgUnitNameJoin> list){
 		List<OrganizationListItem> result = new ArrayList<OrganizationListItem>();
 		if(list.size()==0){ return result; }
@@ -64,7 +56,6 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max) {
-		// TODO: Do this search in the database!
 		// TODO: Pages will be of different sizes!
 		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList("getOrganizationIdDistinctSearchString",
 				"%" + searchString + "%", from, max);
@@ -75,19 +66,6 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 		List<OrgUnitNameJoin> foundOrganizations = getSqlMapClientTemplate().queryForList("getOrganizationListSearchString",
 				new SearchStringInput("%" + searchString + "%", orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1)));
 		return translateList(foundOrganizations);
-		
-//		for (OrganizationListItem organization : foundOrganizations) {
-//			if(organization.getNameEnglish().toLowerCase().contains(searchString.toLowerCase())){
-//				someOrganizations.add(organization);
-//			} else if(organization.getNameShortEnglish().toLowerCase().contains(searchString.toLowerCase())){
-//				someOrganizations.add(organization);
-//			} else if(organization.getNameNorwegian().toLowerCase().contains(searchString.toLowerCase())){
-//				someOrganizations.add(organization);
-//			} else if(organization.getNameShortNorwegian().toLowerCase().contains(searchString.toLowerCase())){
-//				someOrganizations.add(organization);
-//			}
-//		}
-//		return someOrganizations;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
