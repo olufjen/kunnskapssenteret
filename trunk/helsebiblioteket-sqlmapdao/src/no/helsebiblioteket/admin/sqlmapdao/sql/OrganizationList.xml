@@ -57,7 +57,7 @@
 			from tbl_org_unit as org
 				inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 				left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
-			where name.name like #value#
+			where name.name ilike #value#
 		) as org_unit_id_distinct_query
 		order by org_unit_id desc
 	</select>
@@ -75,7 +75,7 @@
 		from tbl_org_unit as org
 			inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 			left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
-		where name.name like #value# and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId# 
+		where name.name ilike #value# and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId# 
 		order by org_unit_id desc
 	</select>
 
