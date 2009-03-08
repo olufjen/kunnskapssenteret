@@ -122,7 +122,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
-		// TODO: Do we need more values in OrganizationListItem?
 		// TODO: Should we use Id for request.from?
 		// TODO: Search for the search string in all names or do this by locale?
 		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString,
