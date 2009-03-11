@@ -28,7 +28,7 @@
 		<property name="password" value="${database.password}"></property>
 		-->
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
-		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin"></property>
+		<property name="url" value="jdbc:postgresql://localhost/helsebiblioteket_admin_dump"></property>
 		<property name="username" value="helsebiblioteket"></property>
 		<property name="password" value="helsebiblioteket"></property>
 	</bean>
@@ -65,6 +65,8 @@
 		
 		<property name="insertUserActionName" ref="insertUserActionName" />
 		<property name="insertOrganizationActionName" ref="insertOrganizationActionName" />
+		<property name="getUserByActionName" ref="getUserByActionName" />
+		<property name="getOrganizationByActionName" ref="getOrganizationByActionName" />
 		<property name="getActionListByUserName" ref="getActionListByUserName" />
 		<property name="getActionListByOrganizationName" ref="getActionListByOrganizationName" />
 		<property name="getActionListByResourceName" ref="getActionListByResourceName" />
@@ -166,7 +168,7 @@
   		<property name="findUserByUsernameName" ref="findUserByUsernameName"></property>
   		<property name="insertUserName" ref="insertUserName"></property>
   		<property name="updateUserName" ref="updateUserName"></property>
-  		<property name="getPositionByKey" ref="getPositionByKeyName"></property>
+  		<property name="positionByKey" ref="positionByKeyName"></property>
   		
   	</bean>
   	<bean name="userServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
@@ -241,6 +243,14 @@
 	<bean name="insertOrganizationActionName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="insertOrganizationAction" />
+	</bean>
+	<bean name="getUserByActionName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getUserByAction" />
+	</bean>
+	<bean name="getOrganizationByActionName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getOrganizationByAction" />
 	</bean>
 	<bean name="getActionListByUserName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
