@@ -1,10 +1,5 @@
 package no.helsebiblioteket.evs.plugin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,15 +23,12 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
-import no.helsebiblioteket.admin.service.UserService;
-import no.helsebiblioteket.admin.translator.RoleToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
@@ -184,19 +176,25 @@ public final class RegisterUserController extends ProfileController {
 		user.setPassword(request.getParameter(this.parameterNames.get("password")));
 		user.setPerson(person);
 		
-		SingleResultRole roleOtherResult = userService.getUserRoleBySystemKeyAndRoleKey(SystemKey.helsebiblioteket_admin, UserRoleKey.health_personnel_other);
+		SingleResultSystem systemResult = userService.getSystemByKey(SystemKey.helsebiblioteket_admin);
+		if (systemResult instanceof EmptyResultSystem) {
+			throw new Exception("non existing system for system key '" + SystemKey.helsebiblioteket_admin + "");
+		}
+		System system = ((ValueResultSystem)systemResult).getValue();
+		
+		SingleResultRole roleOtherResult = userService.getRoleByKeySystem(UserRoleKey.health_personnel_other, system);
 		if (roleOtherResult instanceof EmptyResultRole) {
 			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel_other + "'");
 		}
 		Role roleOther = (Role) ((ValueResultRole) roleOtherResult).getValue();
 		
-		SingleResultRole roleHealthPersonnelResult = userService.getUserRoleBySystemKeyAndRoleKey(SystemKey.helsebiblioteket_admin, UserRoleKey.health_personnel);
+		SingleResultRole roleHealthPersonnelResult = userService.getRoleByKeySystem(UserRoleKey.health_personnel, system);
 		if (roleHealthPersonnelResult instanceof EmptyResultRole) {
 			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel + "'");
 		}
 		Role roleHealthPersonell = (Role) ((ValueResultRole) roleHealthPersonnelResult).getValue();
 		
-		SingleResultRole roleStudentResult = userService.getUserRoleBySystemKeyAndRoleKey(SystemKey.helsebiblioteket_admin, UserRoleKey.student);
+		SingleResultRole roleStudentResult = userService.getRoleByKeySystem(UserRoleKey.student, system);
 		if (roleStudentResult instanceof EmptyResultRole) {
 			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.student + "'");
 		}

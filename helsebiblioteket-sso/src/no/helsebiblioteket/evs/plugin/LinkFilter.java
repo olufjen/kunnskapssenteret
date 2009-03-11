@@ -145,7 +145,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		// TODO: Cache as much as possible, but flush at some set interval!
 		Url myurl = new Url();
 		myurl.setStringValue(url.toExternalForm());
-		SingleResultUrl result = this.urlService.translate(user, organization, myurl);
+		SingleResultUrl result = this.urlService.translateUrlUserOrganization(user, organization, myurl);
 		if(result instanceof EmptyResultUrl){
 			// TODO: What to do here?
 			return url;
