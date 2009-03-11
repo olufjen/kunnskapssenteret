@@ -29,7 +29,7 @@
 
 	<insert id="insertResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
 		<selectKey resultClass="int" keyProperty="resourceAccess.access.id">
-			SELECT nextval('tbl_access_access_id_seq') as access_id;
+			SELECT nextval('tbl_access_access_id_seq') as id;
 		</selectKey>
 		insert into tbl_access (
 			access_type_id, 
