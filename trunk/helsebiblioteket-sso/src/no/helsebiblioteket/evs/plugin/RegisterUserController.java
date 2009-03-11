@@ -160,7 +160,7 @@ public final class RegisterUserController extends ProfileController {
         if ((usertype = request.getParameter(this.parameterNames.get("usertype"))) != null && !"".equals(usertype != null)) {
         	if (UserRoleKey.health_personnel.getValue().equals(usertype)) {
         		String positionString = request.getParameter(this.parameterNames.get("position"));
-        		if (!positionString.equals("choose")) {
+        		if (!positionString.equals("choose") && !positionString.equals("none")) {
 	        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString));
 	        		if (positionResult instanceof EmptyResultPosition) {
 	        			throw new Exception("user somehow selected a non-existing position: '" + positionString + "'");
