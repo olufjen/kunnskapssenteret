@@ -2,22 +2,26 @@ package no.helsebiblioteket.admin.service.impl;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.dao.AccessTypeDao;
 import no.helsebiblioteket.admin.dao.ActionDao;
-import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.Action;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.line.ActionLine;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultAction;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.service.ActionService;
+import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.service.UserService;
 
 public class ActionServiceImpl implements ActionService{
 	private ActionDao actionDao;
-	private AccessTypeDao accessTypeDao;
-	private ResourceDao resourceDao;
+	private UserService userService;
+	private OrganizationService organizationService;
 	@Override
 	public Boolean insertUserAction(User user, Resource resource, AccessType accessType) {
 		ActionLine line = new ActionLine();
@@ -39,6 +43,20 @@ public class ActionServiceImpl implements ActionService{
 		line.setUserId(null);
 		this.actionDao.insertAction(line);
 		return true;
+	}
+	@Override
+	public SingleResultUser getUserByAction(Action action) {
+		ActionLine actionLine = this.actionDao.getActionLineById(action.getId());
+		UserListItem item = new UserListItem();
+		item.setId(actionLine.getUserId());
+		return this.userService.getUserByUserListItem(item);
+	}
+	@Override
+	public SingleResultOrganization getOrganizationByAction(Action action) {
+		ActionLine actionLine = this.actionDao.getActionLineById(action.getId());
+		OrganizationListItem item = new OrganizationListItem();
+		item.setId(actionLine.getOrgUnitId());
+		return this.organizationService.getOrganizationByListItem(item);
 	}
 	@Override
 	public ListResultAction getActionListByUser(User user) {
@@ -66,25 +84,28 @@ public class ActionServiceImpl implements ActionService{
 		for (ActionLine line : list) {
 			Action action = new Action();
 			action.setId(line.getId());
-
-			action.setAccessType(this.accessTypeDao.getAccessTypeById(line.getAccessTypeId()));
-			
-			// TODO: This is not working!
-			action.setResource(this.resourceDao.getResourceById(line.getResourceId()).getResource());
-			
-			// TODO: Return user or organization here or load when needed?
+//			Not in use yet
+//			action.setAccessType(this.accessTypeDao.getAccessTypeById(line.getAccessTypeId()));
+//			action.setResource(this.resourceDao.getResourceById(line.getResourceId()).getResource());
+			if(line.getOrgUnitId() != null){
+				action.setUserOrganizationAccess(Action.ORGANIZATION_ACCESS);
+			} else if(line.getUserId() != null){
+				action.setUserOrganizationAccess(Action.USER_ACCESS);
+			}
 			result[i] = action;
 			i++;
 		}
 		return result;
 	}
+
+	
 	public void setActionDao(ActionDao actionDao) {
 		this.actionDao = actionDao;
 	}
-	public void setAccessTypeDao(AccessTypeDao accessTypeDao) {
-		this.accessTypeDao = accessTypeDao;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
-	public void setResourceDao(ResourceDao resourceDao) {
-		this.resourceDao = resourceDao;
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
 	}
 }

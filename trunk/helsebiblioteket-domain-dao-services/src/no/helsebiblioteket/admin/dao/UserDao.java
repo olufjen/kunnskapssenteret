@@ -10,4 +10,5 @@ public interface UserDao {
 
 	// Fetch
 	public User getUserByUsername(String username);
+	public User getUserById(Integer id);
 }

@@ -1,25 +1,25 @@
 package no.helsebiblioteket.admin.domain;
 
 public class Action {
+	public static final String USER_ACCESS = "U";
+	public static final String ORGANIZATION_ACCESS = "O";
 	private Integer id;
-	private Resource resource;
-	private AccessType accessType;
+	
+	// Not in use yet
+//	private Resource resource;
+//	private AccessType accessType;
+
+	private String userOrganizationAccess = "";
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Resource getResource() {
-		return resource;
+	public String getUserOrganizationAccess() {
+		return userOrganizationAccess;
 	}
-	public void setResource(Resource resource) {
-		this.resource = resource;
-	}
-	public AccessType getAccessType() {
-		return accessType;
-	}
-	public void setAccessType(AccessType accessType) {
-		this.accessType = accessType;
+	public void setUserOrganizationAccess(String userOrganizationAccess) {
+		this.userOrganizationAccess = userOrganizationAccess;
 	}
 }

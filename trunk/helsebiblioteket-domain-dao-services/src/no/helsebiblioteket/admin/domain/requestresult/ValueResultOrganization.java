@@ -2,7 +2,8 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.Organization;
 
-public class ValueResultOrganization extends SingleResultOrganization{
+public class ValueResultOrganization extends SingleResultOrganization {
+	// TODO: Remove class.
 	private Organization value;
 	public ValueResultOrganization() { }
 	public ValueResultOrganization(Organization value){

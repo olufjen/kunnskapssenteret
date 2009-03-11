@@ -9,7 +9,9 @@ import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.IpAddressSingle;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
@@ -19,7 +21,6 @@ import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationList
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageRequestWithString;
 
 public interface OrganizationService extends Serializable {
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY);
@@ -33,7 +34,8 @@ public interface OrganizationService extends Serializable {
 
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress);
 
-	public SingleResultOrganization insertOrganization(Organization organization);
+	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization);
+	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization);
 	public SingleResultOrganization updateOrganization(Organization organization);
 
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSingles);
