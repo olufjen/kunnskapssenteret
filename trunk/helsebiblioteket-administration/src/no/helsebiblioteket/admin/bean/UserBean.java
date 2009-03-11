@@ -350,7 +350,7 @@ public class UserBean {
 
 			// TODO: Right way to add DUMMY?
 			Position dummy = new Position();
-			//dummy.setKey(PositionTypeKey.none);
+			dummy.setKey(PositionTypeKey.none);
 			dummy.setName(ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
 							"user_details_no_position"));
