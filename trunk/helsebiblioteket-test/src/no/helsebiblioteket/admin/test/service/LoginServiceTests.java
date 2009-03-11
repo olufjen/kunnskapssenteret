@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
@@ -47,14 +48,20 @@ public class LoginServiceTests {
 		UserService userService = beanFactory.getUserService();
 		LoginService loginService = beanFactory.getLoginService();
 		
-		User user = createUser();
-		user.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(user.getOrganization())).getValue());
+		MemberOrganization memberOrganization = createMemberOrganization();
+		User user = createUser(memberOrganization);
+		user.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(memberOrganization)).getValue());
 		userService.insertUser(user);
 		
 //	    TEST: public SingleResultUser loginUserByUsernamePassword(String username, String password);
 		SingleResultUser result = loginService.loginUserByUsernamePassword(username, password);
 		Assert.isTrue(result instanceof ValueResultUser, "User not found");
-		Assert.isTrue(((ValueResultUser)result).getValue().getUsername().equals(this.username), "Wrong user."); 
+		Assert.isTrue(((ValueResultUser)result).getValue().getUsername().equals(this.username), "Wrong user.");
+		
+		result = loginService.loginUserByUsernamePassword(username, password + "_NOTFOUND_" + new Random().nextInt());
+		Assert.isTrue(result instanceof EmptyResultUser, "User should not have been logged in");
+		result = loginService.loginUserByUsernamePassword(username + "_NOTFOUND_" + new Random().nextInt(), password);
+		Assert.isTrue(result instanceof EmptyResultUser, "User should not have been logged in");
 	}
 	@org.junit.Test
 	public void testLoginOrganizationByIpAddress() {
@@ -73,7 +80,7 @@ public class LoginServiceTests {
 		ipRangeList[0] = ipRange;
 		organization.setIpAddressRangeList(ipRangeList);
 		
-		organization.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(organization.getOrganization())).getValue());
+		organization.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(organization)).getValue());
 		IpAddressSet[] res = organizationService.addIpAddressRanges(organization.getOrganization(), organization.getIpAddressRangeList()).getList();
 		Assert.notEmpty(res, "Should have returned inserted ones");
 		
@@ -90,7 +97,8 @@ public class LoginServiceTests {
 	@org.junit.Test
 	public void testSendPasswordEmail() {
 		LoginService loginService = beanFactory.getLoginService();
-		User user = createUser();
+		MemberOrganization memberOrganization = createMemberOrganization();
+		User user = createUser(memberOrganization);
 
 //	    TEST: public Boolean sendPasswordEmail(User user);
 //		Look in the log for the result of this!
@@ -111,8 +119,8 @@ public class LoginServiceTests {
 				createOrganizationTypeTeaching(), createPositionJordmor());
 		return memberOrganization;
 	}
-	private User createUser(){
-		User user = UserFactory.factory.completeUser(createMemberOrganization(), createPositionJordmor());
+	private User createUser(MemberOrganization memberOrganization){
+		User user = UserFactory.factory.completeUser(memberOrganization, createPositionJordmor());
 		user.setUsername(username);
 		user.setPassword(password);
 		return user;

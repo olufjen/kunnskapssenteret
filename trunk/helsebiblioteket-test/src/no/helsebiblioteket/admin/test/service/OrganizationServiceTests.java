@@ -69,7 +69,7 @@ public class OrganizationServiceTests {
 	@org.junit.Test
 	public void testFindOrganizationsBySearchString(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organizationService.insertOrganization(createMemberOrganization().getOrganization());
+		organizationService.insertMemberOrganization(createMemberOrganization());
 		PageRequest request = new PageRequest(0, 5);
 		String sub = findMeName.substring(3);
 //		TEST: public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request);
@@ -83,7 +83,7 @@ public class OrganizationServiceTests {
 	public void testGetOrganizationByListItem(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 		MemberOrganization organization = createMemberOrganization();
-		organization.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(organization.getOrganization())).getValue());
+		organization.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(organization)).getValue());
 		OrganizationListItem listItem = new OrganizationListItem();
 		listItem.setId(organization.getOrganization().getId());
 		
@@ -126,10 +126,10 @@ public class OrganizationServiceTests {
 
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 //		TEST: public SingleResultOrganization insertOrganization(Organization organization);
-		organization1.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(
-				organization1.getOrganization())).getValue());
-		organization2.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(
-				organization2.getOrganization())).getValue());
+		organization1.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(
+				organization1)).getValue());
+		organization2.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(
+				organization2)).getValue());
 
 //		TEST: public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges);
 		IpAddressSet[] resIp1 = organizationService.addIpAddressRanges(
@@ -164,8 +164,8 @@ public class OrganizationServiceTests {
 		organization.getOrganization().getContactPerson().setFirstName(firstName);
 		
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organization.setOrganization(((ValueResultOrganization)organizationService.insertOrganization(
-				organization.getOrganization())).getValue());
+		organization.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(
+				organization)).getValue());
 		Assert.isTrue(organization.getOrganization().getNameNorwegian().equals(firstName), "Name NO not saved");
 		Assert.isTrue(organization.getOrganization().getContactInformation().getPostalLocation().equals(firstName), "Post Loc not saved");
 		Assert.isTrue(organization.getOrganization().getContactPerson().getFirstName().equals(firstName), "Contact person not saved");
