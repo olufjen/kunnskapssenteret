@@ -80,11 +80,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     		// FIXME: Are they unique or check for existing?
 //    		organizationService.saveOrganization(organization);
     		// TODO: Use insertSupplier for suppliers!
-    		organizationService.insertOrganization(organization.getOrganization());
-    		// FIXME: Insert new IP-addresses!
-    		organization.getIpAddressRangeList();
-    		organization.getIpAddressSingleList();
-
+    		organizationService.insertMemberOrganization(organization);
     	}
     }
     
