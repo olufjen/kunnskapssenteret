@@ -73,7 +73,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
     	} else {
     		if(this.urlService.isAffected(requestedUrl)){
     			boolean hasAcces = false;
-    			if(this.urlService.hasAccess(user, organization, requestedUrl)){
+    			if(this.urlService.hasAccessUserOrganization(user, organization, requestedUrl)){
     				SingleResultString result = this.urlService.group(requestedUrl);
     				String group;
     				if(result instanceof EmptyResultString){
