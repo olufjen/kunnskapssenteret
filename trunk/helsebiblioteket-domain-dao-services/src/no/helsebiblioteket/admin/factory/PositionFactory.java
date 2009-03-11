@@ -22,7 +22,6 @@ public class PositionFactory {
 	public Position createPosition(){
 		Position position = new Position();
 		position.setDescription("");
-		position.setKey(PositionTypeKey.none);
 		position.setName("");
 //		position.setOrganizationType(organizationType)
 		return position;
