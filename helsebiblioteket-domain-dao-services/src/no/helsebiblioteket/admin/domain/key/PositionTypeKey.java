@@ -9,6 +9,7 @@ public class PositionTypeKey {
 		this.value = value;
 	}
 
+	public static final PositionTypeKey none = new PositionTypeKey("none");
 	public static final PositionTypeKey ambulansearbeider = new PositionTypeKey("ambulansearbeider");
 	public static final PositionTypeKey apotektekniker = new PositionTypeKey("apotektekniker");
 	public static final PositionTypeKey audiograf = new PositionTypeKey("audiograf");
@@ -44,7 +45,8 @@ public class PositionTypeKey {
 	// TODO: Remove?
 	public static PositionTypeKey valueOf(String name) { return (lookup(name)); }
 	
-	private static final PositionTypeKey[] values = new PositionTypeKey[] {  
+	private static final PositionTypeKey[] values = new PositionTypeKey[] { 
+		none, 
 		ambulansearbeider,
 		apotektekniker,
 		audiograf,
