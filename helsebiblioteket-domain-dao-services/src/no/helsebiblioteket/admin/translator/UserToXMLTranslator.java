@@ -1,7 +1,5 @@
 package no.helsebiblioteket.admin.translator;
 
-import java.util.Iterator;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,7 +8,6 @@ import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
@@ -33,16 +30,12 @@ public class UserToXMLTranslator {
 		userElement.appendChild(cDataElement(document, "username", user.getUsername()));
 
 		Element rolesElement = document.createElement("roles");
-		if (null != user.getRoleList()) {
-			for (Role role : user.getRoleList()) {
-				this.roleToXMLTranslator.translate(role, document, rolesElement);
-			}
+		for (Role role : user.getRoleList()) {
+			this.roleToXMLTranslator.translate(role, document, rolesElement);
 		}
 		userElement.appendChild(rolesElement);
 		Organization organization = user.getOrganization();
-		if(organization != null){
-			this.organizationToXMLTranslator.translate(organization, document, userElement);
-		}
+		this.organizationToXMLTranslator.translate(organization, document, userElement);
 //		List<Access> accessList = user.getAccessList();
 //		for (Access access : accessList) {
 //			// TODO: Complete this!
@@ -56,9 +49,7 @@ public class UserToXMLTranslator {
 //			access.getValidTo();
 //		}
 		Person person = user.getPerson();
-		if(person != null){
-			this.personToXMLTranslator.translate(person, document, userElement);
-		}
+		this.personToXMLTranslator.translate(person, document, userElement);
 		if(element == null){
 			document.appendChild(userElement);
 		} else {

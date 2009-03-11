@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 public class SupplierOrganization {
 	// Values loaded by ResourceLine
-	private Resource[] resourceList;
+	private SupplierSourceResource[] resourceList;
 	
 	// Organization
 	private Organization organization = new Organization();
@@ -14,10 +14,10 @@ public class SupplierOrganization {
 	}
 
 	// GET/SET
-	public Resource[] getResourceList() {
+	public SupplierSourceResource[] getResourceList() {
 		return resourceList;
 	}
-	public void setResourceList(Resource[] resourceList) {
+	public void setResourceList(SupplierSourceResource[] resourceList) {
 		this.resourceList = resourceList;
 	}
 	public Organization getOrganization() {

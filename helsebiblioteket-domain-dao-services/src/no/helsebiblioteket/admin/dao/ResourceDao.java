@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.dao;
 
+import java.util.List;
+
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
-import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
 public interface ResourceDao {
 	// Edit not implemented
@@ -11,4 +13,5 @@ public interface ResourceDao {
 
 	// Fetch
 	public SupplierSourceResource getResourceById(Integer id);
+	public List<SupplierSourceResource> getResourceByOrganization(SupplierOrganization supplierOrganization);
 }

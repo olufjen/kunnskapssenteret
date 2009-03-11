@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
@@ -16,7 +13,6 @@ import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
@@ -42,19 +38,13 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.factory.PersonFactory;
-import no.helsebiblioteket.admin.requestresult.EmptyResult;
-import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
-import no.helsebiblioteket.admin.requestresult.ListResult;
-import no.helsebiblioteket.admin.requestresult.MorePageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.UserService;
 
 public class UserServiceImpl implements UserService {
 	private static final long serialVersionUID = 1L;
-	private final Log logger = LogFactory.getLog(getClass());
+//	private final Log logger = LogFactory.getLog(getClass());
 	private UserDao userDao;
 	private UserListDao userListDao;
 	private RoleDao roleDao;
@@ -68,6 +58,7 @@ public class UserServiceImpl implements UserService {
      * Fetches the system with the given key from the
      * database.
      */
+	@Override
 	public SingleResultSystem getSystemByKey(SystemKey key){
 		System system = this.systemDao.getSystemByKey(key);
 		if(system == null) return new EmptyResultSystem();
@@ -77,6 +68,7 @@ public class UserServiceImpl implements UserService {
      * Fetches all the roles from the database for the given
      * system. Delegates the task to RoleDao.
      */
+	@Override
 	public ListResultRole getRoleListBySystem(System system){
 		List<Role> roleList = this.roleDao.getRoleListBySystem(system);
 		Role[] roles = new Role[roleList.size()];
@@ -92,6 +84,7 @@ public class UserServiceImpl implements UserService {
      * Fetches all the positions from the database. Delegates the task to
 	 * PositionDao. The variable DUMMY is never used.
      */
+	@Override
 	public ListResultPosition getPositionListAll(String DUMMY) {
 		List<Position> all = this.positionDao.getPositionListAll();
 		Position[] positions = new Position[all.size()];
@@ -108,6 +101,7 @@ public class UserServiceImpl implements UserService {
 	 * PositionDao. The variable DUMMY is never used.
 	 * Only for webservice client calls
      */
+	// TODO: What is this?
 	public Position[] getPositionListAllWS(String DUMMY) {
 		List<Position> all = this.positionDao.getPositionListAll();
 		Position[] positions = new Position[all.size()];
@@ -118,6 +112,7 @@ public class UserServiceImpl implements UserService {
 		return positions;
 	}
 	
+	@Override
 	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey) {
 		List<Position> all = this.positionDao.getPositionListAll();
 		for (Position position : all) {
@@ -138,8 +133,8 @@ public class UserServiceImpl implements UserService {
 	 * RoleDao.getRoleByKeySystem(..) returns null if no Role is
 	 * found.
 	 */
+	@Override
 	public SingleResultRole getRoleByKeySystem(UserRoleKey key, System system){
-		
 		Role role = this.roleDao.getRoleByKeySystem(key, system);
 		if(role==null){
 			return new EmptyResultRole();
@@ -156,6 +151,7 @@ public class UserServiceImpl implements UserService {
 	 * It only fetches the most important values needed in a list, like names, etc.
 	 * These are the values in the UserListItem object.
 	 */
+	@Override
 	public PageResult<UserListItem> getUserListAll(PageRequest request) {
 		PageResult<UserListItem> result = new PageResult<UserListItem>();
 		result.result = this.userListDao.getUserListPaged(request.getSkip(), request.getMaxResult());
@@ -176,6 +172,7 @@ public class UserServiceImpl implements UserService {
 	 * TODO: There is probably room for optimizations here.
 	 * 
 	 */
+	@Override
 	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest request) {
 		// TODO: Should we use Id for request.from?
 		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roles, request.getSkip(), request.getMaxResult());
@@ -196,6 +193,7 @@ public class UserServiceImpl implements UserService {
 	 *       Is that allowed?
 	 * 
 	 */
+	@Override
     public SingleResultUser findUserByUsername(String username) {
 		User user = this.userDao.getUserByUsername(username);
 		if(user == null){
@@ -223,6 +221,16 @@ public class UserServiceImpl implements UserService {
 			return new ValueResultUser(user);
 		}
 	}
+	/**
+	 * Fetches user from a user list item. Uses findUserByUsername.
+	 * 
+	 */
+	@Override
+	public SingleResultUser getUserByUserListItem(UserListItem userListItem) {
+		User tmp = this.userDao.getUserById(userListItem.getId());
+		return this.findUserByUsername(tmp.getUsername());
+	}
+
     /**
      * Inserts a new User into the database. All properties must
      * be set. No NULL. Use UserFactory and PersonFactory if needed.
@@ -233,6 +241,7 @@ public class UserServiceImpl implements UserService {
      * _separately_.
      * 
      */
+	@Override
 	public SingleResultUser insertUser(User user) {
 		checkNull(user);
 		this.personDao.insertPerson(user.getPerson());
@@ -261,6 +270,7 @@ public class UserServiceImpl implements UserService {
 	 * set.
 	 * 
 	 */
+	@Override
 	public Boolean updateUser(User user) {
 		SingleResultUser oldResult = this.findUserByUsername(user.getUsername());
 		if(oldResult instanceof EmptyResultUser){
@@ -390,27 +400,5 @@ public class UserServiceImpl implements UserService {
 	public void setSystemDao(SystemDao systemDao) {
 		this.systemDao = systemDao;
 	}
-	public User findUserByUsernameWS(String username) {
-		SingleResultUser result = findUserByUsername(username);
-		if (result instanceof EmptyResultUser) {
-			return null;
-		}
-		return (User) ((ValueResultUser)result).getValue();
-	}
 
-	public SingleResultRole getUserRoleBySystemKeyAndRoleKey(SystemKey systemKey, UserRoleKey userRoleKey) {
-		SingleResultRole resultRole = new EmptyResultRole();
-		SingleResultSystem systemResult = getSystemByKey(systemKey);
-		if (systemResult instanceof EmptyResultSystem) {
-			return resultRole;
-		}
-		Role role = new Role();
-		role.setSystem((System) ((ValueResultSystem) systemResult).getValue());
-		role.setKey(userRoleKey);
-		role = userRoleDao.getUserRoleBySystemIdAndRoleKey(role);
-		if (role == null) {
-			return resultRole;
-		}
-		return new ValueResultRole(role);
-	}
 }

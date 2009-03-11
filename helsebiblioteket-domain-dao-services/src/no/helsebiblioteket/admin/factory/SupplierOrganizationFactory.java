@@ -6,6 +6,7 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 
 public class SupplierOrganizationFactory {
 	public static SupplierOrganizationFactory factory = new SupplierOrganizationFactory();
@@ -20,7 +21,7 @@ public class SupplierOrganizationFactory {
 		organization.getOrganization().setNameShortNorwegian("");
 		organization.getOrganization().setContactInformation(ContactInformationFactory.factory.createContactInformation());
 		organization.getOrganization().setContactPerson(PersonFactory.factory.createPerson());
-		organization.setResourceList(new Resource[0]);
+		organization.setResourceList(new SupplierSourceResource[0]);
 		return organization;
 	}
 	public SupplierOrganization completeOrganization(OrganizationType organizationType, Position position){

@@ -5,6 +5,7 @@ import java.util.List;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
 public class UserListItem {
+	private Integer id;
 	private String name;
 	private String username;
 	private List<String> roleNames;
@@ -32,5 +33,11 @@ public class UserListItem {
 	}
 	public void setRoleKeys(List<UserRoleKey> roleKeys) {
 		this.roleKeys = roleKeys;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

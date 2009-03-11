@@ -13,10 +13,13 @@ import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
+import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
@@ -65,12 +68,12 @@ public class URLServiceImpl implements URLService {
 	 * page with information about what to do.
 	 * 
 	 */
-	public SingleResultUrl translate(User user, Url url) {
+	public SingleResultUrl translateUrlUser(User user, Url url) {
 		// TODO: Use "redirectport" somewhere?
 		// TODO: Include deny.
 		// TODO: Check for 'provided by'.
 		Url newUrl = new Url();
-		if(this.hasAccess(user, url)){
+		if(this.hasAccessUser(user, url)){
 			// TODO: When to send through proxy?
 			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		} else {
@@ -87,9 +90,9 @@ public class URLServiceImpl implements URLService {
 	 * TODO: When to send an organization directly?
 	 * 
 	 */
-	public SingleResultUrl translate(MemberOrganization organization, Url url) {
+	public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url) {
 		Url newUrl = new Url();
-		if(hasAccess(organization, url)){
+		if(hasAccessOrganization(organization, url)){
 			// TODO: When to send through proxy?
 			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		} else {
@@ -110,12 +113,12 @@ public class URLServiceImpl implements URLService {
 	 *       to the proxy or directly to the server?
 	 *       Sometimes one and sometimes the other?
 	 */
-	public SingleResultUrl translate(User user, MemberOrganization organization, Url url){
+	public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url){
 		Url newUrl = new Url();
-		if(hasAccess(organization, url)){
-			return this.translate(organization, url);
-		} else if (hasAccess(user, url)){
-			return this.translate(user, url);
+		if(hasAccessOrganization(organization, url)){
+			return this.translateUrlOrganization(organization, url);
+		} else if (hasAccessUser(user, url)){
+			return this.translateUrlUser(user, url);
 		} else {
 			// TODO: When to send directly?
 			newUrl.setStringValue(url.getStringValue());
@@ -129,18 +132,51 @@ public class URLServiceImpl implements URLService {
 	 * TODO: I think we must check for Access type and resource
 	 *       type. 
 	 */
-    public Boolean hasAccess(User user, Url url) {
-    	ListResultResourceAccess accessList = this.accessService.getAccessListByUser(user);
-    	for (ResourceAccess access : accessList.getList()) {
+    public Boolean hasAccessUser(User user, Url url) {
+    	ListResultResourceAccess userAccessList = this.accessService.getAccessListByUser(user);
+    	Boolean test = checkAccess(url, userAccessList.getList());
+    	if(test != null){ return test; }
+    	
+    	// TODO: Trust the user list and organization or reload?
+    	for (Role role : user.getRoleList()) {
+        	ListResultResourceAccess userRoleAccess = this.accessService.getAccessListByRole(role);
+        	test = checkAccess(url, userRoleAccess.getList());
+        	if(test != null){ return test; }
+		}
+    	ListResultResourceAccess organizationAccessList = this.accessService.getAccessListByOrganization(user.getOrganization());
+		test = checkAccess(url, organizationAccessList.getList());
+		if(test != null){ return test; }
+		
+		ListResultResourceAccess organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(user.getOrganization().getType());
+		test = checkAccess(url, organizationTypeAccessList.getList());
+		if(test != null){ return test; }
+		
+		return Boolean.FALSE;
+	}
+    private Boolean checkAccess(Url url, ResourceAccess[] resourceAccesses) {
+    	for (ResourceAccess access : resourceAccesses) {
     		SupplierSourceResource resource = access.getResource();
     		if(resource instanceof SupplierSourceResource){
         		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
-        			return Boolean.TRUE;
+        			// If GRANT and general -> OK
+        			if(access.getAccess().getAccessType().getCategory().getValue().equals(
+        					AccessTypeCategory.GRANT.getValue()) &&
+        					access.getAccess().getAccessType().getKey().getValue().equals(AccessTypeKey.general.getValue())){
+            			return true;
+        			}
+        			// If DENY and general -> NOT OK
+        			if(access.getAccess().getAccessType().getCategory().getValue().equals(
+        					AccessTypeCategory.DENY.getValue()) &&
+        					access.getAccess().getAccessType().getKey().getValue().equals(AccessTypeKey.general.getValue())){
+        				return false;
+        			}
         		}
+    		} else {
+    			// What if other kind?
     		}
 		}
-		return Boolean.FALSE;
-	}
+    	return null;
+    }
 	/**
 	 * Loads the Access list for an organization and checks if the URL
 	 * is in the list.
@@ -148,14 +184,15 @@ public class URLServiceImpl implements URLService {
 	 * TODO: I think we must check for Access type and resource
 	 *       type.
 	 */
-	public Boolean hasAccess(MemberOrganization organization, Url url) {
+	public Boolean hasAccessOrganization(MemberOrganization organization, Url url) {
     	ListResultResourceAccess accessList = this.accessService.getAccessListByOrganization(organization.getOrganization());
-    	for (ResourceAccess access : accessList.getList()) {
-    		SupplierSourceResource resource = access.getResource();    		
-       		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
-       			return Boolean.TRUE;
-       		}
-		}
+		Boolean test = checkAccess(url, accessList.getList());
+		if(test != null){ return test; }
+
+		ListResultResourceAccess organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(organization.getOrganization().getType());
+		test = checkAccess(url, organizationTypeAccessList.getList());
+		if(test != null){ return test; }
+
 		return Boolean.FALSE;
 	}
 	/**
@@ -163,10 +200,10 @@ public class URLServiceImpl implements URLService {
 	 * If none of them have, the URL and the resource it identifies
 	 * is not available to the user or the organization.
 	 */
-	public Boolean hasAccess(User user, MemberOrganization organization, Url url) {
-		if(hasAccess(organization, url)){
+	public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url) {
+		if(hasAccessOrganization(organization, url)){
 			return Boolean.TRUE;
-		} else if(hasAccess(user, url)){
+		} else if(hasAccessUser(user, url)){
 			return Boolean.TRUE;
 		} else {
 			return Boolean.FALSE;
@@ -195,16 +232,5 @@ public class URLServiceImpl implements URLService {
 	}
 	public void setProxyPrefix(String proxyPrefix) {
 		this.proxyPrefix = proxyPrefix;
-	}
-	
-	public String groupWS(Url url) {
-		ListResultSupplierSource list = this.accessService.getSupplierSourceListAll("");
-		for (SupplierSource supplierSource : list.getList()) {
-			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
-    			// TODO: Is this all?
-				return supplierSource.getSupplierSourceName();
-			}
-		}
-		return null;
 	}
 }

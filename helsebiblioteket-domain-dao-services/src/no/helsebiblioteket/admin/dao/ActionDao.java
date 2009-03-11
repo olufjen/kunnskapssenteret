@@ -15,6 +15,8 @@ public interface ActionDao {
 	public void deleteAction(ActionLine actionLine);
 
 	// Fetch
+	public ActionLine getActionLineById(Integer id);
+	
 	public List<ActionLine> getActionListByUser(User user);
 	public List<ActionLine> getActionListByOrganization(Organization organization);
 	public List<ActionLine> getActionListByResource(Resource resource);

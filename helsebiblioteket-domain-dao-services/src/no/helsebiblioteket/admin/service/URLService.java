@@ -10,11 +10,11 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 
 public interface URLService extends Serializable {
     public Boolean isAffected(Url url);
-    public SingleResultUrl translate(User user, Url url);
-    public SingleResultUrl translate(MemberOrganization organization, Url url);
-    public SingleResultUrl translate(User user, MemberOrganization organization, Url url);
-    public Boolean hasAccess(User user, Url url);
-    public Boolean hasAccess(MemberOrganization organization, Url url);
-    public Boolean hasAccess(User user, MemberOrganization organization, Url url);
+    public SingleResultUrl translateUrlUser(User user, Url url);
+    public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url);
+    public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url);
+    public Boolean hasAccessUser(User user, Url url);
+    public Boolean hasAccessOrganization(MemberOrganization organization, Url url);
+    public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url);
     public SingleResultString group(Url url);
 }

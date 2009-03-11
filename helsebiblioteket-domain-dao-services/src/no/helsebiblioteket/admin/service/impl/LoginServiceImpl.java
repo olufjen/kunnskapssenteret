@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 	 * Loads the organization from the database and returns the complete
 	 * object. Finding the organizations with the matching address is
 	 * delegated to IpRangeDao.
-	 * Returns the first found if there are more than one macth.
+	 * Returns the first found if there are more than one match.
 	 */
 	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
 		ListResultOrganizationListItem result = this.organizationService.getOrganizationListByIpAddress(ipAddress);
@@ -62,7 +62,6 @@ public class LoginServiceImpl implements LoginService {
 			}
 			SingleResultOrganization memberResult = this.organizationService.getOrganizationByListItem(list[0]);
 			if(memberResult instanceof ValueResultMemberOrganization) {
-				// FIXME: re-insert:
 				MemberOrganization memberOrganization = ((ValueResultMemberOrganization)memberResult).getValue();
 				return new ValueResultMemberOrganization(memberOrganization);
 			}
@@ -70,7 +69,7 @@ public class LoginServiceImpl implements LoginService {
 		return new EmptyResultMemberOrganization();
 	}
 	/**
-	 * Sends an email to the user. This is delegated to EmailDAO.
+	 * Sends an email to the user. This is delegated to EmailService.
 	 */
 	public Boolean sendPasswordEmail(User user) {
 		logger.info("Sending email to :" + user.getUsername());
@@ -87,6 +86,7 @@ public class LoginServiceImpl implements LoginService {
 		emailService.sendEmail(email);
 		return true;
 	}
+	
 	public void setEmailFromName(String emailFromName) {
 		this.emailFromName = emailFromName;
 	}

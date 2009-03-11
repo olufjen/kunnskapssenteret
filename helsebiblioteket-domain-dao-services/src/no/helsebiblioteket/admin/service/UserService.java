@@ -27,7 +27,6 @@ import no.helsebiblioteket.admin.requestresult.PageResult;
 public interface UserService extends Serializable {
 	public SingleResultSystem getSystemByKey(SystemKey key);
 	public ListResultRole getRoleListBySystem(System system);
-	public SingleResultRole getUserRoleBySystemKeyAndRoleKey(SystemKey systemKey, UserRoleKey userRoleKey);
 	public ListResultPosition getPositionListAll(String DUMMY);
 	/**
      * Fetches all the positions from the database. Delegates the task to
@@ -41,6 +40,7 @@ public interface UserService extends Serializable {
 	public PageResult<UserListItem> getUserListAll(PageRequest request);
 	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest request);
 
+	public SingleResultUser getUserByUserListItem(UserListItem userListItem);
 	public SingleResultUser findUserByUsername(String username);
 
 	public SingleResultUser insertUser(User user);
