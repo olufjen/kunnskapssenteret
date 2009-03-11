@@ -15,18 +15,22 @@ public class SqlMapActionDao extends SqlMapClientDaoSupport implements ActionDao
 	@Override
 	public void insertAction(ActionLine actionLine) {
 		getSqlMapClientTemplate().insert("insertAction", actionLine);
-		ActionLine tmp = (ActionLine) getSqlMapClientTemplate().queryForObject("getActionListByActionId", actionLine.getId());
+		ActionLine tmp = (ActionLine) getSqlMapClientTemplate().queryForObject("getActionLineByActionId", actionLine.getId());
 		actionLine.setActionPerformed(tmp.getActionPerformed());
 	}
 	@Override
 	public void updateAction(ActionLine actionLine) {
 		getSqlMapClientTemplate().update("updateAction", actionLine);
-		ActionLine tmp = (ActionLine) getSqlMapClientTemplate().queryForObject("getActionListByActionId", actionLine.getId());
+		ActionLine tmp = (ActionLine) getSqlMapClientTemplate().queryForObject("getActionLineByActionId", actionLine.getId());
 		actionLine.setActionPerformed(tmp.getActionPerformed());
 	}
 	@Override
 	public void deleteAction(ActionLine actionLine) {
 		getSqlMapClientTemplate().delete("deleteAction", actionLine);
+	}
+	@Override
+	public ActionLine getActionLineById(Integer id) {
+		return (ActionLine) getSqlMapClientTemplate().queryForObject("getActionLineByActionId", id);
 	}
 	@SuppressWarnings("unchecked")
 	@Override

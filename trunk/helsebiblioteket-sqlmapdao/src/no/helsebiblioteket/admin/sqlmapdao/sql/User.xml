@@ -47,4 +47,9 @@
 		from tbl_user
 		where username = #userName#;
 	</select>
+	<select id="getUserById" cacheModel="UserCache" resultMap="getUserResultMap" parameterClass="integer">
+		select user_id, username, password, org_unit_id, person_id, last_changed
+		from tbl_user
+		where user_id = #id#;
+	</select>
 </sqlMap>

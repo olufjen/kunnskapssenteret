@@ -57,7 +57,7 @@
 	<delete id="deleteAction" parameterClass="ActionLine">
   		delete from tbl_action where action_id = #id# and action_performed = #actionPerformed#
     </delete>
-	<select id="getActionListByActionId" cacheModel="ActionCache" resultMap="ActionLineMap" parameterClass="integer">
+	<select id="getActionLineByActionId" cacheModel="ActionCache" resultMap="ActionLineMap" parameterClass="integer">
 		select
 			action_id,
 			action_performed,
