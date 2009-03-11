@@ -20,7 +20,10 @@ import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
@@ -52,15 +55,17 @@ public class ActionServiceTests {
 		
 		// Create objects
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(health_enterprise, vernepleier);
-		memberOrganization.getOrganization().setNameEnglish("mem_org_" + randomValue);
+		String nameEnglish = "mem_org_" + randomValue;
+		memberOrganization.getOrganization().setNameEnglish(nameEnglish);
 		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(content_supplier, vernepleier);
 		supplierOrganization.getOrganization().setNameEnglish("sup_org_" + randomValue);
 		User user = UserFactory.factory.completeUser(memberOrganization, vernepleier);
-		user.setUsername("username_" + randomValue);
+		String username = "username_" + randomValue;
+		user.setUsername(username);
 		SupplierSourceResource resource = SupplierSourceResourceFactory.factory.completeSupplierSourceResource(supplier_source, source, supplierOrganization);
 		
-		memberOrganization.setOrganization(((ValueResultOrganization)beanFactory.getOrganizationService().insertOrganization(memberOrganization.getOrganization())).getValue());
-		supplierOrganization.setOrganization(((ValueResultOrganization)beanFactory.getOrganizationService().insertOrganization(supplierOrganization.getOrganization())).getValue());
+		memberOrganization.setOrganization(((ValueResultOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue());
+		supplierOrganization.setOrganization(((ValueResultOrganization)beanFactory.getOrganizationService().insertSupplierOrganization(supplierOrganization)).getValue());
 		user.setOrganization(memberOrganization.getOrganization());
 		user = ((ValueResultUser)beanFactory.getUserService().insertUser(user)).getValue();
 		resource = ((ValueResultSupplierSourceResource)beanFactory.getAccessService().insertSupplierSourceResource(resource)).getValue();
@@ -77,6 +82,11 @@ public class ActionServiceTests {
 //		TEST: public ListResultAction getActionListByUser(User user);
 		Action[] userActions = actionService.getActionListByUser(user).getList();
 		Assert.isTrue(userActions.length == 1, "Should have found one");
+		Assert.isTrue(userActions[0].getUserOrganizationAccess().equals(Action.USER_ACCESS), "Not user access");
+//		TEST: public SingleResultUser getUserByAction(Action action);
+		SingleResultUser userRes = actionService.getUserByAction(userActions[0]);
+		Assert.isTrue(userRes instanceof ValueResultUser, "User should have been found");
+		Assert.isTrue(((ValueResultUser)userRes).getValue().getUsername().equals(username), "Wrong user found");
 		
 //		TEST: public Boolean insertOrganizationAction(Organization organization, Resource resource, AccessType accessType);
 		actionService.insertOrganizationAction(memberOrganization.getOrganization(), resource.getResource(), general_GRANT);
@@ -84,7 +94,11 @@ public class ActionServiceTests {
 //		TEST: public ListResultAction getActionListByOrganization(Organization organization);
 		Action[] organizationActions = actionService.getActionListByOrganization(memberOrganization.getOrganization()).getList();
 		Assert.isTrue(organizationActions.length == 1, "Should have found one");
-		
+		Assert.isTrue(organizationActions[0].getUserOrganizationAccess().equals(Action.ORGANIZATION_ACCESS), "Not organization access");
+//		TEST: public SingleResultOrganization getOrganizationByAction(Action action);
+		SingleResultOrganization orgRes = actionService.getOrganizationByAction(organizationActions[0]);
+		Assert.isTrue(orgRes instanceof ValueResultMemberOrganization, "Organization should have been found");
+		Assert.isTrue(((ValueResultMemberOrganization)orgRes).getValue().getOrganization().getNameEnglish().equals(nameEnglish), "Wrong organization found");
 		
 //		TEST: public ListResultAction getActionListByResource(Resource resource);
 		Action[] resourceActions = actionService.getActionListByResource(resource.getResource()).getList();

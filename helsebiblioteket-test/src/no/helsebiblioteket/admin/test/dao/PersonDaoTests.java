@@ -50,7 +50,7 @@ public class PersonDaoTests {
 		personDao.updatePerson(foundUser);
 
 		// FIND BY ORGANIZATION
-		Person foundOrganization = personDao.getPersonByOrganization(organization);
+		Person foundOrganization = personDao.getPersonByOrganization(organization.getOrganization());
 		Assert.isTrue(foundOrganization.getFirstName().equals(firstName), "Lost org person");
 		
 		

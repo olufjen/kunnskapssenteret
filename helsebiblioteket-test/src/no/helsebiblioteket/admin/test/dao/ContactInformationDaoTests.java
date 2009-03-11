@@ -41,7 +41,7 @@ public class ContactInformationDaoTests {
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		new OrganizationDaoTests().insertMemberOrganization(organization);
 		
-		ContactInformation orgContactInformation = contactInformationDao.getContactInformationByOrganization(organization);
+		ContactInformation orgContactInformation = contactInformationDao.getContactInformationByOrganization(organization.getOrganization());
 		Assert.notNull(orgContactInformation, "No contact information for organization");
 	}
 	public void insertContactInformation(ContactInformation contactInformation){

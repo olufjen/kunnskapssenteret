@@ -38,7 +38,7 @@ public class UserDetailsServiceTests {
 		user.setUsername(username);
 		
 		// Inserts
-		organization.setOrganization(((ValueResultOrganization)this.beanFactory.getOrganizationService().insertOrganization(organization.getOrganization())).getValue());
+		organization.setOrganization(((ValueResultOrganization)this.beanFactory.getOrganizationService().insertMemberOrganization(organization)).getValue());
 		user.setOrganization(organization.getOrganization());
 		user = ((ValueResultUser)this.beanFactory.getUserService().insertUser(user)).getValue();
 		

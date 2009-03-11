@@ -1,11 +1,12 @@
 package no.helsebiblioteket.admin.test.service;
 
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.test.BeanFactory;
 
 public class UserServiceTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
 	public void testAll(){
-		
+		UserService userService = beanFactory.getUserService();
 	}
 	@org.junit.Test
 	public void testGetRoleListAll(){

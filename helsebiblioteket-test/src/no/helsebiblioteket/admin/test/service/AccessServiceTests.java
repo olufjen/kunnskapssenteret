@@ -58,8 +58,8 @@ public class AccessServiceTests {
 		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(contentSupplier, fotterapeut);
 		User user = UserFactory.factory.completeUser(memberOrganization, fotterapeut);
 		SupplierSource urlSource = SupplierSourceFactory.factory.completeSupplierSource();
-		memberOrganization.setOrganization(((ValueResultOrganization)this.beanFactory.getOrganizationService().insertOrganization(memberOrganization.getOrganization())).getValue());
-		supplierOrganization.setOrganization(((ValueResultOrganization)this.beanFactory.getOrganizationService().insertOrganization(supplierOrganization.getOrganization())).getValue());
+		memberOrganization.setOrganization(((ValueResultOrganization)this.beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue());
+		supplierOrganization.setOrganization(((ValueResultOrganization)this.beanFactory.getOrganizationService().insertSupplierOrganization(supplierOrganization)).getValue());
 		user.setOrganization(memberOrganization.getOrganization());
 		user.setUsername("username_" + randomValue);
 		user = ((ValueResultUser)this.beanFactory.getUserService().insertUser(user)).getValue();
