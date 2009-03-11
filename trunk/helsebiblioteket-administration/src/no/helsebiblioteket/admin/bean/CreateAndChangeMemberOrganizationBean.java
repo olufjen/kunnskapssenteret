@@ -176,11 +176,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		
 		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
 		if (this.memberOrganization.getOrganization().getId() == null) {
-			this.organizationService.insertOrganization(this.memberOrganization.getOrganization());
-			// FIXME: Insert new IP-addresses!
-			this.memberOrganization.getIpAddressRangeList();
-			this.memberOrganization.getIpAddressSingleList();
-			
+			this.organizationService.insertMemberOrganization(this.memberOrganization);
 		} else {
 			// FIXME: Insert new and delete IP-addresses!
 			organizationService.updateOrganization(this.memberOrganization.getOrganization());
@@ -225,7 +221,8 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		organizationLookup.setId(orgId);
 		
 		SingleResultOrganization result = organizationService.getOrganizationByListItem(organizationLookup);
-    	if(result instanceof ValueResultOrganization){
+    	// TODO: Do not use instanceof ValueResultOrganization.
+		if(result instanceof ValueResultOrganization){
     		// FIXME: re-insert:
         	this.memberOrganization = null;// (MemberOrganization) ((ValueResultOrganization)result).getValue();
     	} else {
