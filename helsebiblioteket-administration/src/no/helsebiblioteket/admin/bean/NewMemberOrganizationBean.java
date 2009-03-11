@@ -202,12 +202,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		this.memberOrganization.getOrganization().setContactPerson(contactPerson);
 		
 		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		this.organizationService.insertOrganization(this.memberOrganization.getOrganization());
-		// FIXME: Insert new IP-addresses!
-		this.memberOrganization.getIpAddressRangeList();
-		this.memberOrganization.getIpAddressSingleList();
-
-		
+		this.organizationService.insertMemberOrganization(this.memberOrganization);
 	}
 	
 	public void actionAddSingleIp() {
@@ -245,6 +240,7 @@ public class NewMemberOrganizationBean extends NewOrganizationBean {
 		OrganizationListItem organization = new OrganizationListItem();
 		organization.setId(orgId);
 		SingleResultOrganization result = organizationService.getOrganizationByListItem(organization);
+    	// TODO: Do not use instanceof ValueResultOrganization.
 		if(result instanceof ValueResultOrganization){
 			Organization tmp = ((ValueResultOrganization)result).getValue();
 			// FIXME: Re-insert:

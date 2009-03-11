@@ -119,9 +119,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
 		if (supplierOrganization.getOrganization().getId() == null) {
-			organizationService.insertOrganization(supplierOrganization.getOrganization());
-			// FIXME: Insert resource list!
-			supplierOrganization.getResourceList();
+			organizationService.insertSupplierOrganization(supplierOrganization);
 		} else {
 			organizationService.updateOrganization(supplierOrganization.getOrganization());
 			// FIXME: update resource list!

@@ -127,9 +127,7 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 
 	public void actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
-		organizationService.insertOrganization(organization.getOrganization());
-		// FIXME: Insert resource list!
-		organization.getResourceList();
+		organizationService.insertSupplierOrganization(organization);
 	}
 	
 	public void actionAddSupplierSource() {
