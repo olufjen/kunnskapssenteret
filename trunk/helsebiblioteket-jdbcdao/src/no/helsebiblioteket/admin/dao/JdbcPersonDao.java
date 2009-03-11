@@ -203,7 +203,7 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		return null;
 	}
 	@Override
-	public Person getPersonByOrganization(MemberOrganization organization) {
+	public Person getPersonByOrganization(Organization organization) {
 		// TODO Auto-generated method stub
 		return null;
 	}
