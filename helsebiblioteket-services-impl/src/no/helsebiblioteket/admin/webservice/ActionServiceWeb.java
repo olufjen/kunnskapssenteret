@@ -6,10 +6,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.AccessType;
+import no.helsebiblioteket.admin.domain.Action;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultAction;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.service.ActionService;
 
 @SuppressWarnings("serial")
@@ -17,6 +20,8 @@ public class ActionServiceWeb extends BasicWebService implements ActionService{
 	protected static final Log logger = LogFactory.getLog(ActionServiceWeb.class);
 	private QName insertUserActionName;
 	private QName insertOrganizationActionName;
+	private QName getUserByActionName;
+	private QName getOrganizationByActionName;
 	private QName getActionListByUserName;
 	private QName getActionListByOrganizationName;
 	private QName getActionListByResourceName;
@@ -36,6 +41,20 @@ public class ActionServiceWeb extends BasicWebService implements ActionService{
 		Object[] args = new Object[] { organization, resource, accessType };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertOrganizationActionName, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public SingleResultUser getUserByAction(Action action) {
+		Object[] args = new Object[] { action };
+		Class[] returnTypes = new Class[] { SingleResultUser.class };
+		return (SingleResultUser)invoke(this.getUserByActionName, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public SingleResultOrganization getOrganizationByAction(Action action) {
+		Object[] args = new Object[] { action };
+		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
+		return (SingleResultOrganization)invoke(this.getOrganizationByActionName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -74,8 +93,7 @@ public class ActionServiceWeb extends BasicWebService implements ActionService{
 	public void setGetActionListByUserName(QName getActionListByUserName) {
 		this.getActionListByUserName = getActionListByUserName;
 	}
-	public void setGetActionListByOrganizationName(
-			QName getActionListByOrganizationName) {
+	public void setGetActionListByOrganizationName(QName getActionListByOrganizationName) {
 		this.getActionListByOrganizationName = getActionListByOrganizationName;
 	}
 	public void setGetActionListByResourceName(QName getActionListByResourceName) {
@@ -83,5 +101,11 @@ public class ActionServiceWeb extends BasicWebService implements ActionService{
 	}
 	public void setGetActionListByAccessTypeName(QName getActionListByAccessTypeName) {
 		this.getActionListByAccessTypeName = getActionListByAccessTypeName;
+	}
+	public void setGetUserByActionName(QName getUserByActionName) {
+		this.getUserByActionName = getUserByActionName;
+	}
+	public void setGetOrganizationByActionName(QName getOrganizationByActionName) {
+		this.getOrganizationByActionName = getOrganizationByActionName;
 	}
 }

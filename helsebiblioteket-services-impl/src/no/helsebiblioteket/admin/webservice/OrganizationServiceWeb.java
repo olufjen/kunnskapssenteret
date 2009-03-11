@@ -39,13 +39,12 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName findOrganizationsBySearchString;
 	private QName organizationByListItemName;
 	private QName insertMemberOrganizationName;
-	private QName updateMemberOrganizationName;
+	private QName updateOrganizationName;
 	private QName addIpAddresses;
 	private QName addIpAddressRanges;
 	private QName deleteIpAddresses;
 	private QName insertSupplierOrganizationName;
-	private QName updateSupplierOrganizationName;
-	private QName allPositionsName;
+
 	@Override
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY  };
@@ -79,16 +78,22 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		return (SingleResultOrganization) invoke(this.organizationByListItemName, args, returnTypes);
 	}
 	@Override
-	public SingleResultOrganization insertOrganization(Organization organization) {
-		Object[] args = new Object[] { organization  };
+	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization) {
+		Object[] args = new Object[] { memberOrganization };
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
 		return (SingleResultOrganization) invoke(this.insertMemberOrganizationName, args, returnTypes);
+	}
+	@Override
+	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization) {
+		Object[] args = new Object[] { supplierOrganization };
+		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
+		return (SingleResultOrganization) invoke(this.insertSupplierOrganizationName, args, returnTypes);
 	}
 	@Override
 	public SingleResultOrganization updateOrganization(Organization organization) {
 		Object[] args = new Object[] { organization  };
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
-		return (SingleResultOrganization) invoke(this.updateMemberOrganizationName, args, returnTypes);
+		return (SingleResultOrganization) invoke(this.updateOrganizationName, args, returnTypes);
 	}
 	@Override
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSets) {
@@ -135,20 +140,14 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 			QName findOrganizationsBySearchString) {
 		this.findOrganizationsBySearchString = findOrganizationsBySearchString;
 	}
-	public void setAllPositionsName(QName allPositionsName) {
-		this.allPositionsName = allPositionsName;
-	}
 	public void setInsertMemberOrganizationName(QName insertMemberOrganizationName) {
 		this.insertMemberOrganizationName = insertMemberOrganizationName;
 	}
 	public void setUpdateMemberOrganizationName(QName updateMemberOrganizationName) {
-		this.updateMemberOrganizationName = updateMemberOrganizationName;
+		this.updateOrganizationName = updateOrganizationName;
 	}
 	public void setInsertSupplierOrganizationName(QName insertSupplierOrganizationName) {
 		this.insertSupplierOrganizationName = insertSupplierOrganizationName;
-	}
-	public void setUpdateSupplierOrganizationName(QName updateSupplierOrganizationName) {
-		this.updateSupplierOrganizationName = updateSupplierOrganizationName;
 	}
 	public void setAddIpAddresses(QName addIpAddresses) {
 		this.addIpAddresses = addIpAddresses;

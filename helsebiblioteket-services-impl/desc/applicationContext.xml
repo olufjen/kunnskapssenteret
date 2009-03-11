@@ -42,8 +42,8 @@
   	</bean>
   	<bean id="actionService" class="no.helsebiblioteket.admin.service.impl.ActionServiceImpl">
   		<property name="actionDao" ref="actionDao"></property>
-  		<property name="accessTypeDao" ref="accessTypeDao"></property>
-  		<property name="resourceDao" ref="resourceDao"></property>
+  		<property name="userService" ref="userService"></property>
+  		<property name="organizationService" ref="organizationService"></property>
   	</bean>
   	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
     	<property name="host" value="${mail.smtp.host}"></property>
