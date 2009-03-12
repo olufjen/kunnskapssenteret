@@ -169,6 +169,7 @@
   		<property name="userListAllName" ref="userListAllName"></property>
   		<property name="findUsersBySearchStringRolesName" ref="findUsersBySearchStringRolesName"></property>
   		<property name="findUserByUsernameName" ref="findUserByUsernameName"></property>
+  		<property name="userByUserListItemName" ref="userByUserListItemName"></property>
   		<property name="insertUserName" ref="insertUserName"></property>
   		<property name="updateUserName" ref="updateUserName"></property>
   		<property name="positionByKey" ref="positionByKeyName"></property>
@@ -408,6 +409,10 @@
 	<bean name="findUserByUsernameName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="findUserByUsername" />
+	</bean>
+	<bean name="userByUserListItemName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="getUserByUserListItem" />
 	</bean>
 	<bean name="insertUserName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
