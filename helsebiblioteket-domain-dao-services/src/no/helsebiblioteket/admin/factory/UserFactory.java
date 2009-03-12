@@ -19,7 +19,6 @@ public class UserFactory {
 		user.setPassword("");
 		user.setLastChanged(new Date());
 		user.setRoleList(new Role[0]);
-		
 		user.setPerson(PersonFactory.factory.createPerson());
 		return user;
 	}
