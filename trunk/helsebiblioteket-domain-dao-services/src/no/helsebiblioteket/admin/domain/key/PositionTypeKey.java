@@ -8,7 +8,6 @@ public class PositionTypeKey {
 	public PositionTypeKey(String value) {
 		this.value = value;
 	}
-
 	public static final PositionTypeKey none = new PositionTypeKey("none");
 	public static final PositionTypeKey ambulansearbeider = new PositionTypeKey("ambulansearbeider");
 	public static final PositionTypeKey apotektekniker = new PositionTypeKey("apotektekniker");
