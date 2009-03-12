@@ -1,15 +1,13 @@
 package no.helsebiblioteket.admin.domain.list;
 
-import java.util.List;
-
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
 public class UserListItem {
 	private Integer id;
 	private String name;
 	private String username;
-	private List<String> roleNames;
-	private List<UserRoleKey> roleKeys;
+	private String[] roleNames;
+	private UserRoleKey[] roleKeys;
 	public String getName() {
 		return name;
 	}
@@ -22,16 +20,16 @@ public class UserListItem {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public List<String> getRoleNames() {
+	public String[] getRoleNames() {
 		return roleNames;
 	}
-	public void setRoleNames(List<String> roleNames) {
+	public void setRoleNames(String[] roleNames) {
 		this.roleNames = roleNames;
 	}
-	public List<UserRoleKey> getRoleKeys() {
+	public UserRoleKey[] getRoleKeys() {
 		return roleKeys;
 	}
-	public void setRoleKeys(List<UserRoleKey> roleKeys) {
+	public void setRoleKeys(UserRoleKey[] roleKeys) {
 		this.roleKeys = roleKeys;
 	}
 	public Integer getId() {
