@@ -1,13 +1,14 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.ModifiedListHelper;
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
@@ -30,7 +31,6 @@ import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
@@ -172,10 +172,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 		if(type.getKey().getValue().equals(OrganizationTypeKey.content_supplier.getValue())){
 			SupplierOrganization supplierOrganization = new SupplierOrganization();
 			populateSupplierOrganization(supplierOrganization);
+			supplierOrganization.setOrganization(organization);
 			return new ValueResultSupplierOrganization(supplierOrganization);
 		} else {
 			MemberOrganization memberOrganization = new MemberOrganization();
 			populateMemberOrganization(memberOrganization);
+			memberOrganization.setOrganization(organization);
 			return new ValueResultMemberOrganization(memberOrganization);
 		}
 	}
@@ -236,12 +238,26 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization) {
+		// TODO: This should be removed, because it is only written to get
+		//       around an error(?)in Axis2.
+		if(memberOrganization.getIpAddressRangeList() == null){
+			memberOrganization.setIpAddressRangeList(new IpAddressRange[0]);
+		}
+		if(memberOrganization.getIpAddressSingleList() == null){
+			memberOrganization.setIpAddressSingleList(new IpAddressSingle[0]);
+		}
+		
 		insertOrganization(memberOrganization.getOrganization());
 		insertIpSetLists(memberOrganization);
 		return new ValueResultMemberOrganization(memberOrganization);
 	}
 	@Override
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization) {
+		// TODO: This should be removed, because it is only written to get
+		//       around an error(?)in Axis2.
+		if(supplierOrganization.getResourceList() == null){
+			supplierOrganization.setResourceList(new SupplierSourceResource[0]);
+		}
 		insertOrganization(supplierOrganization.getOrganization());
 		insertSupplierSourceResourceList(supplierOrganization);
 		return new ValueResultSupplierOrganization(supplierOrganization);
@@ -288,16 +304,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 		OrganizationListItem organizationListItem = new OrganizationListItem();
 		organizationListItem.setId(organization.getId());
 		SingleResultOrganization result = this.getOrganizationByListItem(organizationListItem);
-//		Organization old;
-//		if(result instanceof EmptyResultOrganization){
-//			throw new NullPointerException("Tried to update non-existing organization");
-//		} else {
-//			if(result instanceof ValueResultSupplierOrganization){
-//				old = ((ValueResultSupplierOrganization)result).getValue().getOrganization();
-//			} else {
-//				old = ((ValueResultMemberOrganization)result).getValue().getOrganization();
-//			}
-//		}
+		Organization old;
+		if(result instanceof EmptyResultOrganization){
+			throw new NullPointerException("Tried to update non-existing organization");
+		} else {
+			if(result instanceof ValueResultSupplierOrganization){
+				old = ((ValueResultSupplierOrganization)result).getValue().getOrganization();
+			} else {
+				old = ((ValueResultMemberOrganization)result).getValue().getOrganization();
+			}
+		}
 		
 		// TODO: Allowed to change type?
 		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
@@ -306,8 +322,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 		this.personDao.updatePerson(organization.getContactPerson());
 		this.contactInformationDao.updateContactInformation(organization.getContactInformation());
 
-		List<OrganizationName> newOrgNameList = createNameList(organization);
-		updateOrganizationNameList(newOrgNameList);
+		List<OrganizationName> nameList = this.organizationNameDao.getOrganizationNameListByOrganization(old);
+		resetNameList(organization, nameList);
+		updateOrganizationNameList(nameList);
 
 		this.organizationDao.updateOrganization(organization);
 		return new ValueResultOrganization(organization);
@@ -365,6 +382,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
+		ipAddress = new IpAddress(normalizeIp(ipAddress));
 		List<OrganizationListItem> all = this.organizationListDao.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = new OrganizationListItem[all.size()];
 		int i=0;
@@ -403,6 +421,23 @@ public class OrganizationServiceImpl implements OrganizationService {
 		list.add(createName(LanguageCategory.no, OrganizationNameCategory.NORMAL, organization.getNameNorwegian()));
 		list.add(createName(LanguageCategory.no, OrganizationNameCategory.SHORT, organization.getNameShortNorwegian()));
 		return list;
+	}
+	private void resetNameList(Organization organization, List<OrganizationName> names) {
+		for (OrganizationName name : names) {
+			if(name.getCategory() == OrganizationNameCategory.NORMAL &&
+					name.getLanguageCode() == LanguageCategory.en){
+				name.setName(organization.getNameEnglish());
+			} else if(name.getCategory() == OrganizationNameCategory.SHORT &&
+					name.getLanguageCode() == LanguageCategory.en){
+				name.setName(organization.getNameShortEnglish());
+			} else if(name.getCategory() == OrganizationNameCategory.NORMAL &&
+					name.getLanguageCode() == LanguageCategory.no){
+				name.setName(organization.getNameNorwegian());
+			} else if(name.getCategory() == OrganizationNameCategory.SHORT &&
+					name.getLanguageCode() == LanguageCategory.no){
+				name.setName(organization.getNameShortNorwegian());
+			}
+		}
 	}
 	/**
 	 * Simply creates a OrganizationName object. 
@@ -540,6 +575,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	private void insertSupplierSourceResourceList(SupplierOrganization supplierOrganization) {
 		for (SupplierSourceResource resource : supplierOrganization.getResourceList()) {
+			this.supplierSourceDao.insertSupplierSource(resource.getSupplierSource());
 			this.resourceDao.insertSupplierSourceResource(resource);
 		}
 	}
@@ -566,8 +602,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @return
 	 */
 	private String normalizeIp(IpAddress address) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer result = new StringBuffer();
+		StringTokenizer tokenizer = new StringTokenizer(address.getAddress(), ".");
+		String part1 = tokenizer.nextToken();
+		String part2 = tokenizer.nextToken();
+		String part3 = tokenizer.nextToken();
+		String part4 = tokenizer.nextToken();
+		DecimalFormat format = new DecimalFormat("000");
+		result.append(format.format(new Integer(part1)));
+		result.append(".");
+		result.append(format.format(new Integer(part2)));
+		result.append(".");
+		result.append(format.format(new Integer(part3)));
+		result.append(".");
+		result.append(format.format(new Integer(part4)));
+		return result.toString();
 	}
 	/**
 	 * Removes prefixed zeroes from IP addresses for each part, like
@@ -576,9 +625,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * @param address
 	 * @return
 	 */
-	private IpAddress unNormalizeIp(String ipAddressFrom) {
-		// TODO Auto-generated method stub
-		return null;
+	private IpAddress unNormalizeIp(String addressText) {
+		StringBuffer result = new StringBuffer();
+		StringTokenizer tokenizer = new StringTokenizer(addressText, ".");
+		String part1 = tokenizer.nextToken();
+		String part2 = tokenizer.nextToken();
+		String part3 = tokenizer.nextToken();
+		String part4 = tokenizer.nextToken();
+		result.append(new Integer(part1));
+		result.append(".");
+		result.append(new Integer(part2));
+		result.append(".");
+		result.append(new Integer(part3));
+		result.append(".");
+		result.append(new Integer(part4));
+		return new IpAddress(result.toString());
 	}
 	/**
 	 * Translates IpAddressLine (DB) into IpAddressSet(GUI)

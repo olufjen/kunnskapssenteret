@@ -20,8 +20,10 @@ import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
@@ -133,47 +135,45 @@ public class URLServiceImpl implements URLService {
 	 *       type. 
 	 */
     public Boolean hasAccessUser(User user, Url url) {
-    	ListResultResourceAccess userAccessList = this.accessService.getAccessListByUser(user);
+    	ListResultResourceAccessListItem userAccessList = this.accessService.getAccessListByUser(user);
     	Boolean test = checkAccess(url, userAccessList.getList());
     	if(test != null){ return test; }
     	
     	// TODO: Trust the user list and organization or reload?
     	for (Role role : user.getRoleList()) {
-        	ListResultResourceAccess userRoleAccess = this.accessService.getAccessListByRole(role);
+        	ListResultResourceAccessListItem userRoleAccess = this.accessService.getAccessListByRole(role);
         	test = checkAccess(url, userRoleAccess.getList());
         	if(test != null){ return test; }
 		}
-    	ListResultResourceAccess organizationAccessList = this.accessService.getAccessListByOrganization(user.getOrganization());
+    	ListResultResourceAccessListItem organizationAccessList = this.accessService.getAccessListByOrganization(user.getOrganization());
 		test = checkAccess(url, organizationAccessList.getList());
 		if(test != null){ return test; }
 		
-		ListResultResourceAccess organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(user.getOrganization().getType());
+		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(user.getOrganization().getType());
 		test = checkAccess(url, organizationTypeAccessList.getList());
 		if(test != null){ return test; }
 		
 		return Boolean.FALSE;
 	}
-    private Boolean checkAccess(Url url, ResourceAccess[] resourceAccesses) {
-    	for (ResourceAccess access : resourceAccesses) {
-    		SupplierSourceResource resource = access.getResource();
-    		if(resource instanceof SupplierSourceResource){
-        		if(url.getStringValue().equals(((SupplierSourceResource)resource).getSupplierSource().getUrl().getStringValue())){
-        			// If GRANT and general -> OK
-        			if(access.getAccess().getAccessType().getCategory().getValue().equals(
-        					AccessTypeCategory.GRANT.getValue()) &&
-        					access.getAccess().getAccessType().getKey().getValue().equals(AccessTypeKey.general.getValue())){
-            			return true;
-        			}
-        			// If DENY and general -> NOT OK
-        			if(access.getAccess().getAccessType().getCategory().getValue().equals(
-        					AccessTypeCategory.DENY.getValue()) &&
-        					access.getAccess().getAccessType().getKey().getValue().equals(AccessTypeKey.general.getValue())){
-        				return false;
-        			}
+    private Boolean checkAccess(Url url, ResourceAccessListItem[] resourceAccesses) {
+    	for (ResourceAccessListItem access : resourceAccesses) {
+    		if(url.getStringValue().equals(
+    				access.getUrl().getStringValue())){
+        		// If GRANT and general -> OK
+        		if(access.getCategory().getValue().equals(
+        				AccessTypeCategory.GRANT.getValue()) &&
+        					access.getKey().getValue().equals(
+        							AccessTypeKey.general.getValue())){
+            		return true;
         		}
-    		} else {
-    			// What if other kind?
-    		}
+        		// If DENY and general -> NOT OK
+        		if(access.getCategory().getValue().equals(
+        				AccessTypeCategory.DENY.getValue()) &&
+        				access.getKey().getValue().equals(
+        						AccessTypeKey.general.getValue())){
+        			return false;
+        		}
+        	}
 		}
     	return null;
     }
@@ -181,15 +181,13 @@ public class URLServiceImpl implements URLService {
 	 * Loads the Access list for an organization and checks if the URL
 	 * is in the list.
 	 * 
-	 * TODO: I think we must check for Access type and resource
-	 *       type.
 	 */
 	public Boolean hasAccessOrganization(MemberOrganization organization, Url url) {
-    	ListResultResourceAccess accessList = this.accessService.getAccessListByOrganization(organization.getOrganization());
+    	ListResultResourceAccessListItem accessList = this.accessService.getAccessListByOrganization(organization.getOrganization());
 		Boolean test = checkAccess(url, accessList.getList());
 		if(test != null){ return test; }
 
-		ListResultResourceAccess organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(organization.getOrganization().getType());
+		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(organization.getOrganization().getType());
 		test = checkAccess(url, organizationTypeAccessList.getList());
 		if(test != null){ return test; }
 

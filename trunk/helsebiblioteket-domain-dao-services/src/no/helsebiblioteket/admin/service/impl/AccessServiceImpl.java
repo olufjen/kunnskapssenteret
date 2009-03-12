@@ -19,7 +19,8 @@ import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
-import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
+import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
@@ -42,6 +43,7 @@ public class AccessServiceImpl implements AccessService {
 	 */
 	@Override
 	public SingleResultSupplierSourceResource insertSupplierSourceResource(SupplierSourceResource resource) {
+		this.supplierSourceDao.insertSupplierSource(resource.getSupplierSource());
 		this.resourceDao.insertSupplierSourceResource(resource);
 		return new ValueResultSupplierSourceResource(resource);
 	}
@@ -57,9 +59,11 @@ public class AccessServiceImpl implements AccessService {
 	 * Deletes access to a resource. The resource is not deleted.
 	 */
 	@Override
-	public Boolean deleteResourceAccess(ResourceAccess access) {
+	public Boolean deleteResourceAccess(ResourceAccessListItem access) {
 		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
-		keys.setResourceAccess(access);
+		keys.setResourceAccess(new ResourceAccess());
+		keys.getResourceAccess().getAccess().setId(access.getId());
+		keys.getResourceAccess().getAccess().setLastChanged(access.getLastChanged());
 		this.accessDao.deleteResourceAccessForeignKeys(keys);
 		return true;
 	}
@@ -115,7 +119,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(User, Url)
 	 */
 	@Override
-	public ListResultResourceAccess getAccessListByUser(User user) {
+	public ListResultResourceAccessListItem getAccessListByUser(User user) {
 		return translateList(this.accessDao.getAccessListByUser(user));
 	}
 	/**
@@ -126,7 +130,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(no.helsebiblioteket.admin.domain.MemberOrganization, Url)
 	 */
 	@Override
-	public ListResultResourceAccess getAccessListByOrganization(Organization organization) {
+	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization) {
 		return translateList(this.accessDao.getAccessListByOrganization(organization));
 	}
 	/**
@@ -137,7 +141,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(no.helsebiblioteket.admin.domain.MemberOrganization, Url)
 	 */
 	@Override
-	public ListResultResourceAccess getAccessListByOrganizationType(OrganizationType organizationType) {
+	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType) {
 		return translateList(this.accessDao.getAccessListByOrganizationType(organizationType));
 	}
 	/**
@@ -148,7 +152,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(User, Url)
 	 */
 	@Override
-	public ListResultResourceAccess getAccessListByRole(Role role) {
+	public ListResultResourceAccessListItem getAccessListByRole(Role role) {
 		return translateList(this.accessDao.getAccessListByUserRole(role));
 	}
 	/**
@@ -193,12 +197,16 @@ public class AccessServiceImpl implements AccessService {
 	 * @param keyList
 	 * @return
 	 */
-	private ListResultResourceAccess translateList(List<ResourceAccessForeignKeys> keyList) {
-		ListResultResourceAccess result = new ListResultResourceAccess();
-		ResourceAccess[] list = new ResourceAccess[keyList.size()];
+	private ListResultResourceAccessListItem translateList(List<ResourceAccessListItem> itemList) {
+		ListResultResourceAccessListItem result = new ListResultResourceAccessListItem();
+		ResourceAccessListItem[] list = new ResourceAccessListItem[itemList.size()];
 		int i=0;
-		for (ResourceAccessForeignKeys key : keyList) {
-			list[i] = key.getResourceAccess();
+		for (ResourceAccessListItem key : itemList) {
+			list[i] = key;
+//			list[i].setId(key.getResourceAccess().getAccess().getId());
+//			list[i].setCategory(key.getResourceAccess().getAccess().getAccessType().getCategory());
+//			list[i].setKey(key.getResourceAccess().getAccess().getAccessType().getKey());
+//			list[i].setUrl(key.getResourceAccess().getResource().getSupplierSource().getUrl());
 			i++;
 		}
 		result.setList(list);
