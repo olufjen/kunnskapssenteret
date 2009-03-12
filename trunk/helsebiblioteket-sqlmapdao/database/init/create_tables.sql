@@ -13,16 +13,16 @@
 CREATE TABLE tbl_ip_address
 (
     ip_address_from      VARCHAR             NOT NULL,
-    ip_address_to        VARCHAR             NULL,
+    ip_address_to        VARCHAR             NOT NULL,
     ip_address_id        SERIAL             NOT NULL,
     org_unit_id          INTEGER             NULL,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( ip_address_id )
 );
 
+-- Commented out during import
 --ALTER TABLE tbl_ip_address
 --  ADD CONSTRAINT tbl_ip_address_unique UNIQUE(ip_address_from, ip_address_to, org_unit_id);
-
 
 CREATE TABLE tbl_contact_information
 (
