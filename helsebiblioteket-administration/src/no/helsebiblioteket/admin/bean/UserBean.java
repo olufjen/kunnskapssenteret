@@ -20,7 +20,6 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
-import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
@@ -31,11 +30,7 @@ import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationList
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
-import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 
@@ -56,7 +51,7 @@ public class UserBean {
 	private List<Position> allPositions;
 	private Map<PositionTypeKey, Position> allPositionsMap;
 	// FIXME: Use caching?
-	private List<UserListItem> users;
+	private UserListItem[] users;
 	private User user;
 	
 	private boolean showHprNumber;
@@ -97,7 +92,7 @@ public class UserBean {
     	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
 			this.availableIsStudent.add(new SelectItem("Y", "Student"));
 			this.availableIsStudent.add(new SelectItem("N", "Employee"));
-			this.selectedIsStudent = this.user.getPerson().getIsStudent() ? "Y" : "N";
+			this.selectedIsStudent = "N";
 			if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
     	}
 //		}
@@ -166,8 +161,8 @@ public class UserBean {
     	this.enableDisableFields();
     }
     public void studentChanged(ValueChangeEvent event){
-    	if("Y".equals(event.getNewValue())){ this.user.getPerson().setIsStudent(true); }
-    	if("N".equals(event.getNewValue())){ this.user.getPerson().setIsStudent(false); }
+//    	if("Y".equals(event.getNewValue())){ this.user.getPerson().setIsStudent(true); }
+//    	if("N".equals(event.getNewValue())){ this.user.getPerson().setIsStudent(false); }
     	this.enableDisableFields();
     }
     public boolean getCannotShowUser(){ return false; }
@@ -186,21 +181,21 @@ public class UserBean {
     	if(this.mainRole().getKey().equals(roleKeyAdministrator)){
         	this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setStudentNumber(null);
-    		this.user.getPerson().setIsStudent(false);
+//    		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setEmployer("");
     		this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().setProfile(new Profile());
     	} else if(this.mainRole().getKey().equals(roleKeyEmployee)){
         	this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setStudentNumber(null);
-    		this.user.getPerson().setIsStudent(false);
+//    		this.user.getPerson().setIsStudent(false);
     	} else if(this.mainRole().getKey().equals(roleKeyHealthWorker)){
     		this.user.getPerson().setStudentNumber(null);
-    		this.user.getPerson().setIsStudent(false);
+//    		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setPosition(this.allPositionsMap.get(this.user.getPerson().getPosition().getKey()));
     	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
         	this.user.getPerson().setHprNumber(null);
-        	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
+//        	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
     		this.user.getPerson().setPosition(new Position());
     	}
     	if(this.isNew()){
@@ -233,14 +228,15 @@ public class UserBean {
 		this.user = (User) this.usersTable.getRowData();
 		
 		// FIXME: Remove testing.
-		this.user.getPerson().setIsStudent(true);
+//		this.user.getPerson().setIsStudent(true);
 		return details();
 	}
-	public List<Role> getSelectedRolesRoleList(){
-		List<Role> selectedRoles = new ArrayList<Role>();
+	public Role[] getSelectedRolesRoleList(){
 		if(this.allRolesMap == null) {getAllRoles();}
+		Role[] selectedRoles = new Role[this.getSelectedRoles().size()];
+		int i=0;
 		for (UserRoleKey string : this.getSelectedRoles()) {
-			selectedRoles.add(this.allRolesMap.get(string));
+			selectedRoles[i] = this.allRolesMap.get(string);
 		}
 		return selectedRoles;
 	}
@@ -251,7 +247,7 @@ public class UserBean {
 		}
 		// FIXME: Handle paged result!
 		this.users = this.userService.findUsersBySearchStringRoles(this.searchinput, this.getSelectedRolesRoleList(),
-				new PageRequest(0, Integer.MAX_VALUE)).result;
+				new PageRequest(0, Integer.MAX_VALUE)).getResult();
 		return "users_overview";
 	}
 	public List<SelectItem> getAvailableIsStudent() {
@@ -367,9 +363,9 @@ public class UserBean {
 		}
 		return this.allPositions;
 	}
-	public List<UserListItem> getUsers() {
+	public UserListItem[] getUsers() {
 		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest(0, Integer.MAX_VALUE)).result; }
+		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest(0, Integer.MAX_VALUE)).getResult(); }
 		return this.users;
 	}
 	public String getSelectedIsStudent() {
