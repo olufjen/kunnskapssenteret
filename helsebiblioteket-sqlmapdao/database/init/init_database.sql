@@ -45,7 +45,7 @@ insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'T
 insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'Vernepleier', 'vernepleier', (select org_type_id from tbl_org_type_reg where key = 'health_enterprise'));
 insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'Provisorfarmasøyt', 'provisorfarmasoyt', (select org_type_id from tbl_org_type_reg where key = 'health_enterprise'));
 insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'Reseptarfarmasøyt', 'reseptarfarmasoyt', (select org_type_id from tbl_org_type_reg where key = 'health_enterprise'));
---select * from tbl_position_type_reg
+insert into tbl_position_type_reg (descr, name, key, org_type_id) values ('', 'Ingen', 'none', (select org_type_id from tbl_org_type_reg where key = 'health_enterprise'));
 
 insert into tbl_person (first_name, last_name, last_changed) values ('Kjell', 'Tjensvoll',now());
 insert into tbl_org_unit (org_type_id, org_unit_parent_id,contact_information_id,person_id, last_changed) values ((select org_type_id from tbl_org_type_reg where key = 'health_enterprise'),NULL,NULL,(select currval('tbl_person_person_id_seq')),now());
