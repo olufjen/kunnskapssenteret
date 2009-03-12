@@ -13,7 +13,7 @@ public class PersonFactory {
 		person.setEmployer("");
 		person.setFirstName("");
 		person.setHprNumber("");
-		person.setIsStudent(false);
+//		person.setIsStudent(false);
 		person.setLastChanged(new Date());
 		person.setLastName("");
 		person.setPosition(PositionFactory.factory.createPosition());
