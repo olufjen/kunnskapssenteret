@@ -6,7 +6,6 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
-import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
 
 public class SqlMapResourceDao extends SqlMapClientDaoSupport implements ResourceDao {
@@ -27,9 +26,8 @@ public class SqlMapResourceDao extends SqlMapClientDaoSupport implements Resourc
 		// Only supports supplier_source
 		return (SupplierSourceResource) getSqlMapClientTemplate().queryForObject("getSupplierSourceResourceById", resourceId);
 	}
+	@SuppressWarnings("unchecked")
 	public List<SupplierSourceResource> getResourceByOrganization(SupplierOrganization supplierOrganization) {
-		// TODO Auto-generated method stub
-
-		return null;
+		return getSqlMapClientTemplate().queryForList("getSupplierSourceResourceByOrganizationId", supplierOrganization.getOrganization().getId());
 	}
 }

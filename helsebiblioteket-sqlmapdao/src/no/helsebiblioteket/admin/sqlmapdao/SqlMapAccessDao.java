@@ -8,6 +8,7 @@ import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 
 /**
  * Used to insert, update, load and delete ResourceAccess
@@ -30,19 +31,19 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 		getSqlMapClientTemplate().delete("deleteResourceAccessForeignKeys", keys);
 	}
 	@SuppressWarnings("unchecked")
-	public List<ResourceAccessForeignKeys> getAccessListByUser(User user){
-		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserId", user.getId());
+	public List<ResourceAccessListItem> getAccessListByUser(User user){
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByUserId", user.getId());
 	}
 	@SuppressWarnings("unchecked")
-	public List<ResourceAccessForeignKeys> getAccessListByUserRole(Role userRole){
-		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getId());
+	public List<ResourceAccessListItem> getAccessListByUserRole(Role userRole){
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getId());
 	}
 	@SuppressWarnings("unchecked")
-	public List<ResourceAccessForeignKeys> getAccessListByOrganization(Organization organization){
-		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId());
+	public List<ResourceAccessListItem> getAccessListByOrganization(Organization organization){
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId());
 	}
 	@SuppressWarnings("unchecked")
-	public List<ResourceAccessForeignKeys> getAccessListByOrganizationType(OrganizationType organizationType){
-		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
+	public List<ResourceAccessListItem> getAccessListByOrganizationType(OrganizationType organizationType){
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
 	}
 }

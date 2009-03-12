@@ -43,11 +43,11 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 			item.setName(line.getFirstName() + line.getLastName());
 
 			// TODO: Fix! Handles only one role!
-			List<String> names = new ArrayList<String>();
-			names.add(line.getRoleName());
+			String[] names = new String[1];
+			names[0] = line.getRoleName();
 			item.setRoleNames(names);
-			List<UserRoleKey> keys = new ArrayList<UserRoleKey>();
-			keys.add(line.getRoleKey());
+			UserRoleKey[] keys = new UserRoleKey[1];
+			keys[0] = line.getRoleKey();
 			item.setRoleKeys(keys);
 			
 			result.add(item);

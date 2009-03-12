@@ -25,13 +25,15 @@
 			tperson.first_name,
 			tperson.last_name,
 			trole.name as role_name,
-			trole.key as role_key
+			trole.key as role_key,
+			tuser.user_id
 		from
 			tbl_user as tuser
 			inner join tbl_person as tperson on tperson.person_id = tuser.person_id
-			inner join tbl_user_role as userrole on userrole.user_id = tuser.user_id
-			inner join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
+			left outer join tbl_user_role as userrole on userrole.user_id = tuser.user_id
+			left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
 		order by
-			tuser.username
+			tuser.user_id
+		desc
 	</select>
 </sqlMap>
