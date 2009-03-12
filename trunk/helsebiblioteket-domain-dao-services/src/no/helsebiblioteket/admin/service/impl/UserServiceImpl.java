@@ -389,6 +389,7 @@ public class UserServiceImpl implements UserService {
 			userRole.setUserRoleId(role.getId());
 			userRole.setUserId(id);
 			userRole.setLastChanged(new Date());
+			result.add(userRole);
 		}
 		return result;
 	}

@@ -8,6 +8,10 @@ public class UserListItem {
 	private String username;
 	private String[] roleNames;
 	private UserRoleKey[] roleKeys;
+	@Override
+	public String toString() {
+		return "[" + id + ": " + username + ", " + name + "]";
+	}
 	public String getName() {
 		return name;
 	}

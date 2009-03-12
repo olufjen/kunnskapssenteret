@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.domain.line;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
 public class UserListLine {
+	private Integer id;
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -37,5 +38,11 @@ public class UserListLine {
 	}
 	public void setRoleKey(UserRoleKey roleKey) {
 		this.roleKey = roleKey;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }
