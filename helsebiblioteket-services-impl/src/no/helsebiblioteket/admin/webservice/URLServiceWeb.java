@@ -19,8 +19,13 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 public class URLServiceWeb extends BasicWebService implements URLService {
 	protected static final Log logger = LogFactory.getLog(URLServiceWeb.class);
 	private QName isAffectedName;
-	private QName translateName;
-	private QName hasAccessName;
+	private QName translateUrlUserName;
+	private QName translateUrlOrganizationName;
+	private QName translateUrlUserOrganizationName;
+	private QName hasAccessUserName;
+	private QName hasAccessOrganizationName;
+	private QName hasAccessUserOrganizationName;
+	
 	private QName groupName;
 	
 	public Boolean isAffected(Url url){
@@ -31,32 +36,32 @@ public class URLServiceWeb extends BasicWebService implements URLService {
     public SingleResultUrl translateUrlUser(User user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		return (SingleResultUrl)invoke(this.translateName, args, returnTypes);
+		return (SingleResultUrl)invoke(this.translateUrlUserName, args, returnTypes);
     }
     public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		return (SingleResultUrl)invoke(this.translateName, args, returnTypes);
+		return (SingleResultUrl)invoke(this.translateUrlOrganizationName, args, returnTypes);
     }
     public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		return (SingleResultUrl)invoke(this.translateName, args, returnTypes);
+		return (SingleResultUrl)invoke(this.translateUrlUserOrganizationName, args, returnTypes);
     }
     public Boolean hasAccessUser(User user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessName, args, returnTypes);
+		return (Boolean)invoke(this.hasAccessUserName, args, returnTypes);
     }
     public Boolean hasAccessOrganization(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessName, args, returnTypes);
+		return (Boolean)invoke(this.hasAccessOrganizationName, args, returnTypes);
     }
     public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessName, args, returnTypes);
+		return (Boolean)invoke(this.hasAccessUserOrganizationName, args, returnTypes);
     }
     public SingleResultString group(Url url){
 		Object[] args = new Object[] { url };
@@ -73,17 +78,28 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public void setIsAffectedName(QName isAffectedName) {
 		this.isAffectedName = isAffectedName;
 	}
-	public void setTranslateName(QName translateName) {
-		this.translateName = translateName;
+	public void setTranslateUrlUserName(QName translateUrlUserName) {
+		this.translateUrlUserName = translateUrlUserName;
 	}
-	public void setHasAccessName(QName hasAccessName) {
-		this.hasAccessName = hasAccessName;
+	public void setTranslateUrlOrganizationName(QName translateUrlOrganizationName) {
+		this.translateUrlOrganizationName = translateUrlOrganizationName;
 	}
-	
-	
+	public void setTranslateUrlUserOrganizationName(QName translateUrlUserOrganizationName) {
+		this.translateUrlUserOrganizationName = translateUrlUserOrganizationName;
+	}
+	public void setHasAccessUserName(QName hasAccessUserName) {
+		this.hasAccessUserName = hasAccessUserName;
+	}
+	public void setHasAccessOrganizationName(QName hasAccessOrganizationName) {
+		this.hasAccessOrganizationName = hasAccessOrganizationName;
+	}
+	public void setHasAccessUserOrganizationName(QName hasAccessUserOrganizationName) {
+		this.hasAccessUserOrganizationName = hasAccessUserOrganizationName;
+	}
 	public void setGroupName(QName groupName) {
 		this.groupName = groupName;
 	}
+
 	public static void main(String[] args) throws Exception {
 		// TODO: Move to test project!
 		QName isAffectedName = new QName("http://service.admin.helsebiblioteket.no", "isAffected");
@@ -94,7 +110,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		loginService.setServiceClient(serviceClient);
 		loginService.setTargetEPR(targetEPR);
 		loginService.setIsAffectedName(isAffectedName);
-		loginService.setTranslateName(translateName);
+		loginService.setTranslateUrlOrganizationName(translateName);
 		loginService.init();
 		
 		User user = new User();
@@ -113,11 +129,5 @@ public class URLServiceWeb extends BasicWebService implements URLService {
     	System.out.println("isAffected2: " + isAffected2);
     	System.out.println("translated1: " + translated1.getStringValue());
     	System.out.println("translated2: " + translated2.getStringValue());
-	}
-	public String groupWS(Url url) {
-		Object[] args = new Object[] { url };
-		Class[] returnTypes = new Class[] { String.class };
-		Object result = invoke(this.groupName, args, returnTypes);
-		return (result != null) ? (String) result : null;
 	}
 }
