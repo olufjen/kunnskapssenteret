@@ -14,7 +14,9 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
@@ -51,34 +53,34 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 		return (Boolean)invoke(this.deleteSupplierSourceResource, args, returnTypes);
 	}
 	@Override
-	public Boolean deleteResourceAccess(ResourceAccess access) {
+	public Boolean deleteResourceAccess(ResourceAccessListItem access) {
 		Object[] args = new Object[] { access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.deleteResourceAccess, args, returnTypes);
 	}
 	@Override
-	public ListResultResourceAccess getAccessListByOrganization(Organization organization) {
+	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization) {
 		Object[] args = new Object[] { organization };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
-		return (ListResultResourceAccess)invoke(this.accessListByOrganization, args, returnTypes);
+		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganization, args, returnTypes);
 	}
 	@Override
-	public ListResultResourceAccess getAccessListByOrganizationType(OrganizationType organizationType) {
+	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType) {
 		Object[] args = new Object[] { organizationType };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
-		return (ListResultResourceAccess)invoke(this.accessListByOrganizationType, args, returnTypes);
+		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganizationType, args, returnTypes);
 	}
 	@Override
-	public ListResultResourceAccess getAccessListByRole(Role role) {
+	public ListResultResourceAccessListItem getAccessListByRole(Role role) {
 		Object[] args = new Object[] { role };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
-		return (ListResultResourceAccess)invoke(this.accessListByRole, args, returnTypes);
+		return (ListResultResourceAccessListItem)invoke(this.accessListByRole, args, returnTypes);
 	}
 	@Override
-	public ListResultResourceAccess getAccessListByUser(User user) {
+	public ListResultResourceAccessListItem getAccessListByUser(User user) {
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
-		return (ListResultResourceAccess)invoke(this.accessListByUser, args, returnTypes);
+		return (ListResultResourceAccessListItem)invoke(this.accessListByUser, args, returnTypes);
 	}
 	@Override
 	public SingleResultAccessType getAccessTypeByTypeCategory(AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory) {

@@ -1,7 +1,5 @@
 package no.helsebiblioteket.admin.webservice;
 
-import java.util.List;
-
 import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
@@ -10,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
@@ -19,6 +18,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
@@ -70,17 +70,17 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public PageResult<UserListItem> getUserListAll(PageRequest request){
+	public PageResultUserListItem getUserListAll(PageRequest request){
 		Object[] args = new Object[] { request };
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult)invoke(this.userListAllName, args, returnTypes);
+		return (PageResultUserListItem)invoke(this.userListAllName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest request){
+	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request){
 		Object[] args = new Object[] { searchString, roles, request};
 		Class[] returnTypes = new Class[] { PageResult.class };
-		return (PageResult)invoke(this.findUsersBySearchStringRolesName, args, returnTypes);
+		return (PageResultUserListItem)invoke(this.findUsersBySearchStringRolesName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -99,6 +99,10 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser insertUser(User user){
+		// TODO: This test should not be here.
+		if(user.getRoleList() == null) {
+			throw new NullPointerException("RoleList should not be null");
+		}
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { SingleResultUser.class };
 		return (SingleResultUser)invoke(this.insertUserName, args, returnTypes);
@@ -106,14 +110,18 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean updateUser(User user){
+		// TODO: This test should not be here.
+		if(user.getRoleList() == null) {
+			throw new NullPointerException("RoleList should not be null");
+		}
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.updateUserName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey) {
-		Object[] args = new Object[] { positionTypeKey };
+	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey, OrganizationType organizationType) {
+		Object[] args = new Object[] { positionTypeKey, organizationType };
 		Class[] returnTypes = new Class[] { SingleResultPosition.class };
 		return (SingleResultPosition)invoke(this.positionByKey, args, returnTypes);
 	}

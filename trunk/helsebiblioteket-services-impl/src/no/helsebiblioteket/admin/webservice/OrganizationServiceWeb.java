@@ -11,7 +11,6 @@ import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
@@ -21,12 +20,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
-import no.helsebiblioteket.admin.requestresult.ListResult;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 @SuppressWarnings("serial")
@@ -79,12 +73,24 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	@Override
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization) {
+		// TODO: These tests should not be here.
+		if(memberOrganization.getIpAddressRangeList() == null) {
+			throw new NullPointerException("IpAddressRangeList should not be null");
+		}
+		if(memberOrganization.getIpAddressSingleList() == null){
+			throw new NullPointerException("IpAddressSingleList should not be null");
+		}
 		Object[] args = new Object[] { memberOrganization };
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
 		return (SingleResultOrganization) invoke(this.insertMemberOrganizationName, args, returnTypes);
 	}
 	@Override
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization) {
+		// TODO: These tests should not be here.
+		if(supplierOrganization.getResourceList() == null){
+			throw new NullPointerException("ResourceList should not be null");
+		}
+		
 		Object[] args = new Object[] { supplierOrganization };
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
 		return (SingleResultOrganization) invoke(this.insertSupplierOrganizationName, args, returnTypes);
@@ -143,7 +149,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	public void setInsertMemberOrganizationName(QName insertMemberOrganizationName) {
 		this.insertMemberOrganizationName = insertMemberOrganizationName;
 	}
-	public void setUpdateMemberOrganizationName(QName updateMemberOrganizationName) {
+	public void setUpdateOrganizationName(QName updateOrganizationName) {
 		this.updateOrganizationName = updateOrganizationName;
 	}
 	public void setInsertSupplierOrganizationName(QName insertSupplierOrganizationName) {
