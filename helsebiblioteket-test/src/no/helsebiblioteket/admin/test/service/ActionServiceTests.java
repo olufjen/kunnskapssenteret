@@ -28,6 +28,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
@@ -47,7 +48,7 @@ public class ActionServiceTests {
 		// 'static' values
 		OrganizationType health_enterprise = ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
 		OrganizationType content_supplier = ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.content_supplier)).getValue();
-		Position vernepleier = ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.vernepleier)).getValue();
+		Position vernepleier = ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.vernepleier, health_enterprise)).getValue();
 		AccessType general_GRANT = ((ValueResultAccessType)beanFactory.getAccessService().getAccessTypeByTypeCategory(AccessTypeKey.general, AccessTypeCategory.GRANT)).getValue();
 		ResourceType supplier_source = ((ValueResultResourceType)beanFactory.getAccessService().getResourceTypeByKey(ResourceTypeKey.supplier_source)).getValue();
 		SupplierSource source = SupplierSourceFactory.factory.completeSupplierSource();
@@ -64,8 +65,8 @@ public class ActionServiceTests {
 		user.setUsername(username);
 		SupplierSourceResource resource = SupplierSourceResourceFactory.factory.completeSupplierSourceResource(supplier_source, source, supplierOrganization);
 		
-		memberOrganization.setOrganization(((ValueResultOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue());
-		supplierOrganization.setOrganization(((ValueResultOrganization)beanFactory.getOrganizationService().insertSupplierOrganization(supplierOrganization)).getValue());
+		memberOrganization = ((ValueResultMemberOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue();
+		supplierOrganization = ((ValueResultSupplierOrganization)beanFactory.getOrganizationService().insertSupplierOrganization(supplierOrganization)).getValue();
 		user.setOrganization(memberOrganization.getOrganization());
 		user = ((ValueResultUser)beanFactory.getUserService().insertUser(user)).getValue();
 		resource = ((ValueResultSupplierSourceResource)beanFactory.getAccessService().insertSupplierSourceResource(resource)).getValue();

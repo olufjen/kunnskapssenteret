@@ -18,7 +18,6 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
@@ -50,7 +49,7 @@ public class LoginServiceTests {
 		
 		MemberOrganization memberOrganization = createMemberOrganization();
 		User user = createUser(memberOrganization);
-		user.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(memberOrganization)).getValue());
+		user.setOrganization(((ValueResultMemberOrganization)organizationService.insertMemberOrganization(memberOrganization)).getValue().getOrganization());
 		userService.insertUser(user);
 		
 //	    TEST: public SingleResultUser loginUserByUsernamePassword(String username, String password);
@@ -74,14 +73,15 @@ public class LoginServiceTests {
 		IpAddressRange ipRange = new IpAddressRange();
 		ipRange.setIpAddressFrom(new IpAddress(prefix + "001"));
 		ipRange.setIpAddressTo(new IpAddress(prefix + "003"));
-		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(createOrganizationTypeTeaching(), createPositionJordmor());
+		OrganizationType type = createOrganizationHealthEnterprise();
+		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(type, createPositionJordmor(type));
 		organization.getOrganization().setNameEnglish(this.organizationName);
 		IpAddressRange[] ipRangeList = new IpAddressRange[1];
 		ipRangeList[0] = ipRange;
-		organization.setIpAddressRangeList(ipRangeList);
+//		organization.setIpAddressRangeList(ipRangeList);
 		
-		organization.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(organization)).getValue());
-		IpAddressSet[] res = organizationService.addIpAddressRanges(organization.getOrganization(), organization.getIpAddressRangeList()).getList();
+		organization = ((ValueResultMemberOrganization)organizationService.insertMemberOrganization(organization)).getValue();
+		IpAddressSet[] res = organizationService.addIpAddressRanges(organization.getOrganization(), ipRangeList).getList();
 		Assert.notEmpty(res, "Should have returned inserted ones");
 		
 //	    TEST: public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress);
@@ -108,19 +108,21 @@ public class LoginServiceTests {
 	    Assert.isTrue(res, "Failed");
 	}
 
-	private OrganizationType createOrganizationTypeTeaching(){
-		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.teaching)).getValue();
+	private OrganizationType createOrganizationHealthEnterprise(){
+		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
 	}
-	private Position createPositionJordmor(){
-		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.jordmor)).getValue();
+	private Position createPositionJordmor(OrganizationType organizationType){
+		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.jordmor, organizationType)).getValue();
 	}
 	private MemberOrganization createMemberOrganization(){
+		OrganizationType type = createOrganizationHealthEnterprise();
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(
-				createOrganizationTypeTeaching(), createPositionJordmor());
+				type, createPositionJordmor(type));
 		return memberOrganization;
 	}
 	private User createUser(MemberOrganization memberOrganization){
-		User user = UserFactory.factory.completeUser(memberOrganization, createPositionJordmor());
+		OrganizationType type = createOrganizationHealthEnterprise();
+		User user = UserFactory.factory.completeUser(memberOrganization, createPositionJordmor(type));
 		user.setUsername(username);
 		user.setPassword(password);
 		return user;

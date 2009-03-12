@@ -28,6 +28,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
 import no.helsebiblioteket.admin.factory.ResourceAccessFactory;
 import no.helsebiblioteket.admin.factory.SupplierOrganizationFactory;
@@ -69,7 +70,9 @@ public class AccessDaoTests {
 
 		ResourceType resourceType = beanFactory.getResourceTypeDao().getResourceTypeByKey(ResourceTypeKey.supplier_source);
 		SupplierSource supplierSource = SupplierSourceFactory.factory.completeSupplierSource();
+		beanFactory.getSupplierSourceDao().insertSupplierSource(supplierSource);
 		SupplierSourceResource resource = SupplierSourceResourceFactory.factory.completeSupplierSourceResource(resourceType, supplierSource, supplierOrganization);
+		beanFactory.getResourceDao().insertSupplierSourceResource(resource);
 
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 //		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
@@ -87,7 +90,7 @@ public class AccessDaoTests {
 		accessForUserKeys.setResourceAccess(resourceAccessForUser);
 		accessDao.insertResourceAccessForeignKeys(accessForUserKeys);
 		accessDao.updateResourceAccessForeignKeys(accessForUserKeys);
-		List<ResourceAccessForeignKeys> userAccessList = accessDao.getAccessListByUser(user);
+		List<ResourceAccessListItem> userAccessList = accessDao.getAccessListByUser(user);
 		Assert.notEmpty(userAccessList, "No access for user!");
 
 		// Access for user roles
@@ -96,7 +99,7 @@ public class AccessDaoTests {
 		accessForUserRoleKeys.setUserRoleId(userRole.getId());
 		accessForUserRoleKeys.setResourceAccess(resourceAccessForUserRole);
 		accessDao.insertResourceAccessForeignKeys(accessForUserRoleKeys);
-		List<ResourceAccessForeignKeys> userRoleAccessList = accessDao.getAccessListByUserRole(userRole);
+		List<ResourceAccessListItem> userRoleAccessList = accessDao.getAccessListByUserRole(userRole);
 		Assert.notEmpty(userRoleAccessList, "No access for user role!");
 
 		// Access for organization
@@ -105,7 +108,7 @@ public class AccessDaoTests {
 		accessForOrganizationKeys.setOrgUnitId(organization.getOrganization().getId());
 		accessForOrganizationKeys.setResourceAccess(resourceAccessForOrg);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationKeys);
-		List<ResourceAccessForeignKeys> organizationAccessList = accessDao.getAccessListByOrganization(organization.getOrganization());
+		List<ResourceAccessListItem> organizationAccessList = accessDao.getAccessListByOrganization(organization.getOrganization());
 		Assert.notEmpty(organizationAccessList, "No access for organization!");
 		
 		// Access for organization type
@@ -114,7 +117,7 @@ public class AccessDaoTests {
 		accessForOrganizationTypeKeys.setOrgTypeId(organizationType.getId());
 		accessForOrganizationTypeKeys.setResourceAccess(resourceAccessForOrgType);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationTypeKeys);
-		List<ResourceAccessForeignKeys> organizationTypeAccessList = accessDao.getAccessListByOrganizationType(organizationType);
+		List<ResourceAccessListItem> organizationTypeAccessList = accessDao.getAccessListByOrganizationType(organizationType);
 		Assert.notEmpty(organizationTypeAccessList, "No access for organization type!");
 		
 		// Remove
@@ -122,6 +125,8 @@ public class AccessDaoTests {
 		accessDao.deleteResourceAccessForeignKeys(accessForOrganizationKeys);
 		accessDao.deleteResourceAccessForeignKeys(accessForUserRoleKeys);
 		accessDao.deleteResourceAccessForeignKeys(accessForUserKeys);
+		beanFactory.getResourceDao().deleteSupplierSourceResource(resource);
+		beanFactory.getSupplierSourceDao().deleteSupplierSource(supplierSource);
 		userDaoTests.removeUser(user);
 		organizationDaoTests.removeSupplierOrganization(supplierOrganization);
 		organizationDaoTests.removeMemberOrganization(organization);

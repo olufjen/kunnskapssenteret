@@ -11,6 +11,7 @@ import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
@@ -41,6 +42,15 @@ public class OrganizationServiceTests {
 		testGetOrganizationByListItem();
 		testGetOrganizationListByIpAddress();
 		testUpdateOrganization();
+		testInsertSupplierOrganization();
+	}
+	@org.junit.Test
+	private void testInsertSupplierOrganization() {
+		
+		
+//		TEST: public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization);
+
+		
 	}
 	@org.junit.Test
 	public void testGetOrganizationTypeListAll(){
@@ -83,7 +93,7 @@ public class OrganizationServiceTests {
 	public void testGetOrganizationByListItem(){
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 		MemberOrganization organization = createMemberOrganization();
-		organization.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(organization)).getValue());
+		organization = ((ValueResultMemberOrganization)organizationService.insertMemberOrganization(organization)).getValue();
 		OrganizationListItem listItem = new OrganizationListItem();
 		listItem.setId(organization.getOrganization().getId());
 		
@@ -126,10 +136,10 @@ public class OrganizationServiceTests {
 
 		OrganizationService organizationService = beanFactory.getOrganizationService();
 //		TEST: public SingleResultOrganization insertOrganization(Organization organization);
-		organization1.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(
-				organization1)).getValue());
-		organization2.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(
-				organization2)).getValue());
+		organization1 = ((ValueResultMemberOrganization)organizationService.insertMemberOrganization(
+				organization1)).getValue();
+		organization2 = ((ValueResultMemberOrganization)organizationService.insertMemberOrganization(
+				organization2)).getValue();
 
 //		TEST: public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges);
 		IpAddressSet[] resIp1 = organizationService.addIpAddressRanges(
@@ -164,8 +174,8 @@ public class OrganizationServiceTests {
 		organization.getOrganization().getContactPerson().setFirstName(firstName);
 		
 		OrganizationService organizationService = beanFactory.getOrganizationService();
-		organization.setOrganization(((ValueResultOrganization)organizationService.insertMemberOrganization(
-				organization)).getValue());
+		organization = ((ValueResultMemberOrganization)organizationService.insertMemberOrganization(
+				organization)).getValue();
 		Assert.isTrue(organization.getOrganization().getNameNorwegian().equals(firstName), "Name NO not saved");
 		Assert.isTrue(organization.getOrganization().getContactInformation().getPostalLocation().equals(firstName), "Post Loc not saved");
 		Assert.isTrue(organization.getOrganization().getContactPerson().getFirstName().equals(firstName), "Contact person not saved");
@@ -188,12 +198,13 @@ public class OrganizationServiceTests {
 	private OrganizationType createOrganizationType(){
 		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
 	}
-	private Position createPosition(){
-		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.ortoptist)).getValue();
+	private Position createPosition(OrganizationType organizationType){
+		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.ortoptist, organizationType)).getValue();
 	}
 	private MemberOrganization createMemberOrganization(){
+		OrganizationType type = createOrganizationType();
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(
-				createOrganizationType(), createPosition());
+				type, createPosition(type));
 		organization.getOrganization().setNameEnglish(findMeName);
 		return organization;
 	}
