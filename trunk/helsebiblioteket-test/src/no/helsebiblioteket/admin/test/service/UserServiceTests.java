@@ -76,10 +76,13 @@ public class UserServiceTests {
 		memberOrganization = ((ValueResultMemberOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue();
 		User user = UserFactory.factory.completeUser(memberOrganization, apotektekniker);
 		String username = "username_" + randomValue;
-		String name = "name_" + randomValue;
+		String firstname = "name_" + randomValue;
+		String firstnameChanged = firstname + "CHANGED";
+		String lastname = "Last";
+		String fullNameChanged = firstnameChanged + " " + lastname;
 		user.setUsername(username);
-		user.getPerson().setFirstName(name);
-		user.getPerson().setLastName("");
+		user.getPerson().setFirstName(firstname);
+		user.getPerson().setLastName(lastname);
 //		TEST: public SingleResultUser insertUser(User user);
 		// TODO: Finish tests.
 		SingleResultUser userResult = userService.insertUser(user);
@@ -87,7 +90,7 @@ public class UserServiceTests {
 		user = ((ValueResultUser)userResult).getValue();
 		Assert.isTrue(user.getUsername().equals(username), "Wrong user returned");
 		
-		user.getPerson().setFirstName(name + "CHANGED");
+		user.getPerson().setFirstName(firstnameChanged);
 		user.setRoleList(new Role[1]);
 		user.getRoleList()[0] = student;
 //		TEST: public Boolean updateUser(User user);
@@ -97,7 +100,7 @@ public class UserServiceTests {
 //		TEST: public PageResult<UserListItem> getUserListAll(PageRequest request);
 		PageResultUserListItem usersAll = userService.getUserListAll(request);
 		Assert.isTrue(usersAll.getResult().length == 20, "Wrong number in paged result");
-		Assert.isTrue(usersAll.getResult()[0].getName().equals(name + "CHANGED"),
+		Assert.isTrue(usersAll.getResult()[0].getName().equals(fullNameChanged),
 				"User not changed");
 
 		Role health_personnel_other = ((ValueResultRole)beanFactory.getUserService().getRoleByKeySystem(UserRoleKey.health_personnel_other, system)).getValue();
@@ -106,17 +109,19 @@ public class UserServiceTests {
 		searchRoles[1] = health_personnel_other;
 //		TEST: public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest request);
 		PageResultUserListItem usersSearch = userService.findUsersBySearchStringRoles("CHANGED", searchRoles, request);
+		Assert.isTrue(usersAll.getResult()[0].getName().equals(fullNameChanged),
+				"Wrong user found");
 		
 //		TEST: public SingleResultUser getUserByUserListItem(UserListItem userListItem);
 		SingleResultUser userFromListResult = userService.getUserByUserListItem(usersSearch.getResult()[0]);
 		Assert.isTrue(userFromListResult instanceof ValueResultUser, "User not found");
 		Assert.isTrue(((ValueResultUser)userFromListResult).getValue().getPerson().getFirstName().equals(
-				name + "CHANGED"), "Wrong user found");
+				firstnameChanged), "Wrong user found");
 				
 //		TEST: public SingleResultUser findUserByUsername(String username);
-		SingleResultUser userByUsername = userService.findUserByUsername(name + "CHANGED");
+		SingleResultUser userByUsername = userService.findUserByUsername(username);
 		Assert.isTrue(userByUsername instanceof ValueResultUser, "User not found");
 		Assert.isTrue(((ValueResultUser)userByUsername).getValue().getPerson().getFirstName().equals(
-				name + "CHANGED"), "Wrong user found");
+				firstnameChanged), "Wrong user found");
 	}
 }
