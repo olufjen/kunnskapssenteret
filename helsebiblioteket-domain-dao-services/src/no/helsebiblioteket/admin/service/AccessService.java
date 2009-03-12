@@ -16,7 +16,8 @@ import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
-import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
+import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
@@ -25,7 +26,7 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSource
 public interface AccessService extends Serializable {
 	public SingleResultSupplierSourceResource insertSupplierSourceResource(SupplierSourceResource resource);
 	public Boolean deleteSupplierSourceResource(SupplierSourceResource resource);
-	public Boolean deleteResourceAccess(ResourceAccess access);
+	public Boolean deleteResourceAccess(ResourceAccessListItem access);
 	
 	// TODO: Not in use yet. Define methods as needed by clients.
 	public Boolean insertUserResourceAccess(User user, ResourceAccess access);
@@ -36,10 +37,10 @@ public interface AccessService extends Serializable {
 	public SingleResultAccessType getAccessTypeByTypeCategory(AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory);
 	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey);
 
-	public ListResultResourceAccess getAccessListByUser(User user);
-	public ListResultResourceAccess getAccessListByRole(Role role);
-	public ListResultResourceAccess getAccessListByOrganization(Organization organization);
-	public ListResultResourceAccess getAccessListByOrganizationType(OrganizationType organizationType);
+	public ListResultResourceAccessListItem getAccessListByUser(User user);
+	public ListResultResourceAccessListItem getAccessListByRole(Role role);
+	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization);
+	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType);
 
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY);
 }

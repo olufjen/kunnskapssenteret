@@ -13,6 +13,7 @@ import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
@@ -29,6 +30,7 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
@@ -39,7 +41,6 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.factory.PersonFactory;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -113,10 +114,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey) {
+	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey, OrganizationType organizationType) {
 		List<Position> all = this.positionDao.getPositionListAll();
 		for (Position position : all) {
-			if(position.getKey().getValue().equals(positionTypeKey.getValue())){
+			if(position.getKey().getValue().equals(positionTypeKey.getValue()) &&
+					position.getOrganizationType().getId().equals(organizationType.getId())){
 				ValueResultPosition result = new ValueResultPosition();
 				result.setValue(position);
 				return result;
@@ -152,12 +154,21 @@ public class UserServiceImpl implements UserService {
 	 * These are the values in the UserListItem object.
 	 */
 	@Override
-	public PageResult<UserListItem> getUserListAll(PageRequest request) {
-		PageResult<UserListItem> result = new PageResult<UserListItem>();
-		result.result = this.userListDao.getUserListPaged(request.getSkip(), request.getMaxResult());
-		result.skipped = request.getSkip();
-		result.total = result.result.size();
+	public PageResultUserListItem getUserListAll(PageRequest request) {
+		PageResultUserListItem result = new PageResultUserListItem();
+		result.setResult(translateUserList(this.userListDao.getUserListPaged(request.getSkip(), request.getMaxResult())));
+		result.setSkipped(request.getSkip());
+		result.setTotal(result.getResult().length);
 		return result;
+	}
+	private UserListItem[] translateUserList(List<UserListItem> userListPaged) {
+		UserListItem[] list = new UserListItem[userListPaged.size()];
+		int i = 0;
+		for (UserListItem userListItem : userListPaged) {
+			list[i] = userListItem;
+			i++;
+		}
+		return list;
 	}
 	/**
 	 * Finds all the users in the database that have at least one
@@ -173,13 +184,16 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 */
 	@Override
-	public PageResult<UserListItem> findUsersBySearchStringRoles(String searchString, List<Role> roles, PageRequest request) {
-		// TODO: Should we use Id for request.from?
-		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roles, request.getSkip(), request.getMaxResult());
-		PageResult<UserListItem> result = new PageResult<UserListItem>();
-		result.result = some;
-		result.skipped = request.getSkip();
-		result.total = result.result.size();
+	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request) {
+		List<Role> roleList = new ArrayList<Role>();
+		for (Role role : roles) {
+			roleList.add(role);
+		}
+		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roleList, request.getSkip(), request.getMaxResult());
+		PageResultUserListItem result = new PageResultUserListItem();
+		result.setResult(translateUserList(some));
+		result.setSkipped(request.getSkip());
+		result.setTotal(result.getResult().length);
 		return result;
 	}
 	/**
@@ -237,19 +251,22 @@ public class UserServiceImpl implements UserService {
      * Inserts the user roles, but roles must exist.
      * The organization is not inserted and must be inserted
      * _separately_.
-     * The roles are also not inserted and must be inserted
-     * _separately_.
      * 
      */
 	@Override
 	public SingleResultUser insertUser(User user) {
+		// TODO: This should be removed, because it is only written to get
+		//       around an error(?)in Axis2.
+		if(user.getRoleList() == null){
+			user.setRoleList(new Role[0]);
+		}
+
 		checkNull(user);
 		this.personDao.insertPerson(user.getPerson());
-		// FIXME: Roles are not inserted here! Read comment above.
-//		List<UserRoleLine> userRoleList = translateRoles(user.getId(), user.getRoleList());
-//		for (UserRoleLine userRole : userRoleList) {
-//			this.userRoleDao.insertUserRole(userRole);
-//		}
+		List<UserRoleLine> userRoleList = translateRoles(user.getId(), user.getRoleList());
+		for (UserRoleLine userRole : userRoleList) {
+			this.userRoleDao.insertUserRole(userRole);
+		}
 		this.userDao.insertUser(user);
 		return new ValueResultUser(user);
 	}
@@ -259,8 +276,7 @@ public class UserServiceImpl implements UserService {
 		if(user.getOrganization().getId() == null) throw new NullPointerException("organization.id == null");
 		if(user.getPassword() == null) throw new NullPointerException("password == null");
 		if(user.getPerson() == null) throw new NullPointerException("person == null");
-		// TODO: Insert with other service method.
-//		if(user.getRoleList() == null) throw new NullPointerException("roleList == null");
+		if(user.getRoleList() == null) throw new NullPointerException("roleList == null");
 		if(user.getUsername() == null) throw new NullPointerException("username == null");
 	}
 	/**
@@ -272,6 +288,12 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public Boolean updateUser(User user) {
+		// TODO: This should be removed, because it is only written to get
+		//       around an error(?)in Axis2.
+		if(user.getRoleList() == null){
+			user.setRoleList(new Role[0]);
+		}
+
 		SingleResultUser oldResult = this.findUserByUsername(user.getUsername());
 		if(oldResult instanceof EmptyResultUser){
 			throw new NullPointerException("User does not exist.");
@@ -288,7 +310,7 @@ public class UserServiceImpl implements UserService {
 			this.userRoleDao.deleteUserRole(userRole);
 		}
 		for (UserRoleLine userRole : newUserRoleList) {
-			this.userRoleDao.deleteUserRole(userRole);
+			this.userRoleDao.insertUserRole(userRole);
 		}
 		this.userDao.updateUser(user);
 		return Boolean.TRUE;
@@ -364,8 +386,7 @@ public class UserServiceImpl implements UserService {
 		List<UserRoleLine> result = new ArrayList<UserRoleLine>();
 		for (Role role : roleList) {
 			UserRoleLine userRole = new UserRoleLine();
-			// TODO: User line object!
-//			userRole.setUserRole(role);
+			userRole.setUserRoleId(role.getId());
 			userRole.setUserId(id);
 			userRole.setLastChanged(new Date());
 		}
