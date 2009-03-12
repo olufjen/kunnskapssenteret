@@ -6,7 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Role;
@@ -34,7 +33,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName userListAllName;
 	private QName findUsersBySearchStringRolesName;
 	private QName findUserByUsernameName;
-	private QName getUserByUserListItemName;
+	private QName userByUserListItemName;
 	private QName insertUserName;
 	private QName updateUserName;
 	private QName positionByKey;
@@ -72,14 +71,14 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	@Override
 	public PageResultUserListItem getUserListAll(PageRequest request){
 		Object[] args = new Object[] { request };
-		Class[] returnTypes = new Class[] { PageResult.class };
+		Class[] returnTypes = new Class[] { PageResultUserListItem.class };
 		return (PageResultUserListItem)invoke(this.userListAllName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request){
 		Object[] args = new Object[] { searchString, roles, request};
-		Class[] returnTypes = new Class[] { PageResult.class };
+		Class[] returnTypes = new Class[] { PageResultUserListItem.class };
 		return (PageResultUserListItem)invoke(this.findUsersBySearchStringRolesName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
@@ -94,7 +93,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public SingleResultUser getUserByUserListItem(UserListItem userListItem) {
 		Object[] args = new Object[] { userListItem };
 		Class[] returnTypes = new Class[] { SingleResultUser.class };
-		return (SingleResultUser)invoke(this.getUserByUserListItemName, args, returnTypes);
+		return (SingleResultUser)invoke(this.userByUserListItemName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -158,5 +157,8 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setRoleListBySystem(QName roleListBySystem) {
 		this.roleListBySystem = roleListBySystem;
+	}
+	public void setUserByUserListItemName(QName userByUserListItemName) {
+		this.userByUserListItemName = userByUserListItemName;
 	}
 }
