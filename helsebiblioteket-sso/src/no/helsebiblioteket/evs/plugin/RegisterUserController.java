@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -153,7 +154,10 @@ public final class RegisterUserController extends ProfileController {
         	if (UserRoleKey.health_personnel.getValue().equals(usertype)) {
         		String positionString = request.getParameter(this.parameterNames.get("position"));
         		if (!positionString.equals("choose")) {
-	        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString));
+        			// TODO: Fetch organization type.
+        			OrganizationType organizationType = null;
+	        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString),
+	        				organizationType);
 	        		if (positionResult instanceof EmptyResultPosition) {
 	        			throw new Exception("user somehow selected a non-existing position: '" + positionString + "'");
 	        		}
