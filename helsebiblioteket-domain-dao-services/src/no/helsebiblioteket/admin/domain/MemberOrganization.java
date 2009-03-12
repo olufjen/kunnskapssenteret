@@ -6,7 +6,7 @@ public class MemberOrganization {
 	private IpAddressSingle[] ipAddressSingleList;
 	
 	// Organization
-	private Organization organization = new Organization();;
+	private Organization organization = new Organization();
 	
 	// Helpers
 	@Override

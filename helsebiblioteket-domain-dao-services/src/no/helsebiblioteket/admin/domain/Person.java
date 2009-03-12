@@ -11,8 +11,6 @@ public class Person {
 	private String lastName;
 	// TODO: Does not exist in the database
 	private String employer;
-	// TODO: Does not exist in the database
-	private boolean isStudent;
 	private String studentNumber;
 	private String hprNumber;
 	private Date lastChanged;
@@ -67,12 +65,6 @@ public class Person {
 	}
 	public void setHprNumber(String hprNumber) {
 		this.hprNumber = hprNumber;
-	}
-	public boolean getIsStudent() {
-		return isStudent;
-	}
-	public void setIsStudent(boolean isStudent) {
-		this.isStudent = isStudent;
 	}
 	public String getStudentNumber() {
 		return studentNumber;
