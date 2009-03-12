@@ -114,12 +114,11 @@
 		<property name="findOrganizationsBySearchString" ref="findOrganizationsBySearchString" />
 		<property name="organizationByListItemName" ref="organizationByListItemName" />
 		<property name="insertMemberOrganizationName" ref="insertMemberOrganizationName" />
-		<property name="updateMemberOrganizationName" ref="updateMemberOrganizationName" />
+		<property name="insertSupplierOrganizationName" ref="insertSupplierOrganizationName" />
+		<property name="updateOrganizationName" ref="updateOrganizationName" />
 		<property name="addIpAddresses" ref="addIpAddressesName" />
 		<property name="addIpAddressRanges" ref="addIpAddressRangesName" />
 		<property name="deleteIpAddresses" ref="deleteIpAddressesName" />
-		<property name="insertSupplierOrganizationName" ref="insertSupplierOrganizationName" />
-		<property name="updateSupplierOrganizationName" ref="updateSupplierOrganizationName" />
 		<property name="organizationListIpAddressName" ref="organizationListIpAddressName" />
   	</bean>
   	<bean name="organizationServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
@@ -133,8 +132,12 @@
 		<property name="targetEPR" ref="urlServiceTargetEPR" />
 		
 		<property name="isAffectedName" ref="isAffectedName" />
-		<property name="translateName" ref="translateName" />
-		<property name="hasAccessName" ref="hasAccessName" />
+		<property name="translateUrlUserName" ref="translateUrlUserName" />
+		<property name="translateUrlOrganizationName" ref="translateUrlOrganizationName" />
+		<property name="translateUrlUserOrganizationName" ref="translateUrlUserOrganizationName" />
+		<property name="hasAccessUserName" ref="hasAccessUserName" />
+		<property name="hasAccessOrganizationName" ref="hasAccessOrganizationName" />
+		<property name="hasAccessUserOrganizationName" ref="hasAccessUserOrganizationName" />
 		<property name="groupName" ref="groupName" />
   	</bean>
   	<bean name="urlServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
@@ -309,9 +312,13 @@
 	</bean>
 	<bean name="insertMemberOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertOrganization" />
+		<constructor-arg value="insertMemberOrganization" />
 	</bean>
-	<bean name="updateMemberOrganizationName" class="javax.xml.namespace.QName">
+	<bean name="insertSupplierOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="insertSupplierOrganization" />
+	</bean>
+	<bean name="updateOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="updateOrganization" />
 	</bean>
@@ -327,14 +334,6 @@
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="deleteIpAddresses" />
 	</bean>
-	<bean name="insertSupplierOrganizationName" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="insertSupplierOrganization" />
-	</bean>
-	<bean name="updateSupplierOrganizationName" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="updateSupplierOrganization" />
-	</bean>
 	<bean name="organizationListIpAddressName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getOrganizationListByIpAddress" />
@@ -344,13 +343,29 @@
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="isAffected" />
 	</bean>
-	<bean name="translateName" class="javax.xml.namespace.QName">
+	<bean name="translateUrlUserName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="translate" />
+		<constructor-arg value="translateUrlUser" />
 	</bean>
-	<bean name="hasAccessName" class="javax.xml.namespace.QName">
+	<bean name="translateUrlOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
-		<constructor-arg value="hasAccess" />
+		<constructor-arg value="translateUrlOrganization" />
+	</bean>
+	<bean name="translateUrlUserOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="translateUrlUserOrganization" />
+	</bean>
+	<bean name="hasAccessUserName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="hasAccessUser" />
+	</bean>
+	<bean name="hasAccessOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="hasAccessOrganization" />
+	</bean>
+	<bean name="hasAccessUserOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="hasAccessUserOrganization" />
 	</bean>
 	<bean name="groupName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
@@ -374,7 +389,7 @@
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getPositionListAll" />
 	</bean>
-	<bean name="getPositionByKeyName" class="javax.xml.namespace.QName">
+	<bean name="positionByKeyName" class="javax.xml.namespace.QName">
 		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
 		<constructor-arg value="getPositionByKey" />
 	</bean>
