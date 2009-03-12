@@ -56,7 +56,6 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max) {
-		// TODO: Pages will be of different sizes!
 		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList("getOrganizationIdDistinctSearchString",
 				"%" + searchString + "%", from, max);
 		List<OrganizationListItem> someOrganizations = new ArrayList<OrganizationListItem>();
