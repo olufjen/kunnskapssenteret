@@ -32,24 +32,26 @@
 	</select>
 	<select id="getRoleListBySystemId" cacheModel="RoleCache" resultMap="getRoleResultMap" parameterClass="integer">
 		select
-			name,
-			descr,
+			tbl_user_role_reg.name,
+			tbl_user_role_reg.descr,
 			user_role_id,
-			system_id,
-			key as role_key,
-			key as system_key
+			tbl_system_reg.system_id,
+			tbl_user_role_reg.key as role_key,
+			tbl_system_reg.key as system_key
 		from tbl_user_role_reg
-		where system_id = #id#;
+		inner join tbl_system_reg on tbl_user_role_reg.system_id = tbl_system_reg.system_id
+		where tbl_user_role_reg.system_id = #id#;
 	</select>
 	<select id="getRoleById" cacheModel="RoleCache" resultMap="getRoleResultMap" parameterClass="integer">
 		select
-			name,
-			descr,
+			tbl_user_role_reg.name,
+			tbl_user_role_reg.descr,
 			user_role_id,
-			system_id,
-			key as role_key,
-			key as system_key
+			tbl_system_reg.system_id,
+			tbl_user_role_reg.key as role_key,
+			tbl_system_reg.key as system_key
 		from tbl_user_role_reg
+		inner join tbl_system_reg on tbl_user_role_reg.system_id = tbl_system_reg.system_id
 		where user_role_id = #roleId#;
 	</select>
 </sqlMap>

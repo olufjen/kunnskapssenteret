@@ -44,4 +44,9 @@
 		from tbl_resource
 		where resource_id = #id#;
 	</select>
+	<select id="getSupplierSourceResourceByOrganizationId" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultMap" parameterClass="integer">
+		select resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed
+		from tbl_resource
+		where org_unit_id = #id#;
+	</select>
 </sqlMap>
