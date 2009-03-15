@@ -52,11 +52,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		for (Role role : user.getRoleList()) 
 			result[i++] = new GrantedAuthorityImpl("ROLE_"+role.getKey().toString());
 		return result;
-		// TODO: Use ROLE_ALLACCESS?
-//		GrantedAuthority[] result = new GrantedAuthority[2];
-//		result[0]= new GrantedAuthorityImpl("ROLE_ALLACCESS");
-//		result[1]= new GrantedAuthorityImpl("ROLE_URLACCESS");
-//		return result;
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;

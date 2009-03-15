@@ -6,6 +6,11 @@ public class IpAddressSingle {
 	private IpAddress ipAddressSingle;
 	private IpAddressSet ipAddressSet = new IpAddressSet();
 
+	public IpAddressSingle() { }
+	public IpAddressSingle(IpAddress ipAddressSingle) {
+		this.ipAddressSingle = ipAddressSingle;
+	}
+
 	// Helpers
 	@Override
 	public String toString() {
