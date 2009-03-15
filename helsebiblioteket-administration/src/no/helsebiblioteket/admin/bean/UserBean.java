@@ -295,7 +295,7 @@ public class UserBean {
 			dummy.getOrganization().setNameShortNorwegian(name);
 			SelectItem dummyOption = new SelectItem(""+dummy.getOrganization().getId(), dummy.getOrganization().getNameEnglish(), "", false);
 			this.availableEmployers.add(dummyOption);
-			PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
+			PageRequest request = new PageRequest(0, 40);
 			PageResultOrganizationListItem orgs = this.organizationService.getOrganizationListAll(request);
 			for (OrganizationListItem organization : orgs.getResult()) {
 				// TODO: How to find right name here?
