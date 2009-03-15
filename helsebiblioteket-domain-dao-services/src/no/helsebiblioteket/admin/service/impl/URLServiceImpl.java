@@ -74,6 +74,7 @@ public class URLServiceImpl implements URLService {
 		// TODO: Use "redirectport" somewhere?
 		// TODO: Include deny.
 		// TODO: Check for 'provided by'.
+		// TODO: Check for 'offered by'.
 		Url newUrl = new Url();
 		if(this.hasAccessUser(user, url)){
 			// TODO: When to send through proxy?

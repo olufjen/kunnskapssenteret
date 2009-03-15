@@ -96,23 +96,7 @@ public class UserServiceImpl implements UserService {
 		ListResultPosition result = new ListResultPosition(positions);
 		return result;
 	}
-	
-	/**
-     * Fetches all the positions from the database. Delegates the task to
-	 * PositionDao. The variable DUMMY is never used.
-	 * Only for webservice client calls
-     */
-	// TODO: What is this?
-	public Position[] getPositionListAllWS(String DUMMY) {
-		List<Position> all = this.positionDao.getPositionListAll();
-		Position[] positions = new Position[all.size()];
-		int i = 0;
-		for (Position position : all) {
-			positions[i++]=position;
-		}	
-		return positions;
-	}
-	
+		
 	@Override
 	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey, OrganizationType organizationType) {
 		List<Position> all = this.positionDao.getPositionListAll();
@@ -155,6 +139,9 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public PageResultUserListItem getUserListAll(PageRequest request) {
+		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
+			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
+		}
 		PageResultUserListItem result = new PageResultUserListItem();
 		result.setResult(translateUserList(this.userListDao.getUserListPaged(request.getSkip(), request.getMaxResult())));
 		result.setSkipped(request.getSkip());
@@ -180,11 +167,13 @@ public class UserServiceImpl implements UserService {
 	 * like names, etc. These are the values in the UserListItem
 	 * object.
 	 * 
-	 * TODO: There is probably room for optimizations here.
-	 * 
 	 */
 	@Override
 	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request) {
+		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
+			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
+		}
+
 		List<Role> roleList = new ArrayList<Role>();
 		for (Role role : roles) {
 			roleList.add(role);
@@ -203,9 +192,6 @@ public class UserServiceImpl implements UserService {
 	 * database. This helps clients by avoiding null-check and also
 	 * makes it easier to update the user.
 	 * 
-	 * TODO: What do we do with users without an organization?
-	 *       Is that allowed?
-	 * 
 	 */
 	@Override
     public SingleResultUser findUserByUsername(String username) {
@@ -213,10 +199,10 @@ public class UserServiceImpl implements UserService {
 		if(user == null){
 			return new EmptyResultUser();
 		} else {
-			// TODO: Deal with Supp/Member
 			MemberOrganization organization = new MemberOrganization();
 			organization.setOrganization(organizationDao.getOrganizationById(user.getId()));
 			// TODO: Really?
+			// No. Leif says there are users without organizations!
 			if(organization == null){ throw new NullPointerException("No organization for user"); }
 			user.setOrganization(organization.getOrganization());
 
@@ -314,73 +300,6 @@ public class UserServiceImpl implements UserService {
 		}
 		this.userDao.updateUser(user);
 		return Boolean.TRUE;
-
-		
-
-		
-		
-//		// FIXME: Remove this.
-//		User old = null;// this.userDao.getUserByUsername(user);
-//		if(user.getAccessList() != null){
-//			for (Access access : user.getAccessList()) {
-//				AccessType accessType = access.getType();
-//				SupplierSource supplierSource = access.getSupplierSource();
-//				ResourceType resourceType = supplierSource.getResourceType();
-//			}
-//		}
-//		Organization organization = user.getOrganization();
-//		if(organization==null) { user.setOrganization(old.getOrganization()); }
-//		for (Role role : user.getRoleList()) {
-////			if(role==null) { user.setRole(old.getRole()); }
-//		}
-//		Person person = user.getPerson();
-//		if(person==null) {
-//			user.setPerson(old.getPerson());
-//		} else {
-//			ContactInformation contactInformation = person.getContactInformation();
-//			if(contactInformation==null) { user.getPerson().setContactInformation(old.getPerson().getContactInformation()); }
-//			Position position = user.getPerson().getPosition();
-//			if(position==null){ user.getPerson().setPosition(old.getPerson().getPosition()); }
-//			Profile profile = person.getProfile();
-//			if(profile==null){ user.getPerson().setProfile(old.getPerson().getProfile()); }
-//		}
-//
-//		if(user.getPerson()==null) {
-//			return null;
-//		} 
-//		// Move backwards
-//		//this.personDao.updateContactInformation(user.getPerson().getContactInformation());
-////		this.personDao.updatePosition(user.getPerson().getPosition());
-//		user.getPerson().getProfile().setPerson(user.getPerson());
-//		if(user.getPerson().getProfile() != null){
-//			// TODO: Should all persons have a profile?
-//			//	this.personDao.updateProfile(user.getPerson().getProfile());
-//		}
-////		user.getPerson().setUser(user);
-//		this.personDao.updatePerson(user.getPerson());
-//		this.userDao.updateUser(user);
-//		
-//		return Boolean.TRUE;
-//		
-////		if (changedUser.getId() != null) {
-////			if (originalUser == null || (originalUser != null && !originalUser.getLastChanged().equals(changedUser.getLastChanged()))) {
-////				throw new OptimisticLockingFailureException("User has been changed since last time loaded from datastore");
-////			}
-////			savePerson(changedUser.getPerson(), originalUser.getPerson());
-////			userDao.updateUser(changedUser);
-////			userDao.setForeignKeysForUser(changedUser);
-////			// save access
-////			saveUserRoleLineListForUser(changedUser, originalUser);
-////		} else {
-////			savePerson(changedUser.getPerson(), null);
-////			userDao.insertUser(changedUser);
-////			userDao.setForeignKeysForUser(changedUser);
-////			// save access
-////			saveUserRoleLineListForUser(changedUser, null);
-////		}
-////		
-////		return changedUser;
-//
 	}
 	private List<UserRoleLine> translateRoles(Integer id, Role[] roleList){
 		List<UserRoleLine> result = new ArrayList<UserRoleLine>();

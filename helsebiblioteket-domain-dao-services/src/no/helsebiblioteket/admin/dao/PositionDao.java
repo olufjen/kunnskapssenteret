@@ -13,5 +13,7 @@ public interface PositionDao {
 	
 	// Fetch
 	public Position getPositionByKey(PositionTypeKey positionTypeKey);
+	public Position getPositionById(Integer id);
+
 	public List<Position> getPositionListAll();
 }

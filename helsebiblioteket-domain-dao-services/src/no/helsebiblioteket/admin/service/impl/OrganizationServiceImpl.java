@@ -17,6 +17,7 @@ import no.helsebiblioteket.admin.dao.OrganizationNameDao;
 import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
+import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.domain.Access;
@@ -31,6 +32,7 @@ import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
@@ -54,6 +56,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationTyp
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.factory.ContactInformationFactory;
 import no.helsebiblioteket.admin.factory.PersonFactory;
+import no.helsebiblioteket.admin.factory.ProfileFactory;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
@@ -65,6 +68,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private OrganizationTypeDao organizationTypeDao;
 	private OrganizationNameDao organizationNameDao;
 	private PersonDao personDao;
+	private ProfileDao profileDao;
 	private ContactInformationDao contactInformationDao;
 	private IpRangeDao ipRangeDao;
 	private ResourceDao resourceDao;
@@ -111,6 +115,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
+		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
+			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
+		}
 		return this.getOrganizationListBySearchString(request, "");
 	}
 	/**
@@ -126,6 +133,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
+		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
+			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
+		}
+		
 		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString,
 				request.getSkip(), request.getMaxResult());
 		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
@@ -266,7 +277,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		checkNull(organization);
 
 		Person contactPerson = organization.getContactPerson();
-		this.personDao.insertPerson(contactPerson);
+		this.insertPerson(contactPerson);
 		
 		ContactInformation contactInformation = organization.getContactInformation();
 		this.contactInformationDao.insertContactInformation(contactInformation);
@@ -399,7 +410,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		if(organization.getContactInformation()==null){ throw new NullPointerException("contactInformation==null"); }
 		if(organization.getContactPerson()==null){ throw new NullPointerException("contactPerson==null"); }
 		if(organization.getDescription()==null){ throw new NullPointerException("description==null"); }
-		if(organization.getLastChanged()==null){ throw new NullPointerException("lastChanged==null"); }
+//		if(organization.getLastChanged()==null){ throw new NullPointerException("lastChanged==null"); }
 		if(organization.getNameEnglish()==null){ throw new NullPointerException("nameEnglishNormal==null"); }
 		if(organization.getNameNorwegian()==null){ throw new NullPointerException("nameNorwegianNormal==null"); }
 		if(organization.getNameShortEnglish()==null){ throw new NullPointerException("nameEnglishShort==null"); }
@@ -507,9 +518,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private void populateOrganizationRest(Organization organization) {
 		if(organization.getContactPerson() == null ||
 				organization.getContactPerson().getId() == null){
-			this.createContactPerson(organization);
+			this.logger.warn("Organization " + organization.getId() + "has no contact person");
+			Person contactPerson = this.createPerson();
+			organization.setContactPerson(contactPerson);
 		}
-		Person contactPerson = this.personDao.getPersonByOrganization(organization);
+
+		Person contactPerson = loadPerson(organization);
 		if(contactPerson==null){
 			throw new NullPointerException("Contact person not found");
 		}
@@ -517,28 +531,51 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 		if(organization.getContactInformation() == null ||
 				organization.getContactInformation().getId() == null){
-			createContactInformation(organization);
+			ContactInformation contactInformation = createContactInformation();
+			organization.setContactInformation(contactInformation);
 		}
+
 		ContactInformation contactInformation = this.contactInformationDao.getContactInformationByOrganization(organization);
 		if(contactInformation==null){
 			throw new NullPointerException("Contact information not found");
 		}
 		organization.setContactInformation(contactInformation);
 	}
-	private void createContactInformation(Organization organization) {
-		this.logger.warn("Organization " + organization.getId() + "has no contact information");
+	private ContactInformation createContactInformation() {
 		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
 		this.contactInformationDao.insertContactInformation(contactInformation);
-		organization.setContactInformation(contactInformation);
+		return contactInformation;
 	}
-	private void createContactPerson(Organization organization) {
-		this.logger.warn("Organization " + organization.getId() + "has no contact person");
+	private Person createPerson() {
 		// TODO: What position to use, or allow no position?
 		Position position = this.positionDao.getPositionByKey(PositionTypeKey.none);
 		if(position == null){ throw new NullPointerException("Position none not found"); }
+		
 		Person contactPerson = PersonFactory.factory.completePerson(position);
+		ContactInformation contactInformation = this.createContactInformation();
+		contactPerson.setContactInformation(contactInformation);
+		
+		Profile profile = ProfileFactory.factory.completeProfile();
+		this.profileDao.insertProfile(profile);
+		
 		this.personDao.insertPerson(contactPerson);
-		organization.setContactPerson(contactPerson);
+		return contactPerson;
+	}
+	private void insertPerson(Person person) {
+		ContactInformation contactInformation = person.getContactInformation();
+		Profile profile = person.getProfile();
+		this.contactInformationDao.insertContactInformation(contactInformation);
+		this.profileDao.insertProfile(profile);
+		this.personDao.insertPerson(person);
+	}
+	private Person loadPerson(Organization organization) {
+		Person person = this.personDao.getPersonByOrganization(organization);
+		// TODO: Load in DAO
+		person.setEmployer("");
+		person.setContactInformation(this.contactInformationDao.getContactInformationByPerson(person));
+		person.setPosition(this.positionDao.getPositionById(person.getPosition().getId()));
+		person.setProfile(this.profileDao.getProfileById(person.getProfile().getId()));
+		return person;
 	}
 	/**
 	 * Adds new ranges and aingle addresses.
@@ -800,5 +837,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	public void setOrganizationNameDao(OrganizationNameDao organizationNameDao) {
 		this.organizationNameDao = organizationNameDao;
+	}
+	public void setProfileDao(ProfileDao profileDao) {
+		this.profileDao = profileDao;
+	}
+	public void setResourceDao(ResourceDao resourceDao) {
+		this.resourceDao = resourceDao;
+	}
+	public void setPositionDao(PositionDao positionDao) {
+		this.positionDao = positionDao;
 	}
 }
