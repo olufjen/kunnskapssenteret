@@ -5,10 +5,8 @@ package no.helsebiblioteket.admin.service.importexport.impl;
  */
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,14 +19,13 @@ import javax.xml.xpath.XPathFactory;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
-import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -39,6 +36,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganizationsService {
+	private static final long serialVersionUID = 165074489687094057L;
 	private static final String NODE_GROUP = "group";
     private static final String NODE_DESC = "desc";
     private static final String NODE_FROM = "from";
@@ -77,9 +75,10 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     public void importAllMemberOrganizations() {
     	Collection<MemberOrganization> memberOrganizationList = getAllMemberOrganizations().values();
     	for (MemberOrganization organization : memberOrganizationList) {
-    		// FIXME: Are they unique or check for existing?
-//    		organizationService.saveOrganization(organization);
-    		// TODO: Use insertSupplier for suppliers!
+    		organization.getOrganization().setDescription("");
+    		organization.getOrganization().setNameEnglish("");
+    		organization.getOrganization().setNameShortEnglish("");
+    		organization.getOrganization().setNameShortNorwegian("");
     		organizationService.insertMemberOrganization(organization);
     	}
     }
@@ -120,18 +119,17 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         Map<String, MemberOrganization> organizationMap = new HashMap<String, MemberOrganization>();
         MemberOrganization organization = null;
         
-        // TODO: FIX!
-        SingleResult<OrganizationType> orgTypeHPRRes = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
-        OrganizationType orgTypeHPR = (orgTypeHPRRes instanceof ValueResult) ?
-        		((ValueResult<OrganizationType>)orgTypeHPRRes).getValue() :
+        SingleResultOrganizationType orgTypeHPRRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+        OrganizationType orgTypeHPR = (orgTypeHPRRes instanceof ValueResultOrganizationType) ?
+        		((ValueResultOrganizationType)orgTypeHPRRes).getValue() :
         			null;
-        SingleResult<OrganizationType> orgTypeStudRes = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching);
-        OrganizationType orgTypeStud = (orgTypeStudRes instanceof ValueResult) ?
-        		((ValueResult<OrganizationType>)orgTypeStudRes).getValue() :
+        SingleResultOrganizationType orgTypeStudRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching);
+        OrganizationType orgTypeStud = (orgTypeStudRes instanceof ValueResultOrganizationType) ?
+        		((ValueResultOrganizationType)orgTypeStudRes).getValue() :
         			null;
-        SingleResult<OrganizationType> orgTypeEmpRes = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.other);
-        OrganizationType orgTypeEmp = (orgTypeEmpRes instanceof ValueResult) ?
-        		((ValueResult<OrganizationType>)orgTypeEmpRes).getValue() :
+        SingleResultOrganizationType orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.other);
+        OrganizationType orgTypeEmp = (orgTypeEmpRes instanceof ValueResultOrganizationType) ?
+        		((ValueResultOrganizationType)orgTypeEmpRes).getValue() :
         			null;
         
         boolean hasContactInformationValue = false;
@@ -145,7 +143,6 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             	organization = organizationMap.get(orgNameNorwegian);
             } else {
             	logger.log(Level.FINE, "\nAdding organization: " + orgNameNorwegian);
-            	// TODO: User member organization here?
             	organization = new MemberOrganization();
             }            
             Node found = null;
@@ -161,8 +158,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             }
             found = findNodeByName(n, NODE_DESC);
             if (found != null && found.getTextContent().trim().length() > 0) {
-            	// FIXME: Ok with only Norwegian name in import?
-            	if(organization.getOrganization().getNameNorwegian() == null){
+            	if(found.getTextContent() == null){
             		organization.getOrganization().setNameNorwegian(found.getTextContent());
             	}
 //            	if (organization.getNameList() == null) {
@@ -186,18 +182,21 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
                 	addressTo = null;
                 }
                 addressFrom.replace("/", "");
-                IpAddressRange range = new IpAddressRange(new IpAddress(addressFrom), new IpAddress(addressTo));
-                if (organization.getIpAddressRangeList() == null) {
-                	organization.setIpAddressRangeList(new IpAddressRange[0]);
-                }
 
-        		organization.getIpAddressSingleList();
-                // FIXME: Re-insert this!
-//            	if (!organization.getIpAddressSetList().contains(range)) {
-//            		organization.getIpAddressSetList().add(range);
-//            		logger.log(Level.ALL, "Adding range: " + addressFrom + " - " + addressTo);
-//            	}
+                if(addressTo != null){
+                    IpAddressRange range = new IpAddressRange(
+                    		new IpAddress(addressFrom),
+                    		new IpAddress(addressTo));
+                    insertRange(organization, range);
+                } else {
+            		organization.getIpAddressSingleList();
+            		IpAddressSingle single = new IpAddressSingle(
+            				new IpAddress(addressFrom));
+            		insertSingle(organization, single);
+                }
             }
+            
+            
             found = findNodeByName(n, NODE_CONTACT);
             if (found != null && found.getTextContent().trim().length() > 0) {
             	Person contactPerson = new Person();
@@ -246,7 +245,30 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         return organizationMap;
     }
     
-    private Node findNodeByName(Node parent, String lookupString) {
+    private void insertSingle(MemberOrganization organization,  IpAddressSingle single) {
+    	if(organization.getIpAddressSingleList() == null){
+    		organization.setIpAddressSingleList(new IpAddressSingle[0]);
+    	}
+    	IpAddressSingle[] list = new IpAddressSingle[organization.getIpAddressSingleList().length
+    	                                             + 1];
+    	list[list.length-1] = single;
+    	organization.setIpAddressSingleList(list);
+		logger.log(Level.ALL, "Adding single IP: " + single.getIpAddressSingle().getAddress());
+	}
+
+	private void insertRange(MemberOrganization organization, IpAddressRange range) {
+        if (organization.getIpAddressRangeList() == null) {
+        	organization.setIpAddressRangeList(new IpAddressRange[0]);
+        }
+        IpAddressRange[] list = new IpAddressRange[organization.getIpAddressRangeList().length
+                                                   + 1];
+        list[list.length-1] = range;
+        organization.setIpAddressRangeList(list);
+		logger.log(Level.ALL, "Adding range: " + range.getIpAddressFrom().getAddress() +
+				" - " + range.getIpAddressTo().getAddress());
+	}
+
+	private Node findNodeByName(Node parent, String lookupString) {
     	Node foundNode = null;
     	NodeList nodeList = parent.getChildNodes();
     	for (int j = 0; j < parent.getChildNodes().getLength(); j++) {
