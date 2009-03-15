@@ -1,19 +1,22 @@
 package no.helsebiblioteket.admin.bean;
 
-import java.util.List;
-
 import javax.faces.component.html.HtmlDataTable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSingle;
+import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
-import no.helsebiblioteket.admin.requestresult.FirstPageRequest;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
-import no.helsebiblioteket.admin.requestresult.PageResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class OrganizationBean {
@@ -22,6 +25,8 @@ public class OrganizationBean {
 	private String searchinput;
 	private OrganizationListItem[] organizations;
 	private Organization organization;
+	private MemberOrganization memberOrganization;
+	private SupplierOrganization supplierOrganization;
 	private HtmlDataTable organizationsTable;
 	
 	// TODO: Include the ipRangeList in the
@@ -34,7 +39,19 @@ public class OrganizationBean {
     public boolean getFailed() { return true; }
     public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
 	public String actionDetails(){
-		this.organization = (Organization) this.organizationsTable.getRowData();
+		OrganizationListItem item = (OrganizationListItem) this.organizationsTable.getRowData();
+		SingleResultOrganization res = this.organizationService.getOrganizationByListItem(item);
+		if(res instanceof ValueResultMemberOrganization){
+			this.memberOrganization = ((ValueResultMemberOrganization)res).getValue();
+			this.supplierOrganization = null;
+			this.organization =  memberOrganization.getOrganization();
+		} else if(res instanceof ValueResultSupplierOrganization){
+			this.memberOrganization = null;
+			this.supplierOrganization = ((ValueResultSupplierOrganization)res).getValue();
+			this.organization = supplierOrganization.getOrganization();			
+		} else {
+			this.organization = null;
+		}
 		// FIXME: Pass this on to the edit bean!
 		return "organization_details";
 //		else "organizations_overview";
@@ -58,11 +75,11 @@ public class OrganizationBean {
 	}
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }
-		PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
+		PageRequest request = new PageRequest(0, 40);
 		this.organizations = this.organizationService.getOrganizationListBySearchString(request, this.searchinput).getResult();
 	}
 	public OrganizationListItem[] getOrganizations() {
-		PageRequest request = new PageRequest(0, Integer.MAX_VALUE);
+		PageRequest request = new PageRequest(0, 40);
 		PageResultOrganizationListItem pageResult = this.organizationService.getOrganizationListAll(request);
 		this.organizations = pageResult.getResult();
 		return this.organizations;
@@ -72,11 +89,74 @@ public class OrganizationBean {
 	public HtmlDataTable getOrganizationsTable() { return organizationsTable; }
 	public void setOrganizationsTable(HtmlDataTable organizationsTable) { this.organizationsTable = organizationsTable; }
 	public void setOrganizationService(OrganizationService organizationService) { this.organizationService = organizationService; }
+	public boolean getIsMemberOrganization(){ return this.memberOrganization != null; }
+	public boolean getIsSupplierOrganization(){ return this.supplierOrganization != null; }
 	
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
+	public MemberOrganization getMemberOrganization() {
+		return memberOrganization;
+	}
+	public void setMemberOrganization(MemberOrganization memberOrganization) {
+		this.memberOrganization = memberOrganization;
+	}
+	public SupplierOrganization getSupplierOrganization() {
+		return supplierOrganization;
+	}
+	public void setSupplierOrganization(SupplierOrganization supplierOrganization) {
+		this.supplierOrganization = supplierOrganization;
+	}
 	public Organization getOrganization() {
+		// TODO: Delete this debugging information
+		
+		organization.getDescription();
+		organization.getType();
+
+		organization.getContactInformation().getPostalAddress();
+		organization.getContactInformation().getPostalCode();
+		organization.getContactInformation().getPostalLocation();
+		organization.getContactInformation().getEmail();
+		organization.getContactInformation().getTelephoneNumber();
+
+		organization.getContactPerson().getFirstName();
+		organization.getContactPerson().getLastName();
+		organization.getContactPerson().getName();
+
+		organization.getContactPerson().getHprNumber();
+		organization.getContactPerson().getStudentNumber();
+		organization.getContactPerson().getEmployer();
+		organization.getContactPerson().getPosition().getName();
+
+		organization.getContactPerson().getProfile().getParticipateSurvey();
+		organization.getContactPerson().getProfile().getReceiveNewsletter();
+
+		organization.getContactPerson().getContactInformation().getPostalAddress();
+		organization.getContactPerson().getContactInformation().getPostalCode();
+		organization.getContactPerson().getContactInformation().getPostalLocation();
+		organization.getContactPerson().getContactInformation().getEmail();
+		organization.getContactPerson().getContactInformation().getTelephoneNumber();
+
+		if(this.getIsMemberOrganization()){
+			MemberOrganization memberOrganization = this.memberOrganization;
+			for (IpAddressRange range : memberOrganization.getIpAddressRangeList()) {
+				range.getIpAddressFrom();
+				range.getIpAddressTo();
+			}
+			for (IpAddressSingle single : memberOrganization.getIpAddressSingleList()) {
+				single.getIpAddressSingle();
+			}
+		}
+
+		if(this.getIsSupplierOrganization()){
+			SupplierOrganization supplierOrganization = this.supplierOrganization;
+			for (SupplierSourceResource resource : supplierOrganization.getResourceList()) {
+				resource.getResource().getResourceType();
+				resource.getSupplierSource().getSupplierSourceName();
+				resource.getSupplierSource().getUrl();
+			}
+		}
+		
 		return organization;
 	}
 }
