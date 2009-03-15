@@ -21,6 +21,7 @@
 		<result property="contactInformation.id" column="contact_information_id" />
 		<result property="profile.id" column="profile_id" />
 		<result property="position.id" column="position_type_id" />
+		<result property="employer" column="employer" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertPerson" parameterClass="person">
@@ -49,17 +50,47 @@
   		delete from tbl_person where person_id = #id#
     </delete>
 	<select id="getPersonById" cacheModel="PersonCache" resultMap="getPersonResultMap" parameterClass="integer">
-		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
+		select
+			person_id,
+			first_name,
+			last_name,
+			student_number,
+			hpr_number,
+			contact_information_id,
+			profile_id,
+			position_type_id,
+			employer,
+			last_changed
 		from tbl_person
 		where person_id = #id#;
 	</select>
 	<select id="getPersonByUserId" cacheModel="PersonCache" resultMap="getPersonResultMap" parameterClass="integer">
-		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
+		select
+			person_id,
+			first_name,
+			last_name,
+			student_number,
+			hpr_number,
+			contact_information_id,
+			profile_id,
+			position_type_id,
+			employer,
+			last_changed
 		from tbl_person
 		where person_id = (select person_id from tbl_user where user_id = #userId#);
 	</select>
 	<select id="getPersonByOrganizationId" cacheModel="PersonCache" resultMap="getPersonResultMap" parameterClass="integer">
-		select person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed
+		select
+			person_id,
+			first_name,
+			last_name,
+			student_number,
+			hpr_number,
+			contact_information_id,
+			profile_id,
+			position_type_id,
+			employer,
+			last_changed
 		from tbl_person
 		where person_id = (select person_id from tbl_org_unit where org_unit_id = #id#);
 	</select>
