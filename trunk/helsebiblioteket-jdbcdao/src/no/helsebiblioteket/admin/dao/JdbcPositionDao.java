@@ -60,4 +60,9 @@ public class JdbcPositionDao extends SimpleJdbcDaoSupport implements PositionDao
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public Position getPositionById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
