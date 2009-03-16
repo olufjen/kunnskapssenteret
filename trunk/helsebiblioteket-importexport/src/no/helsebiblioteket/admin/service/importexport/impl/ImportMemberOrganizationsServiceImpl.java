@@ -4,6 +4,7 @@ package no.helsebiblioteket.admin.service.importexport.impl;
  * Import service for member organizations
  */
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,16 +20,24 @@ import javax.xml.xpath.XPathFactory;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.factory.ContactInformationFactory;
+import no.helsebiblioteket.admin.factory.ProfileFactory;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.service.importexport.ImportMemberOrganizationsService;
 
 import org.w3c.dom.Node;
@@ -55,6 +64,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     private String xmlDoc;
 
     private OrganizationService organizationService;
+    private UserService userService;
     
     private static final Logger logger = Logger.getLogger(ImportMemberOrganizationsServiceImpl.class.getName());
 
@@ -74,11 +84,31 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     
     public void importAllMemberOrganizations() {
     	Collection<MemberOrganization> memberOrganizationList = getAllMemberOrganizations().values();
+    	
+    	OrganizationType health_enterprise = ((ValueResultOrganizationType)
+    			this.organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
+    	Position none = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, health_enterprise)).getValue();
+    	
     	for (MemberOrganization organization : memberOrganizationList) {
+    		// TODO: Are these values ok?
     		organization.getOrganization().setDescription("");
     		organization.getOrganization().setNameEnglish("");
     		organization.getOrganization().setNameShortEnglish("");
     		organization.getOrganization().setNameShortNorwegian("");
+
+    		if(organization.getOrganization().getContactInformation() == null){
+    			organization.getOrganization().setContactInformation(new ContactInformation());
+    		}
+    		
+    		if(organization.getOrganization().getContactPerson() == null){
+    			organization.getOrganization().setContactPerson(new Person());
+    		}
+    		organization.getOrganization().getContactPerson().setPosition(none);
+    		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
+    		organization.getOrganization().getContactPerson().setContactInformation(contactInformation);
+    		Profile profile = ProfileFactory.factory.completeProfile();
+    		organization.getOrganization().getContactPerson().setProfile(profile);
+    		
     		organizationService.insertMemberOrganization(organization);
     	}
     }
@@ -90,14 +120,21 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
 
         try {
             // This one is cached in jboss, can't make reload work
-            //InputStream is = this.getClass().getResourceAsStream(xmlDoc);
+            InputStream is = this.getClass().getResourceAsStream(xmlDoc);
+            InputSource source = new InputSource(is);
+
+            // TODO: Use this instead!
             // This one does not cache - yhiiihaaa!!
-            URL r = this.getClass().getResource(xmlDoc);
-            rangeNodes = (NodeList)xpath.evaluate(XPATH_EXPR, new InputSource(r.openStream()), XPathConstants.NODESET);
+//            URL r = this.getClass().getResource(xmlDoc);
+//            InputSource source = new InputSource(r.openStream());
+            
+            
+            rangeNodes = (NodeList)xpath.evaluate(XPATH_EXPR, source, XPathConstants.NODESET);
         } catch (NullPointerException e) {
             logger.log(Level.WARNING, "Could not load xml config: " + xmlDoc, e);            
-        } catch (IOException e) {
-        	logger.log(Level.WARNING, "Could not load xml config: " + xmlDoc, e);
+            // TODO: And then you need this.
+//        } catch (IOException e) {
+//        	logger.log(Level.WARNING, "Could not load xml config: " + xmlDoc, e);
         } catch (XPathExpressionException e) {
         	logger.log(Level.WARNING, "Could not load xml config: " + xmlDoc, e);
         }
@@ -158,9 +195,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             }
             found = findNodeByName(n, NODE_DESC);
             if (found != null && found.getTextContent().trim().length() > 0) {
-            	if(found.getTextContent() == null){
-            		organization.getOrganization().setNameNorwegian(found.getTextContent());
-            	}
+           		organization.getOrganization().setNameNorwegian(found.getTextContent().trim());
 //            	if (organization.getNameList() == null) {
 //            		OrganizationName orgName = new OrganizationName();
 //                    orgName.setCategory(OrganizationNameCategory.NORMAL);
@@ -187,11 +222,13 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
                     IpAddressRange range = new IpAddressRange(
                     		new IpAddress(addressFrom),
                     		new IpAddress(addressTo));
+//                    range.setIpAddressSet(new IpAddressSet());
                     insertRange(organization, range);
                 } else {
             		organization.getIpAddressSingleList();
             		IpAddressSingle single = new IpAddressSingle(
             				new IpAddress(addressFrom));
+//            		single.setIpAddressSet(new IpAddressSet());
             		insertSingle(organization, single);
                 }
             }
@@ -251,6 +288,10 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     	}
     	IpAddressSingle[] list = new IpAddressSingle[organization.getIpAddressSingleList().length
     	                                             + 1];
+    	int i=0;
+    	for (IpAddressSingle ipAddressSingle : organization.getIpAddressSingleList()) {
+ 			list[i++] = ipAddressSingle;
+		}
     	list[list.length-1] = single;
     	organization.setIpAddressSingleList(list);
 		logger.log(Level.ALL, "Adding single IP: " + single.getIpAddressSingle().getAddress());
@@ -262,6 +303,10 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         }
         IpAddressRange[] list = new IpAddressRange[organization.getIpAddressRangeList().length
                                                    + 1];
+        int i=0;
+        for (IpAddressRange ipAddressRange : organization.getIpAddressRangeList()) {
+			list[i++] = ipAddressRange;
+		}
         list[list.length-1] = range;
         organization.setIpAddressRangeList(list);
 		logger.log(Level.ALL, "Adding range: " + range.getIpAddressFrom().getAddress() +
@@ -278,4 +323,8 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     	}
     	return foundNode;
     }
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 }
