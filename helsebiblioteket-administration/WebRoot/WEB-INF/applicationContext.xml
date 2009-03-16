@@ -108,6 +108,7 @@ xmlns="http://www.springframework.org/schema/beans"
 	
 	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportMemberOrganizationsServiceImpl">
 	 	<property name="organizationService" ref="organizationService"></property>
+	 	<property name="userService" ref="userService"></property>
 	</bean>
 
 	<!-- 
