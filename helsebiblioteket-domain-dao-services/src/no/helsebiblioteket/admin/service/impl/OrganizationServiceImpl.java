@@ -409,6 +409,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private void checkNull(Organization organization) {
 		if(organization.getContactInformation()==null){ throw new NullPointerException("contactInformation==null"); }
 		if(organization.getContactPerson()==null){ throw new NullPointerException("contactPerson==null"); }
+		if(organization.getContactPerson().getContactInformation()==null){ throw new NullPointerException("contactPerson.contactInformation==null"); }
+		if(organization.getContactPerson().getPosition()==null){ throw new NullPointerException("contactPerson.position==null"); }
+		if(organization.getContactPerson().getProfile()==null){ throw new NullPointerException("contactPerson.profile==null"); }
 		if(organization.getDescription()==null){ throw new NullPointerException("description==null"); }
 //		if(organization.getLastChanged()==null){ throw new NullPointerException("lastChanged==null"); }
 		if(organization.getNameEnglish()==null){ throw new NullPointerException("nameEnglishNormal==null"); }
