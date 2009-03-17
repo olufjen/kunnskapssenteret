@@ -94,6 +94,10 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
 	
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
@@ -156,6 +160,7 @@ xmlns="http://www.springframework.org/schema/beans"
   		<property name="personDao" ref="personDao"></property>
   		<property name="positionDao" ref="positionDao"></property>
   		<property name="organizationDao" ref="organizationDao"></property>
+  		<property name="systemDao" ref="systemDao"></property>
   	</bean>
   	<!-- <bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
     	<property name="host" value="${mail.smtp.host}"></property>
