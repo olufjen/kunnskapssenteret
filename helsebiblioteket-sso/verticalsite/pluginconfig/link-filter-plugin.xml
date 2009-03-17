@@ -9,6 +9,14 @@
 	 		</list>
 		</property>
 	</bean>
+	<bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.InvokeCache">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>
 	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="urlService" ref="urlService" />
@@ -19,6 +27,7 @@
 		<property name="targetEPR" ref="urlTargetEPR" />
 		<property name="isAffectedName" ref="isAffectedName" />
 		<property name="translateName" ref="translateName" />
+		<property name="invokeCache" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
