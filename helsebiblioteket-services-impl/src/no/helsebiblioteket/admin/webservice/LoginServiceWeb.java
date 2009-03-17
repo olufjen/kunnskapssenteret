@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.webservice;
 
+import java.util.Map;
+
 import no.helsebiblioteket.admin.domain.IpAddress;
 import javax.xml.namespace.QName;
 
@@ -21,14 +23,30 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	private QName logInIpAddressName;
 	private QName logInUserName;
 	private QName sendPasswordEmailName;
+	private Map<String, Boolean>cachedFor = null;
+	// <paramtermap>
+	// 		<entry name="loginUserByUsernamePassword" value="false">
+	// 		<entry name="loginOrganizationByIpAddress" value="true">
+	// </paramtermap>
+	
 	public SingleResultUser loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-		return (SingleResultUser)invoke(this.logInUserName, args, returnTypes);
+		if(cachedFor.get("loginUserByUsernamePassword")) {
+			// call cahced
+			return null; 
+		} else {
+			return (SingleResultUser)invoke(this.logInUserName, args, returnTypes);	
+		}
 	}
 	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
 		Class[] returnTypes = new Class[] { SingleResultMemberOrganization.class };
+		
+		// if ... 
+		
+		
+		
 		return (SingleResultMemberOrganization)invoke(this.logInIpAddressName, args, returnTypes);
 	}
 	public Boolean sendPasswordEmail(User user) {
