@@ -131,7 +131,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		this.ipRangeListHtmlDataTable = ipRangeListHtmlDataTable;
 	}
 
-	public void actionSaveOrganization() {
+	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
 		// TODO: use same bindings as used in NewSupplierOrganizationBean
 		// Requires all org props to be initiates first, see getSupplierOrganization()
@@ -169,6 +169,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			this.memberOrganization.getIpAddressRangeList();
 			this.memberOrganization.getIpAddressSingleList();
 		}
+		return "organizations_overview";
 	}
 	
 	public void actionAddSingleIp() {
