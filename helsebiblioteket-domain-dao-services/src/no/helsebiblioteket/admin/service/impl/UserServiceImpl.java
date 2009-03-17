@@ -257,9 +257,12 @@ public class UserServiceImpl implements UserService {
 		return new ValueResultUser(user);
 	}
 	private void checkNull(User user) {
-		if(user.getOrganization() == null) throw new NullPointerException("organization == null");
-//		if(user.getOrganization() == null) throw new NullPointerException("organization.organization == null");
-		if(user.getOrganization().getId() == null) throw new NullPointerException("organization.id == null");
+		// Users are allowed not to have organizations.
+		
+		if(user.getOrganization() != null &&
+				user.getOrganization().getId() == null){
+			throw new NullPointerException("user has org, but organization.id == null");
+		}
 		if(user.getPassword() == null) throw new NullPointerException("password == null");
 		if(user.getPerson() == null) throw new NullPointerException("person == null");
 		if(user.getRoleList() == null) throw new NullPointerException("roleList == null");
