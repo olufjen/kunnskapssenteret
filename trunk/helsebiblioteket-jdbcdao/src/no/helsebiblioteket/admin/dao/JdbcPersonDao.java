@@ -7,6 +7,7 @@ import java.util.List;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.User;
@@ -182,7 +183,9 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             MemberOrganization organization = new MemberOrganization();
-            user.setOrganization(organization.getOrganization());
+            OrganizationUser organizationUser = new OrganizationUser();
+            organizationUser.setUser(user);
+            organizationUser.setOrganization(organization.getOrganization());
 //            user.getOrganization().setOrgUnitId((rs.getInt("org_unit_id")));
             return user;
         }
