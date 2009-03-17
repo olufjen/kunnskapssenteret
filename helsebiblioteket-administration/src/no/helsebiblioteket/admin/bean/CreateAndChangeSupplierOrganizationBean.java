@@ -1,26 +1,18 @@
 package no.helsebiblioteket.admin.bean;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.component.UIInput;
 import org.apache.myfaces.component.html.ext.HtmlDataTable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import no.helsebiblioteket.admin.domain.ContactInformation;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 /**
@@ -42,7 +34,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	private UIInput sourceNameUIInput = null;
 	private UIInput sourceUrlUIInput = null;
 	
-	private List<SupplierSource> supplierSourceList = null;
+//	private List<SupplierSource> supplierSourceList = null;
 	private HtmlDataTable supplierSourceListHtmlDataTable = null;
 	
 	private OrganizationBean organizationBean = null;
@@ -50,9 +42,10 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	public CreateAndChangeSupplierOrganizationBean() {
 	}
 	
-	public String init() {
+	// Method is invoked by hidden init-field in JSP.
+	public String getInit() {
 		initOrganization();
-		return null;
+		return "";
 	}
 
 	public void setOrganizationBean(OrganizationBean organizationBean) {
@@ -104,10 +97,6 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.supplierOrganization = supplierOrganization;
 	}
 	
-	public SupplierOrganization getOrganization() {
-		return this.supplierOrganization;
-	}
-
 	public HtmlDataTable getSupplierSourceListHtmlDataTable() {
 		return this.supplierSourceListHtmlDataTable;
 	}
@@ -147,7 +136,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	}
 
 	public String actionNewSupplierOrganization() {
-		return "new_supplier_organization";
+		return "create_change_supplier_organization";
 	}
 
 	public boolean isShowSourceList() {
@@ -157,21 +146,17 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	
 	private void initOrganization() {
 		if (this.organizationBean != null && this.organizationBean.getOrganization() != null && this.organizationBean.getOrganization().getId() != null) {
-			//this.supplierOrganization = organizationBean.getOrganization();
-			this.organizationBean.setOrganization(null);
-			return;
+			this.supplierOrganization = organizationBean.getSupplierOrganization();
+		} else {
+			this.supplierOrganization = new SupplierOrganization();
+			this.supplierOrganization.getOrganization().setContactInformation(new ContactInformation());
+			this.supplierOrganization.getOrganization().setContactPerson(new Person());
+			this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
+			SingleResultOrganizationType result = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
+	    	if(result instanceof ValueResultOrganizationType){
+				this.supplierOrganization.getOrganization().setType(((ValueResultOrganizationType) result).getValue());
+			}
 		}
-		//this.supplierOrganization = new Organization();
-		// TODO: find out how is namelist initiated, and if it must be initiated from this method or not
-		//if (this.organization.getNameList() == null) {
-		//	this.organization.setNameList(new ArrayList<OrganizationName>());
-		//}		
-		this.supplierOrganization.getOrganization().setContactInformation(new ContactInformation());
-		this.supplierOrganization.getOrganization().setContactPerson(new Person());
-		//SingleResult<OrganizationType> result = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier.toString());
-    	//if(result instanceof ValueResult){
-		//	this.supplierOrganization.setType(((ValueResult<OrganizationType>) result).getValue());
-		//}
-		//this.supplierOrganization.setSupplierSourceList(new ArrayList<SupplierSource>());
+		this.organization = this.supplierOrganization.getOrganization();
 	}
 }

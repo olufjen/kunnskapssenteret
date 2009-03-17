@@ -10,7 +10,6 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
-import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
@@ -32,46 +31,54 @@ public class OrganizationBean {
 	// TODO: Include the ipRangeList in the
 	//       Details view (organization-details.jsp)
 	
-	public String actionEditSingle(){
-		// TODO: Of course not do that!
-		return "organization_edit";
-	}
     public boolean getFailed() { return true; }
     public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
 	public String actionDetails(){
+		return actionDetailsEdit(false);
+	}
+	public String actionEdit() {
+		return this.actionDetailsEdit(true);
+	}
+	private String actionDetailsEdit(boolean edit){
 		OrganizationListItem item = (OrganizationListItem) this.organizationsTable.getRowData();
 		SingleResultOrganization res = this.organizationService.getOrganizationByListItem(item);
 		if(res instanceof ValueResultMemberOrganization){
 			this.memberOrganization = ((ValueResultMemberOrganization)res).getValue();
 			this.supplierOrganization = null;
 			this.organization =  memberOrganization.getOrganization();
+			if(edit) return "create_change_member_organization";
 		} else if(res instanceof ValueResultSupplierOrganization){
 			this.memberOrganization = null;
 			this.supplierOrganization = ((ValueResultSupplierOrganization)res).getValue();
-			this.organization = supplierOrganization.getOrganization();			
+			this.organization = supplierOrganization.getOrganization();
+			if(edit) return "create_change_supplier_organization";
 		} else {
 			this.organization = null;
+			return "organizations_overview";
 		}
-		// FIXME: Pass this on to the edit bean!
 		return "organization_details";
-//		else "organizations_overview";
 	}
-	public String actionEdit() {
-		String actionString = "organizations_overview";
-		setOrganization((Organization) this.organizationsTable.getRowData());
-		String orgTypeKey = this.organization.getType().getKey().toString();
-		if (orgTypeKey.equals(OrganizationTypeKey.content_supplier.toString())) {
-			actionString = "create_change_supplier_organization";
-		} else if (
-				orgTypeKey.equals(OrganizationTypeKey.health_enterprise.toString())
-				|| orgTypeKey.equals(OrganizationTypeKey.other.toString())
-				|| orgTypeKey.equals(OrganizationTypeKey.public_administration.toString())
-				|| orgTypeKey.equals(OrganizationTypeKey.teaching.toString())
-			) {
-			actionString = "create_change_member_organization";
+	public String actionEditSingle(){
+		// TODO: Of course not do that!
+//		return actionDetailsEdit(true);
+		OrganizationListItem item = new OrganizationListItem();
+		item.setId(this.organization.getId());
+		SingleResultOrganization result = this.organizationService.getOrganizationByListItem(item);
+		if(result instanceof ValueResultSupplierOrganization){
+			this.supplierOrganization = ((ValueResultSupplierOrganization)result).getValue();
+			this.memberOrganization = null;
+			this.organization = this.supplierOrganization.getOrganization();
+			logger.debug("changing organization with id " + this.organization.getId());
+			return "create_change_supplier_organization";
+		} else if(result instanceof ValueResultMemberOrganization){
+			this.supplierOrganization = null;
+			this.memberOrganization = ((ValueResultMemberOrganization)result).getValue();
+			this.organization = this.memberOrganization.getOrganization();
+			logger.debug("changing organization with id " + this.organization.getId());
+			return "create_change_member_organization";
+		} else {
+			return "organizations_overview";
 		}
-		logger.debug("changing organization with id " + this.organization.getId());
-		return actionString;
 	}
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }

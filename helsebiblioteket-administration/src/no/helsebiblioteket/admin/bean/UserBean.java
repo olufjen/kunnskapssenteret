@@ -47,9 +47,9 @@ public class UserBean {
 	private String selectedIsStudent;
 
 	private List<Role> allRoles;
-	private Map<UserRoleKey, Role> allRolesMap;
+	private Map<String, Role> allRolesMap;
 	private List<Position> allPositions;
-	private Map<PositionTypeKey, Position> allPositionsMap;
+	private Map<String, Position> allPositionsMap;
 	// FIXME: Use caching?
 	private UserListItem[] users;
 	private User user;
@@ -84,20 +84,24 @@ public class UserBean {
 //		if(this.availableIsStudent == null){
 		this.availableIsStudent = new ArrayList<SelectItem>();
     	if(this.mainRole().getKey().equals(roleKeyAdministrator) | 
-    			this.mainRole().getKey().equals(roleKeyEmployee) |
-    			this.mainRole().getKey().equals(roleKeyHealthWorker)){
+    			this.mainRole().getKey().getValue().equals(roleKeyEmployee) |
+    			this.mainRole().getKey().getValue().equals(roleKeyHealthWorker)){
 			this.availableIsStudent.add(new SelectItem("U", "None"));
     		this.selectedIsStudent = "U";
     		if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
-    	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
+    	} else if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
 			this.availableIsStudent.add(new SelectItem("Y", "Student"));
 			this.availableIsStudent.add(new SelectItem("N", "Employee"));
 			this.selectedIsStudent = "N";
 			if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
+    	} else {
+    		// TODO: What then?
+    		this.availableIsStudent.add(new SelectItem("U", "None"));
+    		this.selectedIsStudent = "";
     	}
 //		}
 
-		logger.info("this.user.getRole().getKey()=" + this.mainRole().getKey());
+		logger.info("this.user.getRole().getKey()=" + this.mainRole().getKey().getValue());
 		logger.info("this.selectedIsStudent=" + this.selectedIsStudent);
 		logger.info("this.isStudentSelectOne=" + this.isStudentSelectOne);
 		
@@ -167,7 +171,12 @@ public class UserBean {
     }
     public boolean getCannotShowUser(){ return false; }
     public boolean getCanShowUser(){ return true; }
-    public String actionEdit(){ this.user = (User) this.usersTable.getRowData(); this.enableDisableFields(); return "user_edit"; }
+    public String actionEdit(){
+    	UserListItem item  = (UserListItem) this.usersTable.getRowData();
+    	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
+    	this.enableDisableFields();
+    	return "user_edit";
+    }
     public String actionEditSingle(){ return "user_edit"; }
     public String getUserRole(){
     	if(this.user != null && this.mainRole() != null) {
@@ -203,6 +212,9 @@ public class UserBean {
     	} else {
     		this.userService.updateUser(this.user);
     	}
+    	UserListItem item = new UserListItem();
+    	item.setId(this.user.getId());
+    	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
     	return "user_details";
     }
     public String actionCancel(){
@@ -282,7 +294,7 @@ public class UserBean {
 		if(this.availablePositions == null) {
 			this.availablePositions = new ArrayList<SelectItem>();
 			for (Position position : getAllPositions()) {
-				SelectItem option = new SelectItem(position.getKey(), position.getName(), "", false);
+				SelectItem option = new SelectItem(position.getKey().getValue(), position.getName(), "", false);
 				this.availablePositions.add(option);
 			}
 		}
@@ -340,10 +352,10 @@ public class UserBean {
 					((ValueResultSystem)
 							this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue()).getList();
 			this.allRoles = new ArrayList<Role>();
-			this.allRolesMap = new HashMap<UserRoleKey, Role>();
+			this.allRolesMap = new HashMap<String, Role>();
 			for (Role role : roles) {
 				this.allRoles.add(role);
-				this.allRolesMap.put(role.getKey(), role);
+				this.allRolesMap.put(role.getKey().getValue(), role);
 			}
 		}
 		return this.allRoles;
@@ -364,9 +376,9 @@ public class UserBean {
 			for (Position loadedPos : positions) {
 				this.allPositions.add(loadedPos);
 			}
-			this.allPositionsMap = new HashMap<PositionTypeKey, Position>();
+			this.allPositionsMap = new HashMap<String, Position>();
 			for (Position position : this.allPositions) {
-				this.allPositionsMap.put(position.getKey(), position);
+				this.allPositionsMap.put(position.getKey().getValue(), position);
 			}
 		}
 		return this.allPositions;
