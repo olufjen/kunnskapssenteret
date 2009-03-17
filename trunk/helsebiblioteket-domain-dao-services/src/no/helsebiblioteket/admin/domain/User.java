@@ -26,6 +26,12 @@ public class User  {
 	public String toString() {
 		return "[" + id + ": " + username + "(" + password + ", " + lastChanged + ")]";
 	}
+	@Override
+	public int hashCode() {
+		// FOR LATER: Make this a little bit smarter
+//		return toString().hashCode();
+		return getId(); //BIT_STUFF
+	}
 	public boolean hasRole(Role role){
 		for (Role userRole : this.roleList) {
 			if(userRole.getKey().equals(role.getKey())){
