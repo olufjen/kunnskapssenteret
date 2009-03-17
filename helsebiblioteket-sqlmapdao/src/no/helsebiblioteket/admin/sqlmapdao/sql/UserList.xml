@@ -19,6 +19,9 @@
 		<result property="lastName" column="last_name" />
 		<result property="roleName" column="role_name" />
 		<result property="roleKey.value" column="role_key" />
+		<!-- TODO: Insert this
+		<result property="organizationName" column="organization_name" />
+		-->
 	</resultMap>
 	<select id="getUserListPaged" cacheModel="UserListCache" resultMap="UserListLineMap" >
 		select

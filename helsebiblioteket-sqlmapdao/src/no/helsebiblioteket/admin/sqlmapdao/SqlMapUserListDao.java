@@ -65,6 +65,7 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 		// TODO: Move name adding to service or domain!
 		working.setName(line.getFirstName() + " " + line.getLastName());
 		working.setUsername(line.getUsername());
+		working.setOrganizationName(line.getOrganizationName());
 		List<String> workingRoleNames = new ArrayList<String>();
 		List<UserRoleKey> workingRoleKeys = new ArrayList<UserRoleKey>();
 		workingRoleNames.add(line.getRoleName());
@@ -80,12 +81,15 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 				working.setId(line.getId());
 				working.setName(line.getFirstName() + " " + line.getLastName());
 				working.setUsername(line.getUsername());
+				working.setOrganizationName(line.getOrganizationName());
 				workingRoleNames = new ArrayList<String>();
 				workingRoleKeys = new ArrayList<UserRoleKey>();
 			}
 			workingRoleNames.add(line.getRoleName());
 			workingRoleKeys.add(line.getRoleKey());
 		}
+		working.setRoleNames(translateRoleNames(workingRoleNames));
+		working.setRoleKeys(translateRoleKeys(workingRoleKeys));
 		result.add(working);
 		return result;
 	}
