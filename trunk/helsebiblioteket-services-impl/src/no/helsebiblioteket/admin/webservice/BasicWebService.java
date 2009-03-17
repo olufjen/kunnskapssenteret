@@ -35,19 +35,33 @@ public abstract class BasicWebService implements Serializable {
 	}
 	
 	public Object invoke(QName name, Object[] args, Class[] returnTypes) {
-		return invoke(this.useCache, generateCacheKey(name, args, returnTypes), name, args, returnTypes); 
+		Object[] response = null;
+		try {
+			response = this.serviceClient.invokeBlocking(name, args, returnTypes);
+			if(response == null || response.length == 0 || response[0] == null){
+				getLogger().error("Invoking webservice [" + name + "]: No result!");
+				return null;
+			} else {
+				return response[0];
+			}
+		} catch (AxisFault e) {
+			getLogger().error(e);
+			return null;
+		}
+
+//		return invoke(this.useCache, generateCacheKey(name, args, returnTypes), name, args, returnTypes); 
 	}
 	
-	public Object invoke(String cacheKey, QName name, Object[] args, Class[] returnTypes) {
-		return invoke(true, cacheKey, name, args, returnTypes); 
-	}
-	
-	public Object invoke(boolean useCache, QName name, Object[] args, Class[] returnTypes) {
-		return invoke(true, generateCacheKey(name, args, returnTypes), name, args, returnTypes); 
-	}
+//	public Object invoke(String cacheKey, QName name, Object[] args, Class[] returnTypes) {
+//		return invoke(true, cacheKey, name, args, returnTypes); 
+//	}
+//	
+//	public Object invoke(boolean useCache, QName name, Object[] args, Class[] returnTypes) {
+//		return invoke(true, generateCacheKey(name, args, returnTypes), name, args, returnTypes); 
+//	}
 	
 	@SuppressWarnings("unchecked")
-	public Object invoke(Boolean useCache, String cacheKey, QName name, Object[] args, Class[] returnTypes) {
+	public Object invoke2(Boolean useCache, String cacheKey, QName name, Object[] args, Class[] returnTypes) {
 		 //testCache();
 		try {
 			Object[] response = null;
@@ -56,7 +70,7 @@ public abstract class BasicWebService implements Serializable {
 			}
 			if (response == null) {
 				response = this.serviceClient.invokeBlocking(name, args, returnTypes);
-				invokeCache.addInvokeCache(cacheKey, response);
+//				invokeCache.addInvokeCache(cacheKey, response);
 			}
 			if(response == null || response.length == 0 || response[0] == null){
 				getLogger().error("Invoking webservice [" + name + "]: No result!");

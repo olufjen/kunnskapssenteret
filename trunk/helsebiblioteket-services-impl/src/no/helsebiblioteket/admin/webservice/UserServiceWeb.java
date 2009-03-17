@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
@@ -35,6 +36,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName findUserByUsernameName;
 	private QName userByUserListItemName;
 	private QName insertUserName;
+	private QName insertOrganizationUserName;
 	private QName updateUserName;
 	private QName positionByKey;
 
@@ -105,6 +107,12 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { SingleResultUser.class };
 		return (SingleResultUser)invoke(this.insertUserName, args, returnTypes);
+	}
+	@Override
+	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser) {
+		Object[] args = new Object[] { organizationUser };
+		Class[] returnTypes = new Class[] { SingleResultUser.class };
+		return (SingleResultUser)invoke(this.insertOrganizationUserName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
