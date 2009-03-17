@@ -9,7 +9,19 @@
 	 		</list>
 		</property>
 	</bean>
-	
+	<bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.InvokeCache">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>
+	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
+ 		<property name="urlPattern" value="/site/[0-3]/.*" />
+ 		<property name="urlService" ref="urlService" />
+ 		<property name="sessionVarName" value="hbloggedin" />
+	</bean>
 	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="priority" value="9999" />
@@ -21,6 +33,7 @@
 		<property name="serviceClient" ref="interceptorLoginServiceClient" />
 		<property name="targetEPR" ref="interceptorLoginServiceTargetEPR" />
 		<property name="logInIpAddressName" ref="interceptorLogInIpAddress" />
+		<property name="invokeCache" ref="methodCachingAdvice" />
 	</bean>
 	
 	<bean name="interceptorLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
