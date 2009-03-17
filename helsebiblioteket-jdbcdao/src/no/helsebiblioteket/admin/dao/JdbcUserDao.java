@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
@@ -97,7 +98,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
         
     }
 
-    public User getUserById(Integer userId) {
+    public OrganizationUser getUserById(Integer userId) {
 		// FIXME: Should not use ID! Key is unique.
 		return null;
 	}
@@ -111,9 +112,24 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 		
 	}
 	@Override
-	public User getUserByUsername(String username) {
+	public OrganizationUser getUserByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public void deleteUser(OrganizationUser organizationUser) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void insertUser(OrganizationUser organizationUser) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void updateUser(OrganizationUser organizationUser) {
+		// TODO Auto-generated method stub
+		
 	}
     
 }
