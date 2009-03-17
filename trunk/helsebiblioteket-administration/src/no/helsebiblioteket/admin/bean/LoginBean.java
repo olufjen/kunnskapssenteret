@@ -93,7 +93,7 @@ public class LoginBean {
 		logger.info("method 'send' invoked");
 		User user = new User();
 		user.setUsername(getEmail());
-		this.loginService.sendPasswordEmail(user);
+		this.loginService.sendPasswordEmail(user.getUsername());
 		return "send_email_success";
 	}
 	public String actionBackToLogin() {

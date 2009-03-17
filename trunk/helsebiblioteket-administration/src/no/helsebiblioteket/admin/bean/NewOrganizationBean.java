@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.bean;
 
-public class NewOrganizationBean {
+import no.helsebiblioteket.admin.domain.Organization;
 
+public class NewOrganizationBean {
+	
 	// FIXME: Replace these with something else?
 	private String organizationName;
 	private String orgAddress;
@@ -11,6 +13,8 @@ public class NewOrganizationBean {
 	private String contactPersonLastName;
 	private String contactPersonTelephoneNumber;
 	private String contactPersonEmail;
+	protected Organization organization;
+		
 	public String getOrganizationName() {
 		return organizationName;
 	}
@@ -58,6 +62,12 @@ public class NewOrganizationBean {
 	}
 	public void setContactPersonEmail(String contactPersonEmail) {
 		this.contactPersonEmail = contactPersonEmail;
+	}
+	public Organization getOrganization() {
+		return organization;
+	}
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 }

@@ -38,7 +38,7 @@ public class ForgottenPasswordBean {
 		person.setContactInformation(contactInformation);
 		user.setPerson(person);
 		user.setUsername("");
-		this.loginService.sendPasswordEmail(user);
+		this.loginService.sendPasswordEmail(user.getPerson().getContactInformation().getEmail());
 		
 		// TODO: Use message from Resource Bundle
 		 //String warningContractRequired =  MessageBundleLoader.getMessage("required") + this.getContractTypeComponent().getLabel();

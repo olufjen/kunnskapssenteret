@@ -136,6 +136,7 @@ xmlns="http://www.springframework.org/schema/beans"
     	<property name="emailFromEmail" value="redaksjonen@helsebiblioteket.no"></property>
     	<property name="emailSubject" value="tilgangsinformasjon for helsebiblioteket.no"></property>
     	<property name="emailMessage" value="Her er ditt nye passord for tilgang til http://www.helsebiblioteket.no: ##password##"></property>
+    	<property name="emailService" ref="emailService"></property>
   	</bean>
   	
   	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
@@ -161,11 +162,14 @@ xmlns="http://www.springframework.org/schema/beans"
   		<property name="positionDao" ref="positionDao"></property>
   		<property name="organizationDao" ref="organizationDao"></property>
   		<property name="systemDao" ref="systemDao"></property>
+  		<property name="profileDao" ref="profileDao"></property>
+  		<property name="contactInformationDao" ref="contactInformationDao"></property>
   	</bean>
-  	<!-- <bean id="emailService" class="no.helsebiblioteket.admin.service.EmailServiceSMTPImpl">
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
     	<property name="host" value="${mail.smtp.host}"></property>
     	<property name="debug" value="${mail.debug}"></property>
-  	</bean>-->
+    	<property name="noSend" value="${mail.nosend}"></property>
+  	</bean>
 	
 <!--  Spring security bean classes start    -->
 

@@ -2,29 +2,22 @@ package no.helsebiblioteket.admin.bean;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.event.ActionEvent;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
-import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.UnknownOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
@@ -46,19 +39,16 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	
 	private List<IpAddressRange> ipRangeList = null;
 	
-	private List<String> selectedSourceList = null;
 	private HtmlDataTable ipRangeListHtmlDataTable = null;
-	
-	private BeanMode beanMode;
-	
+
 	public CreateAndChangeMemberOrganizationBean() {
-		this.beanMode = BeanMode.change;
+//		this.beanMode = BeanMode.change;
 	}
 
 	// Method is invoked by hidden init-field in JSP.
 	public String getInit() {
 		initOrganization();
-		return null;
+		return "";
 	}
 	
 	public void setOrganizationBean(OrganizationBean organizationBean) {
@@ -125,10 +115,6 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		this.organizationService = organizationService;
 	}
 
-	public MemberOrganization getOrganization() {
-		return this.memberOrganization;
-	}
-	
 	public void setOrganization(MemberOrganization organization) {
 		this.memberOrganization = organization;
 	}
@@ -211,7 +197,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	}
 	
 	public String actionNewMemberOrganization() {
-		beanMode = BeanMode.create;
+//		beanMode = BeanMode.create;
 		return "create_change_member_organization";
 	}
 	
@@ -251,23 +237,23 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	}
 	
 	public void setSelectedSourceList(List<String> list) { 
-		this.selectedSourceList = list;
+//		this.selectedSourceList = list;
 	}
 	
 	private void initOrganization() {
 		if (this.organizationBean != null && this.organizationBean.getOrganization() != null && this.organizationBean.getOrganization().getId() != null) {
-			// TODO: Re-insert:
-			this.memberOrganization = null;//(MemberOrganization) organizationBean.getOrganization();
-			this.organizationBean.setOrganization(null);
-			return;
+			this.memberOrganization = organizationBean.getMemberOrganization();
+		} else {
+			this.memberOrganization = new MemberOrganization();
+			this.memberOrganization.getOrganization().setContactInformation(new ContactInformation());
+			this.memberOrganization.getOrganization().setContactPerson(new Person());
+			this.memberOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
+			this.memberOrganization.getOrganization().setNameEnglish("");
+			this.memberOrganization.getOrganization().setNameNorwegian("");
+			this.memberOrganization.getOrganization().setNameShortEnglish("");
+			this.memberOrganization.getOrganization().setNameShortNorwegian("");
+			this.memberOrganization.setIpAddressRangeList(new IpAddressRange[0]);
 		}
-		this.memberOrganization = new MemberOrganization();
-		this.memberOrganization.getOrganization().setContactInformation(new ContactInformation());
-		this.memberOrganization.getOrganization().setContactPerson(new Person());
-		this.memberOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
-		
-		// TODO: Re-insert
-//		this.memberOrganization.setIpAddressSetList(new ArrayList<IpAddressSet>());
-		//this.organization.setNameList(new ArrayList<OrganizationName>());
+		this.organization = this.memberOrganization.getOrganization();
 	}
 }
