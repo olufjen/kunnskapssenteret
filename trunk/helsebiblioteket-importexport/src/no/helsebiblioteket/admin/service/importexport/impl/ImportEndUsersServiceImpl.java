@@ -28,6 +28,10 @@ import no.helsebiblioteket.admin.domain.User;
  */
 
 public class ImportEndUsersServiceImpl implements ImportEndUsersService {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8960490923903576333L;
 	LDAPLookupUtil ldapLookupUtil;
 	UserService userService;
 	
@@ -64,15 +68,16 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 		this.commonPassword = commonPassword;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void importAllEndUsers() {
-		Collection<LDAPUser> allEndUsersAsLdapUsers = new ArrayList();
+		Collection<LDAPUser> allEndUsersAsLdapUsers = new ArrayList<LDAPUser>();
 		try {
 			allEndUsersAsLdapUsers = ldapLookupUtil.getAllLDAPUsers();
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
+			// TODO: Leif? Logge dette?
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// TODO: Leif? Logge dette?
 			e.printStackTrace();
 		}
 		
@@ -87,8 +92,6 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 		}
 		
 		for (User user : allEndUsersAsHelsebibliotekUsers) {
-			// FIXME: Are they unique or check for existing?
-//			userService.createUser(user);
 			userService.insertUser(user);
 		}
 	}
@@ -146,7 +149,7 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         person.setContactInformation(contactInformation);
         user.setPerson(person);
         //user.setOrganization(new Organization());
-        //TODO
+        //TODO: Leif? Hva er dette?
         /*user.setDn(ldapUser.getDn());
         user.setUid(ldapUser.getUid());
         user.setFirstName(ldapUser.getGivenName());

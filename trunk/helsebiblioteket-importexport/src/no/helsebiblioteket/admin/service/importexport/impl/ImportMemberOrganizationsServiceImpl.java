@@ -3,9 +3,7 @@ package no.helsebiblioteket.admin.service.importexport.impl;
 /*
  * Import service for member organizations
  */
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +18,6 @@ import javax.xml.xpath.XPathFactory;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
-import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -34,8 +31,6 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationTyp
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.factory.ContactInformationFactory;
 import no.helsebiblioteket.admin.factory.ProfileFactory;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.service.importexport.ImportMemberOrganizationsService;
@@ -170,8 +165,8 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         			null;
         
         boolean hasContactInformationValue = false;
-        boolean hasContactPersonValue = false;
-        String nodeValue = null;
+//        boolean hasContactPersonValue = false;
+//        String nodeValue = null;
         
         for(int i = 0 ; i < nodeList.getLength(); i++){
             Node n = nodeList.item(i);
@@ -277,7 +272,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         	organizationMap.put(orgNameNorwegian, organization);
         	
         	hasContactInformationValue = false;
-            hasContactPersonValue = false;
+//            hasContactPersonValue = false;
         }
         return organizationMap;
     }
