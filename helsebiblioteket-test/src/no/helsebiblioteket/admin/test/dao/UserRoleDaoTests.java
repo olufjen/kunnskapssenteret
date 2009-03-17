@@ -9,6 +9,7 @@ import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
@@ -37,9 +38,11 @@ public class UserRoleDaoTests {
 		// User
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		new OrganizationDaoTests().insertMemberOrganization(organization);
-		User user = UserFactory.factory.completeUser(organization, position);
+		User user = UserFactory.factory.completeUser(position);
 		user.setUsername("ROLETEST" + new Random().nextInt(1000000));
-		new UserDaoTests().insertUser(user);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		new UserDaoTests().insertUser(organizationUser);
 		
 		// DAO
 		UserRoleDao userRoleDao = beanFactory.getUserRoleDao();
@@ -66,7 +69,8 @@ public class UserRoleDaoTests {
 		userRoleDao.deleteUserRole(sRoleLine);
 		list = userRoleDao.getUserRoleListByUser(user);
 		Assert.isTrue(list.size()==0, "Both roles should have been deleted");
-		new UserDaoTests().removeUser(user);
+		organizationUser.setUser(user);
+		new UserDaoTests().removeUser(organizationUser);
 		new OrganizationDaoTests().removeMemberOrganization(organization);
 	}
 	private UserRoleLine createLine(User user, Role role){

@@ -7,12 +7,13 @@ import org.springframework.util.Assert;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
-import no.helsebiblioteket.admin.factory.UserFactory;
+import no.helsebiblioteket.admin.factory.OrganizationUserFactory;
 import no.helsebiblioteket.admin.test.BeanFactory;
 
 public class UserDaoTests {
@@ -27,12 +28,13 @@ public class UserDaoTests {
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		new OrganizationDaoTests().insertMemberOrganization(organization);
 		
-		User user = UserFactory.factory.completeUser(organization, position);
+		OrganizationUser user = OrganizationUserFactory.factory.completeUser(organization, position);
+		
 		String username1 = "RandomUser" + new Random().nextInt(1000000000);
 		String username2 = "RandomUser" + new Random().nextInt(1000000000);
 		
 		// INSERT
-		user.setUsername(username1);
+		user.getUser().setUsername(username1);
 		this.insertUser(user);
 		
 		// GET
@@ -42,9 +44,9 @@ public class UserDaoTests {
 		
 		
 		// UPDATE
-		user.setUsername(username2);
+		user.getUser().setUsername(username2);
 		userDao.updateUser(user);
-		User notFound = userDao.getUserByUsername(username1);
+		OrganizationUser notFound = userDao.getUserByUsername(username1);
 		Assert.isNull(notFound, "User should not be found");
 		user = userDao.getUserByUsername(username2);
 		Assert.notNull(user, "User not found");
@@ -54,11 +56,11 @@ public class UserDaoTests {
 		new OrganizationDaoTests().removeMemberOrganization(organization);
 	}
 
-	public void insertUser(User user){
+	public void insertUser(OrganizationUser user){
 		UserDao userDao = beanFactory.getUserDao();
 		userDao.insertUser(user);
 	}
-	public void removeUser(User user){
+	public void removeUser(OrganizationUser user){
 		UserDao userDao = beanFactory.getUserDao();
 		userDao.deleteUser(user);
 	}

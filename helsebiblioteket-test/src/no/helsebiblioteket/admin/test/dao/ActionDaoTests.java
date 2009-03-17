@@ -10,6 +10,7 @@ import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceType;
@@ -51,7 +52,7 @@ public class ActionDaoTests {
 		SupplierSource supplierSource = SupplierSourceFactory.factory.completeSupplierSource();
 		Position position = PositionFactory.factory.completePosition(organizationType);
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
-		User user = UserFactory.factory.completeUser(memberOrganization, position);
+		User user = UserFactory.factory.completeUser(position);
 		user.setUsername(randomValue);
 		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(
 				organizationType, position);
@@ -65,7 +66,9 @@ public class ActionDaoTests {
 		// Prepare insert
 		new OrganizationDaoTests().insertSupplierOrganization(supplierOrganization);
 		new OrganizationDaoTests().insertMemberOrganization(memberOrganization);
-		new UserDaoTests().insertUser(user);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		new UserDaoTests().insertUser(organizationUser);
 		supplierSourceDao.insertSupplierSource(supplierSource);
 		resourceDao.insertSupplierSourceResource(supplierSourceResource);
 		

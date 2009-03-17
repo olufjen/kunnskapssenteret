@@ -9,6 +9,7 @@ import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
@@ -49,7 +50,9 @@ public class LoginServiceTests {
 		
 		MemberOrganization memberOrganization = createMemberOrganization();
 		User user = createUser(memberOrganization);
-		user.setOrganization(((ValueResultMemberOrganization)organizationService.insertMemberOrganization(memberOrganization)).getValue().getOrganization());
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		organizationUser.setOrganization(((ValueResultMemberOrganization)organizationService.insertMemberOrganization(memberOrganization)).getValue().getOrganization());
 		userService.insertUser(user);
 		
 //	    TEST: public SingleResultUser loginUserByUsernamePassword(String username, String password);
@@ -122,7 +125,7 @@ public class LoginServiceTests {
 	}
 	private User createUser(MemberOrganization memberOrganization){
 		OrganizationType type = createOrganizationHealthEnterprise();
-		User user = UserFactory.factory.completeUser(memberOrganization, createPositionJordmor(type));
+		User user = UserFactory.factory.completeUser(createPositionJordmor(type));
 		user.setUsername(username);
 		user.setPassword(password);
 		return user;

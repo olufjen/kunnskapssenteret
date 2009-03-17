@@ -11,6 +11,7 @@ import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.ResourceType;
@@ -64,11 +65,13 @@ public class AccessServiceTests {
 		Role health_personnel_other = ((ValueResultRole)this.beanFactory.getUserService().getRoleByKeySystem(UserRoleKey.health_personnel_other, helsebiblioteket_admin)).getValue();
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(healthEnterprice, fotterapeut);
 		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(contentSupplier, fotterapeut);
-		User user = UserFactory.factory.completeUser(memberOrganization, fotterapeut);
+		User user = UserFactory.factory.completeUser( fotterapeut);
 		SupplierSource urlSource = SupplierSourceFactory.factory.completeSupplierSource();
 		memberOrganization = ((ValueResultMemberOrganization)this.beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue();
 		supplierOrganization = ((ValueResultSupplierOrganization)this.beanFactory.getOrganizationService().insertSupplierOrganization(supplierOrganization)).getValue();
-		user.setOrganization(memberOrganization.getOrganization());
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		organizationUser.setOrganization(memberOrganization.getOrganization());
 		user.setUsername("username_" + randomValue);
 		user = ((ValueResultUser)this.beanFactory.getUserService().insertUser(user)).getValue();
 

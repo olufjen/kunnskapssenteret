@@ -71,7 +71,7 @@ public class URLServiceTests {
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(health_enterprise, ambulansearbeider);
 		memberOrganization = ((ValueResultMemberOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue();
 		
-		User user = UserFactory.factory.completeUser(memberOrganization, ambulansearbeider);
+		User user = UserFactory.factory.completeUser(ambulansearbeider);
 		user.setUsername("user_" + randomValue);
 		user = ((ValueResultUser)beanFactory.getUserService().insertUser(user)).getValue();
 		

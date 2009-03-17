@@ -6,6 +6,7 @@ import org.springframework.security.userdetails.UserDetailsService;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
@@ -32,12 +33,15 @@ public class UserDetailsServiceTests {
 
 		// New objects
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(health_enterprise, kiropraktor);
-		User user = UserFactory.factory.completeUser(organization, kiropraktor);
+		User user = UserFactory.factory.completeUser(kiropraktor);
 		user.setUsername(username);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		organizationUser.setOrganization(organization.getOrganization());
 		
 		// Inserts
 		organization = ((ValueResultMemberOrganization)this.beanFactory.getOrganizationService().insertMemberOrganization(organization)).getValue();
-		user.setOrganization(organization.getOrganization());
+		organizationUser.setOrganization(organization.getOrganization());
 		user = ((ValueResultUser)this.beanFactory.getUserService().insertUser(user)).getValue();
 		
 		// Service
