@@ -16,7 +16,9 @@ import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -39,6 +41,7 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
@@ -203,19 +206,11 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
     public SingleResultUser findUserByUsername(String username) {
-		User user = this.userDao.getUserByUsername(username);
-		if(user == null){
+		OrganizationUser organizationUser = this.userDao.getUserByUsername(username);
+		if(organizationUser == null){
 			return new EmptyResultUser();
 		} else {
-			MemberOrganization organization = new MemberOrganization();
-			organization.setOrganization(organizationDao.getOrganizationById(user.getId()));
-			// TODO: Really?
-			// No. Leif says there are users without organizations!
-//			if(organization.getOrganization() == null){
-//				throw new NullPointerException("No organization for user");
-//			}
-			user.setOrganization(organization.getOrganization());
-
+			User user = organizationUser.getUser();
 			Person person = this.personDao.getPersonByUser(user);
 			if(person == null){
 				Position position = null;//this.getPositionByKey(PositionTypeKey.none, organizationType);
@@ -251,7 +246,15 @@ public class UserServiceImpl implements UserService {
 				i++;
 			}
 			user.setRoleList(roleList);
-			return new ValueResultUser(user);
+
+			Organization organization = organizationDao.getOrganizationById(user.getId());
+			if(organization == null){
+				return new ValueResultUser(user);
+			} else {
+				organizationUser.setOrganization(organization);
+				organizationUser.setUser(user);
+				return new ValueResultOrganizationUser(organizationUser);
+			}
 		}
 	}
 	/**
@@ -260,7 +263,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public SingleResultUser getUserByUserListItem(UserListItem userListItem) {
-		User tmp = this.userDao.getUserById(userListItem.getId());
+		User tmp = this.userDao.getUserById(userListItem.getId()).getUser();
 		return this.findUserByUsername(tmp.getUsername());
 	}
 
@@ -274,6 +277,22 @@ public class UserServiceImpl implements UserService {
      */
 	@Override
 	public SingleResultUser insertUser(User user) {
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+
+		this.userDao.insertUser(organizationUser);
+
+		this.insertUserValues(user);
+		
+		return new ValueResultUser(user);
+	}
+	@Override
+	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser) {
+		this.userDao.insertUser(organizationUser);
+		this.insertUserValues(organizationUser.getUser());
+		return null;
+	}
+	public void insertUserValues(User user) {
 		// TODO: This should be removed, because it is only written to get
 		//       around an error(?)in Axis2.
 		if(user.getRoleList() == null){
@@ -290,16 +309,8 @@ public class UserServiceImpl implements UserService {
 		for (UserRoleLine userRole : userRoleList) {
 			this.userRoleDao.insertUserRole(userRole);
 		}
-		this.userDao.insertUser(user);
-		return new ValueResultUser(user);
 	}
 	private void checkNull(User user) {
-		// Users are allowed not to have organizations.
-		
-		if(user.getOrganization() != null &&
-				user.getOrganization().getId() == null){
-			throw new NullPointerException("user has org, but organization.id == null");
-		}
 		if(user.getPassword() == null) throw new NullPointerException("password == null");
 		if(user.getPerson() == null) throw new NullPointerException("person == null");
 		if(user.getRoleList() == null) throw new NullPointerException("roleList == null");
@@ -343,7 +354,9 @@ public class UserServiceImpl implements UserService {
 		for (UserRoleLine userRole : newUserRoleList) {
 			this.userRoleDao.insertUserRole(userRole);
 		}
-		this.userDao.updateUser(user);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		this.userDao.updateUser(organizationUser);
 		return Boolean.TRUE;
 	}
 	private List<UserRoleLine> translateRoles(Integer id, Role[] roleList){

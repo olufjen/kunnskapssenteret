@@ -11,11 +11,6 @@ public class User  {
 	private String password;
 	private Date lastChanged;
 
-	// References
-	// This is the only one we know that need to be initialized.
-	// May drop initialization when we learn more about Ibatis.
-	// FIXME: Insert something?
-	private Organization organization = null;//new UnknownOrganization();
 	private Person person;
 
 	// Values loaded with UserRoleLine
@@ -65,12 +60,6 @@ public class User  {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
-	}
-	public Organization getOrganization() {
-		return organization;
-	}
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
 	}
 	public Person getPerson() {
 		return person;

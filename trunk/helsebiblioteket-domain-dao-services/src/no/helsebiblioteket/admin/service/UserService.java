@@ -7,6 +7,7 @@ package no.helsebiblioteket.admin.service;
 
 import java.io.Serializable;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
@@ -43,5 +44,6 @@ public interface UserService extends Serializable {
 	public SingleResultUser findUserByUsername(String username);
 
 	public SingleResultUser insertUser(User user);
+	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser);
 	public Boolean updateUser(User user);
 }

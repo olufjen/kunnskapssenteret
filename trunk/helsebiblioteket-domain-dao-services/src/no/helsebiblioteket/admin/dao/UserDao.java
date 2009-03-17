@@ -1,14 +1,15 @@
 package no.helsebiblioteket.admin.dao;
 
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.User;
 
 public interface UserDao {
 	// Edit
-	public void insertUser(User user);
-	public void updateUser(User user);
-	public void deleteUser(User user);
+	public void insertUser(OrganizationUser organizationUser);
+	public void updateUser(OrganizationUser organizationUser);
+	public void deleteUser(OrganizationUser organizationUser);
 
 	// Fetch
-	public User getUserByUsername(String username);
-	public User getUserById(Integer id);
+	public OrganizationUser getUserByUsername(String username);
+	public OrganizationUser getUserById(Integer id);
 }

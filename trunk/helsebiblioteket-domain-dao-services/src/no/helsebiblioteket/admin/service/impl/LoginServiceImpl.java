@@ -63,6 +63,9 @@ public class LoginServiceImpl implements LoginService {
 			SingleResultOrganization memberResult = this.organizationService.getOrganizationByListItem(list[0]);
 			if(memberResult instanceof ValueResultMemberOrganization) {
 				MemberOrganization memberOrganization = ((ValueResultMemberOrganization)memberResult).getValue();
+				// TODO: Remove this:
+				memberOrganization.getOrganization().getContactPerson().setPosition(null);
+				memberOrganization.getOrganization().setType(null);
 				return new ValueResultMemberOrganization(memberOrganization);
 			}
 		}
