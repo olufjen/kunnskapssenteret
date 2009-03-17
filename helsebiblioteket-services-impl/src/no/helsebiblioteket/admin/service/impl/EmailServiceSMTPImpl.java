@@ -29,7 +29,7 @@ public class EmailServiceSMTPImpl implements EmailService {
 		} else {
 	        Properties props = new Properties();
 	        props.put("mail.smtp.host", this.host);
-	        props.put("mail.debug", "true");
+	        props.put("mail.debug", this.debug);
 	        Session session = Session.getInstance(props);
 	        try {
 	            Message msg = new MimeMessage(session);

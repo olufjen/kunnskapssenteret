@@ -170,7 +170,7 @@
 		<property name="password" value="${database.password}"></property>
 	</bean>
 	
-	<!-- ==============================   CACHE   ============================= -->'
+	<!-- ==============================   CACHE   ============================= -->
 	<!-- Cache used only on client in dev/test/prod, but might be enabled here also (on server) for testing purposes
 	leaving configuration commented for now-->
 	 <!--  <bean id="appCacheManager" class="net.sf.ehcache.CacheManager">
