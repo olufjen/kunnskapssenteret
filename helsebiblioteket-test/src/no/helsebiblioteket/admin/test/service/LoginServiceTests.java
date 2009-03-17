@@ -103,7 +103,7 @@ public class LoginServiceTests {
 //	    TEST: public Boolean sendPasswordEmail(User user);
 //		Look in the log for the result of this!
 //		TODO: Test with some kind of mock instead?
-	    Boolean res = loginService.sendPasswordEmail(user);
+	    Boolean res = loginService.sendPasswordEmail(user.getUsername());
 	    Assert.notNull(res, "Failed");
 	    Assert.isTrue(res, "Failed");
 	}
