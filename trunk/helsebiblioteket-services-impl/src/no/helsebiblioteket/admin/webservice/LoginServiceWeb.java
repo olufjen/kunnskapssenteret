@@ -49,8 +49,8 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		
 		return (SingleResultMemberOrganization)invoke(this.logInIpAddressName, args, returnTypes);
 	}
-	public Boolean sendPasswordEmail(User user) {
-		Object[] args = new Object[] { user };
+	public Boolean sendPasswordEmail(String emailAddress) {
+		Object[] args = new Object[] { emailAddress };
 		Class[] returnTypes = new Class[] { Boolean.class  };
 		return (Boolean)invoke(this.sendPasswordEmailName, args, returnTypes);
 	}
