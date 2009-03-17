@@ -8,6 +8,7 @@ import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.Action;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.ResourceType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -60,14 +61,16 @@ public class ActionServiceTests {
 		memberOrganization.getOrganization().setNameEnglish(nameEnglish);
 		SupplierOrganization supplierOrganization = SupplierOrganizationFactory.factory.completeOrganization(content_supplier, vernepleier);
 		supplierOrganization.getOrganization().setNameEnglish("sup_org_" + randomValue);
-		User user = UserFactory.factory.completeUser(memberOrganization, vernepleier);
+		User user = UserFactory.factory.completeUser(vernepleier);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
 		String username = "username_" + randomValue;
 		user.setUsername(username);
 		SupplierSourceResource resource = SupplierSourceResourceFactory.factory.completeSupplierSourceResource(supplier_source, source, supplierOrganization);
 		
 		memberOrganization = ((ValueResultMemberOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue();
 		supplierOrganization = ((ValueResultSupplierOrganization)beanFactory.getOrganizationService().insertSupplierOrganization(supplierOrganization)).getValue();
-		user.setOrganization(memberOrganization.getOrganization());
+		organizationUser.setOrganization(memberOrganization.getOrganization());
 		user = ((ValueResultUser)beanFactory.getUserService().insertUser(user)).getValue();
 		resource = ((ValueResultSupplierSourceResource)beanFactory.getAccessService().insertSupplierSourceResource(resource)).getValue();
 		

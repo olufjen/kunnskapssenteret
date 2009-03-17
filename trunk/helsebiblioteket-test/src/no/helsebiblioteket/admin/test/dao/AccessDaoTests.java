@@ -12,6 +12,7 @@ import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.ResourceType;
@@ -78,9 +79,11 @@ public class AccessDaoTests {
 //		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
 		organizationDaoTests.insertMemberOrganization(organization);
 
-		User user = UserFactory.factory.completeUser(organization, position);
+		User user = UserFactory.factory.completeUser(position);
 		user.setUsername("RandomUser" + new Random().nextInt(1000000));
-		userDaoTests.insertUser(user);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		userDaoTests.insertUser(organizationUser);
 		
 		
 		// Access for user
@@ -127,7 +130,8 @@ public class AccessDaoTests {
 		accessDao.deleteResourceAccessForeignKeys(accessForUserKeys);
 		beanFactory.getResourceDao().deleteSupplierSourceResource(resource);
 		beanFactory.getSupplierSourceDao().deleteSupplierSource(supplierSource);
-		userDaoTests.removeUser(user);
+		organizationUser.setUser(user);
+		userDaoTests.removeUser(organizationUser);
 		organizationDaoTests.removeSupplierOrganization(supplierOrganization);
 		organizationDaoTests.removeMemberOrganization(organization);
 	}

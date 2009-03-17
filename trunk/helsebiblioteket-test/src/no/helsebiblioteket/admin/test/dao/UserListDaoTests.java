@@ -10,6 +10,7 @@ import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
@@ -41,10 +42,12 @@ public class UserListDaoTests {
 		// Insert user with roles.
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		new OrganizationDaoTests().insertMemberOrganization(organization);
-		User user = UserFactory.factory.completeUser(organization, position);
+		User user = UserFactory.factory.completeUser(position);
 		String username = "RandomUser" + new Random().nextInt(1000000000);
 		user.setUsername(username);
-		new UserDaoTests().insertUser(user);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		new UserDaoTests().insertUser(organizationUser);
 		UserRoleLine userRoleLine = new UserRoleLine();
 		userRoleLine.setUserId(user.getId());
 		userRoleLine.setUserRoleId(role.getId());
@@ -64,7 +67,8 @@ public class UserListDaoTests {
 		
 		// DELETE
 		userRoleDao.deleteUserRole(userRoleLine);
-		new UserDaoTests().removeUser(user);
+		organizationUser.setUser(user);
+		new UserDaoTests().removeUser(organizationUser);
 		new OrganizationDaoTests().removeMemberOrganization(organization);
 	}
 

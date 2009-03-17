@@ -55,7 +55,7 @@ public class UserServiceTests {
 
 //		TEST: public ListResultPosition getPositionListAll(String DUMMY);
 		ListResultPosition positionList = userService.getPositionListAll("");
-		Assert.isTrue(positionList.getList().length == 29, "Wrong number of positions in system");
+		Assert.isTrue(positionList.getList().length == 30, "Wrong number of positions in system");
 
 //		TEST: public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey, OrganizationType organizationType);
 		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.apotektekniker, health_enterprise);
@@ -74,7 +74,7 @@ public class UserServiceTests {
 		String randomValue = "" + new Random().nextInt(1000000000);
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(health_enterprise, apotektekniker);
 		memberOrganization = ((ValueResultMemberOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue();
-		User user = UserFactory.factory.completeUser(memberOrganization, apotektekniker);
+		User user = UserFactory.factory.completeUser(apotektekniker);
 		String username = "username_" + randomValue;
 		String firstname = "name_" + randomValue;
 		String firstnameChanged = firstname + "CHANGED";
