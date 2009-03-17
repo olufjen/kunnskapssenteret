@@ -4,7 +4,7 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="User">
-	<typeAlias alias="user" type="no.helsebiblioteket.admin.domain.User"/>
+	<typeAlias alias="user" type="no.helsebiblioteket.admin.domain.OrganizationUser"/>
 	<cacheModel id="UserCache" type="LRU" readOnly="false" serialize="true">
 		<flushInterval hours="24"/>
 		<flushOnExecute statement="insertUser"/>
@@ -13,34 +13,34 @@
 		<property name="size" value="1000" />
 	</cacheModel>
 	<resultMap id="getUserResultMap" class="user">
-		<result property="id" column="user_id" />
-		<result property="username" column="username" />
-		<result property="password" column="password" />
+		<result property="user.id" column="user_id" />
+		<result property="user.username" column="username" />
+		<result property="user.password" column="password" />
 		<result property="organization.id" column="org_unit_id" />
-		<result property="person.id" column="person_id" />
-		<result property="lastChanged" column="last_changed" />
+		<result property="user.person.id" column="person_id" />
+		<result property="user.lastChanged" column="last_changed" />
 	</resultMap>
 	
 	<insert id="insertUser" parameterClass="user">
-		<selectKey resultClass="int" keyProperty="id">
+		<selectKey resultClass="int" keyProperty="user.id">
 			SELECT nextval('tbl_user_user_id_seq') as id;
 		</selectKey>
 		insert into tbl_user
 			(user_id, username, password, org_unit_id, person_id, last_changed)
 		values 
-			(#id#, #username#, #password#, #organization.id#, #person.id#, now());
+			(#user.id#, #user.username#, #user.password#, #organization.id#, #user.person.id#, now());
 	</insert>
 	<update id="updateUser" parameterClass="user">
 		update tbl_user set
-			username = #username#,
-			password = #password#,
+			username = #user.username#,
+			password = #user.password#,
 			org_unit_id = #organization.id#,
-			person_id = #person.id#,
+			person_id = #user.person.id#,
 			last_changed = now()
-		where user_id = #id# and last_changed = #lastChanged#;
+		where user_id = #user.id# and last_changed = #user.lastChanged#;
 	</update>
 	<delete id="deleteUser" parameterClass="user">
-  		delete from tbl_user where user_id = #id# and last_changed = #lastChanged#
+  		delete from tbl_user where user_id = #user.id# and last_changed = #user.lastChanged#
     </delete>
 	<select id="getUserByUsername" cacheModel="UserCache" resultMap="getUserResultMap" parameterClass="string">
 		select user_id, username, password, org_unit_id, person_id, last_changed

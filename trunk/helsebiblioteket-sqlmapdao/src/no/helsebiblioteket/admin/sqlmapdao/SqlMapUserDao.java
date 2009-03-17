@@ -3,31 +3,31 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserDao;
-import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 
 public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	@Override
-	public void insertUser(User user){
+	public void insertUser(OrganizationUser user){
 		getSqlMapClientTemplate().insert("insertUser", user);
-		User tmp = (User) getSqlMapClientTemplate().queryForObject("getUserByUsername", user.getUsername());
-		user.setLastChanged(tmp.getLastChanged());
+		OrganizationUser tmp = (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserByUsername", user.getUser().getUsername());
+		user.getUser().setLastChanged(tmp.getUser().getLastChanged());
 	}
 	@Override
-	public void updateUser(User user){
+	public void updateUser(OrganizationUser user){
 		getSqlMapClientTemplate().update("updateUser", user);
-		User tmp = (User) getSqlMapClientTemplate().queryForObject("getUserByUsername", user.getUsername());
-		user.setLastChanged(tmp.getLastChanged());
+		OrganizationUser tmp = (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserByUsername", user.getUser().getUsername());
+		user.getUser().setLastChanged(tmp.getUser().getLastChanged());
 	}
 	@Override
-	public void deleteUser(User user){
+	public void deleteUser(OrganizationUser user){
 		getSqlMapClientTemplate().delete("deleteUser", user);
 	}
 	@Override
-	public User getUserByUsername(String username){
-		return (User) getSqlMapClientTemplate().queryForObject("getUserByUsername", username);
+	public OrganizationUser getUserByUsername(String username){
+		return (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserByUsername", username);
 	}
 	@Override
-	public User getUserById(Integer id) {
-		return (User) getSqlMapClientTemplate().queryForObject("getUserById", id);
+	public OrganizationUser getUserById(Integer id) {
+		return (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserById", id);
 	}
 }
