@@ -17,6 +17,7 @@ import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.User;
@@ -111,7 +112,9 @@ public class LocateFaultyUsersMain {
         person.setContactInformation(contactInformation);
         user.setPerson(person);
         //TODO: Use member organization here?
-        user.setOrganization(new MemberOrganization().getOrganization());
+        OrganizationUser organizationUser = new OrganizationUser();
+        organizationUser.setUser(user);
+        organizationUser.setOrganization(new MemberOrganization().getOrganization());
         //TODO
         /*user.setDn(ldapUser.getDn());
         user.setUid(ldapUser.getUid());
