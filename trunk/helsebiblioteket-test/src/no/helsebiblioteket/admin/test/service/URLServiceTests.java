@@ -135,4 +135,12 @@ public class URLServiceTests {
 		Assert.notNull(value, "Should not be NULL");
 		Assert.isTrue(value, "Should have access");
 	}
+	
+	public void testPerformance() {
+		Url myUrl = new Url();
+		for (int i = 0; i < 100; i++) {
+			myUrl.setStringValue("http://www.legehandboka.no");
+			beanFactory.getURLService().isAffected(myUrl);
+		}
+	}
 }
