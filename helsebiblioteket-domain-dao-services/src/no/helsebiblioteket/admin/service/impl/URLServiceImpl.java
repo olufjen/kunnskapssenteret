@@ -11,6 +11,7 @@ import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.Role;
@@ -146,15 +147,20 @@ public class URLServiceImpl implements URLService {
         	test = checkAccess(url, userRoleAccess.getList());
         	if(test != null){ return test; }
 		}
-    	ListResultResourceAccessListItem organizationAccessList = this.accessService.getAccessListByOrganization(user.getOrganization());
-		test = checkAccess(url, organizationAccessList.getList());
-		if(test != null){ return test; }
+//    	ListResultResourceAccessListItem organizationAccessList = this.accessService.getAccessListByOrganization(user.getOrganization());
+//		test = checkAccess(url, organizationAccessList.getList());
+//		if(test != null){ return test; }
 		
-		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(user.getOrganization().getType());
-		test = checkAccess(url, organizationTypeAccessList.getList());
-		if(test != null){ return test; }
+//		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(user.getOrganization().getType());
+//		test = checkAccess(url, organizationTypeAccessList.getList());
+//		if(test != null){ return test; }
 		
 		return Boolean.FALSE;
+	}
+	@Override
+	public Boolean hasAccessOrganizationUser(OrganizationUser user, Url url) {
+		// TODO Auto-generated method stub
+		return null;
 	}
     private Boolean checkAccess(Url url, ResourceAccessListItem[] resourceAccesses) {
     	for (ResourceAccessListItem access : resourceAccesses) {
@@ -207,6 +213,11 @@ public class URLServiceImpl implements URLService {
 		} else {
 			return Boolean.FALSE;
 		}
+	}
+	@Override
+	public Boolean hasAccessOrganizationUserOrganization(OrganizationUser user, MemberOrganization organization, Url url) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	/**
 	 * Finds the group value for a URL. Loads the resources, finds

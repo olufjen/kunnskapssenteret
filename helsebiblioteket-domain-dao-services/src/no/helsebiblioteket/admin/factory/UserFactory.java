@@ -1,11 +1,7 @@
 package no.helsebiblioteket.admin.factory;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
@@ -22,9 +18,8 @@ public class UserFactory {
 		user.setPerson(PersonFactory.factory.createPerson());
 		return user;
 	}
-	public User completeUser(MemberOrganization organization, Position position){
+	public User completeUser(Position position){
 		User user = createUser();
-		user.setOrganization(organization.getOrganization());
 		user.setPerson(PersonFactory.factory.completePerson(position));
 		return user;
 	}

@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
@@ -25,12 +26,12 @@ public class UserToXMLTranslator {
 	public Document newDocument() {
 		return this.builder.newDocument();
 	}
-	public void translate(User user, Document document, Element element){
+	public void translate(OrganizationUser user, Document document, Element element){
 		Element userElement = document.createElement("user");
-		userElement.appendChild(cDataElement(document, "username", user.getUsername()));
+		userElement.appendChild(cDataElement(document, "username", user.getUser().getUsername()));
 
 		Element rolesElement = document.createElement("roles");
-		for (Role role : user.getRoleList()) {
+		for (Role role : user.getUser().getRoleList()) {
 			this.roleToXMLTranslator.translate(role, document, rolesElement);
 		}
 		userElement.appendChild(rolesElement);
@@ -48,7 +49,7 @@ public class UserToXMLTranslator {
 //			access.getValidFrom();
 //			access.getValidTo();
 //		}
-		Person person = user.getPerson();
+		Person person = user.getUser().getPerson();
 		this.personToXMLTranslator.translate(person, document, userElement);
 		if(element == null){
 			document.appendChild(userElement);
