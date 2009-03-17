@@ -125,6 +125,7 @@
 		<copy file="desc/mail.properties" tofile="${webservices.classes.dir}/mail.properties" overwrite="true" />
 		<copy file="desc/proxy.properties" tofile="${webservices.classes.dir}/proxy.properties" overwrite="true" />
 		<copy file="desc/sqlmap-config.xml" tofile="${webservices.classes.dir}/sqlmap-config.xml" overwrite="true" />
+		<copy file="desc/ehcache-helsebiblioteket.xml" tofile="${webservices.classes.dir}/ehcache-helsebiblioteket.xml" overwrite="true" />
 
 
 		<!-- TODO: Include jars in aar-file
@@ -175,5 +176,4 @@
 			</fileset>
 		</copy>
 	</target>
-	
 </project>
