@@ -1,8 +1,5 @@
 package no.helsebiblioteket.admin.test;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.AccessTypeDao;
 import no.helsebiblioteket.admin.dao.ActionDao;
@@ -64,11 +61,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.userdetails.UserDetailsService;
 
-import sun.util.logging.resources.logging;
-
 public class BeanFactory {
 	private Resource res;
-    private static final Logger LOG = Logger.getLogger(BeanFactory.class.toString());
 	private XmlBeanFactory factory;
 	private static BeanFactory single;
 	public static BeanFactory factory(){
@@ -121,20 +115,6 @@ public class BeanFactory {
 	
 	// Main method when not using ant.
 	public static void main(String[] args) {
-		testDaos();
-		testServices();
-		testPerformance();
-		System.out.println("OK");
-	}
-	
-	private static void testPerformance() {
-		URLServiceTests urlServiceTests = new URLServiceTests();
-		long startTimeMillis = System.currentTimeMillis();
-		urlServiceTests.testAll();
-        LOG.log(Level.INFO, "urlServiceTests.testPerformance() took " + String.valueOf(System.currentTimeMillis() - startTimeMillis) + " milliseconds");
-	}
-	
-	private static void testDaos(){
 		AccessDaoTests accessDaoTests = new AccessDaoTests();
 		accessDaoTests.testAccess();
 		AccessTypeDaoTests accessTypeDaoTests = new AccessTypeDaoTests();
@@ -175,9 +155,7 @@ public class BeanFactory {
 		userListDaoTests.testUserList();
 		UserRoleDaoTests userRoleDaoTests = new UserRoleDaoTests();
 		userRoleDaoTests.testUserRole();
-	}
-	
-	private static void testServices(){
+		
 		AccessServiceTests accessServiceTests = new AccessServiceTests();
 		accessServiceTests.testInsertAccess();
 		
@@ -201,6 +179,15 @@ public class BeanFactory {
 		
 		UserServiceTests userServiceTests = new UserServiceTests();
 		userServiceTests.testAll();
+		
+		System.out.println("OK");
 	}
 	
+	private static void testPerformance() {
+		URLServiceTests urlServiceTests = new URLServiceTests();
+		long startTimeMillis = System.currentTimeMillis();
+		urlServiceTests.testAll();
+        // TODO log this
+		// LOG.log(Level.INFO, "urlServiceTests.testPerformance() took " + String.valueOf(System.currentTimeMillis() - startTimeMillis) + " milliseconds");
+	}
 }
