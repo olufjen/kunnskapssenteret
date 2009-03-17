@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/spring-security-core-2.0.4.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/spring-security-core-tiger-2.0.4.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/spring-security-taglibs-2.0.4.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
