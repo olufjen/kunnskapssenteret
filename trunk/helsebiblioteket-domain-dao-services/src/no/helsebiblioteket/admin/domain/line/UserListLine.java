@@ -8,6 +8,7 @@ public class UserListLine {
 	private String lastName;
 	private String username;
 	private String roleName;
+	private String organizationName;
 	private UserRoleKey roleKey;
 	public String getUsername() {
 		return username;
@@ -44,5 +45,11 @@ public class UserListLine {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getOrganizationName() {
+		return organizationName;
+	}
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 }

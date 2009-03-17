@@ -7,6 +7,7 @@ public class UserListItem {
 	private String name;
 	private String username;
 	private String[] roleNames;
+	private String organizationName;
 	private UserRoleKey[] roleKeys;
 	@Override
 	public String toString() {
@@ -41,5 +42,11 @@ public class UserListItem {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getOrganizationName() {
+		return organizationName;
+	}
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 }
