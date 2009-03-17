@@ -71,14 +71,14 @@ public class LoginServiceImpl implements LoginService {
 	/**
 	 * Sends an email to the user. This is delegated to EmailService.
 	 */
-	public Boolean sendPasswordEmail(User user) {
-		logger.info("Sending email to :" + user.getUsername());
+	public Boolean sendPasswordEmail(String emailaddress) {
+		logger.info("Sending email to :" + emailaddress);
 		Email email = new Email();
 		email.setFromName(this.emailFromName);
 		email.setFromEmail(this.emailFromEmail);
 
-		email.setToName(user.getUsername());
-		email.setToEmail(user.getPerson().getContactInformation().getEmail());
+		email.setToName(emailaddress);
+		email.setToEmail(emailaddress);
 
 		email.setSubject(this.emailSubject);
 		email.setMessage(this.emailMessage);

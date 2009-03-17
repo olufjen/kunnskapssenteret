@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
+import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.SystemDao;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
+import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
@@ -39,7 +43,9 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
+import no.helsebiblioteket.admin.factory.ContactInformationFactory;
 import no.helsebiblioteket.admin.factory.PersonFactory;
+import no.helsebiblioteket.admin.factory.ProfileFactory;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.UserService;
 
@@ -51,6 +57,8 @@ public class UserServiceImpl implements UserService {
 	private RoleDao roleDao;
 	private UserRoleDao userRoleDao;
 	private PersonDao personDao;
+	private ProfileDao profileDao;
+	private ContactInformationDao contactInformationDao;
 	private PositionDao positionDao;
     private OrganizationDao organizationDao;
     private SystemDao systemDao;
@@ -203,13 +211,38 @@ public class UserServiceImpl implements UserService {
 			organization.setOrganization(organizationDao.getOrganizationById(user.getId()));
 			// TODO: Really?
 			// No. Leif says there are users without organizations!
-			if(organization == null){ throw new NullPointerException("No organization for user"); }
+//			if(organization.getOrganization() == null){
+//				throw new NullPointerException("No organization for user");
+//			}
 			user.setOrganization(organization.getOrganization());
 
 			Person person = this.personDao.getPersonByUser(user);
-			if(person == null){ person = PersonFactory.factory.createPerson(); }
+			if(person == null){
+				Position position = null;//this.getPositionByKey(PositionTypeKey.none, organizationType);
+				person = PersonFactory.factory.completePerson(position);
+				this.contactInformationDao.insertContactInformation(person.getContactInformation());
+				this.profileDao.insertProfile(person.getProfile());
+				this.personDao.insertPerson(person);
+			}
 			user.setPerson(person);
-
+			
+			Profile profile = null;
+			if(person.getProfile() != null){
+				profile = this.profileDao.getProfileById(person.getProfile().getId());	
+			}
+			if(profile == null){
+				profile = ProfileFactory.factory.completeProfile();
+				this.profileDao.insertProfile(profile);
+			}
+			person.setProfile(profile);
+			
+			ContactInformation contactInformation = this.contactInformationDao.getContactInformationByPerson(person);
+			if(contactInformation == null) {
+				contactInformation = ContactInformationFactory.factory.completeContactInformation();
+				this.contactInformationDao.insertContactInformation(contactInformation);
+			}
+			person.setContactInformation(contactInformation);
+			
 			List<UserRoleLine> userRoleList = this.userRoleDao.getUserRoleListByUser(user);
 			Role[] roleList = new Role[userRoleList.size()];
 			int i=0;
@@ -248,7 +281,11 @@ public class UserServiceImpl implements UserService {
 		}
 
 		checkNull(user);
+
+		this.contactInformationDao.insertContactInformation(user.getPerson().getContactInformation());
+		this.profileDao.insertProfile(user.getPerson().getProfile());
 		this.personDao.insertPerson(user.getPerson());
+		
 		List<UserRoleLine> userRoleList = translateRoles(user.getId(), user.getRoleList());
 		for (UserRoleLine userRole : userRoleList) {
 			this.userRoleDao.insertUserRole(userRole);
@@ -267,6 +304,9 @@ public class UserServiceImpl implements UserService {
 		if(user.getPerson() == null) throw new NullPointerException("person == null");
 		if(user.getRoleList() == null) throw new NullPointerException("roleList == null");
 		if(user.getUsername() == null) throw new NullPointerException("username == null");
+		if(user.getPerson().getContactInformation() == null) throw new NullPointerException("person.contactInformation == null");
+		if(user.getPerson().getPosition() == null) throw new NullPointerException("person.position == null");
+		if(user.getPerson().getProfile() == null) throw new NullPointerException("person.profile == null");
 	}
 	/**
 	 * Updates an existing user in the database. Throws an exception
@@ -289,6 +329,8 @@ public class UserServiceImpl implements UserService {
 		}
 		User old = ((ValueResultUser)oldResult).getValue();
 
+		this.contactInformationDao.updateContactInformation(user.getPerson().getContactInformation());
+		this.profileDao.updateProfile(user.getPerson().getProfile());
 		this.personDao.updatePerson(user.getPerson());
 
 		List<UserRoleLine> newUserRoleList = translateRoles(user.getId(), user.getRoleList());
@@ -343,6 +385,12 @@ public class UserServiceImpl implements UserService {
 	}
 	public void setSystemDao(SystemDao systemDao) {
 		this.systemDao = systemDao;
+	}
+	public void setProfileDao(ProfileDao profileDao) {
+		this.profileDao = profileDao;
+	}
+	public void setContactInformationDao(ContactInformationDao contactInformationDao) {
+		this.contactInformationDao = contactInformationDao;
 	}
 
 }
