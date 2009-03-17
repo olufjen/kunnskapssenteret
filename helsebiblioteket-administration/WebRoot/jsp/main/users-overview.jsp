@@ -1,4 +1,4 @@
-	<%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@page buffer="none"%>
@@ -41,24 +41,23 @@
       <f:facet name="header">
         <h:outputText value="#{msg_main.user_overview_name}" />
       </f:facet>
-      <h:outputText id="nameOutput" value="#{user.person.name}" />
+      <h:outputText id="nameOutput" value="#{user.name}" />
     </h:column>
 
     <h:column id="rolesColumn">
       <f:facet name="header" />
-      <h:outputText id="rolesOutput" value="#{user.roleList[0].name}" />
+      <h:outputText id="rolesOutput" value="#{user.roleNames[0]}" />
     </h:column>
 
     <h:column id="organizationColumn">
       <f:facet name="header" />
-      <h:outputText id="organizationOutput" value="#{user.organization.name}" />
+      <h:outputText id="organizationOutput" value="#{user.organizationName}" />
     </h:column>
 
 	<h:column id="detailsColumn">
     	<f:facet name="header" />
 		<h:commandLink value="#{msg_main.user_overview_details}"
 			action="#{userBean.actionDetails}" immediate="true">
-			<!--<f:param name="userId" value="#{user.id}" />-->
 		</h:commandLink>
     </h:column>
 
@@ -66,7 +65,6 @@
       <f:facet name="header" />
 		<h:commandLink value="#{msg_main.user_overview_change}"
 			action="#{userBean.actionEdit}" immediate="true">
-			<!--<f:param name="userId" value="#{user.id}" />-->
 		</h:commandLink>
     </h:column>
 
