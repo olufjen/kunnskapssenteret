@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
@@ -23,46 +24,68 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	private QName translateUrlOrganizationName;
 	private QName translateUrlUserOrganizationName;
 	private QName hasAccessUserName;
+	private QName hasAccessOrganizationUserName;
 	private QName hasAccessOrganizationName;
 	private QName hasAccessUserOrganizationName;
+	private QName hasAccessOrganizationUserOrganizationName;
 	
 	private QName groupName;
 	
+	@Override
 	public Boolean isAffected(Url url){
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.isAffectedName, args, returnTypes);
 	}
+	@Override
     public SingleResultUrl translateUrlUser(User user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		return (SingleResultUrl)invoke(this.translateUrlUserName, args, returnTypes);
     }
+	@Override
     public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		return (SingleResultUrl)invoke(this.translateUrlOrganizationName, args, returnTypes);
     }
+	@Override
     public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		return (SingleResultUrl)invoke(this.translateUrlUserOrganizationName, args, returnTypes);
     }
+	@Override
     public Boolean hasAccessUser(User user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.hasAccessUserName, args, returnTypes);
     }
+	@Override
+	public Boolean hasAccessOrganizationUser(OrganizationUser user, Url url) {
+		Object[] args = new Object[] { user, url };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean)invoke(this.hasAccessOrganizationUserName, args, returnTypes);
+	}
+	@Override
     public Boolean hasAccessOrganization(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.hasAccessOrganizationName, args, returnTypes);
     }
+	@Override
     public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.hasAccessUserOrganizationName, args, returnTypes);
     }
+	@Override
+	public Boolean hasAccessOrganizationUserOrganization(OrganizationUser user, MemberOrganization organization, Url url) {
+		Object[] args = new Object[] { user, url };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean)invoke(this.hasAccessOrganizationUserOrganizationName, args, returnTypes);
+	}
+	@Override
     public SingleResultString group(Url url){
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { SingleResultString.class };

@@ -92,6 +92,8 @@
   		<property name="positionDao" ref="positionDao"></property>
   		<property name="organizationDao" ref="organizationDao"></property>
   		<property name="systemDao" ref="systemDao"></property>
+  		<property name="profileDao" ref="profileDao"></property>
+  		<property name="contactInformationDao" ref="contactInformationDao"></property>
   	</bean>
   	
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">

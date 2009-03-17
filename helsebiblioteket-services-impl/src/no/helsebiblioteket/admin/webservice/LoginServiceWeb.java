@@ -32,12 +32,12 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	public SingleResultUser loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-		if(cachedFor.get("loginUserByUsernamePassword")) {
-			// call cahced
-			return null; 
-		} else {
+//		if(cachedFor.get("loginUserByUsernamePassword")) {
+//			// call cahced
+//			return null; 
+//		} else {
 			return (SingleResultUser)invoke(this.logInUserName, args, returnTypes);	
-		}
+//		}
 	}
 	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
