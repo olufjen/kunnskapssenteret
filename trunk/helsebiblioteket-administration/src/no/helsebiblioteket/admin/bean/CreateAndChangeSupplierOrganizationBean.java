@@ -105,7 +105,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.supplierSourceListHtmlDataTable = supplierSourceListHtmlDataTable;
 	}
 
-	public void actionSaveOrganization() {
+	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
 		if (supplierOrganization.getOrganization().getId() == null) {
 			organizationService.insertSupplierOrganization(supplierOrganization);
@@ -114,6 +114,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 			// FIXME: update resource list!
 			supplierOrganization.getResourceList();
 		}
+		return "organizations_overview";
 	}
 	
 	public void actionAddSupplierSource() {
