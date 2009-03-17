@@ -169,4 +169,21 @@
 		<property name="username" value="${database.username}"></property>
 		<property name="password" value="${database.password}"></property>
 	</bean>
+	
+	<!-- ==============================   CACHE   ============================= -->'
+	<!-- Cache used only on client in dev/test/prod, but might be enabled here also (on server) for testing purposes
+	leaving configuration commented for now-->
+	 <!--  <bean id="appCacheManager" class="net.sf.ehcache.CacheManager">
+	 <constructor-arg index="0"  type="java.lang.String"
+		value="classpath:ehcache.xml" />
+	</bean>-->
+	<!--  <bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.InvokeCache">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>-->
+	
 </beans>
