@@ -18,6 +18,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
@@ -120,6 +121,9 @@ public class LoggedInFunction{
 
 	private org.w3c.dom.Document printLoggedIn() throws ParserConfigurationException {
 		User user = this.loggedInUser();
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		
 		MemberOrganization memberOrganization = this.loggedInOrganization();
 		Organization organization = null;
 		if (memberOrganization != null) {
@@ -133,7 +137,7 @@ public class LoggedInFunction{
     		translator.translate(organization, result, loggedinElement);
     	}
     	if(user != null){
-        	userTranslator.translate(user, result, loggedinElement);
+        	userTranslator.translate(organizationUser, result, loggedinElement);
     	}
     	if(organization == null && user == null){
     		loggedinElement.appendChild(result.createElement("none"));

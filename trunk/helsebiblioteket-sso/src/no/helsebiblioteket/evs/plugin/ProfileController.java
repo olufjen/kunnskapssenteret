@@ -11,6 +11,7 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -190,7 +191,9 @@ public class ProfileController extends HttpControllerPlugin {
 //	}
 	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
-		translator.translate(user, document, element);
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		translator.translate(organizationUser, document, element);
 		if(hprNumber == null){
 			String hpr = null;
 			if (user.getPerson() != null) {

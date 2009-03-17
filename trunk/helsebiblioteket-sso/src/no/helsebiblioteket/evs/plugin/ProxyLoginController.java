@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
@@ -118,7 +119,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
 		if(user != null){
 //			proxyresult/loggedin/user
 			UserToXMLTranslator translator = new UserToXMLTranslator();
-			translator.translate(user, document, loggedin);
+			OrganizationUser organizationUser = new OrganizationUser();
+			organizationUser.setUser(user);
+			translator.translate(organizationUser, document, loggedin);
 		} else if(organization != null){
 //			proxyresult/loggedin/organization
 			OrganizationToXMLTranslator organizationTranslator = new OrganizationToXMLTranslator();
