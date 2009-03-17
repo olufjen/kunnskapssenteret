@@ -42,7 +42,7 @@ public class UserBean {
 	private List<SelectItem> availablePositions;
 	private List<SelectItem> availableEmployers;
 	private List<SelectItem> availableIsStudent;
-	private List<UserRoleKey> selectedRoles;
+	private List<String> selectedRoles;
 	private UserRoleKey selectedUserRole;
 	private String selectedIsStudent;
 
@@ -225,9 +225,8 @@ public class UserBean {
 //		Map requestParams = context.getExternalContext().getRequestParameterMap();
 //		logger.info("userId: " +
 //				requestParams.get("userId"));
-		this.user = (User) this.usersTable.getRowData();
-		
-		// FIXME: Remove testing.
+		UserListItem item = (UserListItem) this.usersTable.getRowData();
+    	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
 //		this.user.getPerson().setIsStudent(true);
 		return details();
 	}
@@ -235,19 +234,28 @@ public class UserBean {
 		if(this.allRolesMap == null) {getAllRoles();}
 		Role[] selectedRoles = new Role[this.getSelectedRoles().size()];
 		int i=0;
-		for (UserRoleKey string : this.getSelectedRoles()) {
+		for (String string : this.getSelectedRoles()) {
 			selectedRoles[i] = this.allRolesMap.get(string);
 		}
 		return selectedRoles;
 	}
 	public String actionSearch(){
 		logger.info("method 'search' invoked");
-		for (UserRoleKey role : this.selectedRoles) {
+		for (String role : this.selectedRoles) {
 			logger.info("SELECTED ROLE: " + role);
 		}
 		// FIXME: Handle paged result!
 		this.users = this.userService.findUsersBySearchStringRoles(this.searchinput, this.getSelectedRolesRoleList(),
-				new PageRequest(0, Integer.MAX_VALUE)).getResult();
+				new PageRequest(0, 40)).getResult();
+		
+		// TODO: Adding dummy roles?
+		for (UserListItem item : this.users) {
+			if(item.getRoleNames().length == 0){
+				item.setRoleNames(new String[1]);
+				item.getRoleNames()[0] = "";
+			}
+		}
+		
 		return "users_overview";
 	}
 	public List<SelectItem> getAvailableIsStudent() {
@@ -262,7 +270,7 @@ public class UserBean {
 			this.logger.info("this.userService=" + this.userService);
 			for (Role role : this.getAllRoles()) {
 				logger.info("role: " + role.getKey());
-				SelectItem option = new SelectItem(role.getKey(), role.getName(), "", false);
+				SelectItem option = new SelectItem(role.getKey().getValue(), role.getName(), "", false);
 				this.availableRoles.add(option);
 			}
 			logger.info("DONEROLES");
@@ -305,12 +313,12 @@ public class UserBean {
 		}
 		return this.availableEmployers;
 	}
-	public List<UserRoleKey> getSelectedRoles() {
+	public List<String> getSelectedRoles() {
 		// FIXME: All must be selected!
 		if(this.selectedRoles == null){
-			this.selectedRoles = new ArrayList<UserRoleKey>();
+			this.selectedRoles = new ArrayList<String>();
 			for (Role role : this.getAllRoles()) {
-				this.selectedRoles.add(role.getKey());
+				this.selectedRoles.add(role.getKey().getValue());
 			}
 		}
 		return this.selectedRoles;
@@ -365,7 +373,16 @@ public class UserBean {
 	}
 	public UserListItem[] getUsers() {
 		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest(0, Integer.MAX_VALUE)).getResult(); }
+		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest(0, 40)).getResult(); }
+
+		// TODO: Set dummy roles?
+		for (UserListItem item : this.users) {
+			if(item.getRoleNames().length == 0){
+				item.setRoleNames(new String[1]);
+				item.getRoleNames()[0] = "";
+			}
+		}
+
 		return this.users;
 	}
 	public String getSelectedIsStudent() {
@@ -382,7 +399,7 @@ public class UserBean {
 	public void setUserRolesSelectOne(UISelectOne userRolesSelectOne) { this.userRolesSelectOne = userRolesSelectOne; }
 	public UISelectOne getIsStudentSelectOne() { return isStudentSelectOne; }
 	public void setIsStudentSelectOne(UISelectOne isStudentSelectOne) { this.isStudentSelectOne = isStudentSelectOne; }
-	public void setSelectedRoles(List<UserRoleKey> selectedRoles) { this.selectedRoles = selectedRoles; }
+	public void setSelectedRoles(List<String> selectedRoles) { this.selectedRoles = selectedRoles; }
 	public void setSelectedUserRole(UserRoleKey selectedUserRole) { this.selectedUserRole = selectedUserRole; }
 	public String getSearchinput() { return searchinput; }
 	public void setSearchinput(String searchinput) { this.searchinput = searchinput; }
