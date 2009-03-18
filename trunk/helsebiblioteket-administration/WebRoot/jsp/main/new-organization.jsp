@@ -14,10 +14,10 @@
   <table>
     <tr>
       <td>
-        <h:commandButton value="#{msg_main.new_supplier_organization_button}" action="#{createAndChangeSupplierOrganizationBean.actionNewSupplierOrganization}" />
+        <h:commandButton value="#{msg_main.new_supplier_organization_button}" action="#{organizationBean.actionNewSupplierOrganization}" />
       </td>
       <td>
-        <h:commandButton value="#{msg_main.new_member_organization_button}" action="#{createAndChangeMemberOrganizationBean.actionNewMemberOrganization}" />
+        <h:commandButton value="#{msg_main.new_member_organization_button}" action="#{organizationBean.actionNewMemberOrganization}" />
       </td>
     </tr>
   </table>

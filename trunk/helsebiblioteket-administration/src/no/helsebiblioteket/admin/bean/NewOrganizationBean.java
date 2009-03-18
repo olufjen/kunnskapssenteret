@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.bean;
 
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.service.UserService;
 
 public class NewOrganizationBean {
 	
@@ -13,8 +15,26 @@ public class NewOrganizationBean {
 	private String contactPersonLastName;
 	private String contactPersonTelephoneNumber;
 	private String contactPersonEmail;
+	private Boolean notNew;
+
+	protected Boolean isNew;
 	protected Organization organization;
-		
+	protected UserService userService;
+	protected OrganizationService organizationService;
+	protected OrganizationBean organizationBean;
+	
+	public Boolean getIsNew() {
+		return isNew;
+	}
+	public void setIsNew(Boolean isNew) {
+		this.isNew = isNew;
+	}
+	public Boolean getNotNew() {
+		return notNew;
+	}
+	public void setNotNew(Boolean notNew) {
+		this.notNew = notNew;
+	}
 	public String getOrganizationName() {
 		return organizationName;
 	}
@@ -69,5 +89,13 @@ public class NewOrganizationBean {
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
-
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
+	}
+	public void setOrganizationBean(OrganizationBean organizationBean) {
+		this.organizationBean = organizationBean;
+	}
 }

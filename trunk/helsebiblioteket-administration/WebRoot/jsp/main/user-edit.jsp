@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+
 <%@page buffer="none"%>
 <f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.errors"/> 
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/>
@@ -26,17 +27,15 @@
 					readonly="#{ ! userBean.showEmployerNumber}"/></td>
 			<td><h:message for="studentNumber" styleClass="RED"/></td>
 		</tr>
-		<!--
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_is_student}"  /></td>
 			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}" id="isStudent" 
 					layout="pageDirection" required="true" 
-					disabled="false" valueChangeListener="#{userBean.studentChanged}" onchange="submit()">
+					disabled="true" valueChangeListener="#{userBean.studentChanged}" onchange="submit()">
 					<f:selectItems value="#{userBean.availableIsStudent}"/>
         		</h:selectOneRadio></td>
 			<td><h:message for="isStudent" styleClass="RED"/></td>
 		</tr>
-		-->
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_first_name}"  /></td>
 			<td><h:inputText value="#{userBean.user.person.firstName}" id="firstName" /></td>
@@ -110,8 +109,7 @@
 		</tr>
 	</table>
 	
-	
-	<h:outputText value="#{roles.value}" styleClass="RED"/>
+	<h:messages showDetail="true" showSummary="true" layout="table"/>
 	
 </f:subview>
 </h:form>

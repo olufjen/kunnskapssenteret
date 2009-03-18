@@ -9,32 +9,35 @@ import javax.faces.component.UISelectOne;
 import javax.faces.model.SelectItem;
 
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
-import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class NewEndUserBean extends NewUserBean {
     protected final Log logger = LogFactory.getLog(getClass());
-	private UserService userService;
 
-	private String firstname;
-    private String lastname;
     private String studentHprNo;
     private String employer;
     private boolean newsletter;
     private boolean questionnaire;
-    private String emailaddress;
-    private String username;
-    private String password;
 
     private String selectedUserRole;
 	private UISelectOne userRolesSelectOne;
 	private List<SelectItem> availableRoles;
 	private List<Role> allRoles;
 	private Map<String, Role> allRolesMap;
+
+    public String actionSaveNewUser() {
+		logger.info("method 'saveNewUser' invoked in new end user Bean");
+		User user = new User();
+		Role[] list = new Role[1];
+		list[0] = this.allRolesMap.get(this.selectedUserRole);
+		user.setRoleList(list);
+		return super.actionSaveNewUser(user);
+	}
 
 	public List<SelectItem> getAvailableRoles() {
 		if(this.availableRoles == null) {
@@ -61,18 +64,6 @@ public class NewEndUserBean extends NewUserBean {
 		return this.allRoles;
 	}
 
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 	public String getStudentHprNo() {
 		return studentHprNo;
 	}
@@ -103,18 +94,6 @@ public class NewEndUserBean extends NewUserBean {
 	public void setEmailaddress(String emailaddress) {
 		this.emailaddress = emailaddress;
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public String getSelectedUserRole() {
 		return selectedUserRole;
 	}
@@ -126,8 +105,5 @@ public class NewEndUserBean extends NewUserBean {
 	}
 	public void setUserRolesSelectOne(UISelectOne userRolesSelectOne) {
 		this.userRolesSelectOne = userRolesSelectOne;
-	}
-	public void setUserService(UserService userService) {
-		this.userService = userService;
 	}
 }

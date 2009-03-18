@@ -1,12 +1,19 @@
 package no.helsebiblioteket.admin.bean;
 
-import java.util.ArrayList;
-
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Position;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
@@ -14,13 +21,16 @@ import org.apache.commons.logging.LogFactory;
 
 public class NewUserBean {
     protected final Log logger = LogFactory.getLog(getClass());
-    private String firstname;
-    private String lastname;
-    private String emailaddress;
-    private String username;
-    private String password;
-    private UserBean userBean;
-    private UserService userService;
+    protected String firstname;
+    protected String lastname;
+    protected String emailaddress;
+    protected String username;
+    protected String password;
+    
+    protected UserBean userBean;
+	protected UserService userService;
+	protected OrganizationService organizationService;
+
     public String actionNewEndUser() {
 		logger.info("method 'newEndUser' invoked");
 		User user = new User();
@@ -43,26 +53,29 @@ public class NewUserBean {
     public String actionCancelNewUser(){
     	return "users_overview";
     }
-    public String actionSaveNewUser() {
+    public String actionSaveNewUser(User user) {
     	logger.info("method 'saveNewUser' invoked in new User Bean");
-    	User user = new User();
+
     	Person person = new Person();
     	person.setFirstName(this.firstname);
     	person.setLastName(this.lastname);
+    	OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
+    			OrganizationTypeKey.health_enterprise)).getValue();
+    	Position position = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none,
+    			organizationType)).getValue();
+    	Profile profile = new Profile();
+    	person.setPosition(position);
+    	person.setProfile(profile);
     	ContactInformation contactInformation = new ContactInformation();
     	contactInformation.setEmail(this.emailaddress);
     	person.setContactInformation(contactInformation);
     	user.setPerson(person);
     	user.setUsername(this.username);
     	user.setPassword(this.password);
-    	// TODO: Set admin role differently?
-//    	Role role = new Role();
-//    	role.setKey("ADM");
-//    	user.getRoleList().add((this.userService.getRoleByKey(role)));
+
     	this.userService.insertUser(user);
     	
-    	// FIXME: Reload
-//    	user = this.userService.findUserByUsername(user);
+    	user = ((ValueResultUser)this.userService.findUserByUsername(user.getUsername())).getValue();
     	
     	this.userBean.setUser(user);
     	
@@ -109,5 +122,8 @@ public class NewUserBean {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
 	}
 }

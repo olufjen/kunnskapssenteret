@@ -5,10 +5,16 @@
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/>
 <f:loadBundle var="msg_headings" basename="no.helsebiblioteket.admin.web.jsf.messageresources.headings"/> 
 
-<f:verbatim><h2></f:verbatim><h:outputText value="#{msg_headings.member_organization_new}" /><f:verbatim></h2></f:verbatim>
+<h:inputHidden id="init" value="#{createAndChangeMemberOrganizationBean.init}"></h:inputHidden>
+
+<f:verbatim><h2></f:verbatim>
+	<h:outputText value="#{msg_headings.member_organization_new}"
+		rendered="#{createAndChangeMemberOrganizationBean.isNew}" />
+	<h:outputText value="#{msg_headings.member_organization_change}"
+		rendered="#{createAndChangeMemberOrganizationBean.notNew}" />
+<f:verbatim></h2></f:verbatim>
 <hr />
 <h:form>
-	<h:inputHidden id="init" value="#{createAndChangeMemberOrganizationBean.init}"></h:inputHidden>
 	<table>
 		<tr>
 			<td>
@@ -87,7 +93,7 @@
 			</td>
 			<td>
 				<h:selectOneListbox 
-					value="#{createAndChangeMemberOrganizationBean.selectedOrganizationTypeId}"
+					value="#{createAndChangeMemberOrganizationBean.selectedOrganizationType}"
 					id="organizationType" 
 					required="true"
 					size="1"
@@ -281,7 +287,12 @@
 		</tr>
 		
 		<tr>
-			<td colspan="2" align="right">
+			<td align="right">
+				<h:commandButton value="#{msg_main.cancel}"
+					action="#{createAndChangeMemberOrganizationBean.actionCancel}"
+					immediate="true"/>
+			</td>
+			<td align="right">
 				<h:commandButton value="#{msg_main.save}" action="#{createAndChangeMemberOrganizationBean.actionSaveOrganization}" />
 			</td>
 		</tr>

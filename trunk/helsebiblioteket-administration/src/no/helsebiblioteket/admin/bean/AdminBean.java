@@ -22,8 +22,8 @@ public class AdminBean {
 			OrganizationType[] organizationTypeList = this.organizationService.getOrganizationTypeListAll("").getList();
 			SelectItem selectItem = null;
 			for (OrganizationType orgType: organizationTypeList) {
-				selectItem = new SelectItem(String.valueOf(orgType.getId()),
-						MessageResourceReader.getMessageResourceString(organizationTypesBundle, orgType.getKey().toString(), orgType.getName()));
+				selectItem = new SelectItem(orgType.getKey().getValue(),
+						MessageResourceReader.getMessageResourceString(organizationTypesBundle, orgType.getKey().getValue(), orgType.getName()));
 				organizationTypeSelectItemList.add(selectItem);
 			}
 		}

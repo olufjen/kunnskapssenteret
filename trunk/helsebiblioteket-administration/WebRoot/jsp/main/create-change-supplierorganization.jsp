@@ -5,10 +5,16 @@
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/>
 <f:loadBundle var="msg_headings" basename="no.helsebiblioteket.admin.web.jsf.messageresources.headings"/> 
 
-<f:verbatim><h2></f:verbatim><h:outputText value="#{msg_headings.supplier_organization_new}" /><f:verbatim></h2></f:verbatim>
+<h:inputHidden id="init" value="#{createAndChangeSupplierOrganizationBean.init}"></h:inputHidden>
+
+<f:verbatim><h2></f:verbatim>
+	<h:outputText value="#{msg_headings.supplier_organization_new}"
+		rendered="#{createAndChangeSupplierOrganizationBean.isNew}"/>
+	<h:outputText value="#{msg_headings.supplier_organization_change}"
+		rendered="#{createAndChangeSupplierOrganizationBean.notNew}"/>
+<f:verbatim></h2></f:verbatim>
 <hr />
 <h:form>
-	<h:inputHidden id="init" value="#{createAndChangeSupplierOrganizationBean.init}"></h:inputHidden>
 	<table>
 		<tr>
 			<td>
@@ -128,7 +134,12 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="right">
+			<td align="right">
+				<h:commandButton value="#{msg_main.cancel}"
+					action="#{createAndChangeSupplierOrganizationBean.actionCancel}"
+					immediate="true"/>
+			</td>
+			<td align="right">
 				<h:commandButton value="#{msg_main.save}" action="#{createAndChangeSupplierOrganizationBean.actionSaveOrganization}" />
 			</td>
 		</tr>
