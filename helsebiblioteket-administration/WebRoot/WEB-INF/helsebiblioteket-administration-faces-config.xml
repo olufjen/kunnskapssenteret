@@ -242,10 +242,18 @@
         <managed-bean-name>newEndUserBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.NewEndUserBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+    		<property-name>userBean</property-name>
+        	<value>#{userBean}</value>
+		</managed-property>
     	<managed-property>
     		<property-name>userService</property-name>
         	<value>#{userService}</value>
 		</managed-property>
+		<managed-property>
+            <property-name>organizationService</property-name>
+            <value>#{organizationService}</value>
+        </managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -262,6 +270,10 @@
     		<property-name>userService</property-name>
         	<value>#{userService}</value>
 		</managed-property>
+		<managed-property>
+            <property-name>organizationService</property-name>
+            <value>#{organizationService}</value>
+        </managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -287,6 +299,10 @@
     		<property-name>organizationService</property-name>
         	<value>#{organizationService}</value>
 		</managed-property>
+        <managed-property>
+    		<property-name>userService</property-name>
+        	<value>#{userService}</value>
+		</managed-property>
 		<managed-property>
     		<property-name>organizationBean</property-name>
         	<value>#{organizationBean}</value>
@@ -302,6 +318,10 @@
         <managed-property>
     		<property-name>organizationService</property-name>
         	<value>#{organizationService}</value>
+		</managed-property>
+    	<managed-property>
+    		<property-name>userService</property-name>
+        	<value>#{userService}</value>
 		</managed-property>
 		<managed-property>
     		<property-name>organizationBean</property-name>
