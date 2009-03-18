@@ -186,7 +186,7 @@ public class UserBean {
     	}
     }
     public String actionSave(){
-    	this.mainRole(this.allRolesMap.get(this.selectedUserRole));
+    	this.mainRole(this.allRolesMap.get(this.selectedUserRole.getValue()));
     	if(this.mainRole().getKey().equals(roleKeyAdministrator)){
         	this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setStudentNumber(null);

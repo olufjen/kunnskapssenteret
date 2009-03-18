@@ -15,16 +15,17 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Profile;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
-import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 
 public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
-	
-	private OrganizationService organizationService = null;
-	
 	private MemberOrganization memberOrganization;
 
 	private String ipAddressSingle = null;
@@ -33,9 +34,8 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	private UIInput ipAddressSingleUIInput = null;
 	private UIInput ipAddressFromUIInput = null;
 	private UIInput ipAddressToUIInput = null;
-	private OrganizationBean organizationBean = null;
 	
-	private String selectedOrganizationTypeId = null;
+	private String selectedOrganizationType = null;
 	
 	private List<IpAddressRange> ipRangeList = null;
 	
@@ -45,22 +45,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 //		this.beanMode = BeanMode.change;
 	}
 
-	// Method is invoked by hidden init-field in JSP.
-	public String getInit() {
-		initOrganization();
-		return "";
-	}
-	
-	public void setOrganizationBean(OrganizationBean organizationBean) {
-		this.organizationBean = organizationBean;
+	public String getSelectedOrganizationType() {
+		return selectedOrganizationType;
 	}
 
-	public String getSelectedOrganizationTypeId() {
-		return selectedOrganizationTypeId;
-	}
-
-	public void setSelectedOrganizationTypeId(String selectedOrganizationTypeId) {
-		this.selectedOrganizationTypeId = selectedOrganizationTypeId;
+	public void setSelectedOrganizationType(String selectedOrganizationType) {
+		this.selectedOrganizationType= selectedOrganizationType;
 	}
 
 	public String getIpAddressSingle() {
@@ -110,15 +100,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	public void setIpAddressToUIInput(UIInput ipAddressToUIInput) {
 		this.ipAddressToUIInput = ipAddressToUIInput;
 	}
-	
-	public void setOrganizationService(OrganizationService organizationService) {
-		this.organizationService = organizationService;
-	}
 
-	public void setOrganization(MemberOrganization organization) {
-		this.memberOrganization = organization;
-	}
-	
 	public List<IpAddressRange> getIpRangeList() {
 		return this.ipRangeList;
 	}
@@ -133,43 +115,59 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
-		// TODO: use same bindings as used in NewSupplierOrganizationBean
-		// Requires all org props to be initiates first, see getSupplierOrganization()
-		this.memberOrganization = new MemberOrganization();
-//		private String organizationName;
-		//this.organization.setName(this.getOrganizationName());
-		ContactInformation contactInformationOrganization = new ContactInformation();
-//		private String orgAddress;
+		ContactInformation contactInformationOrganization;
+		Person contactPerson;
+		Profile contactPersonProfile;
+		ContactInformation contactInformationPerson;
+		if(this.isNew){
+//			this.memberOrganization = new MemberOrganization();
+			contactInformationOrganization = new ContactInformation();
+			this.memberOrganization.getOrganization().setContactInformation(contactInformationOrganization);
+			contactPerson = new Person();
+			OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
+					OrganizationTypeKey.health_enterprise)).getValue();
+			contactPerson.setPosition(((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, organizationType)).getValue());
+			this.memberOrganization.getOrganization().setContactPerson(contactPerson);
+			contactInformationPerson = new ContactInformation();
+			contactPerson.setContactInformation(contactInformationPerson);
+			contactPersonProfile = new Profile();
+			contactPerson.setProfile(contactPersonProfile);
+		} else {
+			contactInformationOrganization = this.memberOrganization.getOrganization().getContactInformation();
+			contactPerson = this.memberOrganization.getOrganization().getContactPerson();
+			contactInformationPerson = this.memberOrganization.getOrganization().getContactPerson().getContactInformation();
+			contactPersonProfile = contactPerson.getProfile();
+		}
 		contactInformationOrganization.setPostalAddress(this.getOrgAddress());
-//		private String orgPostalCode;
 		contactInformationOrganization.setPostalCode(this.getOrgPostalCode());
-//		private String orgPostalLocation;
 		contactInformationOrganization.setPostalLocation(this.getOrgPostalLocation());
-		ContactInformation contactInformationPerson = new ContactInformation();
-		Person contactPerson = new Person();
-//		private String contactPersonFirstName;
+		contactInformationOrganization.setEmail("");
+		contactInformationOrganization.setTelephoneNumber("");
+
 		contactPerson.setFirstName(this.getContactPersonFirstName());
-//		private String contactPersonLastName;
 		contactPerson.setLastName(this.getContactPersonLastName());
-//		private String contactPersonTelephoneNumber;
+
 		contactInformationPerson.setTelephoneNumber(this.getContactPersonTelephoneNumber());
-//		private String contactPersonEmail;
 		contactInformationPerson.setEmail(this.getContactPersonEmail());
+
+		contactPersonProfile.setParticipateSurvey(false);
+		contactPersonProfile.setReceiveNewsletter(false);
 		
-		contactPerson.setContactInformation(contactInformationPerson);
-		this.memberOrganization.getOrganization().setContactInformation(contactInformationOrganization);
-		this.memberOrganization.getOrganization().setContactPerson(contactPerson);
-		
-		memberOrganization.getOrganization().setType(new OrganizationType(Integer.valueOf(selectedOrganizationTypeId)));
-		if (this.memberOrganization.getOrganization().getId() == null) {
+		this.memberOrganization.getOrganization().setType(
+				((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
+						new OrganizationTypeKey(selectedOrganizationType))).getValue());
+
+		// FIXME: Insert new and delete IP-addresses!
+		this.memberOrganization.getIpAddressRangeList();
+		this.memberOrganization.getIpAddressSingleList();
+
+		if(this.isNew){
 			this.organizationService.insertMemberOrganization(this.memberOrganization);
 		} else {
-			// FIXME: Insert new and delete IP-addresses!
 			organizationService.updateOrganization(this.memberOrganization.getOrganization());
-			this.memberOrganization.getIpAddressRangeList();
-			this.memberOrganization.getIpAddressSingleList();
 		}
-		return "organizations_overview";
+		this.organizationBean.setOrganization(this.organization);
+		return this.organizationBean.actionDetailsSingle();
 	}
 	
 	public void actionAddSingleIp() {
@@ -195,11 +193,6 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		logger.debug("Method 'actionDeleteIpRange' invoked");
 		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
 		this.ipRangeList.remove((IpAddressRange) this.ipRangeListHtmlDataTable.getRowData());
-	}
-	
-	public String actionNewMemberOrganization() {
-//		beanMode = BeanMode.create;
-		return "create_change_member_organization";
 	}
 	
 	public String actionEditOrganization() {
@@ -240,9 +233,20 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	public void setSelectedSourceList(List<String> list) { 
 //		this.selectedSourceList = list;
 	}
+
+	// Method is invoked by hidden init-field in JSP.
+	public String getInit() {
+		initOrganization();
+		return "";
+	}
+
+	public String actionCancel(){
+		this.organizationBean.setOrganization(this.organization);
+		return this.organizationBean.actionDetailsSingle();
+	}
 	
 	private void initOrganization() {
-		if (this.organizationBean != null && this.organizationBean.getOrganization() != null && this.organizationBean.getOrganization().getId() != null) {
+		if ( ! this.organizationBean.getIsNew()) {
 			this.memberOrganization = organizationBean.getMemberOrganization();
 		} else {
 			this.memberOrganization = new MemberOrganization();
@@ -255,6 +259,8 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			this.memberOrganization.getOrganization().setNameShortNorwegian("");
 			this.memberOrganization.setIpAddressRangeList(new IpAddressRange[0]);
 		}
+		this.setIsNew(this.organizationBean.getIsNew());
+		this.setNotNew( ! this.organizationBean.getIsNew());
 		this.organization = this.memberOrganization.getOrganization();
 	}
 }

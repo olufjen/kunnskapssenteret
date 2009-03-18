@@ -27,6 +27,7 @@ public class OrganizationBean {
 	private MemberOrganization memberOrganization;
 	private SupplierOrganization supplierOrganization;
 	private HtmlDataTable organizationsTable;
+	private Boolean isNew;
 	
 	// TODO: Include the ipRangeList in the
 	//       Details view (organization-details.jsp)
@@ -42,6 +43,7 @@ public class OrganizationBean {
 	private String actionDetailsEdit(boolean edit){
 		OrganizationListItem item = (OrganizationListItem) this.organizationsTable.getRowData();
 		SingleResultOrganization res = this.organizationService.getOrganizationByListItem(item);
+		this.isNew = false;
 		if(res instanceof ValueResultMemberOrganization){
 			this.memberOrganization = ((ValueResultMemberOrganization)res).getValue();
 			this.supplierOrganization = null;
@@ -59,26 +61,43 @@ public class OrganizationBean {
 		return "organization_details";
 	}
 	public String actionEditSingle(){
+		return actionDetailsEditSingle(true);
+	}
+	public String actionDetailsSingle(){
+		return actionDetailsEditSingle(false);
+	}
+	private String actionDetailsEditSingle(boolean edit){
 		// TODO: Of course not do that!
 //		return actionDetailsEdit(true);
 		OrganizationListItem item = new OrganizationListItem();
 		item.setId(this.organization.getId());
 		SingleResultOrganization result = this.organizationService.getOrganizationByListItem(item);
+		this.isNew = false;
 		if(result instanceof ValueResultSupplierOrganization){
 			this.supplierOrganization = ((ValueResultSupplierOrganization)result).getValue();
 			this.memberOrganization = null;
 			this.organization = this.supplierOrganization.getOrganization();
 			logger.debug("changing organization with id " + this.organization.getId());
-			return "create_change_supplier_organization";
+			if(edit) return "create_change_supplier_organization";
 		} else if(result instanceof ValueResultMemberOrganization){
 			this.supplierOrganization = null;
 			this.memberOrganization = ((ValueResultMemberOrganization)result).getValue();
 			this.organization = this.memberOrganization.getOrganization();
 			logger.debug("changing organization with id " + this.organization.getId());
-			return "create_change_member_organization";
+			if(edit) return "create_change_member_organization";
 		} else {
 			return "organizations_overview";
 		}
+		return "organization_details";
+	}
+
+	public String actionNewSupplierOrganization() {
+		this.isNew = true;
+		return "create_change_supplier_organization";
+	}
+	public String actionNewMemberOrganization() {
+		this.isNew = true;
+		return "create_change_member_organization";
 	}
 	public void search() {
 		if(this.searchinput == null) { this.searchinput = ""; }
@@ -165,5 +184,11 @@ public class OrganizationBean {
 		}
 		
 		return organization;
+	}
+	public Boolean getIsNew() {
+		return isNew;
+	}
+	public void setIsNew(Boolean isNew) {
+		this.isNew = isNew;
 	}
 }
