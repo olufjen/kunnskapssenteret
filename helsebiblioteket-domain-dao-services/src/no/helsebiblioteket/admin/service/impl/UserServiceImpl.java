@@ -15,7 +15,6 @@ import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
@@ -212,13 +211,21 @@ public class UserServiceImpl implements UserService {
 		} else {
 			User user = organizationUser.getUser();
 			Person person = this.personDao.getPersonByUser(user);
+			Position position;
 			if(person == null){
-				Position position = null;//this.getPositionByKey(PositionTypeKey.none, organizationType);
+				position = this.positionDao.getPositionByKey(PositionTypeKey.none);
 				person = PersonFactory.factory.completePerson(position);
 				this.contactInformationDao.insertContactInformation(person.getContactInformation());
 				this.profileDao.insertProfile(person.getProfile());
 				this.personDao.insertPerson(person);
+			} else {
+				if(person.getPosition() == null){
+					position = this.positionDao.getPositionByKey(PositionTypeKey.none);					
+				} else {
+					position = this.positionDao.getPositionById(person.getPosition().getId());
+				}
 			}
+			person.setPosition(position);
 			user.setPerson(person);
 			
 			Profile profile = null;
@@ -405,5 +412,4 @@ public class UserServiceImpl implements UserService {
 	public void setContactInformationDao(ContactInformationDao contactInformationDao) {
 		this.contactInformationDao = contactInformationDao;
 	}
-
 }
