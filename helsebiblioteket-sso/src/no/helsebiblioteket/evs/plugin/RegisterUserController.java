@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -50,7 +51,7 @@ public final class RegisterUserController extends ProfileController {
     	}
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		User user = new User();
+//		User user = new User();
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
 		if (null == usertype || "".equals(usertype)) {
 			usertype = request.getParameter("form_3");
@@ -61,7 +62,8 @@ public final class RegisterUserController extends ProfileController {
 //		element.appendChild(document.createElement("init"));
 		Element values = document.createElement("values");
 		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
-		userXML(user, null, document, values);
+		// TODO: But there is no user!		
+//		userXML(null, null, document, values);
 		element.appendChild(values);
 		document.appendChild(element);
 		loggedInFunction.setResult(this.resultSessionVarName, document);
@@ -190,19 +192,20 @@ public final class RegisterUserController extends ProfileController {
 		if (roleOtherResult instanceof EmptyResultRole) {
 			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel_other + "'");
 		}
-		Role roleOther = (Role) ((ValueResultRole) roleOtherResult).getValue();
+		Role roleOther = ((ValueResultRole) roleOtherResult).getValue();
+		
 		
 		SingleResultRole roleHealthPersonnelResult = userService.getRoleByKeySystem(UserRoleKey.health_personnel, system);
 		if (roleHealthPersonnelResult instanceof EmptyResultRole) {
 			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel + "'");
 		}
-		Role roleHealthPersonell = (Role) ((ValueResultRole) roleHealthPersonnelResult).getValue();
+		Role roleHealthPersonell = ((ValueResultRole) roleHealthPersonnelResult).getValue();
 		
 		SingleResultRole roleStudentResult = userService.getRoleByKeySystem(UserRoleKey.student, system);
 		if (roleStudentResult instanceof EmptyResultRole) {
 			throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.student + "'");
 		}
-		Role roleStudent = (Role) ((ValueResultRole) roleStudentResult).getValue();
+		Role roleStudent = ((ValueResultRole) roleStudentResult).getValue();
 		
 		Role roleOtherArray[] = { roleOther };
 		Role roleHealthPersonellArray[] = { roleHealthPersonell };
@@ -218,6 +221,9 @@ public final class RegisterUserController extends ProfileController {
 		} else	if (usertype.equals(UserRoleKey.health_personnel_other.getValue())) {
 			user.setRoleList(roleOtherArray);
 		} else if (usertype.equals(UserRoleKey.student.getValue())) {
+			user.setRoleList(roleStudentArray);
+		} else {
+			// TODO: Handle this error. Do not do this!
 			user.setRoleList(roleStudentArray);
 		}
 		
@@ -240,9 +246,17 @@ public final class RegisterUserController extends ProfileController {
 		SingleResultUser result = this.userService.findUserByUsername(username);
 		return (result instanceof ValueResultUser);
 	}
-	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
-		super.userXML(user, hprNumber, document, element);
-		element.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
+	protected void userXML(Object userObject, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
+		User user;
+		if(userObject instanceof User){
+			user = (User) userObject;
+		} else {
+			user = ((OrganizationUser)userObject).getUser();
+		}
+		super.userXML(userObject, hprNumber, document, element);
+		if(user != null){
+			element.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
+		}
 	}
 	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
 		this.loggedInFunction = loggedInFunction;

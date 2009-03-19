@@ -22,6 +22,7 @@ import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
+import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
@@ -56,16 +57,16 @@ public class ProxyLoginController extends HttpControllerPlugin {
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
-		User user = this.loggedInFunction.loggedInUser();
+		Object objectUser = this.loggedInFunction.loggedInUser();
 		MemberOrganization organization = this.loggedInFunction.loggedInOrganization();
-    	if(user == null && organization == null){
+    	if(objectUser == null && organization == null){
     		if(this.urlService.isAffected(requestedUrl)){
-        		createXML(false, user, organization, requestedUrl, document, element);
+        		createXML(false, objectUser, organization, requestedUrl, document, element);
         		redirectUrl = logUpUrl;
     		} else {
     			// TODO: What does it mean to not be affected.
     			// When everyone has access?
-        		createXML(true, user, organization, requestedUrl, document, element);
+        		createXML(true, objectUser, organization, requestedUrl, document, element);
 
         		// TODO: Go ahead!
 	    		redirectUrl = logUpUrl;
@@ -74,7 +75,15 @@ public class ProxyLoginController extends HttpControllerPlugin {
     	} else {
     		if(this.urlService.isAffected(requestedUrl)){
     			boolean hasAcces = false;
-    			if(this.urlService.hasAccessUserOrganization(user, organization, requestedUrl)){
+    			boolean test;
+    			if(objectUser instanceof User){
+    				User user = (User) objectUser;
+    				test = this.urlService.hasAccessUserOrganization(user, organization, requestedUrl);
+    			} else {
+    				OrganizationUser user = (OrganizationUser) objectUser;
+    				test = this.urlService.hasAccessOrganizationUserOrganization(user, organization, requestedUrl);
+    			}
+    			if(test){
     				SingleResultString result = this.urlService.group(requestedUrl);
     				String group;
     				if(result instanceof EmptyResultString){
@@ -85,11 +94,11 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				}
     				if(this.createProxySession(response, requestedUrlText, group)){
         				// Great, done!
-    	        		createXML(true, user, organization, requestedUrl, document, element);
+    	        		createXML(true, objectUser, organization, requestedUrl, document, element);
 
     	        		redirectUrl = "";
     				} else {
-    	        		createXML(false, user, organization, requestedUrl, document, element);
+    	        		createXML(false, objectUser, organization, requestedUrl, document, element);
     	        		element.appendChild(document.createElement("proxysessionerror"));
     		    		redirectUrl = logUpUrl;
     				}
@@ -97,11 +106,11 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				// Add organization for IP!
     		    	IpAddress ipAddress = new IpAddress();
     		    	ipAddress.setAddress(LogInInterceptor.getXforwardedForOrRemoteAddress(request));
-   	        		createXML(false, user, organization, requestedUrl, document, element);
+   	        		createXML(false, objectUser, organization, requestedUrl, document, element);
     				redirectUrl = logUpUrl;
     			}
     		} else {
-        		createXML(true, user, organization, requestedUrl, document, element);
+        		createXML(true, objectUser, organization, requestedUrl, document, element);
         		
         		// TODO: Go ahead!
 	    		redirectUrl = logUpUrl;
@@ -114,14 +123,17 @@ public class ProxyLoginController extends HttpControllerPlugin {
             redirect(response, redirectUrl);
     	}
     }
-    private void createXML(boolean hasAccess, User user, MemberOrganization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
+    private void createXML(boolean hasAccess, Object user, MemberOrganization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
 		Element loggedin = document.createElement("loggedin");
 		if(user != null){
 //			proxyresult/loggedin/user
 			UserToXMLTranslator translator = new UserToXMLTranslator();
-			OrganizationUser organizationUser = new OrganizationUser();
-			organizationUser.setUser(user);
-			translator.translate(organizationUser, document, loggedin);
+			if(user instanceof User){
+				translator.translate((User) user, document, loggedin);
+			} else {
+				OrganizationUserToXMLTranslator orgTranslator = new OrganizationUserToXMLTranslator();
+				orgTranslator.translate((OrganizationUser) user, document, loggedin);
+			}
 		} else if(organization != null){
 //			proxyresult/loggedin/organization
 			OrganizationToXMLTranslator organizationTranslator = new OrganizationToXMLTranslator();

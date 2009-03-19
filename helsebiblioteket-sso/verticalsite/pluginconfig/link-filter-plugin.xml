@@ -26,7 +26,9 @@
 		<property name="serviceClient" ref="urlServiceClient" />
 		<property name="targetEPR" ref="urlTargetEPR" />
 		<property name="isAffectedName" ref="isAffectedName" />
-		<property name="translateName" ref="translateName" />
+		<property name="translateUrlUserName" ref="translateUrlUserName" />
+		<property name="translateUrlOrganizationName" ref="translateUrlOrganizationName" />
+		<property name="translateUrlUserOrganizationName" ref="translateUrlUserOrganizationName" />
 		<property name="invokeCache" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
@@ -38,8 +40,16 @@
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="isAffected" />
 	</bean>
-	<bean name="translateName" class="javax.xml.namespace.QName">
+	<bean name="translateUrlUserName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="translate" />
+		<constructor-arg value="translateUrlUser" />
+	</bean>
+	<bean name="translateUrlOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="translateUrlOrganization" />
+	</bean>
+	<bean name="translateUrlUserOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="translateUrlUserOrganization" />
 	</bean>
 </beans>

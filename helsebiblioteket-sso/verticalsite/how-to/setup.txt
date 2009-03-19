@@ -22,16 +22,16 @@ Passord                   [Page (Enkeltside - Logg Inn)]
 
 *** OBJECTS ***
 viewProfile
-  Stylesheet: viewProfile.xsl
+  Stylesheet: view_profile.xsl
   editProfileServletPage: RedigerProfilServlet
   editProfilePage: Rediger profil
-  datasource: view_profile.txt
+  datasource: viewProfile.txt
 editProfile
-  Stylesheet: editProfile.xsl
+  Stylesheet: edit_profile.xsl
   viewProfilePage: Vis profil
   editProfilePage: Rediger profil
   editProfileServletPage: RedigerProfilServlet
-  datasource: edit_profile.txt
+  datasource: editProfile.txt
 registerUserPartOne
   Stylesheet: register_user_page_one.xsl
   viewProfilePage: Vis profil
@@ -70,7 +70,7 @@ logon [Used in Position: right, as default, etc]
   loginPage: Logg inn
   logOutServletPage: LoggUtServlet
   loginServletPage: LoggInnServlet
-  datasource: logon.xsl
+  datasource: logon.txt
 registreringFlereTrinnDel1 
   passportPage: Passord
   datasource: registerUserPartOne

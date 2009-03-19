@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -56,9 +57,12 @@ public final class LogInController extends HttpControllerPlugin {
         		response.sendRedirect(referer);
        		} else {
 	       		// Found user!
-       			User user = ((ValueResultUser)resultUser).getValue();
+       			if(resultUser instanceof ValueResultUser){
+    	       		loggedInFunction.logInUser(((ValueResultUser)resultUser).getValue());
+       			} else {
+       				loggedInFunction.logInOrganizationUser(((ValueResultOrganizationUser)resultUser).getValue());
+       			}
 	       		element.appendChild(result.createElement("success"));
-	       		loggedInFunction.logInUser(user);
 	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 	       		response.sendRedirect(gotoUrl);
         	}
