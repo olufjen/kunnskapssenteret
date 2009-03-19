@@ -1,4 +1,3 @@
-
 drop table tbl_access cascade;
 drop table tbl_access_type_reg cascade;
 drop table tbl_action cascade;
