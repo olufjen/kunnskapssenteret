@@ -12,6 +12,7 @@
 	<property name="project.target.dir" value="${project.home.dir}/target"/>
 	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
 	<property name="project.lib.dir" value="${project.home.dir}/lib"/>
+	<property name="project.desc.dir" value="${project.home.dir}/desc"/>
 	<property name="helsebiblioteket-administration-web-lib.dir" value="${helsebiblioteket-administration-web-home.dir}/lib"/>
 	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
 	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/target"/>
@@ -119,12 +120,12 @@
 		<mkdir dir="${webservices.classes.lib.dir}" />
 		<mkdir dir="${webservices.metainf.dir}" />
 
-		<copy file="desc/services.xml" tofile="${webservices.metainf.dir}/services.xml" overwrite="true" />
-		<copy file="desc/applicationContext.xml" tofile="${webservices.classes.dir}/applicationContext.xml" overwrite="true" />
-		<copy file="desc/jdbc.properties" tofile="${webservices.classes.dir}/jdbc.properties" overwrite="true" />
-		<copy file="desc/mail.properties" tofile="${webservices.classes.dir}/mail.properties" overwrite="true" />
-		<copy file="desc/proxy.properties" tofile="${webservices.classes.dir}/proxy.properties" overwrite="true" />
-		<copy file="desc/sqlmap-config.xml" tofile="${webservices.classes.dir}/sqlmap-config.xml" overwrite="true" />
+		<copy file="${project.desc.dir}/services.xml" tofile="${webservices.metainf.dir}/services.xml" overwrite="true" />
+		<copy file="${project.desc.dir}/applicationContext.xml" tofile="${webservices.classes.dir}/applicationContext.xml" overwrite="true" />
+		<copy file="${project.desc.dir}/jdbc.properties" tofile="${webservices.classes.dir}/jdbc.properties" overwrite="true" />
+		<copy file="${project.desc.dir}/mail.properties" tofile="${webservices.classes.dir}/mail.properties" overwrite="true" />
+		<copy file="${project.desc.dir}/proxy.properties" tofile="${webservices.classes.dir}/proxy.properties" overwrite="true" />
+		<copy file="${project.desc.dir}/sqlmap-config.xml" tofile="${webservices.classes.dir}/sqlmap-config.xml" overwrite="true" />
 		<copy file="desc/ehcache-helsebiblioteket.xml" tofile="${webservices.classes.dir}/ehcache-helsebiblioteket.xml" overwrite="true" />
 
 
@@ -139,24 +140,32 @@
             <classpath refid="master-classpath"/>
 		</javac>
 
+		<jar compress="false" basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}" />
 		<!-- 
 		-  deploying exploded, not jared
 		-  crating aar-file, then unziping the file.
 		-  todo: consider a better approach. 
-		-->
-		<jar compress="false" basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}_tmp" />
 		<unwar 
 			src="${webservices.target.dir}/${webservices.target.filename}_tmp"
 			dest="${webservices.target.dir}/${webservices.target.filename}"
 		/>
 		<delete file="${webservices.target.dir}/${webservices.target.filename}_tmp" />
+		-->
 	</target>
 	
 	<target name="deploy-service" depends="generate-service">
-		<!-- copying exploded directory -->
-		<mkdir dir="${webservices.tomcat.services.dir}/${webservices.target.filename}" />
-		<copy todir="${webservices.tomcat.services.dir}/${webservices.target.filename}">
-			<fileset dir="${webservices.target.dir}/${webservices.target.filename}" />
+		<!-- copying exploded directory
+				<mkdir dir="${webservices.tomcat.services.dir}/${webservices.target.filename}" />
+		-->
+		<copy todir="${webservices.tomcat.services.dir}">
+			<fileset dir="${webservices.target.dir}">
+				<include name="**/*.aar"/>
+			</fileset>
+		</copy>
+		<copy todir="${webservices.tomcat.lib.dir}">
+			<fileset dir="${webservices.target.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
 		</copy>
 		<copy todir="${webservices.tomcat.lib.dir}">
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
