@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 public class PasswordValidator {
 	private static PasswordValidator instance = null;
+	// TODO: Comment?
 	private static String validPasswordRegExpString = "[0-9A-Åa-å_]{6,}";
 	private static Pattern validPasswordRegExpPattern = null;
 	static {

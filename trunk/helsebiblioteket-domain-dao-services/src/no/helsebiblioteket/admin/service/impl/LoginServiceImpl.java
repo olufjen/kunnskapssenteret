@@ -10,6 +10,8 @@ import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
@@ -17,6 +19,7 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
@@ -42,6 +45,9 @@ public class LoginServiceImpl implements LoginService {
 		if(result instanceof ValueResultUser){
 			User loggedIn = ((ValueResultUser)result).getValue();
 			if(loggedIn.getPassword().equals(password)){
+				// TODO: Remove this:
+//				loggedIn.setPerson(null);
+//				loggedIn.setRoleList(new Role[0]);
 				return result;
 			}
 		}
@@ -110,5 +116,13 @@ public class LoginServiceImpl implements LoginService {
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
+	}
+
+	
+	
+	@Override
+	public SingleResultPosition hmmm(Person person) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
