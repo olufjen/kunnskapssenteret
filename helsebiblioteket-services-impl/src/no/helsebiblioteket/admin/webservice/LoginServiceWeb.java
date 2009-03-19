@@ -13,9 +13,14 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 @SuppressWarnings("serial")
 
 public class LoginServiceWeb extends BasicWebService implements LoginService {
@@ -32,12 +37,18 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	public SingleResultUser loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { SingleResult.class };
-//		if(cachedFor.get("loginUserByUsernamePassword")) {
-//			// call cahced
-//			return null; 
-//		} else {
-			return (SingleResultUser)invoke(this.logInUserName, args, returnTypes);	
-//		}
+		// TODO: Remove this:
+		SingleResultUser res = (SingleResultUser)invoke(this.logInUserName, args, returnTypes);
+		User user;
+		if(res instanceof ValueResultOrganizationUser){
+			user = ((ValueResultOrganizationUser)res).getValue().getUser();
+		} else if(res instanceof ValueResultUser){
+			user = ((ValueResultUser)res).getValue();
+		} else {
+			user = null;
+		}
+		if(user!=null && user.getRoleList() == null) user.setRoleList(new Role[0]);
+		return res;
 	}
 	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
@@ -100,5 +111,14 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		Class[] returnTypes = new Class[] { User.class };
 		Object result = invoke(this.logInUserName, args, returnTypes);
 		return (result != null) ? (User) result : null;
+	}
+	
+	
+	
+	
+	@Override
+	public SingleResultPosition hmmm(Person person) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
