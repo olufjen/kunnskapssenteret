@@ -33,7 +33,7 @@
 			tuser.user_id
 		from
 			tbl_user as tuser
-			inner join tbl_person as tperson on tperson.person_id = tuser.person_id
+			left outer join tbl_person as tperson on tperson.person_id = tuser.person_id
 			left outer join tbl_user_role as userrole on userrole.user_id = tuser.user_id
 			left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
 		order by
@@ -46,7 +46,7 @@
 			distinct tuser.user_id as user_id_distinct
 		from
 			tbl_user as tuser
-			inner join tbl_person as tperson on tperson.person_id = tuser.person_id
+			left outer join tbl_person as tperson on tperson.person_id = tuser.person_id
 			left outer join tbl_user_role as userrole on userrole.user_id = tuser.user_id
 			left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
 		where (tuser.username ilike #value# or tperson.first_name ilike #value# or tperson.last_name ilike #value#)
@@ -66,7 +66,7 @@
 			tuser.user_id
 		from
 			tbl_user as tuser
-			inner join tbl_person as tperson on tperson.person_id = tuser.person_id
+			left outer join tbl_person as tperson on tperson.person_id = tuser.person_id
 			left outer join tbl_user_role as userrole on userrole.user_id = tuser.user_id
 			left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
 		where (tuser.username ilike #value# or tperson.first_name ilike #value# or tperson.last_name ilike #value#)
