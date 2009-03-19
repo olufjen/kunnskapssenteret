@@ -14,9 +14,19 @@ import no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil;
 import no.helsebiblioteket.admin.service.importexport.ldap.domain.LDAPUser;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.SystemKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSystem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 
 /**
  * This class:
@@ -35,23 +45,11 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 	LDAPLookupUtil ldapLookupUtil;
 	UserService userService;
 	
-	static List<Role> roleOtherList = new ArrayList<Role>();
-	static List<Role> roleHealthPersonellList = new ArrayList<Role>();
-	static List<Role> roleStudentList = new ArrayList<Role>();
+	static Role[] roleOtherArray;
+	static Role[] roleHealthPersonellArray;
+	static Role[] roleStudentArray;
+	static Position position = new Position();
 	
-	static {
-		Role roleOther = new Role();
-		roleOther.setId(4);
-		roleOtherList.add(roleOther);
-		
-		Role roleHealthPersonell = new Role();
-		roleHealthPersonell.setId(2);
-		roleHealthPersonellList.add(roleHealthPersonell);
-		
-		Role roleStudent = new Role();
-		roleStudent.setId(3);
-		roleStudentList.add(roleStudent);
-	}
 
 	String commonPassword;
 	private static final Logger LOG = Logger.getLogger(ImportEndUsersServiceImpl.class.toString());
@@ -70,35 +68,71 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 	
 	@SuppressWarnings("unchecked")
 	public void importAllEndUsers() {
-		Collection<LDAPUser> allEndUsersAsLdapUsers = new ArrayList<LDAPUser>();
 		try {
-			allEndUsersAsLdapUsers = ldapLookupUtil.getAllLDAPUsers();
-		} catch (NamingException e) {
-			// TODO: Leif? Logge dette?
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO: Leif? Logge dette?
-			e.printStackTrace();
-		}
-		
-		User helsebibliotekUser = null;
-		Collection<User> allEndUsersAsHelsebibliotekUsers = new ArrayList();
-		for (LDAPUser ldapUser : allEndUsersAsLdapUsers) {
-			helsebibliotekUser = new User();
-			helsebibliotekUser = populateUser(ldapUser);
-			if (null != helsebibliotekUser) {
-				allEndUsersAsHelsebibliotekUsers.add(helsebibliotekUser);
+			SingleResultSystem systemResult = userService.getSystemByKey(SystemKey.helsebiblioteket_admin);
+			if (systemResult instanceof EmptyResultSystem) {
+				throw new Exception("non existing system for system key '" + SystemKey.helsebiblioteket_admin + "");
 			}
-		}
-		
-		for (User user : allEndUsersAsHelsebibliotekUsers) {
-			userService.insertUser(user);
+			System system = ((ValueResultSystem)systemResult).getValue();
+			
+			SingleResultRole roleOtherResult = userService.getRoleByKeySystem(UserRoleKey.health_personnel_other, system);
+			if (roleOtherResult instanceof EmptyResultRole) {
+				throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel_other + "'");
+			}
+			Role roleOther = (Role) ((ValueResultRole) roleOtherResult).getValue();
+			
+			SingleResultRole roleHealthPersonnelResult = userService.getRoleByKeySystem(UserRoleKey.health_personnel, system);
+			if (roleHealthPersonnelResult instanceof EmptyResultRole) {
+				throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.health_personnel + "'");
+			}
+			Role roleHealthPersonell = (Role) ((ValueResultRole) roleHealthPersonnelResult).getValue();
+			
+			SingleResultRole roleStudentResult = userService.getRoleByKeySystem(UserRoleKey.student, system);
+			if (roleStudentResult instanceof EmptyResultRole) {
+				throw new Exception("non existing role for system key '" + SystemKey.helsebiblioteket_admin + "' and role key '" + UserRoleKey.student + "'");
+			}
+			Role roleStudent = (Role) ((ValueResultRole) roleStudentResult).getValue();
+			
+			roleOtherArray = new Role[] { roleOther };
+			roleHealthPersonellArray = new Role[] { roleHealthPersonell };
+			roleStudentArray = new Role[] { roleStudent };
+			
+			Collection<LDAPUser> allEndUsersAsLdapUsers = new ArrayList<LDAPUser>();
+			try {
+				allEndUsersAsLdapUsers = ldapLookupUtil.getAllLDAPUsers();
+			} catch (NamingException e) {
+				// TODO: Leif? Logge dette?
+				// leif sier: ja
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO: Leif? Logge dette?
+				// leif sier: ja
+				e.printStackTrace();
+			}
+			
+			User helsebibliotekUser = null;
+			Collection<User> allEndUsersAsHelsebibliotekUsers = new ArrayList();
+			for (LDAPUser ldapUser : allEndUsersAsLdapUsers) {
+				helsebibliotekUser = new User();
+				helsebibliotekUser = populateUser(ldapUser);
+				if (null != helsebibliotekUser) {
+					allEndUsersAsHelsebibliotekUsers.add(helsebibliotekUser);
+				}
+			}
+			
+			for (User user : allEndUsersAsHelsebibliotekUsers) {
+				userService.insertUser(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
 	private User populateUser(LDAPUser ldapUser) {
         User user = new User();
         Person person = new Person();
+        
+        person.setPosition(position);
         
         if (null == this.commonPassword) {
         	user.setPassword(ldapUser.getUserPassword());
@@ -113,14 +147,14 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         studentOrHprNumber = ldapUser.getEmployeeNumber(); 
         
         if ("Emp".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList((Role[])roleOtherList.toArray());
+        	user.setRoleList(roleOtherArray);
         }
         if ("Stud".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList((Role[])roleStudentList.toArray());
+        	user.setRoleList(roleStudentArray);
         	person.setStudentNumber(studentOrHprNumber);
         }
         if ("HPR".equalsIgnoreCase(ldapUser.getEmployeeType())) {
-        	user.setRoleList((Role[])roleHealthPersonellList.toArray());
+        	user.setRoleList(roleHealthPersonellArray);
         	person.setStudentNumber(studentOrHprNumber);
         }
         
@@ -149,18 +183,6 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         person.setContactInformation(contactInformation);
         user.setPerson(person);
         //user.setOrganization(new Organization());
-        //TODO: Leif? Hva er dette?
-        /*user.setDn(ldapUser.getDn());
-        user.setUid(ldapUser.getUid());
-        user.setFirstName(ldapUser.getGivenName());
-        user.setSurName(ldapUser.getSureName());
-        user.setEmail(ldapUser.getEmail());
-        user.setOrg(ldapUser.getO());
-        user.setPassword(ldapUser.getUserPassword());
-        user.setEmployeeType(ldapUser.getEmployeeType());
-        user.setEmployeeNumber(ldapUser.getEmployeeNumber());
-        user.setNewsletter(null != ldapUser.getMobile() ? Boolean.valueOf(ldapUser.getMobile()) : null);
-        user.setSurvey(null != ldapUser.getPager() ? Boolean.valueOf(ldapUser.getPager()) : null); */
         return user;
     }
 
