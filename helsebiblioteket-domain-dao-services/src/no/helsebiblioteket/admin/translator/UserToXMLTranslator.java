@@ -8,15 +8,12 @@ import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 
 public class UserToXMLTranslator {
 	private RoleToXMLTranslator roleToXMLTranslator = new RoleToXMLTranslator();
-	private OrganizationToXMLTranslator organizationToXMLTranslator = new OrganizationToXMLTranslator();
 	private PersonToXMLTranslator personToXMLTranslator = new PersonToXMLTranslator();
 	private DocumentBuilder builder;
 	public UserToXMLTranslator() throws ParserConfigurationException{
@@ -26,31 +23,20 @@ public class UserToXMLTranslator {
 	public Document newDocument() {
 		return this.builder.newDocument();
 	}
-	public void translate(OrganizationUser user, Document document, Element element){
+	public void translate(User user, Document document, Element element){
 		Element userElement = document.createElement("user");
-		userElement.appendChild(cDataElement(document, "username", user.getUser().getUsername()));
+		userElement.appendChild(cDataElement(document, "username", user.getUsername()));
 
 		Element rolesElement = document.createElement("roles");
-		for (Role role : user.getUser().getRoleList()) {
+		for (Role role : user.getRoleList()) {
 			this.roleToXMLTranslator.translate(role, document, rolesElement);
 		}
 		userElement.appendChild(rolesElement);
-		Organization organization = user.getOrganization();
-		this.organizationToXMLTranslator.translate(organization, document, userElement);
-//		List<Access> accessList = user.getAccessList();
-//		for (Access access : accessList) {
-//			// TODO: Complete this!
-//			access.getAccessType();
-//			access.getId();
-//			access.getLastChanged();
-//			access.getOrganization();
-//			access.getProvidedBy();
-//			access.getSupplierSource();
-//			access.getValidFrom();
-//			access.getValidTo();
-//		}
-		Person person = user.getUser().getPerson();
-		this.personToXMLTranslator.translate(person, document, userElement);
+		Person person = user.getPerson();
+		if(person != null){
+			// TODO: Should have person?
+			this.personToXMLTranslator.translate(person, document, userElement);
+		}
 		if(element == null){
 			document.appendChild(userElement);
 		} else {
