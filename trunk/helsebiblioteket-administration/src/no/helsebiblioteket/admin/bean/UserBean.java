@@ -247,7 +247,7 @@ public class UserBean {
 		Role[] selectedRoles = new Role[this.getSelectedRoles().size()];
 		int i=0;
 		for (String string : this.getSelectedRoles()) {
-			selectedRoles[i] = this.allRolesMap.get(string);
+			selectedRoles[i++] = this.allRolesMap.get(string);
 		}
 		return selectedRoles;
 	}
