@@ -24,6 +24,7 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
+import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.PositionToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
@@ -45,9 +46,18 @@ public class LoggedInFunction{
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		session.setAttribute(sessionLoggedInUserVarName, user);
 	}
-	public User loggedInUser() {
+	public void logInOrganizationUser(OrganizationUser user){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-		return (User) session.getAttribute(sessionLoggedInUserVarName);
+		session.setAttribute(sessionLoggedInUserVarName, user);
+	}
+	public Object loggedInUser() {
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
+		Object user = session.getAttribute(sessionLoggedInUserVarName);
+		if(user instanceof User || user instanceof OrganizationUser){
+			return user;
+		} else {
+			return null;
+		}
 	}
 	public void logOutUser(){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
@@ -120,9 +130,7 @@ public class LoggedInFunction{
 	}
 
 	private org.w3c.dom.Document printLoggedIn() throws ParserConfigurationException {
-		User user = this.loggedInUser();
-		OrganizationUser organizationUser = new OrganizationUser();
-		organizationUser.setUser(user);
+		Object user = this.loggedInUser();
 		
 		MemberOrganization memberOrganization = this.loggedInOrganization();
 		Organization organization = null;
@@ -136,9 +144,12 @@ public class LoggedInFunction{
     		OrganizationToXMLTranslator translator = new OrganizationToXMLTranslator();
     		translator.translate(organization, result, loggedinElement);
     	}
-    	if(user != null){
-        	userTranslator.translate(organizationUser, result, loggedinElement);
-    	}
+		if(user instanceof User){
+        	userTranslator.translate((User)user, result, loggedinElement);
+		} else if(user instanceof OrganizationUser){
+			OrganizationUserToXMLTranslator organizationUserTranslator = new OrganizationUserToXMLTranslator();
+			organizationUserTranslator.translate((OrganizationUser) user, result, loggedinElement);
+		}
     	if(organization == null && user == null){
     		loggedinElement.appendChild(result.createElement("none"));
     	}

@@ -14,6 +14,7 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.validator.PasswordValidator;
@@ -47,7 +48,13 @@ public class ProfileController extends HttpControllerPlugin {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
-		User user = loggedInFunction.loggedInUser();
+		Object userObject = loggedInFunction.loggedInUser();
+		User user;
+		if(userObject instanceof User){
+			user = (User) userObject;
+		} else {
+			user = ((OrganizationUser)userObject).getUser();
+		}
 		if(user == null){
 			element.appendChild(document.createElement("notloggedin"));
     		String referer = request.getParameter(this.parameterNames.get("from"));
@@ -132,10 +139,12 @@ public class ProfileController extends HttpControllerPlugin {
 			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NOT_VALID"));
 		}
 		if (usertype.length() == 0 || !validPosition(position)) {
-			messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));
+			// TODO: Position not shown in form!
+//			messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));
 		}
 		if(username.length() == 0 || ! UsernameValidator.getInstance().isValidUsername(username)) {
-			messages.appendChild(UserToXMLTranslator.element(document, "username", "NOT_VALID"));
+			// TODO: Username not in form!
+//			messages.appendChild(UserToXMLTranslator.element(document, "username", "NOT_VALID"));
 		}
 		if(password.length() == 0 || ! PasswordValidator.getInstance().isValidPassword(password)) {
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
@@ -189,11 +198,18 @@ public class ProfileController extends HttpControllerPlugin {
 //		response.setContentType("text/xml");
 //		response.getWriter().write(result.toString());
 //	}
-	protected void userXML(User user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
+	protected void userXML(Object userObject, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
-		OrganizationUser organizationUser = new OrganizationUser();
-		organizationUser.setUser(user);
-		translator.translate(organizationUser, document, element);
+		User user;
+		if(userObject instanceof User){
+			user = (User) userObject;
+			translator.translate(user, document, element);
+		} else {
+			OrganizationUser organizationUser = (OrganizationUser) userObject;
+			OrganizationUserToXMLTranslator orgTranslator = new OrganizationUserToXMLTranslator();
+			orgTranslator.translate(organizationUser, document, element);
+			user = organizationUser.getUser();
+		}
 		if(hprNumber == null){
 			String hpr = null;
 			if (user.getPerson() != null) {
@@ -242,7 +258,7 @@ public class ProfileController extends HttpControllerPlugin {
 //		result.append("<passwordrepeat></passwordrepeat>");
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		User user = loggedInFunction.loggedInUser();
+		Object user = loggedInFunction.loggedInUser();
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);

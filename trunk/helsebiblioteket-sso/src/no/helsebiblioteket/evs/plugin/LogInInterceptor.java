@@ -30,7 +30,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MemberOrganization organization = this.loggedInFunction.loggedInOrganization();
-		User user = this.loggedInFunction.loggedInUser();
+		Object user = this.loggedInFunction.loggedInUser();
 		if(organization == null && user == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
