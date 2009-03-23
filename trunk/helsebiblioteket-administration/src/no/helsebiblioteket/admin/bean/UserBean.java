@@ -28,6 +28,7 @@ import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
@@ -238,7 +239,13 @@ public class UserBean {
 //		logger.info("userId: " +
 //				requestParams.get("userId"));
 		UserListItem item = (UserListItem) this.usersTable.getRowData();
-    	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
+    	SingleResultUser lookup = this.userService.getUserByUserListItem(item);
+		if (lookup instanceof ValueResultUser) {
+			this.user = ((ValueResultUser)lookup).getValue();
+		} else if (lookup instanceof ValueResultOrganizationUser) {
+			user = ((ValueResultOrganizationUser) lookup).getValue().getUser();
+		}
+    	
 //		this.user.getPerson().setIsStudent(true);
 		return details();
 	}
