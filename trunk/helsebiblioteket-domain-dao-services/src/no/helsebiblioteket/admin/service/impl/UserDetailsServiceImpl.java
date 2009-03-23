@@ -6,6 +6,7 @@ import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.UserService;
 
@@ -36,8 +37,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if(lookup instanceof EmptyResultUser){
 			throw new UsernameNotFoundException("User not found: ");
 		} else {
-			ValueResultUser value = (ValueResultUser)lookup;
-			User user = value.getValue();
+			User user = null;
+			if (lookup instanceof ValueResultUser) {
+				user = ((ValueResultUser)lookup).getValue();
+			} else if (lookup instanceof ValueResultOrganizationUser) {
+				user = ((ValueResultOrganizationUser) lookup).getValue().getUser();
+			}
 			return makeAcegiUser(user);
 		}
 	}
@@ -50,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		GrantedAuthority[] result = new GrantedAuthority[user.getRoleList().length];
 		int i = 0;
 		for (Role role : user.getRoleList()) 
-			result[i++] = new GrantedAuthorityImpl("ROLE_"+role.getKey().toString());
+			result[i++] = new GrantedAuthorityImpl("ROLE_"+role.getKey().getValue());
 		return result;
 	}
 	public void setUserService(UserService userService) {
