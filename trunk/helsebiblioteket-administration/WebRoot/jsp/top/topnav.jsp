@@ -2,8 +2,8 @@
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@page buffer="none"%>
-<f:loadBundle var="msg_global" basename="no.helsebiblioteket.admin.web.jsf.messageresources.messages_global"/> 
-<f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.messages_menu"/>
+<f:loadBundle var="msg_global" basename="no.helsebiblioteket.admin.web.jsf.messageresources.globals"/> 
+<f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.menu"/>
 
 <!-- start: skip link navigation -->
 <f:verbatim>
@@ -14,5 +14,5 @@
 <h:form>
 	<t:commandLink action="welcome"><h:outputText value="#{msg_menu.welcome}" /></t:commandLink>
 	<t:outputText value=" | " />
-	<t:commandLink action="#{headerBean.actionLogOut}"><h:outputText value="#{msg_global.logout}" /></t:commandLink>
+	<t:commandLink action="logout"><h:outputText value="#{msg_global.logout}" /></t:commandLink>
 </h:form>
