@@ -140,17 +140,18 @@
             <classpath refid="master-classpath"/>
 		</javac>
 
-		<jar compress="false" basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}" />
+		<jar compress="false" basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}_tmp" />
 		<!-- 
 		-  deploying exploded, not jared
 		-  crating aar-file, then unziping the file.
-		-  todo: consider a better approach. 
+		-  todo: consider a better approach.
+		--> 
 		<unwar 
 			src="${webservices.target.dir}/${webservices.target.filename}_tmp"
 			dest="${webservices.target.dir}/${webservices.target.filename}"
 		/>
 		<delete file="${webservices.target.dir}/${webservices.target.filename}_tmp" />
-		-->
+		
 	</target>
 	
 	<target name="deploy-service" depends="generate-service">
