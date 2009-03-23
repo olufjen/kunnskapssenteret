@@ -16,14 +16,12 @@
 	      		<supported-locale>no</supported-locale>
     	</locale-config>
     	<message-bundle>
-			no.helsebiblioteket.admin.web.jsf.messageresources
+			no.helsebiblioteket.admin.web.jsf.messageresources.errors
 		</message-bundle>
     	<!--<variable-resolver>org.springframework.web.jsf.SpringBeanVariableResolver</variable-resolver>-->
     	<!--<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>-->
     	<view-handler>org.apache.myfaces.tomahawk.application.jsp.JspTilesViewHandlerImpl</view-handler>
 	</application>
-	
-	
 	<navigation-rule>
 		<navigation-case>
 			<from-action>#{userBean.getUser}</from-action>
