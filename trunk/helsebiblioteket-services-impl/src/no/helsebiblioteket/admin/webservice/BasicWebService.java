@@ -61,7 +61,7 @@ public abstract class BasicWebService implements Serializable {
 //	}
 	
 	@SuppressWarnings("unchecked")
-	public Object invoke2(Boolean useCache, String cacheKey, QName name, Object[] args, Class[] returnTypes) {
+	public Object invokeCached(String cacheKey, QName name, Object[] args, Class[] returnTypes) {
 		 //testCache();
 		try {
 			Object[] response = null;
@@ -95,7 +95,7 @@ public abstract class BasicWebService implements Serializable {
 	//		} catch (AxisFault e) {
 	//				getLogger().error(e);
 	//		}
-	//	} 
+	//	}   
 	//	return result[0];
 	//}
 	
