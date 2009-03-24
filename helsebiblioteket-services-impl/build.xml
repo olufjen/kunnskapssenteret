@@ -25,6 +25,7 @@
 	<property name="webservices.tomcat.lib.dir" value="${webservices.tomcat.dir}/lib" />
 	<property name="webservices.target.dir" value="${project.home.dir}/target"/>
 	<property name="webservices.target.filename" value="${webservices.servicename}-${webservices.serviceversion}.aar"/>
+	<property name="webservices.target.exploded.dir" value="${webservices.target.filename}.exploded"/>
 	
     <path id="master-classpath">
     	<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
@@ -140,29 +141,40 @@
             <classpath refid="master-classpath"/>
 		</javac>
 
-		<jar compress="false" basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}_tmp" />
+		<jar compress="false" basedir="${webservices.classes.dir}" destfile="${webservices.target.dir}/${webservices.target.filename}" />
 		<!-- 
 		-  deploying exploded, not jared
 		-  crating aar-file, then unziping the file.
 		-  todo: consider a better approach.
 		--> 
 		<unwar 
-			src="${webservices.target.dir}/${webservices.target.filename}_tmp"
-			dest="${webservices.target.dir}/${webservices.target.filename}"
+			src="${webservices.target.dir}/${webservices.target.filename}"
+			dest="${webservices.target.dir}/${webservices.target.exploded.dir}"
 		/>
-		<delete file="${webservices.target.dir}/${webservices.target.filename}_tmp" />
+		<!-- TODO: What was this?
+		<delete file="${webservices.target.dir}/${webservices.target.filename}" />
+		-->
 		
 	</target>
 	
-	<target name="deploy-service" depends="generate-service">
-		<!-- copying exploded directory
-				<mkdir dir="${webservices.tomcat.services.dir}/${webservices.target.filename}" />
-		-->
+	<target name="deploy-service-exploded" depends="deploy-other">
+		<mkdir dir="${webservices.tomcat.services.dir}/${webservices.target.exploded.dir}"/>
+		<copy todir="${webservices.tomcat.services.dir}/${webservices.target.exploded.dir}">
+			<fileset dir="${webservices.target.dir}/${webservices.target.exploded.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="deploy-service" depends="deploy-other">
 		<copy todir="${webservices.tomcat.services.dir}">
 			<fileset dir="${webservices.target.dir}">
 				<include name="**/*.aar"/>
 			</fileset>
 		</copy>
+	</target>
+
+		<target name="deploy-other" depends="generate-service">
 		<copy todir="${webservices.tomcat.lib.dir}">
 			<fileset dir="${webservices.target.dir}">
 				<include name="**/*.jar"/>
