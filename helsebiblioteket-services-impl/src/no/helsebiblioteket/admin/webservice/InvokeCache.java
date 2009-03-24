@@ -3,6 +3,8 @@ package no.helsebiblioteket.admin.webservice;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
+import net.sf.ehcache.hibernate.EhCache;
+
 
 public class InvokeCache {
 	private CacheManager cacheManager ;
@@ -42,6 +44,7 @@ public class InvokeCache {
 
 	public void cacheFlush(Cache cache){
 		cache.flush();
+
 	}
 	   
 	public void setCacheManager(CacheManager cacheManager) {
