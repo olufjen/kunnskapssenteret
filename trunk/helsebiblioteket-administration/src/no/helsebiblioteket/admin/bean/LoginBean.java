@@ -34,8 +34,8 @@ import org.springframework.security.ui.AbstractProcessingFilter;
 import org.springframework.stereotype.Component;
 
 
-@Component
-@Scope("request")
+//@Component
+//@Scope("request")
 public class LoginBean {
 	public static final String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
 	
@@ -46,7 +46,6 @@ public class LoginBean {
          .getExternalContext()
          .getSessionMap()
          .get(AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY);
-         
 		 String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "login_unknown_user", "no property found");
          if (ex != null)
          FacesContext.getCurrentInstance().addMessage(null
@@ -76,6 +75,10 @@ public class LoginBean {
 //		this.failed = failed;
 	}
 	public String login() {
+		
+		return "login";
+	
+		/*
 		logger.info("method 'actionLogin' invoked");
 		String username = this.getEmail();
 		String password = this.getPassword();
@@ -86,7 +89,8 @@ public class LoginBean {
 		} else {
 			this.failed = false;
 			return "login_success";
-		}
+		}	
+		*/
 	}
 	
 	public String send() {

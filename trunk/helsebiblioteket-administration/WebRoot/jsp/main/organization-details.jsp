@@ -36,7 +36,7 @@
 			<td><h:outputText value="#{organizationBean.organization.type.name}"/></td>
 		</tr>
 		<tr>
-			<td><b><h:outputText value="#{msg_main.organization_contact_information}"  /></b></td>
+			<td><h5><u><h:outputText value="#{msg_main.organization_contact_information}"  /></u></h5></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -60,7 +60,7 @@
 			<td><h:outputText value="#{organizationBean.organization.contactInformation.telephoneNumber}"/></td>
 		</tr>
 		<tr>
-			<td><b><h:outputText value="#{msg_main.organization_contact_person}"  /></b></td>
+			<td><h5><u><h:outputText value="#{msg_main.organization_contact_person}"  /></u></h5></b></td>
 			<td></td>
 		</tr>
 		<tr>
