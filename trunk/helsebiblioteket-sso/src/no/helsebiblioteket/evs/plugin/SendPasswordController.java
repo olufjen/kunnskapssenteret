@@ -62,7 +62,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
    		}
     	if(success){
     		element.appendChild(document.createElement("success"));
-    		failXML("", document, element, emailError, sent);
+    		failXML(email, document, element, emailError, sent);
     		document.appendChild(element);
         	loggedInFunction.setResult(this.resultSessionVarName, document);
 
