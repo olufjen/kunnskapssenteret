@@ -3,6 +3,6 @@
  <defaultCache maxElementsInMemory="10" eternal="false"
 	timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true" />
   <cache name="invokeCache" maxElementsInMemory="50" eternal="false"
-      overflowToDisk="true" timeToIdleSeconds="0" timeToLiveSeconds="86000" />
+      overflowToDisk="true" timeToIdleSeconds="0" timeToLiveSeconds="3600" />
 </ehcache>
 
