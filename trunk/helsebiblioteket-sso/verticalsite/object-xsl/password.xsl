@@ -76,7 +76,7 @@
             </xsl:when>
             <xsl:when test="$totresult/success">
                 <div class="error_message">
-                    Nytt passord er sendt til din e-postadresse. 
+                    Nytt passord er sendt til din e-postadresse <xsl:value-of select="$totresult/values/email/text()"/>. 
                 </div>
             </xsl:when>
             <xsl:otherwise>Det oppstod en feil.
