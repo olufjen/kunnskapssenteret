@@ -1,7 +1,5 @@
 package no.helsebiblioteket.admin.bean;
 
-import java.util.Locale;
-
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +18,6 @@ public class HeaderBean {
 		if (session != null) {
 			session.invalidate();
 		}
-		return "login";
-	}
+	return "logout";
+	} 
 }
