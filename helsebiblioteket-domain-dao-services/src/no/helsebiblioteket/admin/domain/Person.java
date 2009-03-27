@@ -26,7 +26,14 @@ public class Person {
 		return id + ": " + firstName + " " + lastName;
 	}
 	public String getName() {
-		return this.firstName + " " + lastName;
+		String fName, lName;
+		fName = this.firstName;
+		lName = this.lastName;
+		if(fName == null)
+			fName="";
+		if( lName == null)
+			lName="";
+		return fName + " " + lName;
 	}
 	
 	// GET/SET
