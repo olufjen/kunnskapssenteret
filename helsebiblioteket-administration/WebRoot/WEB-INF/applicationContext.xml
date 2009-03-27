@@ -263,23 +263,24 @@ xmlns="http://www.springframework.org/schema/beans"
 				/welcome.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				/forgotten-password.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				/forgotten-password-sent.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/organizations-overview.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/organization-details.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/organization-edit.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/new-organization.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/new-supplierorganization.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/new-memberorganization.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/users-overview.tiles.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/user-details.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/user-edit.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/edit-enduser.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/edit-administrator.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/user-new.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/new-enduser.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/new-administrator.faces=IS_AUTHENTICATED_ANONYMOUSLY
-				/user.faces=IS_AUTHENTICATED_ANONYMOUSLY 
 				 -->
-				 /welcome.faces=ROLE_administrator
+				/welcome.faces=ROLE_administrator
+				/organizations-overview.faces=ROLE_administrator
+				/organization-details.faces=ROLE_administrator
+				/organization-edit.faces=ROLE_administrator
+				/new-organization.faces=ROLE_administrator
+				/new-supplierorganization.faces=ROLE_administrator
+				/new-memberorganization.faces=ROLE_administrator
+				/users-overview.tiles.faces=ROLE_administrator
+				/user-details.faces=ROLE_administrator
+				/user-edit.faces=ROLE_administrator
+				/edit-enduser.faces=ROLE_administrator
+				/edit-administrator.faces=ROLE_administrator
+				/user-new.faces=ROLE_administrator
+				/new-enduser.faces=ROLE_administrator
+				/new-administrator.faces=ROLE_administrator
+				/user.faces=ROLE_administrator
+				/users-overview.faces=ROLE_administrator
 			</value>
 		</property>
 	</bean>
