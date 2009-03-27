@@ -14,6 +14,41 @@
 <f:subview id="canShowUser" rendered="#{userBean.canShowUser}">
 	<table>
 		<tr>
+			<td><h:outputText value="#{msg_main.user_details_username}"  /></td>
+			<td><h:outputText value="#{userBean.user.username}"/></td>
+
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.user_details_first_name}"  /></td>
+			<td><h:outputText value="#{userBean.user.person.firstName}"/></td>
+
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.user_details_last_name}"  /></td>
+			<td><h:outputText value="#{userBean.user.person.lastName}"/></td>
+
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.user_details_email}"  /></td>
+			<td><h:outputText value="#{userBean.user.person.contactInformation.email}"/></td>
+			
+		</tr>
+		<tr>
+			
+			<td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
+			<td><h:outputText value="#{userBean.user.roleList[0].name}"/></td>
+
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.user_details_position}"  /></td>
+			<td><h:outputText value="#{userBean.user.person.position.name}"/></td>
+		</tr>
+		<tr>
+			
+			<td><h:outputText value="#{msg_main.user_details_employer}"  /></td>
+			<td><h:outputText value="#{userBean.user.person.employer}"/></td>
+		</tr>
+		<tr>
 			<td><h:outputText value="#{msg_main.user_details_health_personnel_numer}"  /></td>
 			<td><h:outputText value="#{userBean.user.person.hprNumber}"/></td>
 		</tr>
@@ -22,31 +57,9 @@
 			<td><h:outputText value="#{userBean.user.person.studentNumber}"/></td>
 		</tr>
 		<tr>
-			<td><h:outputText value="#{msg_main.user_details_is_student}"  /></td>
-			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}" id="isStudent" 
-					layout="pageDirection" disabled="true" binding="#{userBean.isStudentSelectOne}">
-				<f:selectItems value="#{userBean.availableIsStudent}"/>
-        		</h:selectOneRadio></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_first_name}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.firstName}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_last_name}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.lastName}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_employer}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.employer}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_position}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.position.name}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_email}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.contactInformation.email}"/></td>
+			<td><h:outputText value="#{msg_main.user_details_survey}"  /></td>
+			<td><h:selectBooleanCheckbox id="participateSurvey" disabled="true"
+					value="#{userBean.user.person.profile.participateSurvey}"/></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_newsletter}"  /></td>
@@ -54,17 +67,13 @@
 					value="#{userBean.user.person.profile.receiveNewsletter}"/></td>
 		</tr>
 		<tr>
-			<td><h:outputText value="#{msg_main.user_details_survey}"  /></td>
-			<td><h:selectBooleanCheckbox id="participateSurvey" disabled="true"
-					value="#{userBean.user.person.profile.participateSurvey}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_username}"  /></td>
-			<td><h:outputText value="#{userBean.user.username}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
-			<td><h:outputText value="#{userBean.user.roleList[0].name}"/></td>
+			
+			<td><h:outputText value="#{msg_main.user_details_is_student}"  /></td>
+			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}" id="isStudent" 
+					layout="pageDirection" disabled="true" binding="#{userBean.isStudentSelectOne}">
+				<f:selectItems value="#{userBean.availableIsStudent}"/>
+        		</h:selectOneRadio></td>
+
 		</tr>
 		<tr>
 			<td></td>
