@@ -286,19 +286,29 @@ public class UserServiceImpl implements UserService {
 	public SingleResultUser insertUser(User user) {
 		OrganizationUser organizationUser = new OrganizationUser();
 		organizationUser.setUser(user);
-
-		this.userDao.insertUser(organizationUser);
-
-		this.insertUserValues(user);
-		
-		return new ValueResultUser(user);
+		return createOrganizationUser(organizationUser);
 	}
 	@Override
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser) {
-		this.userDao.insertUser(organizationUser);
-		this.insertUserValues(organizationUser.getUser());
+		createOrganizationUser(organizationUser);
 		return null;
 	}
+	
+	private SingleResultUser createOrganizationUser(OrganizationUser organizationUser) {
+		this.contactInformationDao.insertContactInformation(organizationUser.getUser().getPerson().getContactInformation());
+		this.profileDao.insertProfile(organizationUser.getUser().getPerson().getProfile());
+		this.personDao.insertPerson(organizationUser.getUser().getPerson());
+		
+		this.userDao.insertUser(organizationUser);
+		
+		List<UserRoleLine> userRoleList = translateRoles(organizationUser.getUser().getId(), organizationUser.getUser().getRoleList());
+		for (UserRoleLine userRole : userRoleList) {
+			this.userRoleDao.insertUserRole(userRole);
+		}
+
+		return new ValueResultUser(organizationUser.getUser());
+	}
+	
 	public void insertUserValues(User user) {
 		// TODO: This should be removed, because it is only written to get
 		//       around an error(?)in Axis2.
