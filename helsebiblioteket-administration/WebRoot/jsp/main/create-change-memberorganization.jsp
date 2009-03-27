@@ -2,19 +2,20 @@
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@page buffer="none"%>
+
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/>
 <f:loadBundle var="msg_headings" basename="no.helsebiblioteket.admin.web.jsf.messageresources.headings"/> 
 
 <h:inputHidden id="init" value="#{createAndChangeMemberOrganizationBean.init}"></h:inputHidden>
 
-<f:verbatim><h2></f:verbatim>
+<f:verbatim></f:verbatim>
 	<h:outputText value="#{msg_headings.member_organization_new}"
 		rendered="#{createAndChangeMemberOrganizationBean.isNew}" />
 	<h:outputText value="#{msg_headings.member_organization_change}"
 		rendered="#{createAndChangeMemberOrganizationBean.notNew}" />
 <f:verbatim></h2></f:verbatim>
 <hr />
-<h:form>
+<h:form id="create-and-change-member-organization">
 	<table>
 		<tr>
 			<td>
@@ -146,7 +147,6 @@
 				</h:inputText>
 			</td>
 		</tr>
-		
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.contact_person}" /></h5></td>
 		</tr>
@@ -210,24 +210,37 @@
 			<td>
 				<h:outputText value="#{msg_main.ip_range}" />
 			</td>
-			<td>
-				<h:inputText 
-					value="#{createAndChangeMemberOrganizationBean.ipAddressFrom}"
-					id="ipAddressFrom" 
-					required="false"
-					binding="#{createAndChangeMemberOrganizationBean.ipAddressFromUIInput}"
-					>
-				</h:inputText>
-				<h:outputText value=" - " />
-				<h:inputText 
-					value="#{createAndChangeMemberOrganizationBean.ipAddressTo}"
-					id="ipAddressTo" 
-					required="false"
-					binding="#{createAndChangeMemberOrganizationBean.ipAddressToUIInput}"
-					>
-				</h:inputText>
-				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeMemberOrganizationBean.actionAddIpRange}" actionListener="#{createAndChangeMemberOrganizationBean.addIpRangeActionListener }" />
-				<br /><h:message for="ipAddressTo" styleClass="error" />
+			<td width="420px" >
+				<table    border="0">
+					<tr>
+						<td >
+							<h:inputText 
+								value="#{createAndChangeMemberOrganizationBean.ipAddressFrom}"
+								id="ipAddressFrom" 
+								required="true"
+								binding="#{createAndChangeMemberOrganizationBean.ipAddressFromUIInput}"
+								>
+							</h:inputText>
+							<h:outputText value=" - " />
+							<h:inputText 
+								value="#{createAndChangeMemberOrganizationBean.ipAddressTo}"
+								id="ipAddressTo" 
+								required="true"
+								binding="#{createAndChangeMemberOrganizationBean.ipAddressToUIInput}"
+								>
+							</h:inputText>
+							<h:commandLink  immediate="true" value="#{msg_main.add}" action="#{createAndChangeMemberOrganizationBean.actionAddIpRange}" actionListener="#{createAndChangeMemberOrganizationBean.addIpRangeActionListener }" />
+						</td>
+					</tr>
+					<tr>
+						<td >
+							<h:message for="ipAddressFrom" styleClass="error" />
+							<h:message for="ipAddressTo" styleClass="error" />
+						</td>
+				
+				  </tr>
+					
+				</table>
 			</td>
 		</tr>
 		<tr>
@@ -238,12 +251,13 @@
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.ipAddressSingle}"
 					id="ipAddressSingle" 
-					required="false"
+					required="true"
 					binding="#{createAndChangeMemberOrganizationBean.ipAddressSingleUIInput}"
 					>
+					<%-- <f:validator validatorId="checkvalidip" /> --%>
 				</h:inputText>
 				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeMemberOrganizationBean.actionAddSingleIp}" />
-				<br /><h:message for="ipAddressSingle" styleClass="error" />
+				<br /> <h:message for="ipAddressSingle" styleClass="error" />
 			</td>
 		</tr>
 		<tr>
@@ -285,7 +299,6 @@
 				</t:dataTable>
 			</td>
 		</tr>
-		
 		<tr>
 			<td align="right">
 				<h:commandButton value="#{msg_main.cancel}"
