@@ -3,11 +3,18 @@ package no.helsebiblioteket.admin.bean;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.event.ActionEvent;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+//import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
+
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
@@ -23,6 +30,8 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.validator.IpAddressValidator;
+import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -176,19 +185,38 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		if (this.ipRangeList == null) {
 			this.ipRangeList = new ArrayList<IpAddressRange>();
 		}
-		this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressSingle()), null));
+		if(IpAddressValidator.getInstance().isValidIPAddress(ipAddressSingle)) {
+			this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressSingle()), null));
+		}
+		else{
+			 String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+			 String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "ip_address_valid", "Ip address in not valid.");
+			 FacesContext.getCurrentInstance().addMessage("main:create-and-change-member-organization:ipAddressSingle" , new FacesMessage(FacesMessage.SEVERITY_ERROR,messageValue,null));
+			 
+		}
 	}
-	
 	public void actionAddIpRange() {
 		logger.debug("Method 'actionAddIpRange' invoked");
+		
 		setIpAddressFrom((getIpAddressFromUIInput().getSubmittedValue() != null) ? getIpAddressFromUIInput().getSubmittedValue().toString() : null);
 		setIpAddressTo((getIpAddressToUIInput().getSubmittedValue() != null) ? getIpAddressToUIInput().getSubmittedValue().toString() : null);
 		if (this.ipRangeList == null) {
 			this.ipRangeList = new ArrayList<IpAddressRange>();
 		}
-		this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
+		if(!IpAddressValidator.getInstance().isValidIPAddress(ipAddressFrom)){
+			 String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+			 String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "ip_address_valid", "Ip address in not valid.");
+			 FacesContext.getCurrentInstance().addMessage("main:create-and-change-member-organization:ipAddressFrom" , new FacesMessage(FacesMessage.SEVERITY_ERROR,messageValue,null));
+		}else if(!IpAddressValidator.getInstance().isValidIPAddress(ipAddressTo)){
+			 String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+			 String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "ip_address_valid", "Ip address in not valid.");
+			 FacesContext.getCurrentInstance().addMessage("main:create-and-change-member-organization:ipAddressTo" , new FacesMessage(FacesMessage.SEVERITY_ERROR,messageValue,null));
+		}else
+			this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
+		
+		
 	}
-	
+
 	public void actionDeleteIpRange() {
 		logger.debug("Method 'actionDeleteIpRange' invoked");
 		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
