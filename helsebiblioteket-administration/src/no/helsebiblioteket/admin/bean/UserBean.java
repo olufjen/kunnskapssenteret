@@ -409,7 +409,9 @@ public class UserBean {
 		return selectedIsStudent;
 	}
 	public void setUserService(UserService userService) { this.userService = userService; }
-	public void setOrganizationService(OrganizationService organizationService) { this.organizationService = organizationService; }
+	public void setOrganizationService(OrganizationService organizationService) { 
+		this.organizationService = organizationService; 
+	}
 	public UIData getUsersTable() { return usersTable; }
 	public void setUsersTable(UIData usersTable) { this.usersTable = usersTable; }
 	public UISelectMany getRolesManyCheckbox() { return rolesManyCheckbox; }
