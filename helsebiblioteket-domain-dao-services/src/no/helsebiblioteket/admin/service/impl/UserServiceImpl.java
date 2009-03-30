@@ -286,12 +286,19 @@ public class UserServiceImpl implements UserService {
 	public SingleResultUser insertUser(User user) {
 		OrganizationUser organizationUser = new OrganizationUser();
 		organizationUser.setUser(user);
+		// TODO: Not really do this
+		if(organizationUser.getUser().getRoleList() == null){
+			organizationUser.getUser().setRoleList(new Role[0]);
+		}
 		return createOrganizationUser(organizationUser);
 	}
 	@Override
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser) {
-		createOrganizationUser(organizationUser);
-		return null;
+		// TODO: Not really do this
+		if(organizationUser.getUser().getRoleList() == null){
+			organizationUser.getUser().setRoleList(new Role[0]);
+		}
+		return createOrganizationUser(organizationUser);
 	}
 	
 	private SingleResultUser createOrganizationUser(OrganizationUser organizationUser) {
