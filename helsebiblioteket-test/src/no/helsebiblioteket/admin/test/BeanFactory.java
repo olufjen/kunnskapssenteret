@@ -77,7 +77,7 @@ public class BeanFactory {
 		//       And replace these values in the list 'propertyConfigurer.locations'
 	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/application.properties</value>
 	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/jdbc.properties</value>
-		res = new FileSystemResource(".\\desc\\applicationContext.xml");
+		res = new FileSystemResource("./desc/applicationContext.xml");
 //		res = new FileSystemResource("..\\helsebiblioteket-administration-web\\WebRoot\\WEB-INF\\applicationContext.xml");
 		factory = new XmlBeanFactory(res);
 	}

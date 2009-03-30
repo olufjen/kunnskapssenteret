@@ -73,7 +73,7 @@ public class AccessServiceTests {
 		organizationUser.setUser(user);
 		organizationUser.setOrganization(memberOrganization.getOrganization());
 		user.setUsername("username_" + randomValue);
-		user = ((ValueResultUser)this.beanFactory.getUserService().insertUser(user)).getValue();
+		user = ((ValueResultUser)this.beanFactory.getUserService().insertOrganizationUser(organizationUser)).getValue();
 
 		AccessService accessService = this.beanFactory.getAccessService();
 

@@ -71,7 +71,7 @@ public class ActionServiceTests {
 		memberOrganization = ((ValueResultMemberOrganization)beanFactory.getOrganizationService().insertMemberOrganization(memberOrganization)).getValue();
 		supplierOrganization = ((ValueResultSupplierOrganization)beanFactory.getOrganizationService().insertSupplierOrganization(supplierOrganization)).getValue();
 		organizationUser.setOrganization(memberOrganization.getOrganization());
-		user = ((ValueResultUser)beanFactory.getUserService().insertUser(user)).getValue();
+		user = ((ValueResultUser)beanFactory.getUserService().insertOrganizationUser(organizationUser)).getValue();
 		resource = ((ValueResultSupplierSourceResource)beanFactory.getAccessService().insertSupplierSourceResource(resource)).getValue();
 		
 		// Action service
