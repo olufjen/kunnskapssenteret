@@ -169,4 +169,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public void setUserByUserListItemName(QName userByUserListItemName) {
 		this.userByUserListItemName = userByUserListItemName;
 	}
+	public void setInsertOrganizationUserName(QName insertOrganizationUserName) {
+		this.insertOrganizationUserName = insertOrganizationUserName;
+	}
 }
