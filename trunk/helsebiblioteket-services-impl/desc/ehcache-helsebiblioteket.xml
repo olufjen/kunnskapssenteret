@@ -5,4 +5,3 @@
   <cache name="invokeCache" maxElementsInMemory="50" eternal="false"
       overflowToDisk="true" timeToIdleSeconds="0" timeToLiveSeconds="86000" />
 </ehcache>
-
