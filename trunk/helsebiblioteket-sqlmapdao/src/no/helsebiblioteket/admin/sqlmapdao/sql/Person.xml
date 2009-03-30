@@ -47,7 +47,7 @@
 			person_id = #id# and last_changed = #lastChanged#;
 	</update>
 	<delete id="deletePerson" parameterClass="person">
-  		delete from tbl_person where person_id = #id#
+  		delete from tbl_person where person_id = #id# and last_changed = #lastChanged#;
     </delete>
 	<select id="getPersonById" cacheModel="PersonCache" resultMap="getPersonResultMap" parameterClass="integer">
 		select
