@@ -10,23 +10,23 @@
 <br/>
 
 <h:form>
-  <table>
+  <table  >
     <tr>
-      <td>
+      <td >
         <h:outputText value="#{msg_main.firstname}" />
       </td>
-      <td>
+      <td >
         <h:inputText value="#{newEndUserBean.firstname}"
       	  id="firstname" required="true" size="12" />
       </td>
-      <td align="right" >
+      <td align="right"  >
       	<h:outputText value="#{msg_main.lastname}" />
       </td>
       <td align="right" >
         <h:inputText value="#{newEndUserBean.lastname}"
       	  id="lastname" required="true" size="12" />
       </td>
-      <td>
+      <td >
 		<h:message for="firstname" styleClass="RED"/>
 		<h:message for="lastname" styleClass="RED"/>
       </td>
@@ -69,6 +69,7 @@
       <td colspan="2">
         <h:selectBooleanCheckbox id="questionnaire" value="#{newEndUserBean.questionnaire}" />
         <h:outputText value="#{msg_main.questionnaire}" />
+      </td>
       <td>
 		<h:message for="newsletter" styleClass="RED"/>
 		<h:message for="questionnaire" styleClass="RED"/>
@@ -81,13 +82,25 @@
       </td>
       <td colspan="3">
         <h:inputText value="#{newEndUserBean.emailaddress}"
-      	  id="emailaddress" required="true" size="50"/>
+      	  id="emailaddress" required="true" size="50" validator="#{newEndUserBean.validateEmail}" />
       </td>
       <td>
 		<h:message for="emailaddress" styleClass="RED"/>
       </td>
     </tr>
 
+	<tr>
+      <td>
+        <h:outputText value="#{msg_main.retypeemailaddress}" />
+      </td>
+      <td colspan="3">
+        <h:inputText value="#{newEndUserBean.retypeemailaddress}"
+      	  id="retypeemailaddress" required="true" size="50"  validator="#{newEndUserBean.retypeValidate}" />
+      </td>
+      <td width="150px">
+		<h:message  for="retypeemailaddress" styleClass="RED"/>
+      </td>
+    </tr>
     <tr>
       <td>
         <h:outputText value="#{msg_main.username}" />
