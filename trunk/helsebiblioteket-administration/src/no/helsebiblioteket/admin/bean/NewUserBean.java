@@ -1,5 +1,14 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
@@ -15,6 +24,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.validator.EmailValidator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,6 +34,7 @@ public class NewUserBean {
     protected String firstname;
     protected String lastname;
     protected String emailaddress;
+    protected String retypeemailaddress;
     protected String username;
     protected String password;
     
@@ -82,11 +93,45 @@ public class NewUserBean {
     	this.firstname = "";
     	this.lastname = "";
     	this.emailaddress = "";
+    	this.retypeemailaddress="";
     	this.username = "";
     	this.password = "";
 		return this.userBean.details();
 	}
 
+    public void retypeValidate(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
+		String retypeemail = (String)newValue;
+		UIInput emailComponent = (UIInput)component;
+		String msg = "email_not_match";
+		if (!retypeemail.equals(this.emailaddress) ) {
+			emailComponent.setValid(false);
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			FacesMessage message = new FacesMessage(bundle.getString(msg));
+			facesContext.addMessage(component.getClientId(facesContext), message);
+			throw new ValidatorException(message);
+		}
+	}
+	
+public void validateEmail(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
+		
+		String email = (String)newValue;
+		this.setEmailaddress(email) ;
+		UIInput emailComponent = (UIInput)component;
+		this.logger.debug("email: " + email);
+		String msg = "";
+		boolean valid = true;
+		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) { msg = "email_not_valid"; valid = false; }
+		if ( ! valid) {
+			emailComponent.setValid(false);
+			// TODO: Set with Spring
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			FacesMessage message = new FacesMessage(bundle.getString(msg));
+			facesContext.addMessage(component.getClientId(facesContext), message);
+			throw new ValidatorException(message);
+		}
+	}
+	
+    
 	public String getFirstname() {
 		return firstname;
 	}
@@ -104,6 +149,13 @@ public class NewUserBean {
 	}
 	public void setEmailaddress(String emailaddress) {
 		this.emailaddress = emailaddress;
+	}
+	
+	public String getRetypeemailaddress() {
+		return retypeemailaddress;
+	}
+	public void setRetypeemailaddress(String retypeemailaddress) {
+		this.retypeemailaddress = retypeemailaddress;
 	}
 	public String getUsername() {
 		return username;
