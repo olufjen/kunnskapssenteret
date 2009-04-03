@@ -12,7 +12,7 @@
       <td> <h:outputText value="#{msg_main.user_overview_write_username_etc}" /> </td>
       <td> <h:inputText value="#{userBean.searchinput}" id="searchinput" size="30" /> </td>
     </tr>
-    <tr>
+	<tr>
       <td colspan="2"> <h:message for="searchinput" styleClass="RED"/> </td>
     </tr>
     <tr>
