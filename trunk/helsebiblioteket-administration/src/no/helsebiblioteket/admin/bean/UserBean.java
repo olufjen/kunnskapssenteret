@@ -111,7 +111,7 @@ public class UserBean {
     public void enableDisableFields(){
     	// TODO: Is this done correctly?
     	this.initSelectedIsStudent();
-    	if(this.mainRole().getKey().equals(roleKeyAdministrator)){
+    	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
         	this.showHprNumber = false;
         	this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = false;
@@ -124,7 +124,7 @@ public class UserBean {
     		this.user.getPerson().setPosition(new Position());
     		this.showProfile = false;
     		this.user.getPerson().setProfile(new Profile());
-    	} else if(this.mainRole().getKey().equals(roleKeyEmployee)){
+    	} else if(this.mainRole().getKey().getValue().equals(roleKeyEmployee)){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = false;
@@ -135,7 +135,7 @@ public class UserBean {
         	this.showPositionMenu = false;
     		this.user.getPerson().setPosition(new Position());
     		this.showProfile = true;
-    	} else if(this.mainRole().getKey().equals(roleKeyHealthWorker)){
+    	} else if(this.mainRole().getKey().getValue().equals(roleKeyHealthWorker)){
     		this.showHprNumber = true;
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber(null);
@@ -144,7 +144,7 @@ public class UserBean {
         	this.showPositionText = false;
         	this.showPositionMenu = true;
     		this.showProfile = true;
-    	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
+    	} else if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber(null);
         	this.showEmployerNumber = true;
