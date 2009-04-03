@@ -1,11 +1,19 @@
 package no.helsebiblioteket.admin.bean;
 
 
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 import org.apache.commons.logging.Log;
@@ -64,6 +72,30 @@ public class LoginBean {
 	public String actionForgottenPassword() {
 		return "goto_forgotten";
 	}
+	
+public void validateEmail(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
+		
+		// TODO: No longer user email.
+		// Check length?
+		//if(true) return;
+		
+		String email = (String)newValue;
+		UIInput emailComponent = (UIInput)component;
+		this.logger.debug("email: " + email);
+		String msg = "";
+		boolean valid = true;
+//		if(email.length() == 0) { mes = "Email address is required."; valid = false; }
+		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) { msg = "email_not_valid"; valid = false; }
+		if ( ! valid) {
+			emailComponent.setValid(false);
+			// TODO: Set with Spring
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			FacesMessage message = new FacesMessage(bundle.getString(msg));
+			facesContext.addMessage(component.getClientId(facesContext), message);
+			throw new ValidatorException(message);
+		}
+	}
+	
 	
 	public String getEmail() {
 		return email;
