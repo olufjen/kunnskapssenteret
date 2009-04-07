@@ -1,6 +1,14 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+
 import org.apache.myfaces.component.html.ext.HtmlDataTable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +25,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.validator.EmailValidator;
 
 /**
  * 
@@ -39,6 +48,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	
 
 	public CreateAndChangeSupplierOrganizationBean() {
+		
 	}
 	
 	public UIInput getSourceNameUIInput() {
@@ -85,17 +95,16 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	public void setSupplierSourceListHtmlDataTable(HtmlDataTable supplierSourceListHtmlDataTable) {
 		this.supplierSourceListHtmlDataTable = supplierSourceListHtmlDataTable;
 	}
-
+	
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
-		
-		ContactInformation contactInformationOrganization;
+		ContactInformation contactInformationOrganization ;
 		Person contactPerson;
 		ContactInformation contactInformationPerson;
 		Profile contactPersonProfile;
 		if(this.isNew){
-			contactInformationOrganization = new ContactInformation();
-			this.supplierOrganization.getOrganization().setContactInformation(contactInformationOrganization);
+			//contactInformationOrganization = new ContactInformation();
+			//this.supplierOrganization.getOrganization().setContactInformation(contactInformationOrganization);
 
 			contactPerson = new Person();
 			OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
@@ -163,6 +172,24 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		return this.organizationBean.actionDetailsSingle();
 	}
 
+	public void validateEmail(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
+
+		String email = (String)newValue;
+		UIInput emailComponent = (UIInput)component;
+		this.logger.debug("email: " + email);
+		String msg = "";
+		boolean valid = true;
+		//if(email.length() == 0) { mes = "Email address is required."; valid = false; }
+		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) { msg = "email_not_valid"; valid = false; }
+		if ( ! valid) {
+			emailComponent.setValid(false);
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			FacesMessage message = new FacesMessage(bundle.getString(msg));
+			facesContext.addMessage(component.getClientId(facesContext), message);
+			throw new ValidatorException(message);
+		}
+	}
+	
 	private void initOrganization() {
 		if ( ! this.organizationBean.getIsNew()) {
 			this.supplierOrganization = this.organizationBean.getSupplierOrganization();
@@ -179,5 +206,6 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.setIsNew(this.organizationBean.getIsNew());
 		this.setNotNew( ! this.organizationBean.getIsNew());
 		this.organization = this.supplierOrganization.getOrganization();
+		
 	}
 }
