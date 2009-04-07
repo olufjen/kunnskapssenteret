@@ -88,6 +88,38 @@
 		</tr>
 		
 		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.organization_contact_information}" /></h5></td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.organization_email}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.contactInformation.email}"
+					id="organizationEmail" 
+					required="true" validator="#{createAndChangeSupplierOrganizationBean.validateEmail}"
+					>
+				</h:inputText>
+				<h:message for="organizationEmail" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.organization_telephone_number}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.contactInformation.telephoneNumber}"
+					id="organizationTelephone" 
+					required="true"
+					>
+				</h:inputText>
+				<h:message for="organizationTelephone" styleClass="error"/>
+			</td>
+		</tr>
+	
+		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.sources}" /></h5></td>
 		</tr>
 		<tr>
@@ -99,8 +131,7 @@
 					value="#{createAndChangeSupplierOrganizationBean.sourceName}"
 					id="sourceName" 
 					required="false"
-					binding="#{createAndChangeSupplierOrganizationBean.sourceNameUIInput}"
-					>
+					binding="#{createAndChangeSupplierOrganizationBean.sourceNameUIInput}">
 				</h:inputText>
 				<h:outputText value=" - " />
 				<h:inputText 
