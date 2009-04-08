@@ -10,7 +10,7 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class AdminBean {
-	private static final String organizationTypesBundle = "no.helsebiblioteket.admin.web.jsf.messageresources.domain_organization_type";
+	private static final String organizationTypesBundle = "no.helsebiblioteket.admin.web.jsf.messageresources.domain_organizationtypekey";
 
 	private OrganizationService organizationService;
 	private List<SelectItem> organizationTypeSelectItemList;
