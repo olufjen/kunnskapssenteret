@@ -1,5 +1,8 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.faces.component.html.HtmlDataTable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,8 +20,10 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganizat
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class OrganizationBean {
+	private static final String bundleDomainOrganizationTypeKey = "no.helsebiblioteket.admin.web.jsf.messageresources.domain_organizationtypekey";
 	protected final Log logger = LogFactory.getLog(getClass());
 	private OrganizationService organizationService;
 	private String searchinput;
@@ -190,5 +195,9 @@ public class OrganizationBean {
 	}
 	public void setIsNew(Boolean isNew) {
 		this.isNew = isNew;
+	}
+	
+	public String getOrganizationTypeName() {
+		return MessageResourceReader.getMessageResourceString(bundleDomainOrganizationTypeKey, organization.getType().getKey().getValue());
 	}
 }

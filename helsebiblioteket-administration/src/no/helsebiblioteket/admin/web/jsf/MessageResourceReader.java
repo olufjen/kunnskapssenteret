@@ -22,8 +22,18 @@ public class MessageResourceReader {
 		return loader;
 	}
 	
+	
 	/*
-	 * Looks up and returns a faces message resource value based on a key and a bundle name. Returns a fallback value if value for key is not found
+	 * Looks up and returns a faces message resource value based on a key and a bundle name. 
+	 * Returns a "fallback value" same as key if value for key is not found
+	 */
+	public static String getMessageResourceString(String bundleName, String key) {
+		return getMessageResourceString(bundleName, key, key);
+	}
+	
+	/*
+	 * Looks up and returns a faces message resource value based on a key and a bundle name. 
+	 * Returns a "fallback value" if value for key is not found
 	 */
 	public static String getMessageResourceString(String bundleName, String key, String fallBackValue) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
