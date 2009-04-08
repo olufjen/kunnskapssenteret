@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.organization_type}"  /></td>
-			<td><h:outputText value="#{organizationBean.organization.type.name}"/></td>
+			<td><h:outputText value="#{organizationBean.organizationTypeName}" /></td>
 		</tr>
 		<tr>
 			<td><h5><u><h:outputText value="#{msg_main.organization_contact_information}"  /></u></h5></td>
