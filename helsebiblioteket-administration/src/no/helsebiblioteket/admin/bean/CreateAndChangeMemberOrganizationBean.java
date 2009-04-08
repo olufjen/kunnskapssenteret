@@ -286,6 +286,10 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			this.memberOrganization.getOrganization().setNameShortEnglish("");
 			this.memberOrganization.getOrganization().setNameShortNorwegian("");
 			this.memberOrganization.setIpAddressRangeList(new IpAddressRange[0]);
+			this.ipAddressFrom = "";
+			this.ipAddressTo="";
+			this.ipAddressSingle="";
+				
 		}
 		this.setIsNew(this.organizationBean.getIsNew());
 		this.setNotNew( ! this.organizationBean.getIsNew());
