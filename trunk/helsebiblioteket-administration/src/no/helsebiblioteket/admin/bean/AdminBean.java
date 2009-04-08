@@ -10,24 +10,23 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class AdminBean {
-	private static final String organizationTypesBundle = "no.helsebiblioteket.admin.web.jsf.messageresources.domain_organizationtypekey";
+	private static final String organizationTypeKeyBundle = "no.helsebiblioteket.admin.web.jsf.messageresources.domain_organizationtypekey";
 
 	private OrganizationService organizationService;
-	private List<SelectItem> organizationTypeSelectItemList;
+	private OrganizationType[] organizationTypeList;
 	
 	
 	public List<SelectItem> getOrganizationTypeSelectItemList() {
-		if (this.organizationTypeSelectItemList == null) {
-			organizationTypeSelectItemList = new ArrayList<SelectItem>();
-			OrganizationType[] organizationTypeList = this.organizationService.getOrganizationTypeListAll("").getList();
-			SelectItem selectItem = null;
-			for (OrganizationType orgType: organizationTypeList) {
-				selectItem = new SelectItem(orgType.getKey().getValue(),
-						MessageResourceReader.getMessageResourceString(organizationTypesBundle, orgType.getKey().getValue(), orgType.getName()));
-				organizationTypeSelectItemList.add(selectItem);
-			}
+		List<SelectItem> organizationTypeSelectItemList = new ArrayList<SelectItem>();
+		if (this.organizationTypeList == null) {
+			organizationTypeList = this.organizationService.getOrganizationTypeListAll("").getList();
 		}
-		return this.organizationTypeSelectItemList;
+		SelectItem selectItem = null;
+		for (OrganizationType orgType: organizationTypeList) {
+			selectItem = new SelectItem(orgType.getKey().getValue(), MessageResourceReader.getMessageResourceString(organizationTypeKeyBundle, orgType.getKey().getValue(), orgType.getName()));
+			organizationTypeSelectItemList.add(selectItem);
+		}
+		return organizationTypeSelectItemList;
 	}
 
 
