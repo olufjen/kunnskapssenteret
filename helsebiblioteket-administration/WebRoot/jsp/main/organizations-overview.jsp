@@ -78,5 +78,26 @@
 			</t:commandLink>
     	</t:treeColumn>
 	</t:tree>
+	
+	<t:div rendered="#{organizationBean.showMore}">
+		<center>
+			<t:outputText value="#{msg_main.moreResults}" />
+			<br/>
+			<t:commandLink rendered="#{organizationBean.showMoreLeft}"
+				immediate="true"
+				action="#{organizationBean.actionBackward}"
+				value="#{msg_main.moreLeft}" />
+			<t:outputText rendered="#{ ! organizationBean.showMoreLeft}"
+				value="#{msg_main.moreLeftNot}" />
 
+			<t:outputText value="#{msg_main.moreResultsSplitter}" />
+
+			<t:commandLink rendered="#{organizationBean.showMoreRight}"
+				immediate="true"
+				action="#{organizationBean.actionForward}"
+				value="#{msg_main.moreRight}" />
+			<t:outputText rendered="#{ ! organizationBean.showMoreRight}"
+				value="#{msg_main.moreRightNot}" />
+		</center>
+	</t:div>
 </h:form>

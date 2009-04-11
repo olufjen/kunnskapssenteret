@@ -359,6 +359,18 @@
 		</managed-property>
 	</managed-bean>
 	
+	<managed-bean>
+    	<description>Backingbean related to organization types</description>
+        <display-name>organizationTypeBean</display-name>
+        <managed-bean-name>organizationTypeBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.OrganizationTypeBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+            <property-name>organizationService</property-name>
+            <value>#{organizationService}</value>
+        </managed-property>
+	</managed-bean>
+	
 	<!-- <managed-bean>
     	<description>Backingbean related to "xxxx"</description>
         <display-name>xxxx</display-name>
