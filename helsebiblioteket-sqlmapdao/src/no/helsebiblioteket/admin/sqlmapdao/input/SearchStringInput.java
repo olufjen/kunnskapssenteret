@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.sqlmapdao.input;
 
 public class SearchStringInput {
 	private String value;
+	private String otherValue;
 	private Integer number;
 	private Integer fromId;
 	private Integer toId;
@@ -12,7 +13,15 @@ public class SearchStringInput {
 		this.toId = toId;
 	}
 	public SearchStringInput(String value, Integer fromId, Integer toId) {
-		this(value, null, fromId, toId);
+		this(value, (Integer)null, fromId, toId);
+	}
+	public SearchStringInput(String value, String otherValue, Integer fromId, Integer toId) {
+		this(value, (Integer)null, fromId, toId);
+		this.otherValue = otherValue;
+	}
+	public SearchStringInput(String value, String otherValue) {
+		this.value = value;
+		this.otherValue = otherValue;
 	}
 	public SearchStringInput() { }
 	public String getValue() {
@@ -38,5 +47,11 @@ public class SearchStringInput {
 	}
 	public void setNumber(Integer number) {
 		this.number = number;
+	}
+	public String getOtherValue() {
+		return otherValue;
+	}
+	public void setOtherValue(String otherValue) {
+		this.otherValue = otherValue;
 	}
 }

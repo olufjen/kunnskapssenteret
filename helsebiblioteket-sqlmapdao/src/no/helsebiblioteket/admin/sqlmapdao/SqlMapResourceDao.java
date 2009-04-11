@@ -30,4 +30,9 @@ public class SqlMapResourceDao extends SqlMapClientDaoSupport implements Resourc
 	public List<SupplierSourceResource> getResourceByOrganization(SupplierOrganization supplierOrganization) {
 		return getSqlMapClientTemplate().queryForList("getSupplierSourceResourceByOrganizationId", supplierOrganization.getOrganization().getId());
 	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<SupplierSourceResource> getResourceListAll() {
+		return getSqlMapClientTemplate().queryForList("getSupplierSourceResourcesAll");
+	}
 }

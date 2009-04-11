@@ -25,6 +25,8 @@
 		<result property="organizationName" column="org_name" />
 		<result property="nameLanguage" column="language_code" />
 		<result property="nameCategory" column="category" />
+		<result property="ipAddressFrom" column="ip_address_from" />
+		<result property="ipAddressTo" column="ip_address_to" />
 	</resultMap>
 
 	<select id="getOrganizationListAll" cacheModel="OrganizationListCache" resultMap="OrgUnitNameJoinMap" >
@@ -36,30 +38,47 @@
 			type.descr as org_type_descr,
 			name.name as org_name,
 			name.language_code,
-			name.category
+			name.category,
+			ip.ip_address_from,
+			ip.ip_address_to
 		from tbl_org_unit as org
 			inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 			left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
-		order by org_unit_id desc
+			left outer join tbl_ip_address as ip on org.org_unit_id = ip.org_unit_id
+		order by org_unit_id desc, language_code desc, category desc
 	</select>
 	
-	<select id="getOrganizationIdDistinctSearchString" resultClass="int" parameterClass="string">
+	<select id="getOrganizationIdDistinctSearchString" resultClass="int" parameterClass="SearchStringInput">
 		select distinct org_unit_id as org_unit_id_distinct from(
 			select
-				org.descr as org_descr,
-				org.org_unit_id,
-				type.name as org_type_name,
-				type.key as org_type_key,
-				type.descr as org_type_descr,
-				name.name as org_name,
-				name.language_code,
-				name.category
+				org.org_unit_id
 			from tbl_org_unit as org
 				inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 				left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
-			where name.name ilike #value#
+				left outer join tbl_ip_address as ip on org.org_unit_id = ip.org_unit_id
+			where
+			    (name.name ilike #value#) or
+                (type.descr ilike #value#) or
+                (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#)
 		) as org_unit_id_distinct_query
 		order by org_unit_id desc
+	</select>
+
+	<select id="getOrganizationCountSearchString" resultClass="int" parameterClass="SearchStringInput">
+		select count(org_unit_id_distinct) as org_unit_count from(
+			select distinct org_unit_id as org_unit_id_distinct from(
+				select
+					org.org_unit_id
+				from tbl_org_unit as org
+					inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
+					left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
+				    left outer join tbl_ip_address as ip on org.org_unit_id = ip.org_unit_id
+				where
+                    (name.name ilike #value#) or
+                    (type.descr ilike #value#) or
+                    (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#)
+			) as org_unit_id_distinct_query
+		) as org_unit_count
 	</select>
 	
 	<select id="getOrganizationListSearchString" cacheModel="OrganizationListCache" resultMap="OrgUnitNameJoinMap" parameterClass="SearchStringInput">
@@ -71,32 +90,41 @@
 			type.descr as org_type_descr,
 			name.name as org_name,
 			name.language_code,
-			name.category
+			name.category,
+			ip.ip_address_from,
+			ip.ip_address_to
 		from tbl_org_unit as org
 			inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 			left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
-		where name.name ilike #value# and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId# 
-		order by org_unit_id desc
+			left outer join tbl_ip_address as ip on org.org_unit_id = ip.org_unit_id
+		where
+            ((name.name ilike #value#) or
+            (type.descr ilike #value#) or
+            (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#))
+		      and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId# 
+		order by org_unit_id desc, language_code desc, category desc
 	</select>
 
 	<select id="getOrganizationListByIpAddress" cacheModel="OrganizationListCache" resultMap="OrgUnitNameJoinMap" parameterClass="IpAddress">
-	select
-		org.descr as org_descr,
-		org.org_unit_id,
-		type.name as org_type_name,
-		type.key as org_type_key,
-		type.descr as org_type_descr,
-		name.name as org_name,
-		name.language_code,
-		name.category
-	from
-		tbl_org_unit as org
-		inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
-		left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
-	where
-		org.org_unit_id in (select org_unit_id from tbl_ip_address where ip_address_from &lt;= #address#
-		and ip_address_to &gt;= #address#)
-	order by org_unit_id desc
+		select
+			org.descr as org_descr,
+			org.org_unit_id,
+			type.name as org_type_name,
+			type.key as org_type_key,
+			type.descr as org_type_descr,
+			name.name as org_name,
+			name.language_code,
+			name.category,
+			ip.ip_address_from,
+			ip.ip_address_to
+		from tbl_org_unit as org
+			inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
+			left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
+			left outer join tbl_ip_address as ip on org.org_unit_id = ip.org_unit_id
+		where
+			org.org_unit_id in (select org_unit_id from tbl_ip_address where ip_address_from &lt;= #address#
+			and ip_address_to &gt;= #address#)
+		order by org_unit_id desc, language_code desc, category desc
 	</select>
 
 </sqlMap>
