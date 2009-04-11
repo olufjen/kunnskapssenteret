@@ -166,7 +166,7 @@
 		</copy>
 	</target>
 
-	<target name="deploy-service" depends="deploy-other">
+	<target name="deploy-service-aar" depends="deploy-other">
 		<copy todir="${webservices.tomcat.services.dir}">
 			<fileset dir="${webservices.target.dir}">
 				<include name="**/*.aar"/>
