@@ -1,0 +1,12 @@
+@charset "UTF-8";
+/**
+ * Fixes for tree/table view
+ */
+
+tr.rowClass > td
+{
+}
+
+td.iconClass > img
+{
+}
