@@ -36,7 +36,7 @@
 			<td><h:outputText value="#{organizationBean.organizationTypeName}" /></td>
 		</tr>
 		<tr>
-			<td><h5><u><h:outputText value="#{msg_main.organization_contact_information}"  /></u></h5></td>
+			<td><h5><h:outputText value="#{msg_main.organization_contact_information}"/></h5></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -60,7 +60,7 @@
 			<td><h:outputText value="#{organizationBean.organization.contactInformation.telephoneNumber}"/></td>
 		</tr>
 		<tr>
-			<td><h5><u><h:outputText value="#{msg_main.organization_contact_person}"  /></u></h5></b></td>
+			<td><h5><h:outputText value="#{msg_main.organization_contact_person}"/></h5></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -134,40 +134,57 @@
 		</tr>
 	</table>
 
-	<!--
-	<table>
-		<tr>
-			<td><b><h:outputText value="#{msg_main.organization_ip_ranges}"  /></b></td>
-			<td></td>
-		</tr>
-	</table>
-	-->
-	
-	<h:dataTable id="rangeTable" value="#{organizationBean.memberOrganization.ipAddressRangeList}"
-		var="range" rendered="#{organizationBean.isMemberOrganization}" >
-		<h:column id="fromColumn">
-      		<!--
+	<t:div rendered="#{organizationBean.isMemberOrganization}">
+		<h5><h:outputText value="#{msg_main.ip_address}"/></h5>
+		<h:dataTable id="rangeTable" value="#{organizationBean.memberOrganization.ipAddressRangeList}"
+			var="range" rendered="#{organizationBean.isMemberOrganization}" >
+			<h:column id="fromColumn">
       			<f:facet name="header"><h:outputText value="#{msg_main.organization_ip_range_from}"/></f:facet>
-      		-->
-      		<h:outputText id="rangeFrom" value="#{range.ipAddressFrom}" />
-    	</h:column>
-		<h:column id="toColumn">
-      		<!--
+      			<h:outputText id="rangeFrom" value="#{range.ipAddressFrom}" />
+    		</h:column>
+			<h:column id="toColumn">
       			<f:facet name="header"><h:outputText value="#{msg_main.organization_ip_range_to}"/></f:facet>
-      		-->
-      		<h:outputText id="rangeTo" value="#{range.ipAddressTo}" />
-    	</h:column>
-	</h:dataTable>
-
-	<h:dataTable id="singleTable" value="#{organizationBean.memberOrganization.ipAddressSingleList}"
-		var="single" rendered="#{organizationBean.isMemberOrganization}" >
-		<h:column id="fromColumn">
-      		<!--
+      			<h:outputText id="rangeTo" value="#{range.ipAddressTo}" />
+    		</h:column>
+		</h:dataTable>
+	</t:div>
+	
+	<t:div rendered="#{organizationBean.isMemberOrganization}">
+		<h5><h:outputText value="#{msg_main.ip_range}"/></h5>
+		<h:dataTable id="singleTable" value="#{organizationBean.memberOrganization.ipAddressSingleList}"
+			var="single" rendered="#{organizationBean.isMemberOrganization}" >
+			<h:column id="fromColumn">
       			<f:facet name="header"><h:outputText value="#{msg_main.organization_ip_single}"/></f:facet>
-      		-->
-      		<h:outputText id="rangeFrom" value="#{single.ipAddressSingle}" />
-    	</h:column>
-	</h:dataTable>
+      			<h:outputText id="rangeFrom" value="#{single.ipAddressSingle}" />
+    		</h:column>
+		</h:dataTable>
+	</t:div>
+
+	<t:div rendered="#{organizationBean.isMemberOrganization}">
+		<h5><h:outputText value="#{msg_main.org_type_access_list}"/></h5>
+		<h:dataTable id="orgTypeAccessTable"
+			value="#{organizationBean.orgTypeAccessList}"
+			var="orgTypeAccess" rendered="#{organizationBean.isMemberOrganization}" >
+
+			<h:column id="urlColumn">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
+      			<h:outputText id="orgTypeAccessUrl" value="#{orgTypeAccess.url.stringValue}" />
+    		</h:column>
+			<h:column id="supplierSourceNameColumn">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
+      			<h:outputText id="orgTypeAccessSourceName" value="#{orgTypeAccess.supplierSourceName}" />
+    		</h:column>
+			<h:column id="categoryColumn">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_category}"/></f:facet>
+      			<h:outputText id="orgTypeAccessCategory" value="#{orgTypeAccess.category.value}" />
+    		</h:column>
+			<h:column id="keyColumn">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_key}"/></f:facet>
+      			<h:outputText id="orgTypeAccessKey" value="#{orgTypeAccess.key.value}" />
+    		</h:column>
+    		
+		</h:dataTable>
+	</t:div>
 
 	<h:dataTable id="resourceTable" value="#{organizationBean.supplierOrganization.resourceList}"
 		var="resource" rendered="#{organizationBean.isSupplierOrganization}" >
@@ -192,8 +209,5 @@
 	</h:dataTable>
 
 
-	<!-- TODO: More properties? -->
-	<!-- Insert ipRangeList-->
-	
 	<h:commandLink value="#{msg_main.organization_edit}" action="#{organizationBean.actionEditSingle}" immediate="true"/>
 </h:form>
