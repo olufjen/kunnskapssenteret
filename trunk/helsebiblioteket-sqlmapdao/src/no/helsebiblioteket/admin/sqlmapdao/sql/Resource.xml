@@ -16,7 +16,19 @@
 		<result property="resource.id" column="resource_id" />
 		<result property="supplierSource.id" column="supplier_source_id" />
 		<result property="resource.resourceType.id" column="resource_type_id" />
-		<result property="resource.offeredBy.organization.id" column="org_unit_id" />
+		<result property="resource.offeredBy" column="org_unit_id" />
+		<result property="resource.lastChanged" column="last_changed" />
+	</resultMap>
+	<resultMap id="SupplierSourceResourceResultListMap" class="SupplierSourceResource">
+		<result property="resource.id" column="resource_id" />
+		<result property="supplierSource.id" column="supplier_source_id" />
+		<result property="supplierSource.supplierSourceName" column="supplier_source_name" />
+		<result property="supplierSource.url.stringValue" column="url" />
+		<result property="resource.resourceType.id" column="resource_type_id" />
+		<result property="resource.resourceType.key.value" column="key" />
+		<result property="resource.resourceType.description" column="descr" />
+		<result property="resource.resourceType.name" column="name" />
+		<result property="resource.offeredBy" column="org_unit_id" />
 		<result property="resource.lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertSupplierSourceResource" parameterClass="SupplierSourceResource">
@@ -24,13 +36,13 @@
 			SELECT nextval('tbl_resource_resource_id_seq') as id;
 		</selectKey>
 		insert into tbl_resource (resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed)
-		values (#resource.id#, #supplierSource.id#, #resource.resourceType.id#, #resource.offeredBy.organization.id#, now());
+		values (#resource.id#, #supplierSource.id#, #resource.resourceType.id#, #resource.offeredBy#, now());
 	</insert>
 	<update id="updateSupplierSourceResource" parameterClass="SupplierSourceResource">
 		update tbl_resource set
       		supplier_source_id = #supplierSource.id#,
       		resource_type_id = #resource.resourceType.id#,
-	      	org_unit_id = #resource.offeredBy.organization.id#,
+	      	org_unit_id = #resource.offeredBy#,
     	  	last_changed = now()
     	where resource_id = #resource.id# and last_changed = #resource.lastChanged#;
 	</update>
@@ -49,4 +61,22 @@
 		from tbl_resource
 		where org_unit_id = #id#;
 	</select>
+	
+	<select id="getSupplierSourceResourcesAll" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultListMap">
+		select
+			sup.supplier_source_name,
+			sup.url,
+			type.key,
+			type.descr,
+			type.name,
+			res.resource_id,
+			res.last_changed,
+			sup.supplier_source_id,
+			type.resource_type_id,
+			org_unit_id
+		from tbl_resource as res
+			inner join tbl_supplier_source as sup on res.supplier_source_id = sup.supplier_source_id
+			inner join tbl_resource_type_reg as type on res.resource_type_id = type.resource_type_id
+	</select>
+
 </sqlMap>

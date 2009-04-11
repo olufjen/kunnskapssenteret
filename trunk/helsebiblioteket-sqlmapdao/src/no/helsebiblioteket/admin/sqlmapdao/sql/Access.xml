@@ -33,6 +33,7 @@
 		<result property="key.value" column="key" />
 		<result property="url.stringValue" column="url" />
 		<result property="lastChanged" column="last_changed" />
+		<result property="supplierSourceName" column="supplier_source_name" />
 	</resultMap>
 
 	<insert id="insertResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
@@ -106,7 +107,8 @@
 			category,
 			key,
 			url,
-			tbl_access.last_changed as last_changed
+			tbl_access.last_changed as last_changed,
+			supplier_source_name
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
@@ -119,7 +121,8 @@
 			category,
 			key,
 			url,
-			tbl_access.last_changed as last_changed
+			tbl_access.last_changed as last_changed,
+			supplier_source_name
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
@@ -132,7 +135,8 @@
 			category,
 			key,
 			url,
-			tbl_access.last_changed as last_changed
+			tbl_access.last_changed as last_changed,
+			supplier_source_name
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
@@ -145,7 +149,8 @@
 			category,
 			key,
 			url,
-			tbl_access.last_changed as last_changed
+			tbl_access.last_changed as last_changed,
+			supplier_source_name
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
