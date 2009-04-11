@@ -129,6 +129,7 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
   		<property name="accessDao" ref="accessDao"></property>
   		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  		<property name="resourceDao" ref="resourceDao"></property>
   	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userService" ref="userService"></property>
