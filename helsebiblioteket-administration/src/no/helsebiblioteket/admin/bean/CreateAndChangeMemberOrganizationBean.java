@@ -3,29 +3,29 @@ package no.helsebiblioteket.admin.bean;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-//import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
+import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
@@ -36,6 +36,8 @@ import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private MemberOrganization memberOrganization;
+	private ResourceAccessListItem[] orgTypeAccessList;
+	private ResourceAccessListItem[] orgAccessList;
 
 	private String ipAddressSingle = null;
 	private String ipAddressFrom = null;
@@ -43,6 +45,8 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	private UIInput ipAddressSingleUIInput = null;
 	private UIInput ipAddressFromUIInput = null;
 	private UIInput ipAddressToUIInput = null;
+	private HtmlSelectOneMenu supplierSourceListValue;
+	private HtmlSelectOneMenu accessTypeCategory = null;
 	
 	private String selectedOrganizationType = null;
 	
@@ -216,6 +220,32 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		
 		
 	}
+	
+	public void actionAddSource(){
+		String selectedSourceValue = this.getSupplierSourceListValue().getSubmittedValue().toString();
+		String selectedAccessTypeCategoryValue = this.getAccessTypeCategory().getSubmittedValue().toString();
+
+		SupplierSourceResource addedResource = null;
+		SupplierSourceResource[] resources = this.organizationBean.getSupplierSourceResources();
+		for (SupplierSourceResource supplierSourceResource : resources) {
+			if(selectedSourceValue.equals(""+supplierSourceResource.getResource().getId())){
+				addedResource = supplierSourceResource;
+			}
+		}
+		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.orgAccessList.length + 1];
+		for(int i=0; i<this.orgAccessList.length;i++){
+			newList[i] = this.orgAccessList[i];
+		}
+		newList[newList.length-1] = new ResourceAccessListItem();
+		newList[newList.length-1].setSupplierSourceName(addedResource.getSupplierSource().getSupplierSourceName());
+		newList[newList.length-1].setCategory(new AccessTypeCategory(selectedAccessTypeCategoryValue));
+		newList[newList.length-1].setId(addedResource.getResource().getId());
+		newList[newList.length-1].setKey(AccessTypeKey.general);
+		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
+		
+		this.orgAccessList = newList;
+		this.organizationBean.setOrgAccessList(newList);
+	}
 
 	public void actionDeleteIpRange() {
 		logger.debug("Method 'actionDeleteIpRange' invoked");
@@ -248,18 +278,44 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		return (ipRangeList != null && ipRangeList.size() > 0) ? true : false;
 	}
 	
-	public List<Organization> getSuppliersWithSourcesList() {
-		// TODO fetch supplier organization list based on type
-		return new ArrayList<Organization>();
+	public List<SelectItem> getSupplierSourceList() {
+		SupplierSourceResource[] resources = this.organizationBean.getSupplierSourceResources();
+		List<SelectItem> list = new ArrayList<SelectItem>();
+		for (SupplierSourceResource resource : resources) {
+			SelectItem item = new SelectItem("" + resource.getResource().getId(), "" +
+					resource.getSupplierSource().getSupplierSourceName() + " " +
+					resource.getSupplierSource().getUrl().getStringValue());
+			list.add(item);
+		}
+		return list;
 	}
 	
+	public List<SelectItem> getAccessTypeCategoryList(){
+		List<SelectItem> list = new ArrayList<SelectItem>();
+		list.add(new SelectItem(AccessTypeCategory.GRANT.getValue(), "Grant"));
+		list.add(new SelectItem(AccessTypeCategory.DENY.getValue(), "Deny"));
+		return list;
+	}
+	
+	public HtmlSelectOneMenu getSupplierSourceListValue(){
+		return supplierSourceListValue;
+	}
+
+	public void setSupplierSourceListValue(HtmlSelectOneMenu value){
+		this.supplierSourceListValue = value;
+	}
+
 	public List<String> getSelectedSourceList() {
 		List<String> list = new ArrayList<String>();
 		return list;
 	}
-	
-	public void setSelectedSourceList(List<String> list) { 
-//		this.selectedSourceList = list;
+
+	public ResourceAccessListItem[] getOrgTypeAccessList() {
+		return orgTypeAccessList;
+	}
+
+	public ResourceAccessListItem[] getOrgAccessList() {
+		return orgAccessList;
 	}
 
 	// Method is invoked by hidden init-field in JSP.
@@ -294,5 +350,16 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		this.setIsNew(this.organizationBean.getIsNew());
 		this.setNotNew( ! this.organizationBean.getIsNew());
 		this.organization = this.memberOrganization.getOrganization();
+		
+		this.orgTypeAccessList = this.organizationBean.getOrgTypeAccessList();
+		this.orgAccessList = this.organizationBean.getOrgAccessList();
+		
+	}
+	public HtmlSelectOneMenu getAccessTypeCategory() {
+		return accessTypeCategory;
+	}
+
+	public void setAccessTypeCategory(HtmlSelectOneMenu accessTypeCategory) {
+		this.accessTypeCategory = accessTypeCategory;
 	}
 }
