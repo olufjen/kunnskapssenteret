@@ -12,6 +12,7 @@ public class ResourceAccessListItem {
 	private AccessTypeKey key;
 	private Url url;
 	private Date lastChanged;
+	private String supplierSourceName;
 	public Integer getId() {
 		return id;
 	}
@@ -41,5 +42,11 @@ public class ResourceAccessListItem {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+	public String getSupplierSourceName() {
+		return supplierSourceName;
+	}
+	public void setSupplierSourceName(String supplierSourceName) {
+		this.supplierSourceName = supplierSourceName;
 	}
 }

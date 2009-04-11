@@ -11,7 +11,7 @@ public class Resource {
 	
 	// References
 	private ResourceType resourceType;
-	private SupplierOrganization offeredBy;
+	private Integer offeredBy;
 
 	// Helpers
 	@Override
@@ -38,10 +38,10 @@ public class Resource {
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-	public SupplierOrganization getOfferedBy() {
+	public Integer getOfferedBy() {
 		return offeredBy;
 	}
-	public void setOfferedBy(SupplierOrganization supplierOrganization) {
+	public void setOfferedBy(Integer supplierOrganization) {
 		this.offeredBy = supplierOrganization;
 	}
 }

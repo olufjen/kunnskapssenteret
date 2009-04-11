@@ -13,6 +13,21 @@ public class OrgUnitNameJoin {
 	private String organizationName;
 	private LanguageCategory nameLanguage;
 	private OrganizationNameCategory nameCategory;
+	private String ipAddressFrom;
+	private String ipAddressTo;
+
+	public String getIpAddressFrom() {
+		return ipAddressFrom;
+	}
+	public void setIpAddressFrom(String ipAddressFrom) {
+		this.ipAddressFrom = ipAddressFrom;
+	}
+	public String getIpAddressTo() {
+		return ipAddressTo;
+	}
+	public void setIpAddressTo(String ipAddressTo) {
+		this.ipAddressTo = ipAddressTo;
+	}
 	public String getOrganizationDescription() {
 		return organizationDescription;
 	}
