@@ -8,7 +8,7 @@
 
 <h:inputHidden id="init" value="#{createAndChangeMemberOrganizationBean.init}"></h:inputHidden>
 
-<f:verbatim></f:verbatim>
+<f:verbatim><h2></f:verbatim>
 	<h:outputText value="#{msg_headings.member_organization_new}"
 		rendered="#{createAndChangeMemberOrganizationBean.isNew}" />
 	<h:outputText value="#{msg_headings.member_organization_change}"
@@ -217,7 +217,6 @@
 							<h:inputText 
 								value="#{createAndChangeMemberOrganizationBean.ipAddressFrom}"
 								id="ipAddressFrom" 
-								required="true"
 								binding="#{createAndChangeMemberOrganizationBean.ipAddressFromUIInput}"
 								>
 							</h:inputText>
@@ -225,7 +224,6 @@
 							<h:inputText 
 								value="#{createAndChangeMemberOrganizationBean.ipAddressTo}"
 								id="ipAddressTo" 
-								required="true"
 								binding="#{createAndChangeMemberOrganizationBean.ipAddressToUIInput}"
 								>
 							</h:inputText>
@@ -279,28 +277,97 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.suppliers_and_sources}" /></h5></td>
-		</tr>
-		<tr>
 			<td colspan="2">
-				<t:dataTable newspaperColumns="3" var="supplier" value="#{createAndChangeMemberOrganizationBean.suppliersWithSourcesList}">
-					<t:column style="vertical-align:top">
-			      		<t:outputText id="supplierName" value="#{supplier.name}" />
-			    	</t:column>
-			    	<t:column>
-			      		<t:dataTable var="source" value="#{supplier.sourceList}">
-			      			<t:column>
-			      				<t:selectManyCheckbox id="suppliersources" layout="pageDirection" value="#{createAndChangeMemberOrganizationBean.selectedSourceList}">
-				      				<f:selectItem id="suppliersource" itemLabel="#{source.name}" itemValue="#{source.id}"/>
-			      				</t:selectManyCheckbox>
-			      			</t:column>
-			      		</t:dataTable>
-			    	</t:column>
-				</t:dataTable>
+				<br />
+				<h5><h:outputText value="#{msg_main.org_type_access_list}"/></h5>
 			</td>
 		</tr>
 		<tr>
-			<td align="right">
+			<td colspan="2">
+				<h:dataTable id="orgTypeAccessTable"
+					value="#{createAndChangeMemberOrganizationBean.orgTypeAccessList}"
+					var="orgTypeAccess" >
+
+					<h:column id="urlColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
+      					<h:outputText id="orgTypeAccessUrl" value="#{orgTypeAccess.url.stringValue}" />
+		    		</h:column>
+					<h:column id="supplierSourceNameColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
+		      			<h:outputText id="orgTypeAccessSourceName" value="#{orgTypeAccess.supplierSourceName}" />
+    				</h:column>
+					<h:column id="categoryColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_category}"/></f:facet>
+      					<h:outputText id="orgTypeAccessCategory" value="#{orgTypeAccess.category.value}" />
+    				</h:column>
+					<h:column id="keyColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_key}"/></f:facet>
+      					<h:outputText id="orgTypeAccessKey" value="#{orgTypeAccess.key.value}" />
+		    		</h:column>
+    			</h:dataTable>
+    		</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<br />
+				<h5><h:outputText value="#{msg_main.suppliers_and_sources}" /></h5>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:selectOneMenu id="supplierSources"
+					binding="#{createAndChangeMemberOrganizationBean.supplierSourceListValue}">
+					<f:selectItems value="#{createAndChangeMemberOrganizationBean.supplierSourceList}"/>
+				</h:selectOneMenu>
+			</td>
+			<td>
+				<h:selectOneMenu id="accessTypeCategory"
+					binding="#{createAndChangeMemberOrganizationBean.accessTypeCategory}">
+					<f:selectItems value="#{createAndChangeMemberOrganizationBean.accessTypeCategoryList}"/>
+				</h:selectOneMenu>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left"">
+				<h:commandLink value="#{msg_main.add}"
+					action="#{createAndChangeMemberOrganizationBean.actionAddSource}"
+					immediate="true"
+					actionListener="#{createAndChangeMemberOrganizationBean.addIpRangeActionListener }"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<br />
+				<h5><h:outputText value="#{msg_main.org_access_list}" /></h5>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<h:dataTable id="orgAccessTable"
+					value="#{createAndChangeMemberOrganizationBean.orgAccessList}"
+					var="orgAccess" >
+
+					<h:column id="urlOrgColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
+      					<h:outputText id="orgAccessUrl" value="#{orgAccess.url.stringValue}" />
+		    		</h:column>
+					<h:column id="supplierSourceNameOrgColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
+		      			<h:outputText id="orgAccessSourceName" value="#{orgAccess.supplierSourceName}" />
+    				</h:column>
+					<h:column id="categoryOrgColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_category}"/></f:facet>
+      					<h:outputText id="orgAccessCategory" value="#{orgAccess.category.value}" />
+    				</h:column>
+					<h:column id="keyOrgColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_key}"/></f:facet>
+      					<h:outputText id="orgAccessKey" value="#{orgAccess.key.value}" />
+		    		</h:column>
+    			</h:dataTable>
+    		</td>
+		</tr>
+		<tr>
+			<td align="left">
 				<h:commandButton value="#{msg_main.cancel}"
 					action="#{createAndChangeMemberOrganizationBean.actionCancel}"
 					immediate="true"/>
