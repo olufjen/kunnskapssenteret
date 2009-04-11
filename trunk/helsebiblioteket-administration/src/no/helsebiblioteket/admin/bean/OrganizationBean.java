@@ -55,12 +55,41 @@ public class OrganizationBean implements IconProvider{
 	private ResourceAccessListItem[] orgTypeAccessList;
 	private ResourceAccessListItem[] orgAccessList;
 	private SupplierSourceResource[] supplierSourceResources;
+	
+//	private boolean showMore = true;
+//	private boolean showMoreLeft = true;
+//	private boolean showMoreRight = true;
+	private PageResultOrganizationListItem lastPageResult = null;
+	private int SHOW_MAX = 40;
+
 
 	// TODO: Include the ipRangeList in the
 	//       Details view (organization-details.jsp)
 	
 	public boolean getFailed() { return true; }
     public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
+	public String actionForward(){
+		if(this.getShowMoreRight()){
+			if(this.searchedString == null) this.searchedString = "";
+			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() + SHOW_MAX,
+					SHOW_MAX);
+			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString);
+			this.organizations = this.lastPageResult.getResult();
+			this.resetTreeModel();
+		}
+		return "organizations_overview";
+	}
+	public String actionBackward(){
+		if(this.getShowMoreLeft()){
+			if(this.searchedString == null) this.searchedString = "";
+			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() - SHOW_MAX,
+					SHOW_MAX);
+			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString);
+			this.organizations = this.lastPageResult.getResult();
+			this.resetTreeModel();
+		}
+		return "organizations_overview";
+	}
 	public String actionDetails(){
 		return actionDetailsEdit(false, true);
 	}
@@ -123,13 +152,14 @@ public class OrganizationBean implements IconProvider{
 	public void actionSearch() {
 		if(this.searchinput == null) { this.searchinput = ""; }
 		this.searchedString = this.searchinput;
-		PageRequest request = new PageRequest(0, 40);
-		this.organizations = this.organizationService.getOrganizationListBySearchString(request, this.searchinput).getResult();
+		PageRequest request = new PageRequest(0, SHOW_MAX);
+		this.lastPageResult = this.organizationService.getOrganizationListBySearchString(request, this.searchinput);
+		this.organizations = this.lastPageResult.getResult();
 		this.resetTreeModel();
 	}
 	public void actionExport(){
 		List<String> lines = new ArrayList<String>();
-		PageRequest request = new PageRequest(0, 40);
+		PageRequest request = new PageRequest(0, SHOW_MAX);
 		String searchString = this.searchedString;
 		if(searchString == null){ searchString = ""; }
 		PageResultOrganizationListItem result = this.organizationService.getOrganizationListBySearchString(request, searchString);
@@ -155,7 +185,7 @@ public class OrganizationBean implements IconProvider{
 			if(result.getSkipped() + result.getNumber() >= result.getTotal()){
 				break;
 			} else {
-				request = new PageRequest(result.getSkipped() + result.getNumber(), 40);
+				request = new PageRequest(result.getSkipped() + result.getNumber(), SHOW_MAX);
 				result = this.organizationService.getOrganizationListBySearchString(request, searchString);
 			}
 		}
@@ -264,11 +294,10 @@ public class OrganizationBean implements IconProvider{
 	public void setTreeModel(TreeModel treeModel) {
         this.treeModel = treeModel;
 	}
-
 	public OrganizationListItem[] getOrganizations() {
-		PageRequest request = new PageRequest(0, 40);
-		PageResultOrganizationListItem pageResult = this.organizationService.getOrganizationListAll(request);
-		this.organizations = pageResult.getResult();
+		PageRequest request = new PageRequest(0, SHOW_MAX);
+		this.lastPageResult = this.organizationService.getOrganizationListAll(request);
+		this.organizations = this.lastPageResult.getResult();
 		return this.organizations;
 	}
 	public String getSearchinput() { return searchinput; }
@@ -380,5 +409,27 @@ public class OrganizationBean implements IconProvider{
 	}
 	public String getOrganizationTypeName() {
 		return MessageResourceReader.getMessageResourceString(bundleDomainOrganizationTypeKey, organization.getType().getKey().getValue());
+	}
+	public boolean isShowMore() {
+		if(this.lastPageResult.getTotal() > SHOW_MAX){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean getShowMoreLeft() {
+		if(this.lastPageResult.getSkipped() > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean getShowMoreRight() {
+		if(this.lastPageResult.getTotal() >
+			this.lastPageResult.getSkipped() + this.lastPageResult.getNumber()){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

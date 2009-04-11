@@ -326,7 +326,9 @@ public class UserBean {
 			PageResultOrganizationListItem orgs = this.organizationService.getOrganizationListAll(request);
 			for (OrganizationListItem organization : orgs.getResult()) {
 				// TODO: How to find right name here?
-				SelectItem option = new SelectItem(""+organization.getId(), organization.getNameEnglish(), "", false);
+				String orgName = organization.getNameNorwegian();
+				if(orgName.equals("")) orgName = organization.getNameEnglish();
+				SelectItem option = new SelectItem(""+organization.getId(), orgName, "", false);
 				this.availableEmployers.add(option);
 			}
 		}
