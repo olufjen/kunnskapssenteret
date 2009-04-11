@@ -14,4 +14,5 @@ public interface ResourceDao {
 	// Fetch
 	public SupplierSourceResource getResourceById(Integer id);
 	public List<SupplierSourceResource> getResourceByOrganization(SupplierOrganization supplierOrganization);
+	public List<SupplierSourceResource> getResourceListAll();
 }

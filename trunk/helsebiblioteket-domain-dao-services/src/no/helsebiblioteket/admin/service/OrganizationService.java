@@ -29,10 +29,10 @@ public interface OrganizationService extends Serializable {
 	// TODO: Remove this and use findOrganizationsBySearchStringRoles with empty string?
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request);
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString);
+	
+	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress);
 
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem);
-
-	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress);
 
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization);
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization);

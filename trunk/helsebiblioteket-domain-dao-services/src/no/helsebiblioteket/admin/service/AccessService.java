@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSourceResource;
@@ -43,4 +44,5 @@ public interface AccessService extends Serializable {
 	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType);
 
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY);
+	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY);
 }

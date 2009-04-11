@@ -19,7 +19,7 @@ public class SupplierSourceResourceFactory {
 		SupplierSourceResource resource = createSupplierSourceResource();
 		resource.getResource().setResourceType(resourceType);
 		resource.setSupplierSource(supplierSource);
-		resource.getResource().setOfferedBy(supplierOrganization);
+		resource.getResource().setOfferedBy(supplierOrganization.getOrganization().getId());
 		return resource;
 	}
 }

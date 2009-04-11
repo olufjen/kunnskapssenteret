@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -115,9 +117,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
-		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
-			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
-		}
 		return this.getOrganizationListBySearchString(request, "");
 	}
 	/**
@@ -133,23 +132,45 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
-		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
-			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
+		if(request.getMaxResult() > 40) {
+			throw new NullPointerException("Max result must be 40 or less.");
+		}
+		
+		if(isIpAddress(searchString)){
+			searchString = normalizeIp(new IpAddress(searchString));
 		}
 		
 		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString,
 				request.getSkip(), request.getMaxResult());
+		Integer total = this.organizationListDao.getOrganizationNumberSearchString(searchString);
+		
 		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
 		result.setSkipped( request.getSkip() );
 		result.setResult(translateList(allOrganizations));
-		result.setTotal(allOrganizations.size());
+		result.setNumber(allOrganizations.size());
+		result.setTotal(total);
 		return result;
+	}
+	private boolean isIpAddress(String searchString) {
+		Pattern pattern = Pattern.compile("[0-9][0-9]?[0-9]?\\.[0-9][0-9]?[0-9]?\\.[0-9][0-9]?[0-9]?\\.[0-9][0-9]?[0-9]?");
+		Matcher matcher = pattern.matcher(searchString);
+		return matcher.matches();
 	}
 	private OrganizationListItem[] translateList(List<OrganizationListItem> organizationList) {
 		OrganizationListItem[]items = new OrganizationListItem[organizationList.size()];
 		int i=0;
 		for (OrganizationListItem organizationListItem : organizationList) {
 			items[i] = organizationListItem;
+			String [] from = organizationListItem.getIpAddressesFrom();
+			String [] to = organizationListItem.getIpAddressesTo();
+			for(int j=0; j<from.length; j++){
+				from[j] = unNormalizeIp(from[j]).getAddress();
+				if(to[j] != null && (! to[j].equals(""))){
+					to[j] = unNormalizeIp(to[j]).getAddress();
+				} else {
+					to[j] = "";
+				}
+			}			
 			i++;
 		}
 		return items;
@@ -182,13 +203,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 		
 		if(type.getKey().getValue().equals(OrganizationTypeKey.content_supplier.getValue())){
 			SupplierOrganization supplierOrganization = new SupplierOrganization();
-			populateSupplierOrganization(supplierOrganization);
 			supplierOrganization.setOrganization(organization);
+			populateSupplierOrganization(supplierOrganization);
 			return new ValueResultSupplierOrganization(supplierOrganization);
 		} else {
 			MemberOrganization memberOrganization = new MemberOrganization();
-			populateMemberOrganization(memberOrganization);
 			memberOrganization.setOrganization(organization);
+			populateMemberOrganization(memberOrganization);
 			return new ValueResultMemberOrganization(memberOrganization);
 		}
 	}

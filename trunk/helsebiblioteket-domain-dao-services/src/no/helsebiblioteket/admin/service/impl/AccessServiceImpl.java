@@ -22,6 +22,7 @@ import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSourceResource;
@@ -211,6 +212,16 @@ public class AccessServiceImpl implements AccessService {
 		}
 		result.setList(list);
 		return result;
+	}
+
+	@Override
+	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY) {
+		List<SupplierSourceResource> found = this.resourceDao.getResourceListAll();
+		SupplierSourceResource[] list = new SupplierSourceResource[found.size()];
+		for(int i=0; i<found.size(); i++){
+			list[i] = found.get(i);
+		}
+		return new ListResultSupplierSourceResource(list);
 	}
 
 
