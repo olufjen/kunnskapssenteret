@@ -18,6 +18,7 @@ import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSourceResource;
@@ -40,6 +41,8 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	private QName insertOrganizationTypeAccess;
 	private QName insertUserAccess;
 	private QName insertUserRoleAccess;
+	private QName supplierSourceResourceListAll;
+	
 	@Override
 	public SingleResultSupplierSourceResource insertSupplierSourceResource(SupplierSourceResource resource) {
 		Object[] args = new Object[] { resource };
@@ -125,6 +128,12 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 		return (Boolean)invoke(this.insertUserRoleAccess, args, returnTypes);
 	}
 	@Override
+	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY) {
+		Object[] args = new Object[] { DUMMY };
+		Class[] returnTypes = new Class[] { ListResultSupplierSourceResource.class };
+		return (ListResultSupplierSourceResource)invoke(this.supplierSourceResourceListAll, args, returnTypes);
+	}
+	@Override
 	public Log getLogger() {
 		return this.logger;
 	}
@@ -169,5 +178,8 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	}
 	public void setDeleteResourceAccess(QName deleteResourceAccess) {
 		this.deleteResourceAccess = deleteResourceAccess;
+	}
+	public void setSupplierSourceResourceListAll(QName supplierSourceResourceListAll) {
+		this.supplierSourceResourceListAll = supplierSourceResourceListAll;
 	}
 }
