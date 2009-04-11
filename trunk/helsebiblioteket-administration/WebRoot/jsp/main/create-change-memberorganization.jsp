@@ -248,8 +248,7 @@
 			<td>
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.ipAddressSingle}"
-					id="ipAddressSingle" 
-					required="true"
+					id="ipAddressSingle"
 					binding="#{createAndChangeMemberOrganizationBean.ipAddressSingleUIInput}"
 					>
 					<%-- <f:validator validatorId="checkvalidip" /> --%>
