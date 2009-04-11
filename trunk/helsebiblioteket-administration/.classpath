@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-domain-dao-services"/>
 	<classpathentry kind="lib" path="lib/antlr-2.7.2.jar"/>
-	<classpathentry kind="lib" path="lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.7.0.jar" sourcepath="download-sources/commons-beanutils-1.7.0-src.zip"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-dbcp-1.2.2.jar"/>
@@ -19,8 +19,8 @@
 	<classpathentry kind="lib" path="lib/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
-	<classpathentry kind="lib" path="lib/myfaces-api-1.1.5.jar"/>
-	<classpathentry kind="lib" path="lib/myfaces-impl-1.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/myfaces-api-1.1.5.jar" sourcepath="download-sources/myfaces-core-1.1.5-src.zip"/>
+	<classpathentry kind="lib" path="lib/myfaces-impl-1.1.5.jar" sourcepath="download-sources/myfaces-core-1.1.5-src.zip"/>
 	<classpathentry kind="lib" path="lib/oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.1-FINAL-20080629.jar"/>
 	<classpathentry kind="lib" path="lib/quartz-1.6.0.jar"/>
@@ -30,7 +30,7 @@
 	<classpathentry kind="lib" path="lib/spring-ws-1.5.5-all.jar"/>
 	<classpathentry kind="lib" path="lib/spring.jar"/>
 	<classpathentry kind="lib" path="lib/struts-1.2.8.jar"/>
-	<classpathentry kind="lib" path="lib/tomahawk-1.1.6.jar"/>
+	<classpathentry kind="lib" path="lib/tomahawk-1.1.6.jar" sourcepath="download-sources/tomahawk-1.1.6-src.zip"/>
 	<classpathentry kind="lib" path="lib/xalan-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/spring-security-core-2.0.4.jar"/>
