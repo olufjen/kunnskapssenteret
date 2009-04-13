@@ -9,27 +9,24 @@
 <h:form>
 	<p><t:outputText value="#{msg_main.organization_types_overview_text}" /></p>
 
-	<h:dataTable id="resourceTable" value="#{organizationBean.supplierOrganization.resourceList}"
-		var="resource" rendered="#{organizationBean.isSupplierOrganization}" >
-		<h:column id="resourceTypeColumn">
+	<h:dataTable id="organizationTypeTable"
+			value="#{organizationTypeBean.organizationTypes}"
+			var="type"
+			binding="#{organizationTypeBean.organizationTypeTable}">
+		<h:column id="nameColumn">
       		<f:facet name="header">
-      			<h:outputText value="#{msg_main.organization_resource_type}"/>
+      			<h:outputText value="#{msg_main.organization_type_name}"/>
       		</f:facet>
-      		<h:outputText id="resource_type" value="#{resource.resource.resourceType}" />
+      		<h:outputText id="type_name" value="#{type.description}" />
     	</h:column>
-		<h:column id="supplierSourceNameColumn">
+		<h:column id="editColumn">
       		<f:facet name="header">
-      			<h:outputText value="#{msg_main.organization_supplier_source_name}"/>
+      			<h:outputText value="#{msg_main.organization_type_edit}"/>
       		</f:facet>
-      		<h:outputText id="supplier_source_name" value="#{resource.supplierSource.supplierSourceName}" />
-    	</h:column>
-		<h:column id="supplierSourceUrlColumn">
-      		<f:facet name="header">
-      			<h:outputText value="#{msg_main.organization_supplier_source_url}"/>
-      		</f:facet>
-      		<h:outputText id="supplier_source_url" value="#{resource.supplierSource.url}" />
-    	</h:column>
+			<t:commandLink value="#{msg_main.organization_type_edit}"
+				action="#{organizationTypeBean.actionEdit}"
+				immediate="true"/>
+			</h:column>
 	</h:dataTable>
 	
-
 </h:form>

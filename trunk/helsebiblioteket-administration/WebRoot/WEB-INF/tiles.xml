@@ -119,6 +119,10 @@
 		<put name="main" value="/jsp/main/organization-types-overview.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
+   	<definition name="organization-type-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/organization-type-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
    	
    	
    	<!-- USERS -->

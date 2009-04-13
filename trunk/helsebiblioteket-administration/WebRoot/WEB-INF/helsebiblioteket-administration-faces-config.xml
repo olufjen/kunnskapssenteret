@@ -82,6 +82,17 @@
 	</navigation-rule>
 
 	<navigation-rule>
+		<navigation-case>
+			<from-outcome>edit_organization_type</from-outcome>
+			<to-view-id>/organization-type-edit.faces</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>organization_types_overview</from-outcome>
+			<to-view-id>/organization-types-overview.faces</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
 		<!-- TODO: Use this? <from-view-id>/organizations-overview.tiles</from-view-id>-->
 		<navigation-case>
 			<from-outcome>organizations_overview</from-outcome>
@@ -369,6 +380,10 @@
             <property-name>organizationService</property-name>
             <value>#{organizationService}</value>
         </managed-property>
+        <managed-property>
+    		<property-name>accessService</property-name>
+        	<value>#{accessService}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<!-- <managed-bean>
