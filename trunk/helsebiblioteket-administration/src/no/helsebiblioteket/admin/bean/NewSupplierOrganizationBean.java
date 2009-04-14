@@ -21,8 +21,8 @@ import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 /**
@@ -102,9 +102,9 @@ public class NewSupplierOrganizationBean extends NewOrganizationBean {
 		}
 		if (this.organization.getOrganization().getType() == null) {
 			// TODO: FIX!
-			SingleResult<OrganizationType> res = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
-			if(res instanceof ValueResult){
-				this.organization.getOrganization().setType(((ValueResult<OrganizationType>)res).getValue());
+			SingleResultOrganizationType res = null;//organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
+			if(res instanceof ValueResultOrganizationType){
+				this.organization.getOrganization().setType(((ValueResultOrganizationType)res).getValue());
 			}
 		}
 //		if (this.organization.getSupplierSourceList() == null) {
