@@ -31,6 +31,9 @@ public class OrganizationTypeBean {
 	private HtmlSelectOneMenu supplierSource;
 	private HtmlSelectOneMenu accessTypeCategory;
 
+	private ResourceAccessListItem[] newOrgTypeAccessList;
+	private ResourceAccessListItem[] oldOrgTypeAccessList;
+
 	public String actionEdit(){
 		this.organizationType = (OrganizationType) this.organizationTypeTable.getRowData();
 		loadTypes();
@@ -56,6 +59,8 @@ public class OrganizationTypeBean {
 			ResourceAccess access = new ResourceAccess();
 			access.setAccess(null);
 			access.setResource(null);
+			// TODO: Complete this.
+			// Use newOrgTypeAccessList og oldOrgTypeAccessList.
 //			this.accessService.insertOrganizationTypeResourceAccess(this.organizationType, access);
 		}
 		return "organization_types_overview";
