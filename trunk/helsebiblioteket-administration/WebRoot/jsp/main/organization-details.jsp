@@ -186,6 +186,32 @@
 		</h:dataTable>
 	</t:div>
 
+	<t:div rendered="#{organizationBean.isMemberOrganization}">
+		<h5><h:outputText value="#{msg_main.org_access_list}"/></h5>
+		<h:dataTable id="orgAccessTable"
+			value="#{organizationBean.orgAccessList}"
+			var="orgAccess" rendered="#{organizationBean.isMemberOrganization}" >
+
+			<h:column id="urlColumnOrg">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
+      			<h:outputText id="orgAccessUrl" value="#{orgAccess.url.stringValue}" />
+    		</h:column>
+			<h:column id="supplierSourceNameColumnOrg">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
+      			<h:outputText id="orgAccessSourceName" value="#{orgAccess.supplierSourceName}" />
+    		</h:column>
+			<h:column id="categoryColumnOrg">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_category}"/></f:facet>
+      			<h:outputText id="orgAccessCategory" value="#{orgAccess.category.value}" />
+    		</h:column>
+			<h:column id="keyColumnOrg">
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_key}"/></f:facet>
+      			<h:outputText id="orgAccessKey" value="#{orgAccess.key.value}" />
+    		</h:column>
+    		
+		</h:dataTable>
+	</t:div>
+
 	<h:dataTable id="resourceTable" value="#{organizationBean.supplierOrganization.resourceList}"
 		var="resource" rendered="#{organizationBean.isSupplierOrganization}" >
 		<h:column id="resourceTypeColumn">

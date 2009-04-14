@@ -432,4 +432,10 @@ public class OrganizationBean implements IconProvider{
 			return false;
 		}
 	}
+	public AccessService getAccessService() {
+		return accessService;
+	}
+	public OrganizationService getOrganizationService() {
+		return organizationService;
+	}
 }
