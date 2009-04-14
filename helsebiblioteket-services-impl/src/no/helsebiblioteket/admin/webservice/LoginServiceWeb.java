@@ -10,7 +10,6 @@ import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.requestresult.SingleResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Person;
@@ -36,7 +35,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	
 	public SingleResultUser loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
-		Class[] returnTypes = new Class[] { SingleResult.class };
+		Class[] returnTypes = new Class[] { SingleResultUser.class };
 		// TODO: Remove this:
 		SingleResultUser res = (SingleResultUser)invoke(this.logInUserName, args, returnTypes);
 		User user;
