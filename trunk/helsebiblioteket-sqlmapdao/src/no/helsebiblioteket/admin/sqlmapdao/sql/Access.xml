@@ -34,6 +34,9 @@
 		<result property="url.stringValue" column="url" />
 		<result property="lastChanged" column="last_changed" />
 		<result property="supplierSourceName" column="supplier_source_name" />
+		<result property="providedBy" column="provided_by_org_unit" />
+		<result property="resourceId" column="resource_id" />
+		<result property="supplierSourceId" column="supplier_source_id" />
 	</resultMap>
 
 	<insert id="insertResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
@@ -108,7 +111,10 @@
 			key,
 			url,
 			tbl_access.last_changed as last_changed,
-			supplier_source_name
+			supplier_source_name,
+			provided_by_org_unit,
+			tbl_resource.resource_id,
+			tbl_supplier_source.supplier_source_id
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
@@ -122,7 +128,10 @@
 			key,
 			url,
 			tbl_access.last_changed as last_changed,
-			supplier_source_name
+			supplier_source_name,
+			provided_by_org_unit,
+			tbl_resource.resource_id,
+			tbl_supplier_source.supplier_source_id
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
@@ -136,7 +145,10 @@
 			key,
 			url,
 			tbl_access.last_changed as last_changed,
-			supplier_source_name
+			supplier_source_name,
+			provided_by_org_unit,
+			tbl_resource.resource_id,
+			tbl_supplier_source.supplier_source_id
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
@@ -150,7 +162,10 @@
 			key,
 			url,
 			tbl_access.last_changed as last_changed,
-			supplier_source_name
+			supplier_source_name,
+			provided_by_org_unit,
+			tbl_resource.resource_id,
+			tbl_supplier_source.supplier_source_id
 		from tbl_access
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
