@@ -597,7 +597,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 		// TODO: Load in DAO
 		person.setEmployer("");
 		person.setContactInformation(this.contactInformationDao.getContactInformationByPerson(person));
-		person.setPosition(this.positionDao.getPositionById(person.getPosition().getId()));
+		if(person.getPosition() != null && person.getPosition().getId() != null){
+			person.setPosition(this.positionDao.getPositionById(person.getPosition().getId()));
+		}
 		person.setProfile(this.profileDao.getProfileById(person.getProfile().getId()));
 		return person;
 	}
@@ -650,7 +652,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		IpAddressLine ipAddressLine = new IpAddressLine();
 		ipAddressLine.setId(ipAddressLine.getId());
 		ipAddressLine.setOrgUnitId(organization.getId());
-		ipAddressLine.setLastChanged(ipAddressLine.getLastChanged());
+		ipAddressLine.setLastChanged(ipAddressSingle.getIpAddressSet().getLastChanged());
 		ipAddressLine.setIpAddressFrom(normalizeIp(ipAddressSingle.getIpAddressSingle()));
 		ipAddressLine.setIpAddressTo(normalizeIp(ipAddressSingle.getIpAddressSingle()));
 		return ipAddressLine;
