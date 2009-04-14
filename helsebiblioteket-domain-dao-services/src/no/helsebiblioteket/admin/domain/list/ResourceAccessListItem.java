@@ -13,6 +13,9 @@ public class ResourceAccessListItem {
 	private Url url;
 	private Date lastChanged;
 	private String supplierSourceName;
+	private Integer providedBy;
+	private Integer resourceId;
+	private Integer supplierSourceId;
 	public Integer getId() {
 		return id;
 	}
@@ -48,5 +51,23 @@ public class ResourceAccessListItem {
 	}
 	public void setSupplierSourceName(String supplierSourceName) {
 		this.supplierSourceName = supplierSourceName;
+	}
+	public Integer getProvidedBy() {
+		return providedBy;
+	}
+	public void setProvidedBy(Integer providedBy) {
+		this.providedBy = providedBy;
+	}
+	public Integer getResourceId() {
+		return resourceId;
+	}
+	public void setResourceId(Integer resourceId) {
+		this.resourceId = resourceId;
+	}
+	public Integer getSupplierSourceId() {
+		return supplierSourceId;
+	}
+	public void setSupplierSourceId(Integer supplierSourceId) {
+		this.supplierSourceId = supplierSourceId;
 	}
 }
