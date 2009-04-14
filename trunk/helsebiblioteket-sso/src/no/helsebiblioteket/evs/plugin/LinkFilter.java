@@ -24,9 +24,6 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
-import no.helsebiblioteket.admin.requestresult.EmptyResult;
-import no.helsebiblioteket.admin.requestresult.SingleResult;
-import no.helsebiblioteket.admin.requestresult.ValueResult;
 import no.helsebiblioteket.admin.service.URLService;
 
 import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
