@@ -1,6 +1,7 @@
 package no.helsebiblioteket.admin.bean;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -12,24 +13,37 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import no.helsebiblioteket.admin.domain.Access;
+import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
+import no.helsebiblioteket.admin.domain.IpAddressSet;
+import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
+import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.ResourceAccess;
+import no.helsebiblioteket.admin.domain.ResourceType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.validator.IpAddressValidator;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
@@ -170,15 +184,84 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 				((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
 						new OrganizationTypeKey(selectedOrganizationType))).getValue());
 
-		// FIXME: Insert new and delete IP-addresses!
-		this.memberOrganization.getIpAddressRangeList();
-		this.memberOrganization.getIpAddressSingleList();
-
 		if(this.isNew){
 			this.organizationService.insertMemberOrganization(this.memberOrganization);
 		} else {
 			organizationService.updateOrganization(this.memberOrganization.getOrganization());
 		}
+
+		for (ResourceAccessListItem item : this.organizationBean.getAccessService().getAccessListByOrganization(this.organization).getList()) {
+			this.organizationBean.getAccessService().deleteResourceAccess(item);
+		}
+		for (ResourceAccessListItem item : this.orgAccessList) {
+			ResourceAccess resourceAccess = new ResourceAccess();
+			Access access = new Access();
+			AccessType accessType = ((ValueResultAccessType)this.organizationBean.getAccessService().getAccessTypeByTypeCategory(item.getKey(), item.getCategory())).getValue();
+			access.setAccessType(accessType);
+			OrganizationListItem organizationListItem = new OrganizationListItem();
+			// TODO: Id of supplier
+			organizationListItem.setId(item.getProvidedBy());
+			SupplierOrganization supplier = ((ValueResultSupplierOrganization)this.organizationBean.getOrganizationService().getOrganizationByListItem(organizationListItem)).getValue();
+			access.setProvidedBy(supplier);
+			Calendar calendar = Calendar.getInstance();
+			access.setValidFrom(calendar.getTime());
+			calendar.add(Calendar.YEAR, 1);
+			access.setValidTo(calendar.getTime());
+			resourceAccess.setAccess(access);
+
+			SupplierSourceResource supplierSourceResource = new SupplierSourceResource();
+			Resource resource = new Resource();
+			resource.setId(item.getResourceId());
+			resource.setOfferedBy(supplier.getOrganization().getId());
+			ResourceType resourceType = ((ValueResultResourceType)this.organizationBean.getAccessService().getResourceTypeByKey(ResourceTypeKey.supplier_source)).getValue();
+			resource.setResourceType(resourceType);
+						
+			SupplierSource supplierSource = new SupplierSource();
+			supplierSource.setId(item.getSupplierSourceId());
+			supplierSource.setSupplierSourceName(item.getSupplierSourceName());
+			supplierSource.setUrl(item.getUrl());
+			supplierSourceResource.setResource(resource);
+			supplierSourceResource.setSupplierSource(supplierSource);
+			
+			resourceAccess.setResource(supplierSourceResource);
+			this.organizationBean.getAccessService().insertOrganizationResourceAccess(this.organization, resourceAccess);
+		}
+		
+		IpAddressSet[] ipAddressSets = new IpAddressSet[this.memberOrganization.getIpAddressRangeList().length
+		                                               + this.memberOrganization.getIpAddressSingleList().length];
+		int i=0;
+		for (IpAddressRange range : this.memberOrganization.getIpAddressRangeList()) {
+			ipAddressSets[i++] = range.getIpAddressSet();
+		}
+		for (IpAddressSingle single : this.memberOrganization.getIpAddressSingleList()) {
+			ipAddressSets[i++] = single.getIpAddressSet();
+		}
+		this.organizationService.deleteIpAddresses(ipAddressSets);
+		
+		int singles = 0;
+		int ranges = 0;
+		for (IpAddressRange range : this.ipRangeList) {
+			if(range.getIpAddressTo().getAddress().equals("")) singles++; else ranges++;
+		}
+		IpAddressSingle[] ipAddressSingles = new IpAddressSingle[singles];
+		IpAddressRange[] ipAddressRanges = new IpAddressRange[ranges]; 
+		singles = 0;
+		ranges = 0;
+		
+		for (IpAddressRange range : this.ipRangeList) {
+			if(range.getIpAddressTo().getAddress().equals("")) {
+				ipAddressSingles[singles] = new IpAddressSingle();
+				ipAddressSingles[singles].setIpAddressSet(range.getIpAddressSet());
+				ipAddressSingles[singles].setIpAddressSingle(range.getIpAddressFrom());
+				singles++;
+			} else {
+				ipAddressRanges[ranges++] = range;
+			}
+		}
+		
+		this.organizationService.addIpAddresses(organization, ipAddressSingles);
+		this.organizationService.addIpAddressRanges(organization, ipAddressRanges);
+		
 		this.organizationBean.setOrganization(this.organization);
 		return this.organizationBean.actionDetailsSingle();
 	}
@@ -190,7 +273,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			this.ipRangeList = new ArrayList<IpAddressRange>();
 		}
 		if(IpAddressValidator.getInstance().isValidIPAddress(ipAddressSingle)) {
-			this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressSingle()), null));
+			this.ipRangeList.add(new IpAddressRange(new IpAddress(getIpAddressSingle()), new IpAddress("")));
 		}
 		else{
 			 String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
@@ -242,6 +325,9 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		newList[newList.length-1].setId(addedResource.getResource().getId());
 		newList[newList.length-1].setKey(AccessTypeKey.general);
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
+		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
+		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
+		newList[newList.length-1].setSupplierSourceId(addedResource.getSupplierSource().getId());
 		
 		this.orgAccessList = newList;
 		this.organizationBean.setOrgAccessList(newList);

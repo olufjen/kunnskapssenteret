@@ -87,6 +87,10 @@ public class OrganizationTypeBean {
 		newList[newList.length-1].setId(addedResource.getResource().getId());
 		newList[newList.length-1].setKey(AccessTypeKey.general);
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
+		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
+		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
+		newList[newList.length-1].setSupplierSourceId(addedResource.getSupplierSource().getId());
+
 		this.orgTypeAccessList = newList;
 		return "";
 	}
