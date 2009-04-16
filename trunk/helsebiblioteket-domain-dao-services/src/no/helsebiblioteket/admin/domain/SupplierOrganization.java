@@ -7,6 +7,9 @@ public class SupplierOrganization {
 	// Organization
 	private Organization organization = new Organization();
 
+	private String supportEmail;
+	private String supportTelephone;
+	
 	// Helpers
 	@Override
 	public String toString() {
@@ -25,5 +28,17 @@ public class SupplierOrganization {
 	}
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
+	}
+	public String getSupportEmail() {
+		return supportEmail;
+	}
+	public void setSupportEmail(String supportEmail) {
+		this.supportEmail = supportEmail;
+	}
+	public String getSupportTelephone() {
+		return supportTelephone;
+	}
+	public void setSupportTelephone(String supportTelephone) {
+		this.supportTelephone = supportTelephone;
 	}
 }

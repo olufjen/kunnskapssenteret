@@ -9,6 +9,7 @@ public class OrganizationListItem {
 	private String nameNorwegian;
 	private String nameShortNorwegian;
 	private String typeText;
+	private String typeKey;
 	private OrganizationTypeKey key;
 	private String[] ipAddressesFrom;
 	private String[] ipAddressesTo;
@@ -70,5 +71,11 @@ public class OrganizationListItem {
 	}
 	public void setIpAddressesTo(String[] ipAddressesTo) {
 		this.ipAddressesTo = ipAddressesTo;
+	}
+	public String getTypeKey() {
+		return typeKey;
+	}
+	public void setTypeKey(String typeKey) {
+		this.typeKey = typeKey;
 	}
 }
