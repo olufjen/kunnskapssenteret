@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -16,15 +18,21 @@ import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
+import no.helsebiblioteket.admin.domain.Resource;
+import no.helsebiblioteket.admin.domain.ResourceType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 
 /**
@@ -43,7 +51,6 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	private UIInput sourceNameUIInput = null;
 	private UIInput sourceUrlUIInput = null;
 	
-//	private List<SupplierSource> supplierSourceList = null;
 	private HtmlDataTable supplierSourceListHtmlDataTable = null;
 	
 
@@ -99,41 +106,44 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
 		ContactInformation contactInformationOrganization ;
-		Person contactPerson;
 		ContactInformation contactInformationPerson;
 		Profile contactPersonProfile;
 		if(this.isNew){
-			//contactInformationOrganization = new ContactInformation();
-			//this.supplierOrganization.getOrganization().setContactInformation(contactInformationOrganization);
-
-			contactPerson = new Person();
+			Person contactPerson;
+			contactPerson = this.supplierOrganization.getOrganization().getContactPerson();
 			OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
 					OrganizationTypeKey.health_enterprise)).getValue();
 			contactPerson.setPosition(((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, organizationType)).getValue());
-			this.supplierOrganization.getOrganization().setContactPerson(contactPerson);
-			
-			contactInformationPerson = new ContactInformation();
-			contactPerson.setContactInformation(contactInformationPerson);
-			
-			contactPersonProfile = new Profile();
-			contactPerson.setProfile(contactPersonProfile);
 		} else {
 			contactInformationOrganization = this.supplierOrganization.getOrganization().getContactInformation();
-			contactPerson = this.supplierOrganization.getOrganization().getContactPerson();
 			contactInformationPerson = this.supplierOrganization.getOrganization().getContactPerson().getContactInformation();
 			contactPersonProfile = this.supplierOrganization.getOrganization().getContactPerson().getProfile();
 		}
-		
-		// FIXME: update resource list!
 
-		
+		ResourceType resourceType = ((ValueResultResourceType)this.organizationBean.getAccessService().getResourceTypeByKey(ResourceTypeKey.supplier_source)).getValue();
+		for (SupplierSourceResource resource : this.supplierOrganization.getResourceList()) {
+			resource.getResource().setResourceType(resourceType);
+			resource.getResource().setOfferedBy(this.supplierOrganization.getOrganization().getId());
+		}
+
 		if (this.isNew) {
-			organizationService.insertSupplierOrganization(supplierOrganization);
+			this.supplierOrganization = ((ValueResultSupplierOrganization)
+					organizationService.insertSupplierOrganization(supplierOrganization)).getValue();
 		} else {
 			organizationService.updateOrganization(supplierOrganization.getOrganization());
-			supplierOrganization.getResourceList();
 		}
+		
+		SupplierSourceResource[] resourceList = new SupplierSourceResource[this.organizationBean.deltetedResources.size()];
+		int i=0;
+		for (SupplierSourceResource resource : this.organizationBean.deltetedResources) {
+			resourceList[i++] = resource;
+		}
+		
+		this.organizationService.deleteResources(resourceList);
+		this.organizationService.addResources(this.supplierOrganization.getResourceList());
+		
 		this.organizationBean.setOrganization(this.organization);
+		this.organizationBean.runSearch();
 		return this.organizationBean.actionDetailsSingle();
 	}
 	
@@ -143,22 +153,37 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
 		SupplierSourceResource supplierSourceResource = new SupplierSourceResource();
 		supplierSourceResource.setSupplierSource(new SupplierSource(getSourceName(), new Url(getSourceUrl())));
-		// TODO: Do with services!
-		// FIXME: Re-insert
-//		this.supplierOrganization.getResourceList().add(supplierSourceResource);
+		supplierSourceResource.setResource(new Resource());
+//		supplierSourceResource.getResource().setId(-1);
+		
+		SupplierSourceResource[] newList = new SupplierSourceResource[this.supplierOrganization.getResourceList().length + 1];
+		int i = 0;
+		for (SupplierSourceResource resource : this.supplierOrganization.getResourceList()) {
+			newList[i++] = resource;
+		}
+		newList[newList.length-1] = supplierSourceResource;
+
+		this.supplierOrganization.setResourceList(newList);
+		
 	}
 	
 	public void actionDeleteSource() {
 		logger.debug("Method 'actionDeleteSource' invoked");
-		//Integer rowIndex = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ipRangeDeleteTableRowIndex"); 
-		// TODO: Do with services!
-		// FIXME: Re-insert
-//		supplierOrganization.getResourceList().remove((SupplierSourceResource) this.supplierSourceListHtmlDataTable.getRowData());
+		int index = this.supplierSourceListHtmlDataTable.getRowIndex();
+		
+		this.organizationBean.deltetedResources.add(this.supplierOrganization.getResourceList()[index]);
+		
+		SupplierSourceResource[] newList = new SupplierSourceResource[this.supplierOrganization.getResourceList().length - 1];
+		int j=0; int i=0;
+		for (SupplierSourceResource resource : this.supplierOrganization.getResourceList()) {
+			if(j != index){ newList[i++] = resource; } j++;
+		}
+		this.supplierOrganization.setResourceList(newList);
+		this.supplierSourceListHtmlDataTable = null;
 	}
 
 	public boolean isShowSourceList() {
-		// TODO: Do with services!
-		return false;//(supplierOrganization.getSupplierSourceList() != null && supplierOrganization.getSupplierSourceList().size() > 0) ? true : false;
+		return (supplierOrganization.getResourceList().length > 0) ? true : false;
 	}
 
 	// Method is invoked by hidden init-field in JSP.
@@ -194,18 +219,16 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		if ( ! this.organizationBean.getIsNew()) {
 			this.supplierOrganization = this.organizationBean.getSupplierOrganization();
 		} else {
-			this.supplierOrganization = new SupplierOrganization();
-			this.supplierOrganization.getOrganization().setContactInformation(new ContactInformation());
-			this.supplierOrganization.getOrganization().setContactPerson(new Person());
-			this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
-			SingleResultOrganizationType result = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
-	    	if(result instanceof ValueResultOrganizationType){
-				this.supplierOrganization.getOrganization().setType(((ValueResultOrganizationType) result).getValue());
-			}
+			this.supplierOrganization = this.organizationBean.getSupplierOrganization();
 		}
 		this.setIsNew(this.organizationBean.getIsNew());
 		this.setNotNew( ! this.organizationBean.getIsNew());
 		this.organization = this.supplierOrganization.getOrganization();
+		
+		// TODO: remove:
+		if(this.supplierOrganization.getResourceList() == null){
+			this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
+		}
 		
 	}
 }

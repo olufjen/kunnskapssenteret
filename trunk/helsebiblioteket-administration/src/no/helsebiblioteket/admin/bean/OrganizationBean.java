@@ -20,17 +20,25 @@ import org.apache.myfaces.custom.tree.model.TreeModel;
 import org.apache.myfaces.custom.tree.model.TreeModelEvent;
 
 import no.helsebiblioteket.admin.bean.item.OrganizationTableItem;
+import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.AccessService;
@@ -55,16 +63,15 @@ public class OrganizationBean implements IconProvider{
 	private ResourceAccessListItem[] orgTypeAccessList;
 	private ResourceAccessListItem[] orgAccessList;
 	private SupplierSourceResource[] supplierSourceResources;
-	
+	private List<IpAddressRange> ipRangeList;
+
+	protected List<SupplierSourceResource> deltetedResources;
+
 //	private boolean showMore = true;
 //	private boolean showMoreLeft = true;
 //	private boolean showMoreRight = true;
 	private PageResultOrganizationListItem lastPageResult = null;
 	private int SHOW_MAX = 40;
-
-
-	// TODO: Include the ipRangeList in the
-	//       Details view (organization-details.jsp)
 	
 	public boolean getFailed() { return true; }
     public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
@@ -122,11 +129,23 @@ public class OrganizationBean implements IconProvider{
 			this.orgTypeAccessList = this.accessService.getAccessListByOrganizationType(this.organization.getType()).getList();
 			this.orgAccessList = this.accessService.getAccessListByOrganization(this.organization).getList();
 			this.supplierSourceResources = this.accessService.getSupplierSourceResourceListAll("").getList();
+			this.ipRangeList = new ArrayList<IpAddressRange>();
+			for (IpAddressRange range : this.memberOrganization.getIpAddressRangeList()) {
+				ipRangeList.add(range);
+			}
+			for (IpAddressSingle single : this.memberOrganization.getIpAddressSingleList()) {
+				IpAddressRange range = new IpAddressRange();
+				range.setIpAddressFrom(single.getIpAddressSingle());
+				range.setIpAddressTo(new IpAddress(""));
+				range.setIpAddressSet(single.getIpAddressSet());
+				ipRangeList.add(range);
+			}
 			if(edit) return "create_change_member_organization";
 		} else if(res instanceof ValueResultSupplierOrganization){
 			this.memberOrganization = null;
 			this.supplierOrganization = ((ValueResultSupplierOrganization)res).getValue();
 			this.organization = supplierOrganization.getOrganization();
+			this.deltetedResources = new ArrayList<SupplierSourceResource>();
 			if(edit) return "create_change_supplier_organization";
 		} else {
 			this.organization = null;
@@ -143,17 +162,49 @@ public class OrganizationBean implements IconProvider{
 
 	public String actionNewSupplierOrganization() {
 		this.isNew = true;
+		this.supplierOrganization = new SupplierOrganization();
+		this.supplierOrganization.getOrganization().setContactInformation(new ContactInformation());
+		this.supplierOrganization.getOrganization().setContactPerson(new Person());
+		this.supplierOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
+		this.supplierOrganization.getOrganization().getContactPerson().setProfile(new Profile());
+		this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
+		SingleResultOrganizationType result = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
+    	if(result instanceof ValueResultOrganizationType){
+			this.supplierOrganization.getOrganization().setType(((ValueResultOrganizationType) result).getValue());
+		}
+
 		return "create_change_supplier_organization";
 	}
 	public String actionNewMemberOrganization() {
 		this.isNew = true;
+		this.memberOrganization = new MemberOrganization();
+		this.memberOrganization.getOrganization().setContactInformation(new ContactInformation());
+		this.memberOrganization.getOrganization().setContactPerson(new Person());
+		this.memberOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
+		this.memberOrganization.getOrganization().getContactPerson().setProfile(new Profile());
+		this.memberOrganization.getOrganization().setNameEnglish("");
+		this.memberOrganization.getOrganization().setNameNorwegian("");
+		this.memberOrganization.getOrganization().setNameShortEnglish("");
+		this.memberOrganization.getOrganization().setNameShortNorwegian("");
+		this.memberOrganization.setIpAddressRangeList(new IpAddressRange[0]);
+
+		this.supplierSourceResources = this.accessService.getSupplierSourceResourceListAll("").getList();
+		this.deltetedResources = new ArrayList<SupplierSourceResource>();
+		this.orgTypeAccessList = new ResourceAccessListItem[0];
+		this.orgAccessList = new ResourceAccessListItem[0];
+		this.ipRangeList = new ArrayList<IpAddressRange>();
+		
 		return "create_change_member_organization";
 	}
 	public void actionSearch() {
 		if(this.searchinput == null) { this.searchinput = ""; }
 		this.searchedString = this.searchinput;
+		this.runSearch();
+	}
+	public void runSearch() {
 		PageRequest request = new PageRequest(0, SHOW_MAX);
-		this.lastPageResult = this.organizationService.getOrganizationListBySearchString(request, this.searchinput);
+		if(this.searchedString == null) this.searchedString = "";
+		this.lastPageResult = this.organizationService.getOrganizationListBySearchString(request, this.searchedString);
 		this.organizations = this.lastPageResult.getResult();
 		this.resetTreeModel();
 	}
@@ -268,13 +319,13 @@ public class OrganizationBean implements IconProvider{
 		if(userObject instanceof DefaultMutableTreeNode &&
 				((DefaultMutableTreeNode)userObject).getUserObject() instanceof OrganizationTableItem){
 			OrganizationTableItem item = (OrganizationTableItem) ((DefaultMutableTreeNode)userObject).getUserObject();
-			if(item.getOrganization() == null){
+			if(item==null || item.getOrganization() == null){
 				return "images/NOT_EXIST.gif";
 			} else {
-				if(item.getOrganization().getIpAddressesFrom().length == 0){
-					return "images/network_not.gif";
+				if(item.getOrganization().getTypeKey().equals(OrganizationTypeKey.content_supplier.getValue())){
+					return "images/supplier.gif";
 				} else {
-					return "images/network.gif";
+					return "images/not_supplier.gif";
 				}
 			}
 		} else {
@@ -437,5 +488,11 @@ public class OrganizationBean implements IconProvider{
 	}
 	public OrganizationService getOrganizationService() {
 		return organizationService;
+	}
+	public List<IpAddressRange> getIpRangeList() {
+		return ipRangeList;
+	}
+	public void setIpRangeList(List<IpAddressRange> ipRangeList) {
+		this.ipRangeList = ipRangeList;
 	}
 }
