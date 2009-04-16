@@ -51,15 +51,41 @@
 		where resource_id = #resource.id# 
 		and last_changed = #resource.lastChanged#
 	</delete>
-	<select id="getSupplierSourceResourceById" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultMap" parameterClass="integer">
-		select resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed
-		from tbl_resource
-		where resource_id = #id#;
+	<select id="getSupplierSourceResourceById" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
+		select
+			sup.supplier_source_name,
+			sup.url,
+			type.key,
+			type.descr,
+			type.name,
+			res.resource_id,
+			res.last_changed,
+			sup.supplier_source_id,
+			type.resource_type_id,
+			org_unit_id
+		from tbl_resource as res
+			inner join tbl_supplier_source as sup on res.supplier_source_id = sup.supplier_source_id
+			inner join tbl_resource_type_reg as type on res.resource_type_id = type.resource_type_id
+		where
+			res.resource_id = #id#;
 	</select>
-	<select id="getSupplierSourceResourceByOrganizationId" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultMap" parameterClass="integer">
-		select resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed
-		from tbl_resource
-		where org_unit_id = #id#;
+	<select id="getSupplierSourceResourceByOrganizationId" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
+		select
+			sup.supplier_source_name,
+			sup.url,
+			type.key,
+			type.descr,
+			type.name,
+			res.resource_id,
+			res.last_changed,
+			sup.supplier_source_id,
+			type.resource_type_id,
+			org_unit_id
+		from tbl_resource as res
+			inner join tbl_supplier_source as sup on res.supplier_source_id = sup.supplier_source_id
+			inner join tbl_resource_type_reg as type on res.resource_type_id = type.resource_type_id
+		where
+			res.org_unit_id = #id#;
 	</select>
 	
 	<select id="getSupplierSourceResourcesAll" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultListMap">

@@ -69,6 +69,7 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 		working.setNameShortNorwegian("");
 		
 		working.setTypeText(join.getOrganizationTypeDescription());
+		working.setTypeKey(join.getOrganizationTypeKey().getValue());
 		
 		working.setIpAddressesFrom(new String[0]);
 		working.setIpAddressesTo(new String[0]);
