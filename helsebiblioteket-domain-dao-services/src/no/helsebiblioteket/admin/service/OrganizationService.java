@@ -12,11 +12,13 @@ import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
@@ -41,4 +43,7 @@ public interface OrganizationService extends Serializable {
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSingles);
 	public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges);
 	public Boolean deleteIpAddresses(IpAddressSet[] ipAddressSets);
+
+	public Boolean deleteResources(SupplierSourceResource[] resources);
+	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources);
 }

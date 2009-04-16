@@ -21,6 +21,7 @@ import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
+import no.helsebiblioteket.admin.dao.ResourceTypeDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.ContactInformation;
@@ -49,6 +50,7 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationTyp
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
@@ -74,6 +76,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private ContactInformationDao contactInformationDao;
 	private IpRangeDao ipRangeDao;
 	private ResourceDao resourceDao;
+//	private ResourceTypeDao resourceTypeDao;
 	private PositionDao positionDao;
 	private SupplierSourceDao supplierSourceDao;
 	
@@ -638,6 +641,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	private void insertSupplierSourceResourceList(SupplierOrganization supplierOrganization) {
 		for (SupplierSourceResource resource : supplierOrganization.getResourceList()) {
+			resource.getResource().setOfferedBy(supplierOrganization.getOrganization().getId());
 			this.supplierSourceDao.insertSupplierSource(resource.getSupplierSource());
 			this.resourceDao.insertSupplierSourceResource(resource);
 		}
@@ -872,5 +876,25 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	public void setPositionDao(PositionDao positionDao) {
 		this.positionDao = positionDao;
+	}
+	@Override
+	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources) {
+		for (SupplierSourceResource supplierSourceResource : resources) {
+			if(supplierSourceResource.getResource().getId() == null){
+				this.supplierSourceDao.insertSupplierSource(supplierSourceResource.getSupplierSource());
+				this.resourceDao.insertSupplierSourceResource(supplierSourceResource);
+			}
+		}
+		return new ListResultSupplierSourceResource(resources);
+	}
+	@Override
+	public Boolean deleteResources(SupplierSourceResource[] resources) {
+		for (SupplierSourceResource supplierSourceResource : resources) {
+			if(supplierSourceResource.getResource().getId() != null){
+				this.resourceDao.deleteSupplierSourceResource(supplierSourceResource);
+				this.supplierSourceDao.deleteSupplierSource(supplierSourceResource.getSupplierSource());
+			}
+		}
+		return Boolean.TRUE;
 	}
 }
