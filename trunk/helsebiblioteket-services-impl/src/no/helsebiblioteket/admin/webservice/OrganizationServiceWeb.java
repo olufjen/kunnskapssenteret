@@ -12,11 +12,13 @@ import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
@@ -38,25 +40,31 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName addIpAddressRanges;
 	private QName deleteIpAddresses;
 	private QName insertSupplierOrganizationName;
+	private QName deleteResourcesName;
+	private QName addResourcesName;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY  };
 		Class[] returnTypes = new Class[] { ListResultOrganizationType.class };
 		return (ListResultOrganizationType) invoke(this.organizationTypeListAllName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key) {
 		Object[] args = new Object[] { key  };
 		Class[] returnTypes = new Class[] { SingleResultOrganizationType.class };
 		return (SingleResultOrganizationType) invoke(this.organizationTypeByKeyName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
 		Object[] args = new Object[] { request  };
 		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
 		return (PageResultOrganizationListItem) invoke(this.organizationListAllName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString) {
 		Object[] args = new Object[] { request, searchString  };
@@ -65,12 +73,14 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem) {
 		Object[] args = new Object[] { organizationListItem  };
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
 		return (SingleResultOrganization) invoke(this.organizationByListItemName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization) {
 		// TODO: These tests should not be here.
@@ -84,6 +94,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
 		return (SingleResultOrganization) invoke(this.insertMemberOrganizationName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization) {
 		// TODO: These tests should not be here.
@@ -95,35 +106,54 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
 		return (SingleResultOrganization) invoke(this.insertSupplierOrganizationName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization updateOrganization(Organization organization) {
 		Object[] args = new Object[] { organization  };
 		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
 		return (SingleResultOrganization) invoke(this.updateOrganizationName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSets) {
 		Object[] args = new Object[] { organization, ipAddressSets  };
 		Class[] returnTypes = new Class[] { ListResultIpAddressSet.class };
 		return (ListResultIpAddressSet) invoke(this.addIpAddresses, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges) {
 		Object[] args = new Object[] { organization, ipAddressRanges  };
 		Class[] returnTypes = new Class[] { ListResultIpAddressSet.class };
 		return (ListResultIpAddressSet) invoke(this.addIpAddressRanges, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean deleteIpAddresses(IpAddressSet[] ipAddressSets) {
 		Object[] args = new Object[] { ipAddressSets  };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.deleteIpAddresses, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress  };
 		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
 		return (ListResultOrganizationListItem) invoke(this.organizationListIpAddressName, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources) {
+		Object[] args = new Object[] { resources  };
+		Class[] returnTypes = new Class[] { ListResultSupplierSourceResource.class };
+		return (ListResultSupplierSourceResource) invoke(this.addResourcesName, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Boolean deleteResources(SupplierSourceResource[] resources) {
+		Object[] args = new Object[] { resources  };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean) invoke(this.deleteResourcesName, args, returnTypes);
 	}
 
 	
