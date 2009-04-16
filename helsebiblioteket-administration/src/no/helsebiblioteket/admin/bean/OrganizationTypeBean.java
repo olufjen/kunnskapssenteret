@@ -1,6 +1,7 @@
 package no.helsebiblioteket.admin.bean;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.component.html.HtmlDataTable;
@@ -11,12 +12,22 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.Access;
+import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
+import no.helsebiblioteket.admin.domain.ResourceType;
+import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
@@ -56,12 +67,36 @@ public class OrganizationTypeBean {
 	}
 	public String actionSave() {
 		for (ResourceAccessListItem accessItem : this.orgTypeAccessList) {
-			ResourceAccess access = new ResourceAccess();
-			access.setAccess(null);
-			access.setResource(null);
-			// TODO: Complete this.
-			// Use newOrgTypeAccessList og oldOrgTypeAccessList.
-//			this.accessService.insertOrganizationTypeResourceAccess(this.organizationType, access);
+			ResourceAccess resourceAccess = new ResourceAccess();
+			Access access = new Access();
+			AccessType accessType = ((ValueResultAccessType)this.accessService.getAccessTypeByTypeCategory(accessItem.getKey(), accessItem.getCategory())).getValue();
+			access.setAccessType(accessType);
+			OrganizationListItem organizationListItem = new OrganizationListItem();
+			organizationListItem.setId(accessItem.getProvidedBy());
+			SupplierOrganization supplier = ((ValueResultSupplierOrganization)this.organizationService.getOrganizationByListItem(organizationListItem)).getValue();
+			access.setProvidedBy(supplier);
+			Calendar calendar = Calendar.getInstance();
+			access.setValidFrom(calendar.getTime());
+			calendar.add(Calendar.YEAR, 1);
+			access.setValidTo(calendar.getTime());
+			resourceAccess.setAccess(access);
+
+			SupplierSourceResource supplierSourceResource = new SupplierSourceResource();
+			Resource resource = new Resource();
+			resource.setId(accessItem.getResourceId());
+			resource.setOfferedBy(supplier.getOrganization().getId());
+			ResourceType resourceType = ((ValueResultResourceType)accessService.getResourceTypeByKey(ResourceTypeKey.supplier_source)).getValue();
+			resource.setResourceType(resourceType);
+						
+			SupplierSource supplierSource = new SupplierSource();
+			supplierSource.setId(accessItem.getSupplierSourceId());
+			supplierSource.setSupplierSourceName(accessItem.getSupplierSourceName());
+			supplierSource.setUrl(accessItem.getUrl());
+			supplierSourceResource.setResource(resource);
+			supplierSourceResource.setSupplierSource(supplierSource);
+			
+			resourceAccess.setResource(supplierSourceResource);
+			this.accessService.insertOrganizationTypeResourceAccess(this.organizationType, resourceAccess);
 		}
 		return "organization_types_overview";
 	}

@@ -151,9 +151,11 @@
 				<h:outputText value="#{msg_main.chosen} #{msg_main.sources}:" />
 			</td>
 			<td valign="top">
-				<t:dataTable rendered="#{createAndChangeSupplierOrganizationBean.showSourceList}" var="source" value="#{createAndChangeSupplierOrganizationBean.organization.sourceList}" binding="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
+				<t:dataTable rendered="#{createAndChangeSupplierOrganizationBean.showSourceList}" var="source"
+						value="#{createAndChangeSupplierOrganizationBean.supplierOrganization.resourceList}"
+						binding="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
 					<t:column>
-			      		<t:outputText id="source" value="#{source.name} #{source.url}" />
+			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} #{source.supplierSource.url.stringValue}" />
 			    	</t:column>
 			    	<t:column style="vertical-align:top">
 			      		<t:commandLink id="sourceDeleteLink" action="#{createAndChangeSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">

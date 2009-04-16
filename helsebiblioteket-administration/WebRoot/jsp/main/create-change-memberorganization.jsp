@@ -31,6 +31,43 @@
 				<br /><h:message for="organizationNameEnglish" styleClass="error"/>
 			</td>
 		</tr>
+
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.description}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeMemberOrganizationBean.organization.description}"
+					id="organizationDescription" 
+					required="true"
+					>
+				</h:inputText>
+				<h:message for="organizationDescription" styleClass="error"/>
+			</td>
+		</tr>
+	
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.group}" />
+			</td>
+			<td>
+				<h:selectOneListbox 
+					value="#{createAndChangeMemberOrganizationBean.selectedOrganizationType}"
+					id="organizationType" 
+					required="true"
+					size="1"
+					>
+					<f:selectItems value="#{adminBean.organizationTypeSelectItemList}"/>
+				</h:selectOneListbox>
+				<br /><h:message for="organizationType" styleClass="error"/>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.organization_other_names}" /></h5></td>
+		</tr>
+
 		<tr>
 			<td>
 				<h:outputText value="#{msg_main.english_name_short}" />
@@ -73,41 +110,11 @@
 				<br /><h:message for="organizationNameShortNorwegian" styleClass="error"/>
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.description}" />
-			</td>
-			<td>
-				<h:inputText 
-					value="#{createAndChangeMemberOrganizationBean.organization.description}"
-					id="organizationDescription" 
-					required="true"
-					>
-				</h:inputText>
-				<h:message for="organizationDescription" styleClass="error"/>
-			</td>
-		</tr>
-	
-		<tr>
-			<td>
-				<h:outputText value="#{msg_main.group}" />
-			</td>
-			<td>
-				<h:selectOneListbox 
-					value="#{createAndChangeMemberOrganizationBean.selectedOrganizationType}"
-					id="organizationType" 
-					required="true"
-					size="1"
-					>
-					<f:selectItems value="#{adminBean.organizationTypeSelectItemList}"/>
-				</h:selectOneListbox>
-				<br /><h:message for="organizationType" styleClass="error"/>
-			</td>
-		</tr>
 		
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.organization}" /></h5></td>
 		</tr>
+
 		<tr>
 			<td>
 				<h:outputText value="#{msg_main.postal_address}"></h:outputText>
