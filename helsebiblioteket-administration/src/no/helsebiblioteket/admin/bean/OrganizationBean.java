@@ -60,12 +60,13 @@ public class OrganizationBean implements IconProvider{
 	private TreeModel treeModel;
 	private HtmlTree htmlTree;
 	private String searchedString;
-	private ResourceAccessListItem[] orgTypeAccessList;
-	private ResourceAccessListItem[] orgAccessList;
 	private SupplierSourceResource[] supplierSourceResources;
 	private List<IpAddressRange> ipRangeList;
 
 	protected List<SupplierSourceResource> deltetedResources;
+	protected List<ResourceAccessListItem> deltetedAccesses;
+	protected ResourceAccessListItem[] orgTypeAccessList;
+	protected ResourceAccessListItem[] orgAccessList;
 
 //	private boolean showMore = true;
 //	private boolean showMoreLeft = true;
@@ -140,6 +141,7 @@ public class OrganizationBean implements IconProvider{
 				range.setIpAddressSet(single.getIpAddressSet());
 				ipRangeList.add(range);
 			}
+			this.deltetedAccesses = new ArrayList<ResourceAccessListItem>();
 			if(edit) return "create_change_member_organization";
 		} else if(res instanceof ValueResultSupplierOrganization){
 			this.memberOrganization = null;
@@ -172,6 +174,7 @@ public class OrganizationBean implements IconProvider{
     	if(result instanceof ValueResultOrganizationType){
 			this.supplierOrganization.getOrganization().setType(((ValueResultOrganizationType) result).getValue());
 		}
+    	this.deltetedResources = new ArrayList<SupplierSourceResource>();
 
 		return "create_change_supplier_organization";
 	}
@@ -461,7 +464,7 @@ public class OrganizationBean implements IconProvider{
 	public String getOrganizationTypeName() {
 		return MessageResourceReader.getMessageResourceString(bundleDomainOrganizationTypeKey, organization.getType().getKey().getValue());
 	}
-	public boolean isShowMore() {
+	public boolean getShowMore() {
 		if(this.lastPageResult.getTotal() > SHOW_MAX){
 			return true;
 		} else {

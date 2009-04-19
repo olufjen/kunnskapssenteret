@@ -41,6 +41,8 @@ public class OrganizationTypeBean {
 	private HtmlDataTable organizationTypeTable;
 	private HtmlSelectOneMenu supplierSource;
 	private HtmlSelectOneMenu accessTypeCategory;
+	private HtmlDataTable orgTypeAccessTable;
+	private List<ResourceAccessListItem> deltetedResources;
 
 	private ResourceAccessListItem[] newOrgTypeAccessList;
 	private ResourceAccessListItem[] oldOrgTypeAccessList;
@@ -49,6 +51,7 @@ public class OrganizationTypeBean {
 		this.organizationType = (OrganizationType) this.organizationTypeTable.getRowData();
 		loadTypes();
 		loadAccess();
+		this.deltetedResources = new ArrayList<ResourceAccessListItem>();
 		return "edit_organization_type";
 	}
 	public void loadTypes(){
@@ -66,7 +69,13 @@ public class OrganizationTypeBean {
 		return "organization_types_overview";
 	}
 	public String actionSave() {
+		for (ResourceAccessListItem accessItem : this.deltetedResources) {
+			if(accessItem.getId() == null){ continue; }
+			this.accessService.deleteResourceAccess(accessItem);
+		}
 		for (ResourceAccessListItem accessItem : this.orgTypeAccessList) {
+			if(accessItem.getId() != null){ continue; }
+
 			ResourceAccess resourceAccess = new ResourceAccess();
 			Access access = new Access();
 			AccessType accessType = ((ValueResultAccessType)this.accessService.getAccessTypeByTypeCategory(accessItem.getKey(), accessItem.getCategory())).getValue();
@@ -119,7 +128,6 @@ public class OrganizationTypeBean {
 		newList[newList.length-1] = new ResourceAccessListItem();
 		newList[newList.length-1].setSupplierSourceName(addedResource.getSupplierSource().getSupplierSourceName());
 		newList[newList.length-1].setCategory(new AccessTypeCategory(selectedAccessTypeCategoryValue));
-		newList[newList.length-1].setId(addedResource.getResource().getId());
 		newList[newList.length-1].setKey(AccessTypeKey.general);
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
 		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
@@ -128,6 +136,17 @@ public class OrganizationTypeBean {
 
 		this.orgTypeAccessList = newList;
 		return "";
+	}
+	
+	public void actionDeleteSource(){
+		int index = this.orgTypeAccessTable.getRowIndex();
+		this.deltetedResources.add(this.orgTypeAccessList[index]);
+		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.orgTypeAccessList.length - 1];
+		int j=0; int i=0;
+		for (ResourceAccessListItem access : this.orgTypeAccessList) {
+			if(j != index){ newList[i++] = access; } j++;
+		}
+		this.orgTypeAccessList = newList;
 	}
 	
 	public List<SelectItem> getSupplierSourceList() {
@@ -196,5 +215,11 @@ public class OrganizationTypeBean {
 	}
 	public void setAccessService(AccessService accessService) {
 		this.accessService = accessService;
+	}
+	public HtmlDataTable getOrgTypeAccessTable() {
+		return orgTypeAccessTable;
+	}
+	public void setOrgTypeAccessTable(HtmlDataTable orgTypeAccessTable) {
+		this.orgTypeAccessTable = orgTypeAccessTable;
 	}
 }
