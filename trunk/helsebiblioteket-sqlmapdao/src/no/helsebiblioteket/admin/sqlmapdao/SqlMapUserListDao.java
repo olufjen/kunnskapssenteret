@@ -25,27 +25,25 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 	@Override
 	public List<UserListItem> getUserListPagedSearchStringRoles(String searchString, List<Role> roles, int skip, int max) {
 		Map<Integer, List<UserListLine>> allLinesByUserId = new HashMap<Integer, List<UserListLine>>();
-		for (Role role : roles) {
-			List<Integer> ids = getSqlMapClientTemplate().queryForList("getUserIdsSearchRole",
-					new SearchStringInput("%" + searchString + "%", role.getId(), null, null),
-					skip, max);
-			if(ids.size() != 0) {
-				List<UserListLine> lines = getSqlMapClientTemplate().queryForList("getUserListSearchRole",
-						new SearchStringInput("%" + searchString + "%", role.getId(),
-								ids.get(0), ids.get(ids.size()-1)),
-						skip, max);
-				for (UserListLine line : lines) {
-					if(allLinesByUserId.size() == max){ break; }
-					List<UserListLine> found = allLinesByUserId.get(line.getId());
-					if(found == null){
-						found =  new ArrayList<UserListLine>();
-						allLinesByUserId.put(line.getId(), found);
-					}
-					found.add(line);
+		String rolesString = createRolesString(roles);
+		List<Integer> ids = getSqlMapClientTemplate().queryForList("getUserIdsSearchRole",
+				new SearchStringInput("%" + searchString + "%", rolesString),
+				skip, max);
+		if(ids.size() != 0) {
+			List<UserListLine> lines = getSqlMapClientTemplate().queryForList("getUserListSearchRole",
+					new SearchStringInput("%" + searchString + "%", rolesString,
+							ids.get(0), ids.get(ids.size()-1)));
+			for (UserListLine line : lines) {
+				if(allLinesByUserId.size() == max){ break; }
+				List<UserListLine> found = allLinesByUserId.get(line.getId());
+				if(found == null){
+					found =  new ArrayList<UserListLine>();
+					allLinesByUserId.put(line.getId(), found);
 				}
+				found.add(line);
 			}
-			if(allLinesByUserId.size() == max){ break; }
 		}
+
 		Integer[] sortedIds = allLinesByUserId.keySet().toArray(new Integer[0]);
 		Arrays.sort(sortedIds);
 		List<Integer> reverseIds = Arrays.asList(sortedIds);
@@ -55,6 +53,15 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 			sortedItems.addAll(translateList(allLinesByUserId.get(integer)));
 		}
 		return sortedItems;
+	}
+	private String createRolesString(List<Role> roles) {
+		String result = "";
+		for (int i=0;i<roles.size();i++) {
+			Role role = roles.get(i);
+			result += role.getId();
+			if(i<roles.size()-1) result += ", ";
+		}
+		return result;
 	}
 	private List<UserListItem> translateList(List<UserListLine> lines){
 		List<UserListItem> result = new ArrayList<UserListItem>();
@@ -122,5 +129,14 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 			}
 		}
 		return result;
+	}
+	@Override
+	public Integer getUserNumber() {
+		return (Integer) getSqlMapClientTemplate().queryForObject("getUserNumber");
+	}
+	@Override
+	public Integer getUserNumberSearchStringRoles(String searchString, List<Role> roles) {
+		return (Integer) getSqlMapClientTemplate().queryForObject("getUserNumberSearchStringRoles",
+				new SearchStringInput("%" + searchString + "%", this.createRolesString(roles), null, null));
 	}
 }
