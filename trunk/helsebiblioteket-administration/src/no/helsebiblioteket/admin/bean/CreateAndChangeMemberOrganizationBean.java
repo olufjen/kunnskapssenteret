@@ -50,8 +50,6 @@ import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private MemberOrganization memberOrganization;
-	private ResourceAccessListItem[] orgTypeAccessList;
-	private ResourceAccessListItem[] orgAccessList;
 
 	private String ipAddressSingle = null;
 	private String ipAddressFrom = null;
@@ -63,83 +61,10 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	private HtmlSelectOneMenu accessTypeCategory = null;
 	
 	private String selectedOrganizationType = null;
-	
 	private List<IpAddressRange> ipRangeList = null;
-	
 	private HtmlDataTable ipRangeListHtmlDataTable = null;
-
-	public CreateAndChangeMemberOrganizationBean() {
-//		this.beanMode = BeanMode.change;
-	}
-
-	public String getSelectedOrganizationType() {
-		return selectedOrganizationType;
-	}
-
-	public void setSelectedOrganizationType(String selectedOrganizationType) {
-		this.selectedOrganizationType= selectedOrganizationType;
-	}
-
-	public String getIpAddressSingle() {
-		return ipAddressSingle;
-	}
-
-	public void setIpAddressSingle(String ipAddressSingle) {
-		this.ipAddressSingle = ipAddressSingle;
-	}
-
-	public UIInput getIpAddressSingleUIInput() {
-		return ipAddressSingleUIInput;
-	}
-
-	public void setIpAddressSingleUIInput(UIInput ipAddressSingleUIInput) {
-		this.ipAddressSingleUIInput = ipAddressSingleUIInput;
-	}
-
-	public String getIpAddressFrom() {
-		return ipAddressFrom;
-	}
-
-	public void setIpAddressFrom(String ipAddressFrom) {
-		this.ipAddressFrom = ipAddressFrom;
-	}
-
-	public String getIpAddressTo() {
-		return ipAddressTo;
-	}
-
-	public void setIpAddressTo(String ipAddressTo) {
-		this.ipAddressTo = ipAddressTo;
-	}
+	private HtmlDataTable orgAccessTable;
 	
-	public UIInput getIpAddressFromUIInput() {
-		return ipAddressFromUIInput;
-	}
-
-	public void setIpAddressFromUIInput(UIInput ipAddressFromUIInput) {
-		this.ipAddressFromUIInput = ipAddressFromUIInput;
-	}
-
-	public UIInput getIpAddressToUIInput() {
-		return ipAddressToUIInput;
-	}
-
-	public void setIpAddressToUIInput(UIInput ipAddressToUIInput) {
-		this.ipAddressToUIInput = ipAddressToUIInput;
-	}
-
-	public List<IpAddressRange> getIpRangeList() {
-		return this.ipRangeList;
-	}
-
-	public HtmlDataTable getIpRangeListHtmlDataTable() {
-		return this.ipRangeListHtmlDataTable;
-	}
-
-	public void setIpRangeListHtmlDataTable(HtmlDataTable ipRangeListHtmlDataTable) {
-		this.ipRangeListHtmlDataTable = ipRangeListHtmlDataTable;
-	}
-
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
 		ContactInformation contactInformationOrganization;
@@ -172,10 +97,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			organizationService.updateOrganization(this.memberOrganization.getOrganization());
 		}
 
-		for (ResourceAccessListItem item : this.organizationBean.getAccessService().getAccessListByOrganization(this.organization).getList()) {
+		for (ResourceAccessListItem item : this.organizationBean.deltetedAccesses) {
+			if(item.getId() == null) {continue;}
 			this.organizationBean.getAccessService().deleteResourceAccess(item);
 		}
 		for (ResourceAccessListItem item : this.organizationBean.getOrgAccessList()) {
+			if(item.getId() != null) {continue;}
 			ResourceAccess resourceAccess = new ResourceAccess();
 			Access access = new Access();
 			AccessType accessType = ((ValueResultAccessType)this.organizationBean.getAccessService().getAccessTypeByTypeCategory(item.getKey(), item.getCategory())).getValue();
@@ -277,7 +204,16 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		}else
 			this.organizationBean.getIpRangeList().add(new IpAddressRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
 	}
-	
+	public void actionDeleteAccess(){
+		int index = this.orgAccessTable.getRowIndex();
+		this.organizationBean.deltetedAccesses.add(this.organizationBean.orgAccessList[index]);
+		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.organizationBean.orgAccessList.length - 1];
+		int j=0; int i=0;
+		for (ResourceAccessListItem access : this.organizationBean.orgAccessList) {
+			if(j != index){ newList[i++] = access; } j++;
+		}
+		this.organizationBean.orgAccessList = newList;
+	}
 	public void actionAddSource(){
 		String selectedSourceValue = this.getSupplierSourceListValue().getSubmittedValue().toString();
 		String selectedAccessTypeCategoryValue = this.getAccessTypeCategory().getSubmittedValue().toString();
@@ -289,21 +225,20 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 				addedResource = supplierSourceResource;
 			}
 		}
-		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.orgAccessList.length + 1];
-		for(int i=0; i<this.orgAccessList.length;i++){
-			newList[i] = this.orgAccessList[i];
+		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.organizationBean.orgAccessList.length + 1];
+		for(int i=0; i<this.organizationBean.orgAccessList.length;i++){
+			newList[i] = this.organizationBean.orgAccessList[i];
 		}
 		newList[newList.length-1] = new ResourceAccessListItem();
 		newList[newList.length-1].setSupplierSourceName(addedResource.getSupplierSource().getSupplierSourceName());
 		newList[newList.length-1].setCategory(new AccessTypeCategory(selectedAccessTypeCategoryValue));
-		newList[newList.length-1].setId(addedResource.getResource().getId());
 		newList[newList.length-1].setKey(AccessTypeKey.general);
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
 		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
 		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
 		newList[newList.length-1].setSupplierSourceId(addedResource.getSupplierSource().getId());
 		
-		this.orgAccessList = newList;
+		this.organizationBean.orgAccessList = newList;
 		this.organizationBean.setOrgAccessList(newList);
 	}
 
@@ -356,6 +291,83 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		list.add(new SelectItem(AccessTypeCategory.DENY.getValue(), "Deny"));
 		return list;
 	}
+
+	
+	public HtmlDataTable getOrgAccessTable() {
+		return orgAccessTable;
+	}
+
+	public void setOrgAccessTable(HtmlDataTable orgAccessTable) {
+		this.orgAccessTable = orgAccessTable;
+	}
+	public String getSelectedOrganizationType() {
+		return selectedOrganizationType;
+	}
+
+	public void setSelectedOrganizationType(String selectedOrganizationType) {
+		this.selectedOrganizationType= selectedOrganizationType;
+	}
+
+	public String getIpAddressSingle() {
+		return ipAddressSingle;
+	}
+
+	public void setIpAddressSingle(String ipAddressSingle) {
+		this.ipAddressSingle = ipAddressSingle;
+	}
+
+	public UIInput getIpAddressSingleUIInput() {
+		return ipAddressSingleUIInput;
+	}
+
+	public void setIpAddressSingleUIInput(UIInput ipAddressSingleUIInput) {
+		this.ipAddressSingleUIInput = ipAddressSingleUIInput;
+	}
+
+	public String getIpAddressFrom() {
+		return ipAddressFrom;
+	}
+
+	public void setIpAddressFrom(String ipAddressFrom) {
+		this.ipAddressFrom = ipAddressFrom;
+	}
+
+	public String getIpAddressTo() {
+		return ipAddressTo;
+	}
+
+	public void setIpAddressTo(String ipAddressTo) {
+		this.ipAddressTo = ipAddressTo;
+	}
+	
+	public UIInput getIpAddressFromUIInput() {
+		return ipAddressFromUIInput;
+	}
+
+	public void setIpAddressFromUIInput(UIInput ipAddressFromUIInput) {
+		this.ipAddressFromUIInput = ipAddressFromUIInput;
+	}
+
+	public UIInput getIpAddressToUIInput() {
+		return ipAddressToUIInput;
+	}
+
+	public void setIpAddressToUIInput(UIInput ipAddressToUIInput) {
+		this.ipAddressToUIInput = ipAddressToUIInput;
+	}
+
+	public List<IpAddressRange> getIpRangeList() {
+		return this.ipRangeList;
+	}
+
+	public HtmlDataTable getIpRangeListHtmlDataTable() {
+		return this.ipRangeListHtmlDataTable;
+	}
+
+	public void setIpRangeListHtmlDataTable(HtmlDataTable ipRangeListHtmlDataTable) {
+		this.ipRangeListHtmlDataTable = ipRangeListHtmlDataTable;
+	}
+
 	
 	public HtmlSelectOneMenu getSupplierSourceListValue(){
 		return supplierSourceListValue;
@@ -371,11 +383,19 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	}
 
 	public ResourceAccessListItem[] getOrgTypeAccessList() {
-		return orgTypeAccessList;
+		return this.organizationBean.getOrgTypeAccessList();
 	}
 
 	public ResourceAccessListItem[] getOrgAccessList() {
-		return orgAccessList;
+		return this.organizationBean.getOrgAccessList();
+	}
+
+	public HtmlSelectOneMenu getAccessTypeCategory() {
+		return accessTypeCategory;
+	}
+
+	public void setAccessTypeCategory(HtmlSelectOneMenu accessTypeCategory) {
+		this.accessTypeCategory = accessTypeCategory;
 	}
 
 	// Method is invoked by hidden init-field in JSP.
@@ -399,19 +419,10 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 
 		this.setIsNew(this.organizationBean.getIsNew());
 		this.setNotNew( ! this.organizationBean.getIsNew());
-		this.orgTypeAccessList = this.organizationBean.getOrgTypeAccessList();
-		this.orgAccessList = this.organizationBean.getOrgAccessList();
 		this.ipRangeList = this.organizationBean.getIpRangeList();
 		
 		this.ipAddressFrom = "";
 		this.ipAddressTo="";
 		this.ipAddressSingle="";
-	}
-	public HtmlSelectOneMenu getAccessTypeCategory() {
-		return accessTypeCategory;
-	}
-
-	public void setAccessTypeCategory(HtmlSelectOneMenu accessTypeCategory) {
-		this.accessTypeCategory = accessTypeCategory;
 	}
 }

@@ -50,7 +50,8 @@
 			<td colspan="2">
 				<h:dataTable id="orgAccessTable"
 					value="#{organizationTypeBean.orgTypeAccessList}"
-					var="orgTypeAccess" >
+					var="orgTypeAccess"
+					binding="#{organizationTypeBean.orgTypeAccessTable}">
 
 					<h:column id="urlOrgColumn">
       					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
@@ -68,6 +69,14 @@
       					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_key}"/></f:facet>
       					<h:outputText id="orgAccessKey" value="#{orgTypeAccess.key.value}" />
 		    		</h:column>
+
+					<h:column id="deleteOrgColumn">
+      					<f:facet name="header"><h:outputText value="#{msg_main.delete}"/></f:facet>
+						<h:commandLink value="#{msg_main.delete}"
+							action="#{organizationTypeBean.actionDeleteSource}"
+							immediate="true"/>
+		    		</h:column>
+
     			</h:dataTable>
     		</td>
 		</tr>

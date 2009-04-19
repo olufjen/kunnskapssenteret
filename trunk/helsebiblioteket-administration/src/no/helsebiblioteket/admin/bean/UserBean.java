@@ -27,6 +27,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
@@ -73,6 +74,12 @@ public class UserBean {
 	private UISelectOne userRolesSelectOne;
 	private UISelectOne isStudentSelectOne;
 	private UIData usersTable;
+	
+	private PageResultUserListItem lastPageResult;
+	private String searchedString;
+	private Role[] searchedRoles;
+	private int SHOW_MAX = 40;
+	
     protected final Log logger = LogFactory.getLog(getClass());
 
     private boolean isNew(){ return this.user.getId() == null; }
@@ -227,7 +234,7 @@ public class UserBean {
     	}
     	return "user_details";
     }
-    public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
+    public String getErrorMsg() { return ""; }
     public boolean getFailed() { return true; }
     public String details(){
 		logger.info("USER: " + user.getPerson().getName());
@@ -259,13 +266,12 @@ public class UserBean {
 		return selectedRoles;
 	}
 	public String actionSearch(){
-		logger.info("method 'search' invoked");
-		for (String role : this.selectedRoles) {
-			logger.info("SELECTED ROLE: " + role);
-		}
-		// FIXME: Handle paged result!
-		this.users = this.userService.findUsersBySearchStringRoles(this.searchinput, this.getSelectedRolesRoleList(),
-				new PageRequest(0, 40)).getResult();
+		this.searchedString = this.searchinput;
+		if(this.searchedString == null) this.searchedString = "";
+		this.searchedRoles = this.getSelectedRolesRoleList();
+		this.lastPageResult = this.userService.findUsersBySearchStringRoles(this.searchedString, this.searchedRoles,
+				new PageRequest(0, 40));
+		this.users = this.lastPageResult.getResult();
 		
 		// TODO: Adding dummy roles?
 		for (UserListItem item : this.users) {
@@ -393,17 +399,7 @@ public class UserBean {
 		return this.allPositions;
 	}
 	public UserListItem[] getUsers() {
-		// FIXME: Handle paged result!
-		if(this.users == null) { this.users = userService.getUserListAll(new PageRequest(0, 40)).getResult(); }
-
-		// TODO: Set dummy roles?
-		for (UserListItem item : this.users) {
-			if(item.getRoleNames().length == 0){
-				item.setRoleNames(new String[1]);
-				item.getRoleNames()[0] = "";
-			}
-		}
-
+		if(this.users == null) { this.actionSearch(); }
 		return this.users;
 	}
 	public String getSelectedIsStudent() {
@@ -414,6 +410,60 @@ public class UserBean {
 	public void setOrganizationService(OrganizationService organizationService) { 
 		this.organizationService = organizationService; 
 	}
+	
+	public String actionForward(){
+		if(this.getShowMoreRight()){
+			if(this.searchedString == null) { this.searchedString = ""; }
+			if(this.searchedRoles == null) { this.searchedRoles = this.getSelectedRolesRoleList(); }
+			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() + SHOW_MAX,
+					SHOW_MAX);
+			this.lastPageResult = this.userService.findUsersBySearchStringRoles(this.searchedString,
+					this.searchedRoles, pageRequest);
+			this.users = this.lastPageResult.getResult();
+			this.usersTable = null;
+		}
+		return "users_overview";
+	}
+	public String actionBackward(){
+		if(this.getShowMoreLeft()){
+			if(this.searchedString == null) { this.searchedString = ""; }
+			if(this.searchedRoles == null) { this.searchedRoles = this.getSelectedRolesRoleList(); }
+			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() - SHOW_MAX,
+					SHOW_MAX);
+			this.lastPageResult = this.userService.findUsersBySearchStringRoles(this.searchedString,
+					this.searchedRoles, pageRequest);
+			this.users = this.lastPageResult.getResult();
+			this.usersTable = null;
+		}
+		return "users_overview";
+	}
+	public boolean getShowMore() {
+		if(this.lastPageResult == null){ this.actionSearch(); }
+		if(this.lastPageResult.getTotal() > SHOW_MAX){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean getShowMoreLeft() {
+		if(this.lastPageResult == null){ this.actionSearch(); }
+		if(this.lastPageResult.getSkipped() > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean getShowMoreRight() {
+		if(this.lastPageResult == null){ this.actionSearch(); }
+		if(this.lastPageResult.getTotal() >
+			this.lastPageResult.getSkipped() + this.lastPageResult.getNumber()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
 	public UIData getUsersTable() { return usersTable; }
 	public void setUsersTable(UIData usersTable) { this.usersTable = usersTable; }
 	public UISelectMany getRolesManyCheckbox() { return rolesManyCheckbox; }

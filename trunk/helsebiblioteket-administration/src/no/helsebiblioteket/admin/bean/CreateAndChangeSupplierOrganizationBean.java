@@ -229,6 +229,5 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		if(this.supplierOrganization.getResourceList() == null){
 			this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
 		}
-		
 	}
 }

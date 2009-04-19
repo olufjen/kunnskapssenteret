@@ -69,5 +69,27 @@
     </h:column>
 
   </h:dataTable>
+
+  <t:div rendered="#{userBean.showMore}">
+    <center>
+      <t:outputText value="#{msg_main.moreResults}" />
+      <br/>
+      <t:commandLink rendered="#{userBean.showMoreLeft}"
+          immediate="true"
+          action="#{userBean.actionBackward}"
+          value="#{msg_main.moreLeft}" />
+      <t:outputText rendered="#{ ! userBean.showMoreLeft}"
+          value="#{msg_main.moreLeftNot}" />
+
+      <t:outputText value="#{msg_main.moreResultsSplitter}" />
+
+      <t:commandLink rendered="#{userBean.showMoreRight}"
+          immediate="true"
+          action="#{userBean.actionForward}"
+          value="#{msg_main.moreRight}" />
+      <t:outputText rendered="#{ ! userBean.showMoreRight}"
+          value="#{msg_main.moreRightNot}" />
+      </center>
+  </t:div>
   
 </h:form>
