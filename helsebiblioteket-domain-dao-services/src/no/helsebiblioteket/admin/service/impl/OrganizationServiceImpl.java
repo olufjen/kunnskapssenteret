@@ -695,9 +695,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private IpAddress unNormalizeIp(String addressText) {
 		StringBuffer result = new StringBuffer();
 		StringTokenizer tokenizer = new StringTokenizer(addressText, ".");
+		if( ! tokenizer.hasMoreTokens()){ return new IpAddress("0.0.0.0"); }
 		String part1 = tokenizer.nextToken();
+		if( ! tokenizer.hasMoreTokens()){ return new IpAddress("0.0.0.0"); }
 		String part2 = tokenizer.nextToken();
+		if( ! tokenizer.hasMoreTokens()){ return new IpAddress("0.0.0.0"); }
 		String part3 = tokenizer.nextToken();
+		if( ! tokenizer.hasMoreTokens()){ return new IpAddress("0.0.0.0"); }
 		String part4 = tokenizer.nextToken();
 		result.append(new Integer(part1));
 		result.append(".");
