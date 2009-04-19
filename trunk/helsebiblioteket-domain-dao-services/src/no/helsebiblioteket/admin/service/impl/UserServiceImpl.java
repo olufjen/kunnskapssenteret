@@ -149,13 +149,15 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public PageResultUserListItem getUserListAll(PageRequest request) {
-		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
-			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
+		if(request.getMaxResult() > 40) {
+			throw new NullPointerException("Max result must be 40 or less.");
 		}
 		PageResultUserListItem result = new PageResultUserListItem();
+		Integer total = this.userListDao.getUserNumber();
 		result.setResult(translateUserList(this.userListDao.getUserListPaged(request.getSkip(), request.getMaxResult())));
 		result.setSkipped(request.getSkip());
-		result.setTotal(result.getResult().length);
+		result.setNumber(result.getResult().length);
+		result.setTotal(total);
 		return result;
 	}
 	private UserListItem[] translateUserList(List<UserListItem> userListPaged) {
@@ -180,8 +182,8 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request) {
-		if(request.getSkip() != 0 || request.getMaxResult() > 40) {
-			throw new NullPointerException("Cannot skip and max result must be 40 or less.");
+		if(request.getMaxResult() > 40) {
+			throw new NullPointerException("Max result must be 40 or less.");
 		}
 
 		List<Role> roleList = new ArrayList<Role>();
@@ -189,10 +191,12 @@ public class UserServiceImpl implements UserService {
 			roleList.add(role);
 		}
 		List<UserListItem> some = this.userListDao.getUserListPagedSearchStringRoles(searchString, roleList, request.getSkip(), request.getMaxResult());
+		Integer total = this.userListDao.getUserNumberSearchStringRoles(searchString, roleList);
 		PageResultUserListItem result = new PageResultUserListItem();
 		result.setResult(translateUserList(some));
 		result.setSkipped(request.getSkip());
-		result.setTotal(result.getResult().length);
+		result.setNumber(result.getResult().length);
+		result.setTotal(total);
 		return result;
 	}
 	/**
