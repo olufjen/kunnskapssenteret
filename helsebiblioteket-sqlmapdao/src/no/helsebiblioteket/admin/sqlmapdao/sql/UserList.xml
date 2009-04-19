@@ -40,6 +40,32 @@
 			tuser.user_id
 		desc
 	</select>
+
+	<select id="getUserNumber" cacheModel="UserListCache" resultClass="int" >
+		select
+			count(tuser.user_id)
+		from
+			tbl_user as tuser
+	</select>
+
+	<select id="getUserNumberSearchStringRoles" cacheModel="UserListCache" resultClass="int" parameterClass="SearchStringInput">
+		select count(user_id_distinct) as user_id_count from(
+			select
+				distinct (tuser.user_id) as user_id_distinct
+			from
+				tbl_user as tuser
+				left outer join tbl_person as tperson on tperson.person_id = tuser.person_id
+				left outer join tbl_user_role as userrole on userrole.user_id = tuser.user_id
+				left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
+			where
+				(tuser.username ilike #value# or tperson.first_name ilike #value# or tperson.last_name ilike #value#
+				or tperson.first_name || ' ' || tperson.last_name ilike #value#)
+				and trole.user_role_id in ( $otherValue$ )
+			order by
+				tuser.user_id
+			desc
+		) as user_id_count
+	</select>
 	
 	<select id="getUserIdsSearchRole" cacheModel="UserListCache" resultClass="int" parameterClass="SearchStringInput">
 		select
@@ -52,7 +78,7 @@
 		where
 			(tuser.username ilike #value# or tperson.first_name ilike #value# or tperson.last_name ilike #value#
 			or tperson.first_name || ' ' || tperson.last_name ilike #value#)
-			and trole.user_role_id = #number#
+			and trole.user_role_id in ( $otherValue$ )
 		order by
 			tuser.user_id
 		desc
@@ -83,7 +109,7 @@
 				where
 					(tuser.username ilike #value# or tperson.first_name ilike #value# or tperson.last_name ilike #value#
 					or tperson.first_name || ' ' || tperson.last_name ilike #value#)
-					and trole.user_role_id = #number#
+					and trole.user_role_id in ( $otherValue$ )
 					and tuser.user_id &lt;= #fromId# and tuser.user_id &gt;= #toId#
 			)
 		order by
