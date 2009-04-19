@@ -125,4 +125,15 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public Integer getUserNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Integer getUserNumberSearchStringRoles(String searchString,
+			List<Role> roles) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
