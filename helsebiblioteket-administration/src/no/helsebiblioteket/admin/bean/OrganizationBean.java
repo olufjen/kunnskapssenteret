@@ -60,7 +60,7 @@ public class OrganizationBean implements IconProvider{
 	private TreeModel treeModel;
 	private HtmlTree htmlTree;
 	private String searchedString;
-	private SupplierSourceResource[] supplierSourceResources;
+	private SupplierSourceResource[] supplierSourceResources = {};
 	private List<IpAddressRange> ipRangeList;
 
 	protected List<SupplierSourceResource> deltetedResources;
