@@ -136,6 +136,7 @@ public final class RegisterUserController extends ProfileController {
 			gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		}
 		document.appendChild(element);
+		loggedInFunction.logInUser(user);
 		loggedInFunction.setResult(this.resultSessionVarName, document);
     	response.sendRedirect(gotoUrl);
 	}
@@ -154,7 +155,7 @@ public final class RegisterUserController extends ProfileController {
         	profile.setParticipateSurvey(Boolean.valueOf(tmpString));
         }
 		
-        Position position = null;
+        Position position = new Position();
         String usertype = null;
         if ((usertype = request.getParameter(this.parameterNames.get("usertype"))) != null && !"".equals(usertype != null)) {
         	if (UserRoleKey.health_personnel.getValue().equals(usertype)) {
