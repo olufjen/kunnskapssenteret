@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -25,6 +26,7 @@ import com.enonic.cms.api.plugin.HttpControllerPlugin;
 public class ProfileController extends HttpControllerPlugin {
 	protected String resultSessionVarName;
 	protected UserService userService;
+	protected OrganizationService organizationService;
 	protected Map<String, String> parameterNames;
 	private LoggedInFunction loggedInFunction;
 	
@@ -283,6 +285,9 @@ public class ProfileController extends HttpControllerPlugin {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
 	}
 	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
 		this.loggedInFunction = loggedInFunction;
