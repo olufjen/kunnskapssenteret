@@ -16,7 +16,7 @@ public class Person {
 	private Date lastChanged;
 
 	// References
-	private Position position;
+	private Position position = new Position();
 	private ContactInformation contactInformation;
 	private Profile profile;
 	
