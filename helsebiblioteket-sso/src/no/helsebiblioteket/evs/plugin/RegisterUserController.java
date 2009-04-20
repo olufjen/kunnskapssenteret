@@ -17,20 +17,24 @@ import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSystem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
@@ -156,10 +160,9 @@ public final class RegisterUserController extends ProfileController {
         	if (UserRoleKey.health_personnel.getValue().equals(usertype)) {
         		String positionString = request.getParameter(this.parameterNames.get("position"));
         		if (!positionString.equals("choose")) {
-        			// TODO: Fetch organization type.
-        			OrganizationType organizationType = null;
-	        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString),
-	        				organizationType);
+        			SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+	        		OrganizationType organizationType = (OrganizationType) ((ValueResultOrganizationType) organizationTypeResult).getValue();
+        			SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString), organizationType);
 	        		if (positionResult instanceof EmptyResultPosition) {
 	        			throw new Exception("user somehow selected a non-existing position: '" + positionString + "'");
 	        		}
