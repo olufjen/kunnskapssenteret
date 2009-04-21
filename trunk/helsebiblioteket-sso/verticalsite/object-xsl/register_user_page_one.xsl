@@ -67,9 +67,9 @@
                 <br/>
                 <p>Velg dette dersom du har et helsepersonellnummer. Da får du også tilgang til Norsk Elektronisk Legehåndbok (NEL). Finn helsepersonellnummeret ditt på <a href="http://www.safh.no/hpr/main.php" rel="external">SAFHs nettsider</a>.</p>
                 <input class="radio" id="reg_form_2" name="usertype" type="radio" value="student"/>
-                <label for="reg_form_2">Jeg er student eller ansatt ved helsefaglig utdanningslinje</label>
+                <label for="reg_form_2">Jeg er student på helsefag eller er ansatt ved undervisningssted.</label>
                 <br/>
-                <p>Velg dette dersom du studerer helsefag ved universitet eller høyskole. Du kan bruke studentnummeret ditt i registreringen på neste side.</p>
+                <p>Du kan bruke studentnummeret eller ansattnummeret ditt i registreringen på neste side.</p>
                 <input class="radio" id="reg_form_3" name="usertype" type="radio" value="health_personnel_other"/>
                 <label for="reg_form_3">Jeg har IKKE helsepersonellnummer, men arbeider i helsetjenesten eller offentlig forvaltning</label>
                 <br/>

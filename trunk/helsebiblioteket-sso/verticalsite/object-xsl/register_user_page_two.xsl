@@ -96,7 +96,7 @@
                                             Helsepersonellnummer:
                                         </xsl:if>
                                         <xsl:if test="$usertype='student' ">
-                                            Student/ansattnummer:
+                                            Studentnummer/ansattnummer:
                                         </xsl:if>
                                         <xsl:if test="$usertype='health_personnel_other' ">
                                             Fødselsdato:
@@ -110,7 +110,7 @@
                                             value="{$hbresult/values/hprnumber/text()}"/>
                                         <xsl:choose>
                                             <xsl:when test="$usertype='health_personnel'">
-                                                <a href="http://www.safh.no/hpr/main.php" rel="external">Finn ditt helsepersonellnummer</a>
+                                                <a href="http://www.safh.no/hpr/main.php" rel="external" target="_new">Finn ditt helsepersonellnummer</a>
                                             </xsl:when>
                                             <xsl:otherwise>
                                                 <xsl:comment>//</xsl:comment>
@@ -121,6 +121,37 @@
                                     <td align="left">
                                     	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/hprnumber"/></xsl:call-template>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>Brukernavn: Feltet kan ikke inneholde spesialtegn eller mellomrom</td>
+                                    <td colspan="2">
+                                        <input name="username" size="20" type="text"
+                                            value="{$hbresult/values/user/username/text()}"/>
+                                    </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/username"/></xsl:call-template></td>
+                                </tr>
+                                <tr>
+                                    <td>Passord:</td>
+                                    <td>
+                                        <input class="text" name="password" type="password"/>
+                                    </td>
+                                    <td>
+                                        <xsl:choose>
+                                            <xsl:when test="$hbresult/messages/password != ''">
+                                                <xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/password"/></xsl:call-template>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                Passord må være minst 6 tegn langt, og må inneholde både bokstaver og siffer. Spesialtegn og mellomrom er ikke tillatt.
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Bekreft passord:</td>
+                                    <td colspan="2">
+                                        <input class="text" name="confirmpassword" type="password"/>
+                                    </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/passwordrepeat"/></xsl:call-template></td>
                                 </tr>
                                 <tr>
                                     <td>Fornavn:</td>
@@ -176,8 +207,7 @@
                                         </tr>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <tr>  
-                                            
+                                        <tr>         
                                             <td>Arbeidsgiver:</td> 
                                             <td colspan="2">
                                                 <input name="org" size="20" type="text"
@@ -187,8 +217,21 @@
                                         </tr>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                                
-                                
+								<tr>
+                                    <td>E-postadresse:</td>
+                                    <td colspan="2">
+                                        <input name="email" size="30" type="text"
+                                            value="{$hbresult/values/user/person/contactinformation/email/text()}"/>
+                                    </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/email"/></xsl:call-template></td>
+                                </tr>        
+                                <tr>
+                                    <td>Gjenta e-postadresse:</td>
+                                    <td colspan="2">
+                                        <input name="email" size="30" type="text"
+                                            value="{$hbresult/values/user/person/contactinformation/email/text()}"/>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>Ønsker du å motta nyhetsbrev?</td> 
                                     <td colspan="2">
@@ -223,30 +266,6 @@
                                     </td>  
                                     <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/survey"/></xsl:call-template></td>
                                 </tr>
-                                
-                                <tr>
-                                    <td>E-postadresse:</td>
-                                    <td colspan="2">
-                                        <input name="email" size="30" type="text"
-                                            value="{$hbresult/values/user/person/contactinformation/email/text()}"/>
-                                    </td>
-                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/email"/></xsl:call-template></td>
-                                </tr>        
-                                <tr>
-                                    <td>Gjenta e-postadresse:</td>
-                                    <td colspan="2">
-                                        <input name="email" size="30" type="text"
-                                            value="{$hbresult/values/user/person/contactinformation/email/text()}"/>
-                                    </td>
-                                </tr>             
-                                <tr>
-                                    <td>Brukernavn: Feltet kan ikke inneholde spesialtegn eller mellomrom</td>
-                                    <td colspan="2">
-                                        <input name="username" size="20" type="text"
-                                            value="{$hbresult/values/user/username/text()}"/>
-                                    </td>
-                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/username"/></xsl:call-template></td>
-                                </tr>
                                 <tr>
                                     <td colspan="3"><xsl:comment>//</xsl:comment></td>
                                 </tr>
@@ -255,29 +274,6 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3"><xsl:comment>//</xsl:comment></td>
-                                </tr>
-                                <tr>
-                                    <td>Passord:</td>
-                                    <td>
-                                        <input class="text" name="password" type="password"/>
-                                    </td>
-                                    <td>
-                                        <xsl:choose>
-                                            <xsl:when test="$hbresult/messages/password != ''">
-                                                <xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/password"/></xsl:call-template>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                Passord må være minst 6 tegn langt, og må inneholde både bokstaver og siffer. Spesialtegn og mellomrom er ikke tillatt.
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bekreft passord:</td>
-                                    <td colspan="2">
-                                        <input class="text" name="confirmpassword" type="password"/>
-                                    </td>
-                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/passwordrepeat"/></xsl:call-template></td>
                                 </tr>                            
                             </table> 
                             <br/>
