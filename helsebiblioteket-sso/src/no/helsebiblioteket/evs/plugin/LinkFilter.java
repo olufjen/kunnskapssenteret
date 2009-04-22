@@ -43,7 +43,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
     	} else if (sessionVar instanceof User){
     		user = (User) sessionVar;
     	}
-    	this.logger.info("LinkFilter RUNNING");
+    	this.logger.debug("LinkFilter RUNNING");
     	SAXBuilder parser = new SAXBuilder();
     	StringReader sr = new StringReader(response);
     	Document doc = parser.build(sr);
@@ -67,9 +67,9 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
         		} else {
                		element.setAttribute("href", url.toExternalForm());
         		}
-        		this.logger.info("URL: " + url.toExternalForm());
+        		this.logger.debug("URL: " + url.toExternalForm());
     		} else {
-        		this.logger.info("URL: " + url);
+        		this.logger.debug("URL: " + url);
     		}
     	}
     	this.logger.info("LinkFilter DONE");
