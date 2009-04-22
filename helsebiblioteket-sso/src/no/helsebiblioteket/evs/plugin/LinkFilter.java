@@ -31,7 +31,7 @@ import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
 public final class LinkFilter extends HttpResponseFilterPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
 	private String sessionVarName;
-	private URLService urlService;
+	private URLService urlService; 
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
     	// TODO: Used loggefinuser and loggedinorganization
