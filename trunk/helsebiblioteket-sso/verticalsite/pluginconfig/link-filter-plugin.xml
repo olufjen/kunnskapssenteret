@@ -14,7 +14,7 @@
 		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
 	</bean>
 	<bean id="methodCachingAdvice"
-		class="no.helsebiblioteket.admin.webservice.InvokeCache">
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
 	  <property name="cacheManager" ref="appCacheManager" />
 	</bean>
 	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
@@ -29,7 +29,7 @@
 		<property name="translateUrlUserName" ref="translateUrlUserName" />
 		<property name="translateUrlOrganizationName" ref="translateUrlOrganizationName" />
 		<property name="translateUrlUserOrganizationName" ref="translateUrlUserOrganizationName" />
-		<property name="invokeCache" ref="methodCachingAdvice" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>

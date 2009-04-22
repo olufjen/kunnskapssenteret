@@ -14,7 +14,7 @@
 		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
 	</bean>
 	<bean id="methodCachingAdvice"
-		class="no.helsebiblioteket.admin.webservice.InvokeCache">
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
 	  <property name="cacheManager" ref="appCacheManager" />
 	</bean>
 	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
@@ -33,7 +33,7 @@
 		<property name="serviceClient" ref="interceptorLoginServiceClient" />
 		<property name="targetEPR" ref="interceptorLoginServiceTargetEPR" />
 		<property name="logInIpAddressName" ref="interceptorLogInIpAddress" />
-		<property name="invokeCache" ref="methodCachingAdvice" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	
 	<bean name="interceptorLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
