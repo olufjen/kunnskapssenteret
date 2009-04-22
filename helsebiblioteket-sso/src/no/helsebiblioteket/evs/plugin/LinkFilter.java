@@ -72,7 +72,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
         		this.logger.debug("URL: " + url);
     		}
     	}
-    	this.logger.info("LinkFilter DONE");
+    	this.logger.debug("LinkFilter DONE");
         return new XMLOutputter().outputString(doc);
 //		result = response.replaceAll(TAG_TO_REPLACE, "USR: " + user.getUsername());
 //		"";//element.getAttributeValue("href");
