@@ -184,7 +184,7 @@
 		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
 	</bean>
 	<bean id="methodCachingAdvice"
-		class="no.helsebiblioteket.admin.webservice.InvokeCache">
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
 	  <property name="cacheManager" ref="appCacheManager" />
 	</bean>-->
 	
