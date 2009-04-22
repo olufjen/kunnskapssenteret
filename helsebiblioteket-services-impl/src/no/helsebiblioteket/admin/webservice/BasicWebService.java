@@ -73,41 +73,6 @@ public abstract class BasicWebService implements Serializable {
 		return response;
 	}
 	
-	/**
-	 * Invokes a generic webservice cached. 
-	 * Unique cache key is generated based on all arguments to this method.
-	 */
-	public Object invokeCached(CacheKey cacheKey, QName name, Object[] args, Class[] returnTypes) {
-		return invokeCached(cacheKey, String.valueOf(generateCacheKey(name, args, returnTypes)), name, args, returnTypes);
-	}
-	
-	private Integer generateCacheKey(QName name, Object[] args, Class[] returnTypes) {
-		// FIXME: This method or method which is beeing used by this method does not generate consistent keys.
-		StringBuilder key = new StringBuilder();
-		key.append(name.getNamespaceURI()).append(name.getLocalPart());
-		for (Object o : args) {
-			key.append(generatePartialCacheKey(o));
-		}
-		for (Class clazz : returnTypes) {
-			key.append(clazz.toString());
-		}
-		return key.hashCode();
-	}
-	
-	private Integer generatePartialCacheKey(Object object) {
-		if (object instanceof java.lang.reflect.Array) {
-			StringBuilder partialCacheKey = new StringBuilder();
-			for (Object subObject : (Object[]) object) {
-				if (subObject instanceof java.lang.reflect.Array) {
-					partialCacheKey.append(generatePartialCacheKey((Object[]) subObject));
-				}
-			}
-			return partialCacheKey.hashCode();
-		} else {
-			return object.hashCode();
-		}
-	}
-	
 	public void setServiceClient(RPCServiceClient serviceClient) {
 		this.serviceClient = serviceClient;
 	}
