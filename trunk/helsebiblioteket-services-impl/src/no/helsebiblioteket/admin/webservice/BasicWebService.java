@@ -66,9 +66,9 @@ public abstract class BasicWebService implements Serializable {
 		if (response == null) {
 			response = invoke(name, args, returnTypes);
 			cacheHelper.addCache(cacheKey, key, response);
-			getLogger().info("could not find cached content for key '" + key + "' in cache '" + cacheKey.name() + "', adding content to cache");
+			getLogger().debug("could not find cached content for key '" + key + "' in cache '" + cacheKey.name() + "', adding content to cache");
 		} else {
-			getLogger().info("found cached result for key '" + key + "' in cache '" + cacheKey.name() + "'");
+			getLogger().debug("found cached result for key '" + key + "' in cache '" + cacheKey.name() + "'");
 		}
 		return response;
 	}
