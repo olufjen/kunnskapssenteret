@@ -12,6 +12,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 @SuppressWarnings("serial")
@@ -34,7 +35,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public Boolean isAffected(Url url){
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.isAffectedName, args, returnTypes);
+		return (Boolean)invokeCached(CacheKey.urlCache, url.getStringValue(), this.isAffectedName, args, returnTypes);
 	}
 	@Override
     public SingleResultUrl translateUrlUser(User user, Url url){
