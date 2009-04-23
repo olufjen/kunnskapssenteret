@@ -13,6 +13,12 @@
     <xsl:param name="editProfilePage">
         <type>page</type>
     </xsl:param>
+    <xsl:param name="viewProfilePage">
+        <type>page</type>
+    </xsl:param>
+    <xsl:param name="editPasswordPage">
+        <type>page</type>
+    </xsl:param>
     
     <xsl:variable name="loggedin" select="/verticaldata/loggedin"/>
     <xsl:variable name="language" select="/verticaldata/context/@languagecode"/>
@@ -44,6 +50,14 @@
                     <div>                      
                         <br/><br/>
                         <table cellspacing="2" width="450">
+                            <tr>
+                                <td>HPR-nr:</td>
+                                <td><xsl:value-of select="$loggedin//user/person/hprnumber"/></td>
+                            </tr>
+                            <tr>
+                                <td>Stud.nr:</td>
+                                <td><xsl:value-of select="$loggedin//user/person/studentnumber"/></td>
+                            </tr>
                             <tr>                                    
                                 <td>Brukernavn:</td>
                                 <td><xsl:value-of select="$loggedin/user/username"/></td>
@@ -63,14 +77,6 @@
                             <tr>                                    
                                 <td>Tilknytning:</td>
                                 <td><xsl:value-of select="$loggedin/user/role/name"/></td>
-                            </tr>
-                            <tr>
-                                <td>HPR-nr:</td>
-                                <td><xsl:value-of select="$loggedin//user/person/hprnumber"/></td>
-                            </tr>
-                            <tr>
-                                <td>Stud.nr:</td>
-                                <td><xsl:value-of select="$loggedin//user/person/studentnumber"/></td>
                             </tr>
                             <tr>
                                 <td>Arbeidsgiver/skole:</td>
@@ -113,6 +119,22 @@
                 	<input name="save" type="hidden" value="false"/>
                 
                     <input class="button" type="submit" value="Rediger profil"/>
+                </form>
+
+                <form action="{portal:createPageUrl($editProfileServletPage, ())}" method="post">
+                	<input name="goto" type="hidden">
+                    	<xsl:attribute name="value">
+                    		<xsl:value-of select="portal:createPageUrl($editPasswordPage, ())"/>
+                        </xsl:attribute>
+                    </input>
+                    <input name="passwordPage" type="hidden">
+						<xsl:attribute name="value">
+                        	<xsl:value-of select="portal:createPageUrl($editPasswordPage, ())"/>
+						</xsl:attribute>
+                    </input>
+                    <input name="fromform" type="hidden" value="view"/>
+                	<input name="editpassword" type="hidden" value="Endre passord"/>
+                    <input class="button" type="submit" value="Endre passord"/>
                 </form>
             </div>
 

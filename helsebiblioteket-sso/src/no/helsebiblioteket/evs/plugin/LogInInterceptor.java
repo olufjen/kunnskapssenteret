@@ -30,8 +30,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MemberOrganization organization = this.loggedInFunction.loggedInOrganization();
-		Object user = this.loggedInFunction.loggedInUser();
-		if(organization == null && user == null){
+		if(organization == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
 	    	SingleResultMemberOrganization res = this.loginService.loginOrganizationByIpAddress(ipAddress);

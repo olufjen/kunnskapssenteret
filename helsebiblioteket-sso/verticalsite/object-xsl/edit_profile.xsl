@@ -16,6 +16,9 @@
     <xsl:param name="editProfileServletPage">
         <type>page</type>
     </xsl:param>
+    <xsl:param name="editPasswordPage">
+        <type>page</type>
+    </xsl:param>
     
     <xsl:variable name="language" select="/verticaldata/context/@languagecode"/>
     <xsl:variable name="result" select="/verticaldata/hbprofileresult"/>
@@ -56,7 +59,7 @@
                         		<xsl:value-of select="portal:createPageUrl($editProfilePage, ())"/>
 							</xsl:attribute>
                         </input>
-                		<input name="save" type="hidden" value="true"/>
+                		
                         <br/><br/>
                         <table cellspacing="2" width="450">
                             <tr>                                    
@@ -176,32 +179,18 @@
                             </tr>
                             <tr>
                                 <td colspan="3"><xsl:comment>//</xsl:comment></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><strong>Passord</strong><br/>Passord må være minst 6 tegn langt, og må inneholde både bokstaver og siffer. Spesialtegn er ikke tillatt.</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><xsl:comment>//</xsl:comment></td>
-                            </tr>
-                            <tr>
-                                <td>Passord:</td>
-                                <td>
-                                    <input class="text" name="password" type="password" value=""/>
-                                </td>
-                                <td><xsl:value-of select="$result/messages/password/text()"/></td>
-                            </tr>
-                            <tr>
-                                <td>Bekreft passord:</td>
-                                <td>
-                                    <input class="text" name="confirmpassword" type="password" value=""/>
-                                </td>
-                                <td><xsl:value-of select="$result/messages/passwordrepeat/text()"/></td>
                             </tr>                            
-                            
                         </table>                                           
                         <br/><br/>
                     </div>
-                    <input class="button" type="submit" value="Lagre"/>
+                    <input name="passwordPage" type="hidden">
+						<xsl:attribute name="value">
+                        	<xsl:value-of select="portal:createPageUrl($editPasswordPage, ())"/>
+						</xsl:attribute>
+                    </input>
+                    <input name="fromform" type="hidden" value="edit"/>
+                    <input class="button" type="submit" name="save" value="Lagre"/>
+                    <input class="button" type="submit" name="editpassword"  value="Endre passord"/>
                 </form>
                 <form action="{portal:createPageUrl($editProfileServletPage, ())}" method="post">
                 	<input name="goto" type="hidden">
@@ -214,10 +203,16 @@
                         	<xsl:value-of select="portal:createPageUrl($editProfilePage, ())"/>
 						</xsl:attribute>
                     </input>
+                    <input name="passwordPage" type="hidden">
+						<xsl:attribute name="value">
+                        	<xsl:value-of select="portal:createPageUrl($editPasswordPage, ())"/>
+						</xsl:attribute>
+                    </input>
                 
                 	<input name="delete" type="hidden" value="true"/>
                     <input class="button" type="submit" value="Slett"/>
                 </form>
+
             </div>
 
 
