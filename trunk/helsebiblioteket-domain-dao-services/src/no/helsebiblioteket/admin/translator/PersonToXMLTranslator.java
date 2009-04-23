@@ -4,6 +4,8 @@ package no.helsebiblioteket.admin.translator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.sun.tools.javac.util.Position;
+
 import no.helsebiblioteket.admin.domain.Person;
 
 public class PersonToXMLTranslator {
@@ -22,7 +24,9 @@ public class PersonToXMLTranslator {
 
 		this.profileToXMLTranslator.translate(person.getProfile(), document, personElement);
 		this.contactInformationToXMLTranslator.translate(person.getContactInformation(), document, personElement);
-		this.positionToXMLTranslator.translate(person.getPosition(), document, element);
+		if(person.getPosition() != null){
+			this.positionToXMLTranslator.translate(person.getPosition(), document, element);
+		}
 
 		
 		
