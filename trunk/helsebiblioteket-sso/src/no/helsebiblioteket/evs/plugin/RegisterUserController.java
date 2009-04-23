@@ -43,15 +43,19 @@ public final class RegisterUserController extends ProfileController {
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String cancel = request.getParameter(this.parameterNames.get("cancelName"));
-		String formId = request.getParameter(this.parameterNames.get("formId"));
+		String confirm = request.getParameter(this.parameterNames.get("confirmName"));
     	if(save != null && save.equals(this.parameterNames.get("saveValue"))){
     		if(cancel != null && cancel.equals(this.parameterNames.get("cancelValue"))){
     			this.cancel(request, response);
         	} else {
-        		this.registerUser(request, response);
+            		this.registerUser(request, response);
         	}
     	} else {
-    		this.init(request, response);
+    		if(confirm != null && confirm.equals(this.parameterNames.get("confirmValue"))){
+    			this.confirm(request, response);
+    		} else {
+        		this.init(request, response);
+    		}
     	}
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -68,6 +72,19 @@ public final class RegisterUserController extends ProfileController {
 		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
 		// TODO: But there is no user!		
 //		userXML(null, null, document, values);
+		element.appendChild(values);
+		document.appendChild(element);
+		loggedInFunction.setResult(this.resultSessionVarName, document);
+		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+		response.sendRedirect(gotoUrl);
+	}
+	private void confirm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String usertype = request.getParameter(this.parameterNames.get("usertype"));
+		UserToXMLTranslator translator = new UserToXMLTranslator();
+		Document document = translator.newDocument();
+		Element element = document.createElement(this.resultSessionVarName);
+		Element values = document.createElement("values");
+		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
 		element.appendChild(values);
 		document.appendChild(element);
 		loggedInFunction.setResult(this.resultSessionVarName, document);
@@ -122,6 +139,10 @@ public final class RegisterUserController extends ProfileController {
     	}
 		String gotoUrl = "";
 		if(success){
+			Element values = document.createElement("values");
+			values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
+			element.appendChild(values);
+			
 			element.appendChild(document.createElement("success"));
 			gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		} else {
@@ -169,7 +190,16 @@ public final class RegisterUserController extends ProfileController {
 	        		}
 	        		position = (Position) ((ValueResultPosition) positionResult).getValue();
         		}
+        	} else {
+        		SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+        		OrganizationType organizationType = (OrganizationType) ((ValueResultOrganizationType) organizationTypeResult).getValue();
+        		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.none, organizationType);
+        		if (positionResult instanceof EmptyResultPosition) {
+        			throw new Exception("Unable to load position 'none'");
+        		}
+        		position = (Position) ((ValueResultPosition) positionResult).getValue();
         	}
+        		
         }
 		
 		Person person = new Person();
@@ -179,6 +209,12 @@ public final class RegisterUserController extends ProfileController {
 		person.setEmployer(request.getParameter(this.parameterNames.get("employer")));
 		person.setContactInformation(contactInformation);
 		person.setProfile(profile);
+		
+		// TODO: Fix this!
+		if(position.getKey() == null){
+			position = null;
+		}
+		
 		person.setPosition(position);
 		
 		User user = new User();

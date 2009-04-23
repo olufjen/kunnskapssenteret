@@ -63,8 +63,7 @@
                     <xsl:when test="$usertype='health_personnel'"><h4 class="logon_column_heading">Registrering av ny bruker - helsepersonell</h4></xsl:when>
                     <xsl:when test="$usertype='student'"><h4 class="logon_column_heading">Registrering av ny bruker - høyskole/universitet</h4></xsl:when>
                     <xsl:otherwise><h4 class="logon_column_heading">Registrering av ny bruker - andre ansatte</h4></xsl:otherwise>
-                </xsl:choose>
-                
+                </xsl:choose>               
                 <h4 class="logon_column_heading">Steg 2 av 2: Brukerdata og passord</h4>
                 <div class="column_content">
                     <form action="{portal:createPageUrl($registerUserServletPage, ())}" id="register" method="post" >
@@ -196,7 +195,7 @@
                                         <tr>  
                                             <td>Skole/arbeidsgiver:</td> 
                                             <td colspan="2">
-                                                <select name="skole">
+                                                <select name="org">
                                                     <option value="test">Test</option>
                                                 </select>
                                             </td>                             

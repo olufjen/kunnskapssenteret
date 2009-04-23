@@ -14,6 +14,10 @@
  		<property name="urlPattern" value="/site/2/RedigerProfilServlet" />
  		<property name="userService" ref="profileUserService" />
  		<property name="resultSessionVarName" value="hbprofileresult" />
+ 		<property name="editPasswordresultVarName" value="hbeditpasswordresult" />
+ 		<property name="editPasswordFromVarName" value="hbeditpasswordfrom" />
+ 		<property name="editPasswordUserVarName" value="hbeditpassworduser" />
+ 		
  		<property name="parameterNames"><map>
  			<entry key="hprno" value="uid"/>
  			<entry key="firstname" value="firstname"/>
@@ -28,12 +32,24 @@
  			
  			<entry key="from" value="from"/>
  			<entry key="goto" value="goto"/>
+ 			<entry key="viewPage" value="viewPage"/>
+ 			<entry key="editPage" value="editPage"/>
+ 			<entry key="passwordPage" value="passwordPage"/>
+
+ 			<entry key="fromform" value="fromform"/>
+
  			<entry key="resultName" value="result"/>
  			<entry key="resultValue" value="true"/>
  			<entry key="saveName" value="save"/>
- 			<entry key="saveValue" value="true"/>
+ 			<entry key="saveValue" value="Lagre"/>
  			<entry key="deleteName" value="delete"/>
  			<entry key="deleteValue" value="true"/>
+ 			<entry key="editPasswordName" value="editpassword"/>
+ 			<entry key="editPasswordValue" value="Endre passord"/>
+ 			<entry key="savePasswordName" value="savepassword"/>
+ 			<entry key="savePasswordValue" value="true"/>
+ 			<entry key="cancelName" value="cancel"/>
+ 			<entry key="cancelValue" value="true"/>
  		</map></property>
  		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>

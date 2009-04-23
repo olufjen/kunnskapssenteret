@@ -143,12 +143,16 @@ public class LoggedInFunction{
     	if(organization != null){
     		OrganizationToXMLTranslator translator = new OrganizationToXMLTranslator();
     		translator.translate(organization, result, loggedinElement);
-    	}
+		} else {
+    		loggedinElement.appendChild(result.createElement("noorganization"));
+		}
 		if(user instanceof User){
         	userTranslator.translate((User)user, result, loggedinElement);
 		} else if(user instanceof OrganizationUser){
 			OrganizationUserToXMLTranslator organizationUserTranslator = new OrganizationUserToXMLTranslator();
 			organizationUserTranslator.translate((OrganizationUser) user, result, loggedinElement);
+		} else {
+    		loggedinElement.appendChild(result.createElement("nouser"));
 		}
     	if(organization == null && user == null){
     		loggedinElement.appendChild(result.createElement("none"));
