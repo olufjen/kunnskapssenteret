@@ -8,7 +8,7 @@ public class Position {
 	private Integer id;
 	
 	// Unique value
-	private PositionTypeKey key = PositionTypeKey.none;
+	private PositionTypeKey key = null;
 	
 	// Local values
 	private String name;
