@@ -4,7 +4,6 @@ package no.helsebiblioteket.admin.translator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.sun.tools.javac.util.Position;
 
 import no.helsebiblioteket.admin.domain.Person;
 
