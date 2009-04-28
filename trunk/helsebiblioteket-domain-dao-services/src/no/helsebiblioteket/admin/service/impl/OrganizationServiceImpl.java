@@ -354,8 +354,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
 		if(type == null) throw new NullPointerException("Invalid type reference");
 		
-		this.personDao.updatePerson(organization.getContactPerson());
-		this.contactInformationDao.updateContactInformation(organization.getContactInformation());
+		savePerson(organization.getContactPerson(), null);
+		saveContactInformation(organization.getContactInformation(), null);
 
 		List<OrganizationName> nameList = this.organizationNameDao.getOrganizationNameListByOrganization(old);
 		resetNameList(organization, nameList);
@@ -545,16 +545,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private void populateOrganizationRest(Organization organization) {
 		if(organization.getContactPerson() == null ||
 				organization.getContactPerson().getId() == null){
-			this.logger.warn("Organization " + organization.getId() + "has no contact person");
+			this.logger.debug("Organization " + organization.getId() + "has no contact person");
 			Person contactPerson = this.createPerson();
 			organization.setContactPerson(contactPerson);
 		}
 
 		Person contactPerson = loadPerson(organization);
-		if(contactPerson==null){
-			throw new NullPointerException("Contact person not found");
-		}
-		organization.setContactPerson(contactPerson);
+		
+		organization.setContactPerson((contactPerson != null) ? contactPerson : new Person());
 
 		if(organization.getContactInformation() == null ||
 				organization.getContactInformation().getId() == null){
@@ -563,10 +561,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 
 		ContactInformation contactInformation = this.contactInformationDao.getContactInformationByOrganization(organization);
-		if(contactInformation==null){
-			throw new NullPointerException("Contact information not found");
-		}
-		organization.setContactInformation(contactInformation);
+		organization.setContactInformation((contactInformation != null) ? contactInformation : new ContactInformation());
 	}
 	private ContactInformation createContactInformation() {
 		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
@@ -598,12 +593,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private Person loadPerson(Organization organization) {
 		Person person = this.personDao.getPersonByOrganization(organization);
 		// TODO: Load in DAO
-		person.setEmployer("");
-		person.setContactInformation(this.contactInformationDao.getContactInformationByPerson(person));
-		if(person.getPosition() != null && person.getPosition().getId() != null){
-			person.setPosition(this.positionDao.getPositionById(person.getPosition().getId()));
+		if (person != null) {
+			person.setEmployer("");
+			ContactInformation contactInformation = this.contactInformationDao.getContactInformationByPerson(person);
+			person.setContactInformation((contactInformation != null) ? contactInformation : new ContactInformation());
+			if(person.getPosition() != null && person.getPosition().getId() != null){
+				person.setPosition(this.positionDao.getPositionById(person.getPosition().getId()));
+			}
+			Profile profile = this.profileDao.getProfileById(person.getProfile().getId());
+			person.setProfile((profile != null) ? profile : new Profile());
 		}
-		person.setProfile(this.profileDao.getProfileById(person.getProfile().getId()));
 		return person;
 	}
 	/**

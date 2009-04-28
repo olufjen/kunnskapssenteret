@@ -17,7 +17,7 @@ public class Organization {
 
 	// References
 	private OrganizationType type;
-	private Person contactPerson;
+	private Person contactPerson = new Person();
 	private ContactInformation contactInformation;
 
 	// Helpers
