@@ -16,9 +16,9 @@ public class Person {
 	private Date lastChanged;
 
 	// References
-	private Position position = null;
-	private ContactInformation contactInformation;
-	private Profile profile;
+	private Position position = new Position();
+	private ContactInformation contactInformation = new ContactInformation();
+	private Profile profile = new Profile();
 	
 	// Helpers
 	@Override
