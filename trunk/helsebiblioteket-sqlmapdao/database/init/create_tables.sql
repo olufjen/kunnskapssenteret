@@ -154,6 +154,7 @@ CREATE TABLE tbl_system_reg
 
 CREATE TABLE tbl_supplier_source
 (
+	proxy_database_name VARCHAR				NULL,
     supplier_source_name VARCHAR             NULL,
     url                  VARCHAR             NULL,
     supplier_source_id   SERIAL             NOT NULL,
