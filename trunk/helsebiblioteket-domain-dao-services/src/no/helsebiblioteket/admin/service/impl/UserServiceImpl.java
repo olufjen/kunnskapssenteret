@@ -240,14 +240,14 @@ public class UserServiceImpl implements UserService {
 				profile = ProfileFactory.factory.completeProfile();
 				this.profileDao.insertProfile(profile);
 			}
-			person.setProfile(profile);
+			person.setProfile((profile != null) ? profile : new Profile());
 			
 			ContactInformation contactInformation = this.contactInformationDao.getContactInformationByPerson(person);
 			if(contactInformation == null) {
 				contactInformation = ContactInformationFactory.factory.completeContactInformation();
 				this.contactInformationDao.insertContactInformation(contactInformation);
 			}
-			person.setContactInformation(contactInformation);
+			person.setContactInformation((contactInformation != null) ? contactInformation : new ContactInformation());
 			
 			List<UserRoleLine> userRoleList = this.userRoleDao.getUserRoleListByUser(user);
 			Role[] roleList = new Role[userRoleList.size()];
