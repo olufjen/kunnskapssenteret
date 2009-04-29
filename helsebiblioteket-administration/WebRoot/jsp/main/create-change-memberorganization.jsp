@@ -322,14 +322,15 @@
 		<tr>
 			<td>
 				<h:selectOneMenu id="supplierSources"
+					style="width: 200px;"
 					binding="#{createAndChangeMemberOrganizationBean.supplierSourceListValue}">
 					<f:selectItems value="#{createAndChangeMemberOrganizationBean.supplierSourceList}"/>
 				</h:selectOneMenu>
 			</td>
 			<td>
 				<h:selectOneMenu id="accessTypeCategory"
-					binding="#{createAndChangeMemberOrganizationBean.accessTypeCategory}">
-					<f:selectItems value="#{createAndChangeMemberOrganizationBean.accessTypeCategoryList}"/>
+					binding="#{createAndChangeMemberOrganizationBean.accessTypeCategoryKey}">
+					<f:selectItems value="#{adminBean.accessTypeCategoryKeySelectItemList}"/>
 				</h:selectOneMenu>
 			</td>
 		</tr>

@@ -58,7 +58,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	private UIInput ipAddressFromUIInput = null;
 	private UIInput ipAddressToUIInput = null;
 	private HtmlSelectOneMenu supplierSourceListValue;
-	private HtmlSelectOneMenu accessTypeCategory = null;
+	private HtmlSelectOneMenu accessTypeCategoryKey = null;
 	
 	private String selectedOrganizationType = null;
 	private List<IpAddressRange> ipRangeList = null;
@@ -216,8 +216,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	}
 	public void actionAddSource(){
 		String selectedSourceValue = this.getSupplierSourceListValue().getSubmittedValue().toString();
-		String selectedAccessTypeCategoryValue = this.getAccessTypeCategory().getSubmittedValue().toString();
 
+		String selectedAccessTypeCategoryKeyValue = this.accessTypeCategoryKey.getSubmittedValue().toString();
+		String selectedAccessTypeCategoryKeyValueArray[] = selectedAccessTypeCategoryKeyValue.split(System.getProperty("path.separator"));
+		String selectedAccessTypeCategoryValue = selectedAccessTypeCategoryKeyValueArray[0];
+		String selectedAccessTypeKeyValue = selectedAccessTypeCategoryKeyValueArray[1];
+		
 		SupplierSourceResource addedResource = null;
 		SupplierSourceResource[] resources = this.organizationBean.getSupplierSourceResources();
 		for (SupplierSourceResource supplierSourceResource : resources) {
@@ -232,7 +236,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		newList[newList.length-1] = new ResourceAccessListItem();
 		newList[newList.length-1].setSupplierSourceName(addedResource.getSupplierSource().getSupplierSourceName());
 		newList[newList.length-1].setCategory(new AccessTypeCategory(selectedAccessTypeCategoryValue));
-		newList[newList.length-1].setKey(AccessTypeKey.general);
+		newList[newList.length-1].setKey(new AccessTypeKey(selectedAccessTypeKeyValue));
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
 		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
 		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
@@ -282,13 +286,6 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 					resource.getSupplierSource().getUrl().getStringValue());
 			list.add(item);
 		}
-		return list;
-	}
-	
-	public List<SelectItem> getAccessTypeCategoryList(){
-		List<SelectItem> list = new ArrayList<SelectItem>();
-		list.add(new SelectItem(AccessTypeCategory.GRANT.getValue(), "Grant"));
-		list.add(new SelectItem(AccessTypeCategory.DENY.getValue(), "Deny"));
 		return list;
 	}
 
@@ -390,12 +387,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		return this.organizationBean.getOrgAccessList();
 	}
 
-	public HtmlSelectOneMenu getAccessTypeCategory() {
-		return accessTypeCategory;
+	public HtmlSelectOneMenu getAccessTypeCategoryKey() {
+		return accessTypeCategoryKey;
 	}
 
-	public void setAccessTypeCategory(HtmlSelectOneMenu accessTypeCategory) {
-		this.accessTypeCategory = accessTypeCategory;
+	public void setAccessTypeCategoryKey(HtmlSelectOneMenu accessTypeCategoryKey) {
+		this.accessTypeCategoryKey = accessTypeCategoryKey;
 	}
 
 	// Method is invoked by hidden init-field in JSP.
