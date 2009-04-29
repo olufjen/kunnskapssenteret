@@ -65,7 +65,7 @@
 		<constructor-arg value="${webservice.service.url.prefix}/userService" />
 	</bean>
 	<bean name="profileUpdateUser" class="javax.xml.namespace.QName">
-		<constructor-arg value="http://service.admin.helsebiblioteket.no" />
+		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="updateUser" />
 	</bean>
 	<bean name="findUserByUsername" class="javax.xml.namespace.QName">
