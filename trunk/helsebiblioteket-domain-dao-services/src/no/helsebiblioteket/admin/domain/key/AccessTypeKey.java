@@ -3,9 +3,9 @@ package no.helsebiblioteket.admin.domain.key;
 public class AccessTypeKey {
 	// TODO: Insert something here!
 	public static final AccessTypeKey dummy = new AccessTypeKey("dummy");
-
-	
 	public static final AccessTypeKey general = new AccessTypeKey("general");
+	public static final AccessTypeKey proxy_include = new AccessTypeKey("proxy_include");
+	public static final AccessTypeKey proxy_exclude = new AccessTypeKey("proxy_exclude");
 
 	private String value;
 	public AccessTypeKey() { }
