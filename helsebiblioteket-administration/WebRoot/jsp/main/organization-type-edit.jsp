@@ -22,14 +22,15 @@
 		<tr>
 			<td>
 				<h:selectOneMenu id="supplierSources"
+					style="width: 200px;"
 					binding="#{organizationTypeBean.supplierSource}">
 					<f:selectItems value="#{organizationTypeBean.supplierSourceList}"/>
 				</h:selectOneMenu>
 			</td>
 			<td>
-				<h:selectOneMenu id="accessTypeCategory"
-					binding="#{organizationTypeBean.accessTypeCategory}">
-					<f:selectItems value="#{organizationTypeBean.accessTypeCategoryList}"/>
+				<h:selectOneMenu id="accessTypeCategoryKey"
+					binding="#{organizationTypeBean.accessTypeCategoryKey}">
+					<f:selectItems value="#{adminBean.accessTypeCategoryKeySelectItemList}"/>
 				</h:selectOneMenu>
 			</td>
 		</tr>

@@ -40,7 +40,7 @@ public class OrganizationTypeBean {
 	private OrganizationType organizationType;
 	private HtmlDataTable organizationTypeTable;
 	private HtmlSelectOneMenu supplierSource;
-	private HtmlSelectOneMenu accessTypeCategory;
+	private HtmlSelectOneMenu accessTypeCategoryKey;
 	private HtmlDataTable orgTypeAccessTable;
 	private List<ResourceAccessListItem> deltetedResources;
 
@@ -112,7 +112,10 @@ public class OrganizationTypeBean {
 	
 	public String actionAddSource(){
 		String selectedSourceValue = this.supplierSource.getSubmittedValue().toString();
-		String selectedAccessTypeCategoryValue = this.accessTypeCategory.getSubmittedValue().toString();
+		String selectedAccessTypeCategoryKeyValue = this.accessTypeCategoryKey.getSubmittedValue().toString();
+		String selectedAccessTypeCategoryKeyValueArray[] = selectedAccessTypeCategoryKeyValue.split(System.getProperty("path.separator"));
+		String selectedAccessTypeCategoryValue = selectedAccessTypeCategoryKeyValueArray[0];
+		String selectedAccessTypeKeyValue = selectedAccessTypeCategoryKeyValueArray[1];
 
 		SupplierSourceResource addedResource = null;
 		SupplierSourceResource[] resources = this.accessService.getSupplierSourceResourceListAll("").getList();
@@ -128,7 +131,7 @@ public class OrganizationTypeBean {
 		newList[newList.length-1] = new ResourceAccessListItem();
 		newList[newList.length-1].setSupplierSourceName(addedResource.getSupplierSource().getSupplierSourceName());
 		newList[newList.length-1].setCategory(new AccessTypeCategory(selectedAccessTypeCategoryValue));
-		newList[newList.length-1].setKey(AccessTypeKey.general);
+		newList[newList.length-1].setKey(new AccessTypeKey(selectedAccessTypeKeyValue));
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
 		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
 		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
@@ -160,14 +163,6 @@ public class OrganizationTypeBean {
 		}
 		return list;
 	}
-	public List<SelectItem> getAccessTypeCategoryList(){
-		List<SelectItem> list = new ArrayList<SelectItem>();
-		list.add(new SelectItem(AccessTypeCategory.GRANT.getValue(), "Grant"));
-		list.add(new SelectItem(AccessTypeCategory.DENY.getValue(), "Deny"));
-		return list;
-	}
-
-
 	
 	public OrganizationService getOrganizationService() {
 		return organizationService;
@@ -207,11 +202,11 @@ public class OrganizationTypeBean {
 	public void setSupplierSource(HtmlSelectOneMenu supplierSource) {
 		this.supplierSource = supplierSource;
 	}
-	public HtmlSelectOneMenu getAccessTypeCategory() {
-		return accessTypeCategory;
+	public HtmlSelectOneMenu getAccessTypeCategoryKey() {
+		return accessTypeCategoryKey;
 	}
-	public void setAccessTypeCategory(HtmlSelectOneMenu accessTypeCategory) {
-		this.accessTypeCategory = accessTypeCategory;
+	public void setAccessTypeCategoryKey(HtmlSelectOneMenu accessTypeCategoryKey) {
+		this.accessTypeCategoryKey = accessTypeCategoryKey;
 	}
 	public void setAccessService(AccessService accessService) {
 		this.accessService = accessService;
