@@ -670,10 +670,9 @@ values ((select access_type_id from tbl_access_type_reg where category='GRANT' a
 insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, org_type_id, last_changed)
 values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_exclude'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://cpa.ca'), (select org_type_id from tbl_org_type_reg where key='other'), now());
 
--- TODO: Fjern innslag for medicinescomplete, thelancetnorway og sciencedirect.
--- TODO: Avvent svar fra Kjell før jeg fjerner psychinfo og apa.org
-
 -- done adding access for organization types
+
+
 
 -- Access for roles.
 
@@ -933,13 +932,13 @@ values ((select access_type_id from tbl_access_type_reg where category='GRANT' a
 insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
 values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://cpa.ca'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
 
--- TODO: Fjern innslag for medicinescomplete, thelancetnorway og sciencedirect.
--- TODO: Avvent svar fra Kjell før jeg fjerner psychinfo og apa.org
+
+-- spesialtilfelle: absolutt alle autentiserte forespørrere skal ha direkte proxied tilgang til pubmed (ncbi.nlm.nih.gov) i følge proxykonf i gammel autentiseringsløsning.
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&holding=inohelib_fft_ndi&myncbishare=helsebiblioteket'), (select user_role_id from tbl_user_role_reg where key='no_role'), now());
 
 -- done adding access for roles
 
 
--- Access for roles:
--- Leif Torger: På min TODO list
--- grant for no_role to proxy_include: URL http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&holding=inohelib_fft_ndi&myncbishare=helsebiblioteket
-
+-- TODO: Fjern innslag for medicinescomplete, thelancetnorway og sciencedirect.
+-- TODO: Avvent svar fra Kjell før jeg fjerner psychinfo og apa.org, mulig det er fler/færre baser som skal bort, han sjekker og svarer mandag 4. mai.
