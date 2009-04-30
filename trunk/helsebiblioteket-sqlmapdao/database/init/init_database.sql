@@ -670,11 +670,276 @@ values ((select access_type_id from tbl_access_type_reg where category='GRANT' a
 insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, org_type_id, last_changed)
 values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_exclude'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://cpa.ca'), (select org_type_id from tbl_org_type_reg where key='other'), now());
 
+-- TODO: Fjern innslag for medicinescomplete, thelancetnorway og sciencedirect.
+-- TODO: Avvent svar fra Kjell før jeg fjerner psychinfo og apa.org
 
 -- done adding access for organization types
 
+-- Access for roles.
+
+-- Access for role "health_personell":
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.g-i-n.net'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.legehandboka.no'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://legehandboka.no'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://doi.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://dx.doi.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.proquest.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://proquest.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://proquest.umi.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.tx.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.uk.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.uk.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.tx.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.thelancetnorway.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://thelancetnorway.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycnet.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://content.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycinfo.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycnet.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.psycnet.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://swetswise.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.swetswise.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://medicinescomplete.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.medicinescomplete.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://online.lexi.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.online.lexi.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://rcpsych.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://bjp.rcpsych.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://sciencedirect.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.sciencedirect.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://cpa.ca'), (select user_role_id from tbl_user_role_reg where key='health_personnel'), now());
+
+
+
+-- Access for role "student":
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.g-i-n.net'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='DENY' and key='general'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.legehandboka.no'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='DENY' and key='general'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://legehandboka.no'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://doi.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://dx.doi.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.proquest.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://proquest.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://proquest.umi.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.ovid.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.tx.ovid.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.uk.ovid.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.ovid.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.uk.ovid.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.tx.ovid.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.thelancetnorway.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://thelancetnorway.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.apa.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://apa.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycnet.apa.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://content.apa.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycinfo.apa.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycnet.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.psycnet.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://swetswise.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.swetswise.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://medicinescomplete.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.medicinescomplete.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://online.lexi.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.online.lexi.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://rcpsych.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://bjp.rcpsych.org'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://sciencedirect.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.sciencedirect.com'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://cpa.ca'), (select user_role_id from tbl_user_role_reg where key='student'), now());
+
+
+
+-- Access for role "health personnel other":
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.g-i-n.net'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='DENY' and key='general'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.legehandboka.no'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='DENY' and key='general'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://legehandboka.no'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://doi.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://dx.doi.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.proquest.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://proquest.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://proquest.umi.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.tx.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://gateway.uk.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.uk.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://ovidsp.tx.ovid.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.thelancetnorway.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://thelancetnorway.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycnet.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://content.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycinfo.apa.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://psycnet.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.psycnet.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://swetswise.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.swetswise.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://medicinescomplete.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.medicinescomplete.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://online.lexi.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.online.lexi.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://rcpsych.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://bjp.rcpsych.org'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://sciencedirect.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://www.sciencedirect.com'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+insert into tbl_access (access_type_id, valid_from, valid_to, resource_id, user_role_id, last_changed)
+values ((select access_type_id from tbl_access_type_reg where category='GRANT' and key='proxy_include'), now(), '2020-01-01 00:00:00', (select r.resource_id from tbl_resource r, tbl_supplier_source ss where r.supplier_source_id=ss.supplier_source_id and ss.url='http://cpa.ca'), (select user_role_id from tbl_user_role_reg where key='health_personnel_other'), now());
+
+-- TODO: Fjern innslag for medicinescomplete, thelancetnorway og sciencedirect.
+-- TODO: Avvent svar fra Kjell før jeg fjerner psychinfo og apa.org
+
+-- done adding access for roles
 
 
 -- Access for roles:
 -- Leif Torger: På min TODO list
 -- grant for no_role to proxy_include: URL http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&holding=inohelib_fft_ndi&myncbishare=helsebiblioteket
+
