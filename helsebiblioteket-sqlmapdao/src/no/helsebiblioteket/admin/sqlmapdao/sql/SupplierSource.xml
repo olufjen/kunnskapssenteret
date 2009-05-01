@@ -5,6 +5,7 @@
 
 <sqlMap namespace="SupplierSource">
 	<typeAlias alias="SupplierSource" type="no.helsebiblioteket.admin.domain.SupplierSource" />
+	<typeAlias alias="Url" type="no.helsebiblioteket.admin.domain.Url" />
 	<cacheModel id="SupplierSourceCache" type="LRU" readOnly="false" serialize="true">
 		<flushInterval hours="24"/>
 		<flushOnExecute statement="insertSupplierSource"/>
@@ -45,5 +46,10 @@
 		select supplier_source_name, url, supplier_source_id, last_changed
 		from tbl_supplier_source
 		where supplier_source_id = #id#;
+	</select>
+	<select id="getSupplierSourceByUrlStartsWith" cacheModel="SupplierSourceCache" resultMap="SupplierSourceMap" parameterClass="Url">
+		select supplier_source_name, url, supplier_source_id, last_changed
+		from tbl_supplier_source
+		where url LIKE #stringValue# || '%';
 	</select>
 </sqlMap>
