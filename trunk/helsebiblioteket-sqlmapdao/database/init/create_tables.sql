@@ -162,7 +162,8 @@ CREATE TABLE tbl_supplier_source
     PRIMARY KEY ( supplier_source_id )
 );
 
-
+ALTER TABLE tbl_supplier_source
+  ADD CONSTRAINT tbl_supplier_source_unique UNIQUE (url);
 
 CREATE TABLE tbl_resource
 (
