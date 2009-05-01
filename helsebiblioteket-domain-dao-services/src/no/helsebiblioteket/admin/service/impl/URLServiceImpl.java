@@ -20,10 +20,12 @@ import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
@@ -50,17 +52,12 @@ public class URLServiceImpl implements URLService {
 	 * 
 	 */
 	public Boolean isAffected(Url url) {
-		// TODO: Improve efficiency by not fetching all!
-		ListResultSupplierSource list = this.accessService.getSupplierSourceListAll("");
-		for (SupplierSource supplierSource : list.getList()) {
-			if(supplierSource.getUrl().getStringValue().equals(url.getStringValue())){
-				// TODO: How is the correct way to check this?
-				//       We will hopefully not need to parse it
-				//       and do all kinds of stuff.
-				return Boolean.TRUE;
-			}
+		SingleResultSupplierSource supplierSourceResult = accessService.getSupplierSourceByUrlStartsWith(url);
+		if (supplierSourceResult instanceof EmptyResultSupplierSource) {
+			return Boolean.FALSE;
+		} else {
+			return Boolean.TRUE;
 		}
-		return Boolean.FALSE;
 	}
 	/**
 	 * Translates a URL. If the user has Access he will
@@ -74,7 +71,7 @@ public class URLServiceImpl implements URLService {
 		// TODO: Check for 'provided by'.
 		// TODO: Check for 'offered by'.
 		Url newUrl = new Url();
-		if(this.hasAccessUser(user, url)){
+		if(user != null && this.hasAccessUser(user, url)) {
 			// TODO: When to send through proxy?
 			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		} else {
@@ -93,7 +90,7 @@ public class URLServiceImpl implements URLService {
 	 */
 	public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url) {
 		Url newUrl = new Url();
-		if(hasAccessOrganization(organization, url)){
+		if(organization != null && hasAccessOrganization(organization, url)){
 			// TODO: When to send through proxy?
 			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		} else {
@@ -116,9 +113,9 @@ public class URLServiceImpl implements URLService {
 	 */
 	public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url){
 		Url newUrl = new Url();
-		if(hasAccessOrganization(organization, url)){
+		if(organization != null && hasAccessOrganization(organization, url)){
 			return this.translateUrlOrganization(organization, url);
-		} else if (hasAccessUser(user, url)){
+		} else if (user != null && hasAccessUser(user, url)){
 			return this.translateUrlUser(user, url);
 		} else {
 			// TODO: When to send directly?
@@ -205,7 +202,7 @@ public class URLServiceImpl implements URLService {
 	public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url) {
 		if(hasAccessOrganization(organization, url)){
 			return Boolean.TRUE;
-		} else if(hasAccessUser(user, url)){
+		} else if(user != null && hasAccessUser(user, url)){
 			return Boolean.TRUE;
 		} else {
 			return Boolean.FALSE;
