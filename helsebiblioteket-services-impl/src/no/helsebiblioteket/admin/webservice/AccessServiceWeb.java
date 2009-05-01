@@ -10,6 +10,7 @@ import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
@@ -21,6 +22,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSourceResource;
 import no.helsebiblioteket.admin.service.AccessService;
 
@@ -42,6 +44,7 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	private QName insertUserAccess;
 	private QName insertUserRoleAccess;
 	private QName supplierSourceResourceListAll;
+	private QName supplierSourceByUrlStartsWithName;
 	
 	@Override
 	public SingleResultSupplierSourceResource insertSupplierSourceResource(SupplierSourceResource resource) {
@@ -133,6 +136,11 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 		Class[] returnTypes = new Class[] { ListResultSupplierSourceResource.class };
 		return (ListResultSupplierSourceResource)invoke(this.supplierSourceResourceListAll, args, returnTypes);
 	}
+	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url) {
+		Object[] args = new Object[] { url };
+		Class[] returnTypes = new Class[] { SingleResultSupplierSource.class };
+		return (SingleResultSupplierSource) invoke(this.supplierSourceByUrlStartsWithName, args, returnTypes);
+	}
 	@Override
 	public Log getLogger() {
 		return this.logger;
@@ -181,5 +189,8 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	}
 	public void setSupplierSourceResourceListAll(QName supplierSourceResourceListAll) {
 		this.supplierSourceResourceListAll = supplierSourceResourceListAll;
+	}
+	public void setSupplierSourceByUrlStartsWithName(QName supplierSourceByUrlStartsWithName) {
+		this.supplierSourceByUrlStartsWithName = supplierSourceByUrlStartsWithName;
 	}
 }
