@@ -35,7 +35,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public Boolean isAffected(Url url){
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invokeCached(CacheKey.urlCache, url.getStringValue(), this.isAffectedName, args, returnTypes);
+		return (Boolean)invokeCached(CacheKey.affectedUrlCache, url.getStringValue(), this.isAffectedName, args, returnTypes);
 	}
 	@Override
     public SingleResultUrl translateUrlUser(User user, Url url){
