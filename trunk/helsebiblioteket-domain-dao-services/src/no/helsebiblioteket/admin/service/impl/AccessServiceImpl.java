@@ -20,14 +20,19 @@ import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierSourceResource;
 import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.URLService;
@@ -224,6 +229,14 @@ public class AccessServiceImpl implements AccessService {
 		return new ListResultSupplierSourceResource(list);
 	}
 
+	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url) {
+		SupplierSource supplierSoruce = this.supplierSourceDao.getSupplierSourceByUrlStartsWith(url);
+		if(supplierSoruce == null){
+			return new EmptyResultSupplierSource();
+		} else {
+			return new ValueResultSupplierSource(supplierSoruce);
+		}
+	}
 
 	// DAO. Set by dependency injection.
 	public void setAccessDao(AccessDao accessDao) {
