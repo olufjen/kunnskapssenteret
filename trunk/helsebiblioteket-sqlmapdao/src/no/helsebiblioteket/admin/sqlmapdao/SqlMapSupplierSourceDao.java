@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.domain.SupplierSource;
+import no.helsebiblioteket.admin.domain.Url;
 
 public class SqlMapSupplierSourceDao extends SqlMapClientDaoSupport implements SupplierSourceDao {
 	public void insertSupplierSource(SupplierSource supplierSource){
@@ -25,5 +26,8 @@ public class SqlMapSupplierSourceDao extends SqlMapClientDaoSupport implements S
 	}
 	public SupplierSource getSupplierSourceById(Integer id){
 		return (SupplierSource) getSqlMapClientTemplate().queryForObject("getSupplierSourceById", id);
+	}
+	public SupplierSource getSupplierSourceByUrlStartsWith(Url url) {
+		return (SupplierSource) getSqlMapClientTemplate().queryForObject("getSupplierSourceByUrlStartsWith", url);
 	}
 }
