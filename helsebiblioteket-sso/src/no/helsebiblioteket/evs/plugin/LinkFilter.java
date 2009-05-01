@@ -32,6 +32,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
 	private String sessionVarName;
 	private URLService urlService; 
+	private String proxyDomain;
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
     	// TODO: Used loggefinuser and loggedinorganization
@@ -97,16 +98,16 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 //			ref = DOWNLOADING
 
 			String oldHost = old.getHost();
-			if(oldHost.toLowerCase().startsWith("proxy.helsebiblioteket.no")){
+			if(oldHost.toLowerCase().startsWith(proxyDomain)){
 //		    	http://proxy.helsebiblioteket.no/login?url=http://www.legehandboka.no
 //		      	=> http://www.legehandboka.no
 				// TODO: Better solution?
 				return new URL(this.getQueryMap(old.getQuery()).get("url"));
-			} else if (oldHost.toLowerCase().endsWith("proxy.helsebiblioteket.no")){
+			} else if (oldHost.toLowerCase().endsWith(proxyDomain)){
 //		    	http://www.g-i-n.net.proxy.helsebiblioteket.no/
 //		    	=> http://www.g-i-n.net
 				// TODO: Better solution?
-				String newHost = oldHost.replace("proxy.helsebiblioteket.no", "");
+				String newHost = oldHost.replace(proxyDomain, "");
 				String newHref = old.getProtocol() +
 					newHost +
 					old.getPort() +
@@ -157,5 +158,8 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	}
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;
+	}
+	public void setProxyDomain(String proxyDomain) {
+		this.proxyDomain = proxyDomain;
 	}
 }
