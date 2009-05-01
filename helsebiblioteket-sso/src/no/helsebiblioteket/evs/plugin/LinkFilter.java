@@ -83,44 +83,18 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
         
     }
 	private URL deproxyfy(String href) {
-		try {
-			URL old = new URL(href);
-//	 		Domain name always ends with proxy.helsebiblioteket.no
-//			http://java.sun.com:80/docs/books/tutorial/index.html?name=networking#DOWNLOADING");
-//			protocol = http
-//			authority = java.sun.com:80
-//			host = java.sun.com
-//			port = 80
-//			path = /docs/books/tutorial/index.html
-//			query = name=networking
-//			filename = /docs/books/tutorial/index.html?name=networking
-//			ref = DOWNLOADING
-
-			String oldHost = old.getHost();
-			if(oldHost.toLowerCase().startsWith("proxy.helsebiblioteket.no")){
-//		    	http://proxy.helsebiblioteket.no/login?url=http://www.legehandboka.no
-//		      	=> http://www.legehandboka.no
-				// TODO: Better solution?
-				return new URL(this.getQueryMap(old.getQuery()).get("url"));
-			} else if (oldHost.toLowerCase().endsWith("proxy.helsebiblioteket.no")){
-//		    	http://www.g-i-n.net.proxy.helsebiblioteket.no/
-//		    	=> http://www.g-i-n.net
-				// TODO: Better solution?
-				String newHost = oldHost.replace("proxy.helsebiblioteket.no", "");
-				String newHref = old.getProtocol() +
-					newHost +
-					old.getPort() +
-					old.getPath() +
-					old.getFile() +
-					old.getQuery();
-				return new URL(newHref);
-			} else {
-				return old;
-			}
-		} catch (MalformedURLException e) {
-			// TODO What to do here?
-			return null;
+		if (href.contains("http://proxy.helsebiblioteket.no/login?url=")) {
+			href = href.replace("http://proxy.helsebiblioteket.no/login?url=", "");
+		} else if (href.contains("proxy.helsebiblioteket.no")) {
+			href = href.replace("proxy.helsebiblioteket.no", "");
 		}
+		URL url = null;
+		try {
+			url = new URL(href);
+		} catch (MalformedURLException mfue) {
+			logger.warn("malformed url encountered when trying to deproxyfy incoming url: " + url);
+		}
+		return url;
 	}
 	private Map<String, String> getQueryMap(String query){
 	    String[] params = query.split("&");
