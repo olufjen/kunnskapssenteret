@@ -17,7 +17,9 @@
 		<result property="supplierSourceName" column="supplier_source_name" />
 		<result property="url.stringValue" column="url" />
 		<result property="id" column="supplier_source_id" />
+		<result property="proxyDatabaseName" column="proxy_database_name" />
 		<result property="lastChanged" column="last_changed" />
+		
 	</resultMap>
 	<insert id="insertSupplierSource" parameterClass="SupplierSource">
 		<selectKey resultClass="int" keyProperty="id">
@@ -48,7 +50,7 @@
 		where supplier_source_id = #id#;
 	</select>
 	<select id="getSupplierSourceByUrlStartsWith" cacheModel="SupplierSourceCache" resultMap="SupplierSourceMap" parameterClass="Url">
-		select supplier_source_name, url, supplier_source_id, last_changed
+		select supplier_source_name, url, supplier_source_id, proxy_database_name, last_changed
 		from tbl_supplier_source
 		where #stringValue# LIKE url || '%';
 	</select>
