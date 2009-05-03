@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class UnknownOrganization {
+import java.io.Serializable;
+
+public class UnknownOrganization implements Serializable {
 	// TODO: Remove?
 
 	// This is used when it is not know if an organization

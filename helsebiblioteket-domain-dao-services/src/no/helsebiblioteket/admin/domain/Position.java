@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 
 // TODO: Should this be named position type?
-public class Position {
+public class Position implements Serializable {
 	// Primary key
 	private Integer id;
 	

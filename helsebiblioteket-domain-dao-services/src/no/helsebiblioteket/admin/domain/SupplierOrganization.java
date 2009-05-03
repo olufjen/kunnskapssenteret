@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class SupplierOrganization {
+import java.io.Serializable;
+
+public class SupplierOrganization implements Serializable {
 	// Values loaded by ResourceLine
 	private SupplierSourceResource[] resourceList;
 	

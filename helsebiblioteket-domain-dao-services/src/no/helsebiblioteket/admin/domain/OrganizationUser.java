@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
 
-public class OrganizationUser  {
+
+public class OrganizationUser implements Serializable  {
 	private Organization organization;
 	private User user;
 	

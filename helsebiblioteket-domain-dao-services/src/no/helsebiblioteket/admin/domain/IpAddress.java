@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class IpAddress {
+import java.io.Serializable;
+
+public class IpAddress implements Serializable {
 	// Domain object not in database.
 	private String address;
 	public IpAddress(){ }

@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.domain;
 
-public class OrganizationAction {
+import java.io.Serializable;
+
+public class OrganizationAction implements Serializable {
 
 }

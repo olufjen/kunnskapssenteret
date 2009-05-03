@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
 
-public class IpAddressRange {
+
+public class IpAddressRange implements Serializable {
 	// Local values
 	private IpAddress ipAddressFrom;
 	private IpAddress ipAddressTo;

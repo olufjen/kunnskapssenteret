@@ -1,8 +1,9 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class IpAddressSet {
+public class IpAddressSet implements Serializable {
 	// Primary key
 	private Integer id;
 	

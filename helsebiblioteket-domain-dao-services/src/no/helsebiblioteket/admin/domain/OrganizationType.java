@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 
-public class OrganizationType {
+public class OrganizationType implements Serializable {
 	// Primary key
 	private Integer orgTypeId;
 	

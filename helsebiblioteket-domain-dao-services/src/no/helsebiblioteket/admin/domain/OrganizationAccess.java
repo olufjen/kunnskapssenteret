@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class OrganizationAccess {
+import java.io.Serializable;
+
+public class OrganizationAccess implements Serializable {
 	// References
 	private Organization organization;
 

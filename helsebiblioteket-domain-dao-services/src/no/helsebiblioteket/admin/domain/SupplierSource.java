@@ -1,8 +1,9 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SupplierSource {
+public class SupplierSource implements Serializable {
 	// Primary key
 	private Integer id;
 	
@@ -11,6 +12,7 @@ public class SupplierSource {
 	// url from database table is set to url.stringValue
 	private Url url;
 	private Date lastChanged;
+	private String proxyDatabaseName;
 
 	// Constructors
 	public SupplierSource() { }
@@ -50,5 +52,11 @@ public class SupplierSource {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+	public void setProxyDatabaseName(String proxyDatabaseName) {
+		this.proxyDatabaseName = proxyDatabaseName;
+	}
+	public String getProxyDatabaseName() {
+		return this.proxyDatabaseName;
 	}
 }
