@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.Url;
 
-public class ValueResultUrl extends SingleResultUrl{
+public class ValueResultUrl extends SingleResultUrl {
 	private Url value;
 	public ValueResultUrl() { }
 	public ValueResultUrl(Url value){
