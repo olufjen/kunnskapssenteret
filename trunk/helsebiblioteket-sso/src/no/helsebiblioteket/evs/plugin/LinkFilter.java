@@ -57,7 +57,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
     	for (Element element : allAElements) {
 //    		this.logger.info("ELEM: " + element.getText());
     		String href = element.getAttributeValue("href");
-    		URL url = this.deproxyfy(href);
+    		URL url = this.deproxify(href);
     		if(url != null){
         		if(this.isAffected(url)){
             		// TODO: Add locks to links!
@@ -82,7 +82,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 //        String remoteAddr = request.getRemoteAddr();
         
     }
-	private URL deproxyfy(String href) {
+	private URL deproxify(String href) {
 		if (href.contains("http://proxy.helsebiblioteket.no/login?url=")) {
 			href = href.replace("http://proxy.helsebiblioteket.no/login?url=", "");
 		} else if (href.contains("proxy.helsebiblioteket.no")) {
@@ -91,8 +91,9 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		URL url = null;
 		try {
 			url = new URL(href);
-		} catch (MalformedURLException mfue) {
-			logger.warn("malformed url encountered when trying to deproxyfy incoming url: " + url);
+		} catch (MalformedURLException ignored) {
+			// This will happen each time a relative URL is encountered. 
+			// This is OK and is not to be treated as an error or
 		}
 		return url;
 	}
