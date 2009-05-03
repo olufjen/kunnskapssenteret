@@ -1,4 +1,6 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
-public class SingleResultUser {
+import java.io.Serializable;
+
+public class SingleResultUser implements Serializable {
 }
