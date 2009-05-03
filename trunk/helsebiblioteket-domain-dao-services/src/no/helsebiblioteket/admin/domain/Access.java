@@ -8,9 +8,10 @@ package no.helsebiblioteket.admin.domain;
  * resources available to the requestor
  */
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Access {
+public class Access implements Serializable {
 	// Primary key
 	private Integer id;
 	

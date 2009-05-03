@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
 
-public class IpAddressSingle {
+
+public class IpAddressSingle implements Serializable {
 	// Local values
 	private IpAddress ipAddressSingle;
 	private IpAddressSet ipAddressSet = new IpAddressSet();

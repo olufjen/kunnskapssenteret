@@ -1,12 +1,13 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.base.Identifiable;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 
-public class OrganizationName implements Identifiable{
+public class OrganizationName implements Identifiable, Serializable {
 	// Primary key
 	private Integer id = null;
 	

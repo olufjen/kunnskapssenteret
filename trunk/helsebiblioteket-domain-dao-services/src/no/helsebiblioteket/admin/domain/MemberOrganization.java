@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class MemberOrganization {
+import java.io.Serializable;
+
+public class MemberOrganization implements Serializable {
 	// Values loaded by IpAddressLine
 	private IpAddressRange[] ipAddressRangeList;
 	private IpAddressSingle[] ipAddressSingleList;

@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class Action {
+import java.io.Serializable;
+
+public class Action implements Serializable {
 	public static final String USER_ACCESS = "U";
 	public static final String ORGANIZATION_ACCESS = "O";
 	private Integer id;

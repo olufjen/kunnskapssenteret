@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class Email {
+import java.io.Serializable;
+
+public class Email implements Serializable {
 	// Not in database, yet.
 	private String toName;
 	private String fromName;

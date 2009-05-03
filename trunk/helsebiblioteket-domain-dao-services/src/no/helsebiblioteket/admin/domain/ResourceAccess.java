@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class ResourceAccess {
+import java.io.Serializable;
+
+public class ResourceAccess implements Serializable {
 	// References
 	private SupplierSourceResource resource;
 	private Access access = new Access();

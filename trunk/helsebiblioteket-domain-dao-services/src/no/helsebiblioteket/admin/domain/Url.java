@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class Url {
+import java.io.Serializable;
+
+public class Url implements Serializable {
 	// setStringValue is used by database!
 	private String stringValue;
 	public Url() { super(); }

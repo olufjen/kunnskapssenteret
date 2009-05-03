@@ -1,8 +1,9 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Profile {
+public class Profile implements Serializable {
 	// Primary key
 	private Integer id;
 	

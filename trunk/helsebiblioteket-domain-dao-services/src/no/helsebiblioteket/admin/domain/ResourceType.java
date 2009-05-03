@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
-public class ResourceType {
+public class ResourceType implements Serializable {
 	// Primary key
 	private Integer id;
 

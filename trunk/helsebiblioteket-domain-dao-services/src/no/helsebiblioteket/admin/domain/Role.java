@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
-public class Role {
+public class Role implements Serializable {
 	// Primary key
 	private Integer id;
 

@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 
-public class AccessType {
+public class AccessType implements Serializable {
 	// Primary key
 	private Integer id;
 
