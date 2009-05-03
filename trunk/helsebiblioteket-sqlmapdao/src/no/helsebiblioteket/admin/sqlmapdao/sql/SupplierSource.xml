@@ -50,6 +50,6 @@
 	<select id="getSupplierSourceByUrlStartsWith" cacheModel="SupplierSourceCache" resultMap="SupplierSourceMap" parameterClass="Url">
 		select supplier_source_name, url, supplier_source_id, last_changed
 		from tbl_supplier_source
-		where url LIKE #stringValue# || '%';
+		where #stringValue# LIKE url || '%';
 	</select>
 </sqlMap>
