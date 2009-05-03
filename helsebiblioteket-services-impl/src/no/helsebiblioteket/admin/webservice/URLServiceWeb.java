@@ -53,7 +53,12 @@ public class URLServiceWeb extends BasicWebService implements URLService {
     public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		return (SingleResultUrl)invoke(this.translateUrlUserOrganizationName, args, returnTypes);
+		String key = (
+				((user != null) ? (user.getId() + "-") : "") + 
+				((organization) != null ? (organization.getOrganization().getId() + "-") : "") +
+				url
+				);
+		return (SingleResultUrl) invokeCached(CacheKey.translateUrlUserOrganizationCache, key, this.translateUrlUserOrganizationName, args, returnTypes);
     }
 	@Override
     public Boolean hasAccessUser(User user, Url url){
@@ -77,13 +82,24 @@ public class URLServiceWeb extends BasicWebService implements URLService {
     public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessUserOrganizationName, args, returnTypes);
+		String key = (
+				((user != null) ? (user.getId() + "-") : "") + 
+				((organization) != null ? (organization.getOrganization().getId() + "-") : "") +
+				url
+				);
+		return (Boolean) invokeCached(CacheKey.hasAccessUserOrganizationCache, key, this.hasAccessUserOrganizationName, args, returnTypes);
     }
 	@Override
 	public Boolean hasAccessOrganizationUserOrganization(OrganizationUser user, MemberOrganization organization, Url url) {
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessOrganizationUserOrganizationName, args, returnTypes);
+		String key = (
+				((user != null && user.getOrganization() != null) ? (user.getOrganization().getId() + "-") : "") + 
+				((user != null && user.getUser() != null) ? (user.getUser().getId() + "-") : "") +
+				((organization) != null ? (organization.getOrganization().getId() + "-") : "") +
+				url
+				);
+		return (Boolean) invokeCached(CacheKey.hasAccessOrganizationUserOrganizationCache, key, this.hasAccessOrganizationUserOrganizationName, args, returnTypes);
 	}
 	@Override
     public SingleResultString group(Url url){
