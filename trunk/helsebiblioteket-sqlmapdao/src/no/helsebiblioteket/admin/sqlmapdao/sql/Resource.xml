@@ -5,13 +5,6 @@
 
 <sqlMap namespace="Resource">
 	<typeAlias alias="SupplierSourceResource" type="no.helsebiblioteket.admin.domain.SupplierSourceResource" />
-	<cacheModel id="ResourceCache" type="LRU" readOnly="false" serialize="true">
-		<flushInterval hours="24"/>
-		<flushOnExecute statement="insertSupplierSourceResource"/>
-		<flushOnExecute statement="updateSupplierSourceResource"/>
-		<flushOnExecute statement="deleteSupplierSourceResource"/>
-		<property name="size" value="1000" />
-	</cacheModel>
 	<resultMap id="SupplierSourceResourceResultMap" class="SupplierSourceResource">
 		<result property="resource.id" column="resource_id" />
 		<result property="supplierSource.id" column="supplier_source_id" />
@@ -51,7 +44,7 @@
 		where resource_id = #resource.id# 
 		and last_changed = #resource.lastChanged#
 	</delete>
-	<select id="getSupplierSourceResourceById" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
+	<select id="getSupplierSourceResourceById" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
 		select
 			sup.supplier_source_name,
 			sup.url,
@@ -69,7 +62,7 @@
 		where
 			res.resource_id = #id#;
 	</select>
-	<select id="getSupplierSourceResourceByOrganizationId" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
+	<select id="getSupplierSourceResourceByOrganizationId" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
 		select
 			sup.supplier_source_name,
 			sup.url,
@@ -88,7 +81,7 @@
 			res.org_unit_id = #id#;
 	</select>
 	
-	<select id="getSupplierSourceResourcesAll" cacheModel="ResourceCache" resultMap="SupplierSourceResourceResultListMap">
+	<select id="getSupplierSourceResourcesAll" resultMap="SupplierSourceResourceResultListMap">
 		select
 			sup.supplier_source_name,
 			sup.url,

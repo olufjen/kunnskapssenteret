@@ -5,13 +5,6 @@
 
 <sqlMap namespace="User">
 	<typeAlias alias="user" type="no.helsebiblioteket.admin.domain.OrganizationUser"/>
-	<cacheModel id="UserCache" type="LRU" readOnly="false" serialize="true">
-		<flushInterval hours="24"/>
-		<flushOnExecute statement="insertUser"/>
-		<flushOnExecute statement="updateUser"/>
-		<flushOnExecute statement="deleteUser"/>
-		<property name="size" value="1000" />
-	</cacheModel>
 	<resultMap id="getUserResultMap" class="user">
 		<result property="user.id" column="user_id" />
 		<result property="user.username" column="username" />
@@ -42,12 +35,12 @@
 	<delete id="deleteUser" parameterClass="user">
   		delete from tbl_user where user_id = #user.id# and last_changed = #user.lastChanged#
     </delete>
-	<select id="getUserByUsername" cacheModel="UserCache" resultMap="getUserResultMap" parameterClass="string">
+	<select id="getUserByUsername" resultMap="getUserResultMap" parameterClass="string">
 		select user_id, username, password, org_unit_id, person_id, last_changed
 		from tbl_user
 		where username = #userName#;
 	</select>
-	<select id="getUserById" cacheModel="UserCache" resultMap="getUserResultMap" parameterClass="integer">
+	<select id="getUserById" resultMap="getUserResultMap" parameterClass="integer">
 		select user_id, username, password, org_unit_id, person_id, last_changed
 		from tbl_user
 		where user_id = #id#;
