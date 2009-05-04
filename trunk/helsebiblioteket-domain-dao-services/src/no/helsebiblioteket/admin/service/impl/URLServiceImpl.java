@@ -138,6 +138,8 @@ public class URLServiceImpl implements URLService {
 			// TODO: phase2: handle user access
 		}
 		
+		// TODO: phase2: add an image to link to illustrate whether requester has access or not.
+		
 		newUrl.setStringValue(((proxify) ? this.proxyPrefix : "") + url.getStringValue());
 		
 		return new ValueResultUrl(newUrl);
