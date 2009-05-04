@@ -5,13 +5,6 @@
 
 <sqlMap namespace="Profile">
 	<typeAlias alias="profile" type="no.helsebiblioteket.admin.domain.Profile"/>
-	<cacheModel id="ProfileCache" type="LRU" readOnly="false" serialize="true">
-		<flushInterval hours="24"/>
-		<flushOnExecute statement="insertProfile"/>
-		<flushOnExecute statement="updateProfile"/>
-		<flushOnExecute statement="deleteProile"/>
-		<property name="size" value="1000" />
-	</cacheModel>
 	<resultMap id="getProfileResultMap" class="profile">
 		<result property="id" column="profile_id" />
 		<result property="receiveNewsletter" column="receive_newsletter" />
@@ -38,7 +31,7 @@
 	<delete id="deleteProfile" parameterClass="profile">
   		delete from tbl_profile where profile_id = #id# and last_changed = #lastChanged#
     </delete>
-	<select id="getProfileById" cacheModel="ProfileCache" resultMap="getProfileResultMap" parameterClass="integer">
+	<select id="getProfileById" resultMap="getProfileResultMap" parameterClass="integer">
 		select profile_id, receive_newsletter, participate_survey, last_changed
 		from tbl_profile
 		where profile_id = #id#;
