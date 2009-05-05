@@ -15,6 +15,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
@@ -59,10 +60,10 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		
 		return (SingleResultMemberOrganization)invoke(this.logInIpAddressName, args, returnTypes);
 	}
-	public Boolean sendPasswordEmail(String emailAddress) {
+	public SendPasswordEmailResult sendPasswordEmail(String emailAddress) {
 		Object[] args = new Object[] { emailAddress };
-		Class[] returnTypes = new Class[] { Boolean.class  };
-		return (Boolean)invoke(this.sendPasswordEmailName, args, returnTypes);
+		Class[] returnTypes = new Class[] { SendPasswordEmailResult.class  };
+		return (SendPasswordEmailResult)invoke(this.sendPasswordEmailName, args, returnTypes);
 	}
 
 	
