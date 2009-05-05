@@ -136,4 +136,9 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public List<UserListItem> getUserListByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
