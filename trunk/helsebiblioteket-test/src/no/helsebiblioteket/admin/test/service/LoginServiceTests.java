@@ -16,6 +16,7 @@ import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
@@ -106,9 +107,9 @@ public class LoginServiceTests {
 //	    TEST: public Boolean sendPasswordEmail(User user);
 //		Look in the log for the result of this!
 //		TODO: Test with some kind of mock instead?
-	    Boolean res = loginService.sendPasswordEmail(user.getUsername());
+	    SendPasswordEmailResult res = loginService.sendPasswordEmail(user.getUsername());
 	    Assert.notNull(res, "Failed");
-	    Assert.isTrue(res, "Failed");
+	    Assert.isTrue( ! res.getFailed(), "Failed");
 	}
 
 	private OrganizationType createOrganizationHealthEnterprise(){
