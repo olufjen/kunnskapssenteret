@@ -15,6 +15,7 @@ public class Person implements Serializable {
 	private String studentNumber;
 	private String hprNumber;
 	private Date lastChanged;
+	private Boolean isStudent;
 
 	// References
 	private Position position = new Position();
@@ -97,5 +98,11 @@ public class Person implements Serializable {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+	public Boolean getIsStudent() {
+		return isStudent;
+	}
+	public void setIsStudent(Boolean isStudent) {
+		this.isStudent = isStudent;
 	}
 }

@@ -35,6 +35,7 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
@@ -276,6 +277,22 @@ public class UserServiceImpl implements UserService {
 	public SingleResultUser getUserByUserListItem(UserListItem userListItem) {
 		User tmp = this.userDao.getUserById(userListItem.getId()).getUser();
 		return this.findUserByUsername(tmp.getUsername());
+	}
+
+	@Override
+	public ListResultUser getUserListByEmailAddress(String emailAddress) {
+		List<UserListItem> users = this.userListDao.getUserListByEmail(emailAddress);
+		ListResultUser result = new ListResultUser();
+		result.setList(new User[users.size()]);
+		for(int i=0; i<users.size(); i++){
+			SingleResultUser resultUser = this.findUserByUsername(users.get(i).getUsername());
+			if(resultUser instanceof ValueResultUser){
+				result.getList()[i] = ((ValueResultUser)resultUser).getValue();
+			} else if(resultUser instanceof ValueResultOrganizationUser){
+				result.getList()[i] = ((ValueResultOrganizationUser)resultUser).getValue().getUser();
+			}
+		}
+		return result;
 	}
 
     /**

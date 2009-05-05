@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.util.Random;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -7,16 +9,17 @@ import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
@@ -80,22 +83,68 @@ public class LoginServiceImpl implements LoginService {
 	/**
 	 * Sends an email to the user. This is delegated to EmailService.
 	 */
-	public Boolean sendPasswordEmail(String emailaddress) {
-		logger.info("Sending email to :" + emailaddress);
+	public SendPasswordEmailResult sendPasswordEmail(String emailaddressOrUsername) {
+		SendPasswordEmailResult result = new SendPasswordEmailResult();
+		if(EmailValidator.getInstance().isValidEmailAdress(emailaddressOrUsername)){
+			User[] users = this.userService.getUserListByEmailAddress(emailaddressOrUsername).getList();
+			if(users.length == 0){
+				result.setValue(SendPasswordEmailResult.notFoundEmail);
+			} else if(users.length == 1){
+				this.sendEmail(users[0]);
+				result.setValue(SendPasswordEmailResult.sentEmail);
+			} else {
+				result.setValue(SendPasswordEmailResult.multipleEmail);
+			}
+		} else {
+			SingleResultUser userResult = this.userService.findUserByUsername(emailaddressOrUsername);
+			if(userResult instanceof ValueResultUser){
+				User user = ((ValueResultUser)userResult).getValue();
+				if(user.getPerson() != null &&
+						user.getPerson().getContactInformation() != null &&
+						user.getPerson().getContactInformation().getEmail() != null &&
+						EmailValidator.getInstance().isValidEmailAdress(
+								user.getPerson().getContactInformation().getEmail())){
+					this.sendEmail(user);
+					result.setValue(SendPasswordEmailResult.sentUser);
+				} else {
+					result.setValue(SendPasswordEmailResult.noEmailAddress);
+				}
+			} else {
+				result.setValue(SendPasswordEmailResult.notFoundUser);
+			}
+		}
+		return result;
+	}
+	
+	private void sendEmail(User user) {
+		user.setPassword(this.newPasssword());
+		this.userService.updateUser(user);
+		
+		
 		Email email = new Email();
 		email.setFromName(this.emailFromName);
 		email.setFromEmail(this.emailFromEmail);
-
-		email.setToName(emailaddress);
-		email.setToEmail(emailaddress);
-
+		email.setToName(user.getUsername());
+		email.setToEmail(user.getPerson().getContactInformation().getEmail());
 		email.setSubject(this.emailSubject);
-		email.setMessage(this.emailMessage);
-		
+		email.setMessage(this.message(this.emailMessage, user));
 		emailService.sendEmail(email);
-		return true;
+
+		logger.info("Sending email to user:" + user.getUsername());
 	}
-	
+	private String newPasssword() {
+		String password = "";
+		String values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		Random random = new Random();
+		for(int i=0; i<9;i++){
+			int val = random.nextInt(62);
+			password += values.substring(val, val+1);
+		}
+		return password;
+	}
+	private String message(String emailMessage, User user) {
+		return emailMessage.replace("##password##", user.getPassword());
+	}
 	public void setEmailFromName(String emailFromName) {
 		this.emailFromName = emailFromName;
 	}
