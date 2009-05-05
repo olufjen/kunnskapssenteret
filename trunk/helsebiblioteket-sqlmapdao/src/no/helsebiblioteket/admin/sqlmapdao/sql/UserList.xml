@@ -34,6 +34,27 @@
 		desc
 	</select>
 
+	<select id="getUserListByEmail" resultMap="UserListLineMap" parameterClass="String">
+		select
+			tuser.username,
+			tperson.first_name,
+			tperson.last_name,
+			trole.name as role_name,
+			trole.key as role_key,
+			tuser.user_id
+		from
+			tbl_user as tuser
+			left outer join tbl_person as tperson on tperson.person_id = tuser.person_id
+			left outer join tbl_user_role as userrole on userrole.user_id = tuser.user_id
+			left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
+			left outer join tbl_contact_information as tcontact on tcontact.contact_information_id = tperson.contact_information_id
+		where
+			tcontact.email ilike #email#
+		order by
+			tuser.user_id
+		desc
+	</select>
+
 	<select id="getUserNumber" resultClass="int" >
 		select
 			count(tuser.user_id)

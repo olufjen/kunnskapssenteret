@@ -139,4 +139,10 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 		return (Integer) getSqlMapClientTemplate().queryForObject("getUserNumberSearchStringRoles",
 				new SearchStringInput("%" + searchString + "%", this.createRolesString(roles), null, null));
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserListItem> getUserListByEmail(String email) {
+		List<UserListLine> lines = getSqlMapClientTemplate().queryForList("getUserListByEmail", email);
+		return translateList(lines);
+	}
 }
