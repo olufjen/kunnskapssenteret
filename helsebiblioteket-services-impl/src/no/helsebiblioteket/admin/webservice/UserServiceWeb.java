@@ -18,6 +18,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
@@ -132,7 +133,14 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Class[] returnTypes = new Class[] { SingleResultPosition.class };
 		return (SingleResultPosition)invoke(this.positionByKey, args, returnTypes);
 	}
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public ListResultUser getUserListByEmailAddress(String emailAddress) {
+		Object[] args = new Object[] { emailAddress };
+		Class[] returnTypes = new Class[] { ListResultUser.class };
+		return (ListResultUser)invoke(this.positionByKey, args, returnTypes);
+	}
+
 	public Log getLogger() {
 		return logger;
 	}
