@@ -23,14 +23,14 @@
 	</bean>
 	
 	<bean name="proxyUrlServiceWeb" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
-		<property name="serviceClient" ref="proxyControllerLoginServiceClient" />
-		<property name="targetEPR" ref="proxyControllerLoginServiceTargetEPR" />
+		<property name="serviceClient" ref="proxyControllerUrlServiceClient" />
+		<property name="targetEPR" ref="proxyControllerUrlServiceTargetERP" />
 		<property name="isAffectedName" ref="proxyControllerIsAffected" />
 	</bean>
-	<bean name="proxyControllerLoginServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	<bean name="proxyControllerUrlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
-	<bean name="proxyControllerLoginServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
-		<constructor-arg value="${webservice.service.url.prefix}/loginService" />
+	<bean name="proxyControllerUrlServiceTargetERP" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="${webservice.service.url.prefix}/urlService" />
 	</bean>
 	<bean name="proxyControllerIsAffected" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />

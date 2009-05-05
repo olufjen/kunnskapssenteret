@@ -21,6 +21,7 @@
  			<entry key="firstname" value="firstname"/>
  			<entry key="lastname" value="surname"/>
  			<entry key="employer" value="org"/>
+ 			<entry key="studentansatt" value="studentansatt"/>
  			<entry key="newsletter" value="newsletter"/>
  			<entry key="questionaire" value="survey"/>
  			<entry key="emailaddress" value="email"/>

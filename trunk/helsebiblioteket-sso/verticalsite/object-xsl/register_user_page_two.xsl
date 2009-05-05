@@ -177,7 +177,7 @@
                                             <td colspan="2">
                                                 <input name="org" size="20" type="text"
                                                     value="{$hbresult/values/user/person/employer/text()}"/>
-                                            </td>   
+                                            </td>
                                             <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/employer"/></xsl:call-template></td>
                                         </tr>
                                         <tr>  
@@ -198,11 +198,30 @@
                                                 <select name="org">
                                                     <option value="test">Test</option>
                                                 </select>
-                                            </td>                             
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td><xsl:comment>//</xsl:comment></td>
-                                            <td colspan="2"><input type="radio" name="type" value="Student">Student</input> <input type="radio" name="type" value="Ansatt">Ansatt</input></td>
+                                        <tr>  
+                                            <td>Student/ansatt:</td> 
+                                            <td colspan="2">
+	                                            <input>
+		                                            <xsl:attribute name="type">radio</xsl:attribute>
+	    	                                        <xsl:attribute name="name">studentansatt</xsl:attribute>
+	        	                                    <xsl:attribute name="value">student</xsl:attribute>
+	    	                                        <xsl:if test="$hbresult/values/user/person/isStudent = true">
+		                                            	<xsl:attribute name="checked"/>
+	        	                                    </xsl:if>
+	                                            </input>
+	                                            Student <br/>
+	                                            <input>
+		                                            <xsl:attribute name="type">radio</xsl:attribute>
+	    	                                        <xsl:attribute name="name">studentansatt</xsl:attribute>
+	        	                                    <xsl:attribute name="value">ansatt</xsl:attribute>
+	    	                                        <xsl:if test="$hbresult/values/user/person/isStudent = true">
+		                                            	<xsl:attribute name="checked"/>
+	        	                                    </xsl:if>
+	                                            </input>
+	                                            Ansatt
+                                            </td>
                                         </tr>
                                     </xsl:when>
                                     <xsl:otherwise>
