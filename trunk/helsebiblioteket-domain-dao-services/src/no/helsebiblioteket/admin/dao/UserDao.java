@@ -1,7 +1,6 @@
 package no.helsebiblioteket.admin.dao;
 
 import no.helsebiblioteket.admin.domain.OrganizationUser;
-import no.helsebiblioteket.admin.domain.User;
 
 public interface UserDao {
 	// Edit

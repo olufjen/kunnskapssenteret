@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
@@ -15,5 +16,5 @@ public interface LoginService extends Serializable {
     // TODO: Remove:
     public SingleResultPosition hmmm(Person person);
     
-    public Boolean sendPasswordEmail(String emailAddress);
+    public SendPasswordEmailResult sendPasswordEmail(String emailAddress);
 }

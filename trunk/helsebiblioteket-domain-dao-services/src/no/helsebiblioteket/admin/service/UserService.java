@@ -17,6 +17,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultRole;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
@@ -40,8 +41,10 @@ public interface UserService extends Serializable {
 	public PageResultUserListItem getUserListAll(PageRequest request);
 	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request);
 
+	public ListResultUser getUserListByEmailAddress(String emailAddress);
 	public SingleResultUser getUserByUserListItem(UserListItem userListItem);
 	public SingleResultUser findUserByUsername(String username);
+	
 
 	public SingleResultUser insertUser(User user);
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser);
