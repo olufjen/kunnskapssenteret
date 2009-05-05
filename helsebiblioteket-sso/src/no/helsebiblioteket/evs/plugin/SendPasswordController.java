@@ -56,7 +56,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
    			success = false;
    	    	// TODO: Return errors, etc from property files!
    			emailError = "NOT_VALID";
-   		} else if(! this.loginService.sendPasswordEmail(user.getUsername())) {
+   		} else if(this.loginService.sendPasswordEmail(user.getUsername()).getFailed()) {
    			success = false;
    			sent = false;
    		}

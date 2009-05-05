@@ -207,6 +207,7 @@ public final class RegisterUserController extends ProfileController {
 		person.setFirstName(request.getParameter(this.parameterNames.get("firstname")));
 		person.setLastName(request.getParameter(this.parameterNames.get("lastname")));
 		person.setEmployer(request.getParameter(this.parameterNames.get("employer")));
+		person.setIsStudent("student".equals(request.getParameter(this.parameterNames.get("studentansatt"))));
 		person.setContactInformation(contactInformation);
 		person.setProfile(profile);
 		
