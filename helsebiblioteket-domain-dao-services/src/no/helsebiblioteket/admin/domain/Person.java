@@ -19,6 +19,8 @@ public class Person implements Serializable {
 
 	// References
 	private Position position = new Position();
+	// TODO: This is not stored in the database!
+	private String positionText;
 	private ContactInformation contactInformation = new ContactInformation();
 	private Profile profile = new Profile();
 	
@@ -104,5 +106,11 @@ public class Person implements Serializable {
 	}
 	public void setIsStudent(Boolean isStudent) {
 		this.isStudent = isStudent;
+	}
+	public String getPositionText() {
+		return positionText;
+	}
+	public void setPositionText(String positionText) {
+		this.positionText = positionText;
 	}
 }
