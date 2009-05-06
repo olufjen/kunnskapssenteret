@@ -15,7 +15,7 @@
   		eternal="false"
       	overflowToDisk="true" 
       	timeToIdleSeconds="0" 
-      	timeToLiveSeconds="300" 
+      	timeToLiveSeconds="30" 
     />
     <cache 
   		name="translateUrlUserOrganizationCache" 
@@ -23,7 +23,7 @@
   		eternal="false"
       	overflowToDisk="true" 
       	timeToIdleSeconds="0" 
-      	timeToLiveSeconds="300" 
+      	timeToLiveSeconds="30" 
     />
     <cache 
   		name="hasAccessUserOrganizationCache" 
@@ -31,7 +31,7 @@
   		eternal="false"
       	overflowToDisk="true" 
       	timeToIdleSeconds="0" 
-      	timeToLiveSeconds="300" 
+      	timeToLiveSeconds="30" 
     />
     <cache 
   		name="hasAccessOrganizationUserOrganizationCache" 
@@ -39,6 +39,6 @@
   		eternal="false"
       	overflowToDisk="true" 
       	timeToIdleSeconds="0" 
-      	timeToLiveSeconds="300" 
+      	timeToLiveSeconds="30" 
     />
 </ehcache>
