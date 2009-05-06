@@ -26,15 +26,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="hasAccessUserOrganizationCache" 
-  		maxElementsInMemory="500" 
-  		eternal="false"
-      	overflowToDisk="true" 
-      	timeToIdleSeconds="0" 
-      	timeToLiveSeconds="30" 
-    />
-    <cache 
-  		name="hasAccessOrganizationUserOrganizationCache" 
+  		name="accessTypeForUserAndMemberOrganizationCache" 
   		maxElementsInMemory="500" 
   		eternal="false"
       	overflowToDisk="true" 
