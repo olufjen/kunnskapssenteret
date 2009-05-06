@@ -16,14 +16,14 @@
         <h:outputText value="#{msg_main.firstname}" />
       </td>
       <td >
-        <h:inputText value="#{newEndUserBean.firstname}"
+        <h:inputText value="#{newEndUserBean.user.person.firstName}"
       	  id="firstname" required="true" size="12" />
       </td>
       <td align="right"  >
       	<h:outputText value="#{msg_main.lastname}" />
       </td>
       <td align="right" >
-        <h:inputText value="#{newEndUserBean.lastname}"
+        <h:inputText value="#{newEndUserBean.user.person.lastName}"
       	  id="lastname" required="true" size="12" />
       </td>
       <td >
@@ -34,11 +34,30 @@
 
     <tr>
       <td>
-        <h:outputText value="#{msg_main.student_hpr_no}" />
+        <h:outputText value="#{msg_main.student_emp_no}" />
       </td>
       <td colspan="3">
-        <h:inputText value="#{newEndUserBean.studentHprNo}"
-      	  id="studentHprNo" required="true" size="50"/>
+        <h:inputText value="#{newEndUserBean.user.person.studentNumber}"
+      	  id="studentNo" size="50"
+      	  required="#{newEndUserBean.showStudentNo}"
+      	  disabled="#{ ! newEndUserBean.showStudentNo}"
+      	  readonly="#{ ! newEndUserBean.showStudentNo}"/>
+      </td>
+      <td>
+		<h:message for="studentNo" styleClass="RED"/>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <h:outputText value="#{msg_main.hpr_no}" />
+      </td>
+      <td colspan="3">
+        <h:inputText value="#{newEndUserBean.user.person.hprNumber}"
+      	  id="studentHpr" size="50"
+      	  required="#{newEndUserBean.showHpr}"
+      	  disabled="#{ ! newEndUserBean.showHpr}"
+      	  readonly="#{ ! newEndUserBean.showHpr}"/>
       </td>
       <td>
 		<h:message for="studentHprNo" styleClass="RED"/>
@@ -50,8 +69,12 @@
         <h:outputText value="#{msg_main.employer}" />
       </td>
       <td colspan="3">
-        <h:inputText value="#{newEndUserBean.employer}"
-      	  id="employer" required="true" size="50"/>
+        <h:inputText value="#{newEndUserBean.user.person.employer}"
+      	  id="employer"
+      	  size="50"
+      	  required="#{newEndUserBean.showEmployer}"
+      	  disabled="#{ ! newEndUserBean.showEmployer}"
+      	  readonly="#{ ! newEndUserBean.showEmployer}"/>
       </td>
       <td>
 		<h:message for="employer" styleClass="RED"/>
@@ -60,14 +83,61 @@
 
     <tr>
       <td>
+        <h:outputText value="#{msg_main.position}" />
+      </td>
+      <td colspan="3">
+        <h:inputText value="#{newEndUserBean.user.person.positionText}"
+      	  id="positionText" size="50"
+      	  required="#{newEndUserBean.showPositionText}"
+      	  disabled="#{ ! newEndUserBean.showPositionText}"
+      	  readonly="#{ ! newEndUserBean.showPositionText}"/>
+      </td>
+      <td>
+		<h:message for="positionText" styleClass="RED"/>
+      </td>
+    </tr>
+
+	<tr>
+		<td><h:outputText value="#{msg_main.position_select}"  /></td>
+		<td>
+			<h:selectOneMenu value="#{newEndUserBean.user.person.position.key.value}"
+				id="positionSelect"
+				required="#{newEndUserBean.showPositionSelect}"
+				readonly="#{ ! newEndUserBean.showPositionSelect}"
+				disabled="#{ ! newEndUserBean.showPositionSelect}">
+				<f:selectItems value="#{userBean.availablePositions}"/>
+			</h:selectOneMenu>
+		</td>
+		<td><h:message for="positionSelect" styleClass="RED"/></td>
+	</tr>
+
+	<tr>
+		<td><h:outputText value="#{msg_main.is_student}"  /></td>
+		<td><h:selectOneRadio value="#{newEndUserBean.user.person.isStudent}"
+					id="isStudent" 
+					layout="pageDirection"
+					required="#{ ! newEndUserBean.showIsStudent}"
+					readonly="#{ ! newEndUserBean.showIsStudent}"
+					disabled="#{ ! newEndUserBean.showIsStudent}">
+					<f:selectItems value="#{newEndUserBean.availableIsStudent}"/>
+        	</h:selectOneRadio>
+        </td>
+		<td><h:message for="isStudent" styleClass="RED"/></td>
+
+	</tr>
+
+    <tr>
+      <td>
         <h:outputText value="#{msg_main.attributes}" />
       </td>
       <td>
-        <h:selectBooleanCheckbox id="newsletter" value="#{newEndUserBean.newsletter}" />
+        <h:selectBooleanCheckbox id="newsletter"
+        	value="#{newEndUserBean.user.person.profile.receiveNewsletter}" />
         <h:outputText value="#{msg_main.newsletter}" />
       </td>
       <td colspan="2">
-        <h:selectBooleanCheckbox id="questionnaire" value="#{newEndUserBean.questionnaire}" />
+        <h:selectBooleanCheckbox id="questionnaire"
+        	value="#{newEndUserBean.user.person.profile.participateSurvey}" />
         <h:outputText value="#{msg_main.questionnaire}" />
       </td>
       <td>
@@ -82,7 +152,8 @@
       </td>
       <td colspan="3">
         <h:inputText value="#{newEndUserBean.emailaddress}"
-      	  id="emailaddress" required="true" size="50" validator="#{newEndUserBean.validateEmail}" />
+      	  id="emailaddress" required="true" size="50"
+      	  validator="#{newEndUserBean.validateEmail}" />
       </td>
       <td>
 		<h:message for="emailaddress" styleClass="RED"/>
@@ -95,7 +166,8 @@
       </td>
       <td colspan="3">
         <h:inputText value="#{newEndUserBean.retypeemailaddress}"
-      	  id="retypeemailaddress" required="true" size="50"  validator="#{newEndUserBean.retypeValidate}" />
+      	  id="retypeemailaddress" required="true" size="50"
+      	  validator="#{newEndUserBean.retypeValidate}" />
       </td>
       <td width="150px">
 		<h:message  for="retypeemailaddress" styleClass="RED"/>
@@ -106,8 +178,9 @@
         <h:outputText value="#{msg_main.username}" />
       </td>
       <td colspan="3">
-        <h:inputText value="#{newEndUserBean.username}"
-      	  id="username" required="true" size="50"/>
+        <h:inputText value="#{newEndUserBean.user.username}"
+      	  id="username" required="true" size="50"
+      	  validator="#{newEndUserBean.validateUserExists}"/>
       </td>
       <td>
 		<h:message for="username" styleClass="RED"/>
@@ -120,7 +193,8 @@
       </td>
       <td colspan="3">
         <h:inputText value="#{newEndUserBean.password}"
-      	  id="password" required="true" size="50"/>
+      	  id="password" required="true" size="50"
+      	  validator="#{newEndUserBean.validatePassword}" />
       </td>
       <td>
 		<h:message for="password" styleClass="RED"/>
@@ -128,9 +202,24 @@
     </tr>
 
     <tr>
+      <td>
+        <h:outputText value="#{msg_main.password_repeat}" />
+      </td>
+      <td colspan="3">
+        <h:inputText value="#{newEndUserBean.retypePassword}"
+      	  id="retypepassword" required="true" size="50"
+      	  validator="#{newEndUserBean.validatePasswordRepeat}" />
+      </td>
+      <td>
+		<h:message for="retypepassword" styleClass="RED"/>
+      </td>
+    </tr>
+
+    <tr>
       <td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
-      <td colspan="3"><h:selectOneRadio value="#{newEndUserBean.selectedUserRole}" id="roles" 
-              layout="pageDirection" binding="#{newEndUserBean.userRolesSelectOne}">
+      <td colspan="3"><h:selectOneRadio value="#{newEndUserBean.role.key.value}" id="roles" 
+              layout="pageDirection" 
+              valueChangeListener="#{newEndUserBean.roleChanged}" onchange="submit()">
             <f:selectItems value="#{newEndUserBean.availableRoles}"/>
           </h:selectOneRadio>
       </td>
@@ -140,7 +229,7 @@
 	<tr>
       <td colspan="2">&nbsp;</td>
       <td align="right" >
-        <h:commandButton value="#{msg_main.save}" action="#{newEndUserBean.actionSaveNewUser}" />
+        <h:commandButton value="#{msg_main.save}" action="#{newEndUserBean.actionSaveNewEndUser}" />
       </td>
       <td align="right">
       	<h:commandButton value="#{msg_main.cancel}" action="#{newEndUserBean.actionCancelNewUser}" immediate="true" />

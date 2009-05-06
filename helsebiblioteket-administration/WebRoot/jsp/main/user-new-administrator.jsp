@@ -18,20 +18,48 @@
 
     <tr>
       <td><h:outputText value="#{msg_main.emailaddress}" /></td>
-      <td colspan="3"> <h:inputText value="#{newAdministratorBean.emailaddress}" id="emailaddress" required="true" size="50"/></td>
+      <td colspan="3">
+		  <h:inputText value="#{newAdministratorBean.emailaddress}"
+		  	id="emailaddress" required="true" size="50"
+		  	validator="#{newAdministratorBean.validateEmail}"/>
+	  </td>
       <td><h:message for="emailaddress" styleClass="RED"/></td>
     </tr>
 
     <tr>
+      <td><h:outputText value="#{msg_main.retypeemailaddress}" /></td>
+      <td colspan="3">
+		  <h:inputText value="#{newAdministratorBean.retypeemailaddress}"
+		  	id="retypeemailaddress" required="true" size="50"
+		  	validator="#{newAdministratorBean.retypeValidate}"/>
+	  </td>
+      <td><h:message for="retypeemailaddress" styleClass="RED"/></td>
+    </tr>
+
+    <tr>
       <td><h:outputText value="#{msg_main.username}" /></td>
-      <td colspan="3"><h:inputText value="#{newAdministratorBean.username}" id="username" required="true" size="50"/></td>
+      <td colspan="3">
+      	  <h:inputText value="#{newAdministratorBean.username}"
+      	  id="username" required="true" size="50"
+      	  validator="#{newAdministratorBean.validateUserExists}" />
+      </td>
       <td><h:message for="username" styleClass="RED"/></td>
     </tr>
 
     <tr>
       <td><h:outputText value="#{msg_main.password}" /></td>
-      <td colspan="3"><h:inputText value="#{newAdministratorBean.password}" id="password" required="true" size="50"/></td>
+      <td colspan="3"><h:inputText value="#{newAdministratorBean.password}"
+      	  id="password" required="true" size="50"
+      	  validator="#{newEndUserBean.validatePassword}"/></td>
       <td><h:message for="password" styleClass="RED"/></td>
+    </tr>
+
+    <tr>
+      <td><h:outputText value="#{msg_main.password_repeat}" /></td>
+      <td colspan="3"><h:inputText value="#{newAdministratorBean.retypePassword}"
+      	  id="retypePassword" required="true" size="50"
+      	  validator="#{newEndUserBean.validatePasswordRepeat}"/></td>
+      <td><h:message for="retypePassword" styleClass="RED"/></td>
     </tr>
 
 	<tr>
