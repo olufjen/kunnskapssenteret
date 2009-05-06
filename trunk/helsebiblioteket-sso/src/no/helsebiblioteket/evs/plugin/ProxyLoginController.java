@@ -5,15 +5,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
+import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
@@ -31,23 +34,22 @@ import java.net.URL;
 
 
 public class ProxyLoginController extends HttpControllerPlugin {
-	// FIXME: Complete plugin-cofig including services!
-	private String resultSessionVarName = "hbproxyresult";
-	private String proxyPassword = "mypassword";
-	private String urlParamName = "url";
+	private String resultSessionVarName;
+	private String proxyPassword;
+	private String urlParamName;
 	// proxyUrl and logUpUrl are configured in spring(plugin)conf.xml+environment.properties
 	private String proxyUrl;
 	private String logUpUrl;
 	private boolean proxyUseGroup = true;
 	private int proxyTimeout = 0;
+	protected final Log logger = LogFactory.getLog(getClass());
 
 	private URLService urlService;
 	private LoggedInFunction loggedInFunction;
 
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		String requestedUrlText = request.getParameter(this.urlParamName);
-        String redirectUrl;
+        String redirectUrl = "";
 		Url requestedUrl = new Url();
 		requestedUrl.setStringValue(requestedUrlText);
 		
@@ -55,65 +57,60 @@ public class ProxyLoginController extends HttpControllerPlugin {
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
 		Object objectUser = this.loggedInFunction.loggedInUser();
-		MemberOrganization organization = this.loggedInFunction.loggedInOrganization();
-    	if(objectUser == null && organization == null){
+		MemberOrganization memberOrganization = this.loggedInFunction.loggedInOrganization();
+    	if(objectUser == null && memberOrganization == null){
     		if(this.urlService.isAffected(requestedUrl)){
-        		createXML(false, objectUser, organization, requestedUrl, document, element);
+        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
         		redirectUrl = logUpUrl;
     		} else {
-    			// TODO: What does it mean to not be affected.
-    			// When everyone has access?
-        		createXML(true, objectUser, organization, requestedUrl, document, element);
-
-        		// TODO: Go ahead!
+    			// Special case: 
+    			// See error messages below.
+    			// No other choice than to redirect user to default "logup page"
+	    		logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database" +
+	    			"or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
+	    		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
 	    		redirectUrl = logUpUrl;
-//	    		redirectUrl = requestedUrlText;
     		}
     	} else {
-    		if(this.urlService.isAffected(requestedUrl)){
-    			boolean hasAcces = false;
-    			boolean test = false;
-    			if(objectUser instanceof User){
-    				User user = (User) objectUser;
-    				test = this.urlService.hasAccessUserOrganization(user, organization, requestedUrl);
+    		if(this.urlService.isAffected(requestedUrl)) {
+    			User user = null;
+    			if (objectUser instanceof User) {
+    				user = (User) objectUser;
     			} else if (objectUser instanceof OrganizationUser) {
-    				OrganizationUser user = (OrganizationUser) objectUser;
-    				test = this.urlService.hasAccessOrganizationUserOrganization(user, organization, requestedUrl);
-    			} else if (organization instanceof MemberOrganization) {
-    				test = this.urlService.hasAccessOrganization(organization, requestedUrl);
+    				user = ((OrganizationUser) objectUser).getUser();
     			}
-    			if(test){
+    			
+    			AccessType accessType = urlService.getAccessTypeForUserAndMemberOrganization(user, memberOrganization, requestedUrl);
+    			
+    			if (accessType.getCategory().equals(AccessTypeCategory.DENY) && accessType.getKey().equals(AccessTypeKey.general)) {
+   	        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
+    				redirectUrl = logUpUrl;
+    			} else if (accessType.getCategory().equals(AccessTypeCategory.GRANT) && accessType.getKey().equals(AccessTypeKey.proxy_exclude)) {
+    				redirectUrl = requestedUrl.getStringValue();
+    			} else if (accessType.getCategory().equals(AccessTypeCategory.GRANT) && accessType.getKey().equals(AccessTypeKey.proxy_include)) {
     				SingleResultString result = this.urlService.group(requestedUrl);
     				String group;
     				if(result instanceof EmptyResultString){
-    					// TODO: What to do here?
     					group = null;
+    					logger.error("Group name was expected but was not found for URL: " + requestedUrl);
     				} else {
     					group = ((ValueResultString)result).getValue();
     				}
     				if(this.createProxySession(response, requestedUrlText, group)){
         				// Great, done!
-    	        		createXML(true, objectUser, organization, requestedUrl, document, element);
-
+    	        		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
     	        		redirectUrl = "";
     				} else {
-    	        		createXML(false, objectUser, organization, requestedUrl, document, element);
+    	        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
     	        		element.appendChild(document.createElement("proxysessionerror"));
     		    		redirectUrl = logUpUrl;
     				}
-    			} else {
-    				// Add organization for IP!
-    		    	IpAddress ipAddress = new IpAddress();
-    		    	ipAddress.setAddress(LogInInterceptor.getXforwardedForOrRemoteAddress(request));
-   	        		createXML(false, objectUser, organization, requestedUrl, document, element);
-    				redirectUrl = logUpUrl;
     			}
     		} else {
-        		createXML(true, objectUser, organization, requestedUrl, document, element);
-        		
-        		// TODO: Go ahead!
+    			logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database\n" +
+	    			"or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
+    			createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
 	    		redirectUrl = logUpUrl;
-//	    		redirectUrl = requestedUrlText;
     		}
     	}
     	document.appendChild(element);
