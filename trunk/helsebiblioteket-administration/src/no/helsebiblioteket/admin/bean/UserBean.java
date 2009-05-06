@@ -7,11 +7,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
+import javax.faces.component.UIInput;
 import javax.faces.component.UISelectMany;
 import javax.faces.component.UISelectOne;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +40,8 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.validator.PasswordValidator;
+import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class UserBean {
 	private UserService userService;
@@ -47,6 +54,9 @@ public class UserBean {
 	private List<String> selectedRoles;
 	private UserRoleKey selectedUserRole;
 	private String selectedIsStudent;
+	
+	private String password;
+	private String repeatPassword;
 
 	private List<Role> allRoles;
 	private Map<String, Role> allRolesMap;
@@ -74,11 +84,14 @@ public class UserBean {
 	private UISelectOne userRolesSelectOne;
 	private UISelectOne isStudentSelectOne;
 	private UIData usersTable;
+	private UIInput passwordRepeat;
+	private UIInput passwordInput;
 	
 	private PageResultUserListItem lastPageResult;
 	private String searchedString;
 	private Role[] searchedRoles;
 	private int SHOW_MAX = 40;
+	
 	
     protected final Log logger = LogFactory.getLog(getClass());
 
@@ -183,6 +196,8 @@ public class UserBean {
     	UserListItem item  = (UserListItem) this.usersTable.getRowData();
     	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
     	this.enableDisableFields();
+    	this.password = "";
+    	this.repeatPassword = "";
     	return "user_edit";
     }
     public String actionEditSingle(){ return "user_edit"; }
@@ -194,6 +209,27 @@ public class UserBean {
     	}
     }
     public String actionSave(){
+    	if(this.password==null) this.password = "";
+    	if(this.repeatPassword==null) this.repeatPassword="";
+    	if( ( ! this.password.equals("") ) ||
+    			( ! this.repeatPassword.equals(""))){
+    		if( ! PasswordValidator.getInstance().isValidPassword(this.password)){
+    			String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+    			String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "password_not_valid", "The password is not valid");
+    			FacesContext.getCurrentInstance().addMessage(
+    					this.passwordInput.getClientId(FacesContext.getCurrentInstance()),
+    					new FacesMessage(FacesMessage.SEVERITY_INFO, messageValue, messageValue));
+    			return null;
+    		} else if( ! this.password.equals(this.repeatPassword)){
+    			String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+    			String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "password_repeat_not_equal", "Passwords are not equal");
+    			FacesContext.getCurrentInstance().addMessage(
+    					this.passwordRepeat.getClientId(FacesContext.getCurrentInstance()),
+    					new FacesMessage(FacesMessage.SEVERITY_INFO, messageValue, messageValue));
+    			return null; 
+    		}
+    	}
+    	
     	this.mainRole(this.allRolesMap.get(this.selectedUserRole.getValue()));
     	if(this.mainRole().getKey().equals(roleKeyAdministrator)){
         	this.user.getPerson().setHprNumber(null);
@@ -252,7 +288,6 @@ public class UserBean {
 		} else if (lookup instanceof ValueResultOrganizationUser) {
 			user = ((ValueResultOrganizationUser) lookup).getValue().getUser();
 		}
-    	
 //		this.user.getPerson().setIsStudent(true);
 		return details();
 	}
@@ -486,4 +521,12 @@ public class UserBean {
 	public boolean isShowEmployerNumber() { return showEmployerNumber; }
 	public boolean isShowProfile() { return showProfile; }
 	public void setUser(User user) { this.user = user; }
+	public String getPassword() { return password; }
+	public void setPassword(String password) { this.password = password; }
+	public String getRepeatPassword() { return repeatPassword; }
+	public void setRepeatPassword(String repeatPassword) { this.repeatPassword = repeatPassword; }
+	public UIInput getPasswordRepeat() { return passwordRepeat; }
+	public void setPasswordRepeat(UIInput passwordRepeat) { this.passwordRepeat = passwordRepeat; }
+	public UIInput getPasswordInput() { return passwordInput; }
+	public void setPasswordInput(UIInput passwordInput) { this.passwordInput = passwordInput; }
 }

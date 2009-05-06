@@ -250,7 +250,7 @@ public class OrganizationBean implements IconProvider{
 		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 		response.setContentType("application/txt");
 		response.setHeader("Content-Disposition", "attachment;filename=\"" +
-				   "download.cvs" + "\""); 
+				   "download.csv" + "\""); 
 		try {
 			PrintStream ps = new PrintStream(response.getOutputStream());
 			for (String s : lines) {
