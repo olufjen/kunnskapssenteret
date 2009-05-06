@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.service.impl;
 
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,6 +40,7 @@ public class URLServiceImpl implements URLService {
 	private static final long serialVersionUID = 1L;
 	private AccessService accessService;
 	private String proxyPrefix;
+	
 	/**
 	 * This checks if a URL is relevant(affected) for the proxy
 	 * server. If the URL is found in the supplier sources table,
@@ -250,6 +252,30 @@ public class URLServiceImpl implements URLService {
 		return new EmptyResultString();
 	}
 	
+	public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
+		AccessType accessType = new AccessType(AccessTypeCategory.DENY, AccessTypeKey.general);
+		AccessType accessTypeTmp = null;
+		
+		Role noRole = new Role();
+		noRole.setKey(UserRoleKey.no_role);
+		accessType = (accessTypeTmp = getAccessTypeForUserRole(noRole, url)) != null ? accessTypeTmp : accessType;
+		
+		if (memberOrganization != null) {
+			accessType = (accessTypeTmp = getAccessTypeForOrganizationType(memberOrganization.getOrganization().getType(), url)) != null ? accessTypeTmp : accessType;
+			accessType = (accessTypeTmp = getAccessTypeForMemberOrganization(memberOrganization, url)) != null ? accessTypeTmp : accessType;
+		}
+		
+		if (user != null) {
+			if (user.getRoleList() != null) {
+				for (Role role : user.getRoleList()) {
+					accessType = (accessTypeTmp = getAccessTypeForUserRole(role, url)) != null ? accessTypeTmp : accessType;
+				}
+			}
+		}
+		
+		return accessType;
+	}
+	
 	private AccessType getAccessTypeForOrganizationType(OrganizationType organizationType, Url url) {
 		AccessType accessType = null;
 		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(organizationType);
@@ -264,9 +290,9 @@ public class URLServiceImpl implements URLService {
 		return accessType;
 	}
 	
-	private AccessType getAccessTypeForUserRole(Role role, Url url) {
+	private AccessType getAccessTypeForUserRole(Role userRole, Url url) {
 		AccessType accessType = null;
-		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByRole(role);
+		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByRole(userRole);
 		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);
 		return accessType;
 	}
