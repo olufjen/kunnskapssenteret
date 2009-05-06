@@ -17,6 +17,13 @@ public class AccessType implements Serializable {
 	private String description;
 	private String name;
 	
+	public AccessType() {
+	}
+	
+	public AccessType(AccessTypeCategory category, AccessTypeKey key) {
+		this.category = category;
+		this.key = key;
+	}
 	// Helpers
 	@Override
 	public String toString() {
