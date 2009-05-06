@@ -9,7 +9,14 @@
 	 		</list>
 		</property>
 	</bean>
-	
+	<bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>
 	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
  		<property name="urlPattern" value="/site/2/ProxyServlet" />
  		<property name="priority" value="9998" />
@@ -24,16 +31,37 @@
 	
 	<bean name="proxyUrlServiceWeb" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
 		<property name="serviceClient" ref="proxyControllerUrlServiceClient" />
-		<property name="targetEPR" ref="proxyControllerUrlServiceTargetERP" />
-		<property name="isAffectedName" ref="proxyControllerIsAffected" />
+		<property name="targetEPR" ref="proxyControllerUrlServiceTargetEPR" />
+		<property name="isAffectedName" ref="proxyControllerIsAffectedName" />
+		<property name="hasAccessOrganizationUserOrganizationName" ref="hasAccessOrganizationUserOrganizationName" />
+		<property name="hasAccessUserOrganizationName" ref="hasAccessUserOrganizationName" />
+		<property name="hasAccessOrganizationName" ref="hasAccessOrganizationName" />
+		<property name="groupName" ref="groupName" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="proxyControllerUrlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
-	<bean name="proxyControllerUrlServiceTargetERP" class="org.apache.axis2.addressing.EndpointReference">
+	<bean name="proxyControllerUrlServiceTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
 		<constructor-arg value="${webservice.service.url.prefix}/urlService" />
 	</bean>
-	<bean name="proxyControllerIsAffected" class="javax.xml.namespace.QName">
+	<bean name="proxyControllerIsAffectedName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="isAffected" />
+	</bean>
+	<bean name="hasAccessOrganizationUserOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="hasAccessOrganizationUserOrganization" />
+	</bean>
+	<bean name="hasAccessUserOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="hasAccessUserOrganization" />
+	</bean>
+	<bean name="hasAccessOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="hasAccessOrganization" />
+	</bean>
+	<bean name="groupName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="group" />
 	</bean>
 </beans>
