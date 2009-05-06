@@ -135,10 +135,13 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public void setHasAccessUserOrganizationName(QName hasAccessUserOrganizationName) {
 		this.hasAccessUserOrganizationName = hasAccessUserOrganizationName;
 	}
+	public void setHasAccessOrganizationUserOrganizationName(QName hasAccessOrganizationUserOrganizationName) {
+		this.hasAccessOrganizationUserOrganizationName = hasAccessOrganizationUserOrganizationName;
+	}
 	public void setGroupName(QName groupName) {
 		this.groupName = groupName;
 	}
-
+	
 	public static void main(String[] args) throws Exception {
 		// TODO: Move to test project!
 		QName isAffectedName = new QName("http://service.admin.helsebiblioteket.no", "isAffected");
