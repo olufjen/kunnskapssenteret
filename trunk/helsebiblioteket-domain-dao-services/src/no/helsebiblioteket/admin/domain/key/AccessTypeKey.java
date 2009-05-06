@@ -12,4 +12,12 @@ public class AccessTypeKey {
 	public AccessTypeKey(String value) { this.value = value; }
 	public String getValue() { return value; }
 	public void setValue(String value) { this.value = value; }
+	
+	public boolean equals(Object object) {
+		boolean ret = false;
+		if (object instanceof AccessTypeKey && object != null) {
+			return (((AccessTypeKey) object).getValue().equals(this.getValue()));
+		}
+		return ret;
+	}
 }
