@@ -1,5 +1,11 @@
 package no.helsebiblioteket.evs.plugin;
 
+/**
+ * Important: Properties injected by Spring in this class are being set correctly,
+ * but the same properties are null when the method "filterResponse" run.
+ */
+
+
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -8,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,6 +26,7 @@ import org.jdom.xpath.XPath;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUrl;
@@ -27,22 +35,31 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
 import no.helsebiblioteket.admin.service.URLService;
 
 import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
+import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public final class LinkFilter extends HttpResponseFilterPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
 	private String sessionVarName;
+	private String sessionLoggedInUserVarName = "hbloggedinuser";
+	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	private URLService urlService; 
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
-    	// TODO: Used loggefinuser and loggedinorganization
-    	Object sessionVar = request.getSession().getAttribute(this.sessionVarName);
-    	MemberOrganization organization = null;
-    	User user = null; 
-    	if(sessionVar instanceof MemberOrganization){
-    		organization = (MemberOrganization) sessionVar;
-    	} else if (sessionVar instanceof User){
-    		user = (User) sessionVar;
-    	}
+    	// TODO: Do not user springinjected properties like loggedinfunction.
+    	// See comments above
+    	
+    	HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
+		
+    	Object userObject = session.getAttribute(sessionLoggedInUserVarName);
+    	User user = null;
+    	if (userObject instanceof User) {
+			user = (User) userObject;
+		} else if (userObject instanceof OrganizationUser) {
+			user = ((OrganizationUser) userObject).getUser();
+		}
+    	 
+		MemberOrganization memberOrganization = (MemberOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+    	
     	this.logger.debug("LinkFilter RUNNING");
     	SAXBuilder parser = new SAXBuilder();
     	StringReader sr = new StringReader(response);
@@ -60,9 +77,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
     		URL url = this.deproxify(href);
     		if(url != null){
         		if(this.isAffected(url)){
-            		// TODO: Add locks to links!
-            		// TODO: Links are translated to contain proxy values!
-            		url = this.translate(user, organization, url);
+        			url = this.translate(user, memberOrganization, url);
                		element.setAttribute("href", url.toExternalForm());
         		} else {
                		element.setAttribute("href", url.toExternalForm());
@@ -93,7 +108,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 			url = new URL(href);
 		} catch (MalformedURLException ignored) {
 			// This will happen each time a relative URL is encountered. 
-			// This is OK and is not to be treated as an error or
+			// This is OK and is not to be treated as an error or logged as such.
 		}
 		return url;
 	}
