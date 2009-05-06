@@ -4,11 +4,22 @@
 <%@page buffer="none"%>
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/> 
 <h:form>
-<h2><h:outputText value="#{msg_main.forgotten_password_title}" /></h2>
-<br/>
-<h:outputText value="#{msg_main.forgotten_password_sent_description}" />
-<b><h:outputText value="#{loginBean.email}" /></b>
-<br/>
-
-<h:commandLink value="#{msg_main.forgotten_password_back_login}" action="#{loginBean.actionBackToLogin}" />
+	<h2><h:outputText value="#{msg_main.forgotten_password_title}" /></h2>
+	<br/>
+	<h:outputText value="#{msg_main.forgotten_password_description_sent_user}"
+		rendered="#{loginBean.sentUser}" />
+	<h:outputText value="#{msg_main.forgotten_password_description_sent_email}"
+		rendered="#{loginBean.sentEmail}" />
+	<h:outputText value="#{msg_main.forgotten_password_description_unknown_user}"
+		rendered="#{loginBean.notFoundUser}" />
+	<h:outputText value="#{msg_main.forgotten_password_description_unknown_email}"
+		rendered="#{loginBean.notFoundEmail}" />
+	<h:outputText value="#{msg_main.forgotten_password_description_multiple_email}"
+		rendered="#{loginBean.multipleEmail}" />
+	<b>
+		<h:outputText value="#{loginBean.email}"/>
+	</b>
+	<br/>
+	<h:commandLink value="#{msg_main.forgotten_password_back_login}"
+		action="#{loginBean.actionBackToLogin}" />
 </h:form>
