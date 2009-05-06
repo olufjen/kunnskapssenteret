@@ -8,8 +8,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.URLService;
+import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
@@ -28,6 +31,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	private QName hasAccessOrganizationName;
 	private QName hasAccessUserOrganizationName;
 	private QName hasAccessOrganizationUserOrganizationName;
+	private QName accessTypeForUserAndMemberOrganizationName;
 	
 	private QName groupName;
 	
@@ -82,24 +86,13 @@ public class URLServiceWeb extends BasicWebService implements URLService {
     public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		String key = (
-				((user != null) ? (user.getId() + "-") : "") + 
-				((organization) != null ? (organization.getOrganization().getId() + "-") : "") +
-				url
-				);
-		return (Boolean) invokeCached(CacheKey.hasAccessUserOrganizationCache, key, this.hasAccessUserOrganizationName, args, returnTypes);
+		return (Boolean) invoke(this.hasAccessUserOrganizationName, args, returnTypes);
     }
 	@Override
 	public Boolean hasAccessOrganizationUserOrganization(OrganizationUser user, MemberOrganization organization, Url url) {
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		String key = (
-				((user != null && user.getOrganization() != null) ? (user.getOrganization().getId() + "-") : "") + 
-				((user != null && user.getUser() != null) ? (user.getUser().getId() + "-") : "") +
-				((organization) != null ? (organization.getOrganization().getId() + "-") : "") +
-				url
-				);
-		return (Boolean) invokeCached(CacheKey.hasAccessOrganizationUserOrganizationCache, key, this.hasAccessOrganizationUserOrganizationName, args, returnTypes);
+		return (Boolean) invoke(this.hasAccessOrganizationUserOrganizationName, args, returnTypes);
 	}
 	@Override
     public SingleResultString group(Url url){
@@ -107,12 +100,22 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		Class[] returnTypes = new Class[] { SingleResultString.class };
 		return (SingleResultString)invoke(this.groupName, args, returnTypes);
     }
-    
 
+	@Override
+    public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
+		Object[] args = new Object[] { user, memberOrganization, url };
+		Class[] returnTypes = new Class[] { AccessType.class };
+		String key = ( 
+				((user) != null ? (user.getId() + "-") : "") +
+				((memberOrganization) != null ? (memberOrganization.getOrganization().getId() + "-") : "") +
+				url
+				);
+		return (AccessType) invokeCached(CacheKey.accessTypeForUserAndMemberOrganizationCache, key, this.accessTypeForUserAndMemberOrganizationName, args, returnTypes);
+	}
+    
     public Log getLogger() {
 		return this.logger;
 	}
-	
 	
 	public void setIsAffectedName(QName isAffectedName) {
 		this.isAffectedName = isAffectedName;
@@ -140,6 +143,9 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	}
 	public void setGroupName(QName groupName) {
 		this.groupName = groupName;
+	}
+	public void setAccessTypeForUserAndMemberOrganizationName(QName accessTypeForUserAndMemberOrganizationName) {
+		this.accessTypeForUserAndMemberOrganizationName = accessTypeForUserAndMemberOrganizationName;
 	}
 	
 	public static void main(String[] args) throws Exception {
