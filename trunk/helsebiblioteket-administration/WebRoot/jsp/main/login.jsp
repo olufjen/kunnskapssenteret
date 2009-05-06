@@ -14,7 +14,7 @@
 		<h:panelGrid columns="3">
 			<h:outputLabel value="#{msg_main.username}" for="j_username" />
 			<t:inputText   id="j_username" forceId="true"  
-				required="true"   value="#{loginBean.email}" size="40" maxlength="80"></t:inputText>
+				required="true"   value="#{loginBean.username}" size="40" maxlength="80"></t:inputText>
 			<h:message style="color:red"   for="j_username"  showSummary="true" showDetail="false"></h:message>
 			<h:outputLabel value="#{msg_main.password}" for="j_password" />
 			<t:inputSecret required="true" id="j_password" forceId="true"

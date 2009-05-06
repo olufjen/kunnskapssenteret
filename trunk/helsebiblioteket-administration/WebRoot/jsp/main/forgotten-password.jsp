@@ -14,12 +14,12 @@
 			<td> <h:outputText value="#{msg_main.email_address_input}" /> </td>
 			<td>
 				<h:inputText value="#{loginBean.email}"
-					id="email" required="true"
-					validator="#{loginBean.validateEmail}" />
+					id="email" required="true" />
 				<h:message for="email" styleClass="RED"/>
 			</td>
 		</tr>
 	</table>
 	<br/>
-	<h:commandButton value="#{msg_main.forgotten_password_send_password}" action="#{loginBean.send}" />
+	<h:commandButton value="#{msg_main.forgotten_password_send_password}"
+		action="#{loginBean.send}" />
 </h:form>
