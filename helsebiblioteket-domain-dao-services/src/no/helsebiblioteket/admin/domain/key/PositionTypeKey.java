@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain.key;
 
-public class PositionTypeKey {
+import java.io.Serializable;
+
+public class PositionTypeKey implements Serializable {
 	private String value;
 	
 	public PositionTypeKey() {
