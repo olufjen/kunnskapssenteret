@@ -37,6 +37,7 @@
 		<property name="hasAccessUserOrganizationName" ref="hasAccessUserOrganizationName" />
 		<property name="hasAccessOrganizationName" ref="hasAccessOrganizationName" />
 		<property name="groupName" ref="groupName" />
+		<property name="accessTypeForUserAndMemberOrganizationName" ref="accessTypeForUserAndMemberOrganizationName" />
 		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="proxyControllerUrlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
@@ -63,5 +64,9 @@
 	<bean name="groupName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="group" />
+	</bean>
+	<bean name="accessTypeForUserAndMemberOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="getAccessTypeForUserAndMemberOrganization" />
 	</bean>
 </beans>
