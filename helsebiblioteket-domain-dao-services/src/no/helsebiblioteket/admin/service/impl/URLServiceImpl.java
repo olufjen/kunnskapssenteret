@@ -116,23 +116,23 @@ public class URLServiceImpl implements URLService {
 	 * 2) if the resource authenticates requester(s) in their end based on either GeoIP or other authentication mechanism. 
 	 * 
 	 */
-	public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization memberOrganization, Url url){
+	public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization memberOrganization, Url url) {
 		Url newUrl = new Url();
 		boolean proxify = true;
 		
 		Role noRole = new Role();
 		noRole.setKey(UserRoleKey.no_role);
-		proxify = !proxyExclude(getAccessTypeForUserRole(noRole, url));
+		proxify = proxify && !proxyExclude(getAccessTypeForUserRole(noRole, url));
 		
 		if (memberOrganization != null) {
-			proxify = !proxyExclude(getAccessTypeForOrganizationType(memberOrganization.getOrganization().getType(), url));
-			proxify = !proxyExclude(getAccessTypeForMemberOrganization(memberOrganization, url));
+			proxify = proxify && !proxyExclude(getAccessTypeForOrganizationType(memberOrganization.getOrganization().getType(), url));
+			proxify = proxify && !proxyExclude(getAccessTypeForMemberOrganization(memberOrganization, url));
 		}
 		
 		if (user != null) {
 			if (user.getRoleList() != null) {
 				for (Role role : user.getRoleList()) {
-					proxify = !proxyExclude(getAccessTypeForUserRole(role, url));
+					proxify = proxify && !proxyExclude(getAccessTypeForUserRole(role, url));
 				}
 			}
 			// TODO: phase2: handle user access
@@ -194,7 +194,7 @@ public class URLServiceImpl implements URLService {
         		if (access.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue())) {
             		return true;
         		}
-        		// If DENY and general -> NOT OK
+        		// If DENY -> NOT OK
         		if (access.getCategory().getValue().equals(AccessTypeCategory.DENY.getValue())) {
         			return false;
         		}
@@ -224,7 +224,7 @@ public class URLServiceImpl implements URLService {
 	 * is not available to the user or the organization.
 	 */
 	public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url) {
-		if(hasAccessOrganization(organization, url)){
+		if(organization != null && hasAccessOrganization(organization, url)){
 			return Boolean.TRUE;
 		} else if(user != null && hasAccessUser(user, url)){
 			return Boolean.TRUE;
