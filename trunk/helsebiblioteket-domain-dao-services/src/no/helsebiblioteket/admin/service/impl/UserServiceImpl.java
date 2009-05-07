@@ -187,6 +187,15 @@ public class UserServiceImpl implements UserService {
 			throw new NullPointerException("Max result must be 40 or less.");
 		}
 
+		if(roles.length == 0){
+			PageResultUserListItem result = new PageResultUserListItem();
+			result.setResult(new UserListItem[0]);
+			result.setSkipped(0);
+			result.setNumber(0);
+			result.setTotal(0);
+			return result;
+		}
+		
 		List<Role> roleList = new ArrayList<Role>();
 		for (Role role : roles) {
 			roleList.add(role);
