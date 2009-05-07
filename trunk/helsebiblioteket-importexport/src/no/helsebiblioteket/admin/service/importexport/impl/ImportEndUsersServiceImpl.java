@@ -155,7 +155,7 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         }
         if ("HPR".equalsIgnoreCase(ldapUser.getEmployeeType())) {
         	user.setRoleList(roleHealthPersonellArray);
-        	person.setStudentNumber(studentOrHprNumber);
+        	person.setHprNumber(studentOrHprNumber);
         }
         
         if (user.getRoleList() == null) {
