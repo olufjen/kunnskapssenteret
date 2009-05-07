@@ -305,6 +305,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 		
 		ContactInformation contactInformation = organization.getContactInformation();
 		this.contactInformationDao.insertContactInformation(contactInformation);
+		
+		ContactInformation supportInformation = organization.getSupportInformation();
+		this.contactInformationDao.insertContactInformation(supportInformation);
 
 		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
 		if(type == null) throw new NullPointerException("Invalid type reference");
@@ -356,6 +359,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		
 		savePerson(organization.getContactPerson(), null);
 		saveContactInformation(organization.getContactInformation(), null);
+		saveContactInformation(organization.getSupportInformation(), null);
 
 		List<OrganizationName> nameList = this.organizationNameDao.getOrganizationNameListByOrganization(old);
 		resetNameList(organization, nameList);
@@ -562,6 +566,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 		ContactInformation contactInformation = this.contactInformationDao.getContactInformationByOrganization(organization);
 		organization.setContactInformation((contactInformation != null) ? contactInformation : new ContactInformation());
+
+		ContactInformation supportInformation = organization.getSupportInformation();
+		if(supportInformation != null){
+			supportInformation = this.contactInformationDao.getContactInformationById(supportInformation.getId());
+		}
+		organization.setSupportInformation((supportInformation != null) ? supportInformation : new ContactInformation());
 	}
 	private ContactInformation createContactInformation() {
 		ContactInformation contactInformation = ContactInformationFactory.factory.completeContactInformation();
