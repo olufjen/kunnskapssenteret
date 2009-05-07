@@ -20,6 +20,7 @@ public class Organization implements Serializable {
 	private OrganizationType type;
 	private Person contactPerson = new Person();
 	private ContactInformation contactInformation;
+	private ContactInformation supportInformation;
 
 	// Helpers
 	@Override
@@ -117,5 +118,11 @@ public class Organization implements Serializable {
 	}
 	public void setContactInformation(ContactInformation contactInformation) {
 		this.contactInformation = contactInformation;
+	}
+	public ContactInformation getSupportInformation() {
+		return supportInformation;
+	}
+	public void setSupportInformation(ContactInformation supportInformation) {
+		this.supportInformation = supportInformation;
 	}
 }

@@ -15,4 +15,5 @@ public interface ContactInformationDao {
 	// TODO: Change this!
 	public ContactInformation getContactInformationByPerson(Person person);
 	public ContactInformation getContactInformationByOrganization(Organization organization);
+	public ContactInformation getContactInformationById(Integer id);
 }
