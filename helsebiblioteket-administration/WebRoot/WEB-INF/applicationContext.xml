@@ -116,7 +116,7 @@ xmlns="http://www.springframework.org/schema/beans"
   	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportEndUsersServiceImpl">
  		<property name="userService" ref="userService"></property>
  		<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
- 		<!--<property name="commonPassword" value="password" />-->
+ 		<property name="commonPassword" value="password" />
 	</bean>
 	
 	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportMemberOrganizationsServiceImpl">
@@ -290,6 +290,8 @@ xmlns="http://www.springframework.org/schema/beans"
 				/new-administrator.faces=ROLE_administrator
 				/user.faces=ROLE_administrator
 				/users-overview.faces=ROLE_administrator
+				/organization-types-overview.faces=ROLE_administrator
+				/organization-type-edit.faces=ROLE_administrator
 			</value>
 		</property>
 	</bean>
