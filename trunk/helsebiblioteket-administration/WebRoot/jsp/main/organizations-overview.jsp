@@ -25,8 +25,9 @@
 		var="treeItem"
 		expandRoot="true"
 		
-		iconNodeClose="images/empty.gif"
-		iconNodeOpen="images/empty.gif"
+		iconNodeClose="images/smiley.gif"
+		iconNodeOpen="images/smiley.gif"
+		
 		iconLine="images/empty.gif"
 		iconNoline="images/empty.gif"
 

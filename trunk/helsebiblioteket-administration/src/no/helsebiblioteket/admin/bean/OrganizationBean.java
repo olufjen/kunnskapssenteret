@@ -193,6 +193,7 @@ public class OrganizationBean implements IconProvider{
 
 		this.supplierSourceResources = this.accessService.getSupplierSourceResourceListAll("").getList();
 		this.deltetedResources = new ArrayList<SupplierSourceResource>();
+		this.deltetedAccesses = new ArrayList<ResourceAccessListItem>();
 		this.orgTypeAccessList = new ResourceAccessListItem[0];
 		this.orgAccessList = new ResourceAccessListItem[0];
 		this.ipRangeList = new ArrayList<IpAddressRange>();
@@ -332,7 +333,7 @@ public class OrganizationBean implements IconProvider{
 				}
 			}
 		} else {
-			return "images/empty.gif";
+			return "images/smiley.gif";
 		}
 	}
 

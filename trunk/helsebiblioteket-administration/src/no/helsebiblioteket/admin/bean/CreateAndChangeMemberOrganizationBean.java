@@ -58,7 +58,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	private UIInput ipAddressFromUIInput = null;
 	private UIInput ipAddressToUIInput = null;
 	private HtmlSelectOneMenu supplierSourceListValue;
-	private HtmlSelectOneMenu accessTypeCategoryKey = null;
+	private HtmlSelectOneMenu accessTypeCategoryKey;
 	
 	private String selectedOrganizationType = null;
 	private List<IpAddressRange> ipRangeList = null;
@@ -170,7 +170,24 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		this.organizationService.addIpAddresses(organization, ipAddressSingles);
 		this.organizationService.addIpAddressRanges(organization, ipAddressRanges);
 		
-		this.organizationBean.setOrganization(this.organization);
+		this.ipAddressFrom = "";
+		this.ipAddressTo = "";
+		this.ipAddressSingle = "";
+		
+		this.ipAddressFromUIInput = null;
+		this.ipAddressToUIInput = null;
+		this.ipAddressSingleUIInput = null;
+		
+		this.supplierSourceListValue = null;
+		this.accessTypeCategoryKey = null;
+		
+		this.selectedOrganizationType = null;
+		this.ipRangeList = null;
+		this.ipRangeListHtmlDataTable = null;
+		this.orgAccessTable = null;
+
+		
+//		this.organizationBean.setOrganization(this.organization);
 		this.organizationBean.runSearch();
 		return this.organizationBean.actionDetailsSingle();
 	}
@@ -180,17 +197,16 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		setIpAddressSingle((getIpAddressSingleUIInput().getSubmittedValue() != null) ? getIpAddressSingleUIInput().getSubmittedValue().toString() : null);
 		if(IpAddressValidator.getInstance().isValidIPAddress(ipAddressSingle)) {
 			this.organizationBean.getIpRangeList().add(new IpAddressRange(new IpAddress(getIpAddressSingle()), new IpAddress("")));
-		}
-		else{
+		} else{
 			 String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
 			 String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "ip_address_valid", "Ip address in not valid.");
 			 FacesContext.getCurrentInstance().addMessage("main:create-and-change-member-organization:ipAddressSingle" , new FacesMessage(FacesMessage.SEVERITY_ERROR,messageValue,null));
-			 
 		}
+//		this.ipAddressSingle = "";
+//		this.ipAddressSingleUIInput = null;
 	}
 	public void actionAddIpRange() {
 		logger.debug("Method 'actionAddIpRange' invoked");
-		
 		setIpAddressFrom((getIpAddressFromUIInput().getSubmittedValue() != null) ? getIpAddressFromUIInput().getSubmittedValue().toString() : null);
 		setIpAddressTo((getIpAddressToUIInput().getSubmittedValue() != null) ? getIpAddressToUIInput().getSubmittedValue().toString() : null);
 		if(!IpAddressValidator.getInstance().isValidIPAddress(ipAddressFrom)){
@@ -201,8 +217,13 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			 String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
 			 String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "ip_address_valid", "Ip address in not valid.");
 			 FacesContext.getCurrentInstance().addMessage("main:create-and-change-member-organization:ipAddressTo" , new FacesMessage(FacesMessage.SEVERITY_ERROR,messageValue,null));
-		}else
+		}else {
 			this.organizationBean.getIpRangeList().add(new IpAddressRange(new IpAddress(getIpAddressFrom()), new IpAddress(getIpAddressTo())));
+		}
+//		this.ipAddressFrom = "";
+//		this.ipAddressTo = "";
+//		this.ipAddressFromUIInput = null;
+//		this.ipAddressToUIInput = null;
 	}
 	public void actionDeleteAccess(){
 		int index = this.orgAccessTable.getRowIndex();
@@ -402,7 +423,24 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	}
 
 	public String actionCancel(){
-		this.organizationBean.setOrganization(this.organization);
+		this.ipAddressFrom = "";
+		this.ipAddressTo = "";
+		this.ipAddressSingle = "";
+		
+		this.ipAddressFromUIInput = null;
+		this.ipAddressToUIInput = null;
+		this.ipAddressSingleUIInput = null;
+		
+		this.supplierSourceListValue = null;
+		this.accessTypeCategoryKey = null;
+		
+		this.selectedOrganizationType = null;
+		this.ipRangeList = null;
+		this.ipRangeListHtmlDataTable = null;
+		this.orgAccessTable = null;
+
+		
+//		this.organizationBean.setOrganization(this.organization);
 		return this.organizationBean.actionDetailsSingle();
 	}
 	
@@ -421,5 +459,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		this.ipAddressFrom = "";
 		this.ipAddressTo="";
 		this.ipAddressSingle="";
+		
+		if(this.organization.getType() != null &&
+				this.organization.getType().getKey() != null){
+			this.selectedOrganizationType = this.organization.getType().getKey().getValue();
+		} else {
+			this.selectedOrganizationType = null;
+		}
 	}
 }
