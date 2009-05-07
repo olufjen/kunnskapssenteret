@@ -50,6 +50,7 @@
 			where
 			    (name.name ilike #value#) or
                 (type.descr ilike #value#) or
+                (org.descr ilike #value#) or
                 (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#)
 		) as org_unit_id_distinct_query
 		order by org_unit_id desc
@@ -67,6 +68,7 @@
 				where
                     (name.name ilike #value#) or
                     (type.descr ilike #value#) or
+                    (org.descr ilike #value#) or
                     (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#)
 			) as org_unit_id_distinct_query
 		) as org_unit_count
@@ -99,6 +101,7 @@
 				where
 		            ((name.name ilike #value#) or
         		    (type.descr ilike #value#) or
+        		    (org.descr ilike #value#) or
         		    (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#))
 		      		and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId#
 		     )
