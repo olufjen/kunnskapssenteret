@@ -55,6 +55,7 @@ CREATE TABLE tbl_org_unit
     descr                VARCHAR             NULL,
     org_type_id          INTEGER             NOT NULL,
     contact_information_id INTEGER           NULL,
+    support_information_id INTEGER           NULL,
     person_id            INTEGER             NULL,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( org_unit_id )
