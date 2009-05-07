@@ -35,7 +35,7 @@
 		update tbl_supplier_source set
 	      	supplier_source_name = #supplierSourceName#,
       		url = #url.stringValue#,
-      		proxyDatabaseName = #proxy_database_name#,
+      		proxy_database_name = #proxyDatabaseName#,
     	  	last_changed = now()
     	where supplier_source_id = #id# and last_changed = #lastChanged#;
 	</update>
