@@ -26,4 +26,7 @@ public class SqlMapContactInformationDao extends SqlMapClientDaoSupport implemen
 	public ContactInformation getContactInformationByOrganization(Organization organization){
 		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationByOrganization", organization.getId());
 	}
+	public ContactInformation getContactInformationById(Integer id) {
+		return (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", id);
+	}
 }
