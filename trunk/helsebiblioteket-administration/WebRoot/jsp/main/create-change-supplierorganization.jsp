@@ -88,6 +88,38 @@
 		</tr>
 		
 		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.organization_support_information}" /></h5></td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.organization_email}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.supportInformation.email}"
+					id="organizationSupportEmail" 
+					required="true" validator="#{createAndChangeSupplierOrganizationBean.validateEmail}"
+					>
+				</h:inputText>
+				<h:message for="organizationSupportEmail" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.organization_telephone_number}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.supportInformation.telephoneNumber}"
+					id="organizationSupportTelephone" 
+					required="true"
+					>
+				</h:inputText>
+				<h:message for="organizationSupportTelephone" styleClass="error"/>
+			</td>
+		</tr>
+		
+		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.organization_contact_information}" /></h5></td>
 		</tr>
 		<tr>
