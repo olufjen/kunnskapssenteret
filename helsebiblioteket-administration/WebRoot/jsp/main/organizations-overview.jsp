@@ -25,21 +25,15 @@
 		var="treeItem"
 		expandRoot="true"
 		
-		iconNodeClose="iconNodeClose"
-		iconNodeOpen="iconNodeOpen"
-		iconLine="iconLine"
-		iconNoline="iconNoline"
+		iconNodeClose="images/empty.gif"
+		iconNodeOpen="images/empty.gif"
+		iconLine="images/empty.gif"
+		iconNoline="images/empty.gif"
 
 
-		iconChildFirst="iconChildFirst"
-		iconChildLast="iconChildLast"
-		iconChildMiddle="iconChildMiddle"
-
-		rowClasses="rowClass"
-		columnClasses="treename"
-
-		nodeClass="nodeClass"
-		iconClass="iconClass"
+		iconChildFirst="images/empty.gif"
+		iconChildLast="images/empty.gif"
+		iconChildMiddle="images/empty.gif"
 
 		iconNodeCloseFirst="images/node_closed.gif"
 		iconNodeCloseLast="images/node_closed.gif"
@@ -50,10 +44,10 @@
 		iconNodeOpenMiddle="images/node_open.gif"
 		>
 		<!-- 
+		rowClasses="rowClass"
 		columnClasses="treename, treedetails, treeedit, c4, c5, c6, c7, c8, c9"
-
-
-
+		nodeClass="nodeClass"
+		iconClass="iconClass"
 		 -->
 		<t:treeColumn id="nameColumn">
       		<f:facet name="header"><t:outputText value="#{msg_main.organization_overview_organization}"/></f:facet>
