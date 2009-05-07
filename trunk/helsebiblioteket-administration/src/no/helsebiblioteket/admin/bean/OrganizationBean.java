@@ -323,7 +323,7 @@ public class OrganizationBean implements IconProvider{
 				((DefaultMutableTreeNode)userObject).getUserObject() instanceof OrganizationTableItem){
 			OrganizationTableItem item = (OrganizationTableItem) ((DefaultMutableTreeNode)userObject).getUserObject();
 			if(item==null || item.getOrganization() == null){
-				return "images/NOT_EXIST.gif";
+				return "images/empty.gif";
 			} else {
 				if(item.getOrganization().getTypeKey().equals(OrganizationTypeKey.content_supplier.getValue())){
 					return "images/supplier.gif";
@@ -332,7 +332,7 @@ public class OrganizationBean implements IconProvider{
 				}
 			}
 		} else {
-			return "images/NOT_EXIST.gif";
+			return "images/empty.gif";
 		}
 	}
 
