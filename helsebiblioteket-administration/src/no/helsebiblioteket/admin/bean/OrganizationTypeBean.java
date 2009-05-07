@@ -66,6 +66,8 @@ public class OrganizationTypeBean {
 	}
 	public String actionCancel(){
 		this.organizationType = null;
+		this.supplierSource = null;
+		this.accessTypeCategoryKey = null;
 		return "organization_types_overview";
 	}
 	public String actionSave() {
@@ -107,6 +109,9 @@ public class OrganizationTypeBean {
 			resourceAccess.setResource(supplierSourceResource);
 			this.accessService.insertOrganizationTypeResourceAccess(this.organizationType, resourceAccess);
 		}
+		this.organizationType = null;
+		this.supplierSource = null;
+		this.accessTypeCategoryKey = null;
 		return "organization_types_overview";
 	}
 	

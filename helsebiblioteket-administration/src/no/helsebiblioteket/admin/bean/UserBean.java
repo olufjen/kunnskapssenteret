@@ -450,6 +450,7 @@ public class UserBean {
 		if(this.getShowMoreRight()){
 			if(this.searchedString == null) { this.searchedString = ""; }
 			if(this.searchedRoles == null) { this.searchedRoles = this.getSelectedRolesRoleList(); }
+			if(this.lastPageResult == null){ this.actionSearch(); }
 			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() + SHOW_MAX,
 					SHOW_MAX);
 			this.lastPageResult = this.userService.findUsersBySearchStringRoles(this.searchedString,
@@ -463,6 +464,7 @@ public class UserBean {
 		if(this.getShowMoreLeft()){
 			if(this.searchedString == null) { this.searchedString = ""; }
 			if(this.searchedRoles == null) { this.searchedRoles = this.getSelectedRolesRoleList(); }
+			if(this.lastPageResult == null){ this.actionSearch(); }
 			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() - SHOW_MAX,
 					SHOW_MAX);
 			this.lastPageResult = this.userService.findUsersBySearchStringRoles(this.searchedString,

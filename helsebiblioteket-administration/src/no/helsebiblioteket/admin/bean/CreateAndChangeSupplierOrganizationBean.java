@@ -139,6 +139,9 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 			resourceList[i++] = resource;
 		}
 		
+		this.sourceName = "";
+		this.sourceUrl = "";
+		
 		this.organizationService.deleteResources(resourceList);
 		this.organizationService.addResources(this.supplierOrganization.getResourceList());
 		
@@ -193,6 +196,10 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	}
 	
 	public String actionCancel(){
+		this.sourceName = "";
+		this.sourceUrl = "";
+		this.sourceNameUIInput = null;
+		this.sourceUrlUIInput = null;
 		this.organizationBean.setOrganization(this.organization);
 		return this.organizationBean.actionDetailsSingle();
 	}
