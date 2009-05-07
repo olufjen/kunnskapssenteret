@@ -26,7 +26,6 @@ import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -166,6 +165,7 @@ public class OrganizationBean implements IconProvider{
 		this.isNew = true;
 		this.supplierOrganization = new SupplierOrganization();
 		this.supplierOrganization.getOrganization().setContactInformation(new ContactInformation());
+		this.supplierOrganization.getOrganization().setSupportInformation(new ContactInformation());
 		this.supplierOrganization.getOrganization().setContactPerson(new Person());
 		this.supplierOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
 		this.supplierOrganization.getOrganization().getContactPerson().setProfile(new Profile());
