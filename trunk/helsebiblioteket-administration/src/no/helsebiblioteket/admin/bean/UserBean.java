@@ -159,6 +159,8 @@ public class UserBean {
     		this.showHprNumber = true;
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setPosition(new Position());
+    		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     		this.showIsStudent = false;
         	this.showEmployerText = true;
         	this.showPositionText = false;
@@ -246,6 +248,7 @@ public class UserBean {
     		this.user.getPerson().setStudentNumber(null);
 //    		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setPosition(this.allPositionsMap.get(this.user.getPerson().getPosition().getKey()));
+    		this.user.getPerson().setPositionText("");
     	} else if(this.mainRole().getKey().equals(roleKeyStudent)){
         	this.user.getPerson().setHprNumber(null);
 //        	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
