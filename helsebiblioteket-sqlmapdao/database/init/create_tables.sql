@@ -285,6 +285,9 @@ ALTER TABLE tbl_org_unit
     ADD CONSTRAINT contact_information_for_organization FOREIGN KEY ( contact_information_id ) REFERENCES tbl_contact_information ( contact_information_id );
 
 ALTER TABLE tbl_org_unit
+    ADD CONSTRAINT support_contact_information_for_organization FOREIGN KEY ( support_information_id ) REFERENCES tbl_contact_information ( contact_information_id );
+    
+ALTER TABLE tbl_org_unit
     ADD CONSTRAINT contact_person_for_organization FOREIGN KEY ( person_id ) REFERENCES tbl_person ( person_id );
 
 ALTER TABLE tbl_org_unit
