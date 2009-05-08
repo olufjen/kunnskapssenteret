@@ -105,9 +105,6 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
-		ContactInformation contactInformationOrganization ;
-		ContactInformation contactInformationPerson;
-		Profile contactPersonProfile;
 		if(this.isNew){
 			Person contactPerson;
 			contactPerson = this.supplierOrganization.getOrganization().getContactPerson();
@@ -115,9 +112,6 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 					OrganizationTypeKey.health_enterprise)).getValue();
 			contactPerson.setPosition(((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, organizationType)).getValue());
 		} else {
-			contactInformationOrganization = this.supplierOrganization.getOrganization().getContactInformation();
-			contactInformationPerson = this.supplierOrganization.getOrganization().getContactPerson().getContactInformation();
-			contactPersonProfile = this.supplierOrganization.getOrganization().getContactPerson().getProfile();
 		}
 
 		ResourceType resourceType = ((ValueResultResourceType)this.organizationBean.getAccessService().getResourceTypeByKey(ResourceTypeKey.supplier_source)).getValue();
