@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain.key;
 
-public class OrganizationTypeKey {
+import java.io.Serializable;
+
+public class OrganizationTypeKey implements Serializable {
 //	content_supplier, health_enterprise, public_administration, teaching, other
 
 	public static final OrganizationTypeKey content_supplier = new OrganizationTypeKey("content_supplier");
