@@ -307,7 +307,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 		this.contactInformationDao.insertContactInformation(contactInformation);
 		
 		ContactInformation supportInformation = organization.getSupportInformation();
-		this.contactInformationDao.insertContactInformation(supportInformation);
+		if (supportInformation != null) {
+			this.contactInformationDao.insertContactInformation(supportInformation);
+		}
 
 		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
 		if(type == null) throw new NullPointerException("Invalid type reference");
