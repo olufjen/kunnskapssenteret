@@ -361,6 +361,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 		saveContactInformation(organization.getContactInformation(), null);
 		saveContactInformation(organization.getSupportInformation(), null);
 
+		if(organization.getContactPerson() != null &&
+				organization.getContactPerson().getContactInformation() != null){
+			saveContactInformation(organization.getContactPerson().getContactInformation(), null);
+		}
+		
 		List<OrganizationName> nameList = this.organizationNameDao.getOrganizationNameListByOrganization(old);
 		resetNameList(organization, nameList);
 		updateOrganizationNameList(nameList);
