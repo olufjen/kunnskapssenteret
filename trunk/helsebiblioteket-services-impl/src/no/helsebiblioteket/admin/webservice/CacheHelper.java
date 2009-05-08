@@ -36,11 +36,12 @@ public class CacheHelper {
 
 	   public Object findCache(CacheKey cacheKey, String key) {
 	     try{
-		   Cache cache = getCache(cacheKey);
+	    	 //long timeStart = System.currentTimeMillis();
+	    	 Cache cache = getCache(cacheKey);
 		     Element element = cache.get(key);
+		     //System.out.println("lookup of cache element with cacheKey '" + cacheKey + "' and key '" + key + "' took " + (System.currentTimeMillis() - timeStart));
 		     if (element != null) {
-		    	 return (Object) element.getValue();
-		      
+		    	 return (Object) element.getValue();		      
 		     } else {
 		       return null;
 		     }
