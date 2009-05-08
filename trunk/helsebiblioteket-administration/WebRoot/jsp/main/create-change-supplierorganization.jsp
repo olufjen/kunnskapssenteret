@@ -150,7 +150,64 @@
 				<h:message for="organizationTelephone" styleClass="error"/>
 			</td>
 		</tr>
-	
+		
+		<tr>
+			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.contact_person}" /></h5></td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.firstname}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.contactPerson.firstName}"
+					id="contactPersonFirstName" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.lastname}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.contactPerson.lastName}"
+					id="contactPersonLastName" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.telephone_number}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.contactPerson.contactInformation.telephoneNumber}"
+					id="contactPersonTelephoneNumber" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.organization_email}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeSupplierOrganizationBean.organization.contactPerson.contactInformation.email}"
+					id="contactPersonEmail" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		
+		
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.sources}" /></h5></td>
 		</tr>
