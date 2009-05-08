@@ -20,7 +20,6 @@
 	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="urlService" ref="urlService" />
- 		<property name="sessionVarName" value="hbloggedin" />
 	</bean>
 	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
