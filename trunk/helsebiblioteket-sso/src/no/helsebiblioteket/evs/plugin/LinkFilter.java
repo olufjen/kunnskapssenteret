@@ -9,9 +9,12 @@ package no.helsebiblioteket.evs.plugin;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,13 +42,20 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public final class LinkFilter extends HttpResponseFilterPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
-	private String sessionVarName;
 	private String sessionLoggedInUserVarName = "hbloggedinuser";
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
-	private URLService urlService; 
+	private URLService urlService;
+	private final static String invalidHrefRegExp = "javascript:.*|mailto:.*";
+	private final static String linkRegExp = "<a href=(['\"])(.*?)\\1";
+	private final static Pattern linkPattern;
+
+	static {
+		// precompile patterns
+		linkPattern = Pattern.compile(linkRegExp);
+	}
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
-    	// TODO: Do not user springinjected properties like loggedinfunction.
+    	// TODO: Do not use springinjected properties like loggedinfunction.
     	// See comments above
     	
     	HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
@@ -57,51 +67,52 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		} else if (userObject instanceof OrganizationUser) {
 			user = ((OrganizationUser) userObject).getUser();
 		}
-    	 
-		MemberOrganization memberOrganization = (MemberOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
     	
-    	this.logger.debug("LinkFilter RUNNING");
-    	SAXBuilder parser = new SAXBuilder();
-    	StringReader sr = new StringReader(response);
-    	Document doc = parser.build(sr);
-    	XPath path = XPath.newInstance("//*[@href]");////a");
-//    	Element root = doc.getRootElement();
-//    	root.detach();
-//    	Document newDoc = new Document(root);
-//    	List<Element> allA = doc.getContent(new ElementFilter("a"));
-
-    	List<Element> allAElements = path.selectNodes(doc);
-    	for (Element element : allAElements) {
-//    		this.logger.info("ELEM: " + element.getText());
-    		String href = element.getAttributeValue("href");
-    		URL url = this.deproxify(href);
-    		if(url != null){
-        		if(this.isAffected(url)){
-        			url = this.translate(user, memberOrganization, url);
-               		element.setAttribute("href", url.toExternalForm());
-        		} else {
-               		element.setAttribute("href", url.toExternalForm());
-        		}
-        		this.logger.debug("URL: " + url.toExternalForm());
-    		} else {
-        		this.logger.debug("URL: " + url);
-    		}
+		MemberOrganization memberOrganization = (MemberOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+		
+		//long timeStart = System.currentTimeMillis();
+		
+		URL url = null;
+		String oldLink = null;
+		String newLink = null;
+		Map<String, String> linkReplaceMap = new HashMap<String, String>();
+		Matcher m = linkPattern.matcher(response);
+		
+    	while (m.find()) {
+    		oldLink = m.group(2);
+			if (validHref(oldLink)) {
+				url = this.deproxify(oldLink);
+				if(url != null) {
+		    		if(this.isAffected(url)){
+		    			url = this.translate(user, memberOrganization, url);
+		    		}
+		    		newLink = url.toExternalForm();
+		    		if (!oldLink.equals(newLink)) {
+		    			// using map to avoid duplicate replacements
+		    			// also only adding links that are actually changed to the map.
+		    			linkReplaceMap.put(oldLink, newLink);
+		    		}
+				}
+			}
     	}
-    	this.logger.debug("LinkFilter DONE");
-        return new XMLOutputter().outputString(doc);
-//		result = response.replaceAll(TAG_TO_REPLACE, "USR: " + user.getUsername());
-//		"";//element.getAttributeValue("href");
-//		this.myService.fixURK(user/org, "gin.net")
-//    	Element.
-//    	 build("http://www.cafeconleche.org/");
-//        String remoteAddr = request.getRemoteAddr();
-        
+    	
+    	for (String link : linkReplaceMap.keySet()) {
+    		response = response.replace(link, linkReplaceMap.get(link));
+    	}
+    	
+    	//logger.info("linkfilter took " + (System.currentTimeMillis() - timeStart) + " milliseconds");
+    	
+		return response;
     }
 	private URL deproxify(String href) {
 		if (href.contains("http://proxy.helsebiblioteket.no/login?url=")) {
 			href = href.replace("http://proxy.helsebiblioteket.no/login?url=", "");
 		} else if (href.contains("proxy.helsebiblioteket.no")) {
 			href = href.replace("proxy.helsebiblioteket.no", "");
+		} else if (href.contains("http://proxy-t.helsebiblioteket.no/login?url=")) {
+			href = href.replace("http://proxy-t.helsebiblioteket.no/login?url=", "");
+		} else if (href.contains("proxy-t.helsebiblioteket.no")) {
+			href = href.replace("proxy-t.helsebiblioteket.no", "");
 		}
 		URL url = null;
 		try {
@@ -112,6 +123,15 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		}
 		return url;
 	}
+	
+	private boolean validHref(String s) {
+		if (s.matches(invalidHrefRegExp)) {
+			return false;
+		}
+		return true;
+	}
+
+	
 	private Map<String, String> getQueryMap(String query){
 	    String[] params = query.split("&");
 	    Map<String, String> map = new HashMap<String, String>();
@@ -122,19 +142,19 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	    }
 	    return map;
 	}
+	
 	private boolean isAffected(URL url) {
-		// TODO: Cache as much as possible, but flush at some set interval!
 		Url myurl = new Url();
 		myurl.setStringValue(url.toExternalForm());
 		return this.urlService.isAffected(myurl);
 	}
+	
 	private URL translate(User user, MemberOrganization organization, URL url) throws MalformedURLException {
-		// TODO: Cache as much as possible, but flush at some set interval!
-		Url myurl = new Url();
-		myurl.setStringValue(url.toExternalForm());
-		SingleResultUrl result = this.urlService.translateUrlUserOrganization(user, organization, myurl);
+		Url myUrl = new Url();
+		myUrl.setStringValue(url.toExternalForm());
+		SingleResultUrl result = this.urlService.translateUrlUserOrganization(user, organization, myUrl);
 		if(result instanceof EmptyResultUrl){
-			// TODO: What to do here?
+			logger.error("Unable to translate URL '" + myUrl + "' for user '" + user + "' and organization '" + organization + "'" );
 			return url;
 		} else {
 			ValueResultUrl value = (ValueResultUrl) result;
@@ -142,9 +162,6 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		}
 	}
 
-	public void setSessionVarName(String sessionVarName) {
-		this.sessionVarName = sessionVarName;
-	}
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;
 	}
