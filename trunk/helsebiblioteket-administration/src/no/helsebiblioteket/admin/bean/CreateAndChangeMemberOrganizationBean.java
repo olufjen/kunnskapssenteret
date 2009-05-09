@@ -186,8 +186,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		this.ipRangeListHtmlDataTable = null;
 		this.orgAccessTable = null;
 
-		
-//		this.organizationBean.setOrganization(this.organization);
+		this.organizationBean.setOrganization(this.organization);
 		this.organizationBean.runSearch();
 		return this.organizationBean.actionDetailsSingle();
 	}
