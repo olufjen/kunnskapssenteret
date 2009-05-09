@@ -272,6 +272,7 @@ CREATE TABLE tbl_person
     profile_id           INTEGER             NULL,
     position_type_id     INTEGER             NULL,
     employer			 VARCHAR			 NULL,
+    position_text		 VARCHAR			 NULL,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( person_id )
 );
