@@ -141,7 +141,6 @@ public class UserBean {
     		this.user.getPerson().setEmployer("");
         	this.showPositionText = false;
         	this.showPositionMenu = false;
-    		this.user.getPerson().setPosition(new Position());
     		this.showProfile = false;
     		this.user.getPerson().setProfile(new Profile());
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyEmployee)){
@@ -153,14 +152,11 @@ public class UserBean {
         	this.showEmployerText = true;
         	this.showPositionText = true;
         	this.showPositionMenu = false;
-    		this.user.getPerson().setPosition(new Position());
     		this.showProfile = true;
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyHealthWorker)){
     		this.showHprNumber = true;
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber(null);
-    		this.user.getPerson().setPosition(new Position());
-    		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     		this.showIsStudent = false;
         	this.showEmployerText = true;
         	this.showPositionText = false;
@@ -174,7 +170,6 @@ public class UserBean {
         	this.showEmployerText = true;
         	this.showPositionText = false;
         	this.showPositionMenu = false;
-    		this.user.getPerson().setPosition(new Position());
     		this.showProfile = true;
     	}
     }
@@ -185,6 +180,9 @@ public class UserBean {
     	if(this.allRolesMap.containsKey(event.getNewValue())){
     		this.mainRole(this.allRolesMap.get(event.getNewValue()));
     	}
+		this.user.getPerson().setPosition(new Position());
+		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
+		this.selectedUserRole = this.mainRole().getKey();
     	this.enableDisableFields();
     }
     public void studentChanged(ValueChangeEvent event){
@@ -197,12 +195,23 @@ public class UserBean {
     public String actionEdit(){
     	UserListItem item  = (UserListItem) this.usersTable.getRowData();
     	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
-    	this.enableDisableFields();
-    	this.password = "";
-    	this.repeatPassword = "";
+    	this.prepareEdit();
     	return "user_edit";
     }
-    public String actionEditSingle(){ return "user_edit"; }
+    public String actionEditSingle(){
+    	this.prepareEdit();
+    	return "user_edit";
+    }
+    public void prepareEdit(){
+    	this.password = "";
+    	this.repeatPassword = "";
+    	if(this.user.getPerson().getPosition() == null){
+    		this.user.getPerson().setPosition(new Position());
+    		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
+    	}
+		this.selectedUserRole = this.mainRole().getKey();
+		this.enableDisableFields();
+    }
     public String getUserRole(){
     	if(this.user != null && this.mainRole() != null) {
     		return this.mainRole().getName();
@@ -389,14 +398,7 @@ public class UserBean {
 		return this.selectedRoles;
 	}
 	public UserRoleKey getSelectedUserRole() {
-		if(this.selectedUserRole == null){
-//			this.selectedUserRole = new ArrayList<String>();
-			if(this.user != null){ 
-//				for (Role role : this.user.getRoleList()) {
-				this.selectedUserRole = this.mainRole().getKey();
-//				}
-			}
-		}
+		this.selectedUserRole = this.mainRole().getKey();
 		return this.selectedUserRole;
 	}
 	public List<Role> getAllRoles() {
@@ -418,12 +420,12 @@ public class UserBean {
 			this.allPositions = new ArrayList<Position>();
 
 			// TODO: Right way to add DUMMY?
-			Position dummy = new Position();
-			dummy.setKey(PositionTypeKey.none);
-			dummy.setName(ResourceBundle.getBundle(
-					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
-							"user_details_no_position"));
-			this.allPositions.add(dummy);
+//			Position dummy = new Position();
+//			dummy.setKey(PositionTypeKey.none);
+//			dummy.setName(ResourceBundle.getBundle(
+//					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
+//							"user_details_no_position"));
+//			this.allPositions.add(dummy);
 			
 			Position[] positions = this.userService.getPositionListAll("").getList();
 			for (Position loadedPos : positions) {
