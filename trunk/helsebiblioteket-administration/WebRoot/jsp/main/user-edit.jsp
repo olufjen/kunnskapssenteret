@@ -47,7 +47,7 @@
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_position}"  /></td>
-			<td><h:inputText value="#{userBean.user.person.position.name}" id="position"
+			<td><h:inputText value="#{userBean.user.person.positionText}" id="position"
 					readonly="#{ ! userBean.showPositionText}"
 					disabled="#{ ! userBean.showPositionText}"/></td>
 			<td><h:message for="position" styleClass="RED"/></td>
@@ -113,9 +113,14 @@
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_is_student}"  /></td>
-			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}" id="isStudent" 
+			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}"
+					id="isStudent" 
 					layout="pageDirection" required="true" 
-					disabled="true" valueChangeListener="#{userBean.studentChanged}" onchange="submit()">
+					disabled="true"
+					valueChangeListener="#{userBean.studentChanged}"
+					onchange="submit()"
+					readonly="#{ ! userBean.showIsStudent}"
+					disabled="#{ ! userBean.showIsStudent}">
 					<f:selectItems value="#{userBean.availableIsStudent}"/>
         		</h:selectOneRadio></td>
 			<td><h:message for="isStudent" styleClass="RED"/></td>
