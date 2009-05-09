@@ -15,6 +15,7 @@
 		<result property="profile.id" column="profile_id" />
 		<result property="position.id" column="position_type_id" />
 		<result property="employer" column="employer" />
+		<result property="positionText" column="position_text" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertPerson" parameterClass="person">
@@ -22,9 +23,9 @@
 			SELECT nextval('tbl_person_person_id_seq') as id;
 		</selectKey>
 		insert into tbl_person
-		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, last_changed)
+		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, employer, position_text, last_changed)
 		values 
-		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, now());
+		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, #employer#, #positionText#, now());
 	</insert>
 	<update id="updatePerson" parameterClass="person">
 		update tbl_person set
@@ -34,6 +35,8 @@
 			hpr_number = #hprNumber#,
 			contact_information_id = #contactInformation.id#,
 			profile_id = #profile.id#,
+			employer = #employer#,
+			position_text = #positionText#,
 			position_type_id = #position.id#,
 			last_changed = now()
 		where
@@ -53,6 +56,7 @@
 			profile_id,
 			position_type_id,
 			employer,
+			position_text,
 			last_changed
 		from tbl_person
 		where person_id = #id#;
@@ -68,6 +72,7 @@
 			profile_id,
 			position_type_id,
 			employer,
+			position_text,
 			last_changed
 		from tbl_person
 		where person_id = (select person_id from tbl_user where user_id = #userId#);
@@ -83,6 +88,7 @@
 			profile_id,
 			position_type_id,
 			employer,
+			position_text,
 			last_changed
 		from tbl_person
 		where person_id = (select person_id from tbl_org_unit where org_unit_id = #id#);
