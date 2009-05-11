@@ -193,7 +193,12 @@ public class UserBean {
     public boolean getCanShowUser(){ return true; }
     public String actionEdit(){
     	UserListItem item  = (UserListItem) this.usersTable.getRowData();
-    	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
+    	Object userObject = this.userService.getUserByUserListItem(item);
+    	if (userObject instanceof ValueResultUser) {
+    		this.user = ((ValueResultUser) userObject).getValue(); 
+    	} else if (userObject instanceof ValueResultOrganizationUser) {
+    		this.user = ((ValueResultOrganizationUser) userObject).getValue().getUser();
+    	}
     	this.prepareEdit();
     	return "user_edit";
     }
@@ -269,7 +274,15 @@ public class UserBean {
     	}
     	UserListItem item = new UserListItem();
     	item.setId(this.user.getId());
-    	this.user = ((ValueResultUser)this.userService.getUserByUserListItem(item)).getValue();
+    	
+    	Object userObject = this.userService.getUserByUserListItem(item);
+    	
+    	if (userObject instanceof ValueResultUser) {
+    		this.user = ((ValueResultUser) userObject).getValue(); 
+    	} else if (userObject instanceof ValueResultOrganizationUser) {
+    		this.user = ((ValueResultOrganizationUser) userObject).getValue().getUser();
+    	}
+    	
     	return "user_details";
     }
     public String actionCancel(){

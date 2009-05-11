@@ -392,7 +392,13 @@ public class UserServiceImpl implements UserService {
 		if(oldResult instanceof EmptyResultUser){
 			throw new NullPointerException("User does not exist.");
 		}
-		User old = ((ValueResultUser)oldResult).getValue();
+		
+		User old = null;
+		if (oldResult instanceof ValueResultUser) {
+			old = ((ValueResultUser) oldResult).getValue(); 
+    	} else if (oldResult instanceof ValueResultOrganizationUser) {
+    		old = ((ValueResultOrganizationUser) oldResult).getValue().getUser();
+    	}
 
 		this.contactInformationDao.updateContactInformation(user.getPerson().getContactInformation());
 		this.profileDao.updateProfile(user.getPerson().getProfile());
