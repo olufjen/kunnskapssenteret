@@ -6,6 +6,7 @@
 <sqlMap namespace="Access">
 	<typeAlias alias="ResourceAccessForeignKeys" type="no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys"/>
 	<typeAlias alias="ResourceAccessListItem" type="no.helsebiblioteket.admin.domain.list.ResourceAccessListItem"/>
+	<typeAlias alias="Resource" type="no.helsebiblioteket.admin.domain.Resource"/>
 
 	<resultMap id="ResourceAccessResultMap" class="ResourceAccessForeignKeys">
 		<result property="resourceAccess.access.accessType.id" column="access_type_id" />
@@ -19,6 +20,7 @@
 		<result property="resourceAccess.access.providedBy.organization.id" column="provided_by_org_unit" />
 		<result property="orgUnitId" column="org_unit_id" />
 		<result property="resourceAccess.access.lastChanged" column="last_changed" />
+		<result property="resourceAccess.access.deleted" column="deleted" />
 	</resultMap>
 	<resultMap id="ResourceAccessListItemResultMap" class="ResourceAccessListItem">
 		<result property="id" column="access_id" />
@@ -46,7 +48,8 @@
 			resource_id, 
 			org_type_id, 
 			provided_by_org_unit,
-			org_unit_id, 
+			org_unit_id,
+			deleted,
 			last_changed
 			)
 		values (#resourceAccess.access.accessType.id#,
@@ -58,6 +61,7 @@
 				#resourceAccess.resource.resource.id#,
 				#orgTypeId#,
 				#resourceAccess.access.providedBy.organization.id#,
+				#resourceAccess.access.deleted#,
 				#orgUnitId#, now());
 	</insert>
 	<update id="updateResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
@@ -71,7 +75,8 @@
 			resource_id = #resourceAccess.resource.resource.id#,
 			org_type_id = #orgTypeId#,
 			provided_by_org_unit = #resourceAccess.access.providedBy.organization.id#,
-			org_unit_id = #orgUnitId#, 
+			org_unit_id = #orgUnitId#,
+			deleted = #resourceAccess.access.deleted#,
 			last_changed = now()
 		where access_id = #resourceAccess.access.id# and last_changed = #resourceAccess.access.lastChanged#
 	</update>
@@ -91,7 +96,8 @@
 			resource_id, 
 			org_type_id, 
 			provided_by_org_unit,
-			org_unit_id, 
+			org_unit_id,
+			deleted, 
 			last_changed
 		from tbl_access
 		where access_id = #id#;
@@ -112,7 +118,7 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where user_id = #userId#;
+		where user_id = #userId# and tbl_access.deleted is false;
 	</select>
 	<select id="getAccessListByOrganizationId" resultMap="ResourceAccessListItemResultMap" parameterClass="integer">
 		select
@@ -129,7 +135,7 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where tbl_access.org_unit_id = #organizationId#;
+		where tbl_access.org_unit_id = #organizationId# and tbl_access.deleted is false;
 	</select>
 	<select id="getAccessListByOrganizationType" resultMap="ResourceAccessListItemResultMap" parameterClass="integer">
 		select
@@ -146,7 +152,7 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where org_type_id = #organizationTypeId#;
+		where org_type_id = #organizationTypeId# and tbl_access.deleted is false;
 	</select>
 	<select id="getAccessListByUserRole" resultMap="ResourceAccessListItemResultMap" parameterClass="integer">
 		select
@@ -163,7 +169,22 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where user_role_id = #userRoleId#;
+		where user_role_id = #userRoleId# and tbl_access.deleted is false;
 	</select>
-
+	<select id="getAccessListByResource" resultMap="ResourceAccessResultMap" parameterClass="Resource">
+		select access_type_id, 
+			user_id, 
+			user_role_id, 
+			valid_from, 
+			valid_to, 
+			access_id, 
+			resource_id, 
+			org_type_id, 
+			provided_by_org_unit,
+			org_unit_id,
+			deleted, 
+			last_changed
+		from tbl_access
+		where resource_id = #id#;
+	</select>
 </sqlMap>

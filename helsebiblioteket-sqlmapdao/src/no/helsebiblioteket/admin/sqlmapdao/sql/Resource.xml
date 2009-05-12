@@ -10,6 +10,7 @@
 		<result property="supplierSource.id" column="supplier_source_id" />
 		<result property="resource.resourceType.id" column="resource_type_id" />
 		<result property="resource.offeredBy" column="org_unit_id" />
+		<result property="resource.deleted" column="deleted" />
 		<result property="resource.lastChanged" column="last_changed" />
 	</resultMap>
 	<resultMap id="SupplierSourceResourceResultListMap" class="SupplierSourceResource">
@@ -22,20 +23,22 @@
 		<result property="resource.resourceType.description" column="descr" />
 		<result property="resource.resourceType.name" column="name" />
 		<result property="resource.offeredBy" column="org_unit_id" />
+		<result property="resource.deleted" column="deleted" />
 		<result property="resource.lastChanged" column="last_changed" />
 	</resultMap>
 	<insert id="insertSupplierSourceResource" parameterClass="SupplierSourceResource">
 		<selectKey resultClass="int" keyProperty="resource.id">
 			SELECT nextval('tbl_resource_resource_id_seq') as id;
 		</selectKey>
-		insert into tbl_resource (resource_id, supplier_source_id, resource_type_id, org_unit_id, last_changed)
-		values (#resource.id#, #supplierSource.id#, #resource.resourceType.id#, #resource.offeredBy#, now());
+		insert into tbl_resource (resource_id, supplier_source_id, resource_type_id, org_unit_id, deleted, last_changed)
+		values (#resource.id#, #supplierSource.id#, #resource.resourceType.id#, #resource.offeredBy#, #resource.deleted#, now());
 	</insert>
 	<update id="updateSupplierSourceResource" parameterClass="SupplierSourceResource">
 		update tbl_resource set
       		supplier_source_id = #supplierSource.id#,
       		resource_type_id = #resource.resourceType.id#,
 	      	org_unit_id = #resource.offeredBy#,
+	      	deleted = #resource.deleted#,
     	  	last_changed = now()
     	where resource_id = #resource.id# and last_changed = #resource.lastChanged#;
 	</update>
@@ -53,6 +56,7 @@
 			type.name,
 			res.resource_id,
 			res.last_changed,
+			res.deleted,
 			sup.supplier_source_id,
 			type.resource_type_id,
 			org_unit_id
@@ -71,6 +75,7 @@
 			type.name,
 			res.resource_id,
 			res.last_changed,
+			res.deleted,
 			sup.supplier_source_id,
 			type.resource_type_id,
 			org_unit_id
@@ -78,7 +83,7 @@
 			inner join tbl_supplier_source as sup on res.supplier_source_id = sup.supplier_source_id
 			inner join tbl_resource_type_reg as type on res.resource_type_id = type.resource_type_id
 		where
-			res.org_unit_id = #id#;
+			res.org_unit_id = #id# and res.deleted is false;
 	</select>
 	
 	<select id="getSupplierSourceResourcesAll" resultMap="SupplierSourceResourceResultListMap">
@@ -90,12 +95,15 @@
 			type.name,
 			res.resource_id,
 			res.last_changed,
+			res.deleted,
 			sup.supplier_source_id,
 			type.resource_type_id,
 			org_unit_id
 		from tbl_resource as res
 			inner join tbl_supplier_source as sup on res.supplier_source_id = sup.supplier_source_id
 			inner join tbl_resource_type_reg as type on res.resource_type_id = type.resource_type_id
+		where
+			res.deleted is false;
 	</select>
 
 </sqlMap>
