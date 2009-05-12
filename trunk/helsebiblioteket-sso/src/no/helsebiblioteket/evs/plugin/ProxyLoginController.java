@@ -2,7 +2,6 @@ package no.helsebiblioteket.evs.plugin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
@@ -10,13 +9,11 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
-import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
@@ -26,7 +23,6 @@ import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
-import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -80,14 +76,23 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				user = ((OrganizationUser) objectUser).getUser();
     			}
     			
-    			AccessType accessType = urlService.getAccessTypeForUserAndMemberOrganization(user, memberOrganization, requestedUrl);
+    			AccessResult accessResult;
+    			if(memberOrganization != null && user != null){
+    				accessResult = urlService.hasAccessUserOrganization(user, memberOrganization, requestedUrl);
+    			} else if(user != null){
+    				accessResult = urlService.hasAccessUser(user, requestedUrl);
+    			} else if(memberOrganization != null){
+    				accessResult = urlService.hasAccessOrganization(memberOrganization, requestedUrl);
+    			} else {
+    				accessResult = urlService.hasAccessNone(requestedUrl);
+    			}
     			
-    			if (accessType.getCategory().equals(AccessTypeCategory.DENY) && accessType.getKey().equals(AccessTypeKey.general)) {
+    			if (accessResult.getValue().equals(AccessResult.logup)) {
    	        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
     				redirectUrl = logUpUrl;
-    			} else if (accessType.getCategory().equals(AccessTypeCategory.GRANT) && accessType.getKey().equals(AccessTypeKey.proxy_exclude)) {
+    			} else if (accessResult.getValue().equals(AccessResult.exclude)) {
     				redirectUrl = requestedUrl.getStringValue();
-    			} else if (accessType.getCategory().equals(AccessTypeCategory.GRANT) && accessType.getKey().equals(AccessTypeKey.proxy_include)) {
+    			} else if (accessResult.getValue().equals(AccessResult.include)) {
     				SingleResultString result = this.urlService.group(requestedUrl);
     				String group;
     				if(result instanceof EmptyResultString){
