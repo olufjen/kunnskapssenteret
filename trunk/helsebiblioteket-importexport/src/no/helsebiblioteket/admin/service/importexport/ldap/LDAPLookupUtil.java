@@ -88,6 +88,7 @@ public class LDAPLookupUtil {
      * @throws javax.naming.NamingException
      * @since 2006.06.21
      */
+	@SuppressWarnings("unchecked")
     public Collection getLDAPUsers(Collection colDn) throws NamingException, Exception {
         Collection usrs = new ArrayList();
         try {
@@ -124,6 +125,7 @@ public class LDAPLookupUtil {
      *
      * @since 2006.06.22
      */
+	@SuppressWarnings("unchecked")
     public Collection getAllLDAPUsers() throws NamingException, LDAPAuthenticationException {
         Collection usrs = new ArrayList();
         // filtermask (&(sn=*)(givenName=*))
