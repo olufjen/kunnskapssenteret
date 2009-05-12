@@ -119,6 +119,7 @@ CREATE TABLE tbl_access
     org_type_id          INTEGER             NULL,
     provided_by_org_unit INTEGER             NULL,
     org_unit_id          INTEGER             NULL,
+    deleted              BOOLEAN             NOT NULL DEFAULT FALSE,
     last_changed         TIMESTAMP           NULL,
     org_unit_as_resource_id INTEGER          NULL,
     PRIMARY KEY ( access_id )
@@ -134,6 +135,7 @@ CREATE TABLE tbl_action
     resource_id          INTEGER             NOT NULL,
     org_unit_id          INTEGER             NULL,
     access_type_id       INTEGER             NOT NULL,
+    deleted              BOOLEAN             NOT NULL DEFAULT FALSE,
     PRIMARY KEY ( action_id )
 );
 
@@ -159,6 +161,7 @@ CREATE TABLE tbl_supplier_source
     supplier_source_name VARCHAR             NULL,
     url                  VARCHAR             NULL,
     supplier_source_id   SERIAL             NOT NULL,
+    deleted              BOOLEAN             NOT NULL DEFAULT FALSE,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( supplier_source_id )
 );
@@ -172,6 +175,7 @@ CREATE TABLE tbl_resource
     supplier_source_id   INTEGER             NULL,
     resource_type_id     INTEGER             NOT NULL,
     org_unit_id          INTEGER             NULL,
+    deleted              BOOLEAN             NOT NULL DEFAULT FALSE,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( resource_id )
 );

@@ -6,6 +6,7 @@ import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
@@ -45,5 +46,10 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 	@SuppressWarnings("unchecked")
 	public List<ResourceAccessListItem> getAccessListByOrganizationType(OrganizationType organizationType){
 		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
+	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ResourceAccessForeignKeys> getAccessListByResource(Resource resource) {
+		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByResource", resource);
 	}
 }
