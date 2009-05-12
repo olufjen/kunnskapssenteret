@@ -30,14 +30,13 @@ public class Person implements Serializable {
 		return id + ": " + firstName + " " + lastName;
 	}
 	public String getName() {
-		String fName, lName;
-		fName = this.firstName;
-		lName = this.lastName;
-		if(fName == null)
-			fName="";
-		if( lName == null)
-			lName="";
-		return fName + " " + lName;
+		if(this.lastName.equals("")){
+			return this.firstName;
+		} else if(this.firstName.equals("")){
+			return this.lastName;
+		} else {
+			return this.firstName + " " + this.lastName;
+		}
 	}
 	
 	// GET/SET
