@@ -21,6 +21,7 @@ import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
@@ -102,15 +103,15 @@ public class URLServiceTests {
 		checkUrl(userOrganizationUrl, randomUrl);
 		
 //		TEST: public Boolean hasAccess(User user, Url url);
-		Boolean userAccess = urlService.hasAccessUser(user, new Url(randomUrl));
+		AccessResult userAccess = urlService.hasAccessUser(user, new Url(randomUrl));
 		checkAccess(userAccess);
 		
 //		TEST: public Boolean hasAccess(MemberOrganization organization, Url url);
-		Boolean organizationAccess = urlService.hasAccessOrganization(memberOrganization, new Url(randomUrl));
+		AccessResult organizationAccess = urlService.hasAccessOrganization(memberOrganization, new Url(randomUrl));
 		checkAccess(organizationAccess);
 		
 //		TEST: public Boolean hasAccess(User user, MemberOrganization organization, Url url);
-		Boolean userOrganizationAccess = urlService.hasAccessUserOrganization(user, memberOrganization, new Url(randomUrl));
+		AccessResult userOrganizationAccess = urlService.hasAccessUserOrganization(user, memberOrganization, new Url(randomUrl));
 		checkAccess(userOrganizationAccess);
 		
 		// TODO: How do we test group?
@@ -131,9 +132,9 @@ public class URLServiceTests {
 		Assert.isTrue(((ValueResultUrl)singleResultUrl).getValue().getStringValue().contains(urlValue), "Error finding URL");
 		Assert.isTrue(((ValueResultUrl)singleResultUrl).getValue().getStringValue().startsWith(this.urlPrefix), "URL not prefixed");
 	}
-	private void checkAccess(Boolean value){
+	private void checkAccess(AccessResult value){
 		Assert.notNull(value, "Should not be NULL");
-		Assert.isTrue(value, "Should have access");
+		Assert.isTrue(value.getValue().equals(AccessResult.include.getValue()), "Should have access");
 	}
 	
 	public void testPerformance() {
