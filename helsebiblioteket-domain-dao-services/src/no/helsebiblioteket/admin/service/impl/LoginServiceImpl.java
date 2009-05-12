@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
@@ -48,9 +49,9 @@ public class LoginServiceImpl implements LoginService {
 		if(result instanceof ValueResultUser){
 			User loggedIn = ((ValueResultUser)result).getValue();
 			if(loggedIn.getPassword().equals(password)){
-				// TODO: Remove this:
-//				loggedIn.setPerson(null);
-//				loggedIn.setRoleList(new Role[0]);
+				// FIXME: Remove this. Something wrong with Axis!
+				loggedIn.setPerson(null);
+				loggedIn.setRoleList(new Role[0]);
 				return result;
 			}
 		}
@@ -72,6 +73,8 @@ public class LoginServiceImpl implements LoginService {
 			SingleResultOrganization memberResult = this.organizationService.getOrganizationByListItem(list[0]);
 			if(memberResult instanceof ValueResultMemberOrganization) {
 				MemberOrganization memberOrganization = ((ValueResultMemberOrganization)memberResult).getValue();
+				// FIXME: Remove this. Something wrong with Axis!
+				memberOrganization.getOrganization().setContactPerson(null);
 				return new ValueResultMemberOrganization(memberOrganization);
 			}
 		}
@@ -162,13 +165,5 @@ public class LoginServiceImpl implements LoginService {
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
-	}
-
-	
-	// TODO: hmmm?
-	@Override
-	public SingleResultPosition hmmm(Person person) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -12,9 +12,6 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 public interface LoginService extends Serializable {
     public SingleResultUser loginUserByUsernamePassword(String username, String password);
     public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress);
-
-    // TODO: Remove:
-    public SingleResultPosition hmmm(Person person);
     
     public SendPasswordEmailResult sendPasswordEmail(String emailAddress);
 }
