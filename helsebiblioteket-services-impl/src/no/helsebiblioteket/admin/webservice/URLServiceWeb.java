@@ -10,12 +10,10 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationUser;
-import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
+import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 @SuppressWarnings("serial")
@@ -26,33 +24,36 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	private QName translateUrlUserName;
 	private QName translateUrlOrganizationName;
 	private QName translateUrlUserOrganizationName;
+	private QName translateUrlNoneName;
 	private QName hasAccessUserName;
-	private QName hasAccessOrganizationUserName;
 	private QName hasAccessOrganizationName;
 	private QName hasAccessUserOrganizationName;
-	private QName hasAccessOrganizationUserOrganizationName;
+	private QName hasAccessNodeName;
 	private QName accessTypeForUserAndMemberOrganizationName;
 	
 	private QName groupName;
-	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean isAffected(Url url){
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invokeCached(CacheKey.affectedUrlCache, url.getStringValue(), this.isAffectedName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlUser(User user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		return (SingleResultUrl)invoke(this.translateUrlUserName, args, returnTypes);
     }
+	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		return (SingleResultUrl)invoke(this.translateUrlOrganizationName, args, returnTypes);
     }
+	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
@@ -64,36 +65,42 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 				);
 		return (SingleResultUrl) invokeCached(CacheKey.translateUrlUserOrganizationCache, key, this.translateUrlUserOrganizationName, args, returnTypes);
     }
+	@SuppressWarnings("unchecked")
 	@Override
-    public Boolean hasAccessUser(User user, Url url){
-		Object[] args = new Object[] { user, url };
-		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessUserName, args, returnTypes);
-    }
-	@Override
-	public Boolean hasAccessOrganizationUser(OrganizationUser user, Url url) {
-		Object[] args = new Object[] { user, url };
-		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessOrganizationUserName, args, returnTypes);
+	public SingleResultUrl translateUrlNone(Url url) {
+		Object[] args = new Object[] { url };
+		Class[] returnTypes = new Class[] { SingleResultUrl.class };
+		return (SingleResultUrl)invoke(this.translateUrlNoneName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
-    public Boolean hasAccessOrganization(MemberOrganization organization, Url url){
+    public AccessResult hasAccessUser(User user, Url url){
+		Object[] args = new Object[] { user, url };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (AccessResult)invoke(this.hasAccessUserName, args, returnTypes);
+    }
+	@SuppressWarnings("unchecked")
+	@Override
+    public AccessResult hasAccessOrganization(MemberOrganization organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invoke(this.hasAccessOrganizationName, args, returnTypes);
+		return (AccessResult)invoke(this.hasAccessOrganizationName, args, returnTypes);
     }
+	@SuppressWarnings("unchecked")
 	@Override
-    public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url){
+    public AccessResult hasAccessUserOrganization(User user, MemberOrganization organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.hasAccessUserOrganizationName, args, returnTypes);
+		return (AccessResult) invoke(this.hasAccessUserOrganizationName, args, returnTypes);
     }
+	@SuppressWarnings("unchecked")
 	@Override
-	public Boolean hasAccessOrganizationUserOrganization(OrganizationUser user, MemberOrganization organization, Url url) {
-		Object[] args = new Object[] { user, url };
+	public AccessResult hasAccessNone(Url url) {
+		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean) invoke(this.hasAccessOrganizationUserOrganizationName, args, returnTypes);
+		return (AccessResult)invoke(this.hasAccessNodeName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultString group(Url url){
 		Object[] args = new Object[] { url };
@@ -101,7 +108,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		return (SingleResultString)invoke(this.groupName, args, returnTypes);
     }
 
-	@Override
+	@SuppressWarnings("unchecked")
     public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
 		Object[] args = new Object[] { user, memberOrganization, url };
 		Class[] returnTypes = new Class[] { AccessType.class };
@@ -114,7 +121,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	}
     
     public Log getLogger() {
-		return this.logger;
+		return logger;
 	}
 	
 	public void setIsAffectedName(QName isAffectedName) {
@@ -138,9 +145,6 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public void setHasAccessUserOrganizationName(QName hasAccessUserOrganizationName) {
 		this.hasAccessUserOrganizationName = hasAccessUserOrganizationName;
 	}
-	public void setHasAccessOrganizationUserOrganizationName(QName hasAccessOrganizationUserOrganizationName) {
-		this.hasAccessOrganizationUserOrganizationName = hasAccessOrganizationUserOrganizationName;
-	}
 	public void setGroupName(QName groupName) {
 		this.groupName = groupName;
 	}
@@ -148,6 +152,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		this.accessTypeForUserAndMemberOrganizationName = accessTypeForUserAndMemberOrganizationName;
 	}
 	
+	@SuppressWarnings("null")
 	public static void main(String[] args) throws Exception {
 		// TODO: Move to test project!
 		QName isAffectedName = new QName("http://service.admin.helsebiblioteket.no", "isAffected");
@@ -169,7 +174,9 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		url2.setStringValue("http://www.g-i-n.net.proxy.helsebiblioteket.no/");
 		Boolean isAffected1 = loginService.isAffected(url1);
 		Boolean isAffected2 = loginService.isAffected(url2);
+		@SuppressWarnings("unused")
 		SingleResultUrl translatedResult1 = loginService.translateUrlUserOrganization(user, organization, url1);
+		@SuppressWarnings("unused")
 		SingleResultUrl translatedResult2 = loginService.translateUrlUserOrganization(user, organization, url2);
 		Url translated1 = null;
 		Url translated2 = null;
