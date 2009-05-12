@@ -9,14 +9,13 @@ import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
-import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
@@ -49,6 +48,7 @@ public class URLServiceImpl implements URLService {
 	 * must match a "starts with" criteria for any stored URL.
 	 * 
 	 */
+	@Override
 	public Boolean isAffected(Url url) {
 		SingleResultSupplierSource supplierSourceResult = accessService.getSupplierSourceByUrlStartsWith(url);
 		if (supplierSourceResult instanceof EmptyResultSupplierSource) {
@@ -57,26 +57,19 @@ public class URLServiceImpl implements URLService {
 			return Boolean.TRUE;
 		}
 	}
+	@Override
+	public SingleResultUrl translateUrlNone(Url url) {
+		return this.translateUrlUserOrganizationInternal(null, null, url);
+	}
 	/**
 	 * Translates a URL. If the user has Access he will
 	 * be sent to the proxy. Otherwise there must be a
 	 * page with information about what to do.
 	 * 
 	 */
+	@Override
 	public SingleResultUrl translateUrlUser(User user, Url url) {
-		// TODO: Use "redirectport" somewhere?
-		// TODO: Include deny.
-		// TODO: Check for 'provided by'.
-		// TODO: Check for 'offered by'.
-		Url newUrl = new Url();
-		if(user != null && this.hasAccessUser(user, url)) {
-			// TODO: When to send through proxy?
-			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
-		} else {
-			// TODO: When to send directly?
-			newUrl.setStringValue(url.getStringValue());
-		}
-		return new ValueResultUrl(newUrl);
+		return this.translateUrlUserOrganizationInternal(user, null, url);
 	}
 	/**
 	 * Translates a URL for an organization. If the organization
@@ -86,16 +79,9 @@ public class URLServiceImpl implements URLService {
 	 * TODO: When to send an organization directly?
 	 * 
 	 */
+	@Override
 	public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url) {
-		Url newUrl = new Url();
-		if(organization != null && hasAccessOrganization(organization, url)){
-			// TODO: When to send through proxy?
-			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
-		} else {
-			// TODO: When to send directly?
-			newUrl.setStringValue(url.getStringValue());
-		}
-		return new ValueResultUrl(newUrl);
+		return this.translateUrlUserOrganizationInternal(null, organization, url);
 	}
 	/**
 	 * Translates a URL for either organization or user.
@@ -118,13 +104,15 @@ public class URLServiceImpl implements URLService {
 	 * 2) if the resource authenticates requester(s) in their end based on either GeoIP or other authentication mechanism. 
 	 * 
 	 */
+	@Override
 	public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization memberOrganization, Url url) {
+		return this.translateUrlUserOrganizationInternal(user, memberOrganization, url);
+	}
+	private SingleResultUrl translateUrlUserOrganizationInternal(User user, MemberOrganization memberOrganization, Url url) {
 		Url newUrl = new Url();
 		boolean proxify = true;
 		
-		Role noRole = new Role();
-		noRole.setKey(UserRoleKey.no_role);
-		proxify = proxify && !proxyExclude(getAccessTypeForUserRole(noRole, url));
+		proxify = proxify && !proxyExclude(getAccessTypeForAll(url));
 		
 		if (memberOrganization != null) {
 			proxify = proxify && !proxyExclude(getAccessTypeForOrganizationType(memberOrganization.getOrganization().getType(), url));
@@ -146,7 +134,6 @@ public class URLServiceImpl implements URLService {
 		
 		return new ValueResultUrl(newUrl);
 	}
-	
 	private boolean proxyExclude(AccessType accessType) {
 		if (accessType != null &&
 				accessType.getKey().getValue().equals(AccessTypeKey.proxy_exclude.getValue()) &&
@@ -163,87 +150,38 @@ public class URLServiceImpl implements URLService {
 	 * TODO: I think we must check for Access type and resource
 	 *       type. 
 	 */
-    public Boolean hasAccessUser(User user, Url url) {
-    	ListResultResourceAccessListItem userAccessList = this.accessService.getAccessListByUser(user);
-    	Boolean test = checkAccess(url, userAccessList.getList());
-    	if(test != null){ return test; }
-    	
-    	// TODO: Trust the user list and organization or reload?
-    	for (Role role : user.getRoleList()) {
-        	ListResultResourceAccessListItem userRoleAccess = this.accessService.getAccessListByRole(role);
-        	test = checkAccess(url, userRoleAccess.getList());
-        	if(test != null){ return test; }
-		}
-//    	ListResultResourceAccessListItem organizationAccessList = this.accessService.getAccessListByOrganization(user.getOrganization());
-//		test = checkAccess(url, organizationAccessList.getList());
-//		if(test != null){ return test; }
-		
-//		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(user.getOrganization().getType());
-//		test = checkAccess(url, organizationTypeAccessList.getList());
-//		if(test != null){ return test; }
-		
-		return Boolean.FALSE;
-	}
 	@Override
-	public Boolean hasAccessOrganizationUser(OrganizationUser user, Url url) {
-		// TODO Auto-generated method stub
-		return null;
+    public AccessResult hasAccessUser(User user, Url url) {
+		return this.getAccessResultForUserAndMemberOrganization(user, null, url);
 	}
-    private Boolean checkAccess(Url url, ResourceAccessListItem[] resourceAccesses) {
-    	for (ResourceAccessListItem access : resourceAccesses) {
-    		if (url.getStringValue().startsWith(access.getUrl().getStringValue())) {
-        		// If GRANT -> OK
-        		if (access.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue())) {
-            		return true;
-        		}
-        		// If DENY -> NOT OK
-        		if (access.getCategory().getValue().equals(AccessTypeCategory.DENY.getValue())) {
-        			return false;
-        		}
-        	}
-		}
-    	return null;
-    }
 	/**
 	 * Loads the Access list for an organization and checks if the URL
 	 * is in the list.
 	 * 
 	 */
-	public Boolean hasAccessOrganization(MemberOrganization organization, Url url) {
-    	ListResultResourceAccessListItem accessList = this.accessService.getAccessListByOrganization(organization.getOrganization());
-		Boolean test = checkAccess(url, accessList.getList());
-		if(test != null){ return test; }
-
-		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(organization.getOrganization().getType());
-		test = checkAccess(url, organizationTypeAccessList.getList());
-		if(test != null){ return test; }
-
-		return Boolean.FALSE;
+	@Override
+	public AccessResult hasAccessOrganization(MemberOrganization organization, Url url) {
+		return this.getAccessResultForUserAndMemberOrganization(null, organization, url);
 	}
 	/**
 	 * Checks if an organization has access first, then check the user.
 	 * If none of them have, the URL and the resource it identifies
 	 * is not available to the user or the organization.
 	 */
-	public Boolean hasAccessUserOrganization(User user, MemberOrganization organization, Url url) {
-		if(organization != null && hasAccessOrganization(organization, url)){
-			return Boolean.TRUE;
-		} else if(user != null && hasAccessUser(user, url)){
-			return Boolean.TRUE;
-		} else {
-			return Boolean.FALSE;
-		}
+	@Override
+	public AccessResult hasAccessUserOrganization(User user, MemberOrganization organization, Url url) {
+		return this.getAccessResultForUserAndMemberOrganization(user, organization, url);
 	}
 	@Override
-	public Boolean hasAccessOrganizationUserOrganization(OrganizationUser user, MemberOrganization organization, Url url) {
-		// TODO Auto-generated method stub
-		return null;
+	public AccessResult hasAccessNone(Url url) {
+		return this.getAccessResultForUserAndMemberOrganization(null, null, url);
 	}
 	/**
 	 * Finds the group value for a URL. Loads the resources, finds
 	 * the URL and the group name for it.
 	 *  
 	 */
+	@Override
 	public SingleResultString group(Url url){
 		SingleResultSupplierSource supplierSourceResult = accessService.getSupplierSourceByUrlStartsWith(url);
 		if (supplierSourceResult instanceof ValueResultSupplierSource) {
@@ -251,14 +189,27 @@ public class URLServiceImpl implements URLService {
 		}
 		return new EmptyResultString();
 	}
-	
-	public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
+
+	private AccessResult getAccessResultForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
+		AccessType accessType = this.getAccessTypeForUserAndMemberOrganization(user, memberOrganization, url);
+		if(accessType.getCategory().getValue().equals(AccessTypeCategory.DENY.getValue())){
+			return AccessResult.logup;
+		} else if(accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue()) &&
+				accessType.getKey().getValue().equals(AccessTypeKey.proxy_exclude.getValue())){
+			return AccessResult.exclude;
+		} else if(accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue()) &&
+				accessType.getKey().getValue().equals(AccessTypeKey.proxy_include.getValue())){
+			return AccessResult.include;
+		} else {
+			return AccessResult.logup;
+		}
+	}
+
+	private AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
 		AccessType accessType = new AccessType(AccessTypeCategory.DENY, AccessTypeKey.general);
 		AccessType accessTypeTmp = null;
 		
-		Role noRole = new Role();
-		noRole.setKey(UserRoleKey.no_role);
-		accessType = (accessTypeTmp = getAccessTypeForUserRole(noRole, url)) != null ? accessTypeTmp : accessType;
+		accessType = (accessTypeTmp = getAccessTypeForAll(url)) != null ? accessTypeTmp : accessType;
 		
 		if (memberOrganization != null) {
 			accessType = (accessTypeTmp = getAccessTypeForOrganizationType(memberOrganization.getOrganization().getType(), url)) != null ? accessTypeTmp : accessType;
@@ -286,6 +237,12 @@ public class URLServiceImpl implements URLService {
 	private AccessType getAccessTypeForMemberOrganization(MemberOrganization memberOrganization, Url url) {
 		AccessType accessType = null;
 		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganization(memberOrganization.getOrganization());
+		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);
+		return accessType;
+	}
+	private AccessType getAccessTypeForAll(Url url) {
+		AccessType accessType = null;
+		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListForAll();
 		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);
 		return accessType;
 	}
