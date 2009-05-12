@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
@@ -34,11 +35,17 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
+import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 public final class RegisterUserController extends ProfileController {
 	private LoggedInFunction loggedInFunction;
+	private EmailService emailService;
+	private String fromEmailText;
+	private String fromNameText;
+	private String messageText;
+	private String subjectText;
 	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
@@ -131,6 +138,7 @@ public final class RegisterUserController extends ProfileController {
 			// TODO: Saving may fail though!
 	    	boolean saved = true;
 	    	this.userService.insertUser(user);
+	    	this.sendNewUserEmail(user);
 	    	if( ! saved){
 	    		summary = "USER_NOT_REGISTERED";
 	    	} else {
@@ -160,6 +168,23 @@ public final class RegisterUserController extends ProfileController {
 		loggedInFunction.logInUser(user);
 		loggedInFunction.setResult(this.resultSessionVarName, document);
     	response.sendRedirect(gotoUrl);
+	}
+	private void sendNewUserEmail(User user) {
+		Email email = new Email();
+		
+		email.setFromName(this.fromNameText);
+		email.setFromEmail(this.fromEmailText);
+		email.setToName(user.getPerson().getName());
+		email.setToEmail(user.getPerson().getContactInformation().getEmail());
+		email.setSubject(this.subjectText);
+
+		String message = this.messageText;
+		message.replace("#username#", user.getUsername());
+		message.replace("#name#", user.getPerson().getName());
+		message.replace("#email#", user.getPerson().getContactInformation().getEmail());
+		email.setMessage(message);
+		
+		this.emailService.sendEmail(email);
 	}
 	private User createUserFromRequestParams(HttpServletRequest request) throws Exception {	
 		ContactInformation contactInformation = new ContactInformation();
@@ -301,5 +326,20 @@ public final class RegisterUserController extends ProfileController {
 	}
 	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
 		this.loggedInFunction = loggedInFunction;
+	}
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
+	public void setFromEmailText(String fromEmailText) {
+		this.fromEmailText = fromEmailText;
+	}
+	public void setFromNameText(String fromNameText) {
+		this.fromNameText = fromNameText;
+	}
+	public void setMessageText(String messageText) {
+		this.messageText = messageText;
+	}
+	public void setSubjectText(String subjectText) {
+		this.subjectText = subjectText;
 	}
 }

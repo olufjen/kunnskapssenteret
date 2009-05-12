@@ -40,6 +40,11 @@
  			<entry key="formId" value="form_id"/>
  		</map></property>
  		<property name="loggedInFunction" ref="loggedInFunction" />
+ 		<property name="emailService" ref="emailService" />
+ 		<property name="fromEmailText" value="fromEmailText" />
+ 		<property name="fromNameText" value="fromNameText" />
+ 		<property name="messageText" value="messageText" />
+ 		<property name="subjectText" value="subjectText" />
 	</bean>
 	<bean name="registerUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="userServiceClient" />
@@ -93,5 +98,20 @@
 	<bean name="organizationTypeByKeyName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="getOrganizationTypeByKey" />
+	</bean>
+
+	<bean name="emailService" class="no.helsebiblioteket.admin.webservice.EmailServiceWeb" init-method="init">
+		<property name="serviceClient" ref="emailServiceClient" />
+		<property name="targetEPR" ref="emailTargetEPR" />
+		<property name="sendEmailName" ref="sendEmailName" />
+	</bean>
+	<bean name="emailServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="emailTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="${webservice.service.url.prefix}/emailService" />
+	</bean>
+	<bean name="sendEmailName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="sendEmail" />
 	</bean>
 </beans>
