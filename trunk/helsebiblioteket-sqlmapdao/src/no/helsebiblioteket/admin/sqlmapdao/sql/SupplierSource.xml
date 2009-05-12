@@ -11,6 +11,7 @@
 		<result property="url.stringValue" column="url" />
 		<result property="id" column="supplier_source_id" />
 		<result property="proxyDatabaseName" column="proxy_database_name" />
+		<result property="deleted" column="deleted" />
 		<result property="lastChanged" column="last_changed" />	
 	</resultMap>
 	<insert id="insertSupplierSource" parameterClass="SupplierSource">
@@ -22,12 +23,14 @@
 			url,
 			supplier_source_id,
 			proxy_database_name,
+			deleted,
 			last_changed
 		) values (
 			#supplierSourceName#,
 			#url.stringValue#,
 			#id#,
 			#proxyDatabaseName#,
+			#deleted#,
 			now()
 		);
 	</insert>
@@ -36,6 +39,7 @@
 	      	supplier_source_name = #supplierSourceName#,
       		url = #url.stringValue#,
       		proxy_database_name = #proxyDatabaseName#,
+      		deleted = #deleted#,
     	  	last_changed = now()
     	where supplier_source_id = #id# and last_changed = #lastChanged#;
 	</update>
@@ -45,17 +49,18 @@
 		and last_changed = #lastChanged#
 	</delete>
 	<select id="getSupplierSourceListAll" resultMap="SupplierSourceMap">
-		select supplier_source_name, url, supplier_source_id, proxy_database_name, last_changed
+		select supplier_source_name, url, supplier_source_id, proxy_database_name, deleted, last_changed
 		from tbl_supplier_source
+		where deleted is false;
 	</select>
 	<select id="getSupplierSourceById" resultMap="SupplierSourceMap" parameterClass="integer">
-		select supplier_source_name, url, supplier_source_id, proxy_database_name, last_changed
+		select supplier_source_name, url, supplier_source_id, proxy_database_name, deleted, last_changed
 		from tbl_supplier_source
-		where supplier_source_id = #id#;
+		where supplier_source_id = #id# and deleted is false;
 	</select>
 	<select id="getSupplierSourceByUrlStartsWith" resultMap="SupplierSourceMap" parameterClass="Url">
-		select supplier_source_name, url, supplier_source_id, proxy_database_name, last_changed
+		select supplier_source_name, url, supplier_source_id, proxy_database_name, deleted, last_changed
 		from tbl_supplier_source
-		where #stringValue# LIKE url || '%';
+		where #stringValue# LIKE url || '%' and deleted is false;
 	</select>
 </sqlMap>

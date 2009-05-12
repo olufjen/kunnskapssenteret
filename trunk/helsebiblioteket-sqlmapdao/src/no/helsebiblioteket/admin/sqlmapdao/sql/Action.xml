@@ -12,6 +12,7 @@
 		<result property="resourceId" column="resource_id" />
 		<result property="orgUnitId" column="org_unit_id" />
 		<result property="actionPerformed" column="action_performed" />
+		<result property="deleted" column="deleted" />
 		<result property="accessTypeId" column="access_type_id" />
 	</resultMap>
 	
@@ -25,14 +26,16 @@
 			user_id,
 			resource_id,
 			org_unit_id,
-			access_type_id
+			access_type_id,
+			deleted
 		) values (
 			#id#,
 			now(),
 			#userId#,
 			#resourceId#,
 			#orgUnitId#,
-			#accessTypeId#
+			#accessTypeId#,
+			#deleted#
 		);
 	</insert>
 	<update id="updateAction" parameterClass="ActionLine">
@@ -42,7 +45,8 @@
 			user_id = #userId#,
 			resource_id = #resourceId#,
 			org_unit_id = #orgUnitId#,
-			access_type_id = #accessTypeId#
+			access_type_id = #accessTypeId#,
+			deleted = #deleted#
 		where
 			action_id = #id# and action_performed = #actionPerformed#
 	</update>
@@ -56,7 +60,8 @@
 			user_id,
 			resource_id,
 			org_unit_id,
-			access_type_id
+			access_type_id,
+			deleted
 		from
 			tbl_action
 		where
@@ -69,11 +74,12 @@
 			user_id,
 			resource_id,
 			org_unit_id,
-			access_type_id
+			access_type_id,
+			deleted
 		from
 			tbl_action
 		where
-			user_id = #id#;
+			user_id = #id# and deleted is false;
 	</select>
 	<select id="getActionListByOrganizationId" resultMap="ActionLineMap" parameterClass="integer">
 		select
@@ -82,11 +88,12 @@
 			user_id,
 			resource_id,
 			org_unit_id,
-			access_type_id
+			access_type_id,
+			deleted
 		from
 			tbl_action
 		where
-			org_unit_id = #id#;
+			org_unit_id = #id# and deleted is false;
 	</select>
 	<select id="getActionListByResourceId" resultMap="ActionLineMap" parameterClass="integer">
 		select
@@ -95,11 +102,12 @@
 			user_id,
 			resource_id,
 			org_unit_id,
-			access_type_id
+			access_type_id,
+			deleted
 		from
 			tbl_action
 		where
-			resource_id = #id#;
+			resource_id = #id# and deleted is false;
 	</select>
 	<select id="getActionListByAccessTypeId" resultMap="ActionLineMap" parameterClass="integer">
 		select
@@ -108,10 +116,11 @@
 			user_id,
 			resource_id,
 			org_unit_id,
-			access_type_id
+			access_type_id,
+			deleted
 		from
 			tbl_action
 		where
-			access_type_id = #id#;
+			access_type_id = #id# and deleted is false;
 	</select>
 </sqlMap>
