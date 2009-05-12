@@ -275,4 +275,7 @@ public class AccessServiceImpl implements AccessService {
 	public void setResourceDao(ResourceDao resourceDao) {
 		this.resourceDao = resourceDao;
 	}
+	public void setActionDao(ActionDao actionDao) {
+		this.actionDao = actionDao;
+	}
 }
