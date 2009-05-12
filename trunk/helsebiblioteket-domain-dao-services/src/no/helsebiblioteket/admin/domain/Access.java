@@ -18,6 +18,7 @@ public class Access implements Serializable {
 	// Local values
 	private Date validFrom;
 	private Date validTo;
+	private boolean deleted = false;
 	private Date lastChanged;
 
 	// References
@@ -68,5 +69,11 @@ public class Access implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

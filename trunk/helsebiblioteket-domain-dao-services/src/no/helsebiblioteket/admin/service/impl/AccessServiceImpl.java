@@ -4,12 +4,14 @@ import java.util.List;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.AccessTypeDao;
+import no.helsebiblioteket.admin.dao.ActionDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.ResourceTypeDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
@@ -19,6 +21,7 @@ import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.line.ActionLine;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
@@ -40,6 +43,7 @@ import no.helsebiblioteket.admin.service.URLService;
 @SuppressWarnings(value={"serial"})
 public class AccessServiceImpl implements AccessService {
 	private AccessDao accessDao;
+	private ActionDao actionDao;
 	private SupplierSourceDao supplierSourceDao;
 	private ResourceTypeDao resourceTypeDao;
 	private AccessTypeDao accessTypeDao;
@@ -58,7 +62,24 @@ public class AccessServiceImpl implements AccessService {
 	 */
 	@Override
 	public Boolean deleteSupplierSourceResource(SupplierSourceResource resource) {
-		this.resourceDao.deleteSupplierSourceResource(resource);
+		// "Delete" ACTION
+		List<ActionLine> actions = this.actionDao.getActionListByResource(resource.getResource());
+		for (ActionLine actionLine : actions) {
+			actionLine.setDeleted(true);
+			this.actionDao.updateAction(actionLine);
+		}
+		// "Delete" ACCESS
+		List<ResourceAccessForeignKeys> resourceAccesses = this.accessDao.getAccessListByResource(resource.getResource());
+		for (ResourceAccessForeignKeys resourceAccess : resourceAccesses) {
+			resourceAccess.getResourceAccess().getAccess().setDeleted(true);
+			this.accessDao.updateResourceAccessForeignKeys(resourceAccess);
+		}
+		// "Delete" Resource.
+		resource.getResource().setDeleted(true);
+		resource.getSupplierSource().setDeleted(true);
+		this.resourceDao.updateSupplierSourceResource(resource);
+		this.supplierSourceDao.updateSupplierSource(resource.getSupplierSource());
+		// And added where deleted is false to queries. :-)
 		return true;
 	}
 	/**
