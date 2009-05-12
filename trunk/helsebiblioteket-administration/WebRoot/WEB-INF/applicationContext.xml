@@ -61,6 +61,9 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	<bean id="actionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapActionDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
@@ -134,6 +137,7 @@ xmlns="http://www.springframework.org/schema/beans"
 
 	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
   		<property name="accessDao" ref="accessDao"></property>
+  		<property name="actionDao" ref="actionDao"></property>
   		<property name="accessTypeDao" ref="accessTypeDao"></property>
   		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
   		<property name="resourceDao" ref="resourceDao"></property>
