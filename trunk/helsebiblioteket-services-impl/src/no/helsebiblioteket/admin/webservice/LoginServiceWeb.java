@@ -112,13 +112,4 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		Object result = invoke(this.logInUserName, args, returnTypes);
 		return (result != null) ? (User) result : null;
 	}
-	
-	
-	
-	
-	@Override
-	public SingleResultPosition hmmm(Person person) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
