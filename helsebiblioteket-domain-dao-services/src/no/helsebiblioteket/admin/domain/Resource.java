@@ -9,7 +9,8 @@ public class Resource implements Serializable {
 	
 	// Local values
 	private Date lastChanged;
-	
+	private boolean deleted = false;
+
 	// References
 	private ResourceType resourceType;
 	private Integer offeredBy;
@@ -44,5 +45,11 @@ public class Resource implements Serializable {
 	}
 	public void setOfferedBy(Integer supplierOrganization) {
 		this.offeredBy = supplierOrganization;
+	}
+	public boolean getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

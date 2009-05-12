@@ -13,6 +13,7 @@ public class SupplierSource implements Serializable {
 	private Url url;
 	private Date lastChanged;
 	private String proxyDatabaseName;
+	private boolean deleted = false;
 
 	// Constructors
 	public SupplierSource() { }
@@ -58,5 +59,11 @@ public class SupplierSource implements Serializable {
 	}
 	public String getProxyDatabaseName() {
 		return this.proxyDatabaseName;
+	}
+	public boolean getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

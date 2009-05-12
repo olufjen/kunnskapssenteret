@@ -8,6 +8,7 @@ public class ActionLine {
 	private Integer resourceId;
 	private Integer orgUnitId;
 	private Integer accessTypeId;
+	private boolean deleted = false;
 	private Date actionPerformed;
 	public Integer getId() {
 		return id;
@@ -44,5 +45,11 @@ public class ActionLine {
 	}
 	public void setActionPerformed(Date actionPerformed) {
 		this.actionPerformed = actionPerformed;
+	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }
