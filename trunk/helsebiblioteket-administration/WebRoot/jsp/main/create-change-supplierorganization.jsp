@@ -24,7 +24,8 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.nameEnglish}"
 					id="organizationNameEnglish" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeSupplierOrganizationBean.organizationNameEnglishUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameEnglish" styleClass="error"/>
@@ -38,7 +39,8 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.nameShortEnglish}"
 					id="organizationNameEnglishShort" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeSupplierOrganizationBean.organizationNameEnglishShortUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameEnglishShort" styleClass="error"/>
@@ -52,7 +54,8 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.nameNorwegian}"
 					id="organizationNameNorwegian" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeSupplierOrganizationBean.organizationNameNorwegianUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameNorwegian" styleClass="error"/>
@@ -66,7 +69,8 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.nameShortNorwegian}"
 					id="organizationNameShortNorwegian" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeSupplierOrganizationBean.organizationNameNorwegianShortUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameShortNorwegian" styleClass="error"/>
@@ -80,7 +84,7 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.description}"
 					id="organizationDescription" 
-					required="true"
+					required="false"
 					>
 				</h:inputText>
 				<h:message for="organizationDescription" styleClass="error"/>
@@ -98,7 +102,7 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.supportInformation.email}"
 					id="organizationSupportEmail" 
-					required="true" validator="#{createAndChangeSupplierOrganizationBean.validateEmail}"
+					required="false" validator="#{createAndChangeSupplierOrganizationBean.validateEmail}"
 					>
 				</h:inputText>
 				<h:message for="organizationSupportEmail" styleClass="error"/>
@@ -112,7 +116,7 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.supportInformation.telephoneNumber}"
 					id="organizationSupportTelephone" 
-					required="true"
+					required="false"
 					>
 				</h:inputText>
 				<h:message for="organizationSupportTelephone" styleClass="error"/>
@@ -130,7 +134,7 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.contactInformation.email}"
 					id="organizationEmail" 
-					required="true" validator="#{createAndChangeSupplierOrganizationBean.validateEmail}"
+					required="false" validator="#{createAndChangeSupplierOrganizationBean.validateEmail}"
 					>
 				</h:inputText>
 				<h:message for="organizationEmail" styleClass="error"/>
@@ -144,7 +148,7 @@
 				<h:inputText 
 					value="#{createAndChangeSupplierOrganizationBean.organization.contactInformation.telephoneNumber}"
 					id="organizationTelephone" 
-					required="true"
+					required="false"
 					>
 				</h:inputText>
 				<h:message for="organizationTelephone" styleClass="error"/>
