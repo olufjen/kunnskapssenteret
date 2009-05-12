@@ -195,9 +195,8 @@
                                         <tr>  
                                             <td>Skole/arbeidsgiver:</td> 
                                             <td colspan="2">
-                                                <select name="org">
-                                                    <option value="test">Test</option>
-                                                </select>
+                                                <input name="org" size="20" type="text"
+                                                    value="{$hbresult/values/user/person/employer/text()}"/>
                                             </td>
                                         </tr>
                                         <tr>  
