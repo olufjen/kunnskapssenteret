@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.domain.category;
 
-import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 
 public class AccessTypeCategory {
 	public static final AccessTypeCategory GRANT = new AccessTypeCategory("GRANT");
