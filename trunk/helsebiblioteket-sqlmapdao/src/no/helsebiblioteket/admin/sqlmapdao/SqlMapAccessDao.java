@@ -32,23 +32,32 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 		getSqlMapClientTemplate().delete("deleteResourceAccessForeignKeys", keys);
 	}
 	@SuppressWarnings("unchecked")
+	@Override
+	public List<ResourceAccessListItem> getAccessListForAll() {
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListForAll");
+	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<ResourceAccessListItem> getAccessListByUser(User user){
 		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByUserId", user.getId());
 	}
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ResourceAccessListItem> getAccessListByUserRole(Role userRole){
 		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getId());
 	}
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ResourceAccessListItem> getAccessListByOrganization(Organization organization){
 		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId());
 	}
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ResourceAccessListItem> getAccessListByOrganizationType(OrganizationType organizationType){
 		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
 	}
-	@Override
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<ResourceAccessForeignKeys> getAccessListByResource(Resource resource) {
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByResource", resource);
 	}
