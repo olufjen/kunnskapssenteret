@@ -29,6 +29,7 @@ import no.helsebiblioteket.admin.service.AccessService;
 @SuppressWarnings("serial")
 public class AccessServiceWeb extends BasicWebService implements AccessService{
 	protected static final Log logger = LogFactory.getLog(AccessServiceWeb.class);
+	private QName accessListByAll;
 	private QName accessListByOrganization;
 	private QName accessListByOrganizationType;
 	private QName accessListByRole;
@@ -46,96 +47,120 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	private QName supplierSourceResourceListAll;
 	private QName supplierSourceByUrlStartsWithName;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultSupplierSourceResource insertSupplierSourceResource(SupplierSourceResource resource) {
 		Object[] args = new Object[] { resource };
 		Class[] returnTypes = new Class[] { SingleResultSupplierSourceResource.class };
 		return (SingleResultSupplierSourceResource)invoke(this.insertSupplierSourceResource, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean deleteSupplierSourceResource(SupplierSourceResource resource) {
 		Object[] args = new Object[] { resource };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.deleteSupplierSourceResource, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean deleteResourceAccess(ResourceAccessListItem access) {
 		Object[] args = new Object[] { access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.deleteResourceAccess, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public ListResultResourceAccessListItem getAccessListForAll() {
+		Object[] args = new Object[] {  };
+		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
+		return (ListResultResourceAccessListItem)invoke(this.accessListByAll, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization) {
 		Object[] args = new Object[] { organization };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganization, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType) {
 		Object[] args = new Object[] { organizationType };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganizationType, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByRole(Role role) {
 		Object[] args = new Object[] { role };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByRole, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByUser(User user) {
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByUser, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultAccessType getAccessTypeByTypeCategory(AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory) {
 		Object[] args = new Object[] { accessTypeKey, accessTypeCategory };
 		Class[] returnTypes = new Class[] { SingleResultAccessType.class };
 		return (SingleResultAccessType)invoke(this.accessTypeByTypeCategory, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey){
 		Object[] args = new Object[] { resourceTypeKey };
 		Class[] returnTypes = new Class[] { SingleResultResourceType.class };
 		return (SingleResultResourceType)invoke(this.resourceTypeByKey, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY };
 		Class[] returnTypes = new Class[] { ListResultSupplierSource.class };
 		return (ListResultSupplierSource)invoke(this.supplierSourceListAll, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertOrganizationResourceAccess(Organization organization, ResourceAccess access) {
 		Object[] args = new Object[] { organization, access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertOrganizationAccess, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertOrganizationTypeResourceAccess(OrganizationType organizationType, ResourceAccess access) {
 		Object[] args = new Object[] { organizationType, access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertOrganizationTypeAccess, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertUserResourceAccess(User user, ResourceAccess access) {
 		Object[] args = new Object[] { user, access};
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertUserAccess, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertUserRoleResourceAccess(Role userRole, ResourceAccess access) {
 		Object[] args = new Object[] { userRole, access };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean)invoke(this.insertUserRoleAccess, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY) {
 		Object[] args = new Object[] { DUMMY };
 		Class[] returnTypes = new Class[] { ListResultSupplierSourceResource.class };
 		return (ListResultSupplierSourceResource)invoke(this.supplierSourceResourceListAll, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { SingleResultSupplierSource.class };
@@ -143,7 +168,7 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	}
 	@Override
 	public Log getLogger() {
-		return this.logger;
+		return logger;
 	}
 	public void setAccessListByOrganization(QName accessListByOrganization) {
 		this.accessListByOrganization = accessListByOrganization;
