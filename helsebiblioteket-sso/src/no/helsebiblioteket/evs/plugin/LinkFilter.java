@@ -6,12 +6,9 @@ package no.helsebiblioteket.evs.plugin;
  */
 
 
-import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,14 +18,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.XMLOutputter;
-import org.jdom.xpath.XPath;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
@@ -132,17 +123,6 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	}
 
 	
-	private Map<String, String> getQueryMap(String query){
-	    String[] params = query.split("&");
-	    Map<String, String> map = new HashMap<String, String>();
-	    for (String param : params) {
-	        String name = param.split("=")[0];
-	        String value = param.split("=")[1];
-	        map.put(name, value);
-	    }
-	    return map;
-	}
-	
 	private boolean isAffected(URL url) {
 		Url myurl = new Url();
 		myurl.setStringValue(url.toExternalForm());
@@ -152,7 +132,17 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private URL translate(User user, MemberOrganization organization, URL url) throws MalformedURLException {
 		Url myUrl = new Url();
 		myUrl.setStringValue(url.toExternalForm());
-		SingleResultUrl result = this.urlService.translateUrlUserOrganization(user, organization, myUrl);
+		SingleResultUrl result;
+		if(user != null && organization != null){
+			result = this.urlService.translateUrlUserOrganization(user, organization, myUrl);
+		} else if(user != null){
+			result = this.urlService.translateUrlUser(user, myUrl);
+		} else if(organization != null){
+			result = this.urlService.translateUrlOrganization(organization, myUrl);
+		} else {
+			result = this.urlService.translateUrlNone(myUrl);
+		}
+		
 		if(result instanceof EmptyResultUrl){
 			logger.error("Unable to translate URL '" + myUrl + "' for user '" + user + "' and organization '" + organization + "'" );
 			return url;
