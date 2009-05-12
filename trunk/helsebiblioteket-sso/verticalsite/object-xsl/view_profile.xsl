@@ -38,10 +38,10 @@
             <h4 class="logon_column_heading">Din profil - Dine registrerte data</h4>
             <xsl:choose>
     			<xsl:when test="$loggedin/none">
-					You are not logged in!
+					You are not logged in as a user!
 				</xsl:when>
-    			<xsl:when test="$loggedin/organization">
-					You are logged inn as organization <xsl:value-of select="$loggedin/organization/name"/>
+    			<xsl:when test="$loggedin/nouser">
+					You are not logged in as a user!
 				</xsl:when>
 				<xsl:otherwise>
             
