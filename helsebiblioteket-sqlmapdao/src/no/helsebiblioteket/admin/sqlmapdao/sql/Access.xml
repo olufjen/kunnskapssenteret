@@ -103,6 +103,27 @@
 		where access_id = #id#;
 	</select>
 
+	<select id="getAccessListForAll" resultMap="ResourceAccessListItemResultMap" >
+		select
+			access_id,
+			category,
+			key,
+			url,
+			tbl_access.last_changed as last_changed,
+			supplier_source_name,
+			provided_by_org_unit,
+			tbl_resource.resource_id,
+			tbl_supplier_source.supplier_source_id
+		from tbl_access
+			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
+			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
+			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
+		where
+			category = 'GRANT' and
+			(key = 'proxy_include_all' or key = 'proxy_exclude_all') and
+			tbl_access.deleted is false;
+	</select>
+
 	<select id="getAccessListByUserId" resultMap="ResourceAccessListItemResultMap" parameterClass="integer">
 		select
 			access_id,
