@@ -4,6 +4,8 @@ public class AccessTypeKey {
 	public static final AccessTypeKey general = new AccessTypeKey("general");
 	public static final AccessTypeKey proxy_include = new AccessTypeKey("proxy_include");
 	public static final AccessTypeKey proxy_exclude = new AccessTypeKey("proxy_exclude");
+	public static final AccessTypeKey proxy_include_all = new AccessTypeKey("proxy_include_all");
+	public static final AccessTypeKey proxy_exclude_all = new AccessTypeKey("proxy_exclude_all");
 
 	private String value;
 	public AccessTypeKey() { }

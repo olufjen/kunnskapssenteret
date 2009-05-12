@@ -40,6 +40,7 @@ public interface AccessService extends Serializable {
 	public SingleResultAccessType getAccessTypeByTypeCategory(AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory);
 	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey);
 
+	public ListResultResourceAccessListItem getAccessListForAll();
 	public ListResultResourceAccessListItem getAccessListByUser(User user);
 	public ListResultResourceAccessListItem getAccessListByRole(Role role);
 	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization);

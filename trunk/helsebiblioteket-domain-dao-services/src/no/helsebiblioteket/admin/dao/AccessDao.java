@@ -17,6 +17,7 @@ public interface AccessDao {
 	public void deleteResourceAccessForeignKeys(ResourceAccessForeignKeys access);
 
 	// Fetch
+	public List<ResourceAccessListItem> getAccessListForAll();
 	public List<ResourceAccessListItem> getAccessListByUser(User user);
 	public List<ResourceAccessListItem> getAccessListByUserRole(Role userRole);
 	public List<ResourceAccessListItem> getAccessListByOrganization(Organization organization);
