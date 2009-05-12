@@ -11,7 +11,6 @@ import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
@@ -23,7 +22,6 @@ import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.line.ActionLine;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
-import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
@@ -33,7 +31,6 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultResourceType;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierSourceResource;
@@ -181,6 +178,10 @@ public class AccessServiceImpl implements AccessService {
 	@Override
 	public ListResultResourceAccessListItem getAccessListByRole(Role role) {
 		return translateList(this.accessDao.getAccessListByUserRole(role));
+	}
+	@Override
+	public ListResultResourceAccessListItem getAccessListForAll() {
+		return translateList(this.accessDao.getAccessListForAll());
 	}
 	/**
 	 * Retrieves a list of all the supplier sources. The list result should perhaps
