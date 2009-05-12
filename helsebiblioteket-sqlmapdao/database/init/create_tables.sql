@@ -273,6 +273,7 @@ CREATE TABLE tbl_person
     position_type_id     INTEGER             NULL,
     employer			 VARCHAR			 NULL,
     position_text		 VARCHAR			 NULL,
+    is_student			 BOOLEAN			 NULL,
     last_changed         TIMESTAMP           NULL,
     PRIMARY KEY ( person_id )
 );
