@@ -221,8 +221,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
               }
 
             } catch (IOException e) {
-            	// TODO Fase2: Log error!
-//                logger.warn("Failed redirect to url", e);
+            	logger.error("Failed redirect to url '" + url + "'", e);
             }
     }
 	public Object loggedInUser() {

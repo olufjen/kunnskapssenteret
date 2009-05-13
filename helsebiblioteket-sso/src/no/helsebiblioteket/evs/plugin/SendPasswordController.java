@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
@@ -40,8 +41,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
     	boolean success = true;
     	boolean sent = true;
     	String emailError = "";
-    	// TODO Fase2: Validate emailaddress!
-   		if( ! email.contains("@")) {
+   		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) {
    			success = false;
    	    	// TODO Fase2: Return errors, etc from property files!
    			emailError = "NOT_VALID";

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -44,6 +46,7 @@ import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
 public final class RegisterUserController extends ProfileController {
+	private final Log logger = LogFactory.getLog(getClass());
 	private EmailService emailService;
 	private String fromEmailText;
 	private String fromNameText;
@@ -293,8 +296,7 @@ public final class RegisterUserController extends ProfileController {
 		} else if (usertype.equals(UserRoleKey.student.getValue())) {
 			user.setRoleList(roleStudentArray);
 		} else {
-			// TODO Fase2: Handle this error. Do not do this!
-			user.setRoleList(roleStudentArray);
+			logger.error("Controller not able to resolve usertype from request params for user '" + user + "'");
 		}
 		
 		
