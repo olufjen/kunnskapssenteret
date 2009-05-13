@@ -5,6 +5,7 @@ package no.helsebiblioteket.admin.service.importexport.ldap.exception;
  * Date: 12.okt.2007
  * Time: 10:11:50
  */
+@SuppressWarnings("serial")
 public class LDAPUserAlreadyExistException extends Exception {
     private static final String DEFAULT_MESSAGE = "LDAP user already exists";
 

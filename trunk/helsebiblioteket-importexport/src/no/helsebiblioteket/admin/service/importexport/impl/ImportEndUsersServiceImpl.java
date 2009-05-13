@@ -2,7 +2,6 @@ package no.helsebiblioteket.admin.service.importexport.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,11 +100,11 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 			try {
 				allEndUsersAsLdapUsers = ldapLookupUtil.getAllLDAPUsers();
 			} catch (NamingException e) {
-				// TODO: Leif? Logge dette?
+				// TODO Fase2: Log this?
 				// leif sier: ja
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO: Leif? Logge dette?
+				// TODO Fase2: Log this?
 				// leif sier: ja
 				e.printStackTrace();
 			}
