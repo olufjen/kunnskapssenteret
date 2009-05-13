@@ -7,16 +7,12 @@ import java.util.logging.Logger;
 
 import javax.naming.NamingException;
 
-import com.sun.security.auth.module.LdapLoginModule;
-
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.service.impl.UserServiceImpl;
 import no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil;
 import no.helsebiblioteket.admin.service.importexport.ldap.domain.LDAPUser;
-import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -40,8 +36,6 @@ public class LocateFaultyUsersMain {
 	
 	public static void main(String args[]) {
 		LocateFaultyUsersMain locateFaultyUsers = new LocateFaultyUsersMain();
-		UserServiceImpl userServiceImpl = new UserServiceImpl();
-		//userServiceImpl.setUserDao(new SqlMapUserDao());
 		locateFaultyUsers.setUserService(new UserServiceImpl());
 	}
 	
@@ -57,15 +51,16 @@ public class LocateFaultyUsersMain {
 		this.commonPassword = commonPassword;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void importAllEndUsers() {
 		Collection<LDAPUser> allEndUsersAsLdapUsers = new ArrayList();
 		try {
 			allEndUsersAsLdapUsers = ldapLookupUtil.getAllLDAPUsers();
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
+			// TODO Fase2: Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// TODO Fase2: Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -78,8 +73,6 @@ public class LocateFaultyUsersMain {
 		}
 		
 		for (User user : allEndUsersAsHelsebibliotekUsers) {
-			// FIXME: Are they unique? Need test?
-//			userService.createUser(user);
 			userService.insertUser(user);
 		}
 	}
@@ -111,11 +104,10 @@ public class LocateFaultyUsersMain {
         person.setProfile(userProfile);
         person.setContactInformation(contactInformation);
         user.setPerson(person);
-        //TODO: Use member organization here?
+        //TODO Fase2: Use member organization here?
         OrganizationUser organizationUser = new OrganizationUser();
         organizationUser.setUser(user);
         organizationUser.setOrganization(new MemberOrganization().getOrganization());
-        //TODO
         /*user.setDn(ldapUser.getDn());
         user.setUid(ldapUser.getUid());
         user.setFirstName(ldapUser.getGivenName());

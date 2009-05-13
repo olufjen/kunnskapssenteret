@@ -19,17 +19,21 @@ public class TextResourceUtil
         return INSTANCE;
     }
 
-    private final HashMap mResourceBundleMap;
+    @SuppressWarnings("unchecked")
+	private final HashMap mResourceBundleMap;
 
-    private TextResourceUtil() {
+    @SuppressWarnings("unchecked")
+	private TextResourceUtil() {
         mResourceBundleMap = new HashMap();
     }
     
-    public Double getDouble(Class aClass, String  key) {
+    @SuppressWarnings("unchecked")
+	public Double getDouble(Class aClass, String  key) {
         return getDouble(aClass, key, null);
     }
     
-    public Double getDouble(Class aClass, String  key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public Double getDouble(Class aClass, String  key, Locale locale) {
         Double out = null;
         String val = getString(aClass, key, locale);
         
@@ -44,20 +48,24 @@ public class TextResourceUtil
         return out;  
     }
     
-    public double getdouble(Class aClass, String key) {
+    @SuppressWarnings("unchecked")
+	public double getdouble(Class aClass, String key) {
         return getdouble(aClass, key, null);
     }
     
-    public double getdouble(Class aClass, String key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public double getdouble(Class aClass, String key, Locale locale) {
         Double i = getDouble(aClass, key, locale);
         return (null != i) ? i.doubleValue() : 0;
     }
     
-    public Long getLong(Class aClass, String  key) {
+    @SuppressWarnings("unchecked")
+	public Long getLong(Class aClass, String  key) {
         return getLong(aClass, key, null);
     }
     
-    public Long getLong(Class aClass, String  key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public Long getLong(Class aClass, String  key, Locale locale) {
         Long out = null;
         String val = getString(aClass, key, locale);
         
@@ -73,20 +81,24 @@ public class TextResourceUtil
     }
     
     
-    public long getlong(Class aClass, String key) {
+    @SuppressWarnings("unchecked")
+	public long getlong(Class aClass, String key) {
         return getlong(aClass, key, null);
     }
     
-    public long getlong(Class aClass, String key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public long getlong(Class aClass, String key, Locale locale) {
         Long i = getLong(aClass, key, locale);
         return (null != i) ? i.longValue() : 0;
     }
     
-    public Integer getInteger(Class aClass, String key) {
+    @SuppressWarnings("unchecked")
+	public Integer getInteger(Class aClass, String key) {
         return getInteger(aClass, key, null);
     }
     
-    public Integer getInteger(Class aClass, String key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public Integer getInteger(Class aClass, String key, Locale locale) {
         Integer out = null;
         String val = getString(aClass, key, locale);
         
@@ -101,11 +113,13 @@ public class TextResourceUtil
         return out;
     }
     
-    public int getInt(Class aClass, String key) {
+    @SuppressWarnings("unchecked")
+	public int getInt(Class aClass, String key) {
         return getInt(aClass, key, null);
     }
     
-    public int getInt(Class aClass, String key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public int getInt(Class aClass, String key, Locale locale) {
         Integer i = getInteger(aClass, key, locale);
         return (null != i) ? i.intValue() : 0;
     }
@@ -116,7 +130,8 @@ public class TextResourceUtil
      * @param key
      * @return The string
      */
-    public String getString(Class aClass, String key){
+    @SuppressWarnings("unchecked")
+	public String getString(Class aClass, String key){
         return getString(aClass, key, null);
     }
     
@@ -127,7 +142,8 @@ public class TextResourceUtil
      * @param locale
      * @return The string
      */
-    public String getString(Class aClass, String key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public String getString(Class aClass, String key, Locale locale) {
         if (null == locale) locale = Locale.getDefault();
         
         TextResourceUtilKey tKey = new TextResourceUtilKey(null, aClass, locale);
@@ -166,7 +182,8 @@ public class TextResourceUtil
      * @param locale
      * @return The sstring
      */
-    public String getString(Package aPackage, String key, Locale locale) {
+    @SuppressWarnings("unchecked")
+	public String getString(Package aPackage, String key, Locale locale) {
         if (null == locale) locale = Locale.getDefault();
         
         TextResourceUtilKey tKey = new TextResourceUtilKey(aPackage, null, locale);
@@ -220,10 +237,12 @@ public class TextResourceUtil
      */
     private static class TextResourceUtilKey {
         private final Package _package;
-        private final Class _clazz;
+        @SuppressWarnings("unchecked")
+		private final Class _clazz;
         private final Locale _locale;
         
-        public TextResourceUtilKey(Package aPackage, Class aClass, Locale locale) {
+        @SuppressWarnings("unchecked")
+		public TextResourceUtilKey(Package aPackage, Class aClass, Locale locale) {
             this._package = aPackage;
             this._clazz = aClass;
             this._locale = locale;

@@ -85,7 +85,6 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     	Position none = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, health_enterprise)).getValue();
     	
     	for (MemberOrganization organization : memberOrganizationList) {
-    		// TODO: Are these values ok?
     		organization.getOrganization().setDescription("");
     		organization.getOrganization().setNameEnglish("");
     		organization.getOrganization().setNameShortEnglish("");
@@ -118,7 +117,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             InputStream is = this.getClass().getResourceAsStream(xmlDoc);
             InputSource source = new InputSource(is);
 
-            // TODO: Use this instead!
+            // TODO Fase2: Use this instead!
             // This one does not cache - yhiiihaaa!!
 //            URL r = this.getClass().getResource(xmlDoc);
 //            InputSource source = new InputSource(r.openStream());
@@ -127,7 +126,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             rangeNodes = (NodeList)xpath.evaluate(XPATH_EXPR, source, XPathConstants.NODESET);
         } catch (NullPointerException e) {
             logger.log(Level.WARNING, "Could not load xml config: " + xmlDoc, e);            
-            // TODO: And then you need this.
+            // TODO Fase2: And then you need this.
 //        } catch (IOException e) {
 //        	logger.log(Level.WARNING, "Could not load xml config: " + xmlDoc, e);
         } catch (XPathExpressionException e) {

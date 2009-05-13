@@ -94,7 +94,7 @@ public class LDAPLookupUtil {
         try {
             doLogIn();
 
-            // TODO will result in multiple lookups in LDAP - can we do better?
+            // TODO Fase2: will result in multiple lookups in LDAP - can we do better?
             Iterator itr = colDn.iterator();
             while (itr.hasNext()) {
                 String dn = (String) itr.next();
@@ -131,7 +131,7 @@ public class LDAPLookupUtil {
         // filtermask (&(sn=*)(givenName=*))
         String filter = "(&(sn=*)(givenName=*))";
 
-        // TODO this should either be a parameter or a property
+        // TODO Fase2: this should either be a parameter or a property
         int limit = 40000;
 
         try {
@@ -168,12 +168,13 @@ public class LDAPLookupUtil {
      *
      * @since 2006.06.22
      */
-    public Collection getLDAPUsers(String givenName, String sureName) throws NamingException, LDAPAuthenticationException {
+    @SuppressWarnings("unchecked")
+	public Collection getLDAPUsers(String givenName, String sureName) throws NamingException, LDAPAuthenticationException {
         Collection usrs = new ArrayList();
         // filtermask (&(sn=*)(givenName=*))
         String filter = "(&(" + ATR_SN + "=" + sureName + "*)(" + ATR_GIVENNAME + "=" + givenName + "*))";
 
-        // TODO this should either be a parameter or a property
+        // TODO Fase2: this should either be a parameter or a property
         int limit = 40000;
 
         try {
@@ -237,7 +238,8 @@ public class LDAPLookupUtil {
      *
      * @since 2006.06.21
      */
-    public LDAPUser getLDAPUserByUid(String uid) throws NamingException, LDAPAuthenticationException {
+    @SuppressWarnings("unchecked")
+	public LDAPUser getLDAPUserByUid(String uid) throws NamingException, LDAPAuthenticationException {
         LDAPUser usr = null;
 
         try {
@@ -264,7 +266,8 @@ public class LDAPLookupUtil {
     }
 
 
-    public LDAPUser getLDAPUserByEmail(String email) throws NamingException, LDAPAuthenticationException {
+    @SuppressWarnings("unchecked")
+	public LDAPUser getLDAPUserByEmail(String email) throws NamingException, LDAPAuthenticationException {
         LDAPUser usr = null;
 
         try {
@@ -290,7 +293,8 @@ public class LDAPLookupUtil {
         return usr;
     }
 
-    public void createLDAPUser(LDAPUser user) throws LDAPUserWithEmailAlreadyExistException, LDAPUserAlreadyExistException, LDAPAuthenticationException, NamingException {
+    @SuppressWarnings("unchecked")
+	public void createLDAPUser(LDAPUser user) throws LDAPUserWithEmailAlreadyExistException, LDAPUserAlreadyExistException, LDAPAuthenticationException, NamingException {
         try {
             doLogIn();
 
@@ -324,7 +328,8 @@ public class LDAPLookupUtil {
         }
     }
 
-    public void updateLDAPUser(LDAPUser user) throws LDAPUserWithEmailAlreadyExistException, LDAPAuthenticationException, NamingException {
+    @SuppressWarnings("unchecked")
+	public void updateLDAPUser(LDAPUser user) throws LDAPUserWithEmailAlreadyExistException, LDAPAuthenticationException, NamingException {
         try {
             doLogIn();
 
@@ -397,7 +402,8 @@ public class LDAPLookupUtil {
      * @return Collection All objects found with the given uid
      * @throws NamingException If the search fails an exception is thrown
      */
-    private Collection searchForUserByUid(String uid) throws NamingException {
+    @SuppressWarnings("unchecked")
+	private Collection searchForUserByUid(String uid) throws NamingException {
         String filter = "(" + ATR_UID + "=" + uid + ")";
         int limit = 1;
 
@@ -412,7 +418,8 @@ public class LDAPLookupUtil {
      * @return Collection All objects found with the given email
      * @throws NamingException If the search fails an exception is thrown
      */
-    private Collection searchForUserByEmail(String email) throws NamingException {
+    @SuppressWarnings("unchecked")
+	private Collection searchForUserByEmail(String email) throws NamingException {
         String filter = "(" + ATR_MAIL + "=" + email + ")";
         int limit = 1;
 
@@ -448,7 +455,8 @@ public class LDAPLookupUtil {
      * @return Collection - Collection of SearchResult objects from LDAP
      * @throws javax.naming.NamingException
      */
-    private Collection ldapSearch(String[] attribute, String filter, String initCtx, int limit) throws NamingException {
+    @SuppressWarnings("unchecked")
+	private Collection ldapSearch(String[] attribute, String filter, String initCtx, int limit) throws NamingException {
         NamingEnumeration nEnum;
         SearchResult sr;
         SearchControls sc = new SearchControls();
@@ -550,7 +558,8 @@ public class LDAPLookupUtil {
      * @param oldUser  The existing user
      * @throws NamingException If the update fails an exception is thrown
      */
-    private void updateUser(LDAPUser ldapUser, LDAPUser oldUser) throws NamingException {
+    @SuppressWarnings("unchecked")
+	private void updateUser(LDAPUser ldapUser, LDAPUser oldUser) throws NamingException {
         String cn = ldapUser.getCn();
         String givenName = ldapUser.getGivenName();
         String mail = ldapUser.getEmail();
@@ -602,7 +611,8 @@ public class LDAPLookupUtil {
         }
     }
 
-    private void addModifiedAttributeToList(String attr, String s, String old, List list) {
+    @SuppressWarnings("unchecked")
+	private void addModifiedAttributeToList(String attr, String s, String old, List list) {
         if (isAttributeChanged(s, old)) {
             list.add(new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute(attr, s)));
         }
@@ -668,7 +678,8 @@ public class LDAPLookupUtil {
      *
      * @since 2006.06.21
      */
-    private void doAuthenticate() throws LDAPAuthenticationException {
+    @SuppressWarnings("unchecked")
+	private void doAuthenticate() throws LDAPAuthenticationException {
         //Set to the environment
         Hashtable props = new Hashtable();
         props.put(Context.INITIAL_CONTEXT_FACTORY, INITIAL_CONTEXT_FACTORY);
