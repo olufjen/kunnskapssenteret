@@ -13,11 +13,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
+import no.helsebiblioteket.admin.domain.LoggedInUser;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
@@ -26,6 +29,7 @@ import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.validator.PasswordValidator;
 import no.helsebiblioteket.admin.validator.UsernameValidator;
+import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 import com.enonic.cms.api.plugin.PluginEnvironment;
@@ -38,7 +42,7 @@ public class ProfileController extends HttpControllerPlugin {
 	protected UserService userService;
 	protected OrganizationService organizationService;
 	protected Map<String, String> parameterNames;
-	private LoggedInFunction loggedInFunction;
+	private String sessionLoggedInUserVarName = "hbloggedinuser";
 	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
@@ -81,8 +85,14 @@ public class ProfileController extends HttpControllerPlugin {
 
 		boolean success;
 		if( ! messages.hasChildNodes()){
-			User user = (User)this.loggedInFunction.loggedInUser();
-			user = ((ValueResultUser)this.userService.findUserByUsername(user.getUsername())).getValue();
+			LoggedInUser loggedin = this.loggedInUser();
+			SingleResultUser res = this.userService.findUserByUsername(loggedin.getUsername());
+			User user;
+			if(res instanceof ValueResultUser){
+				user = ((ValueResultUser)res).getValue();
+			} else {
+				user = ((ValueResultOrganizationUser)res).getValue().getUser();
+			}
 			user.setPassword(password);
 			this.userService.updateUser(user);
 			element.appendChild(document.createElement("success"));
@@ -93,7 +103,7 @@ public class ProfileController extends HttpControllerPlugin {
 
 		element.appendChild(messages);
 		document.appendChild(element);
-		loggedInFunction.setResult(this.editPasswordresultVarName, document);
+		ResultHandler.setResult(this.editPasswordresultVarName, document);
 		if(success){
 			this.goBack(request, response);
 		} else {
@@ -126,14 +136,14 @@ public class ProfileController extends HttpControllerPlugin {
 		Element values = document.createElement("values");
 		userXML(user, null, document, values);
 		element.appendChild(values);
-		this.loggedInFunction.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document);
 		
 		document = translator.newDocument();
 		messages = document.createElement("messages");
 		element = document.createElement(this.editPasswordresultVarName);
 		element.appendChild(messages);
 		document.appendChild(element);
-		loggedInFunction.setResult(this.editPasswordresultVarName, document);
+		ResultHandler.setResult(this.editPasswordresultVarName, document);
 		
 		String gotoUrl = request.getParameter(this.parameterNames.get("passwordPage"));
 		response.sendRedirect(gotoUrl);
@@ -158,7 +168,6 @@ public class ProfileController extends HttpControllerPlugin {
 		}
 	}
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -166,12 +175,13 @@ public class ProfileController extends HttpControllerPlugin {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
-		Object userObject = loggedInFunction.loggedInUser();
+		LoggedInUser loggedinuser = this.loggedInUser();
+		SingleResultUser res = this.userService.findUserByUsername(loggedinuser.getUsername());
 		User user;
-		if(userObject instanceof User){
-			user = (User) userObject;
+		if(res instanceof ValueResultUser){
+			user = ((ValueResultUser)res).getValue();
 		} else {
-			user = ((OrganizationUser)userObject).getUser();
+			user = ((ValueResultOrganizationUser)res).getValue().getUser();
 		}
 		if(user == null){
 			element.appendChild(document.createElement("notloggedin"));
@@ -180,19 +190,16 @@ public class ProfileController extends HttpControllerPlugin {
 		} else {
 			String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
 			if(hprNumber == null) { hprNumber = "";}
-			// TODO: Check for errors.
-			// TODO: Load errror messages from props!
-//			StringBuffer errorBuffer = new StringBuffer();
     		Element messages = document.createElement("messages");
 			if(hprNumber.length() == 0 || ! isInteger(hprNumber)){
 				messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NOT_NUMBER"));
 				user.getPerson().setHprNumber(null);
 			}
 			this.validateUser(user, request, document, messages);
-			// TODO: Bad test!
+			// TODO Fase2: Bad test!
 			if( ! messages.hasChildNodes()){
 				user.getPerson().setHprNumber(hprNumber);
-				// TODO: Saving may fail though!
+				// TODO Fase2: Saving may fail though!
 		    	boolean saved = true;
 		    	this.userService.updateUser(user);
 		    	if( ! saved){
@@ -217,7 +224,7 @@ public class ProfileController extends HttpControllerPlugin {
 	    	}
 		}
 		document.appendChild(element);
-		loggedInFunction.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document);
 	}
 	protected void validateUser(User user, HttpServletRequest request, Document document, Element messages){
 		String position = request.getParameter(this.parameterNames.get("position"));
@@ -257,11 +264,11 @@ public class ProfileController extends HttpControllerPlugin {
 			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NOT_VALID"));
 		}
 		if (usertype.length() == 0 || !validPosition(position)) {
-			// TODO: Position not shown in form!
+			// FIXME: Position not shown in form!
 //			messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));
 		}
 		if(username.length() == 0 || ! UsernameValidator.getInstance().isValidUsername(username)) {
-			// TODO: Username not in form!
+			// FIXME: Username not in form!
 //			messages.appendChild(UserToXMLTranslator.element(document, "username", "NOT_VALID"));
 		}
 		if(password.length() == 0 || ! PasswordValidator.getInstance().isValidPassword(password)) {
@@ -290,13 +297,13 @@ public class ProfileController extends HttpControllerPlugin {
 		user.setPassword(password);
 	}
 	
-	private boolean isBoolean(String bool) {
-		if(bool.equals(Boolean.FALSE.toString()) || bool.equals(Boolean.TRUE.toString())){
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	private boolean isBoolean(String bool) {
+//		if(bool.equals(Boolean.FALSE.toString()) || bool.equals(Boolean.TRUE.toString())){
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 	
 	private boolean validPosition(String position) {
 		return (!"choose".equals(position));
@@ -306,16 +313,7 @@ public class ProfileController extends HttpControllerPlugin {
 		try{Integer.parseInt(integer);} catch (NumberFormatException e) {return false;}
 		return true;
 	}
-//	protected void result(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		StringBuffer result = (StringBuffer) request.getSession().getAttribute(this.resultSessionVarName);
-//		if(result == null){
-//			result = new StringBuffer();
-//			result.append("<profileresult><empty/></profileresult>");
-//		}
-//		// TODO: Use buffer properties!
-//		response.setContentType("text/xml");
-//		response.getWriter().write(result.toString());
-//	}
+
 	protected void userXML(Object userObject, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		User user;
@@ -341,42 +339,9 @@ public class ProfileController extends HttpControllerPlugin {
 		}
 		element.appendChild(UserToXMLTranslator.element(document, "hprnumber", hprNumber));
 
-//		Source source = new DOMSource(document);
-//        StringWriter stringWriter = new StringWriter();
-//		Result streamResult = new StreamResult(stringWriter);
-//		TransformerFactory factory = TransformerFactory.newInstance();
-//		Transformer transformer = factory.newTransformer();
-//		transformer.transform(source, streamResult);
-//		
-//		// TODO: Use DOM all the way!
-//		result.append(stringWriter.getBuffer().toString());
-
-		
-//		result.append("<hprnumber>");
-//		result.append("</hprnumber>");
-//		result.append("<firstname>");
-//		result.append(user.getPerson().getFirstName());
-//		result.append("</firstname>");
-//		result.append("<lastname>");
-//		result.append(user.getPerson().getLastName());
-//		result.append("</lastname>");
-//		result.append("<employer>");
-//		result.append(user.getPerson().getEmployer());
-//		result.append("</employer>");
-//		result.append("<newsletter>");
-//		result.append(user.getPerson().getProfile().getReceiveNewsletter());
-//		result.append("</newsletter>");
-//		result.append("<questionaire>");
-//		result.append(user.getPerson().getProfile().getParticipateSurvey());
-//		result.append("</questionaire>");
-//		result.append("<emailaddress>");
-//		result.append(user.getPerson().getContactInformation().getEmail());
-//		result.append("</emailaddress>");
-//		result.append("<password></password>");
-//		result.append("<passwordrepeat></passwordrepeat>");
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Object user = loggedInFunction.loggedInUser();
+		Object user = this.loggedInUser();
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
@@ -389,9 +354,13 @@ public class ProfileController extends HttpControllerPlugin {
 			element.appendChild(values);
 		}
 		document.appendChild(element);
-		loggedInFunction.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
+	}
+	public LoggedInUser loggedInUser() {
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
+		return (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
 	}
 	public void setParameterNames(Map<String, String> parameterNames) {
 		this.parameterNames = parameterNames;
@@ -404,9 +373,6 @@ public class ProfileController extends HttpControllerPlugin {
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
-	}
-	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
-		this.loggedInFunction = loggedInFunction;
 	}
 	public void setEditPasswordresultVarName(String editPasswordresultVarName) {
 		this.editPasswordresultVarName = editPasswordresultVarName;

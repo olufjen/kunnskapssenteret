@@ -19,10 +19,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.OrganizationUser;
+import no.helsebiblioteket.admin.domain.LoggedInOrganization;
+import no.helsebiblioteket.admin.domain.LoggedInUser;
 import no.helsebiblioteket.admin.domain.Url;
-import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
@@ -46,20 +47,13 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	}
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
-    	// TODO: Do not use springinjected properties like loggedinfunction.
+    	// Do not use springinjected properties like loggedinfunction.
     	// See comments above
     	
     	HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		
-    	Object userObject = session.getAttribute(sessionLoggedInUserVarName);
-    	User user = null;
-    	if (userObject instanceof User) {
-			user = (User) userObject;
-		} else if (userObject instanceof OrganizationUser) {
-			user = ((OrganizationUser) userObject).getUser();
-		}
-    	
-		MemberOrganization memberOrganization = (MemberOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+    	LoggedInUser user = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
+		LoggedInOrganization memberOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
 		
 		//long timeStart = System.currentTimeMillis();
 		
@@ -129,16 +123,24 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		return this.urlService.isAffected(myurl);
 	}
 	
-	private URL translate(User user, MemberOrganization organization, URL url) throws MalformedURLException {
+	private URL translate(LoggedInUser user, LoggedInOrganization organization, URL url) throws MalformedURLException {
 		Url myUrl = new Url();
 		myUrl.setStringValue(url.toExternalForm());
 		SingleResultUrl result;
 		if(user != null && organization != null){
-			result = this.urlService.translateUrlUserOrganization(user, organization, myUrl);
+			UserListItem userL = new UserListItem();
+			userL.setId(user.getId());
+			OrganizationListItem orgL = new OrganizationListItem();
+			orgL.setId(organization.getId());
+			result = this.urlService.translateUrlUserOrganization(userL, orgL, myUrl);
 		} else if(user != null){
-			result = this.urlService.translateUrlUser(user, myUrl);
+			UserListItem userL = new UserListItem();
+			userL.setId(user.getId());
+			result = this.urlService.translateUrlUser(userL, myUrl);
 		} else if(organization != null){
-			result = this.urlService.translateUrlOrganization(organization, myUrl);
+			OrganizationListItem orgL = new OrganizationListItem();
+			orgL.setId(organization.getId());
+			result = this.urlService.translateUrlOrganization(orgL, myUrl);
 		} else {
 			result = this.urlService.translateUrlNone(myUrl);
 		}

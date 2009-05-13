@@ -2,6 +2,7 @@ package no.helsebiblioteket.evs.plugin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
@@ -9,20 +10,24 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
 import no.helsebiblioteket.admin.service.URLService;
-import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
+import no.helsebiblioteket.admin.translator.LoggedInOrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
+import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -33,6 +38,8 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private String resultSessionVarName;
 	private String proxyPassword;
 	private String urlParamName;
+	private String sessionLoggedInUserVarName = "hbloggedinuser";
+	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	// proxyUrl and logUpUrl are configured in spring(plugin)conf.xml+environment.properties
 	private String proxyUrl;
 	private String logUpUrl;
@@ -41,7 +48,6 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	private URLService urlService;
-	private LoggedInFunction loggedInFunction;
 
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String requestedUrlText = request.getParameter(this.urlParamName);
@@ -52,8 +58,8 @@ public class ProxyLoginController extends HttpControllerPlugin {
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
-		Object objectUser = this.loggedInFunction.loggedInUser();
-		MemberOrganization memberOrganization = this.loggedInFunction.loggedInOrganization();
+		Object objectUser = this.loggedInUser();
+		LoggedInOrganization memberOrganization = this.loggedInOrganization();
     	if(objectUser == null && memberOrganization == null){
     		if(this.urlService.isAffected(requestedUrl)){
         		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
@@ -78,11 +84,19 @@ public class ProxyLoginController extends HttpControllerPlugin {
     			
     			AccessResult accessResult;
     			if(memberOrganization != null && user != null){
-    				accessResult = urlService.hasAccessUserOrganization(user, memberOrganization, requestedUrl);
+    				OrganizationListItem organizationListItem = new OrganizationListItem();
+    				organizationListItem.setId(memberOrganization.getId());
+    				UserListItem userListItem = new UserListItem();
+    				userListItem.setId(user.getId());
+    				accessResult = urlService.hasAccessUserOrganization(userListItem, organizationListItem, requestedUrl);
     			} else if(user != null){
-    				accessResult = urlService.hasAccessUser(user, requestedUrl);
+    				UserListItem userListItem = new UserListItem();
+    				userListItem.setId(user.getId());
+    				accessResult = urlService.hasAccessUser(userListItem, requestedUrl);
     			} else if(memberOrganization != null){
-    				accessResult = urlService.hasAccessOrganization(memberOrganization, requestedUrl);
+    				OrganizationListItem organizationListItem = new OrganizationListItem();
+    				organizationListItem.setId(memberOrganization.getId());
+    				accessResult = urlService.hasAccessOrganization(organizationListItem, requestedUrl);
     			} else {
     				accessResult = urlService.hasAccessNone(requestedUrl);
     			}
@@ -119,12 +133,12 @@ public class ProxyLoginController extends HttpControllerPlugin {
     		}
     	}
     	document.appendChild(element);
-    	loggedInFunction.setResult(this.resultSessionVarName, document);
+    	ResultHandler.setResult(this.resultSessionVarName, document);
     	if( ! redirectUrl.equals("")){
             redirect(response, redirectUrl);
     	}
     }
-    private void createXML(boolean hasAccess, Object user, MemberOrganization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
+    private void createXML(boolean hasAccess, Object user, LoggedInOrganization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
 		Element loggedin = document.createElement("loggedin");
 		if(user != null){
 //			proxyresult/loggedin/user
@@ -137,14 +151,14 @@ public class ProxyLoginController extends HttpControllerPlugin {
 			}
 		} else if(organization != null){
 //			proxyresult/loggedin/organization
-			OrganizationToXMLTranslator organizationTranslator = new OrganizationToXMLTranslator();
-			organizationTranslator.translate(organization.getOrganization(), document, loggedin);
+			LoggedInOrganizationToXMLTranslator organizationTranslator = new LoggedInOrganizationToXMLTranslator();
+			organizationTranslator.translate(organization, document, loggedin);
 	} else {
 //			proxyresult/loggedin/none
     		loggedin.appendChild(document.createElement("none"));
 		}
 		element.appendChild(loggedin);
-		// TODO: Use resource class here! Fetch from service!
+		// TODO Fase2: Use resource class here! Fetch from service!
 		Element resource = document.createElement("resource");
 //		proxyresult/resource/name
 		resource.appendChild(UserToXMLTranslator.cDataElement(document, "name", requestedUrl.getStringValue()));
@@ -207,18 +221,28 @@ public class ProxyLoginController extends HttpControllerPlugin {
               }
 
             } catch (IOException e) {
-            	// TODO: Log error"
+            	// TODO Fase2: Log error!
 //                logger.warn("Failed redirect to url", e);
             }
     }
+	public Object loggedInUser() {
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
+		Object user = session.getAttribute(sessionLoggedInUserVarName);
+		if(user instanceof User || user instanceof OrganizationUser){
+			return user;
+		} else {
+			return null;
+		}
+	}
+	private LoggedInOrganization loggedInOrganization(){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
+	}
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;
 	}
 	public void setResultSessionVarName(String resultSessionVarName) {
 		this.resultSessionVarName = resultSessionVarName;
-	}
-	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
-		this.loggedInFunction = loggedInFunction;
 	}
 	public void setProxyPassword(String proxyPassword) {
 		this.proxyPassword = proxyPassword;

@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
@@ -21,22 +22,10 @@ public final class SendPasswordController extends HttpControllerPlugin {
 	private String resultSessionVarName;
 	private LoginService loginService;
 	private Map<String, String> parameterNames;
-	private LoggedInFunction loggedInFunction;
 	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	this.logger.info("SendPasswordController RUNNING");
-    	// TODO: Real parsing of query string
-//    	String prefix = "&" + this.parameterNames.get("resultName") + "=" +
-//    		this.parameterNames.get("resultValue");
-//    	String initPrefix = "&" + this.parameterNames.get("initName") + "=" +
-//			this.parameterNames.get("initValue");
-//    	if(request.getQueryString().endsWith(prefix)){
-//    		this.result(request, response);
-//    	} else if(request.getQueryString().endsWith(initPrefix)){
-//    		this.init(request, response);
-//    	} else {
-    		this.sendEmail(request, response);
-//    	}
+   		this.sendEmail(request, response);
     	this.logger.info("SendPasswordController DONE");
 	}
 	private void sendEmail(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -51,10 +40,10 @@ public final class SendPasswordController extends HttpControllerPlugin {
     	boolean success = true;
     	boolean sent = true;
     	String emailError = "";
-    	// TODO: Validate emailaddress!
+    	// TODO Fase2: Validate emailaddress!
    		if( ! email.contains("@")) {
    			success = false;
-   	    	// TODO: Return errors, etc from property files!
+   	    	// TODO Fase2: Return errors, etc from property files!
    			emailError = "NOT_VALID";
    		} else if(this.loginService.sendPasswordEmail(user.getUsername()).getFailed()) {
    			success = false;
@@ -64,7 +53,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
     		element.appendChild(document.createElement("success"));
     		failXML(email, document, element, emailError, sent);
     		document.appendChild(element);
-        	loggedInFunction.setResult(this.resultSessionVarName, document);
+        	ResultHandler.setResult(this.resultSessionVarName, document);
 
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
     		response.sendRedirect(gotoUrl);
@@ -72,7 +61,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
     		failXML(email, document, element, emailError, sent);
     		
     		document.appendChild(element);
-        	loggedInFunction.setResult(this.resultSessionVarName, document);
+    		ResultHandler.setResult(this.resultSessionVarName, document);
 
         	String referer = request.getParameter(this.parameterNames.get("from"));
     		response.sendRedirect(referer);
@@ -102,8 +91,5 @@ public final class SendPasswordController extends HttpControllerPlugin {
 	}
 	public void setResultSessionVarName(String resultSessionVarName) {
 		this.resultSessionVarName = resultSessionVarName;
-	}
-	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
-		this.loggedInFunction = loggedInFunction;
 	}
 }
