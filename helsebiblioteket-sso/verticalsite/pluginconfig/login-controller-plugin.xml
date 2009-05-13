@@ -22,7 +22,6 @@
  			<entry key="resultName" value="result"/>
  			<entry key="resultValue" value="true"/>
  		</map></property>
- 		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
 	<bean name="loginControllerLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
 		<property name="serviceClient" ref="loginControllerLoginServiceClient" />

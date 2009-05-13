@@ -13,6 +13,5 @@
 	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
  		<property name="urlPattern" value="/site/2/LoggUtServlet" />
  		<property name="gotoUrl" value="${plugin.logoutcontroller.gotourl}" />
- 		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
 </beans>

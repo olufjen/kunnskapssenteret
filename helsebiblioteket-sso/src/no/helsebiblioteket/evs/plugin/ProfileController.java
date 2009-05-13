@@ -14,7 +14,6 @@ import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.LoggedInUser;
-import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
@@ -24,7 +23,8 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUse
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
-import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
+import no.helsebiblioteket.admin.translator.LoggedInUserToXMLTranslator;
+import no.helsebiblioteket.admin.translator.UserToLoggedInUserTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.validator.PasswordValidator;
@@ -134,7 +134,8 @@ public class ProfileController extends HttpControllerPlugin {
 		document.appendChild(element);
 		messages = document.createElement("messages");
 		Element values = document.createElement("values");
-		userXML(user, null, document, values);
+		UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
+		userXML(userTranslator.translate(user), null, document, values);
 		element.appendChild(values);
 		ResultHandler.setResult(this.resultSessionVarName, document);
 		
@@ -204,7 +205,8 @@ public class ProfileController extends HttpControllerPlugin {
 		    	this.userService.updateUser(user);
 		    	if( ! saved){
 		    		Element values = document.createElement("values");
-		    		userXML(user, hprNumber, document, values);
+		    		UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
+		    		userXML(userTranslator.translate(user), hprNumber, document, values);
 		    		element.appendChild(values);
 		    		element.appendChild(messages);
 		    		element.appendChild(UserToXMLTranslator.element(document, "summary", "NOT_SAVED"));
@@ -216,7 +218,8 @@ public class ProfileController extends HttpControllerPlugin {
 	    	} else {
 //	    		result.append("<success>false</success>");
 	    		Element values = document.createElement("values");
-	    		userXML(user, hprNumber, document, values);
+	    		UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
+	    		userXML(userTranslator.translate(user), hprNumber, document, values);
 	    		element.appendChild(values);
 	    		element.appendChild(messages);
 	    		String referer = request.getParameter(this.parameterNames.get("from"));
@@ -314,34 +317,16 @@ public class ProfileController extends HttpControllerPlugin {
 		return true;
 	}
 
-	protected void userXML(Object userObject, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
-		UserToXMLTranslator translator = new UserToXMLTranslator();
-		User user;
-		if(userObject instanceof User){
-			user = (User) userObject;
-			translator.translate(user, document, element);
-		} else {
-			OrganizationUser organizationUser = (OrganizationUser) userObject;
-			OrganizationUserToXMLTranslator orgTranslator = new OrganizationUserToXMLTranslator();
-			orgTranslator.translate(organizationUser, document, element);
-			user = organizationUser.getUser();
-		}
+	protected void userXML(LoggedInUser user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
+		LoggedInUserToXMLTranslator loggedInUserToXMLTranslator = new LoggedInUserToXMLTranslator();
+		loggedInUserToXMLTranslator.translate(user, document, element);
 		if(hprNumber == null){
-			String hpr = null;
-			if (user.getPerson() != null) {
-				hpr = user.getPerson().getHprNumber();
-			}
-			if(hpr == null) {
-				hprNumber = "";
-			} else {
-				hprNumber = hpr.toString();
-			}
+			hprNumber = user.getHprNumber();
 		}
 		element.appendChild(UserToXMLTranslator.element(document, "hprnumber", hprNumber));
-
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Object user = this.loggedInUser();
+		LoggedInUser user = this.loggedInUser();
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);

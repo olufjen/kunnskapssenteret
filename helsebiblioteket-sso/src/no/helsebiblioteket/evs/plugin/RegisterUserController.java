@@ -13,8 +13,8 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Email;
+import no.helsebiblioteket.admin.domain.LoggedInUser;
 import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -155,7 +155,8 @@ public final class RegisterUserController extends ProfileController {
 		} else {
 			Element values = document.createElement("values");
 			values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
-			userXML(user, hprNumber, document, values);
+			UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
+			userXML(userTranslator.translate(user), hprNumber, document, values);
 			element.appendChild(values);
 			element.appendChild(messages);
 			if(summary.length() != 0){
@@ -315,14 +316,8 @@ public final class RegisterUserController extends ProfileController {
 		SingleResultUser result = this.userService.findUserByUsername(username);
 		return (result instanceof ValueResultUser);
 	}
-	protected void userXML(Object userObject, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
-		User user;
-		if(userObject instanceof User){
-			user = (User) userObject;
-		} else {
-			user = ((OrganizationUser)userObject).getUser();
-		}
-		super.userXML(userObject, hprNumber, document, element);
+	protected void userXML(LoggedInUser user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
+		super.userXML(user, hprNumber, document, element);
 		if(user != null){
 			element.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
 		}

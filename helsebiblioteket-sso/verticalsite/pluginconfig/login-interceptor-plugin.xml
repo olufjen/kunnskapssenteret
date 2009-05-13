@@ -25,7 +25,6 @@
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="priority" value="9999" />
  		<property name="loginService" ref="interceptorLoginService" />
- 		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
 
 	<bean name="interceptorLoginService" class="no.helsebiblioteket.admin.webservice.LoginServiceWeb" init-method="init">
