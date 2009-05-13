@@ -69,7 +69,6 @@ public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserLis
 		UserListLine line = lines.get(0);
 		UserListItem working = new UserListItem();
 		working.setId(line.getId());
-		// TODO: Move name adding to service or domain!
 		working.setName(line.getFirstName() + " " + line.getLastName());
 		working.setUsername(line.getUsername());
 		working.setOrganizationName(line.getOrganizationName());
