@@ -8,23 +8,19 @@ import com.enonic.cms.api.plugin.HttpControllerPlugin;
 import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public class LogOutController extends HttpControllerPlugin {
-//	private final Log logger = LogFactory.getLog(getClass());
 	private String gotoUrl;
-	private LoggedInFunction loggedInFunction;
+	private String sessionLoggedInUserVarName = "hbloggedinuser";
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
-		
-		// TODO: Config!
 		String gotoUrl = request.getParameter("goto");
 		if(gotoUrl==null) gotoUrl = this.gotoUrl;
-		
-		loggedInFunction.logOutUser();
+		this.logOutUser();
 		response.sendRedirect(gotoUrl);
 	}
 	public void setGotoUrl(String gotoUrl) {
 		this.gotoUrl = gotoUrl;
 	}
-	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
-		this.loggedInFunction = loggedInFunction;
+	public void logOutUser(){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		session.setAttribute(sessionLoggedInUserVarName, null);
 	}
 }

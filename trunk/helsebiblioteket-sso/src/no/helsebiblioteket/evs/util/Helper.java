@@ -15,6 +15,9 @@ import org.jdom.output.XMLOutputter;
  */
 public final class Helper 
 {
+	// TODO Fase2: Remove this helper!
+	
+	
 	/**
 	 * Pretty print document.
 	 */

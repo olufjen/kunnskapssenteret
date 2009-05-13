@@ -4,16 +4,16 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 
 import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
+import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,7 +21,7 @@ import org.apache.commons.logging.LogFactory;
 public final class LogInInterceptor extends HttpInterceptorPlugin {
 	private static final Log logger = LogFactory.getLog(LogInInterceptor.class);
 	private LoginService loginService;
-	private LoggedInFunction loggedInFunction;
+	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	public LogInInterceptor(){
 		System.out.println("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 		logger.info("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
@@ -29,18 +29,19 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		MemberOrganization organization = this.loggedInFunction.loggedInOrganization();
+		LoggedInOrganization organization = this.loggedInOrganization();
 		if(organization == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
-	    	SingleResultMemberOrganization res = this.loginService.loginOrganizationByIpAddress(ipAddress);
-    		if(res instanceof ValueResultMemberOrganization){
-	    		loggedInFunction.logInOrganization(((ValueResultMemberOrganization)res).getValue());
+	    	LoggedInOrganizationResult res = this.loginService.loginOrganizationByIpAddress(ipAddress);
+    		if(res.isSuccess()){
+	    		this.logInOrganization(res.getOrganization());
 	    	}
 		}
 		return true;
 	}
-    public static String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
+    @SuppressWarnings("unchecked")
+	public static String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
     	String XFF = "X-Forwarded-For";
         String ret = null;
         Enumeration en = request.getHeaderNames();
@@ -71,10 +72,15 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
         }
         return (ret != null ? ret : request.getRemoteAddr());
     }
+	public void logInOrganization(LoggedInOrganization organization){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
+	}
+	private LoggedInOrganization loggedInOrganization(){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
+	}
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
-	}
-	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
-		this.loggedInFunction = loggedInFunction;
 	}
 }

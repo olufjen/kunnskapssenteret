@@ -2,11 +2,14 @@ package no.helsebiblioteket.evs.plugin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Email;
@@ -36,16 +39,17 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.EmailService;
-import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.translator.UserToLoggedInUserTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
 public final class RegisterUserController extends ProfileController {
-	private LoggedInFunction loggedInFunction;
 	private EmailService emailService;
 	private String fromEmailText;
 	private String fromNameText;
 	private String messageText;
 	private String subjectText;
+	private String sessionLoggedInUserVarName = "hbloggedinuser";
 	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
@@ -66,7 +70,6 @@ public final class RegisterUserController extends ProfileController {
     	}
 	}
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		User user = new User();
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
 		if (null == usertype || "".equals(usertype)) {
 			usertype = request.getParameter("form_3");
@@ -74,14 +77,11 @@ public final class RegisterUserController extends ProfileController {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
-//		element.appendChild(document.createElement("init"));
 		Element values = document.createElement("values");
 		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
-		// TODO: But there is no user!		
-//		userXML(null, null, document, values);
 		element.appendChild(values);
 		document.appendChild(element);
-		loggedInFunction.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -94,7 +94,7 @@ public final class RegisterUserController extends ProfileController {
 		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
 		element.appendChild(values);
 		document.appendChild(element);
-		loggedInFunction.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -106,7 +106,7 @@ public final class RegisterUserController extends ProfileController {
 		Element cancel = document.createElement("cancel");
 		element.appendChild(cancel);
 		document.appendChild(element);
-		loggedInFunction.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -117,8 +117,7 @@ public final class RegisterUserController extends ProfileController {
 		String hprNumber = request.getParameter(this.parameterNames.get("hprno"));
 		if(hprNumber == null) { hprNumber = "";}
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
-		// TODO: Check for errors.
-		// TODO: Load errror messages from props!
+		// TODO Fase2: Check for errors.
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
@@ -128,14 +127,14 @@ public final class RegisterUserController extends ProfileController {
 		}
 		this.validateUser(user, request, document, messages);
 		
-		// TODO: Deal with different user types!
+		// TODO Fase2: Deal with different user types!
 
 		boolean success = false;
 		String summary = "";
-		// TODO: Bad test!
+		// TODO Fase2: Bad test!
 		if( ! messages.hasChildNodes()){
 			user.getPerson().setHprNumber(hprNumber);
-			// TODO: Saving may fail though!
+			// TODO Fase2: Saving may fail though!
 	    	boolean saved = true;
 	    	this.userService.insertUser(user);
 	    	this.sendNewUserEmail(user);
@@ -165,9 +164,14 @@ public final class RegisterUserController extends ProfileController {
 			gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		}
 		document.appendChild(element);
-		loggedInFunction.logInUser(user);
-		loggedInFunction.setResult(this.resultSessionVarName, document);
+		loginNewUser(user);
+		ResultHandler.setResult(this.resultSessionVarName, document);
     	response.sendRedirect(gotoUrl);
+	}
+	private void loginNewUser(User user) {
+		UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		session.setAttribute(sessionLoggedInUserVarName, userTranslator.translate(user));
 	}
 	private void sendNewUserEmail(User user) {
 		Email email = new Email();
@@ -236,7 +240,6 @@ public final class RegisterUserController extends ProfileController {
 		person.setContactInformation(contactInformation);
 		person.setProfile(profile);
 		
-		// TODO: Fix this!
 		if(position.getKey() == null){
 			position = null;
 		}
@@ -289,7 +292,7 @@ public final class RegisterUserController extends ProfileController {
 		} else if (usertype.equals(UserRoleKey.student.getValue())) {
 			user.setRoleList(roleStudentArray);
 		} else {
-			// TODO: Handle this error. Do not do this!
+			// TODO Fase2: Handle this error. Do not do this!
 			user.setRoleList(roleStudentArray);
 		}
 		
@@ -323,9 +326,6 @@ public final class RegisterUserController extends ProfileController {
 		if(user != null){
 			element.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
 		}
-	}
-	public void setLoggedInFunction(LoggedInFunction loggedInFunction) {
-		this.loggedInFunction = loggedInFunction;
 	}
 	public void setEmailService(EmailService emailService) {
 		this.emailService = emailService;
