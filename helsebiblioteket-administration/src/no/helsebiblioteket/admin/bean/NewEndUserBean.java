@@ -48,6 +48,9 @@ public class NewEndUserBean extends NewUserBean {
 		return null;
 	}
     public String actionSaveNewEndUser() {
+    	if(this.role == null){
+    		//
+    	}
     	if(this.role.getKey().getValue().equals(roleKeyAdministrator)){
     	} else if(this.role.getKey().getValue().equals(roleKeyEmployee)){
     	} else if(this.role.getKey().getValue().equals(roleKeyStudent)){
