@@ -1,18 +1,11 @@
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.translator.OrganizationToXMLTranslator;
-import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
-
-
+@SuppressWarnings("serial")
 public class LoggedInServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
