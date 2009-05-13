@@ -22,6 +22,9 @@ public class ActionServiceImpl implements ActionService{
 	private ActionDao actionDao;
 	private UserService userService;
 	private OrganizationService organizationService;
+	/**
+	 * Inserts an action performed by a user
+	 */
 	@Override
 	public Boolean insertUserAction(User user, Resource resource, AccessType accessType) {
 		ActionLine line = new ActionLine();
@@ -33,6 +36,9 @@ public class ActionServiceImpl implements ActionService{
 		this.actionDao.insertAction(line);
 		return true;
 	}
+	/**
+	 * Inserts an action performed by an organization
+	 */
 	@Override
 	public Boolean insertOrganizationAction(Organization organization, Resource resource, AccessType accessType) {
 		ActionLine line = new ActionLine();
@@ -44,6 +50,9 @@ public class ActionServiceImpl implements ActionService{
 		this.actionDao.insertAction(line);
 		return true;
 	}
+	/**
+	 * Loads the user that performed the action
+	 */
 	@Override
 	public SingleResultUser getUserByAction(Action action) {
 		ActionLine actionLine = this.actionDao.getActionLineById(action.getId());
@@ -51,6 +60,9 @@ public class ActionServiceImpl implements ActionService{
 		item.setId(actionLine.getUserId());
 		return this.userService.getUserByUserListItem(item);
 	}
+	/**
+	 * Loads the organization that performed the action
+	 */
 	@Override
 	public SingleResultOrganization getOrganizationByAction(Action action) {
 		ActionLine actionLine = this.actionDao.getActionLineById(action.getId());
@@ -58,26 +70,42 @@ public class ActionServiceImpl implements ActionService{
 		item.setId(actionLine.getOrgUnitId());
 		return this.organizationService.getOrganizationByListItem(item);
 	}
+	/**
+	 * Loads all actions performed by a user
+	 */
 	@Override
 	public ListResultAction getActionListByUser(User user) {
 		List<ActionLine> list = this.actionDao.getActionListByUser(user);
 		return new ListResultAction(translateList(list));
 	}
+	/**
+	 * Loads all actions performed by an organization
+	 */
 	@Override
 	public ListResultAction getActionListByOrganization(Organization organization) {
 		List<ActionLine> list = this.actionDao.getActionListByOrganization(organization);
 		return new ListResultAction(translateList(list));
 	}
+	/**
+	 * Loads all actions performed on a resource
+	 */
 	@Override
 	public ListResultAction getActionListByResource(Resource resource) {
 		List<ActionLine> list = this.actionDao.getActionListByResource(resource);
 		return new ListResultAction(translateList(list));
 	}
+	/**
+	 * Loads all actions performed on a resource with a certain access type
+	 */
 	@Override
 	public ListResultAction getActionListByAccessType(AccessType accessType) {
 		List<ActionLine> list = this.actionDao.getActionListByAccessType(accessType);
 		return new ListResultAction(translateList(list));
 	}
+	/**
+	 * Helper
+	 * Translates list of action line into array of action
+	 */
 	private Action[] translateList(List<ActionLine> list){
 		Action[] result = new Action[list.size()];
 		int i = 0;
@@ -98,7 +126,7 @@ public class ActionServiceImpl implements ActionService{
 		return result;
 	}
 
-	
+	// DAO
 	public void setActionDao(ActionDao actionDao) {
 		this.actionDao = actionDao;
 	}

@@ -1,11 +1,12 @@
 package no.helsebiblioteket.admin.service.impl;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.AccessService;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.URLService;
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
@@ -14,17 +15,24 @@ import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 
 /**
  * Service used to rewrite URLs on websites. The results
@@ -38,6 +46,8 @@ public class URLServiceImpl implements URLService {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static final long serialVersionUID = 1L;
 	private AccessService accessService;
+	private UserService userService;
+	private OrganizationService organizationService;
 	private String proxyPrefix;
 	
 	/**
@@ -68,7 +78,7 @@ public class URLServiceImpl implements URLService {
 	 * 
 	 */
 	@Override
-	public SingleResultUrl translateUrlUser(User user, Url url) {
+	public SingleResultUrl translateUrlUser(UserListItem user, Url url) {
 		return this.translateUrlUserOrganizationInternal(user, null, url);
 	}
 	/**
@@ -76,11 +86,9 @@ public class URLServiceImpl implements URLService {
 	 * has access it may be sent to the proxy, but not if it 
 	 * can be sent directly.
 	 * 
-	 * TODO: When to send an organization directly?
-	 * 
 	 */
 	@Override
-	public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url) {
+	public SingleResultUrl translateUrlOrganization(OrganizationListItem organization, Url url) {
 		return this.translateUrlUserOrganizationInternal(null, organization, url);
 	}
 	/**
@@ -105,10 +113,30 @@ public class URLServiceImpl implements URLService {
 	 * 
 	 */
 	@Override
-	public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization memberOrganization, Url url) {
+	public SingleResultUrl translateUrlUserOrganization(UserListItem user, OrganizationListItem memberOrganization, Url url) {
 		return this.translateUrlUserOrganizationInternal(user, memberOrganization, url);
 	}
-	private SingleResultUrl translateUrlUserOrganizationInternal(User user, MemberOrganization memberOrganization, Url url) {
+
+	
+	private SingleResultUrl translateUrlUserOrganizationInternal(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
+		User user;
+		MemberOrganization memberOrganization;
+		SingleResultUser userResult = this.userService.getUserByUserListItem(userListItem);
+		SingleResultOrganization orgResult = this.organizationService.getOrganizationByListItem(organizationListItem);
+		if(userResult instanceof ValueResultUser){
+			user = ((ValueResultUser)userResult).getValue();
+		} else if (userResult instanceof ValueResultOrganizationUser){
+			user = ((ValueResultOrganizationUser)userResult).getValue().getUser();
+		} else {
+			user = null;
+		}
+		if(orgResult instanceof ValueResultMemberOrganization){
+			memberOrganization = ((ValueResultMemberOrganization)orgResult).getValue();
+		} else {
+			memberOrganization = null;
+		}
+		
+		
 		Url newUrl = new Url();
 		boolean proxify = true;
 		
@@ -125,10 +153,10 @@ public class URLServiceImpl implements URLService {
 					proxify = proxify && !proxyExclude(getAccessTypeForUserRole(role, url));
 				}
 			}
-			// TODO: phase2: handle user access
+			// TODO Fase2: handle user access
 		}
 		
-		// TODO: phase2: add an image to link to illustrate whether requester has access or not.
+		// TODO Fase2: add an image to link to illustrate whether requester has access or not.
 		
 		newUrl.setStringValue(((proxify) ? this.proxyPrefix : "") + url.getStringValue());
 		
@@ -146,21 +174,17 @@ public class URLServiceImpl implements URLService {
 	/**
 	 * Loads the Access list for a user and checks if the URL
 	 * is in the list.
-	 * 
-	 * TODO: I think we must check for Access type and resource
-	 *       type. 
 	 */
 	@Override
-    public AccessResult hasAccessUser(User user, Url url) {
+    public AccessResult hasAccessUser(UserListItem user, Url url) {
 		return this.getAccessResultForUserAndMemberOrganization(user, null, url);
 	}
 	/**
 	 * Loads the Access list for an organization and checks if the URL
 	 * is in the list.
-	 * 
 	 */
 	@Override
-	public AccessResult hasAccessOrganization(MemberOrganization organization, Url url) {
+	public AccessResult hasAccessOrganization(OrganizationListItem organization, Url url) {
 		return this.getAccessResultForUserAndMemberOrganization(null, organization, url);
 	}
 	/**
@@ -169,7 +193,7 @@ public class URLServiceImpl implements URLService {
 	 * is not available to the user or the organization.
 	 */
 	@Override
-	public AccessResult hasAccessUserOrganization(User user, MemberOrganization organization, Url url) {
+	public AccessResult hasAccessUserOrganization(UserListItem user, OrganizationListItem organization, Url url) {
 		return this.getAccessResultForUserAndMemberOrganization(user, organization, url);
 	}
 	@Override
@@ -190,7 +214,7 @@ public class URLServiceImpl implements URLService {
 		return new EmptyResultString();
 	}
 
-	private AccessResult getAccessResultForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
+	private AccessResult getAccessResultForUserAndMemberOrganization(UserListItem user, OrganizationListItem memberOrganization, Url url) {
 		AccessType accessType = this.getAccessTypeForUserAndMemberOrganization(user, memberOrganization, url);
 		if(accessType.getCategory().getValue().equals(AccessTypeCategory.DENY.getValue())){
 			return AccessResult.logup;
@@ -205,7 +229,25 @@ public class URLServiceImpl implements URLService {
 		}
 	}
 
-	private AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
+	private AccessType getAccessTypeForUserAndMemberOrganization(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
+		User user;
+		MemberOrganization memberOrganization;
+		SingleResultUser userResult = this.userService.getUserByUserListItem(userListItem);
+		SingleResultOrganization orgResult = this.organizationService.getOrganizationByListItem(organizationListItem);
+		if(userResult instanceof ValueResultUser){
+			user = ((ValueResultUser)userResult).getValue();
+		} else if (userResult instanceof ValueResultOrganizationUser){
+			user = ((ValueResultOrganizationUser)userResult).getValue().getUser();
+		} else {
+			user = null;
+		}
+		if(orgResult instanceof ValueResultMemberOrganization){
+			memberOrganization = ((ValueResultMemberOrganization)orgResult).getValue();
+		} else {
+			memberOrganization = null;
+		}
+
+		
 		AccessType accessType = new AccessType(AccessTypeCategory.DENY, AccessTypeKey.general);
 		AccessType accessTypeTmp = null;
 		

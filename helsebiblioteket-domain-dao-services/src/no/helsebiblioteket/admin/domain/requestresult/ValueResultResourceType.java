@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.ResourceType;
 
+@SuppressWarnings("serial")
 public class ValueResultResourceType extends SingleResultResourceType{
 	private ResourceType value;
 	public ValueResultResourceType() { }

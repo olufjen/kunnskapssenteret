@@ -217,8 +217,6 @@ public class AccessServiceImpl implements AccessService {
 	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey) {
 		return new ValueResultResourceType(this.resourceTypeDao.getResourceTypeByKey(resourceTypeKey));
 	}
-
-	
 	/**
 	 * Helper. Translates java.util.List into List Result.
 	 * 
@@ -231,16 +229,15 @@ public class AccessServiceImpl implements AccessService {
 		int i=0;
 		for (ResourceAccessListItem key : itemList) {
 			list[i] = key;
-//			list[i].setId(key.getResourceAccess().getAccess().getId());
-//			list[i].setCategory(key.getResourceAccess().getAccess().getAccessType().getCategory());
-//			list[i].setKey(key.getResourceAccess().getAccess().getAccessType().getKey());
-//			list[i].setUrl(key.getResourceAccess().getResource().getSupplierSource().getUrl());
 			i++;
 		}
 		result.setList(list);
 		return result;
 	}
-
+	/**
+	 * Loads all supplier sources.
+	 * DUMMY is not used.
+	 */
 	@Override
 	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY) {
 		List<SupplierSourceResource> found = this.resourceDao.getResourceListAll();
@@ -250,7 +247,11 @@ public class AccessServiceImpl implements AccessService {
 		}
 		return new ListResultSupplierSourceResource(list);
 	}
-
+	/**
+	 * Loads all sources that starts with some text.
+	 * url has the URL text to search for.
+	 */
+	@Override
 	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url) {
 		SupplierSource supplierSoruce = this.supplierSourceDao.getSupplierSourceByUrlStartsWith(url);
 		if(supplierSoruce == null){

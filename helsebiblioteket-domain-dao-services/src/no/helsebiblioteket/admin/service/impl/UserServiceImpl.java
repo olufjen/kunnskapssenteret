@@ -54,7 +54,6 @@ import no.helsebiblioteket.admin.service.UserService;
 
 public class UserServiceImpl implements UserService {
 	private static final long serialVersionUID = 1L;
-//	private final Log logger = LogFactory.getLog(getClass());
 	private UserDao userDao;
 	private UserListDao userListDao;
 	private RoleDao roleDao;
@@ -107,7 +106,10 @@ public class UserServiceImpl implements UserService {
 		ListResultPosition result = new ListResultPosition(positions);
 		return result;
 	}
-		
+    /**
+     * Fetches the position with the given key from the
+     * database.
+     */
 	@Override
 	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey, OrganizationType organizationType) {
 		List<Position> all = this.positionDao.getPositionListAll();
@@ -121,7 +123,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return new EmptyResultPosition();
 	}
-	
 	/**
 	 * Fetches the Role with the given key for the given system.
 	 * If none is found EmptyResult is returned. Delegates the
@@ -287,7 +288,9 @@ public class UserServiceImpl implements UserService {
 		User tmp = this.userDao.getUserById(userListItem.getId()).getUser();
 		return this.findUserByUsername(tmp.getUsername());
 	}
-
+    /**
+     * Finds all the users with the given email address
+     */
 	@Override
 	public ListResultUser getUserListByEmailAddress(String emailAddress) {
 		List<UserListItem> users = this.userListDao.getUserListByEmail(emailAddress);
@@ -303,7 +306,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
-
     /**
      * Inserts a new User into the database. All properties must
      * be set. No NULL. Use UserFactory and PersonFactory if needed.
@@ -316,21 +318,23 @@ public class UserServiceImpl implements UserService {
 	public SingleResultUser insertUser(User user) {
 		OrganizationUser organizationUser = new OrganizationUser();
 		organizationUser.setUser(user);
-		// TODO: Not really do this
+		// TODO Fase2: Not really do this
 		if(organizationUser.getUser().getRoleList() == null){
 			organizationUser.getUser().setRoleList(new Role[0]);
 		}
 		return createOrganizationUser(organizationUser);
 	}
+    /**
+     * Inserts an organization user into the database
+     */
 	@Override
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser) {
-		// TODO: Not really do this
+		// TODO Fase2: Not really do this
 		if(organizationUser.getUser().getRoleList() == null){
 			organizationUser.getUser().setRoleList(new Role[0]);
 		}
 		return createOrganizationUser(organizationUser);
 	}
-	
 	private SingleResultUser createOrganizationUser(OrganizationUser organizationUser) {
 		this.contactInformationDao.insertContactInformation(organizationUser.getUser().getPerson().getContactInformation());
 		this.profileDao.insertProfile(organizationUser.getUser().getPerson().getProfile());
@@ -345,9 +349,8 @@ public class UserServiceImpl implements UserService {
 
 		return new ValueResultUser(organizationUser.getUser());
 	}
-	
 	public void insertUserValues(User user) {
-		// TODO: This should be removed, because it is only written to get
+		// TODO Fase2: This should be removed, because it is only written to get
 		//       around an error(?)in Axis2.
 		if(user.getRoleList() == null){
 			user.setRoleList(new Role[0]);
@@ -382,7 +385,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public Boolean updateUser(User user) {
-		// TODO: This should be removed, because it is only written to get
+		// TODO Fase2: This should be removed, because it is only written to get
 		//       around an error(?)in Axis2.
 		if(user.getRoleList() == null){
 			user.setRoleList(new Role[0]);
@@ -406,7 +409,7 @@ public class UserServiceImpl implements UserService {
 
 		List<UserRoleLine> newUserRoleList = translateRoles(user.getId(), user.getRoleList());
 		List<UserRoleLine> oldUserRoleList = translateRoles(old.getId(), old.getRoleList());
-		// TODO: Do this a little smarter without deleting all.
+		// TODO Fase2: Do this a little smarter without deleting all.
 		//       Improve ModifiedListHelper.
 		for (UserRoleLine userRole : oldUserRoleList) {
 			this.userRoleDao.deleteUserRole(userRole);
@@ -430,9 +433,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
-	
-	
-	
 	
 	
 	public void setUserDao(UserDao userDao) {

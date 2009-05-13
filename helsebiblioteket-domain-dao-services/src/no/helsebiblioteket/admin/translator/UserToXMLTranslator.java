@@ -34,7 +34,7 @@ public class UserToXMLTranslator {
 		userElement.appendChild(rolesElement);
 		Person person = user.getPerson();
 		if(person != null){
-			// TODO: Should have person?
+			// TODO Fase2: Should have person?
 			this.personToXMLTranslator.translate(person, document, userElement);
 		}
 		if(element == null){
@@ -56,7 +56,6 @@ public class UserToXMLTranslator {
 		return element;
 	}
 	public static Element element(Document document, String name, Integer value){
-		// TODO: </nonum> ??
 		if(value == null){
 			return element(document, name, "");
 		} else {
@@ -64,7 +63,6 @@ public class UserToXMLTranslator {
 		}
 	}
 	public static Element element(Document document, String name, Boolean value){
-		// TODO: </nobool> ??
 		if(value == null){
 			return element(document, name, "");
 		} else {

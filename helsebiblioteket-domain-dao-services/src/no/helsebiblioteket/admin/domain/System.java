@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 
+@SuppressWarnings("serial")
 public class System implements Serializable {
 	// Primary key
 	private Integer id;

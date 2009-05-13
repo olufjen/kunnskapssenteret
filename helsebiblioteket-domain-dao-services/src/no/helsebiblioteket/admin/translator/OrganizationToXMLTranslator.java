@@ -3,7 +3,6 @@ package no.helsebiblioteket.admin.translator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 
 public class OrganizationToXMLTranslator {
@@ -14,18 +13,12 @@ public class OrganizationToXMLTranslator {
 		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "nameenglishshort", organization.getNameShortEnglish()));
 		orgElement.appendChild(UserToXMLTranslator.cDataElement(document, "namenorwegianshort", organization.getNameShortNorwegian()));
 		
-		// TODO Complete this!
-//		organization.getAccessList();
-		organization.getContactInformation();
-		organization.getContactPerson();
-		organization.getDescription();
-//		organization.getOrgUnitId();
-//		organization.getIpAddressSetList();
-		organization.getLastChanged();
-//		organization.getNameList();
-//		organization.getNameMap()
-//		organization.getParent();
-		organization.getType();
+		// TODO Fase2: Complete this!
+//		organization.getContactInformation();
+//		organization.getContactPerson();
+//		organization.getDescription();
+//		organization.getLastChanged();
+//		organization.getType();
 		
 		
 		if(element == null){

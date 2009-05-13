@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 
+@SuppressWarnings("serial")
 public class OrganizationType implements Serializable {
 	// Primary key
 	private Integer orgTypeId;

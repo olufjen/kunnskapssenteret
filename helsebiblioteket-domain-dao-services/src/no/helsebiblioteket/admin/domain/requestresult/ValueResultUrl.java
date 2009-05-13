@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.Url;
 
+@SuppressWarnings("serial")
 public class ValueResultUrl extends SingleResultUrl {
 	private Url value;
 	public ValueResultUrl() { }

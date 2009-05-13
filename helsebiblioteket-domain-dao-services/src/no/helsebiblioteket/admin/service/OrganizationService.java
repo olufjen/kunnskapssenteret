@@ -28,7 +28,6 @@ public interface OrganizationService extends Serializable {
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY);
 	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key);
 
-	// TODO: Remove this and use findOrganizationsBySearchStringRoles with empty string?
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request);
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString);
 	

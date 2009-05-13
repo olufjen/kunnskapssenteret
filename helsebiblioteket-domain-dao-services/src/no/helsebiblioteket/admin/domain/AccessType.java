@@ -5,6 +5,7 @@ import java.io.Serializable;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 
+@SuppressWarnings("serial")
 public class AccessType implements Serializable {
 	// Primary key
 	private Integer id;

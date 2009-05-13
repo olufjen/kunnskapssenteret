@@ -1,7 +1,6 @@
 package no.helsebiblioteket.admin.domain.key;
 
 public class UserRoleKey {
-	// TODO: Use for dummy?
 	public static final UserRoleKey none = new UserRoleKey("none");
 	
 	public static final UserRoleKey administrator = new UserRoleKey("administrator");

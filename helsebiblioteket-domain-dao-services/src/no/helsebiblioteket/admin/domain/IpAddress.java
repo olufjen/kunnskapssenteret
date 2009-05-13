@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class IpAddress implements Serializable {
 	// Domain object not in database.
 	private String address;
@@ -14,9 +15,6 @@ public class IpAddress implements Serializable {
 		return address;
 	}
 	
-	// TODO: Create normalized string here: 192.001.101.002
-	//       with all number of size 3! Used for alphabetic
-	//       search!
 	public String getAddress() {
 		return address;
 	}
@@ -24,6 +22,4 @@ public class IpAddress implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	// FIXME: Must have hashCode and equals methods? Used in IpRange
 }

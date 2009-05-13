@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Action implements Serializable {
 	public static final String USER_ACCESS = "U";
 	public static final String ORGANIZATION_ACCESS = "O";

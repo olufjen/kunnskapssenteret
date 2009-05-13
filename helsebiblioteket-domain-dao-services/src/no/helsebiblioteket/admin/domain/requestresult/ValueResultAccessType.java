@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.AccessType;
 
+@SuppressWarnings("serial")
 public class ValueResultAccessType extends SingleResultAccessType{
 	private AccessType value;
 	public ValueResultAccessType() { }

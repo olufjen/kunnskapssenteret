@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.dao.keys;
 
-import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 

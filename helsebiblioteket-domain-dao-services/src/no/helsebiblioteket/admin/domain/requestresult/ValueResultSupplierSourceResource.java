@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 
+@SuppressWarnings("serial")
 public class ValueResultSupplierSourceResource extends SingleResultSupplierSourceResource {
 	private SupplierSourceResource value;
 	public ValueResultSupplierSourceResource() { }

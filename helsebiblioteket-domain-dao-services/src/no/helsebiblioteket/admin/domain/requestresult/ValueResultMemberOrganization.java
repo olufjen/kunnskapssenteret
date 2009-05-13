@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 
+@SuppressWarnings("serial")
 public class ValueResultMemberOrganization extends SingleResultMemberOrganization{
 	private MemberOrganization value;
 	public ValueResultMemberOrganization() { }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
+@SuppressWarnings("serial")
 public class Role implements Serializable {
 	// Primary key
 	private Integer id;

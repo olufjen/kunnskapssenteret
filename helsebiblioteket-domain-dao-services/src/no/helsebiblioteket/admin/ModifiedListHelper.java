@@ -28,7 +28,7 @@ public class ModifiedListHelper<T extends Identifiable> {
 //		return new ArrayList<T>();
 	}
 	public List<T> removeAll(List<T> from, List<T> remove) {
-		// TODO: This must be rewritten to use Id.
+		// TODO Fase2: This must be rewritten to use Id.
 		HashSet<Integer> ids = new HashSet<Integer>();
 		for (T unique : remove) { ids.add(unique.getMyId()); }
 		List<T> result = new ArrayList<T>();

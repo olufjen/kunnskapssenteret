@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Url implements Serializable {
 	// setStringValue is used by database!
 	private String stringValue;

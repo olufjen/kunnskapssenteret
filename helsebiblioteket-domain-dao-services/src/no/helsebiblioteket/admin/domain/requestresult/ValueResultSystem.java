@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.System;
 
+@SuppressWarnings("serial")
 public class ValueResultSystem extends SingleResultSystem{
 	private System value;
 	public ValueResultSystem() { }

@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.domain;
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public class IpAddressSingle implements Serializable {
 	// Local values
 	private IpAddress ipAddressSingle;

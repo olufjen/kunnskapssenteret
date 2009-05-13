@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Email implements Serializable {
 	// Not in database, yet.
 	private String toName;

@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 
+@SuppressWarnings("serial")
 public class ValueResultSupplierOrganization extends SingleResultSupplierOrganization{
 	private SupplierOrganization value;
 	public ValueResultSupplierOrganization() { }

@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Organization implements Serializable {
 	// Primary key
 	private Integer id;
@@ -29,19 +30,12 @@ public class Organization implements Serializable {
 	}
 	public int hashCode() {
         int result;
-        // TODO: What was this important for? Use Id
-//        result = (parent != null ? parent.hashCode() : 0);
-//        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = (type != null ? type.hashCode() : 0);
-        // TODO: Include names here!
         return result;
     }
 	public boolean equals(Organization org) {
         if (this == org) return true;
-        // TODO: What was this important for? Use Id
-//        if (parent != null ? !parent.equals(org.parent) : org.parent != null) return false;
         if (type != null ? !type.equals(org.type) : org.type != null) return false;
-        // TODO: Compare names here!
         return true;
     }
 

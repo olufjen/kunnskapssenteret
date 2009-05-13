@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.AccessType;
-import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
