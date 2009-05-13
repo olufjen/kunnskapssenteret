@@ -117,7 +117,6 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             InputStream is = this.getClass().getResourceAsStream(xmlDoc);
             InputSource source = new InputSource(is);
 
-            // TODO Fase2: Use this instead!
             // This one does not cache - yhiiihaaa!!
 //            URL r = this.getClass().getResource(xmlDoc);
 //            InputSource source = new InputSource(r.openStream());

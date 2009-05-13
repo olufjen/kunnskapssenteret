@@ -21,7 +21,7 @@ public class User implements Serializable {
 	// Helpers
 	@Override
 	public String toString() {
-		return "[" + id + ": " + username + "(" + password + ", " + lastChanged + ")]";
+		return "[" + id + ": " + username + " (," + lastChanged + ")]";
 	}
 	@Override
 	public int hashCode() {
