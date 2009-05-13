@@ -16,9 +16,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
     
-	// TODO: Remove class
-
-	
 	protected final Log logger = LogFactory.getLog(getClass());
 	public List<Role> getAllRoles() {
         logger.info("fetching all roles");
@@ -39,40 +36,33 @@ public class JdbcRoleDao extends SimpleJdbcDaoSupport implements RoleDao{
     }
 
 	public void deleteUserRoleLine(UserRoleLine userRoleLine) {
-		// TODO: Need not be implemented!
 		
 	}
 
 	public Role getUserRoleById(Integer userRoleId) {
-		// FIXME: Should not use ID! Key is unique.
 		return null;
 	}
 
 	public List<Role> getUserRoleListByUserId(Integer userId) {
-		// FIXME: Should not use ID! Key is unique.
 		return null;
 	}
 
 	public void insertUserRoleLine(UserRoleLine userRoleLine) {
-		// TODO: Need not be implemented!		
 	}
 
 
 	@Override
 	public Role getRoleByKeySystem(UserRoleKey key, System system) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Role> getRoleListBySystem(System system) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Role getRoleById(Integer roleId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -14,7 +14,7 @@ import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 
 public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements OrganizationTypeDao {
 
-	// TODO: Remove class
+	// TODO Fase2: Remove class
 
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
@@ -47,7 +47,6 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 
 
 	public List<OrganizationType> getOrganizationTypeListAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -55,19 +54,16 @@ public class JdbcOrganizationTypeDao extends SimpleJdbcDaoSupport implements Org
 	@Override
 	public OrganizationType getOrganizationTypeByKey(
 			OrganizationTypeKey organizationTypeKey) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void insertOrganizationType(OrganizationType organizationType) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public OrganizationType getOrganizationTypeById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
