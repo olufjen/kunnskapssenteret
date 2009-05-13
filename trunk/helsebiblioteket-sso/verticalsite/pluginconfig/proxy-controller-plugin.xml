@@ -26,18 +26,17 @@
  		<property name="proxyUrl" value="${proxy.url}" />
  		<property name="logUpUrl" value="${proxy.logup.url}" />
  		<property name="urlService" ref="proxyUrlServiceWeb" />
- 		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
 	
 	<bean name="proxyUrlServiceWeb" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
 		<property name="serviceClient" ref="proxyControllerUrlServiceClient" />
 		<property name="targetEPR" ref="proxyControllerUrlServiceTargetEPR" />
 		<property name="isAffectedName" ref="proxyControllerIsAffectedName" />
-		<property name="hasAccessOrganizationUserOrganizationName" ref="hasAccessOrganizationUserOrganizationName" />
-		<property name="hasAccessUserOrganizationName" ref="hasAccessUserOrganizationName" />
+		<property name="hasAccessUserName" ref="hasAccessUserName" />
 		<property name="hasAccessOrganizationName" ref="hasAccessOrganizationName" />
+		<property name="hasAccessUserOrganizationName" ref="hasAccessUserOrganizationName" />
+		<property name="hasAccessNoneName" ref="hasAccessNoneName" />
 		<property name="groupName" ref="groupName" />
-		<property name="accessTypeForUserAndMemberOrganizationName" ref="accessTypeForUserAndMemberOrganizationName" />
 		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="proxyControllerUrlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
@@ -49,24 +48,24 @@
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="isAffected" />
 	</bean>
-	<bean name="hasAccessOrganizationUserOrganizationName" class="javax.xml.namespace.QName">
+	<bean name="hasAccessUserName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="hasAccessOrganizationUserOrganization" />
-	</bean>
-	<bean name="hasAccessUserOrganizationName" class="javax.xml.namespace.QName">
-		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="hasAccessUserOrganization" />
+		<constructor-arg value="hasAccessUser" />
 	</bean>
 	<bean name="hasAccessOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="hasAccessOrganization" />
 	</bean>
+	<bean name="hasAccessUserOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="hasAccessUserOrganization" />
+	</bean>
+	<bean name="hasAccessNoneName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="hasAccessNone" />
+	</bean>
 	<bean name="groupName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="group" />
-	</bean>
-	<bean name="accessTypeForUserAndMemberOrganizationName" class="javax.xml.namespace.QName">
-		<constructor-arg value="${webservice.domain.url}" />
-		<constructor-arg value="getAccessTypeForUserAndMemberOrganization" />
 	</bean>
 </beans>

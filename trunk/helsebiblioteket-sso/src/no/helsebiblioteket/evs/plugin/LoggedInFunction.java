@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.translator.LoggedInOrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.LoggedInUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.PositionToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 import no.helsebiblioteket.evs.plugin.result.XMLTranslator;
 
 import org.jdom.Document;
@@ -32,6 +33,9 @@ public class LoggedInFunction{
 	}
 	public Document getPositionsAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		return XMLTranslator.translate(printPositions());
+	}
+	public Document getResult(String key) throws JDOMException, IOException, ParserConfigurationException, TransformerException {
+		return ResultHandler.getResult(key);
 	}
 
 	private org.w3c.dom.Document printPositions() throws ParserConfigurationException {

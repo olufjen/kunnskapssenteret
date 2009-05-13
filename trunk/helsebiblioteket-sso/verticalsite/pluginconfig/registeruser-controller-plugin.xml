@@ -39,7 +39,6 @@
  			<entry key="confirmValue" value="true"/>
  			<entry key="formId" value="form_id"/>
  		</map></property>
- 		<property name="loggedInFunction" ref="loggedInFunction" />
  		<property name="emailService" ref="emailService" />
  		<property name="fromEmailText" value="fromEmailText" />
  		<property name="fromNameText" value="fromNameText" />

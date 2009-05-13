@@ -51,7 +51,6 @@
  			<entry key="cancelName" value="cancel"/>
  			<entry key="cancelValue" value="true"/>
  		</map></property>
- 		<property name="loggedInFunction" ref="loggedInFunction" />
 	</bean>
 	<bean name="profileUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="profileServiceClient" />

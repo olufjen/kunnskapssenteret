@@ -28,6 +28,7 @@
 		<property name="translateUrlUserName" ref="translateUrlUserName" />
 		<property name="translateUrlOrganizationName" ref="translateUrlOrganizationName" />
 		<property name="translateUrlUserOrganizationName" ref="translateUrlUserOrganizationName" />
+		<property name="translateUrlNoneName" ref="translateUrlNoneName" />
 		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
@@ -50,5 +51,9 @@
 	<bean name="translateUrlUserOrganizationName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="translateUrlUserOrganization" />
+	</bean>
+	<bean name="translateUrlNoneName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="translateUrlNone" />
 	</bean>
 </beans>
