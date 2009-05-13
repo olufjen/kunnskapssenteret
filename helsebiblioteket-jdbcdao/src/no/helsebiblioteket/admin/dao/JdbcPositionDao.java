@@ -15,8 +15,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 public class JdbcPositionDao extends SimpleJdbcDaoSupport implements PositionDao {
 	
 	
-	// TODO: Remove class
-
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	public List<Position> getAllPositions() {
@@ -37,32 +35,26 @@ public class JdbcPositionDao extends SimpleJdbcDaoSupport implements PositionDao
     }
 	@Override
 	public void deletePosition(Position position) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public List<Position> getPositionListAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public void insertPosition(Position position) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void updatePosition(Position position) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public Position getPositionByKey(PositionTypeKey key) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public Position getPositionById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

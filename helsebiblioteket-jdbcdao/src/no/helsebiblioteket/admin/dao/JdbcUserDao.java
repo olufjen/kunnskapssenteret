@@ -2,10 +2,8 @@ package no.helsebiblioteket.admin.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
@@ -18,9 +16,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
    
-	// TODO: Remove class
-
-	
 	protected final Log logger = LogFactory.getLog(getClass());
 	public User getUserByUsername(User user) {
         logger.info("finding user with username '" + ((user != null) ? user.getUsername() : "") + "'");
@@ -32,7 +27,6 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
         if(users.size() == 0) { return null; } else { return users.get(0); }
 	}
 	public void insertUser(User user) {
-		// FIXME: Also include person_id!
 		String sql = "insert into tbl_user (username, org_unit_id, password) values (" +
 				":username, :org_unit_id, :password)";
 		MapSqlParameterSource sqlParameters = new MapSqlParameterSource();
@@ -78,7 +72,6 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
         		);
         if(users.size() == 0) return user;
         else{
-        	// FIXME: Alt slettes her? Hvorfor? Får aldri logget inn.
         	// Må ihvertfall ha passordet!
         	String password = users.get(0).getPassword();
         	user = new User();
@@ -99,36 +92,29 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
     }
 
     public OrganizationUser getUserById(Integer userId) {
-		// FIXME: Should not use ID! Key is unique.
 		return null;
 	}
 
     public void setForeignKeysForUser(User user) {
-		// TODO: Not a nice solution.
 		
 	}
 	public void deleteUser(User user) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public OrganizationUser getUserByUsername(String username) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public void deleteUser(OrganizationUser organizationUser) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void insertUser(OrganizationUser organizationUser) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void updateUser(OrganizationUser organizationUser) {
-		// TODO Auto-generated method stub
 		
 	}
     

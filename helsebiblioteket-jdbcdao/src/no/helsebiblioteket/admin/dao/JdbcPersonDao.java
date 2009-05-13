@@ -20,8 +20,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
   
-	// TODO: Remove class
-
 	protected final Log logger = LogFactory.getLog(getClass());
 	public int insertContactInformation(ContactInformation contactInformation) {
 		String sql ="insert into tbl_contact_information (postal_address, postal_code, " +
@@ -45,7 +43,6 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 //		return keyHolder.getKey().intValue();
 	}
 	public void insertProfile(Profile profile) {
-		// FIXME: Translate into bit!
 		String sql ="insert into tbl_profile (receive_newsletter, participate_survey) values (" +
 			"'" + (profile.getReceiveNewsletter() ? "1" : "0") + "', " +
 			"'" + (profile.getParticipateSurvey() ? "1" : "0") + "')";
@@ -69,43 +66,6 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 //		return getSimpleJdbcTemplate().queryForInt("select currval('tbl_person_person_id_seq');");
 		
 		
-//		// TODO Auto-generated method stub
-//		KeyHolder keyHolder = new GeneratedKeyHolder();
-//		PreparedStatementCreatorFactory psc = new PreparedStatementCreatorFactory(sql);
-//		psc.addParameter(new SqlParameter("person_id", Types.INTEGER));
-//		psc.addParameter(new SqlParameter("first_name", Types.VARCHAR));
-//		psc.addParameter(new SqlParameter("last_name", Types.VARCHAR));
-//		psc.addParameter(new SqlParameter("student_number", Types.INTEGER));
-//		psc.addParameter(new SqlParameter("hpr_number", Types.INTEGER));
-//		getJdbcTemplate().update(psc.newPreparedStatementCreator(new Object[]{
-//				null,
-//				person.getFirstName(),
-//				person.getLastName(),
-//				person.getStudentNumber(),
-//				person.getHprNumber()}), keyHolder);
-//		final String INSERT_SQL = "tbl_person (first_name, last_name, student_number, hpr_number) " +
-//				"values(?,?,?,?)";
-//		final String fName = person.getFirstName();
-//		final String lName = person.getLastName();
-//		final Integer sNumber = person.getStudentNumber();
-//		final Integer hNumber = person.getHprNumber();
-//		
-//		KeyHolder keyHolder = new GeneratedKeyHolder();
-//		getJdbcTemplate().update(
-//		    new PreparedStatementCreator() {
-//		        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-//		            PreparedStatement ps =
-//		                connection.prepareStatement(INSERT_SQL, new String[] {"person_id"});
-//		            ps.setString(1, fName);
-//		            ps.setString(2, lName);
-//		            ps.setInt(3, sNumber);
-//		            ps.setInt(4, hNumber);
-//		            return ps;
-//		        }
-//		    },
-//		    keyHolder);
-//
-//		return keyHolder.getKey().intValue();
 	}
 
 	public void updateContactInformation(ContactInformation contactInformation) {
@@ -120,7 +80,6 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
 		getSimpleJdbcTemplate().update(sql, sqlParameters);
 	}
 	public void updateProfile(Profile profile) {
-		// FIXME: Translate into bit!
 		String sql ="update tbl_profile set " +
 			"receive_newsletter='" + (profile.getReceiveNewsletter() ? "1" : "0") + "', " +
 			"participate_survey='" + (profile.getParticipateSurvey() ? "1" : "0") + "' " +
@@ -192,22 +151,18 @@ public class JdbcPersonDao extends SimpleJdbcDaoSupport implements PersonDao {
     }
 
     public void deletePerson(Person person) {
-		// TODO: Need not be implemented!
 		
 	}
 
 	public Person getPersonById(Integer personId) {
-		// FIXME: We should not do this! Username is unique.
 		return null;
 	}
 	@Override
 	public Person getPersonByUser(User user) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public Person getPersonByOrganization(Organization organization) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -3,12 +3,9 @@ package no.helsebiblioteket.admin.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
-import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
@@ -23,9 +20,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserListDao {
    
-	// TODO: Remove class
-
-	
 	protected final Log logger = LogFactory.getLog(getClass());
 	public User getUserByUsername(User user) {
         logger.info("finding user with username '" + ((user != null) ? user.getUsername() : "") + "'");
@@ -56,8 +50,7 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
                 "left outer join tbl_user_role_reg on tbl_user_role.user_role_id = tbl_user_role_reg.user_role_id " +
                 "left outer join tbl_org_unit on tbl_org_unit.org_unit_id = tbl_user.org_unit_id ",
                 new UserPersonRoleOrgMapper());
-        // FIXME: Only include users once!
-        Map<String, User> userMap = new HashMap<String, User>();
+//        Map<String, User> userMap = new HashMap<String, User>();
         List<User> uniqueUsers = new ArrayList<User>();
         for (User user : users) {
 //        	if(userMap.containsKey(""+user.getUserId())) {
@@ -102,7 +95,6 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
             }
             
             ContactInformation contactInformation = new ContactInformation();
-            // FIXME: Use real email address!
             contactInformation.setEmail(rs.getString("username"));
             person.setContactInformation(contactInformation);
             
@@ -117,28 +109,23 @@ public class JdbcUserCompositeDao extends SimpleJdbcDaoSupport implements UserLi
         }
     }
 	public List<UserListItem> getUserListPaged(int from, int max) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	public List<UserListItem> getUserListPagedSearchStringRoles(
 			String searchString, List<Role> roles, int from, int max) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public Integer getUserNumber() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public Integer getUserNumberSearchStringRoles(String searchString,
 			List<Role> roles) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public List<UserListItem> getUserListByEmail(String email) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
