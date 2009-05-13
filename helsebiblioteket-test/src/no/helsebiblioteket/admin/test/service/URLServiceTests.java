@@ -20,7 +20,9 @@ import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
@@ -91,30 +93,34 @@ public class URLServiceTests {
 		Assert.isTrue( ! shouldNotFind, "URL is not affected");
 		
 //		TEST: public SingleResultUrl translate(User user, Url url);
-		SingleResultUrl userUrl = urlService.translateUrlUser(user, new Url(randomUrl));
+		UserListItem userL = new UserListItem();
+		userL.setId(user.getId());
+		SingleResultUrl userUrl = urlService.translateUrlUser(userL, new Url(randomUrl));
 		checkUrl(userUrl, randomUrl);
 
 //		TEST: public SingleResultUrl translate(MemberOrganization organization, Url url);
-		SingleResultUrl organizationUrl = urlService.translateUrlOrganization(memberOrganization, new Url(randomUrl));
+		OrganizationListItem orgL = new OrganizationListItem();
+		orgL.setId(memberOrganization.getOrganization().getId());
+		SingleResultUrl organizationUrl = urlService.translateUrlOrganization(orgL, new Url(randomUrl));
 		checkUrl(organizationUrl, randomUrl);
 				
 //		TEST: public SingleResultUrl translate(User user, MemberOrganization organization, Url url);
-		SingleResultUrl userOrganizationUrl = urlService.translateUrlUserOrganization(user, memberOrganization, new Url(randomUrl));
+		SingleResultUrl userOrganizationUrl = urlService.translateUrlUserOrganization(userL, orgL, new Url(randomUrl));
 		checkUrl(userOrganizationUrl, randomUrl);
 		
 //		TEST: public Boolean hasAccess(User user, Url url);
-		AccessResult userAccess = urlService.hasAccessUser(user, new Url(randomUrl));
+		AccessResult userAccess = urlService.hasAccessUser(userL, new Url(randomUrl));
 		checkAccess(userAccess);
 		
 //		TEST: public Boolean hasAccess(MemberOrganization organization, Url url);
-		AccessResult organizationAccess = urlService.hasAccessOrganization(memberOrganization, new Url(randomUrl));
+		AccessResult organizationAccess = urlService.hasAccessOrganization(orgL, new Url(randomUrl));
 		checkAccess(organizationAccess);
 		
 //		TEST: public Boolean hasAccess(User user, MemberOrganization organization, Url url);
-		AccessResult userOrganizationAccess = urlService.hasAccessUserOrganization(user, memberOrganization, new Url(randomUrl));
+		AccessResult userOrganizationAccess = urlService.hasAccessUserOrganization(userL, orgL, new Url(randomUrl));
 		checkAccess(userOrganizationAccess);
 		
-		// TODO: How do we test group?
+		// TODO Fase2: How do we test group?
 //		TEST: public SingleResultString group(Url url);
 
 		// Deleting test values

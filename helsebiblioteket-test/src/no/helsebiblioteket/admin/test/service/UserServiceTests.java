@@ -84,7 +84,7 @@ public class UserServiceTests {
 		user.getPerson().setFirstName(firstname);
 		user.getPerson().setLastName(lastname);
 //		TEST: public SingleResultUser insertUser(User user);
-		// TODO: Finish tests.
+		// TODO Fase2: Finish tests.
 		SingleResultUser userResult = userService.insertUser(user);
 		Assert.isTrue(userResult instanceof ValueResultUser, "Failed to insert user");
 		user = ((ValueResultUser)userResult).getValue();

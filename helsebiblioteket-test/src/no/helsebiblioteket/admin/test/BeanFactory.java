@@ -71,12 +71,12 @@ public class BeanFactory {
 	}
 	private BeanFactory(){
 
-		// TODO: Replace bean factory with something else when we know more about JUnit and Spring.
-		// TODO: Before running replace the configLocation property for bean 'sqlMapClient' with this:
+		//       Replace bean factory with something else when we know more about JUnit and Spring.
+		//       Before running replace the configLocation property for bean 'sqlMapClient' with this:
 		//       <property name="configLocation" value="file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/sqlmap-config.xml"/>
 		//       And replace these values in the list 'propertyConfigurer.locations'
-	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/application.properties</value>
-	 	//		<value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/jdbc.properties</value>
+	 	//		 <value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/application.properties</value>
+	 	//		 <value>file:C:/Data/Eclipse-Workspaces/Diverse-prosjekter-SWAT/helsebiblioteket-administration-web/WebRoot/WEB-INF/jdbc.properties</value>
 		res = new FileSystemResource("./desc/applicationContext.xml");
 //		res = new FileSystemResource("..\\helsebiblioteket-administration-web\\WebRoot\\WEB-INF\\applicationContext.xml");
 		factory = new XmlBeanFactory(res);
@@ -183,11 +183,4 @@ public class BeanFactory {
 		System.out.println("OK");
 	}
 	
-	private static void testPerformance() {
-		URLServiceTests urlServiceTests = new URLServiceTests();
-		long startTimeMillis = System.currentTimeMillis();
-		urlServiceTests.testAll();
-        // TODO log this
-		// LOG.log(Level.INFO, "urlServiceTests.testPerformance() took " + String.valueOf(System.currentTimeMillis() - startTimeMillis) + " milliseconds");
-	}
 }

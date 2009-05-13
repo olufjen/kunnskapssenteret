@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
-import no.helsebiblioteket.admin.dao.OrganizationNameDao;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
@@ -29,17 +28,13 @@ public class OrganizationListDaoTests {
 		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
 		IpRangeDao ipRangeDao = beanFactory.getIpRangeDao();
 
-		// TODO: Removed. Not in use any more.
-//		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPaged(0, 4);
-//		Assert.isTrue(organizationList.size()<=16, "Too many orgs");
-		
 		// Can never find this!
 		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPagedSearchString(""+new Random().nextInt(), 0, Integer.MAX_VALUE);
 		Assert.isTrue(organizationList.size()==0, "Should find no orgs");
 
 		organizationList = organizationListDao.getOrganizationListPagedSearchString("", 0, 20);
 		OrganizationListItem item = organizationList.get(0);
-		OrganizationNameDao organizationNameDao = beanFactory.getOrganizationNameDao();
+//		OrganizationNameDao organizationNameDao = beanFactory.getOrganizationNameDao();
 		Assert.isTrue(organizationList.size()<=20, "Too many orgs");
 		
 		MemberOrganization organization = new MemberOrganization();
@@ -49,7 +44,7 @@ public class OrganizationListDaoTests {
 		organizationName.setLanguageCode(LanguageCategory.en);
 		organizationName.setLastChanged(new Date());
 		organizationName.setName("English name" + new Random(1000000000).nextInt());
-		// TODO: Test differently
+		// TODO Fase2: Test differently
 //		organizationNameDao.insertOrganizationName(organization.getOrganization(), organizationName);
 
 		int randomaddress1 = new Random().nextInt(1000);

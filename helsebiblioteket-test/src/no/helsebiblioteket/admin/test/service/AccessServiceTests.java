@@ -1,14 +1,10 @@
 package no.helsebiblioteket.admin.test.service;
 
-import java.util.Date;
 import java.util.Random;
 
 import org.springframework.util.Assert;
 
 import no.helsebiblioteket.admin.domain.AccessType;
-import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpAddressRange;
-import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
@@ -29,12 +25,10 @@ import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
-import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;

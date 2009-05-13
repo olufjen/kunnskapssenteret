@@ -2,8 +2,6 @@ package no.helsebiblioteket.admin.test.service;
 
 import java.util.Random;
 
-import org.springframework.security.userdetails.UserDetailsService;
-
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
@@ -45,10 +43,10 @@ public class UserDetailsServiceTests {
 		user = ((ValueResultUser)this.beanFactory.getUserService().insertUser(user)).getValue();
 		
 		// Service
-		UserDetailsService userDetailsService = beanFactory.getUserDetailsService();
+//		UserDetailsService userDetailsService = beanFactory.getUserDetailsService();
 		
 //		TEST: public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		// TODO: UserDetails støttes ikke av Axis2.
+		// TODO Fase2: UserDetails støttes ikke av Axis2.
 //		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 //		Assert.notNull(userDetails, "No user found");
 //		Assert.isTrue(userDetails.getUsername().equals(username), "User not the same");
