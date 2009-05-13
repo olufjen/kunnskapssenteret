@@ -261,11 +261,12 @@ public class OrganizationBean implements IconProvider{
 			ps.flush();
 			ps.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// TODO Fase2: Auto-generated catch block
 			e.printStackTrace();
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}
+	@SuppressWarnings("unchecked")
 	public void resetTreeModel() {
 		DefaultMutableTreeNode root;
 		if(this.treeModel == null){
@@ -379,34 +380,6 @@ public class OrganizationBean implements IconProvider{
 		this.supplierOrganization = supplierOrganization;
 	}
 	public Organization getOrganization() {
-		// TODO: Delete this debugging information
-		
-		organization.getDescription();
-		organization.getType();
-
-		organization.getContactInformation().getPostalAddress();
-		organization.getContactInformation().getPostalCode();
-		organization.getContactInformation().getPostalLocation();
-		organization.getContactInformation().getEmail();
-		organization.getContactInformation().getTelephoneNumber();
-
-		organization.getContactPerson().getFirstName();
-		organization.getContactPerson().getLastName();
-		organization.getContactPerson().getName();
-
-		organization.getContactPerson().getHprNumber();
-		organization.getContactPerson().getStudentNumber();
-		organization.getContactPerson().getEmployer();
-		organization.getContactPerson().getPosition().getName();
-
-		organization.getContactPerson().getProfile().getParticipateSurvey();
-		organization.getContactPerson().getProfile().getReceiveNewsletter();
-
-		organization.getContactPerson().getContactInformation().getPostalAddress();
-		organization.getContactPerson().getContactInformation().getPostalCode();
-		organization.getContactPerson().getContactInformation().getPostalLocation();
-		organization.getContactPerson().getContactInformation().getEmail();
-		organization.getContactPerson().getContactInformation().getTelephoneNumber();
 
 		if(this.getIsMemberOrganization()){
 			MemberOrganization memberOrganization = this.memberOrganization;

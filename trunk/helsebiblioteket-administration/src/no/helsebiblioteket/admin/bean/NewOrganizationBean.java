@@ -6,7 +6,7 @@ import no.helsebiblioteket.admin.service.UserService;
 
 public class NewOrganizationBean {
 	
-	// FIXME: Replace these with something else?
+	// TODO Fase2: Replace these with something else?
 	private String organizationName;
 	private String orgAddress;
 	private String orgPostalCode;

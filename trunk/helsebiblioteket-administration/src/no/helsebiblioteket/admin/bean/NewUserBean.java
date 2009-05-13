@@ -154,7 +154,7 @@ public class NewUserBean {
 		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) { msg = "email_not_valid"; valid = false; }
 		if ( ! valid) {
 			emailComponent.setValid(false);
-			// TODO: Set with Spring
+			// TODO Fase2: Set with Spring
 			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
 			FacesMessage message = new FacesMessage(bundle.getString(msg));
 			facesContext.addMessage(component.getClientId(facesContext), message);

@@ -44,9 +44,6 @@ public class OrganizationTypeBean {
 	private HtmlDataTable orgTypeAccessTable;
 	private List<ResourceAccessListItem> deltetedResources;
 
-	private ResourceAccessListItem[] newOrgTypeAccessList;
-	private ResourceAccessListItem[] oldOrgTypeAccessList;
-
 	public String actionEdit(){
 		this.organizationType = (OrganizationType) this.organizationTypeTable.getRowData();
 		loadTypes();

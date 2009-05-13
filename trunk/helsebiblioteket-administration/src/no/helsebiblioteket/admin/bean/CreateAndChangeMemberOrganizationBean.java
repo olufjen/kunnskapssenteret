@@ -37,9 +37,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
@@ -269,23 +267,6 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	public void actionDeleteIpRange() {
 		logger.debug("Method 'actionDeleteIpRange' invoked");
 		this.ipRangeList.remove((IpAddressRange) this.ipRangeListHtmlDataTable.getRowData());
-	}
-	
-	public String actionEditOrganizationREMOVE() {
-		// FIXME: Remove this?
-		Integer orgId = (Integer) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("organizationId");
-		OrganizationListItem organizationLookup = new OrganizationListItem();
-		organizationLookup.setId(orgId);
-		
-		SingleResultOrganization result = organizationService.getOrganizationByListItem(organizationLookup);
-    	// TODO: Do not use instanceof ValueResultOrganization.
-		if(result instanceof ValueResultOrganization){
-    		// FIXME: re-insert:
-        	this.memberOrganization = null;// (MemberOrganization) ((ValueResultOrganization)result).getValue();
-    	} else {
-    		this.memberOrganization = null;
-    	}
-		return "create_and_change_member_organization";
 	}
 	
 	public void addIpRangeActionListener(ActionEvent actionEvent) {

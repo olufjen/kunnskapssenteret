@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectMany;
@@ -16,14 +15,12 @@ import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Position;
-import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
@@ -62,7 +59,6 @@ public class UserBean {
 	private Map<String, Role> allRolesMap;
 	private List<Position> allPositions;
 	private Map<String, Position> allPositionsMap;
-	// FIXME: Use caching?
 	private UserListItem[] users;
 	private User user;
 	
@@ -74,7 +70,6 @@ public class UserBean {
 	private boolean showPositionMenu;
 	private boolean showProfile;
 	
-	// TODO: Move to domain model!
 	private String roleKeyStudent = "student";
 	private String roleKeyEmployee = "health_personnel_other";
 	private String roleKeyHealthWorker = "health_personnel";
@@ -96,40 +91,20 @@ public class UserBean {
     protected final Log logger = LogFactory.getLog(getClass());
 
     private boolean isNew(){ return this.user.getId() == null; }
-	// TODO: Now fetching main role with: user.roleList[0].name
-    // TODO: Place in User class?
+
     private Role mainRole(){ return this.user.getRoleList()[0]; }
     private void mainRole(Role role){ this.user.setRoleList(new Role[1]); this.user.getRoleList()[0]=role; }
     
     public void initSelectedIsStudent(){
 		if(this.availableIsStudent == null){
 			this.availableIsStudent = new ArrayList<SelectItem>();
-//    	if(this.mainRole().getKey().equals(roleKeyAdministrator) | 
-//    			this.mainRole().getKey().getValue().equals(roleKeyEmployee) |
-//    			this.mainRole().getKey().getValue().equals(roleKeyHealthWorker)){
-//			this.availableIsStudent.add(new SelectItem("U", "None"));
-//    		this.selectedIsStudent = "U";
-//    		if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
-//    	} else if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
 			this.availableIsStudent.add(new SelectItem("Y", "Student"));
 			this.availableIsStudent.add(new SelectItem("N", "Employee"));
 			this.selectedIsStudent = "N";
 			if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
-//    	} else {
-//    		// TODO: What then?
-//    		this.availableIsStudent.add(new SelectItem("U", "None"));
-//    		this.selectedIsStudent = "";
     	}
-//		}
-
-//		logger.info("this.user.getRole().getKey()=" + this.mainRole().getKey().getValue());
-//		logger.info("this.selectedIsStudent=" + this.selectedIsStudent);
-//		logger.info("this.isStudentSelectOne=" + this.isStudentSelectOne);
-		
-
     }
     public void enableDisableFields(){
-    	// TODO: Is this done correctly?
     	this.initSelectedIsStudent();
     	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
         	this.showHprNumber = false;
@@ -173,9 +148,6 @@ public class UserBean {
     	}
     }
     public void roleChanged(ValueChangeEvent event){
-    	// FIXME: Really use submit and this action for enable and disable fields?
-    	logger.info("OLD: " + event.getOldValue());
-    	logger.info("NEW: " + event.getNewValue());
     	if(this.allRolesMap.containsKey(event.getNewValue())){
     		this.mainRole(this.allRolesMap.get(event.getNewValue()));
     	}
@@ -331,7 +303,7 @@ public class UserBean {
 				new PageRequest(0, 40));
 		this.users = this.lastPageResult.getResult();
 		
-		// TODO: Adding dummy roles?
+		// TODO Fase2: Adding dummy roles?
 		for (UserListItem item : this.users) {
 			if(item.getRoleNames().length == 0){
 				item.setRoleNames(new String[1]);
@@ -379,7 +351,7 @@ public class UserBean {
 			String name = ResourceBundle.getBundle(
 					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
 					"user_details_no_employer");
-			// TODO: How to find right name here?
+			// TODO Fase2: How to find right name here?
 			dummy.getOrganization().setNameEnglish(name);
 			dummy.getOrganization().setNameShortEnglish(name);
 			dummy.getOrganization().setNameNorwegian(name);
@@ -389,7 +361,7 @@ public class UserBean {
 			PageRequest request = new PageRequest(0, 40);
 			PageResultOrganizationListItem orgs = this.organizationService.getOrganizationListAll(request);
 			for (OrganizationListItem organization : orgs.getResult()) {
-				// TODO: How to find right name here?
+				// TODO Fase2: How to find right name here?
 				String orgName = organization.getNameNorwegian();
 				if(orgName.equals("")) orgName = organization.getNameEnglish();
 				SelectItem option = new SelectItem(""+organization.getId(), orgName, "", false);
@@ -399,7 +371,6 @@ public class UserBean {
 		return this.availableEmployers;
 	}
 	public List<String> getSelectedRoles() {
-		// FIXME: All must be selected!
 		if(this.selectedRoles == null){
 			this.selectedRoles = new ArrayList<String>();
 			for (Role role : this.getAllRoles()) {
@@ -430,14 +401,6 @@ public class UserBean {
 		if(this.allPositions == null){
 			this.allPositions = new ArrayList<Position>();
 
-			// TODO: Right way to add DUMMY?
-//			Position dummy = new Position();
-//			dummy.setKey(PositionTypeKey.none);
-//			dummy.setName(ResourceBundle.getBundle(
-//					"no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault()).getString(
-//							"user_details_no_position"));
-//			this.allPositions.add(dummy);
-			
 			Position[] positions = this.userService.getPositionListAll("").getList();
 			for (Position loadedPos : positions) {
 				this.allPositions.add(loadedPos);

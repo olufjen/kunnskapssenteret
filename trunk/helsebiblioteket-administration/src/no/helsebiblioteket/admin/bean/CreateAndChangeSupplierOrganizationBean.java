@@ -1,7 +1,5 @@
 package no.helsebiblioteket.admin.bean;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -14,12 +12,8 @@ import javax.faces.validator.ValidatorException;
 import org.apache.myfaces.component.html.ext.HtmlDataTable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import no.helsebiblioteket.admin.domain.ContactInformation;
-import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceType;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
@@ -29,15 +23,11 @@ import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
 import no.helsebiblioteket.admin.validator.EmailValidator;
-import no.helsebiblioteket.admin.validator.IpAddressValidator;
-import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 /**
  * 
@@ -265,7 +255,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.setNotNew( ! this.organizationBean.getIsNew());
 		this.organization = this.supplierOrganization.getOrganization();
 		
-		// TODO: remove:
+		// TODO Fase2: remove
 		if(this.supplierOrganization.getResourceList() == null){
 			this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
 		}
