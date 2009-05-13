@@ -31,7 +31,6 @@ public interface AccessService extends Serializable {
 	public Boolean deleteSupplierSourceResource(SupplierSourceResource resource);
 	public Boolean deleteResourceAccess(ResourceAccessListItem access);
 	
-	// TODO: Not in use yet. Define methods as needed by clients.
 	public Boolean insertUserResourceAccess(User user, ResourceAccess access);
 	public Boolean insertUserRoleResourceAccess(Role userRole, ResourceAccess access);
 	public Boolean insertOrganizationResourceAccess(Organization organization, ResourceAccess access);

@@ -9,21 +9,19 @@ import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.translator.OrganizationToLoggedInOrganizationTranslator;
+import no.helsebiblioteket.admin.translator.UserToLoggedInUserTranslator;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
-import no.helsebiblioteket.admin.domain.requestresult.EmptyResultMemberOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
+import no.helsebiblioteket.admin.domain.requestresult.LoggedInUserResult;
 import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
@@ -44,18 +42,20 @@ public class LoginServiceImpl implements LoginService {
 	 * Returns the complete user object.
 	 * Returns EmptyResult if user not found or passwords not equal.
 	 */
-	public SingleResultUser loginUserByUsernamePassword(String username, String password){
-		SingleResultUser result = this.userService.findUserByUsername(username);
-		if(result instanceof ValueResultUser){
-			User loggedIn = ((ValueResultUser)result).getValue();
-			if(loggedIn.getPassword().equals(password)){
-				// FIXME: Remove this. Something wrong with Axis!
-				loggedIn.setPerson(null);
-				loggedIn.setRoleList(new Role[0]);
+	@Override
+	public LoggedInUserResult loginUserByUsernamePassword(String username, String password){
+		SingleResultUser find = this.userService.findUserByUsername(username);
+		LoggedInUserResult result = new LoggedInUserResult();
+		if(find instanceof ValueResultUser){
+			User found = ((ValueResultUser)find).getValue();
+			if(found.getPassword().equals(password)){
+				UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
+				result.setUser(userTranslator.translate(found));
+				result.setSuccess(true);
 				return result;
 			}
 		}
-		return new EmptyResultUser();
+		return result;
 	}
 	/**
 	 * Loads the organization from the database and returns the complete
@@ -63,7 +63,9 @@ public class LoginServiceImpl implements LoginService {
 	 * delegated to IpRangeDao.
 	 * Returns the first found if there are more than one match.
 	 */
-	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
+	@Override
+	public LoggedInOrganizationResult loginOrganizationByIpAddress(IpAddress ipAddress) {
+		LoggedInOrganizationResult returnThis = new LoggedInOrganizationResult();
 		ListResultOrganizationListItem result = this.organizationService.getOrganizationListByIpAddress(ipAddress);
 		OrganizationListItem[] list = result.getList();
 		if(list.length >= 1) {			
@@ -73,16 +75,18 @@ public class LoginServiceImpl implements LoginService {
 			SingleResultOrganization memberResult = this.organizationService.getOrganizationByListItem(list[0]);
 			if(memberResult instanceof ValueResultMemberOrganization) {
 				MemberOrganization memberOrganization = ((ValueResultMemberOrganization)memberResult).getValue();
-				// FIXME: Remove this. Something wrong with Axis!
-				memberOrganization.getOrganization().setContactPerson(null);
-				return new ValueResultMemberOrganization(memberOrganization);
+				OrganizationToLoggedInOrganizationTranslator translator = new OrganizationToLoggedInOrganizationTranslator();
+				returnThis.setOrganization(translator.translate(memberOrganization.getOrganization()));
+				returnThis.setSuccess(true);
+				return returnThis;
 			}
 		}
-		return new EmptyResultMemberOrganization();
+		return returnThis;
 	}
 	/**
 	 * Sends an email to the user. This is delegated to EmailService.
 	 */
+	@Override
 	public SendPasswordEmailResult sendPasswordEmail(String emailaddressOrUsername) {
 		SendPasswordEmailResult result = new SendPasswordEmailResult();
 		if(EmailValidator.getInstance().isValidEmailAdress(emailaddressOrUsername)){
@@ -115,12 +119,9 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return result;
 	}
-	
 	private void sendEmail(User user) {
 		user.setPassword(this.newPasssword());
 		this.userService.updateUser(user);
-		
-		
 		Email email = new Email();
 		email.setFromName(this.emailFromName);
 		email.setFromEmail(this.emailFromEmail);
@@ -129,8 +130,7 @@ public class LoginServiceImpl implements LoginService {
 		email.setSubject(this.emailSubject);
 		email.setMessage(this.message(this.emailMessage, user));
 		emailService.sendEmail(email);
-
-		logger.info("Sending email to user:" + user.getUsername());
+		logger.debug("Sending email to user:" + user.getUsername());
 	}
 	private String newPasssword() {
 		String password = "";

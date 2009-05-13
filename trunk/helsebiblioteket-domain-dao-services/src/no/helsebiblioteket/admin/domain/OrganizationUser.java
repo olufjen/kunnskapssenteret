@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.domain;
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public class OrganizationUser implements Serializable  {
 	private Organization organization;
 	private User user;

@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.User;
 
+@SuppressWarnings("serial")
 public class ValueResultUser extends SingleResultUser{
 	private User value;
 	public ValueResultUser() { }

@@ -21,9 +21,7 @@ import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
-import no.helsebiblioteket.admin.dao.ResourceTypeDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
-import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
@@ -37,7 +35,6 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
-import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
@@ -273,7 +270,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization) {
-		// TODO: This should be removed, because it is only written to get
+		// TODO Fase2: This should be removed, because it is only written to get
 		//       around an error(?)in Axis2.
 		if(memberOrganization.getIpAddressRangeList() == null){
 			memberOrganization.setIpAddressRangeList(new IpAddressRange[0]);
@@ -288,7 +285,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	@Override
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization) {
-		// TODO: This should be removed, because it is only written to get
+		// TODO Fase2: This should be removed, because it is only written to get
 		//       around an error(?)in Axis2.
 		if(supplierOrganization.getResourceList() == null){
 			supplierOrganization.setResourceList(new SupplierSourceResource[0]);
@@ -355,7 +352,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 		
-		// TODO: Allowed to change type?
 		OrganizationType type = this.organizationTypeDao.getOrganizationTypeByKey(organization.getType().getKey());
 		if(type == null) throw new NullPointerException("Invalid type reference");
 		
@@ -586,7 +582,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return contactInformation;
 	}
 	private Person createPerson() {
-		// TODO: What position to use, or allow no position?
 		Position position = this.positionDao.getPositionByKey(PositionTypeKey.none);
 		if(position == null){ throw new NullPointerException("Position none not found"); }
 		
@@ -609,7 +604,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	private Person loadPerson(Organization organization) {
 		Person person = this.personDao.getPersonByOrganization(organization);
-		// TODO: Load in DAO
 		if (person != null) {
 			person.setEmployer("");
 			ContactInformation contactInformation = this.contactInformationDao.getContactInformationByPerson(person);
@@ -623,7 +617,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return person;
 	}
 	/**
-	 * Adds new ranges and aingle addresses.
+	 * Adds new ranges and single addresses.
 	 * 
 	 * @param changedIpRangeList
 	 * @param originalIpRangeList
@@ -740,66 +734,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		ipAddressSet.setLastChanged(ipAddressLine.getLastChanged());
 		return ipAddressSet;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	private void saveAccessList(List<Access> changedAccessList, List<Access> originalAccessList) {
-//		ModifiedListHelper<Access> listHelper = new ModifiedListHelper<Access>();
-//		List<Access> deleteList = listHelper.getDeleteList(changedAccessList, originalAccessList);
-//		List<Access> insertAndUpdateList = null;//listHelper.getInsertAndUpdateList(changedAccessList, originalAccessList);
-//		if (deleteList != null) {
-//			for (Access access : deleteList) {
-////				accessDao.deleteAccess(access);
-//			}
-//		}
-//		if (insertAndUpdateList != null) {
-//			for (Access access : insertAndUpdateList) {
-//				saveAccess(access);
-//			}
-//		}
-	}
-	private void saveOrganization(Organization organization) {
-//		saveOrganization(organization, organizationDao.getOrganizationById(organization.getId()));
-	}
-	private void saveOrganization(Organization changedOrganization, Organization originalOrganization) {
-//		if (changedOrganization.getOrgUnitId() != null) {
-			//if (originalOrganization == null || (originalOrganization != null && !originalOrganization.getLastChanged().equals(changedOrganization.getLastChanged()))) {
-			//	throw new OptimisticLockingFailureException("Organization has been changed by another caller since last time it was loaded from datastore");
-			//}
-//			updateOrganization(changedOrganization, originalOrganization);
-//		} else {
-//			insertOrganization(changedOrganization);
-//		}
-	}
-	private void updateOrganization(MemberOrganization changedOrganization, MemberOrganization originalOrganization) {		
-//		organizationDao.updateOrganization(changedOrganization);
-//		setForeignKeysForOrganization(changedOrganization);
-//		savePerson(changedOrganization.getContactPerson(), changedOrganization.getContactPerson());
-//		saveContactInformation(changedOrganization.getContactInformation(), originalOrganization.getContactInformation());
-//		saveIpRangeList(changedOrganization.getIpAddressSetList(), originalOrganization.getIpAddressSetList());
-//		saveOrganizationNameList(changedOrganization.getNameList(), originalOrganization.getNameList());
-//		saveAccessList(changedOrganization.getAccessList(), originalOrganization.getAccessList());
-//		saveSupplierSourceList(changedOrganization.getSupplierSourceList(), originalOrganization.getSupplierSourceList());
-	}
 	private void savePerson(Person person, Person originalPerson) {
-//		saveContactInformation(person.getContactInformation(), originalPerson.getContactInformation());
 		if (person.getId() != null) {
 			personDao.updatePerson(person);
 		} else {
@@ -817,48 +752,25 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 	}
-	private void saveAccess(Access access) {
-	}
-	private void insertOrganization2(Organization organization) {
-		if (organization.getContactPerson() != null) {
-			if (organization.getContactPerson().getContactInformation() != null) {
-				contactInformationDao.insertContactInformation(organization.getContactPerson().getContactInformation());
-			}
-			personDao.insertPerson(organization.getContactPerson());
-		}
-		if (organization.getContactInformation() != null) {
-			contactInformationDao.insertContactInformation(organization.getContactInformation());
-		}
-//		organizationDao.insertOrganization(organization);
-//		setForeignKeysForOrganization(organization);
-//		if (organization.getNameList() != null) {
-//			for (OrganizationName organizationName : organization.getNameList()) {		
-//				organizationDao.insertOrganizationName(organizationName);
-//			}
-//		}
-//		if (organization.getIpAddressSetList() != null) {
-//			for (IpAddressSet ipRange : organization.getIpAddressSetList()) {
-//				ipRangeDao.insertIpRange(ipRange);
-//			}
-//		}
-	}
-	private void saveSupplierSource(SupplierSource supplierSource) {
-		if (supplierSource.getId() == null) {
-			supplierSourceDao.insertSupplierSource(supplierSource);
-//			resourceDao.insertResource(supplierSource);
-		} else {
-			supplierSourceDao.updateSupplierSource(supplierSource);
-//			resourceDao.updateResource(supplierSource);
-		}
-	}
-	private void setForeignKeysForOrganization(MemberOrganization organization) {
-		if (organization != null) {
-			if (organization.getIpAddressRangeList() != null) {
-//				for (IpAddressSet ipRange : organization.getIpAddressRangeList()) {
-////					ipRange.setOrganizationId(organization.getOrgUnitId());
-//				}
+	@Override
+	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources) {
+		for (SupplierSourceResource supplierSourceResource : resources) {
+			if(supplierSourceResource.getResource().getId() == null){
+				this.supplierSourceDao.insertSupplierSource(supplierSourceResource.getSupplierSource());
+				this.resourceDao.insertSupplierSourceResource(supplierSourceResource);
 			}
 		}
+		return new ListResultSupplierSourceResource(resources);
+	}
+	@Override
+	public Boolean deleteResources(SupplierSourceResource[] resources) {
+		for (SupplierSourceResource supplierSourceResource : resources) {
+			if(supplierSourceResource.getResource().getId() != null){
+				this.resourceDao.deleteSupplierSourceResource(supplierSourceResource);
+				this.supplierSourceDao.deleteSupplierSource(supplierSourceResource.getSupplierSource());
+			}
+		}
+		return Boolean.TRUE;
 	}
 
 	public void setOrganizationDao(OrganizationDao organizationDao) {
@@ -896,25 +808,5 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	public void setPositionDao(PositionDao positionDao) {
 		this.positionDao = positionDao;
-	}
-	@Override
-	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources) {
-		for (SupplierSourceResource supplierSourceResource : resources) {
-			if(supplierSourceResource.getResource().getId() == null){
-				this.supplierSourceDao.insertSupplierSource(supplierSourceResource.getSupplierSource());
-				this.resourceDao.insertSupplierSourceResource(supplierSourceResource);
-			}
-		}
-		return new ListResultSupplierSourceResource(resources);
-	}
-	@Override
-	public Boolean deleteResources(SupplierSourceResource[] resources) {
-		for (SupplierSourceResource supplierSourceResource : resources) {
-			if(supplierSourceResource.getResource().getId() != null){
-				this.resourceDao.deleteSupplierSourceResource(supplierSourceResource);
-				this.supplierSourceDao.deleteSupplierSource(supplierSourceResource.getSupplierSource());
-			}
-		}
-		return Boolean.TRUE;
 	}
 }

@@ -30,10 +30,10 @@ public class PersonToXMLTranslator {
 
 		
 		
-		// TODO: Complete this!
-		person.getId();
+		// TODO Fase2: Complete this!
+//		person.getId();
 //		person.getIsStudent();
-		person.getLastChanged();
+//		person.getLastChanged();
 		
 		if(element == null){
 			document.appendChild(personElement);

@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.key;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PositionTypeKey implements Serializable {
 	private String value;
 	
@@ -41,9 +42,9 @@ public class PositionTypeKey implements Serializable {
 	public static final PositionTypeKey provisorfarmasoyt = new PositionTypeKey("provisorfarmasoyt");
 	public static final PositionTypeKey reseptarfarmasoyt = new PositionTypeKey("reseptarfarmasoyt");
 	
-	// TODO: Remove?
+	// TODO Fase2: Remove?
 	public static PositionTypeKey[] values() { return PositionTypeKey.values.clone(); }
-	// TODO: Remove?
+	// TODO Fase2: Remove?
 	public static PositionTypeKey valueOf(String name) { return (lookup(name)); }
 	
 	private static final PositionTypeKey[] values = new PositionTypeKey[] { 
@@ -90,7 +91,7 @@ public class PositionTypeKey implements Serializable {
 		return this.value;
 	}
 	
-	// TODO: Remove?
+	// TODO Fase2: Remove?
 	private static PositionTypeKey lookup(String lookupString) {
 		if (null != lookupString) {
 			for (PositionTypeKey positionTypeKey : PositionTypeKey.values) {

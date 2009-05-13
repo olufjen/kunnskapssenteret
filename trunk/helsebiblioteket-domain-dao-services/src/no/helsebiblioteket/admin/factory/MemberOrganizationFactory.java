@@ -3,7 +3,6 @@ package no.helsebiblioteket.admin.factory;
 import java.util.Date;
 
 import no.helsebiblioteket.admin.domain.IpAddressRange;
-import no.helsebiblioteket.admin.domain.IpAddressSet;
 import no.helsebiblioteket.admin.domain.IpAddressSingle;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationType;

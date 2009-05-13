@@ -37,7 +37,6 @@ public interface UserService extends Serializable {
 	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey, OrganizationType organizationType);
 	public SingleResultRole getRoleByKeySystem(UserRoleKey key, System system);
 
-	// TODO: Remove this and use findUsersBySearchStringRoles with empty string and list?
 	public PageResultUserListItem getUserListAll(PageRequest request);
 	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request);
 

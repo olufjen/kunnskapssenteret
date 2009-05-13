@@ -1,8 +1,6 @@
 package no.helsebiblioteket.admin.domain.key;
 
 public class ResourceTypeKey {
-	// TODO: Insert something here?
-
 	public static final ResourceTypeKey supplier_source = new ResourceTypeKey("supplier_source");
 
 	private String value;

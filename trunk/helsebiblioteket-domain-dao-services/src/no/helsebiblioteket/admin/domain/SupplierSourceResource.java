@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class SupplierSourceResource implements Serializable  {
 	// References
 	private SupplierSource supplierSource;

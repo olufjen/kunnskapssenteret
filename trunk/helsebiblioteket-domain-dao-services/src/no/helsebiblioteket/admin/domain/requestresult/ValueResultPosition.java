@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.Position;
 
+@SuppressWarnings("serial")
 public class ValueResultPosition extends SingleResultPosition{
 	private Position value;
 	public ValueResultPosition() { }

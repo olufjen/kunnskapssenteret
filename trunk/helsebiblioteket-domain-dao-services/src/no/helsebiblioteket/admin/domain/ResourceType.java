@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 
+@SuppressWarnings("serial")
 public class ResourceType implements Serializable {
 	// Primary key
 	private Integer id;

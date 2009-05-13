@@ -10,6 +10,5 @@ public interface RoleDao {
 	// Fetch
 	public Role getRoleByKeySystem(UserRoleKey userRoleKey, System system);
 	public List<Role> getRoleListBySystem(System system);
-	// TODO: Revmove this? Probably not.
 	public Role getRoleById(Integer roleId);
 }

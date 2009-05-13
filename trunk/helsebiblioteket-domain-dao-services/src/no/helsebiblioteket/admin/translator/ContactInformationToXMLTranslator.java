@@ -11,13 +11,12 @@ public class ContactInformationToXMLTranslator {
 		Element contactElement = document.createElement("contactinformation");
 		contactElement.appendChild(UserToXMLTranslator.cDataElement(document, "email", contactInformation.getEmail()));
 		
-		// TODO: Complete this!
-//		contactInformation.getContactInformationId();
-		contactInformation.getLastChanged();
-		contactInformation.getPostalAddress();
-		contactInformation.getPostalCode();
-		contactInformation.getPostalLocation();
-		contactInformation.getTelephoneNumber();
+		// TODO Fase2: Complete this!
+//		contactInformation.getLastChanged();
+//		contactInformation.getPostalAddress();
+//		contactInformation.getPostalCode();
+//		contactInformation.getPostalLocation();
+//		contactInformation.getTelephoneNumber();
 		
 		
 		if(element == null){

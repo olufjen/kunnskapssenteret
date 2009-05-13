@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.domain;
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public class IpAddressRange implements Serializable {
 	// Local values
 	private IpAddress ipAddressFrom;

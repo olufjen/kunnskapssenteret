@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.Role;
 
+@SuppressWarnings("serial")
 public class ValueResultRole extends SingleResultRole{
 	private Role value;
 	public ValueResultRole() { }

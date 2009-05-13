@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.key;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class OrganizationTypeKey implements Serializable {
 //	content_supplier, health_enterprise, public_administration, teaching, other
 

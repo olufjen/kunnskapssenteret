@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Person implements Serializable {
 	// Primary key
 	private Integer id;
@@ -10,7 +11,6 @@ public class Person implements Serializable {
 	// Local values
 	private String firstName;
 	private String lastName;
-	// TODO: Does not exist in the database
 	private String employer;
 	private String studentNumber;
 	private String hprNumber;
@@ -19,7 +19,6 @@ public class Person implements Serializable {
 
 	// References
 	private Position position = new Position();
-	// TODO: This is not stored in the database!
 	private String positionText;
 	private ContactInformation contactInformation = new ContactInformation();
 	private Profile profile = new Profile();

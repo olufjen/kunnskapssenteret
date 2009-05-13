@@ -11,8 +11,8 @@ public class ProfileToXMLTranslator {
 		profileElement.appendChild(UserToXMLTranslator.element(document, "survey", profile.getParticipateSurvey()));
 		profileElement.appendChild(UserToXMLTranslator.element(document, "newsletter", profile.getReceiveNewsletter()));
 		
-		// TODO: Complete this!
-		profile.getLastChanged();
+		// TODO Fase2: Complete this!
+//		profile.getLastChanged();
 		
 		if(element == null){
 			document.appendChild(profileElement);

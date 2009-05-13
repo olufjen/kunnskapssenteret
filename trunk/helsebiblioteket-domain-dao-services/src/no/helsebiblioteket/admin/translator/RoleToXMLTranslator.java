@@ -14,10 +14,10 @@ public class RoleToXMLTranslator {
 		
 		
 		
-		// TODO Complete this!
+		// TODO Fase2: Complete this!
 //		role.getLastChanged();
-		role.getName();
-		role.getId();
+//		role.getName();
+//		role.getId();
 		
 		element.appendChild(roleElement);
 	}

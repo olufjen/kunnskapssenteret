@@ -7,6 +7,7 @@ import no.helsebiblioteket.admin.domain.base.Identifiable;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 
+@SuppressWarnings("serial")
 public class OrganizationName implements Identifiable, Serializable {
 	// Primary key
 	private Integer id = null;

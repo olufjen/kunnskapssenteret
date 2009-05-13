@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class SupplierOrganization implements Serializable {
 	// Values loaded by ResourceLine
 	private SupplierSourceResource[] resourceList;

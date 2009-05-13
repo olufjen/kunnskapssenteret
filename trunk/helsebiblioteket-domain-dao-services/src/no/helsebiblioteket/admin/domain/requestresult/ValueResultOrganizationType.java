@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
 
+@SuppressWarnings("serial")
 public class ValueResultOrganizationType extends SingleResultOrganizationType{
 	private OrganizationType value;
 	public ValueResultOrganizationType() { }
