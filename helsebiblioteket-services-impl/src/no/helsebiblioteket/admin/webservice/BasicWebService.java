@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public abstract class BasicWebService implements Serializable {
 	
 	private CacheHelper cacheHelper;
@@ -33,6 +34,7 @@ public abstract class BasicWebService implements Serializable {
 	/**
 	 * Invokes a generic webservice.
 	 */
+	@SuppressWarnings("unchecked")
 	public Object invoke(QName name, Object[] args, Class[] returnTypes) {
 		Object[] response = null;
 		try {
@@ -53,6 +55,7 @@ public abstract class BasicWebService implements Serializable {
 	 * Invokes a webservice cached.
 	 * CacheKey.defaultCache is used as cache
 	 */
+	@SuppressWarnings("unchecked")
 	public Object invokeCached(String cacheKey, QName name, Object[] args, Class[] returnTypes) {
 		return invokeCached(CacheKey.defaultCache, cacheKey, name, args, returnTypes);
 	}

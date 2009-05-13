@@ -101,7 +101,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser insertUser(User user){
-		// TODO: This test should not be here.
+		// TODO Fase2: This test should not be here.
 		if(user.getRoleList() == null) {
 			throw new NullPointerException("RoleList should not be null");
 		}
@@ -109,6 +109,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Class[] returnTypes = new Class[] { SingleResultUser.class };
 		return (SingleResultUser)invoke(this.insertUserName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser) {
 		Object[] args = new Object[] { organizationUser };
@@ -118,7 +119,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean updateUser(User user){
-		// TODO: This test should not be here.
+		// TODO Fase2: This test should not be here.
 		if(user.getRoleList() == null) {
 			throw new NullPointerException("RoleList should not be null");
 		}

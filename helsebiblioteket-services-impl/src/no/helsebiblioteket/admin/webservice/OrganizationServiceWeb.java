@@ -83,7 +83,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization) {
-		// TODO: These tests should not be here.
+		// TODO Fase2: These tests should not be here.
 		if(memberOrganization.getIpAddressRangeList() == null) {
 			throw new NullPointerException("IpAddressRangeList should not be null");
 		}
@@ -97,7 +97,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization) {
-		// TODO: These tests should not be here.
+		// TODO Fase2: These tests should not be here.
 		if(supplierOrganization.getResourceList() == null){
 			throw new NullPointerException("ResourceList should not be null");
 		}
@@ -158,7 +158,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 
 	
 	public Log getLogger() {
-		return this.logger;
+		return logger;
 	}
 	public void setOrganizationTypeListAllName(QName organizationTypeListAllName) {
 		this.organizationTypeListAllName = organizationTypeListAllName;
