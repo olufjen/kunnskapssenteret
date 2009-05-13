@@ -68,6 +68,8 @@ public class LDAPLookupUtil {
     private static final String ATR_PAGER = TextResourceUtil.getInstance().getString(LDAPLookupUtil.class, S_ATR_PAGER);
 
     private static final String[] ATTRIBUTES = new String[]{ATR_CN, ATR_GIVENNAME, ATR_MAIL, ATR_SN, ATR_UID, ATR_USER_PASSWORD, ATR_O, ATR_EMPLOYEE_TYPE, ATR_EMPLOYEE_NUMBER, ATR_MOBILE, ATR_PAGER};
+    
+    private static final int ldapLookupLimit = 100000;
 
     private DirContext ctx = null;
     private boolean isLoggedIn = false;
@@ -131,13 +133,10 @@ public class LDAPLookupUtil {
         // filtermask (&(sn=*)(givenName=*))
         String filter = "(&(sn=*)(givenName=*))";
 
-        // TODO Fase2: this should either be a parameter or a property
-        int limit = 40000;
-
         try {
             doLogIn();
 
-            Collection colObj = ldapSearch(ATTRIBUTES, filter, INITIAL_USER_CTX, limit);
+            Collection colObj = ldapSearch(ATTRIBUTES, filter, INITIAL_USER_CTX, ldapLookupLimit);
             if (null != colObj) {
                 Iterator itr = colObj.iterator();
                 while (itr.hasNext()) {
@@ -174,13 +173,10 @@ public class LDAPLookupUtil {
         // filtermask (&(sn=*)(givenName=*))
         String filter = "(&(" + ATR_SN + "=" + sureName + "*)(" + ATR_GIVENNAME + "=" + givenName + "*))";
 
-        // TODO Fase2: this should either be a parameter or a property
-        int limit = 40000;
-
         try {
             doLogIn();
 
-            Collection colObj = ldapSearch(ATTRIBUTES, filter, INITIAL_USER_CTX, limit);
+            Collection colObj = ldapSearch(ATTRIBUTES, filter, INITIAL_USER_CTX, ldapLookupLimit);
             if (null != colObj) {
                 Iterator itr = colObj.iterator();
                 while (itr.hasNext()) {
