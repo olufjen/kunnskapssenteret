@@ -6,11 +6,11 @@ import no.helsebiblioteket.admin.domain.Organization;
 public class OrganizationToLoggedInOrganizationTranslator {
 	public LoggedInOrganization translate(Organization organization){
 		LoggedInOrganization loggedInOrganization = new LoggedInOrganization();
-
-		
-		// FIXME: Write this!
-
-		
+		loggedInOrganization.setId(organization.getId());
+		loggedInOrganization.setNameEnglishNormal(organization.getNameEnglish());
+		loggedInOrganization.setNameEnglishShort(organization.getNameShortEnglish());
+		loggedInOrganization.setNameNorwegianNormal(organization.getNameNorwegian());
+		loggedInOrganization.setNameNorwegianShort(organization.getNameShortNorwegian());
 		return loggedInOrganization;
 	}
 }
