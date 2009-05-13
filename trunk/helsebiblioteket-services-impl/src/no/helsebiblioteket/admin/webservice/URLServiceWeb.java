@@ -8,10 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.URLService;
-import no.helsebiblioteket.admin.domain.AccessType;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Url;
-import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
@@ -30,8 +27,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	private QName hasAccessUserName;
 	private QName hasAccessOrganizationName;
 	private QName hasAccessUserOrganizationName;
-	private QName hasAccessNodeName;
-	private QName accessTypeForUserAndMemberOrganizationName;
+	private QName hasAccessNoneName;
 	
 	private QName groupName;
 	@SuppressWarnings("unchecked")
@@ -100,7 +96,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public AccessResult hasAccessNone(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (AccessResult)invoke(this.hasAccessNodeName, args, returnTypes);
+		return (AccessResult)invoke(this.hasAccessNoneName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -110,17 +106,16 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		return (SingleResultString)invoke(this.groupName, args, returnTypes);
     }
 
-	@SuppressWarnings("unchecked")
-    public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
-		Object[] args = new Object[] { user, memberOrganization, url };
-		Class[] returnTypes = new Class[] { AccessType.class };
-		String key = ( 
-				((user) != null ? (user.getId() + "-") : "") +
-				((memberOrganization) != null ? (memberOrganization.getOrganization().getId() + "-") : "") +
-				url
-				);
-		return (AccessType) invokeCached(CacheKey.accessTypeForUserAndMemberOrganizationCache, key, this.accessTypeForUserAndMemberOrganizationName, args, returnTypes);
-	}
+//    public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
+//		Object[] args = new Object[] { user, memberOrganization, url };
+//		Class[] returnTypes = new Class[] { AccessType.class };
+//		String key = ( 
+//				((user) != null ? (user.getId() + "-") : "") +
+//				((memberOrganization) != null ? (memberOrganization.getOrganization().getId() + "-") : "") +
+//				url
+//				);
+//		return (AccessType) invokeCached(CacheKey.accessTypeForUserAndMemberOrganizationCache, key, this.accessTypeForUserAndMemberOrganizationName, args, returnTypes);
+//	}
     
     public Log getLogger() {
 		return logger;
@@ -150,10 +145,13 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public void setGroupName(QName groupName) {
 		this.groupName = groupName;
 	}
-	public void setAccessTypeForUserAndMemberOrganizationName(QName accessTypeForUserAndMemberOrganizationName) {
-		this.accessTypeForUserAndMemberOrganizationName = accessTypeForUserAndMemberOrganizationName;
+	public void setTranslateUrlNoneName(QName translateUrlNoneName) {
+		this.translateUrlNoneName = translateUrlNoneName;
 	}
-	
+	public void setHasAccessNoneName(QName hasAccessNoneName) {
+		this.hasAccessNoneName = hasAccessNoneName;
+	}
+
 	@SuppressWarnings("null")
 	public static void main(String[] args) throws Exception {
 		// TODO Fase2: Move to test project!
