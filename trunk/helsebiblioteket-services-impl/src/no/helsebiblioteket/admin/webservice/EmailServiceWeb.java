@@ -8,11 +8,13 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.service.EmailService;
 
+@SuppressWarnings("serial")
 public class EmailServiceWeb extends BasicWebService implements EmailService{
 	protected static final Log logger = LogFactory.getLog(EmailServiceWeb.class);
 	private QName sendEmailName;
 	@Override
-	public Log getLogger() { return this.logger; }
+	public Log getLogger() { return logger; }
+	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean sendEmail(Email email) {
 		Object[] args = new Object[] { email };

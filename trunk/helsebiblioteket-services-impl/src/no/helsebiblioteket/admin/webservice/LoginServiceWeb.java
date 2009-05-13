@@ -1,7 +1,5 @@
 package no.helsebiblioteket.admin.webservice;
 
-import java.util.Map;
-
 import no.helsebiblioteket.admin.domain.IpAddress;
 import javax.xml.namespace.QName;
 
@@ -11,16 +9,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.Person;
-import no.helsebiblioteket.admin.domain.Role;
-import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
+import no.helsebiblioteket.admin.domain.requestresult.LoggedInUserResult;
 import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultMemberOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 @SuppressWarnings("serial")
 
 public class LoginServiceWeb extends BasicWebService implements LoginService {
@@ -28,48 +20,37 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	private QName logInIpAddressName;
 	private QName logInUserName;
 	private QName sendPasswordEmailName;
-	private Map<String, Boolean>cachedFor = null;
 	// <paramtermap>
 	// 		<entry name="loginUserByUsernamePassword" value="false">
 	// 		<entry name="loginOrganizationByIpAddress" value="true">
 	// </paramtermap>
 	
-	public SingleResultUser loginUserByUsernamePassword(String username, String password) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public LoggedInUserResult loginUserByUsernamePassword(String username, String password) {
 		Object[] args = new Object[] { username, password };
 		Class[] returnTypes = new Class[] { SingleResultUser.class };
-		// TODO: Remove this:
-		SingleResultUser res = (SingleResultUser)invoke(this.logInUserName, args, returnTypes);
-		User user;
-		if(res instanceof ValueResultOrganizationUser){
-			user = ((ValueResultOrganizationUser)res).getValue().getUser();
-		} else if(res instanceof ValueResultUser){
-			user = ((ValueResultUser)res).getValue();
-		} else {
-			user = null;
-		}
-		if(user!=null && user.getRoleList() == null) user.setRoleList(new Role[0]);
-		return res;
+		return (LoggedInUserResult) invoke(this.logInUserName, args, returnTypes);
 	}
-	public SingleResultMemberOrganization loginOrganizationByIpAddress(IpAddress ipAddress) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public LoggedInOrganizationResult loginOrganizationByIpAddress(IpAddress ipAddress) {
 		Object[] args = new Object[] { ipAddress };
-		Class[] returnTypes = new Class[] { SingleResultMemberOrganization.class };
-		
-		// if ... 
-		
-		
-		
-		return (SingleResultMemberOrganization)invoke(this.logInIpAddressName, args, returnTypes);
+		Class[] returnTypes = new Class[] { LoggedInOrganizationResult.class };
+		return (LoggedInOrganizationResult) invoke(this.logInIpAddressName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public SendPasswordEmailResult sendPasswordEmail(String emailAddress) {
 		Object[] args = new Object[] { emailAddress };
 		Class[] returnTypes = new Class[] { SendPasswordEmailResult.class  };
 		return (SendPasswordEmailResult)invoke(this.sendPasswordEmailName, args, returnTypes);
 	}
-
-	
+	@Override
 	public Log getLogger() {
-		return this.logger;
+		return logger;
 	}
+
 	public void setLogInIpAddressName(QName logInIpAddressName) {
 		this.logInIpAddressName = logInIpAddressName;
 	}
@@ -82,7 +63,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 
 	
 	public static void main(String[] args) throws Exception {
-		// TODO: Move to unit test package!
+		// TODO Fase2: Move to unit test package!
 		QName logInIpAddress = new QName("http://service.admin.helsebiblioteket.no", "loginOrganizationByIpAddress");
 		EndpointReference targetEPR = new EndpointReference("http://localhost:8080/axis2/services/loginService");
 		LoginServiceWeb loginService = new LoginServiceWeb();
@@ -94,22 +75,10 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		
     	IpAddress ipAddress = new IpAddress();
     	ipAddress.setAddress("111.222.333");
-    	SingleResultMemberOrganization result = loginService.loginOrganizationByIpAddress(ipAddress);
+    	@SuppressWarnings("unused")
+		LoggedInOrganizationResult result = loginService.loginOrganizationByIpAddress(ipAddress);
 //    	Organization organization = null;
 //    	System.out.println("organization: " + organization.getName());
 	}
-	
-	public MemberOrganization loginOrganizationByIpAddressWS(IpAddress ipAddress) {
-		Object[] args = new Object[] { ipAddress };
-		Class[] returnTypes = new Class[] { MemberOrganization.class };
-		Object result = invoke(this.logInIpAddressName, args, returnTypes);
-		return (null != result) ? (MemberOrganization) result : null;
-	}
-	
-	public User loginUserByUsernamePasswordWS(String username, String password) {
-		Object[] args = new Object[] { username, password };
-		Class[] returnTypes = new Class[] { User.class };
-		Object result = invoke(this.logInUserName, args, returnTypes);
-		return (result != null) ? (User) result : null;
-	}
+
 }

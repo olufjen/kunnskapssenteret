@@ -13,6 +13,8 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
@@ -41,26 +43,26 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-    public SingleResultUrl translateUrlUser(User user, Url url){
+    public SingleResultUrl translateUrlUser(UserListItem user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		return (SingleResultUrl)invoke(this.translateUrlUserName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
-    public SingleResultUrl translateUrlOrganization(MemberOrganization organization, Url url){
+    public SingleResultUrl translateUrlOrganization(OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		return (SingleResultUrl)invoke(this.translateUrlOrganizationName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
-    public SingleResultUrl translateUrlUserOrganization(User user, MemberOrganization organization, Url url){
+    public SingleResultUrl translateUrlUserOrganization(UserListItem user, OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		String key = (
 				((user != null) ? (user.getId() + "-") : "") + 
-				((organization) != null ? (organization.getOrganization().getId() + "-") : "") +
+				((organization) != null ? (organization.getId() + "-") : "") +
 				url
 				);
 		return (SingleResultUrl) invokeCached(CacheKey.translateUrlUserOrganizationCache, key, this.translateUrlUserOrganizationName, args, returnTypes);
@@ -74,21 +76,21 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-    public AccessResult hasAccessUser(User user, Url url){
+    public AccessResult hasAccessUser(UserListItem user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (AccessResult)invoke(this.hasAccessUserName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
-    public AccessResult hasAccessOrganization(MemberOrganization organization, Url url){
+    public AccessResult hasAccessOrganization(OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (AccessResult)invoke(this.hasAccessOrganizationName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
-    public AccessResult hasAccessUserOrganization(User user, MemberOrganization organization, Url url){
+    public AccessResult hasAccessUserOrganization(UserListItem user, OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (AccessResult) invoke(this.hasAccessUserOrganizationName, args, returnTypes);
@@ -154,7 +156,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	
 	@SuppressWarnings("null")
 	public static void main(String[] args) throws Exception {
-		// TODO: Move to test project!
+		// TODO Fase2: Move to test project!
 		QName isAffectedName = new QName("http://service.admin.helsebiblioteket.no", "isAffected");
 		QName translateName = new QName("http://service.admin.helsebiblioteket.no", "translate");
 		EndpointReference targetEPR = new EndpointReference("http://localhost:8080/axis2/services/urlService");
@@ -166,8 +168,8 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		loginService.setTranslateUrlOrganizationName(translateName);
 		loginService.init();
 		
-		User user = new User();
-		MemberOrganization organization = new MemberOrganization();
+		UserListItem user = new UserListItem();
+		OrganizationListItem organization = new OrganizationListItem();
 		Url url1 = new Url();
 		url1.setStringValue("http://proxy.helsebiblioteket.no/login?url=http://www.legehandboka.no");
 		Url url2 = new Url();
