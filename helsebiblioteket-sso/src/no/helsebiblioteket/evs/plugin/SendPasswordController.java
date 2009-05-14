@@ -36,8 +36,6 @@ public final class SendPasswordController extends HttpControllerPlugin {
 
 		String email = request.getParameter(this.parameterNames.get("emailaddress"));
     	if(email == null) { email = ""; }
-    	User user = new User();
-   		user.setUsername(email);
     	boolean success = true;
     	boolean sent = true;
     	String emailError = "";
@@ -45,7 +43,7 @@ public final class SendPasswordController extends HttpControllerPlugin {
    			success = false;
    	    	// TODO Fase2: Return errors, etc from property files!
    			emailError = "NOT_VALID";
-   		} else if(this.loginService.sendPasswordEmail(user.getUsername()).getFailed()) {
+   		} else if(this.loginService.sendPasswordEmail(email).getFailed()) {
    			success = false;
    			sent = false;
    		}
