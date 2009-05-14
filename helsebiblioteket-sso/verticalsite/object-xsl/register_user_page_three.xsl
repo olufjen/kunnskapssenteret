@@ -33,8 +33,7 @@
     <xsl:variable name="survey" select="/verticaldata/context/querystring/parameter[@name = 'survey']"/>
     <xsl:variable name="newsletter" select="/verticaldata/context/querystring/parameter[@name = 'newsletter']"/>
     <xsl:variable name="hbresult" select="/verticaldata/hbregisterresult"/>
-    <xsl:variable name="loggedin" select="/verticaldata/loggedin"/>
-    
+    <xsl:variable name="loggedin" select="/verticaldata/loggedin"/>    
     
     <xsl:template match="/">
         <div class="main_loggin">    
@@ -46,9 +45,7 @@
                     </div>
                 </div>
             </div><!-- left -->
-        </div><!-- main -->
-        
-        
+        </div><!-- main -->        
     </xsl:template> <!-- end content -->
     
     <xsl:template name="step3">
@@ -56,9 +53,9 @@
             <div class="wrap">
                 <xsl:variable name="usertype"><xsl:call-template name="usertype"></xsl:call-template></xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="$usertype='health_personnel'"><h4 class="logon_column_heading">Registrering av ny bruker - helsepersonell</h4></xsl:when>
-                    <xsl:when test="$usertype='student'"><h4 class="logon_column_heading">Registrering av ny bruker - høyskole/universitet</h4></xsl:when>
-                    <xsl:otherwise><h4 class="logon_column_heading">Registrering av ny bruker - andre ansatte</h4></xsl:otherwise>
+                	<xsl:when test="$usertype='health_personnel'"><h1 class="autoheading">Registrering av ny bruker - helsepersonell</h1></xsl:when>
+                	<xsl:when test="$usertype='student'"><h1 class="autoheading">Registrering av ny bruker - høyskole/universitet</h1></xsl:when>
+                	<xsl:otherwise><h1 class="autoheading">Registrering av ny bruker - andre ansatte</h1></xsl:otherwise>
                 </xsl:choose>
                 
                 <h4 class="logon_column_heading">Bekreftelse</h4>
@@ -84,18 +81,18 @@
 								Du har registrert følgende brukernavn:
                             </p>
                             <p>
-                            	<xsl:value-of select="$loggedin/user/username/text()" />
+                            	<b><xsl:value-of select="$loggedin/user/username/text()" /></b>
                             </p>
                             <p>
 								Bekreftelse er også sendt til: “
 								<xsl:value-of select="$loggedin/user/person/contactinformation/email/text()" />
-								”. Dersom epostadressen ovenfor er feil, ta kontakt med oss.
+                            	”.<br />Dersom epostadressen ovenfor er feil, <a href="#">ta kontakt</a> med oss.
                             </p>
                             <p>
-								For å endre ditt passord eller dine brukerdata, velg “Min Profil”
-								øverst på nettsiden.
-                            </p>
-
+                            	For å endre ditt passord eller dine brukerdata, velg “Min Profil” øverst på nettsiden etter at du er logget inn.
+                            <br />
+	                        		For å logge deg inn, fyll inn feltene øverst i høyrespalten.
+	                        	</p>
                 			<xsl:choose>
 			                    <xsl:when test="$usertype='health_personnel'">
 									<!-- none -->
