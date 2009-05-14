@@ -24,7 +24,9 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
@@ -87,7 +89,9 @@ public class AccessServiceTests {
 		accessService.insertUserResourceAccess(user, access);
 		
 //		TEST: public List<ResourceAccess> getAccessListByUser(User user);
-		ListResultResourceAccessListItem userAccessList = accessService.getAccessListByUser(user);
+		UserListItem item = new UserListItem();
+		item.setId(user.getId());
+		ListResultResourceAccessListItem userAccessList = accessService.getAccessListByUser(item);
 		// Important need this for deleting!
 		Assert.notEmpty(userAccessList.getList(), "Should have value");
 		ResourceAccessListItem deleteAccess1 = userAccessList.getList()[0];
@@ -96,7 +100,9 @@ public class AccessServiceTests {
 		accessService.insertOrganizationResourceAccess(memberOrganization.getOrganization(), access);
 		
 //		TEST: public List<ResourceAccess> getAccessListByOrganization(MemberOrganization organization);
-		ListResultResourceAccessListItem organizationAccessList = accessService.getAccessListByOrganization(memberOrganization.getOrganization());
+		OrganizationListItem organizationListItem = new OrganizationListItem();
+		organizationListItem.setId(memberOrganization.getOrganization().getId());
+		ListResultResourceAccessListItem organizationAccessList = accessService.getAccessListByOrganization(organizationListItem);
 		Assert.notEmpty(organizationAccessList.getList(), "Should have value");
 		ResourceAccessListItem deleteAccess2 = organizationAccessList.getList()[0];
 
@@ -104,7 +110,7 @@ public class AccessServiceTests {
 		accessService.insertUserRoleResourceAccess(health_personnel_other, access);
 		
 //		TEST: public List<ResourceAccess> getAccessListByRole(Role role);
-		ListResultResourceAccessListItem roleAccessList = accessService.getAccessListByRole(health_personnel_other);
+		ListResultResourceAccessListItem roleAccessList = accessService.getAccessListByRole(health_personnel_other.getKey());
 		Assert.notEmpty(roleAccessList.getList(), "Should have value");
 //		ResourceAccess deleteAccess3 = roleAccessList.getList()[roleAccessList.getList().length-1];
 				
@@ -112,7 +118,7 @@ public class AccessServiceTests {
 		accessService.insertOrganizationTypeResourceAccess(healthEnterprice, access);
 		
 //		TEST: public List<ResourceAccess> getAccessListByOrganizationType(OrganizationType organizationType);
-		ListResultResourceAccessListItem organizationTypeAccessList = accessService.getAccessListByOrganizationType(healthEnterprice);
+		ListResultResourceAccessListItem organizationTypeAccessList = accessService.getAccessListByOrganizationType(healthEnterprice.getKey());
 		Assert.notEmpty(organizationTypeAccessList.getList(), "Should have value");
 //		ResourceAccess deleteAccess4 = organizationTypeAccessList.getList()[organizationTypeAccessList.getList().length-1];
 		
