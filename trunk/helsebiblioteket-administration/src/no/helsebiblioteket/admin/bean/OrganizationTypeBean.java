@@ -56,7 +56,7 @@ public class OrganizationTypeBean {
 	}
 	private void loadAccess() {
 		if(this.organizationType != null){
-			this.orgTypeAccessList = this.accessService.getAccessListByOrganizationType(this.organizationType).getList();
+			this.orgTypeAccessList = this.accessService.getAccessListByOrganizationType(this.organizationType.getKey()).getList();
 		} else {
 			this.orgTypeAccessList = new ResourceAccessListItem[0];
 		}
