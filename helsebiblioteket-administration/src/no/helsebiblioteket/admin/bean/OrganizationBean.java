@@ -126,8 +126,10 @@ public class OrganizationBean implements IconProvider{
 			this.memberOrganization = ((ValueResultMemberOrganization)res).getValue();
 			this.supplierOrganization = null;
 			this.organization =  memberOrganization.getOrganization();
-			this.orgTypeAccessList = this.accessService.getAccessListByOrganizationType(this.organization.getType()).getList();
-			this.orgAccessList = this.accessService.getAccessListByOrganization(this.organization).getList();
+			this.orgTypeAccessList = this.accessService.getAccessListByOrganizationType(this.organization.getType().getKey()).getList();
+			OrganizationListItem orgItem = new OrganizationListItem();
+			orgItem.setId(this.organization.getId());
+			this.orgAccessList = this.accessService.getAccessListByOrganization(orgItem).getList();
 			this.supplierSourceResources = this.accessService.getSupplierSourceResourceListAll("").getList();
 			this.ipRangeList = new ArrayList<IpAddressRange>();
 			for (IpAddressRange range : this.memberOrganization.getIpAddressRangeList()) {
