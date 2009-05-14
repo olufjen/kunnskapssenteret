@@ -57,23 +57,25 @@
     </xsl:template> <!-- end content -->
     
     <xsl:template name="step1">
+    	<h1 class="autoheading">Registering av ny bruker</h1>
         <h4 class="logon_column_heading">Steg 1 av 2: Velg type tilgang</h4>
         <form action="{portal:createPageUrl($registerUserPage, ())}" method="get">
             <div class="column_content">
-                <p>Kun studenter og ansatte innen helsesektoren oppfyller kravene for tilgang til passordbeskyttede tjenester i Helsebiblioteket.<br/><br/>Velg ett alternativ:
-                </p>                            
+            	<p>
+            		<br/><b>Kun studenter og ansatte innen helsesektoren oppfyller kravene for tilgang til passordbeskyttede tjenester i Helsebiblioteket.<br/>Type tilgang: velg et alternativ og trykk "Neste".</b><br/><br/>
+               </p>                            
                 <input class="radio" id="reg_form_1" name="usertype" type="radio" value="health_personnel"/>
-                <label for="reg_form_1">Jeg er registrert i Helsepersonellregisteret</label>
+            	<label for="reg_form_1"><b>Jeg er registrert i Helsepersonellregisteret</b></label>
                 <br/>
-                <p>Velg dette dersom du har et helsepersonellnummer. Da får du også tilgang til Norsk Elektronisk Legehåndbok (NEL). Finn helsepersonellnummeret ditt på <a href="http://www.safh.no/hpr/main.php" rel="external">SAFHs nettsider</a>.</p>
+								<p>Velg dette dersom du har helsepersonellnummer. Da får du tilgang til alle Helsebibliotekets tidsskrifter og databaser. Du kan finne helsepersonellnummeret ditt på SAFHs nettsider</p>
                 <input class="radio" id="reg_form_2" name="usertype" type="radio" value="student"/>
-                <label for="reg_form_2">Jeg er student på helsefag eller er ansatt ved undervisningssted.</label>
+            		<label for="reg_form_2"><b>Jeg er student på helsefag eller er ansatt ved undervisningssted.</b></label>
                 <br/>
                 <p>Du kan bruke studentnummeret eller ansattnummeret ditt i registreringen på neste side.</p>
                 <input class="radio" id="reg_form_3" name="usertype" type="radio" value="health_personnel_other"/>
-                <label for="reg_form_3">Jeg har IKKE helsepersonellnummer, men arbeider i helsetjenesten eller offentlig forvaltning</label>
+            		<label for="reg_form_3"><b>Jeg har IKKE helsepersonellnummer, men arbeider i helsetjenesten eller offentlig forvaltning</b></label>
                 <br/>
-                <p>Velg dette dersom du ikke har helsepersonellnummer, men likevel har en jobb knyttet til helsetjenesten, eller den offentlige helseforvaltningen. Du vil ikke få tilgang til Norsk Elektronisk Legehåndbok (NEL), men alle de andre ressursene vil være tilgjengelige.</p>
+            	<p>Velg dette dersom du ikke har helsepersonellnummer, men likevel har en jobb knyttet til helsetjenesten, eller den offentlige helseforvaltningen. Du vil ikke få tilgang til Norsk Elektronisk Legehåndbok og LexiComp, men alle andre tidsskrifter og databaser vil være tilgjengelige.</p>
                 <input type="submit" value="Neste"/>
             </div>
         </form>
