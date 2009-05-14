@@ -42,8 +42,8 @@ public final class LogInController extends HttpControllerPlugin {
        		LoggedInUserResult resultUser = this.loginService.loginUserByUsernamePassword(username, password);
        		if( ! resultUser.isSuccess()){
         		makeXML(username, password, result, element);
-        		String referer = request.getParameter(this.parameterNames.get("from"));
-        		response.sendRedirect(referer);
+        		String from = request.getParameter(this.parameterNames.get("from"));
+        		response.sendRedirect(from);
        		} else {
 	       		// Found user!
        			HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
@@ -55,8 +55,8 @@ public final class LogInController extends HttpControllerPlugin {
        	} else {
     		// Return!
     		makeXML(username, password, result, element);
-    		String referer = request.getParameter(this.parameterNames.get("from"));
-    		response.sendRedirect(referer);
+    		String from = request.getParameter(this.parameterNames.get("from"));
+    		response.sendRedirect(from);
        	}
 		result.appendChild(element);
 		ResultHandler.setResult(this.resultSessionVarName, result);

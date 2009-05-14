@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.admin.validator.IpAddressValidator;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
 
 import org.apache.commons.logging.Log;
@@ -23,25 +24,20 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	private LoginService loginService;
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	public LogInInterceptor(){
-		System.out.println("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 		logger.info("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 	}
 	public void postHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		// FIXME: Remove!
-		if(false) return true;
-		if(true) return true;
-
-		
 		LoggedInOrganization organization = this.loggedInOrganization();
 		if(organization == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
-	    	LoggedInOrganizationResult res = this.loginService.loginOrganizationByIpAddress(ipAddress);
-    		if(res.isSuccess()){
-	    		this.logInOrganization(res.getOrganization());
+	    	if(IpAddressValidator.getInstance().isValidIPAddress(ipAddress.getAddress())){
+		    	LoggedInOrganizationResult res = this.loginService.loginOrganizationByIpAddress(ipAddress);
+	    		if(res.isSuccess()){
+		    		this.logInOrganization(res.getOrganization());
+		    	}
 	    	}
 		}
 		return true;

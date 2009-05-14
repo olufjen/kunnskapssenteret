@@ -210,8 +210,8 @@ public final class RegisterUserController extends ProfileController {
         }
 		
         Position position = new Position();
-        String usertype = null;
-        if ((usertype = request.getParameter(this.parameterNames.get("usertype"))) != null && !"".equals(usertype != null)) {
+        String usertype = request.getParameter(this.parameterNames.get("usertype"));
+        if ((usertype != null) && ( ! "".equals(usertype))) {
         	if (UserRoleKey.health_personnel.getValue().equals(usertype)) {
         		String positionString = request.getParameter(this.parameterNames.get("position"));
         		if (!positionString.equals("choose")) {
@@ -319,7 +319,7 @@ public final class RegisterUserController extends ProfileController {
 		return (result instanceof ValueResultUser);
 	}
 	protected void userXML(LoggedInUser user, String hprNumber, Document document, Element element) throws ParserConfigurationException, TransformerException {
-		super.userXML(user, hprNumber, document, element);
+//		super.userXML(user, hprNumber, document, element);
 		if(user != null){
 			element.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
 		}
