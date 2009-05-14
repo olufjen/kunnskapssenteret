@@ -93,221 +93,262 @@
                             <br/>
                             <i>Alle felter må fylles ut</i>
                             <br/><br/>
-                            <table cellspacing="0">
+                            <table cellspacing="0" width="350">
                                 <tr>
-                                    <td width="130">
+                                    <td>
                                         <xsl:variable name="usertype"><xsl:call-template name="usertype"></xsl:call-template></xsl:variable>
                                         <xsl:if test="$usertype='health_personnel' ">
-                                            Helsepersonellnummer
+                                            Helsepersonellnummer:
                                         </xsl:if>
                                         <xsl:if test="$usertype='student' ">
-                                            Studentnummer/ansattnummer
+                                            Studentnummer/ansattnummer:
                                         </xsl:if>
                                         <xsl:if test="$usertype='health_personnel_other' ">
-                                            Fødselsdato
+                                            Fødselsdato:
                                         </xsl:if>
                                         <xsl:if test="$usertype='' ">
                                             <!-- start på nytt -->
                                         </xsl:if>
-                                    </td>  
-<!-- FØRSTE FELT -->
-                                    <td>
+                                    </td>                                 
+                                    <td colspan="2">
+                                        <input size="20" type="text">
+  	                                        <xsl:if test="$usertype='health_personnel'">
+	                                           	<xsl:attribute name="name">uid</xsl:attribute>
+	                                           	<xsl:attribute name="value">
+		                                           	<xsl:value-of select="$hbresult/values/user/person/hprnumber/text()"/>
+	                                           	</xsl:attribute>
+      	                                    </xsl:if>
+  	                                        <xsl:if test="$usertype='student'">
+	                                           	<xsl:attribute name="name">studentnumber</xsl:attribute>
+	                                           	<xsl:attribute name="value">
+		                                           	<xsl:value-of select="$hbresult/values/user/person/studentnumber/text()"/>
+	                                           	</xsl:attribute>
+      	                                    </xsl:if>
+  	                                        <xsl:if test="$usertype='health_personnel_other'">
+	                                           	<xsl:attribute name="name">studentnumber</xsl:attribute>
+	                                           	<xsl:attribute name="value">
+		                                           	<xsl:value-of select="$hbresult/values/user/person/studentnumber/text()"/>
+	                                           	</xsl:attribute>
+      	                                    </xsl:if>
+                                        </input>
                                         <xsl:choose>
                                             <xsl:when test="$usertype='health_personnel'">
-                                                <a href="http://www.safh.no/hpr/main.php" rel="external" target="_new">Finn ditt helsepersonellnummer</a>
+                                                <a href="http://www.safh.no/hpr/main.php" rel="external" target="_new">
+                                                	Finn ditt helsepersonellnummer
+                                               	</a>
                                             </xsl:when>
                                             <xsl:otherwise>
                                                 <xsl:comment>//</xsl:comment>
                                             </xsl:otherwise>
                                         </xsl:choose>
-                                    	<xsl:choose>
-                                    		<xsl:when test="$hbresult/messages/hprnumber">
-                                    			<input class="error" name="uid" size="20" type="text" value="{$hbresult/values/hprnumber/text()}"/>
-                                    		</xsl:when>
-                                    		<xsl:otherwise>
-                                    			<input name="uid" size="20" type="text" value="{$hbresult/values/hprnumber/text()}"/>
-                                    		</xsl:otherwise>
-                                    	</xsl:choose>                                    	                                    	
-                                    	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/hprnumber"/></xsl:call-template>                                    	
+                                        
+                                    </td>    
+                                    <td align="left">
+                                        <xsl:choose>
+                                            <xsl:when test="$usertype='health_personnel'">
+        		                            	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+        		                            		select="$hbresult/messages/hprnumber"/></xsl:call-template>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+		                                    	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+		                                    		select="$hbresult/messages/studentnumber"/></xsl:call-template>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
                                     </td>
                                 </tr>
-	                            	<tr>
-	                            		<td>Fornavn</td>
-	                            		<td>
-	                            			<xsl:choose>
-	                            				<xsl:when test="$hbresult/messages/firstname">
-	                            					<input class="error" name="firstname" size="20" type="text" value="{$hbresult/values/user/person/firstname/text()}"/>
-	                            				</xsl:when>
-	                            				<xsl:otherwise>
-	                            					<input name="firstname" size="20" type="text" value="{$hbresult/values/user/person/firstname/text()}"/>
-	                            				</xsl:otherwise>
-	                            			</xsl:choose>                         			
-	                            			
-	                            			<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/firstname"/></xsl:call-template>
-	                            		</td>
-	                            	</tr>
-	                            	<tr>
-	                            		<td>Etternavn</td>
-	                            		<td>
-	                            			<xsl:choose>
-	                            				<xsl:when test="$hbresult/messages/lastname">
-	                            					<input class="error" name="surname" size="20" type="text" value="{$hbresult/values/user/person/lastname/text()}"/>
-	                            				</xsl:when>
-	                            				<xsl:otherwise>
-	                            					<input name="surname" size="20" type="text" value="{$hbresult/values/user/person/lastname/text()}"/>
-	                            				</xsl:otherwise>
-	                            			</xsl:choose>                  			
-
-	                            			<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/lastname"/></xsl:call-template>
-	                            		</td>
-	                            	</tr>
-	                            	<xsl:choose>
-	                            		<xsl:when test="$usertype='health_personnel'">
-	                            			<tr>  
-	                            				<td>Arbeidsgiver</td> 
-	                            				<td>
-	                            					<input name="org" size="20" type="text" value="{$hbresult/values/user/person/employer/text()}"/>
-	                            					
-	                            					<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/employer"/></xsl:call-template>
-	                            				</td>                            				
-	                            			</tr>
-	                            			<tr>  
-	                            				<td>Stilling/fagfelt</td> 
-	                            				<td>
-	                            					<select name="position">
-	                            						<option value="choose">Velg</option>
-	                            						<xsl:apply-templates select="/verticaldata/positions/position"/>
-	                            						<option value="none">Ingen passende</option>
-	                            					</select>
-	                            				</td>
-	                            			</tr>
-	                            		</xsl:when>
-	                            		<xsl:when test="$usertype='student'">
-	                            			<tr>  
-	                            				<td>Skole/arbeidsgiver</td> 
-	                            				<td>
-	                            					<select name="org">
-	                            						<option value="test">Test</option>
-	                            					</select>
-	                            				</td>                             
-	                            			</tr>
-	                            			<tr>
-	                            				<td><xsl:comment>//</xsl:comment></td>
-	                            				<td><input type="radio" name="type" value="Student">Student</input> <input type="radio" name="type" value="Ansatt">Ansatt</input></td>
-	                            			</tr>
-	                            		</xsl:when>
-	                            		<xsl:otherwise>
-	                            			<tr>         
-	                            				<td>Arbeidsgiver</td> 
-	                            				<td>
-	                            					<input name="org" size="20" type="text" value="{$hbresult/values/user/person/employer/text()}"/>
-	                            					
-	                            					<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/employer"/></xsl:call-template>
-	                            				</td>                	                            				
-	                            			</tr>
-	                            		</xsl:otherwise>
-	                            	</xsl:choose>
-	                            	<tr>
-	                            		<td>Ønsker du å motta nyhetsbrev?</td> 
-	                            		<td>
-	                            			<input>
-	                            				<xsl:attribute name="type">checkbox</xsl:attribute>
-	                            				<xsl:attribute name="name">newsletter</xsl:attribute>
-	                            				<xsl:attribute name="value">true</xsl:attribute>
-	                            				<xsl:variable name="newsletter" select="$hbresult/values/user/person/profile/newsletter" />
-	                            				<xsl:if test="(string-length($newsletter) = 0) or (string-length($newsletter) > 0 and $newsletter)">
-	                            					<xsl:attribute name="checked"/>
-	                            				</xsl:if>
-	                            				<xsl:if test="$hbresult/values/user/person/profile/newsletter">
-	                            					<xsl:attribute name="checked"/>
-	                            				</xsl:if>
-	                            			</input>
-	                            			
-	                            			<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/newsletter"/></xsl:call-template>
-	                            		</td>	                            		
-	                            	</tr>
-	                            	
-	                            	<tr>
-	                            		<td>Ønsker du å delta i spørreundersøkelser?</td> 
-	                            		<td>
-	                            			<input>
-	                            				<xsl:attribute name="type">checkbox</xsl:attribute>
-	                            				<xsl:attribute name="name">survey</xsl:attribute>
-	                            				<xsl:attribute name="value">true</xsl:attribute>
-	                            				<xsl:variable name="survey" select="$hbresult/values/user/person/profile/survey" />
-	                            				<xsl:if test="(string-length($survey) = 0) or (string-length($survey) > 0 and $survey)">
-	                            					<xsl:attribute name="checked"/>
-	                            				</xsl:if>
-	                            			</input>
-	                            			
-	                            			<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/survey"/></xsl:call-template>
-	                            		</td>	                            		
-	                            	</tr>
-	                            	<tr>
-	                            		<td>E-postadresse</td>
-	                            		<td>
-	                            			<input name="email" size="30" type="text" value="{$hbresult/values/user/person/contactinformation/email/text()}"/>
-	                            			
-	                            			<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/email"/></xsl:call-template>
-	                            		</td>	                            		
-	                            	</tr>        
-                            		<tr>
-                            			<td>Brukernavn</td>
-                                  <td>
-                                      <input name="username" size="20" type="text" value="{$hbresult/values/user/username/text()}"/>
-                                  	
-                                  		<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/username"/></xsl:call-template>
-                                  </td>                                  
+                                <tr>
+                                    <td>Brukernavn: Feltet kan ikke inneholde spesialtegn eller mellomrom</td>
+                                    <td colspan="2">
+                                        <input name="username" size="20" type="text"
+                                            value="{$hbresult/values/user/username/text()}"/>
+                                    </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/username"/></xsl:call-template></td>
                                 </tr>
-        
-                            		<!--
-																<tr>
+                                <tr>
+                                    <td>Passord:</td>
+                                    <td>
+                                        <input class="text" name="password" type="password"/>
+                                    </td>
+                                    <td>
+                                        <xsl:choose>
+                                            <xsl:when test="$hbresult/messages/password != ''">
+                                                <xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/password"/></xsl:call-template>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                Passord må være minst 6 tegn langt, og må inneholde både bokstaver og siffer. Spesialtegn og mellomrom er ikke tillatt.
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Bekreft passord:</td>
+                                    <td colspan="2">
+                                        <input class="text" name="confirmpassword" type="password"/>
+                                    </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/passwordrepeat"/></xsl:call-template></td>
+                                </tr>
+                                <tr>
+                                    <td>Fornavn:</td>
+                                    <td colspan="2">
+                                        <input name="firstname" size="20" type="text"
+                                            value="{$hbresult/values/user/person/firstname/text()}"/>
+                                    </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/firstname"/></xsl:call-template></td>
+                                </tr>
+                                <tr>
+                                    <td>Etternavn:</td>
+                                    <td colspan="2">
+                                        <input name="surname" size="20" type="text"
+                                            value="{$hbresult/values/user/person/lastname/text()}"/>
+                                    </td>
+                                    <td align="left">
+                                    	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                    		select="$hbresult/messages/lastname"/></xsl:call-template>
+                                    </td>
+                                </tr>
+                                <xsl:choose>
+                                    <xsl:when test="$usertype='health_personnel'">
+                                        <tr>  
+                                            <td>Arbeidsgiver:</td> 
+                                            <td colspan="2">
+                                                <input name="org" size="20" type="text"
+                                                    value="{$hbresult/values/user/person/employer/text()}"/>
+                                            </td>
+                                            <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                            	select="$hbresult/messages/employer"/></xsl:call-template></td>
+                                        </tr>
+                                        <tr>  
+                                            <td>Stilling/fagfelt:</td> 
+                                            <td colspan="2">
+                                                <select name="position">
+                                                    <option value="choose">Velg</option>
+                                                    <xsl:apply-templates select="/verticaldata/positions/position"/>
+                                                </select>
+                                            </td>
+                                            <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                            	select="$hbresult/messages/position"/></xsl:call-template></td>
+                                        </tr>
+                                    </xsl:when>
+                                    <xsl:when test="$usertype='student'">
+                                        <tr>  
+                                            <td>Skole/arbeidsgiver:</td> 
+                                            <td colspan="2">
+                                                <input name="org" size="20" type="text"
+                                                    value="{$hbresult/values/user/person/employer/text()}"/>
+                                            </td>
+                                            <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                            	select="$hbresult/messages/employer"/></xsl:call-template></td>
+                                        </tr>
+                                        <tr>  
+                                            <td>Student/ansatt:</td> 
+                                            <td colspan="2">
+	                                            <input>
+		                                            <xsl:attribute name="type">radio</xsl:attribute>
+	    	                                        <xsl:attribute name="name">studentansatt</xsl:attribute>
+	        	                                    <xsl:attribute name="value">student</xsl:attribute>
+	    	                                        <xsl:if test="$hbresult/values/user/person/isStudent = true">
+		                                            	<xsl:attribute name="checked"/>
+	        	                                    </xsl:if>
+	                                            </input>
+	                                            Student <br/>
+	                                            <input>
+		                                            <xsl:attribute name="type">radio</xsl:attribute>
+	    	                                        <xsl:attribute name="name">studentansatt</xsl:attribute>
+	        	                                    <xsl:attribute name="value">ansatt</xsl:attribute>
+	    	                                        <xsl:if test="$hbresult/values/user/person/isStudent = true">
+		                                            	<xsl:attribute name="checked"/>
+	        	                                    </xsl:if>
+	                                            </input>
+	                                            Ansatt
+                                            </td>
+                                            <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                            	select="$hbresult/messages/studentansatt"/></xsl:call-template></td>
+                                        </tr>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <tr>         
+                                            <td>Arbeidsgiver:</td> 
+                                            <td colspan="2">
+                                                <input name="org" size="20" type="text"
+                                                    value="{$hbresult/values/user/person/employer/text()}"/>
+                                            </td>                
+                                            <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                            	select="$hbresult/messages/employer"/></xsl:call-template></td>
+                                        </tr>
+                                        <tr>  
+                                            <td>Stilling:</td> 
+                                            <td colspan="2">
+                                                <input name="positiontext" size="20" type="text"
+                                                    value="{$hbresult/values/user/person/positiontext/text()}"/>
+                                            </td>
+                                            <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                            	select="$hbresult/messages/positiontext"/></xsl:call-template></td>
+                                        </tr>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+								<tr>
                                     <td>E-postadresse:</td>
                                     <td colspan="2">
                                         <input name="email" size="30" type="text"
                                             value="{$hbresult/values/user/person/contactinformation/email/text()}"/>
                                     </td>
-                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/email"/></xsl:call-template></td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                    	select="$hbresult/messages/emailaddress"/></xsl:call-template></td>
                                 </tr>        
                                 <tr>
                                     <td>Gjenta e-postadresse:</td>
                                     <td colspan="2">
-                                        <input name="email" size="30" type="text"
-                                            value="{$hbresult/values/user/person/contactinformation/email/text()}"/>
+                                        <input name="repeatemail" size="30" type="text"
+                                            value="{$hbresult/values/repeatemail/text()}"/>
                                     </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                    	select="$hbresult/messages/repeatemail"/></xsl:call-template></td>
                                 </tr>
-                            		-->
-        
-                            		<tr>
-                                    <td colspan="2"><xsl:comment>//</xsl:comment></td>
+                                <tr>
+                                    <td>Ønsker du å motta nyhetsbrev?</td> 
+                                    <td colspan="2">
+                                        <input>
+                                            <xsl:attribute name="type">checkbox</xsl:attribute>
+                                            <xsl:attribute name="name">newsletter</xsl:attribute>
+                                            <xsl:attribute name="value">true</xsl:attribute>
+                                            <xsl:variable name="newsletter" select="$hbresult/values/user/person/profile/newsletter" />
+                                            <xsl:if test="(string-length($newsletter) = 0) or (string-length($newsletter) > 0 and $newsletter)">
+                                            	<xsl:attribute name="checked"/>
+                                            </xsl:if>
+                                            <xsl:if test="$hbresult/values/user/person/profile/newsletter">
+                                            	<xsl:attribute name="checked"/>
+                                            </xsl:if>
+                                        </input>
+                                    </td>
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+                                    	select="$hbresult/messages/newsletter"/></xsl:call-template></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Ønsker du å delta i spørreundersøkelser?</td> 
+                                    <td colspan="2">
+                                        <input>
+                                            <xsl:attribute name="type">checkbox</xsl:attribute>
+                                            <xsl:attribute name="name">survey</xsl:attribute>
+                                            <xsl:attribute name="value">true</xsl:attribute>
+                                            <xsl:variable name="survey" select="$hbresult/values/user/person/profile/survey" />
+                                            <xsl:if test="(string-length($survey) = 0) or (string-length($survey) > 0 and $survey)">
+                                            	<xsl:attribute name="checked"/>
+                                            </xsl:if>
+                                        </input>
+                                    </td>  
+                                    <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+										select="$hbresult/messages/survey"/></xsl:call-template></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><xsl:comment>//</xsl:comment></td>
                                 </tr>
                                 <tr>
                                     
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><b>Passord</b><br />Passord må være minst 6 tegn langt, og må inneholde både bokstaver og siffer. Spesialtegn er ikke tillatt.</td>
-                                </tr>
-	                            	<tr>
-	                            		<td>Passord</td>
-	                            		<td>
-	                            			<input class="text" name="password" type="password"/>
-	                            		</td>
-	                            	</tr>
-	                            	<tr>
-	                            		<td>Bekreft passord</td>
-	                            		<td>
-	                            			<xsl:choose>
-	                            				<xsl:when test="$hbresult/messages/passwordrepeat">
-	                            					<input id="error" class="text" name="confirmpassword" type="password"/>
-	                            				</xsl:when>
-	                            				<xsl:otherwise>
-	                            					<input class="text" name="confirmpassword" type="password"/>
-	                            				</xsl:otherwise>
-	                            			</xsl:choose>                  			
-	                            			
-	                            			<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/lastname"/></xsl:call-template>
-	                            		</td>
-	                            	</tr>
+                                    <td colspan="3"><xsl:comment>//</xsl:comment></td>
+                                </tr>                            
                             </table> 
                             <br/>
                             Når du har registrert deg, kan du ta i bruk Helsebibliotekets ressurser umiddelbart.
