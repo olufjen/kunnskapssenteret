@@ -17,18 +17,21 @@
  		<property name="resultSessionVarName" value="hbregisterresult" />
  		<property name="parameterNames"><map>
  			<entry key="usertype" value="usertype"/>
- 			<entry key="hprno" value="uid"/>
+ 			<entry key="hprnumber" value="uid"/>
+ 			<entry key="studentnumber" value="studentnumber"/>
  			<entry key="firstname" value="firstname"/>
  			<entry key="lastname" value="surname"/>
  			<entry key="employer" value="org"/>
  			<entry key="studentansatt" value="studentansatt"/>
  			<entry key="newsletter" value="newsletter"/>
- 			<entry key="questionaire" value="survey"/>
+ 			<entry key="survey" value="survey"/>
  			<entry key="emailaddress" value="email"/>
+ 			<entry key="repeatemail" value="repeatemail"/>
  			<entry key="username" value="username"/>
  			<entry key="password" value="password"/>
  			<entry key="passwordrepeat" value="confirmpassword"/>
  			<entry key="position" value="position"/>
+ 			<entry key="positiontext" value="positiontext"/>
  			<entry key="from" value="from"/>
  			<entry key="goto" value="goto"/>
  			<entry key="saveName" value="save"/>
