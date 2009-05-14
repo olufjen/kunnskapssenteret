@@ -95,6 +95,7 @@ public class LoginServiceImpl implements LoginService {
 				result.setValue(SendPasswordEmailResult.notFoundEmail);
 			} else if(users.length == 1){
 				this.sendEmail(users[0]);
+				result.setFailed(false);
 				result.setValue(SendPasswordEmailResult.sentEmail);
 			} else {
 				result.setValue(SendPasswordEmailResult.multipleEmail);
@@ -109,6 +110,7 @@ public class LoginServiceImpl implements LoginService {
 						EmailValidator.getInstance().isValidEmailAdress(
 								user.getPerson().getContactInformation().getEmail())){
 					this.sendEmail(user);
+					result.setFailed(false);
 					result.setValue(SendPasswordEmailResult.sentUser);
 				} else {
 					result.setValue(SendPasswordEmailResult.noEmailAddress);
