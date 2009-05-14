@@ -240,6 +240,8 @@ public class UserServiceImpl implements UserService {
 					position = this.positionDao.getPositionById(person.getPosition().getId());
 				}
 			}
+			if(person.getFirstName() == null){ person.setFirstName(""); }
+			if(person.getLastName() == null){ person.setLastName(""); }
 			person.setPosition(position);
 			user.setPerson(person);
 			
