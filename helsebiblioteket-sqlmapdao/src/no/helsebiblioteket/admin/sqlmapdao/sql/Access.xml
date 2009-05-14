@@ -163,7 +163,7 @@
 		select
 			access_id,
 			category,
-			key,
+			tbl_access_type_reg.key,
 			url,
 			tbl_access.last_changed as last_changed,
 			supplier_source_name,
@@ -174,13 +174,14 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where key = #value# and tbl_access.deleted is false;
+			inner join tbl_org_type_reg on tbl_org_type_reg.org_type_id = tbl_access.org_type_id
+		where tbl_org_type_reg.key = #value# and tbl_access.deleted is false;
 	</select>
 	<select id="getAccessListByUserRole" resultMap="ResourceAccessListItemResultMap" parameterClass="String">
 		select
 			access_id,
 			category,
-			key,
+			tbl_access_type_reg.key,
 			url,
 			tbl_access.last_changed as last_changed,
 			supplier_source_name,
@@ -191,7 +192,8 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where key = #value# and tbl_access.deleted is false;
+			inner join tbl_user_role_reg on tbl_user_role_reg.user_role_id = tbl_access.user_role_id
+		where tbl_user_role_reg.key = #value# and tbl_access.deleted is false;
 	</select>
 	<select id="getAccessListByResource" resultMap="ResourceAccessResultMap" parameterClass="Resource">
 		select access_type_id, 
