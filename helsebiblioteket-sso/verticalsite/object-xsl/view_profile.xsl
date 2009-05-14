@@ -111,34 +111,23 @@
                         <br/><br/>
                     </div>
                 <form action="{portal:createPageUrl($editProfileServletPage, ())}" method="post">
-                	<input name="goto" type="hidden">
+                	<input name="editPage" type="hidden">
                     	<xsl:attribute name="value">
                     		<xsl:value-of select="portal:createPageUrl($editProfilePage, ())"/>
                         </xsl:attribute>
                     </input>
-                	<input name="save" type="hidden" value="false"/>
-                
-                    <input class="button" type="submit" value="Rediger profil"/>
-                </form>
-
-                <form action="{portal:createPageUrl($editProfileServletPage, ())}" method="post">
-                	<input name="goto" type="hidden">
+                	<input name="passwordPage" type="hidden">
                     	<xsl:attribute name="value">
                     		<xsl:value-of select="portal:createPageUrl($editPasswordPage, ())"/>
                         </xsl:attribute>
                     </input>
-                    <input name="passwordPage" type="hidden">
-						<xsl:attribute name="value">
-                        	<xsl:value-of select="portal:createPageUrl($editPasswordPage, ())"/>
-						</xsl:attribute>
-                    </input>
                     <input name="fromform" type="hidden" value="view"/>
-                	<input name="editpassword" type="hidden" value="Endre passord"/>
-                    <input class="button" type="submit" value="Endre passord"/>
+
+                    <input class="button" type="submit" name="editprofile" value="Rediger profil"/>
+                    <input class="button" type="submit" name="editpassword" value="Endre passord"/>
                 </form>
-            </div>
-
-
+                
+			</div>
     			</xsl:otherwise>
 			</xsl:choose>
 

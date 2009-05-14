@@ -95,26 +95,26 @@
                                 <td>Tilknytning:</td>
                                 <td>
                                     <select name="role">
-                                        <option value="HPR">
-                                            <xsl:if test="$result/values/user/role/key/text() = 'HPR'">
+                                        <option value="health_personnel">
+                                            <xsl:if test="$result/values/user/role/key/text() = 'health_personnel'">
                                                 <xsl:attribute name="selected">true</xsl:attribute>                                             
                                             </xsl:if>
                                             Helsepersonellregisteret
                                         </option>
-                                        <option value="Stud"> 
-                                            <xsl:if test="$result/values/user/role/key/text() = 'Stud'">
+                                        <option value="student"> 
+                                            <xsl:if test="$result/values/user/role/key/text() = 'student'">
                                                 <xsl:attribute name="selected">true</xsl:attribute>                                     
                                             </xsl:if>
                                             Student
                                         </option>                                       
-                                        <option value="ADMN">
-                                            <xsl:if test="$result/values/user/role/key/text() = 'ADMN'">
+                                        <option value="administrator">
+                                            <xsl:if test="$result/values/user/role/key/text() = 'administrator'">
                                                 <xsl:attribute name="selected">true</xsl:attribute>                                               
                                             </xsl:if>
                                             Administrator
                                         </option>
-                                        <option value="Emp">
-                                            <xsl:if test="$result/values/user/role/key/text() = 'Emp'">
+                                        <option value="health_personnel_other">
+                                            <xsl:if test="$result/values/user/role/key/text() = 'health_personnel_other'">
                                                 <xsl:attribute name="selected">true</xsl:attribute>                                               
                                             </xsl:if>
                                             Andre
@@ -127,7 +127,7 @@
                                 <td>HPR-nr:</td>
                                 <td>
                                 	<input class="text" name="uid" type="text"
-                                		value="{$result/values/hprnumber/text()}"/>
+                                		value="{$result/values/user/person/hprnumber/text()}"/>
                                 </td>
                                 <td><xsl:value-of select="$result/messages/hprnumber/text()"/></td>
                             </tr>
@@ -191,28 +191,8 @@
                     <input name="fromform" type="hidden" value="edit"/>
                     <input class="button" type="submit" name="save" value="Lagre"/>
                     <input class="button" type="submit" name="editpassword"  value="Endre passord"/>
+                    <input class="button" type="submit" name="cancel" value="Avbryt"/>
                 </form>
-                <form action="{portal:createPageUrl($editProfileServletPage, ())}" method="post">
-                	<input name="goto" type="hidden">
-                        <xsl:attribute name="value">
-							<xsl:value-of select="portal:createPageUrl($viewProfilePage, ())"/>
-                    	</xsl:attribute>
-					</input>
-                    <input name="from" type="hidden">
-                        <xsl:attribute name="value">
-                        	<xsl:value-of select="portal:createPageUrl($editProfilePage, ())"/>
-						</xsl:attribute>
-                    </input>
-                    <input name="passwordPage" type="hidden">
-						<xsl:attribute name="value">
-                        	<xsl:value-of select="portal:createPageUrl($editPasswordPage, ())"/>
-						</xsl:attribute>
-                    </input>
-                
-                	<input name="delete" type="hidden" value="true"/>
-                    <input class="button" type="submit" value="Slett"/>
-                </form>
-
             </div>
 
 

@@ -92,23 +92,9 @@
                         <br/><br/>
                     </div>
 
-               		<input name="savepassword" type="hidden" value="true"/>
-                    <input class="button" type="submit" value="Lagre"/>
+                    <input class="button" type="submit" name="savepassword" value="Lagre"/>
+                    <input class="button" type="submit" name="cancelpassword" value="Avbryt"/>
 
-                </form>
-                <form action="{portal:createPageUrl($editProfileServletPage, ())}" method="post">
-					<input name="viewPage" type="hidden">
-                       	<xsl:attribute name="value">
-							<xsl:value-of select="portal:createPageUrl($viewProfilePage, ())"/>
-                           </xsl:attribute>
-					</input>
-                    <input name="editPage" type="hidden">
-                       	<xsl:attribute name="value">
-                       		<xsl:value-of select="portal:createPageUrl($editProfilePage, ())"/>
-						</xsl:attribute>
-                    </input>
-                	<input name="cancel" type="hidden" value="true"/>
-                    <input class="button" type="submit" value="Avbryt"/>
                 </form>
             </div>
             

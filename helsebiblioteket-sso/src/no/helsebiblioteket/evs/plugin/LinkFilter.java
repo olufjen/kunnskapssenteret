@@ -22,6 +22,8 @@ import org.apache.commons.logging.LogFactory;
 import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.domain.LoggedInUser;
 import no.helsebiblioteket.admin.domain.Url;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUrl;
@@ -57,21 +59,18 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		
 		//long timeStart = System.currentTimeMillis();
 		
-		URL url = null;
-		String oldLink = null;
-		String newLink = null;
 		Map<String, String> linkReplaceMap = new HashMap<String, String>();
 		Matcher m = linkPattern.matcher(response);
 		
     	while (m.find()) {
-    		oldLink = m.group(2);
+    		String oldLink = m.group(2);
 			if (validHref(oldLink)) {
-				url = this.deproxify(oldLink);
+				URL url = this.deproxify(oldLink);
 				if(url != null) {
 		    		if(this.isAffected(url)){
 		    			url = this.translate(user, memberOrganization, url);
 		    		}
-		    		newLink = url.toExternalForm();
+		    		String newLink = url.toExternalForm();
 		    		if (!oldLink.equals(newLink)) {
 		    			// using map to avoid duplicate replacements
 		    			// also only adding links that are actually changed to the map.
@@ -115,7 +114,6 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		}
 		return true;
 	}
-
 	
 	private boolean isAffected(URL url) {
 		Url myurl = new Url();
@@ -130,16 +128,19 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		if(user != null && organization != null){
 			UserListItem userL = new UserListItem();
 			userL.setId(user.getId());
+			userL.setRoleKeys(new UserRoleKey[]{new UserRoleKey(user.getRoleKey())});
 			OrganizationListItem orgL = new OrganizationListItem();
 			orgL.setId(organization.getId());
 			result = this.urlService.translateUrlUserOrganization(userL, orgL, myUrl);
 		} else if(user != null){
 			UserListItem userL = new UserListItem();
 			userL.setId(user.getId());
+			userL.setRoleKeys(new UserRoleKey[]{new UserRoleKey(user.getRoleKey())});
 			result = this.urlService.translateUrlUser(userL, myUrl);
 		} else if(organization != null){
 			OrganizationListItem orgL = new OrganizationListItem();
 			orgL.setId(organization.getId());
+			orgL.setTypeKey(new OrganizationTypeKey(organization.getTypeKey()));
 			result = this.urlService.translateUrlOrganization(orgL, myUrl);
 		} else {
 			result = this.urlService.translateUrlNone(myUrl);

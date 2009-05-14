@@ -19,6 +19,7 @@
  		<property name="editPasswordUserVarName" value="hbeditpassworduser" />
  		
  		<property name="parameterNames"><map>
+ 			<entry key="studentnumber" value="studentnumber"/>
  			<entry key="hprno" value="uid"/>
  			<entry key="firstname" value="firstname"/>
  			<entry key="lastname" value="surname"/>
@@ -43,13 +44,17 @@
  			<entry key="saveName" value="save"/>
  			<entry key="saveValue" value="Lagre"/>
  			<entry key="deleteName" value="delete"/>
- 			<entry key="deleteValue" value="true"/>
+ 			<entry key="deleteValue" value="Slett"/>
  			<entry key="editPasswordName" value="editpassword"/>
  			<entry key="editPasswordValue" value="Endre passord"/>
  			<entry key="savePasswordName" value="savepassword"/>
- 			<entry key="savePasswordValue" value="true"/>
+ 			<entry key="savePasswordValue" value="Lagre"/>
  			<entry key="cancelName" value="cancel"/>
- 			<entry key="cancelValue" value="true"/>
+ 			<entry key="cancelValue" value="Avbryt"/>
+ 			<entry key="cancelPasswordName" value="cancelpassword"/>
+ 			<entry key="cancelPasswordValue" value="Avbryt"/>
+ 			<entry key="editProfileName" value="editprofile"/>
+ 			<entry key="editProfileValue" value="Rediger profil"/>
  		</map></property>
 	</bean>
 	<bean name="profileUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
@@ -57,6 +62,7 @@
 		<property name="targetEPR" ref="profileTargetEPR" />
 		<property name="updateUserName" ref="profileUpdateUser" />
 		<property name="findUserByUsernameName" ref="findUserByUsername" />
+		<property name="systemByKey" ref="systemByKeyName" />
 	</bean>
 	<bean name="profileServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
@@ -70,5 +76,9 @@
 	<bean name="findUserByUsername" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="findUserByUsername" />
+	</bean>
+	<bean name="systemByKeyName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="getSystemByKey" />
 	</bean>
 </beans>
