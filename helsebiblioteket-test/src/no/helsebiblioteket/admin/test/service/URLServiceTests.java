@@ -125,10 +125,14 @@ public class URLServiceTests {
 
 		// Deleting test values
 		AccessService accessService = beanFactory.getAccessService();
-		for (ResourceAccessListItem resourceAccessListItem : accessService.getAccessListByOrganization(memberOrganization.getOrganization()).getList()) {
+		OrganizationListItem item = new OrganizationListItem();
+		item.setId(memberOrganization.getOrganization().getId());
+		for (ResourceAccessListItem resourceAccessListItem : accessService.getAccessListByOrganization(item).getList()) {
 			accessService.deleteResourceAccess(resourceAccessListItem);
 		}
-		for (ResourceAccessListItem resourceAccess : accessService.getAccessListByUser(user).getList()) {
+		UserListItem uItem = new UserListItem();
+		uItem.setId(user.getId());
+		for (ResourceAccessListItem resourceAccess : accessService.getAccessListByUser(uItem).getList()) {
 			accessService.deleteResourceAccess(resourceAccess);
 		}
 		beanFactory.getAccessService().deleteSupplierSourceResource(resource);

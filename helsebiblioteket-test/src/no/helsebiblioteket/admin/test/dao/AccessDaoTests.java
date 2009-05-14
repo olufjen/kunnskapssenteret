@@ -29,7 +29,9 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.factory.MemberOrganizationFactory;
 import no.helsebiblioteket.admin.factory.ResourceAccessFactory;
 import no.helsebiblioteket.admin.factory.SupplierOrganizationFactory;
@@ -93,7 +95,9 @@ public class AccessDaoTests {
 		accessForUserKeys.setResourceAccess(resourceAccessForUser);
 		accessDao.insertResourceAccessForeignKeys(accessForUserKeys);
 		accessDao.updateResourceAccessForeignKeys(accessForUserKeys);
-		List<ResourceAccessListItem> userAccessList = accessDao.getAccessListByUser(user);
+		UserListItem item = new UserListItem();
+		item.setId(user.getId());
+		List<ResourceAccessListItem> userAccessList = accessDao.getAccessListByUser(item);
 		Assert.notEmpty(userAccessList, "No access for user!");
 
 		// Access for user roles
@@ -102,7 +106,7 @@ public class AccessDaoTests {
 		accessForUserRoleKeys.setUserRoleId(userRole.getId());
 		accessForUserRoleKeys.setResourceAccess(resourceAccessForUserRole);
 		accessDao.insertResourceAccessForeignKeys(accessForUserRoleKeys);
-		List<ResourceAccessListItem> userRoleAccessList = accessDao.getAccessListByUserRole(userRole);
+		List<ResourceAccessListItem> userRoleAccessList = accessDao.getAccessListByUserRole(userRole.getKey());
 		Assert.notEmpty(userRoleAccessList, "No access for user role!");
 
 		// Access for organization
@@ -111,7 +115,9 @@ public class AccessDaoTests {
 		accessForOrganizationKeys.setOrgUnitId(organization.getOrganization().getId());
 		accessForOrganizationKeys.setResourceAccess(resourceAccessForOrg);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationKeys);
-		List<ResourceAccessListItem> organizationAccessList = accessDao.getAccessListByOrganization(organization.getOrganization());
+		OrganizationListItem lItem = new OrganizationListItem();
+		lItem.setId(organization.getOrganization().getId());
+		List<ResourceAccessListItem> organizationAccessList = accessDao.getAccessListByOrganization(lItem);
 		Assert.notEmpty(organizationAccessList, "No access for organization!");
 		
 		// Access for organization type
@@ -120,7 +126,7 @@ public class AccessDaoTests {
 		accessForOrganizationTypeKeys.setOrgTypeId(organizationType.getId());
 		accessForOrganizationTypeKeys.setResourceAccess(resourceAccessForOrgType);
 		accessDao.insertResourceAccessForeignKeys(accessForOrganizationTypeKeys);
-		List<ResourceAccessListItem> organizationTypeAccessList = accessDao.getAccessListByOrganizationType(organizationType);
+		List<ResourceAccessListItem> organizationTypeAccessList = accessDao.getAccessListByOrganizationType(organizationType.getKey());
 		Assert.notEmpty(organizationTypeAccessList, "No access for organization type!");
 		
 		// Remove
