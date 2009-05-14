@@ -19,9 +19,13 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.ActionLine;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
@@ -143,7 +147,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(User, Url)
 	 */
 	@Override
-	public ListResultResourceAccessListItem getAccessListByUser(User user) {
+	public ListResultResourceAccessListItem getAccessListByUser(UserListItem user) {
 		return translateList(this.accessDao.getAccessListByUser(user));
 	}
 	/**
@@ -154,7 +158,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(no.helsebiblioteket.admin.domain.MemberOrganization, Url)
 	 */
 	@Override
-	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization) {
+	public ListResultResourceAccessListItem getAccessListByOrganization(OrganizationListItem organization) {
 		return translateList(this.accessDao.getAccessListByOrganization(organization));
 	}
 	/**
@@ -165,7 +169,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(no.helsebiblioteket.admin.domain.MemberOrganization, Url)
 	 */
 	@Override
-	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType) {
+	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationTypeKey organizationType) {
 		return translateList(this.accessDao.getAccessListByOrganizationType(organizationType));
 	}
 	/**
@@ -176,7 +180,7 @@ public class AccessServiceImpl implements AccessService {
 	 * @see URLService#hasAccess(User, Url)
 	 */
 	@Override
-	public ListResultResourceAccessListItem getAccessListByRole(Role role) {
+	public ListResultResourceAccessListItem getAccessListByRole(UserRoleKey role) {
 		return translateList(this.accessDao.getAccessListByUserRole(role));
 	}
 	@Override

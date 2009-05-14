@@ -4,17 +4,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.AccessService;
-import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.URLService;
-import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.domain.AccessType;
-import no.helsebiblioteket.admin.domain.MemberOrganization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
-import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.Url;
-import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
@@ -22,17 +18,12 @@ import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 
 /**
  * Service used to rewrite URLs on websites. The results
@@ -46,8 +37,6 @@ public class URLServiceImpl implements URLService {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static final long serialVersionUID = 1L;
 	private AccessService accessService;
-	private UserService userService;
-	private OrganizationService organizationService;
 	private String proxyPrefix;
 	
 	/**
@@ -119,37 +108,19 @@ public class URLServiceImpl implements URLService {
 
 	
 	private SingleResultUrl translateUrlUserOrganizationInternal(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
-		User user;
-		MemberOrganization memberOrganization;
-		SingleResultUser userResult = this.userService.getUserByUserListItem(userListItem);
-		SingleResultOrganization orgResult = this.organizationService.getOrganizationByListItem(organizationListItem);
-		if(userResult instanceof ValueResultUser){
-			user = ((ValueResultUser)userResult).getValue();
-		} else if (userResult instanceof ValueResultOrganizationUser){
-			user = ((ValueResultOrganizationUser)userResult).getValue().getUser();
-		} else {
-			user = null;
-		}
-		if(orgResult instanceof ValueResultMemberOrganization){
-			memberOrganization = ((ValueResultMemberOrganization)orgResult).getValue();
-		} else {
-			memberOrganization = null;
-		}
-		
-		
 		Url newUrl = new Url();
 		boolean proxify = true;
 		
 		proxify = proxify && !proxyExclude(getAccessTypeForAll(url));
 		
-		if (memberOrganization != null) {
-			proxify = proxify && !proxyExclude(getAccessTypeForOrganizationType(memberOrganization.getOrganization().getType(), url));
-			proxify = proxify && !proxyExclude(getAccessTypeForMemberOrganization(memberOrganization, url));
+		if (organizationListItem != null) {
+			proxify = proxify && !proxyExclude(getAccessTypeForOrganizationType(organizationListItem.getTypeKey(), url));
+			proxify = proxify && !proxyExclude(getAccessTypeForMemberOrganization(organizationListItem, url));
 		}
 		
-		if (user != null) {
-			if (user.getRoleList() != null) {
-				for (Role role : user.getRoleList()) {
+		if (userListItem != null) {
+			if (userListItem.getRoleKeys() != null) {
+				for (UserRoleKey role : userListItem.getRoleKeys()) {
 					proxify = proxify && !proxyExclude(getAccessTypeForUserRole(role, url));
 				}
 			}
@@ -230,37 +201,19 @@ public class URLServiceImpl implements URLService {
 	}
 
 	private AccessType getAccessTypeForUserAndMemberOrganization(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
-		User user;
-		MemberOrganization memberOrganization;
-		SingleResultUser userResult = this.userService.getUserByUserListItem(userListItem);
-		SingleResultOrganization orgResult = this.organizationService.getOrganizationByListItem(organizationListItem);
-		if(userResult instanceof ValueResultUser){
-			user = ((ValueResultUser)userResult).getValue();
-		} else if (userResult instanceof ValueResultOrganizationUser){
-			user = ((ValueResultOrganizationUser)userResult).getValue().getUser();
-		} else {
-			user = null;
-		}
-		if(orgResult instanceof ValueResultMemberOrganization){
-			memberOrganization = ((ValueResultMemberOrganization)orgResult).getValue();
-		} else {
-			memberOrganization = null;
-		}
-
-		
 		AccessType accessType = new AccessType(AccessTypeCategory.DENY, AccessTypeKey.general);
 		AccessType accessTypeTmp = null;
 		
 		accessType = (accessTypeTmp = getAccessTypeForAll(url)) != null ? accessTypeTmp : accessType;
 		
-		if (memberOrganization != null) {
-			accessType = (accessTypeTmp = getAccessTypeForOrganizationType(memberOrganization.getOrganization().getType(), url)) != null ? accessTypeTmp : accessType;
-			accessType = (accessTypeTmp = getAccessTypeForMemberOrganization(memberOrganization, url)) != null ? accessTypeTmp : accessType;
+		if (organizationListItem != null) {
+			accessType = (accessTypeTmp = getAccessTypeForOrganizationType(organizationListItem.getTypeKey(), url)) != null ? accessTypeTmp : accessType;
+			accessType = (accessTypeTmp = getAccessTypeForMemberOrganization(organizationListItem, url)) != null ? accessTypeTmp : accessType;
 		}
 		
-		if (user != null) {
-			if (user.getRoleList() != null) {
-				for (Role role : user.getRoleList()) {
+		if (userListItem != null) {
+			if (userListItem.getRoleKeys() != null) {
+				for (UserRoleKey role : userListItem.getRoleKeys()) {
 					accessType = (accessTypeTmp = getAccessTypeForUserRole(role, url)) != null ? accessTypeTmp : accessType;
 				}
 			}
@@ -269,16 +222,16 @@ public class URLServiceImpl implements URLService {
 		return accessType;
 	}
 	
-	private AccessType getAccessTypeForOrganizationType(OrganizationType organizationType, Url url) {
+	private AccessType getAccessTypeForOrganizationType(OrganizationTypeKey organizationType, Url url) {
 		AccessType accessType = null;
 		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganizationType(organizationType);
 		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);
 		return accessType;
 	}
 	
-	private AccessType getAccessTypeForMemberOrganization(MemberOrganization memberOrganization, Url url) {
+	private AccessType getAccessTypeForMemberOrganization(OrganizationListItem memberOrganization, Url url) {
 		AccessType accessType = null;
-		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganization(memberOrganization.getOrganization());
+		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByOrganization(memberOrganization);
 		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);
 		return accessType;
 	}
@@ -289,7 +242,7 @@ public class URLServiceImpl implements URLService {
 		return accessType;
 	}
 	
-	private AccessType getAccessTypeForUserRole(Role userRole, Url url) {
+	private AccessType getAccessTypeForUserRole(UserRoleKey userRole, Url url) {
 		AccessType accessType = null;
 		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByRole(userRole);
 		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);

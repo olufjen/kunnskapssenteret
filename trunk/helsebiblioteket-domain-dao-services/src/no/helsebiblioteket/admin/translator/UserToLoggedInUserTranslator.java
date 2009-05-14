@@ -14,15 +14,17 @@ public class UserToLoggedInUserTranslator {
 		loggedInUser.setIsStudent(user.getPerson().getIsStudent());
 		loggedInUser.setLastName(user.getPerson().getLastName());
 		loggedInUser.setParticipateSurvey(user.getPerson().getProfile().getParticipateSurvey());
-		if(user.getPerson().getPosition() != null){
+		if(user.getPerson().getPosition() != null && user.getPerson().getPosition().getKey() != null){
 			loggedInUser.setPositionDescription(user.getPerson().getPosition().getDescription());
 			loggedInUser.setPositionKey(user.getPerson().getPosition().getKey().getValue());
 			loggedInUser.setPositionName(user.getPerson().getPosition().getName());
 		}
 		loggedInUser.setPositionText(user.getPerson().getPositionText());
 		loggedInUser.setReceiveNewsletter(user.getPerson().getProfile().getReceiveNewsletter());
-		loggedInUser.setRoleKey(user.getRoleList()[0].getKey().getValue());
-		loggedInUser.setRoleName(user.getRoleList()[0].getName());
+		if(user.getRoleList().length > 0){
+			loggedInUser.setRoleKey(user.getRoleList()[0].getKey().getValue());
+			loggedInUser.setRoleName(user.getRoleList()[0].getName());
+		}
 		loggedInUser.setStudentNumber(user.getPerson().getStudentNumber());
 		loggedInUser.setUsername(user.getUsername());
 		return loggedInUser;

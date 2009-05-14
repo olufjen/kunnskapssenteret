@@ -6,6 +6,7 @@ public class LoggedInOrganization {
 	private String nameEnglishShort;
 	private String nameNorwegianNormal;
 	private String nameNorwegianShort;
+	private String typeKey;
 
 	public Integer getId() {
 		return id;
@@ -36,5 +37,11 @@ public class LoggedInOrganization {
 	}
 	public void setNameNorwegianShort(String nameNorwegianShort) {
 		this.nameNorwegianShort = nameNorwegianShort;
+	}
+	public String getTypeKey() {
+		return typeKey;
+	}
+	public void setTypeKey(String typeKey) {
+		this.typeKey = typeKey;
 	}
 }

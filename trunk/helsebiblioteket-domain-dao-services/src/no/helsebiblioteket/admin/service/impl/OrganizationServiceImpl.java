@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,6 +58,7 @@ import no.helsebiblioteket.admin.factory.PersonFactory;
 import no.helsebiblioteket.admin.factory.ProfileFactory;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.validator.IpAddressValidator;
 
 public class OrganizationServiceImpl implements OrganizationService {
 	private final Log logger = LogFactory.getLog(getClass());
@@ -152,9 +151,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return result;
 	}
 	private boolean isIpAddress(String searchString) {
-		Pattern pattern = Pattern.compile("[0-9][0-9]?[0-9]?\\.[0-9][0-9]?[0-9]?\\.[0-9][0-9]?[0-9]?\\.[0-9][0-9]?[0-9]?");
-		Matcher matcher = pattern.matcher(searchString);
-		return matcher.matches();
+		return IpAddressValidator.getInstance().isValidIPAddress(searchString);
 	}
 	private OrganizationListItem[] translateList(List<OrganizationListItem> organizationList) {
 		OrganizationListItem[]items = new OrganizationListItem[organizationList.size()];

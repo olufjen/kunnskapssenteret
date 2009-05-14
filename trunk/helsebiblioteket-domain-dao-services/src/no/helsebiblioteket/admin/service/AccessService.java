@@ -16,8 +16,12 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
@@ -40,10 +44,10 @@ public interface AccessService extends Serializable {
 	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey);
 
 	public ListResultResourceAccessListItem getAccessListForAll();
-	public ListResultResourceAccessListItem getAccessListByUser(User user);
-	public ListResultResourceAccessListItem getAccessListByRole(Role role);
-	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization);
-	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType);
+	public ListResultResourceAccessListItem getAccessListByUser(UserListItem user);
+	public ListResultResourceAccessListItem getAccessListByRole(UserRoleKey role);
+	public ListResultResourceAccessListItem getAccessListByOrganization(OrganizationListItem organization);
+	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationTypeKey organizationType);
 
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY);
 	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url);
