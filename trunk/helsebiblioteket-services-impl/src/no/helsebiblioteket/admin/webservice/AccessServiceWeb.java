@@ -14,8 +14,12 @@ import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
@@ -77,28 +81,28 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public ListResultResourceAccessListItem getAccessListByOrganization(Organization organization) {
+	public ListResultResourceAccessListItem getAccessListByOrganization(OrganizationListItem organization) {
 		Object[] args = new Object[] { organization };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganization, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationType organizationType) {
+	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationTypeKey organizationType) {
 		Object[] args = new Object[] { organizationType };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganizationType, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public ListResultResourceAccessListItem getAccessListByRole(Role role) {
+	public ListResultResourceAccessListItem getAccessListByRole(UserRoleKey role) {
 		Object[] args = new Object[] { role };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByRole, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public ListResultResourceAccessListItem getAccessListByUser(User user) {
+	public ListResultResourceAccessListItem getAccessListByUser(UserListItem user) {
 		Object[] args = new Object[] { user };
 		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByUser, args, returnTypes);
