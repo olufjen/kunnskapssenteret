@@ -1,15 +1,16 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
+
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
-import no.helsebiblioteket.admin.domain.Organization;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Resource;
-import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.Role;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
+import no.helsebiblioteket.admin.domain.list.UserListItem;
 
 /**
  * Used to insert, update, load and delete ResourceAccess
@@ -38,23 +39,23 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ResourceAccessListItem> getAccessListByUser(User user){
+	public List<ResourceAccessListItem> getAccessListByUser(UserListItem user){
 		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByUserId", user.getId());
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ResourceAccessListItem> getAccessListByUserRole(Role userRole){
-		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getId());
+	public List<ResourceAccessListItem> getAccessListByUserRole(UserRoleKey userRole){
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByUserRole", userRole.getValue());
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ResourceAccessListItem> getAccessListByOrganization(Organization organization){
+	public List<ResourceAccessListItem> getAccessListByOrganization(OrganizationListItem organization){
 		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationId", organization.getId());
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ResourceAccessListItem> getAccessListByOrganizationType(OrganizationType organizationType){
-		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getId());
+	public List<ResourceAccessListItem> getAccessListByOrganizationType(OrganizationTypeKey organizationType){
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListByOrganizationType", organizationType.getValue());
 	}
 	@SuppressWarnings("unchecked")
 	@Override

@@ -159,7 +159,7 @@
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
 		where tbl_access.org_unit_id = #organizationId# and tbl_access.deleted is false;
 	</select>
-	<select id="getAccessListByOrganizationType" resultMap="ResourceAccessListItemResultMap" parameterClass="integer">
+	<select id="getAccessListByOrganizationType" resultMap="ResourceAccessListItemResultMap" parameterClass="String">
 		select
 			access_id,
 			category,
@@ -174,9 +174,9 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where org_type_id = #organizationTypeId# and tbl_access.deleted is false;
+		where key = #value# and tbl_access.deleted is false;
 	</select>
-	<select id="getAccessListByUserRole" resultMap="ResourceAccessListItemResultMap" parameterClass="integer">
+	<select id="getAccessListByUserRole" resultMap="ResourceAccessListItemResultMap" parameterClass="String">
 		select
 			access_id,
 			category,
@@ -191,7 +191,7 @@
 			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
 			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
 			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
-		where user_role_id = #userRoleId# and tbl_access.deleted is false;
+		where key = #value# and tbl_access.deleted is false;
 	</select>
 	<select id="getAccessListByResource" resultMap="ResourceAccessResultMap" parameterClass="Resource">
 		select access_type_id, 

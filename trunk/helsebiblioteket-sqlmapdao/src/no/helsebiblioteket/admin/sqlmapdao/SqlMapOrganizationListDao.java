@@ -62,14 +62,13 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	private OrganizationListItem init(OrgUnitNameJoin join){
 		OrganizationListItem working = new OrganizationListItem();
 		working.setId(join.getOrgUnitId());
-		working.setKey(join.getOrganizationTypeKey());
 		working.setNameEnglish("");
 		working.setNameNorwegian("");
 		working.setNameShortEnglish("");
 		working.setNameShortNorwegian("");
 		
 		working.setTypeText(join.getOrganizationTypeDescription());
-		working.setTypeKey(join.getOrganizationTypeKey().getValue());
+		working.setTypeKey(join.getOrganizationTypeKey());
 		
 		working.setIpAddressesFrom(new String[0]);
 		working.setIpAddressesTo(new String[0]);
