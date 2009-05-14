@@ -308,33 +308,6 @@ public class ProfileController extends HttpControllerPlugin {
 			messages.appendChild(UserToXMLTranslator.element(document, "employer", "NO_VALUE"));
 		}
 		
-//		if(username.length() == 0 || ! UsernameValidator.getInstance().isValidUsername(username)) {
-//			messages.appendChild(UserToXMLTranslator.element(document, "username", "NOT_VALID"));
-//		}
-
-//		String password = request.getParameter(this.parameterNames.get("password"));
-//		if(password == null) { password = "";}
-//		String passwordRepeat = request.getParameter(this.parameterNames.get("passwordrepeat"));
-//		if(passwordRepeat == null) { passwordRepeat = "";}
-//		String position = request.getParameter(this.parameterNames.get("position"));
-//		if (position==null) { position = ""; }
-//		if(password.length() == 0 || ! PasswordValidator.getInstance().isValidPassword(password)) {
-//			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
-//		}
-//		if (role.length() == 0 || !validPosition(position)) {
-//			messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));
-//		}
-//		if(passwordRepeat.length() == 0){ }
-//		if(! password.equals(passwordRepeat)){
-//			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
-//		}
-//		if( ! isBoolean(receiveNewsletter)){
-//			errorBuffer.append("<newsletter>Not valid.</newsletter>");
-//		}
-//		if( ! isBoolean(participateSurvey)){
-//			errorBuffer.append("<questionaire>Not valid.</questionaire>");
-//		}
-		
 		user.getPerson().setFirstName(firstName);
 		user.getPerson().setLastName(lastName);
 		user.getPerson().getContactInformation().setEmail(email);
@@ -346,20 +319,7 @@ public class ProfileController extends HttpControllerPlugin {
 		user.getPerson().setEmployer(employer);
 		user.getPerson().getProfile().setReceiveNewsletter(new Boolean(receiveNewsletter));
 		user.getPerson().getProfile().setParticipateSurvey(new Boolean(participateSurvey));
-//		user.setPassword(password);
 	}
-	
-//	private boolean isBoolean(String bool) {
-//		if(bool.equals(Boolean.FALSE.toString()) || bool.equals(Boolean.TRUE.toString())){
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-	
-//	private boolean validPosition(String position) {
-//		return (!"choose".equals(position));
-//	}
 	
 	protected boolean isInteger(String integer) {
 		try{Integer.parseInt(integer);} catch (NumberFormatException e) {return false;}
