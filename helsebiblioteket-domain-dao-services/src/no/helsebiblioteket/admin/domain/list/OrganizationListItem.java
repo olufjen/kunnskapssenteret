@@ -9,13 +9,12 @@ public class OrganizationListItem {
 	private String nameNorwegian;
 	private String nameShortNorwegian;
 	private String typeText;
-	private String typeKey;
-	private OrganizationTypeKey key;
+	private OrganizationTypeKey typeKey;
 	private String[] ipAddressesFrom;
 	private String[] ipAddressesTo;
 
 	public String toString() {
-		return "[" + id + "] " + key + ", nameEnglish=" + nameEnglish;
+		return "[" + id + "] " + typeKey + ", nameEnglish=" + nameEnglish;
 	}
 	
 	public Integer getId() {
@@ -48,12 +47,6 @@ public class OrganizationListItem {
 	public void setNameShortNorwegian(String nameShortNorwegian) {
 		this.nameShortNorwegian = nameShortNorwegian;
 	}
-	public OrganizationTypeKey getKey() {
-		return key;
-	}
-	public void setKey(OrganizationTypeKey key) {
-		this.key = key;
-	}
 	public String getTypeText() {
 		return typeText;
 	}
@@ -72,10 +65,10 @@ public class OrganizationListItem {
 	public void setIpAddressesTo(String[] ipAddressesTo) {
 		this.ipAddressesTo = ipAddressesTo;
 	}
-	public String getTypeKey() {
+	public OrganizationTypeKey getTypeKey() {
 		return typeKey;
 	}
-	public void setTypeKey(String typeKey) {
+	public void setTypeKey(OrganizationTypeKey typeKey) {
 		this.typeKey = typeKey;
 	}
 }

@@ -10,14 +10,11 @@ public class LoggedInUserToXMLTranslator {
 		Element userElement = document.createElement("user");
 		userElement.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
 
-		Element rolesElement = document.createElement("roles");
 		Element roleElement = document.createElement("role");
 		roleElement.appendChild(UserToXMLTranslator.element(document, "key", user.getRoleKey()));
 		roleElement.appendChild(UserToXMLTranslator.cDataElement(document, "name", user.getRoleName()));
-		rolesElement.appendChild(roleElement);
-		userElement.appendChild(rolesElement);
+		userElement.appendChild(roleElement);
 
-		
 		Element personElement = document.createElement("person");
 		personElement.appendChild(UserToXMLTranslator.cDataElement(document, "name", user.getName()));
 		personElement.appendChild(UserToXMLTranslator.cDataElement(document, "firstname", user.getFirstName()));
