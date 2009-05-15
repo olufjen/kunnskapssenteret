@@ -1,17 +1,15 @@
-Name localhost
+Option ProxyByHostname
+Name proxy-t.helsebiblioteket.no
+LoginPort 80
+LoginPortSSL 443
 
-##Name 192.168.1.133
-##Name proxy.no
-#Option ProxyByHostname
-#IncludeIP 0.0.0.0-255.255.255.255
 
-Group  vg
-Title  VG
-URL    http://www.vg.no
-Domain vg.no
+Group genericgroup
 
-Group  altavista
-Title  AltaVista
-URL    http://www.altavista.com
-Domain altavista.com
-Domain yahoo.com
+Title  site1
+URL    http://www.site1.com
+Domain site1.com
+
+Title  site2
+URL    http://www.site2.com
+Domain site2.com
