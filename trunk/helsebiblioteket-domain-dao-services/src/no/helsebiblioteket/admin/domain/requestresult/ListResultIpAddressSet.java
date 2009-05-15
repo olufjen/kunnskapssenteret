@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 
-public class ListResultIpAddressSet {
+public class ListResultIpAddressSet implements Serializable {
 	private IpAddressSet[] list;
 
 	public ListResultIpAddressSet() {

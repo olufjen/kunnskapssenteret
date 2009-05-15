@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.SupplierSource;
 
-public class ListResultSupplierSource {
+public class ListResultSupplierSource implements Serializable {
 	private SupplierSource[] list;
 
 	public ListResultSupplierSource() {

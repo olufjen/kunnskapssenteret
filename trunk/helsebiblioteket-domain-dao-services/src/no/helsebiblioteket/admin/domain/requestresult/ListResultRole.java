@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.Role;
 
-public class ListResultRole {
+public class ListResultRole implements Serializable {
 	private Role[] list;
 	
 	public ListResultRole() {

@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.Position;
 
-public class ListResultPosition {
+public class ListResultPosition implements Serializable {
 	private Position[] list;
 	
 	public ListResultPosition() {
