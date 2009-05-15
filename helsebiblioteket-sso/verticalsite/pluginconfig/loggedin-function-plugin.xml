@@ -11,6 +11,15 @@
 		</property>
 	</bean>
 	
+	<bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>
+	
     <!-- Configure the function library to respond at extension "example". -->
     <bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
         <property name="name" value="loggedinuser"/>
@@ -25,6 +34,7 @@
 		<property name="serviceClient" ref="loggedInServiceClient" />
 		<property name="targetEPR" ref="loggedInTargetEPR" />
 		<property name="positionListAllName" ref="loggedInAllPositionsName" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	
 	<bean name="loggedInServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
