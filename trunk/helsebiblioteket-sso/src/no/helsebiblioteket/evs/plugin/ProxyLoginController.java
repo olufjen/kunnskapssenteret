@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
@@ -44,6 +45,8 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private String proxyUrl;
 	private String logUpUrl;
 	private boolean proxyUseGroup = true;
+	private String proxyGenericGroup;
+	private String proxyUsername;
 	private int proxyTimeout = 0;
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -51,10 +54,11 @@ public class ProxyLoginController extends HttpControllerPlugin {
 
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String requestedUrlText = request.getQueryString();
-		//requestedUrlText = request.getRequestURI();
-		//requestedUrlText = requestedUrlText.substring(requestedUrlText.indexOf(this.urlParamName + this.urlParamName.length() + 1));
-        String redirectUrl = "";
+		requestedUrlText = requestedUrlText.substring(requestedUrlText.indexOf(this.urlParamName) + this.urlParamName.length() + 1);
+		
+		String redirectUrl = "";
 		Url requestedUrl = new Url();
+		
 		requestedUrl.setStringValue(requestedUrlText);
 		
         UserToXMLTranslator translator = new UserToXMLTranslator();
@@ -62,20 +66,20 @@ public class ProxyLoginController extends HttpControllerPlugin {
         Element element = document.createElement(this.resultSessionVarName);
 		Object objectUser = this.loggedInUser();
 		LoggedInOrganization memberOrganization = this.loggedInOrganization();
-    	if(objectUser == null && memberOrganization == null){
-    		if(this.urlService.isAffected(requestedUrl)){
-        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
-        		redirectUrl = logUpUrl;
-    		} else {
+    	//if(objectUser == null && memberOrganization == null){
+		//	if(this.urlService.isAffected(requestedUrl)){
+		//		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
+		//		redirectUrl = logUpUrl;
+		//	} else {
     			// Special case: 
     			// See error messages below.
     			// No other choice than to redirect user to default "logup page"
-	    		logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database" +
-	    			"or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
-	    		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
-	    		redirectUrl = logUpUrl;
-    		}
-    	} else {
+		//		logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database" +
+		//			"or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
+		//		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
+		//		redirectUrl = logUpUrl;
+		//	}
+    	//} else {
     		if(this.urlService.isAffected(requestedUrl)) {
     			User user = null;
     			if (objectUser instanceof User) {
@@ -88,6 +92,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
     			if(memberOrganization != null && user != null){
     				OrganizationListItem organizationListItem = new OrganizationListItem();
     				organizationListItem.setId(memberOrganization.getId());
+    				organizationListItem.setTypeKey(new OrganizationTypeKey(memberOrganization.getTypeKey()));
     				UserListItem userListItem = new UserListItem();
     				userListItem.setId(user.getId());
     				accessResult = urlService.hasAccessUserOrganization(userListItem, organizationListItem, requestedUrl);
@@ -98,26 +103,27 @@ public class ProxyLoginController extends HttpControllerPlugin {
     			} else if(memberOrganization != null){
     				OrganizationListItem organizationListItem = new OrganizationListItem();
     				organizationListItem.setId(memberOrganization.getId());
+    				organizationListItem.setTypeKey(new OrganizationTypeKey(memberOrganization.getTypeKey()));
     				accessResult = urlService.hasAccessOrganization(organizationListItem, requestedUrl);
     			} else {
     				accessResult = urlService.hasAccessNone(requestedUrl);
     			}
     			
-    			if (accessResult.getValue().equals(AccessResult.logup)) {
+    			if (accessResult.equals(AccessResult.logup)) {
    	        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
     				redirectUrl = logUpUrl;
-    			} else if (accessResult.getValue().equals(AccessResult.exclude)) {
+    			} else if (accessResult.equals(AccessResult.exclude)) {
     				redirectUrl = requestedUrl.getStringValue();
-    			} else if (accessResult.getValue().equals(AccessResult.include)) {
-    				SingleResultString result = this.urlService.group(requestedUrl);
-    				String group;
-    				if(result instanceof EmptyResultString){
-    					group = null;
-    					logger.error("Group name was expected but was not found for URL: " + requestedUrl);
-    				} else {
-    					group = ((ValueResultString)result).getValue();
-    				}
-    				if(this.createProxySession(response, requestedUrlText, group)){
+    			} else if (accessResult.equals(AccessResult.include)) {
+    				//SingleResultString result = this.urlService.group(requestedUrl);
+    				//String group;
+    				//if(result instanceof EmptyResultString){
+    				//	group = null;
+    				//	logger.error("Group name was expected but was not found for URL: " + requestedUrl);
+    				//} else {
+    				//	group = ((ValueResultString)result).getValue();
+    				//}
+    				if(this.createProxySession(response, requestedUrlText)){
         				// Great, done!
     	        		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
     	        		redirectUrl = "";
@@ -129,11 +135,11 @@ public class ProxyLoginController extends HttpControllerPlugin {
     			}
     		} else {
     			logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database\n" +
-	    			"or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
+	    			" or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
     			createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
 	    		redirectUrl = logUpUrl;
     		}
-    	}
+    	//}
     	document.appendChild(element);
     	ResultHandler.setResult(this.resultSessionVarName, document);
     	if( ! redirectUrl.equals("")){
@@ -176,14 +182,14 @@ public class ProxyLoginController extends HttpControllerPlugin {
 			element.appendChild(document.createElement("noaccess"));
 		}
 	}
-	private boolean createProxySession(HttpServletResponse clientResponse, String destinationUrl, String group) {
+	private boolean createProxySession(HttpServletResponse clientResponse, String destinationUrl) {
         boolean sessionCreated = false;
         // Don't follow redirect returned from proxy. This redirect is to be given to user.
         HttpURLConnection.setFollowRedirects(false);
         try {
             // Create a URLConnection to proxy server
-            String url = this.proxyUrl + "?user=" + group + "&pass=" + this.proxyPassword
-                    + (this.proxyUseGroup && (group != null) ? "&group=" + group : null)
+            String url = this.proxyUrl + "?user=" + proxyUsername + "&pass=" + this.proxyPassword
+                    + (this.proxyUseGroup && (proxyGenericGroup != null) ? "&group=" + proxyGenericGroup : null)
                     + "&url=" + destinationUrl;
             URL proxyServerUrl = new URL(url);
             HttpURLConnection proxyServer = (HttpURLConnection)proxyServerUrl.openConnection();
@@ -262,5 +268,11 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	}
 	public void setProxyTimeout(int proxyTimeout) {
 		this.proxyTimeout = proxyTimeout;
+	}
+	public void setProxyGenericGroup(String proxyGenericGroup) {
+		this.proxyGenericGroup = proxyGenericGroup;
+	}
+	public void setProxyUsername(String proxyUsername) {
+		this.proxyUsername = proxyUsername;
 	}
 }
