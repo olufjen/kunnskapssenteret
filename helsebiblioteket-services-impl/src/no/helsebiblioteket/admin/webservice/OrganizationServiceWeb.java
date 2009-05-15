@@ -13,6 +13,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
@@ -52,10 +53,13 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key) {
-		Object[] args = new Object[] { key  };
+	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey organizationTypeKey) {
+		Object[] args = new Object[] { organizationTypeKey  };
 		Class[] returnTypes = new Class[] { SingleResultOrganizationType.class };
-		return (SingleResultOrganizationType) invoke(this.organizationTypeByKeyName, args, returnTypes);
+		String key = (
+				((organizationTypeKey != null) ? (organizationTypeKey.getValue()) : "")
+				);
+		return (SingleResultOrganizationType) invokeCached(CacheKey.organizationServiceWebGetOrganizationTypeByKeyCache, key, this.organizationTypeByKeyName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override

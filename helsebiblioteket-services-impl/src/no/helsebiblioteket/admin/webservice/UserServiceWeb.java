@@ -12,6 +12,7 @@ import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
@@ -43,10 +44,13 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public SingleResultSystem getSystemByKey(SystemKey key) {
-		Object[] args = new Object[] { key };
+	public SingleResultSystem getSystemByKey(SystemKey systemKey) {
+		Object[] args = new Object[] { systemKey };
 		Class[] returnTypes = new Class[] { SingleResultSystem.class };
-		return (SingleResultSystem)invoke(this.systemByKey, args, returnTypes);
+		String key = (
+				((systemKey != null) ? (systemKey.getValue()) : "")
+				);
+		return (SingleResultSystem)invokeCached(CacheKey.userServiceWebGetSystemByKeyCache, key, this.systemByKey, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -60,15 +64,19 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public ListResultPosition getPositionListAll(String DUMMY){
 		Object[] args = new Object[] { DUMMY };
 		Class[] returnTypes = new Class[] { ListResultPosition.class };
-		Object result = invoke(this.positionListAllName, args, returnTypes);
+		Object result = invokeCached(CacheKey.staticListCache, "getPositionListAll", this.positionListAllName, args, returnTypes);
 		return (ListResultPosition) result;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public SingleResultRole getRoleByKeySystem(UserRoleKey key, System system) {
-		Object[] args = new Object[] { key, system };
+	public SingleResultRole getRoleByKeySystem(UserRoleKey roleKey, System system) {
+		Object[] args = new Object[] { roleKey, system };
 		Class[] returnTypes = new Class[] { SingleResultRole.class };
-		return (SingleResultRole)invoke(this.roleByKeyName, args, returnTypes);
+		String key = (
+				((roleKey != null) ? (roleKey.getValue() + "-") : "") +
+				((system != null && system.getKey() != null) ? (system.getKey().getValue()) : "")
+				);
+		return (SingleResultRole)invokeCached(CacheKey.userServiceWebGetRoleByKeySystemCache, key, this.roleByKeyName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override

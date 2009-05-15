@@ -35,21 +35,29 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	public Boolean isAffected(Url url){
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (Boolean)invokeCached(CacheKey.affectedUrlCache, url.getStringValue(), this.isAffectedName, args, returnTypes);
+		return (Boolean)invokeCached(CacheKey.urlServiceWebIsAffectedCache, url.getStringValue(), this.isAffectedName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlUser(UserListItem user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		return (SingleResultUrl)invoke(this.translateUrlUserName, args, returnTypes);
+		String key = (
+				((user != null) ? (user.getId() + "-") : "") + 
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (SingleResultUrl)invokeCached(CacheKey.urlServiceWebTranslateUrlUserCache, key, this.translateUrlUserName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlOrganization(OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		return (SingleResultUrl)invoke(this.translateUrlOrganizationName, args, returnTypes);
+		String key = (
+				((organization != null) ? (organization.getId() + "-") : "") + 
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (SingleResultUrl)invokeCached(CacheKey.urlServiceWebTranslateUrlOrganizationCache, key, this.translateUrlOrganizationName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
@@ -59,51 +67,71 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		String key = (
 				((user != null) ? (user.getId() + "-") : "") + 
 				((organization) != null ? (organization.getId() + "-") : "") +
-				url
+				((url != null) ? (url.getStringValue()) : "")
 				);
-		return (SingleResultUrl) invokeCached(CacheKey.translateUrlUserOrganizationCache, key, this.translateUrlUserOrganizationName, args, returnTypes);
+		return (SingleResultUrl) invokeCached(CacheKey.urlServiceWebTranslateUrlUserOrganizationCache, key, this.translateUrlUserOrganizationName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUrl translateUrlNone(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		return (SingleResultUrl)invoke(this.translateUrlNoneName, args, returnTypes);
+		String key = (url != null) ? url.getStringValue() : "";
+		return (SingleResultUrl)invokeCached(CacheKey.urlServiceWebTranslateUrlNoneCache, key, this.translateUrlNoneName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
     public AccessResult hasAccessUser(UserListItem user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (AccessResult)invoke(this.hasAccessUserName, args, returnTypes);
+		String key = (
+				((user != null) ? (user.getId() + "-") : "") + 
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (AccessResult)invokeCached(CacheKey.urlServiceWebHasAccessUserCache, key, this.hasAccessUserName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
     public AccessResult hasAccessOrganization(OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (AccessResult)invoke(this.hasAccessOrganizationName, args, returnTypes);
+		String key = (
+				((organization != null) ? (organization.getId() + "-") : "") + 
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (AccessResult)invokeCached(CacheKey.urlServiceWebHasAccessOrganizationCache, key, this.hasAccessOrganizationName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
     public AccessResult hasAccessUserOrganization(UserListItem user, OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (AccessResult) invoke(this.hasAccessUserOrganizationName, args, returnTypes);
+		String key = (
+				((organization != null) ? (organization.getId() + "-") : "") + 
+				((user != null) ? (user.getId() + "-") : "") +
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (AccessResult) invokeCached(CacheKey.urlServiceWebHasAccessUserOrganizationCache, key, this.hasAccessUserOrganizationName, args, returnTypes);
     }
 	@SuppressWarnings("unchecked")
 	@Override
 	public AccessResult hasAccessNone(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { Boolean.class };
-		return (AccessResult)invoke(this.hasAccessNoneName, args, returnTypes);
+		String key = (
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (AccessResult)invokeCached(CacheKey.urlServiceWebHasAccessNoneCache, key, this.hasAccessNoneName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-    public SingleResultString group(Url url){
+    public SingleResultString group(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { SingleResultString.class };
-		return (SingleResultString)invoke(this.groupName, args, returnTypes);
+		String key = (
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (SingleResultString)invokeCached(CacheKey.urlServiceWebGroupCache, key, this.groupName, args, returnTypes);
     }
 
 //    public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {
@@ -112,7 +140,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 //		String key = ( 
 //				((user) != null ? (user.getId() + "-") : "") +
 //				((memberOrganization) != null ? (memberOrganization.getOrganization().getId() + "-") : "") +
-//				url
+//				((url != null) ? (url.getStringValue()) : "")
 //				);
 //		return (AccessType) invokeCached(CacheKey.accessTypeForUserAndMemberOrganizationCache, key, this.accessTypeForUserAndMemberOrganizationName, args, returnTypes);
 //	}

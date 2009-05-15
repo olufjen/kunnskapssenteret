@@ -10,7 +10,7 @@
 		overflowToDisk="true" 
 	/>
 	<cache 
-  		name="affectedUrlCache" 
+  		name="urlServiceWebIsAffectedCache" 
   		maxElementsInMemory="500" 
   		eternal="false"
       	overflowToDisk="true" 
@@ -18,7 +18,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="translateUrlUserOrganizationCache" 
+  		name="urlServiceWebTranslateUrlUserOrganizationCache" 
   		maxElementsInMemory="500" 
   		eternal="false"
       	overflowToDisk="true" 
@@ -26,7 +26,95 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="accessTypeForUserAndMemberOrganizationCache" 
+  		name="urlServiceWebTranslateUrlUserCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceWebTranslateUrlOrganizationCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceWebTranslateUrlNoneCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceWebHasAccessUserCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceWebHasAccessOrganizationCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceWebHasAccessUserOrganizationCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceWebHasAccessNoneCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceWebGroupCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="organizationServiceWebGetOrganizationTypeByKeyCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="userServiceWebGetSystemByKeyCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="userServiceWebGetPositionListAllCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="userServiceWebGetRoleByKeySystemCache" 
   		maxElementsInMemory="500" 
   		eternal="false"
       	overflowToDisk="true" 

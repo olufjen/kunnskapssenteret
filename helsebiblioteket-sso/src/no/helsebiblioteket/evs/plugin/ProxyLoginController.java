@@ -50,7 +50,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private URLService urlService;
 
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String requestedUrlText = request.getParameter(this.urlParamName);
+		String requestedUrlText = request.getQueryString();
+		//requestedUrlText = request.getRequestURI();
+		//requestedUrlText = requestedUrlText.substring(requestedUrlText.indexOf(this.urlParamName + this.urlParamName.length() + 1));
         String redirectUrl = "";
 		Url requestedUrl = new Url();
 		requestedUrl.setStringValue(requestedUrlText);
