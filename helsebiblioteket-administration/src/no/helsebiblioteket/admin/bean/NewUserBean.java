@@ -22,6 +22,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.OrganizationService;
@@ -91,7 +92,12 @@ public class NewUserBean {
     	this.user.setPassword(this.password);
     	this.user.getPerson().getContactInformation().setEmail(this.emailaddress);
     	this.userService.insertUser(user);
-    	this.user = ((ValueResultUser)this.userService.findUserByUsername(this.user.getUsername())).getValue();
+    	Object userObject = this.userService.findUserByUsername(this.user.getUsername());
+    	if (userObject instanceof ValueResultOrganizationUser) {
+    		this.user = ((ValueResultOrganizationUser) userObject).getValue().getUser();
+    	} else if (userObject instanceof ValueResultUser) {
+    		this.user = ((ValueResultUser) userObject).getValue();
+    	}
     	this.userBean.setUser(user);
     	return this.userBean.details();
     }
