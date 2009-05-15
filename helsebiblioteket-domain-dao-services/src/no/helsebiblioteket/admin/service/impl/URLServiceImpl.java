@@ -196,6 +196,12 @@ public class URLServiceImpl implements URLService {
 		AccessType accessType = this.getAccessTypeForUserAndMemberOrganization(user, memberOrganization, url);
 		if(accessType.getCategory().getValue().equals(AccessTypeCategory.DENY.getValue())){
 			return AccessResult.logup;
+		}else if(accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue()) &&
+				accessType.getKey().getValue().equals(AccessTypeKey.proxy_exclude_all.getValue())) {
+			return AccessResult.exclude;
+		} else if(accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue()) &&
+				accessType.getKey().getValue().equals(AccessTypeKey.proxy_include_all.getValue())){
+			return AccessResult.include;
 		} else if(accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue()) &&
 				accessType.getKey().getValue().equals(AccessTypeKey.proxy_exclude.getValue())){
 			return AccessResult.exclude;
