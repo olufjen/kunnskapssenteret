@@ -64,6 +64,10 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		
     	while (m.find()) {
     		String oldLink = m.group(2);
+    		oldLink = oldLink.replace("&amp;", "&");
+    		//if (oldLink.contains("http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&holding=inohelib_fft_ndi&myncbishare=helsebiblioteket")) {
+    		//	logger.debug("breakpoint here");
+    		//}
 			if (validHref(oldLink)) {
 				URL url = this.deproxify(oldLink);
 				if(url != null) {
@@ -124,6 +128,10 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private URL translate(LoggedInUser user, LoggedInOrganization organization, URL url) throws MalformedURLException {
 		Url myUrl = new Url();
 		myUrl.setStringValue(url.toExternalForm());
+		if (myUrl.getStringValue().contains("http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&holding=inohelib_fft_ndi&myncbishare=helsebiblioteket")) {
+			logger.debug("breakpoint here");
+		}
+		
 		SingleResultUrl result;
 		if(user != null && organization != null){
 			UserListItem userL = new UserListItem();

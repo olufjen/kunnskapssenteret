@@ -129,7 +129,14 @@ public class URLServiceImpl implements URLService {
 		
 		// TODO Fase2: add an image to link to illustrate whether requester has access or not.
 		
-		newUrl.setStringValue(((proxify) ? this.proxyPrefix : "") + url.getStringValue());
+		if (proxify) {
+			// TODO: In case any existing "&amp;'s in URL: double replace, or use negative lookahead regexp
+			url.setStringValue(url.getStringValue().replace("&amp;", "&"));
+			url.setStringValue(url.getStringValue().replace("&", "&amp;"));
+			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
+		} else {
+			newUrl.setStringValue(url.getStringValue());
+		}
 		
 		return new ValueResultUrl(newUrl);
 	}
