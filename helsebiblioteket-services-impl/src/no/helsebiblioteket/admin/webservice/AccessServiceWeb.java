@@ -76,35 +76,35 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	@Override
 	public ListResultResourceAccessListItem getAccessListForAll() {
 		Object[] args = new Object[] {  };
-		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
+		Class[] returnTypes = new Class[] { ListResultResourceAccessListItem.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByAll, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByOrganization(OrganizationListItem organization) {
 		Object[] args = new Object[] { organization };
-		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
+		Class[] returnTypes = new Class[] { ListResultResourceAccessListItem.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganization, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationTypeKey organizationType) {
 		Object[] args = new Object[] { organizationType };
-		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
+		Class[] returnTypes = new Class[] { ListResultResourceAccessListItem.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByOrganizationType, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByRole(UserRoleKey role) {
 		Object[] args = new Object[] { role };
-		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
+		Class[] returnTypes = new Class[] { ListResultResourceAccessListItem.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByRole, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByUser(UserListItem user) {
 		Object[] args = new Object[] { user };
-		Class[] returnTypes = new Class[] { ListResultResourceAccess.class };
+		Class[] returnTypes = new Class[] { ListResultResourceAccessListItem.class };
 		return (ListResultResourceAccessListItem)invoke(this.accessListByUser, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
