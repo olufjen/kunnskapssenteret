@@ -29,9 +29,9 @@ public class Person implements Serializable {
 		return id + ": " + firstName + " " + lastName;
 	}
 	public String getName() {
-		if(this.lastName.equals("")){
+		if("".equals(this.lastName)){
 			return this.firstName;
-		} else if(this.firstName.equals("")){
+		} else if("".equals(this.firstName)) {
 			return this.lastName;
 		} else {
 			return this.firstName + " " + this.lastName;
