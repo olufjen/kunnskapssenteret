@@ -83,7 +83,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	@Override
     public AccessResult hasAccessUser(UserListItem user, Url url){
 		Object[] args = new Object[] { user, url };
-		Class[] returnTypes = new Class[] { Boolean.class };
+		Class[] returnTypes = new Class[] { AccessResult.class };
 		String key = (
 				((user != null) ? (user.getId() + "-") : "") + 
 				((url != null) ? (url.getStringValue()) : "")
@@ -94,7 +94,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	@Override
     public AccessResult hasAccessOrganization(OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { organization, url };
-		Class[] returnTypes = new Class[] { Boolean.class };
+		Class[] returnTypes = new Class[] { AccessResult.class };
 		String key = (
 				((organization != null) ? (organization.getId() + "-") : "") + 
 				((url != null) ? (url.getStringValue()) : "")
@@ -105,7 +105,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	@Override
     public AccessResult hasAccessUserOrganization(UserListItem user, OrganizationListItem organization, Url url){
 		Object[] args = new Object[] { user, organization, url };
-		Class[] returnTypes = new Class[] { Boolean.class };
+		Class[] returnTypes = new Class[] { AccessResult.class };
 		String key = (
 				((organization != null) ? (organization.getId() + "-") : "") + 
 				((user != null) ? (user.getId() + "-") : "") +
@@ -117,7 +117,7 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	@Override
 	public AccessResult hasAccessNone(Url url) {
 		Object[] args = new Object[] { url };
-		Class[] returnTypes = new Class[] { Boolean.class };
+		Class[] returnTypes = new Class[] { AccessResult.class };
 		String key = (
 				((url != null) ? (url.getStringValue()) : "")
 				);
