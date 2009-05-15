@@ -284,19 +284,6 @@
             <value>#{organizationService}</value>
         </managed-property>
 	</managed-bean>
-
-	<managed-bean>
-    	<description>Backingbean related to retrieving lost password</description>
-        <display-name>Forgotten PasswordNew Administrator Bean</display-name>
-        <managed-bean-name>forgottenPasswordBean</managed-bean-name>
-        <managed-bean-class>no.helsebiblioteket.admin.bean.ForgottenPasswordBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-        <managed-property>
-    		<property-name>loginService</property-name>
-        	<value>#{loginService}</value>
-		</managed-property>
-        
-	</managed-bean>
 	
 	<managed-bean>
     	<description>Backingbean related to creating a new member organization</description>
