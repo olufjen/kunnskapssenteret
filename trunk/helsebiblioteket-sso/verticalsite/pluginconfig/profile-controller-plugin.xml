@@ -10,6 +10,15 @@
 		</property>
 	</bean>
 	
+	<bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>
+	
 	<bean class="no.helsebiblioteket.evs.plugin.ProfileController">
  		<property name="urlPattern" value="/site/2/RedigerProfilServlet" />
  		<property name="userService" ref="profileUserService" />
@@ -64,6 +73,7 @@
 		<property name="findUserByUsernameName" ref="findUserByUsername" />
 		<property name="systemByKey" ref="systemByKeyName" />
 		<property name="roleByKeyName" ref="roleByKeyName" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="profileServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
