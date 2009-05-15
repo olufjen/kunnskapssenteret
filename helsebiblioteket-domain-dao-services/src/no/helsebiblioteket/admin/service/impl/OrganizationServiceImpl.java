@@ -530,7 +530,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 				return organizationName;
 			}
 		}
-		this.logger.warn("Name " + language + "_" + category + " did not exist for organization " + organization.getId());
+		this.logger.info("Name " + language + "_" + category + " did not exist for organization " + organization.getId() + ". Inserting empty value for name. Just so you know. But this message is really a bit rendundant.");
 		OrganizationName created = createName(language, category, "");
 		this.organizationNameDao.insertOrganizationName(organization, created);
 		return created;
