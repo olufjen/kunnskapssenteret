@@ -10,6 +10,15 @@
 		</property>
 	</bean>
 	
+	<bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>
+	
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
  		<property name="urlPattern" value="/site/2/RegistreringBrukerServlet" />
  		<property name="userService" ref="registerUserService" />
@@ -57,11 +66,13 @@
 		<property name="roleByKeyName" ref="getRoleByKeyName" />
 		<property name="positionByKey" ref="getPositionByKey" />
 		<property name="systemByKey" ref="getSystemByKey" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="organizationService" class="no.helsebiblioteket.admin.webservice.OrganizationServiceWeb" init-method="init">
 		<property name="serviceClient" ref="organizationServiceClient" />
 		<property name="targetEPR" ref="organizationTargetEPR" />
 		<property name="organizationTypeByKeyName" ref="organizationTypeByKeyName" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
 	<bean name="organizationServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
