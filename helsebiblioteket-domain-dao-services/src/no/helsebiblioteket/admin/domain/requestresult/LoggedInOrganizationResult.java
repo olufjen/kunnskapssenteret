@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 
-public class LoggedInOrganizationResult {
+public class LoggedInOrganizationResult implements Serializable {
 	private LoggedInOrganization organization;
 	private boolean success = false;
 	public LoggedInOrganizationResult() { }

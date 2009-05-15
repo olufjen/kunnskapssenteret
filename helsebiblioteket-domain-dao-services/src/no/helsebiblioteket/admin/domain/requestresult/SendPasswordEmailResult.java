@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
-public class SendPasswordEmailResult {
+import java.io.Serializable;
+
+public class SendPasswordEmailResult implements Serializable {
 	public static final String sentUser = "sentUser";
 	public static final String sentEmail = "sentEmail";
 	public static final String notFoundUser = "notFoundUser";

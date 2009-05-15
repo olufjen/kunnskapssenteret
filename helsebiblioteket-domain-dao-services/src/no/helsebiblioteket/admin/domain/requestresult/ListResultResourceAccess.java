@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 
-public class ListResultResourceAccess {
+public class ListResultResourceAccess implements Serializable {
 	private ResourceAccess[] list;
 
 	public ListResultResourceAccess() {

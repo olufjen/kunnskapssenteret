@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.requestresult;
 
-public class PageResult {
+import java.io.Serializable;
+
+public class PageResult implements Serializable {
 	private Integer number;
 	private Integer skipped;
 	private Integer total;
