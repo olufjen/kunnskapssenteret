@@ -45,8 +45,6 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private String proxyUrl;
 	private String logUpUrl;
 	private boolean proxyUseGroup = true;
-	private String proxyGenericGroup;
-	private String proxyUsername;
 	private int proxyTimeout = 0;
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -115,15 +113,15 @@ public class ProxyLoginController extends HttpControllerPlugin {
     			} else if (accessResult.equals(AccessResult.exclude)) {
     				redirectUrl = requestedUrl.getStringValue();
     			} else if (accessResult.equals(AccessResult.include)) {
-    				//SingleResultString result = this.urlService.group(requestedUrl);
-    				//String group;
-    				//if(result instanceof EmptyResultString){
-    				//	group = null;
-    				//	logger.error("Group name was expected but was not found for URL: " + requestedUrl);
-    				//} else {
-    				//	group = ((ValueResultString)result).getValue();
-    				//}
-    				if(this.createProxySession(response, requestedUrlText)){
+    				SingleResultString result = this.urlService.group(requestedUrl);
+    				String group;
+    				if(result instanceof EmptyResultString){
+    					group = null;
+    					logger.error("Group name was expected but was not found for URL: " + requestedUrl);
+    				} else {
+    					group = ((ValueResultString)result).getValue();
+    				}
+    				if(this.createProxySession(response, requestedUrlText, group)){
         				// Great, done!
     	        		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
     	        		redirectUrl = "";
@@ -182,14 +180,14 @@ public class ProxyLoginController extends HttpControllerPlugin {
 			element.appendChild(document.createElement("noaccess"));
 		}
 	}
-	private boolean createProxySession(HttpServletResponse clientResponse, String destinationUrl) {
+	private boolean createProxySession(HttpServletResponse clientResponse, String destinationUrl, String group) {
         boolean sessionCreated = false;
         // Don't follow redirect returned from proxy. This redirect is to be given to user.
         HttpURLConnection.setFollowRedirects(false);
         try {
             // Create a URLConnection to proxy server
-            String url = this.proxyUrl + "?user=" + proxyUsername + "&pass=" + this.proxyPassword
-                    + (this.proxyUseGroup && (proxyGenericGroup != null) ? "&group=" + proxyGenericGroup : null)
+            String url = this.proxyUrl + "?user=" + group + "&pass=" + this.proxyPassword
+                    + (this.proxyUseGroup && (group != null) ? "&group=" + group : null)
                     + "&url=" + destinationUrl;
             URL proxyServerUrl = new URL(url);
             HttpURLConnection proxyServer = (HttpURLConnection)proxyServerUrl.openConnection();
@@ -268,11 +266,5 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	}
 	public void setProxyTimeout(int proxyTimeout) {
 		this.proxyTimeout = proxyTimeout;
-	}
-	public void setProxyGenericGroup(String proxyGenericGroup) {
-		this.proxyGenericGroup = proxyGenericGroup;
-	}
-	public void setProxyUsername(String proxyUsername) {
-		this.proxyUsername = proxyUsername;
 	}
 }
