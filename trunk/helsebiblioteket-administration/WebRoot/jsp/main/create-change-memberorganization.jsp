@@ -25,7 +25,8 @@
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.organization.nameEnglish}"
 					id="organizationNameEnglish" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeMemberOrganizationBean.organizationNameEnglishUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameEnglish" styleClass="error"/>
@@ -40,7 +41,7 @@
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.organization.description}"
 					id="organizationDescription" 
-					required="true"
+					required="false"
 					>
 				</h:inputText>
 				<h:message for="organizationDescription" styleClass="error"/>
@@ -76,7 +77,8 @@
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.organization.nameShortEnglish}"
 					id="organizationNameEnglishShort" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeMemberOrganizationBean.organizationNameEnglishShortUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameEnglishShort" styleClass="error"/>
@@ -90,7 +92,8 @@
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.organization.nameNorwegian}"
 					id="organizationNameNorwegian" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeMemberOrganizationBean.organizationNameNorwegianUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameNorwegian" styleClass="error"/>
@@ -104,7 +107,8 @@
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.organization.nameShortNorwegian}"
 					id="organizationNameShortNorwegian" 
-					required="true"
+					required="false"
+					binding="#{createAndChangeMemberOrganizationBean.organizationNameNorwegianShortUIInput}"
 					>
 				</h:inputText>
 				<br /><h:message for="organizationNameShortNorwegian" styleClass="error"/>
