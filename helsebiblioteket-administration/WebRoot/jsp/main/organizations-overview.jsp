@@ -25,8 +25,8 @@
 		var="treeItem"
 		expandRoot="true"
 		
-		iconNodeClose="images/smiley.gif"
-		iconNodeOpen="images/smiley.gif"
+		iconNodeClose="images/helsebiblioteket.ico"
+		iconNodeOpen="images/helsebiblioteket.ico"
 		
 		iconLine="images/empty.gif"
 		iconNoline="images/empty.gif"
