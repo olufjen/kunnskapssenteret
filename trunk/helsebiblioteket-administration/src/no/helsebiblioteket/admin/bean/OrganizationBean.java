@@ -290,8 +290,18 @@ public class OrganizationBean implements IconProvider{
 		}
 		for (OrganizationListItem item : this.organizations) {
 			OrganizationTableItem tableItem = new OrganizationTableItem();
-			String name = item.getNameNorwegian();
-			if(name.equals("")) name = item.getNameEnglish();
+			String name = null;
+			// avoiding potential blank names in organization overview
+			// (rule: at least one name type is defined for an organization)
+			if (hasValue(item.getNameNorwegian())) {
+				name = item.getNameNorwegian();
+			} else if (hasValue(item.getNameEnglish())) {
+				name = item.getNameEnglish();
+			} else if (hasValue(item.getNameShortNorwegian())) {
+				name = item.getNameShortNorwegian();
+			} else if (hasValue(item.getNameShortEnglish())) {
+				name = item.getNameShortEnglish();
+			}
 			tableItem.setText(name);
 			tableItem.setOrganization(item);
 			tableItem.setShowLinks(true);
@@ -320,6 +330,10 @@ public class OrganizationBean implements IconProvider{
 			this.htmlTree.setIconProvider(this);
 			this.htmlTree.treeStructureChanged(new TreeModelEvent(root, new Object[]{root}));
 		}
+	}
+	
+	private boolean hasValue(String string) {
+		return (null != string && !"".equals(string));
 	}
 
 	public String getIconUrl(Object userObject, int childCount, boolean isLeaf) {
