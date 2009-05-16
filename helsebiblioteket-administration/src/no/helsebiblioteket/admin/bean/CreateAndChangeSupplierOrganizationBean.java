@@ -45,10 +45,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	private UIInput sourceNameUIInput = null;
 	private UIInput sourceUrlUIInput = null;
 	
-	private UIInput organizationNameNorwegianUIInput = null;
-	private UIInput organizationNameNorwegianShortUIInput = null;
-	private UIInput organizationNameEnglishUIInput = null;
-	private UIInput organizationNameEnglishShortUIInput = null;
+	
 	
 	private HtmlDataTable supplierSourceListHtmlDataTable = null;
 	
@@ -216,35 +213,6 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		}
 	}
 	
-	public boolean validateOrganizationNames() {
-		String msg = "one_or_more_organization_names";
-		boolean validation = true;
-		if (this.supplierOrganization != null && 
-				this.supplierOrganization.getOrganization() != null &&
-					(!hasValue(this.supplierOrganization.getOrganization().getNameEnglish()) &&
-						!hasValue(this.supplierOrganization.getOrganization().getNameNorwegian()) &&
-						!hasValue(this.supplierOrganization.getOrganization().getNameShortEnglish()) &&
-						!hasValue(this.supplierOrganization.getOrganization().getNameShortNorwegian()))) {
-			validation = false;
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault());
-			FacesMessage message = new FacesMessage(bundle.getString(msg));	
-			organizationNameEnglishShortUIInput.setValid(false);
-			facesContext.addMessage(organizationNameEnglishShortUIInput.getClientId(facesContext), message);
-			organizationNameEnglishUIInput.setValid(false);
-			facesContext.addMessage(organizationNameEnglishUIInput.getClientId(facesContext), message);
-			organizationNameNorwegianShortUIInput.setValid(false);
-			facesContext.addMessage(organizationNameNorwegianShortUIInput.getClientId(facesContext), message);
-			organizationNameNorwegianUIInput.setValid(false);
-			facesContext.addMessage(organizationNameNorwegianUIInput.getClientId(facesContext), message);
-		}
-		return validation;
-	}
-	
-	private boolean hasValue(String string) {
-		return (string != null && !"".equals(string));
-		
-	}
 	private void initOrganization() {
 		if ( ! this.organizationBean.getIsNew()) {
 			this.supplierOrganization = this.organizationBean.getSupplierOrganization();
@@ -259,41 +227,5 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		if(this.supplierOrganization.getResourceList() == null){
 			this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
 		}
-	}
-	
-	public void setOrganizationNameNorwegianUIInput(
-			UIInput organizationNameNorwegianUIInput) {
-		this.organizationNameNorwegianUIInput = organizationNameNorwegianUIInput;
-	}
-
-	public void setOrganizationNameNorwegianShortUIInput(
-			UIInput organizationNameNorwegianShortUIInput) {
-		this.organizationNameNorwegianShortUIInput = organizationNameNorwegianShortUIInput;
-	}
-
-	public void setOrganizationNameEnglishUIInput(
-			UIInput organizationNameEnglishUIInput) {
-		this.organizationNameEnglishUIInput = organizationNameEnglishUIInput;
-	}
-
-	public void setOrganizationNameEnglishShortUIInput(
-			UIInput organizationNameEnglishShortUIInput) {
-		this.organizationNameEnglishShortUIInput = organizationNameEnglishShortUIInput;
-	}
-	
-	public UIInput getOrganizationNameNorwegianUIInput() {
-		return organizationNameNorwegianUIInput;
-	}
-
-	public UIInput getOrganizationNameNorwegianShortUIInput() {
-		return organizationNameNorwegianShortUIInput;
-	}
-
-	public UIInput getOrganizationNameEnglishUIInput() {
-		return organizationNameEnglishUIInput;
-	}
-
-	public UIInput getOrganizationNameEnglishShortUIInput() {
-		return organizationNameEnglishShortUIInput;
 	}
 }
