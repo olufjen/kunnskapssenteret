@@ -214,6 +214,8 @@ public class UserBean {
     					this.passwordRepeat.getClientId(FacesContext.getCurrentInstance()),
     					new FacesMessage(FacesMessage.SEVERITY_INFO, messageValue, messageValue));
     			return null; 
+    		} else {
+    			this.user.setPassword(this.password);
     		}
     	}
     	
