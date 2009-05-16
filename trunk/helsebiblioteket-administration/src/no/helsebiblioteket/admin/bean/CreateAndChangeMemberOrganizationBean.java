@@ -65,6 +65,9 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
+		if (!validateOrganizationNames()) {
+			return "create_change_member_organization";
+		}
 		ContactInformation contactInformationOrganization;
 		Profile contactPersonProfile;
 		if(this.isNew){

@@ -1,5 +1,12 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
@@ -17,6 +24,11 @@ public class NewOrganizationBean {
 	private String contactPersonEmail;
 	private Boolean notNew;
 
+	protected UIInput organizationNameNorwegianUIInput = null;
+	protected UIInput organizationNameNorwegianShortUIInput = null;
+	protected UIInput organizationNameEnglishUIInput = null;
+	protected UIInput organizationNameEnglishShortUIInput = null;
+	
 	protected Boolean isNew;
 	protected Organization organization;
 	protected UserService userService;
@@ -97,5 +109,70 @@ public class NewOrganizationBean {
 	}
 	public void setOrganizationBean(OrganizationBean organizationBean) {
 		this.organizationBean = organizationBean;
+	}
+	
+	public void setOrganizationNameNorwegianUIInput(
+			UIInput organizationNameNorwegianUIInput) {
+		this.organizationNameNorwegianUIInput = organizationNameNorwegianUIInput;
+	}
+
+	public void setOrganizationNameNorwegianShortUIInput(
+			UIInput organizationNameNorwegianShortUIInput) {
+		this.organizationNameNorwegianShortUIInput = organizationNameNorwegianShortUIInput;
+	}
+
+	public void setOrganizationNameEnglishUIInput(
+			UIInput organizationNameEnglishUIInput) {
+		this.organizationNameEnglishUIInput = organizationNameEnglishUIInput;
+	}
+
+	public void setOrganizationNameEnglishShortUIInput(
+			UIInput organizationNameEnglishShortUIInput) {
+		this.organizationNameEnglishShortUIInput = organizationNameEnglishShortUIInput;
+	}
+	
+	public UIInput getOrganizationNameNorwegianUIInput() {
+		return organizationNameNorwegianUIInput;
+	}
+
+	public UIInput getOrganizationNameNorwegianShortUIInput() {
+		return organizationNameNorwegianShortUIInput;
+	}
+
+	public UIInput getOrganizationNameEnglishUIInput() {
+		return organizationNameEnglishUIInput;
+	}
+
+	public UIInput getOrganizationNameEnglishShortUIInput() {
+		return organizationNameEnglishShortUIInput;
+	}
+	
+	public boolean validateOrganizationNames() {
+		String msg = "one_or_more_organization_names";
+		boolean validation = true;
+		if (organization != null && 
+				(!hasValue(organization.getNameEnglish()) &&
+					!hasValue(organization.getNameNorwegian()) &&
+					!hasValue(organization.getNameShortEnglish()) &&
+					!hasValue(organization.getNameShortNorwegian()))) {
+			validation = false;
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault());
+			FacesMessage message = new FacesMessage(bundle.getString(msg));	
+			organizationNameEnglishShortUIInput.setValid(false);
+			facesContext.addMessage(organizationNameEnglishShortUIInput.getClientId(facesContext), message);
+			organizationNameEnglishUIInput.setValid(false);
+			facesContext.addMessage(organizationNameEnglishUIInput.getClientId(facesContext), message);
+			organizationNameNorwegianShortUIInput.setValid(false);
+			facesContext.addMessage(organizationNameNorwegianShortUIInput.getClientId(facesContext), message);
+			organizationNameNorwegianUIInput.setValid(false);
+			facesContext.addMessage(organizationNameNorwegianUIInput.getClientId(facesContext), message);
+		}
+		return validation;
+	}
+	
+	private boolean hasValue(String string) {
+		return (string != null && !"".equals(string));
+		
 	}
 }
