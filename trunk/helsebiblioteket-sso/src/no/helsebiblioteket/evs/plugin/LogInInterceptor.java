@@ -35,7 +35,10 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
 	    	if(IpAddressValidator.getInstance().isValidIPAddress(ipAddress.getAddress())){
 		    	LoggedInOrganizationResult res = this.loginService.loginOrganizationByIpAddress(ipAddress);
-	    		if(res.isSuccess()){
+	    		if (null == res) {
+	    			logger.error("loginService.loginOrganizationByIpAddress returned null for IP '" + ipAddress + "' .This was not expected.");
+	    		}
+	    		else if(res.isSuccess()){
 		    		this.logInOrganization(res.getOrganization());
 		    	}
 	    	}
