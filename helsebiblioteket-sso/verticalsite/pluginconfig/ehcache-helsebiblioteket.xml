@@ -121,4 +121,12 @@
       	timeToIdleSeconds="0" 
       	timeToLiveSeconds="30" 
     />
+    <cache 
+  		name="staticListCache" 
+  		maxElementsInMemory="500" 
+  		eternal="false"
+      	overflowToDisk="true" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
 </ehcache>
