@@ -26,7 +26,7 @@
 		insert into tbl_person
 		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, employer, position_text, is_student, last_changed)
 		values 
-		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, #employer#, #positionText#, #isStudent#, now());
+		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, #employer#, #positionText#, #isStudent#, date_trunc('milliseconds', now()));
 	</insert>
 	<update id="updatePerson" parameterClass="person">
 		update tbl_person set
@@ -40,12 +40,12 @@
 			position_text = #positionText#,
 			position_type_id = #position.id#,
 			is_student = #isStudent#,
-			last_changed = now()
+			last_changed = date_trunc('milliseconds', now())
 		where
-			person_id = #id# and last_changed = #lastChanged#;
+			person_id = #id# and date_trunc('milliseconds', last_changed) = #lastChanged#;
 	</update>
 	<delete id="deletePerson" parameterClass="person">
-  		delete from tbl_person where person_id = #id# and last_changed = #lastChanged#;
+  		delete from tbl_person where person_id = #id# and date_trunc('milliseconds', last_changed) = #lastChanged#;
     </delete>
 	<select id="getPersonById" resultMap="getPersonResultMap" parameterClass="integer">
 		select
@@ -60,7 +60,7 @@
 			employer,
 			position_text,
 			is_student,
-			last_changed
+			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_person
 		where person_id = #id#;
 	</select>
@@ -77,7 +77,7 @@
 			employer,
 			position_text,
 			is_student,
-			last_changed
+			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_person
 		where person_id = (select person_id from tbl_user where user_id = #userId#);
 	</select>
@@ -94,7 +94,7 @@
 			employer,
 			position_text,
 			is_student,
-			last_changed
+			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_person
 		where person_id = (select person_id from tbl_org_unit where org_unit_id = #id#);
 	</select>

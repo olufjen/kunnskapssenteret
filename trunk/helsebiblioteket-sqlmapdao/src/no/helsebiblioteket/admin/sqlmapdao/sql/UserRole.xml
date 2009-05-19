@@ -14,7 +14,7 @@
 		insert into tbl_user_role
 		(user_role_id, user_id, last_changed)
 		values 
-		(#userRoleId#, #userId#, now());
+		(#userRoleId#, #userId#, date_trunc('milliseconds', now()));
 	</insert>
 	<delete id="deleteUserRole" parameterClass="UserRoleLine">
 		delete from tbl_user_role
@@ -24,7 +24,7 @@
 		select 
 			user_role_id,
 			user_id,
-			last_changed
+			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_user_role
 		where user_id = #userId# and user_role_id = #userRoleId#;
 	</select>
@@ -32,7 +32,7 @@
 		select 
 			user_role_id, 
 			user_id,
-			last_changed
+			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_user_role
 		where user_id = #userId#;
 	</select>

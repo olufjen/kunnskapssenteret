@@ -31,7 +31,7 @@
 			SELECT nextval('tbl_resource_resource_id_seq') as id;
 		</selectKey>
 		insert into tbl_resource (resource_id, supplier_source_id, resource_type_id, org_unit_id, deleted, last_changed)
-		values (#resource.id#, #supplierSource.id#, #resource.resourceType.id#, #resource.offeredBy#, #resource.deleted#, now());
+		values (#resource.id#, #supplierSource.id#, #resource.resourceType.id#, #resource.offeredBy#, #resource.deleted#, date_trunc('milliseconds', now()));
 	</insert>
 	<update id="updateSupplierSourceResource" parameterClass="SupplierSourceResource">
 		update tbl_resource set
@@ -39,13 +39,13 @@
       		resource_type_id = #resource.resourceType.id#,
 	      	org_unit_id = #resource.offeredBy#,
 	      	deleted = #resource.deleted#,
-    	  	last_changed = now()
-    	where resource_id = #resource.id# and last_changed = #resource.lastChanged#;
+    	  	last_changed = date_trunc('milliseconds', now())
+    	where resource_id = #resource.id# and date_trunc('milliseconds', last_changed) = #resource.lastChanged#;
 	</update>
 	<delete id="deleteSupplierSourceResource" parameterClass="SupplierSourceResource">
 		delete from tbl_resource
 		where resource_id = #resource.id# 
-		and last_changed = #resource.lastChanged#
+		and date_trunc('milliseconds', last_changed) = #resource.lastChanged#
 	</delete>
 	<select id="getSupplierSourceResourceById" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
 		select
@@ -55,7 +55,7 @@
 			type.descr,
 			type.name,
 			res.resource_id,
-			res.last_changed,
+			date_trunc('milliseconds', res.last_changed) as last_changed,
 			res.deleted,
 			sup.supplier_source_id,
 			type.resource_type_id,
@@ -74,7 +74,7 @@
 			type.descr,
 			type.name,
 			res.resource_id,
-			res.last_changed,
+			date_trunc('milliseconds', res.last_changed) as last_changed,
 			res.deleted,
 			sup.supplier_source_id,
 			type.resource_type_id,
@@ -94,7 +94,7 @@
 			type.descr,
 			type.name,
 			res.resource_id,
-			res.last_changed,
+			date_trunc('milliseconds', res.last_changed) as last_changed,
 			res.deleted,
 			sup.supplier_source_id,
 			type.resource_type_id,
