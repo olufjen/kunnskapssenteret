@@ -7,6 +7,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
     <head>
+    	<meta http-equiv="pragma" content="no-cache">
+    	<meta http-equiv="cache-control" content="no-cache">
+    	<meta http-equiv="expires" content="Mon, 8 Aug 2006 10:00:00 GMT">
+    	<meta http-equiv="cache-control" content="must-revalidate">
         <title>Helsebiblioteket - Administration</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <!--  <link rel="stylesheet" type="text/css" href="css/reset.css" />--> <!--stilsett som nuller ut alle marger, paddings, borders osv-->
