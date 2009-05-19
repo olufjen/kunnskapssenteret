@@ -63,7 +63,7 @@
 				#resourceAccess.access.providedBy.organization.id#,
 				#orgUnitId#,
 				#resourceAccess.access.deleted#,
-				now());
+				date_trunc('milliseconds', now()));
 	</insert>
 	<update id="updateResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
 		update tbl_access set
@@ -78,13 +78,13 @@
 			provided_by_org_unit = #resourceAccess.access.providedBy.organization.id#,
 			org_unit_id = #orgUnitId#,
 			deleted = #resourceAccess.access.deleted#,
-			last_changed = now()
+			last_changed = date_trunc('milliseconds', now())
 		where access_id = #resourceAccess.access.id# and last_changed = #resourceAccess.access.lastChanged#
 	</update>
 	<delete id="deleteResourceAccessForeignKeys" parameterClass="ResourceAccessForeignKeys">
   		delete from tbl_access
   		where
-  		access_id = #resourceAccess.access.id# and last_changed = #resourceAccess.access.lastChanged#
+  		access_id = #resourceAccess.access.id# and date_trunc('milliseconds', last_changed) = #resourceAccess.access.lastChanged#
     </delete>
 
 	<select id="getResourceAccessForeignKeysByAccessId" resultMap="ResourceAccessResultMap" parameterClass="integer">
@@ -99,7 +99,7 @@
 			provided_by_org_unit,
 			org_unit_id,
 			deleted, 
-			last_changed
+			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_access
 		where access_id = #id#;
 	</select>
@@ -110,7 +110,7 @@
 			category,
 			key,
 			url,
-			tbl_access.last_changed as last_changed,
+			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
 			tbl_resource.resource_id,
@@ -131,7 +131,7 @@
 			category,
 			key,
 			url,
-			tbl_access.last_changed as last_changed,
+			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
 			tbl_resource.resource_id,
@@ -148,7 +148,7 @@
 			category,
 			key,
 			url,
-			tbl_access.last_changed as last_changed,
+			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
 			tbl_resource.resource_id,
@@ -165,7 +165,7 @@
 			category,
 			tbl_access_type_reg.key,
 			url,
-			tbl_access.last_changed as last_changed,
+			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
 			tbl_resource.resource_id,
@@ -183,7 +183,7 @@
 			category,
 			tbl_access_type_reg.key,
 			url,
-			tbl_access.last_changed as last_changed,
+			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
 			tbl_resource.resource_id,
@@ -207,7 +207,7 @@
 			provided_by_org_unit,
 			org_unit_id,
 			deleted, 
-			last_changed
+			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_access
 		where resource_id = #id#;
 	</select>

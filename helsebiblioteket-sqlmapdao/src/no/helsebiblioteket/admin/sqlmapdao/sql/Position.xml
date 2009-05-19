@@ -33,7 +33,7 @@
   			position_type_id = #id#
 	</update>
 	<delete id="deletePosition" parameterClass="integer">
-  		delete from tbl_position_type_reg where position_type_id = #id# and last_changed = #lastChanged#
+  		delete from tbl_position_type_reg where position_type_id = #id# and date_trunc('milliseconds', last_changed) = #lastChanged#
     </delete>
 	<select id="getPositionByKey" resultMap="PositionResultMap" parameterClass="string">
 		select position_type_id, descr, name, key, org_type_id

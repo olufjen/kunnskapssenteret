@@ -30,7 +30,7 @@
 			deleted
 		) values (
 			#id#,
-			now(),
+			date_trunc('milliseconds', now()),
 			#userId#,
 			#resourceId#,
 			#orgUnitId#,
@@ -41,7 +41,7 @@
 	<update id="updateAction" parameterClass="ActionLine">
 		update tbl_action set
 			action_id = #id#,
-			action_performed = now(),
+			action_performed = date_trunc('milliseconds', now()),
 			user_id = #userId#,
 			resource_id = #resourceId#,
 			org_unit_id = #orgUnitId#,
