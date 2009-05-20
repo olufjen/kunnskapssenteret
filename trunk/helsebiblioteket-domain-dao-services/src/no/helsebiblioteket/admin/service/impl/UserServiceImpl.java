@@ -393,7 +393,12 @@ public class UserServiceImpl implements UserService {
 			user.setRoleList(new Role[0]);
 		}
 
-		SingleResultUser oldResult = this.findUserByUsername(user.getUsername());
+		// User might have changed username, must fetch old user based on id.
+		String existingUsername = null;
+		OrganizationUser oldUser = userDao.getUserById(user.getId());
+		existingUsername = oldUser.getUser().getUsername();
+		
+		SingleResultUser oldResult = this.findUserByUsername(existingUsername);
 		if(oldResult instanceof EmptyResultUser){
 			throw new NullPointerException("User does not exist.");
 		}
