@@ -17,6 +17,7 @@
 		<result property="resource.id" column="resource_id" />
 		<result property="supplierSource.id" column="supplier_source_id" />
 		<result property="supplierSource.supplierSourceName" column="supplier_source_name" />
+		<result property="supplierSource.proxyDatabaseName" column="proxy_database_name" />
 		<result property="supplierSource.url.stringValue" column="url" />
 		<result property="resource.resourceType.id" column="resource_type_id" />
 		<result property="resource.resourceType.key.value" column="key" />
@@ -50,6 +51,7 @@
 	<select id="getSupplierSourceResourceById" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
 		select
 			sup.supplier_source_name,
+			sup.proxy_database_name,
 			sup.url,
 			type.key,
 			type.descr,
@@ -70,6 +72,7 @@
 		select
 			sup.supplier_source_name,
 			sup.url,
+			sup.proxy_database_name,
 			type.key,
 			type.descr,
 			type.name,
@@ -89,6 +92,7 @@
 	<select id="getSupplierSourceResourcesAll" resultMap="SupplierSourceResourceResultListMap">
 		select
 			sup.supplier_source_name,
+			sup.proxy_database_name,
 			sup.url,
 			type.key,
 			type.descr,
