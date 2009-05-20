@@ -179,9 +179,9 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
             found = findNodeByName(n, NODE_GROUP);
             if (found != null) {
             	if ("1".equals(found.getTextContent())) {
-            		organization.getOrganization().setType(orgTypeEmp);
-            	} else if ("2".equals(found.getTextContent())) {
             		organization.getOrganization().setType(orgTypeStud);
+            	} else if ("2".equals(found.getTextContent())) {
+            		organization.getOrganization().setType(orgTypeEmp);
             	} else if ("3".equals(found.getTextContent())) {
             		organization.getOrganization().setType(orgTypeHPR);
             	}
