@@ -18,11 +18,12 @@ public class SupplierSource implements Serializable {
 
 	// Constructors
 	public SupplierSource() { }
-	public SupplierSource(String name, Url url) {
+	public SupplierSource(String name, Url url, String proxyDatabaseName) {
 		this.supplierSourceName = name;
 		this.url = url;
+		this.proxyDatabaseName = proxyDatabaseName;
 	}
-	public SupplierSource(Integer id, String name, Url url) {
+	public SupplierSource(Integer id, String name, Url url, String proxyDatabaseName) {
 		setId(id);
 		this.supplierSourceName = name;
 		this.url = url;
