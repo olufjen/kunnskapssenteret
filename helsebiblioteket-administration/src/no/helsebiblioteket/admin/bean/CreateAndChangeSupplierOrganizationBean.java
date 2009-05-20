@@ -42,7 +42,10 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 
 	private String sourceName = null;
 	private String sourceUrl = null;
+	private String sourceProxyDatabaseName = null;
+
 	private UIInput sourceNameUIInput = null;
+	private UIInput sourceProxyDatabaseNameUIInput = null;
 	private UIInput sourceUrlUIInput = null;
 	
 	
@@ -62,6 +65,14 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.sourceNameUIInput = sourceNameUIInput;
 	}
 
+	public void setSourceProxyDatabaseNameUIInput(UIInput sourceProxyDatabaseNameUIInput) {
+		this.sourceProxyDatabaseNameUIInput = sourceProxyDatabaseNameUIInput;
+	}
+	
+	public UIInput getSourceProxyDatabaseNameUIInput() {
+		return sourceProxyDatabaseNameUIInput;
+	}
+	
 	public UIInput getSourceUrlUIInput() {
 		return sourceUrlUIInput;
 	}
@@ -76,6 +87,14 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 
 	public void setSourceName(String sourceName) {
 		this.sourceName = sourceName;
+	}
+	
+	public String getSourceProxyDatabaseName() {
+		return sourceProxyDatabaseName;
+	}
+
+	public void setSourceProxyDatabaseName(String sourceProxyDatabaseName) {
+		this.sourceProxyDatabaseName = sourceProxyDatabaseName;
 	}
 
 	public String getSourceUrl() {
@@ -132,8 +151,9 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 			resourceList[i++] = resource;
 		}
 		
-		this.sourceName = "";
-		this.sourceUrl = "";
+		this.setSourceName("");
+		this.setSourceUrl("");
+		this.setSourceProxyDatabaseName("");
 		
 		this.organizationService.deleteResources(resourceList);
 		this.organizationService.addResources(this.supplierOrganization.getResourceList());
@@ -147,8 +167,10 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		logger.debug("Method 'actionAddSupplierSource' invoked");
 		setSourceName((getSourceNameUIInput().getSubmittedValue() != null) ? getSourceNameUIInput().getSubmittedValue().toString() : null);
 		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
+		setSourceProxyDatabaseName((getSourceProxyDatabaseNameUIInput().getSubmittedValue() != null) ? getSourceProxyDatabaseNameUIInput().getSubmittedValue().toString() : null);
 		SupplierSourceResource supplierSourceResource = new SupplierSourceResource();
-		supplierSourceResource.setSupplierSource(new SupplierSource(getSourceName(), new Url(getSourceUrl())));
+		SupplierSource supplierSource = new SupplierSource(getSourceName(), new Url(getSourceUrl()), getSourceProxyDatabaseName());
+		supplierSourceResource.setSupplierSource(supplierSource);
 		supplierSourceResource.setResource(new Resource());
 //		supplierSourceResource.getResource().setId(-1);
 		
@@ -159,8 +181,14 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		}
 		newList[newList.length-1] = supplierSourceResource;
 
-		this.supplierOrganization.setResourceList(newList);
-		
+		// TODO: Fase2: why are values not being reset?
+		//this.supplierOrganization.setResourceList(newList);
+		//this.setSourceName("");
+		//this.setSourceUrl("");
+		//this.setSourceProxyDatabaseName("");
+		//getSourceNameUIInput().setValue("");
+		//getSourceProxyDatabaseNameUIInput().setValue("");
+		//getSourceUrlUIInput().setValue("");
 	}
 	
 	public void actionDeleteSource() {

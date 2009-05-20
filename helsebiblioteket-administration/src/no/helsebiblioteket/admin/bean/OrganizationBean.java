@@ -414,6 +414,7 @@ public class OrganizationBean implements IconProvider{
 				resource.getResource().getResourceType();
 				resource.getSupplierSource().getSupplierSourceName();
 				resource.getSupplierSource().getUrl();
+				resource.getSupplierSource().getProxyDatabaseName();
 			}
 		}
 		

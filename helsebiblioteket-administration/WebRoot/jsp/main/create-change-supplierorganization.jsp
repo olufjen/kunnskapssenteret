@@ -217,10 +217,11 @@
 		</tr>
 		<tr>
 			<td valign="top">
-				<h:outputText value="#{msg_main.source} (#{msg_main.name} - URL)" />
+				<h:outputText value="#{msg_main.source} (#{msg_main.name} - #{msg_main.url} - #{msg_main.proxy_database_name})" />
 			</td>
 			<td>
 				<h:inputText 
+					size="5"
 					value="#{createAndChangeSupplierOrganizationBean.sourceName}"
 					id="sourceName" 
 					required="false"
@@ -228,10 +229,20 @@
 				</h:inputText>
 				<h:outputText value=" - " />
 				<h:inputText 
+					size="10"
 					value="#{createAndChangeSupplierOrganizationBean.sourceUrl}"
 					id="sourceUrl" 
 					required="false"
 					binding="#{createAndChangeSupplierOrganizationBean.sourceUrlUIInput}"
+					>
+				</h:inputText>
+				<h:outputText value=" - " />
+				<h:inputText
+					size="5" 
+					value="#{createAndChangeSupplierOrganizationBean.sourceProxyDatabaseName}"
+					id="sourceProxyDatabaseName" 
+					required="false"
+					binding="#{createAndChangeSupplierOrganizationBean.sourceProxyDatabaseNameUIInput}"
 					>
 				</h:inputText>
 				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeSupplierOrganizationBean.actionAddSupplierSource}" />
@@ -248,7 +259,7 @@
 						value="#{createAndChangeSupplierOrganizationBean.supplierOrganization.resourceList}"
 						binding="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
 					<t:column>
-			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} #{source.supplierSource.url.stringValue}" />
+			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} - #{source.supplierSource.url.stringValue} - #{source.supplierSource.proxyDatabaseName}" />
 			    	</t:column>
 			    	<t:column style="vertical-align:top">
 			      		<t:commandLink id="sourceDeleteLink" action="#{createAndChangeSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">
