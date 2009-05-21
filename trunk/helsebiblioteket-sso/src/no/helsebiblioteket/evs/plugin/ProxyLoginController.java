@@ -89,6 +89,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
     				UserListItem userListItem = new UserListItem();
     				userListItem.setId(loggedInUser.getId());
+    				if (loggedInUser.getRoleKey() != null && !"".equals(loggedInUser.getRoleKey())) {
+    					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
+    				}
     				accessResult = urlService.hasAccessUserOrganization(userListItem, organizationListItem, requestedUrl);
     			} else if(loggedInUser != null){
     				UserListItem userListItem = new UserListItem();
