@@ -46,7 +46,7 @@ public abstract class BasicWebService implements Serializable {
 				return response[0];
 			}
 		} catch (AxisFault e) {
-			getLogger().error(e);
+			getLogger().error("Axis fault caught while trying to execute 'invokeBlocking' with the following arguments: Qname=" + name + ", args=" + args + ", returnTypes=" + returnTypes + ". Message: " + e.getMessage() + ". Trace follows.", e);
 			return null;
 		} 
 	}

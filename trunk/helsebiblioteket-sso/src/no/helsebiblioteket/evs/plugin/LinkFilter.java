@@ -120,9 +120,15 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	}
 	
 	private boolean isAffected(URL url) {
-		Url myurl = new Url();
-		myurl.setStringValue(url.toExternalForm());
-		return this.urlService.isAffected(myurl);
+		boolean result = false;
+		try {
+			Url myurl = new Url();
+			myurl.setStringValue(url.toExternalForm());
+			result = this.urlService.isAffected(myurl);
+		} catch (NullPointerException npe) {
+			logger.error("url: " + ((url != null) ? url.toExternalForm() : "null") + ". urlService: " + urlService);
+		}
+		return result;
 	}
 	
 	private URL translate(LoggedInUser user, LoggedInOrganization organization, URL url) throws MalformedURLException {

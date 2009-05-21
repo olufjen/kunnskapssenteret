@@ -24,6 +24,7 @@ import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 
 public class LoginServiceImpl implements LoginService {
@@ -43,17 +44,20 @@ public class LoginServiceImpl implements LoginService {
 	 * Returns EmptyResult if user not found or passwords not equal.
 	 */
 	@Override
-	public LoggedInUserResult loginUserByUsernamePassword(String username, String password){
+	public LoggedInUserResult loginUserByUsernamePassword(String username, String password) {
 		SingleResultUser find = this.userService.findUserByUsername(username);
 		LoggedInUserResult result = new LoggedInUserResult();
-		if(find instanceof ValueResultUser){
-			User found = ((ValueResultUser)find).getValue();
-			if(found.getPassword().equals(password)){
-				UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
-				result.setUser(userTranslator.translate(found));
-				result.setSuccess(true);
-				return result;
-			}
+		User found = null;
+		if (find instanceof ValueResultOrganizationUser) {
+			found = ((ValueResultOrganizationUser) find).getValue().getUser();
+		} else if (find instanceof ValueResultUser) {
+			found = ((ValueResultUser)find).getValue();
+		}
+		if (null != found && found.getPassword().equals(password)) {
+			UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
+			result.setUser(userTranslator.translate(found));
+			result.setSuccess(true);
+			return result;
 		}
 		return result;
 	}

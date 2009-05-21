@@ -11,10 +11,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.LoggedInOrganization;
+import no.helsebiblioteket.admin.domain.LoggedInUser;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
@@ -23,6 +25,7 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.translator.LoggedInOrganizationToXMLTranslator;
+import no.helsebiblioteket.admin.translator.LoggedInUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.evs.plugin.result.ResultHandler;
@@ -62,8 +65,8 @@ public class ProxyLoginController extends HttpControllerPlugin {
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
-		Object objectUser = this.loggedInUser();
-		LoggedInOrganization memberOrganization = this.loggedInOrganization();
+		LoggedInUser loggedInUser = loggedInUser();
+		LoggedInOrganization loggedInOrganization = this.loggedInOrganization();
     	//if(objectUser == null && memberOrganization == null){
 		//	if(this.urlService.isAffected(requestedUrl)){
 		//		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
@@ -79,36 +82,32 @@ public class ProxyLoginController extends HttpControllerPlugin {
 		//	}
     	//} else {
     		if(this.urlService.isAffected(requestedUrl)) {
-    			User user = null;
-    			if (objectUser instanceof User) {
-    				user = (User) objectUser;
-    			} else if (objectUser instanceof OrganizationUser) {
-    				user = ((OrganizationUser) objectUser).getUser();
-    			}
-    			
     			AccessResult accessResult;
-    			if(memberOrganization != null && user != null){
+    			if(loggedInOrganization != null && loggedInUser != null){
     				OrganizationListItem organizationListItem = new OrganizationListItem();
-    				organizationListItem.setId(memberOrganization.getId());
-    				organizationListItem.setTypeKey(new OrganizationTypeKey(memberOrganization.getTypeKey()));
+    				organizationListItem.setId(loggedInOrganization.getId());
+    				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
     				UserListItem userListItem = new UserListItem();
-    				userListItem.setId(user.getId());
+    				userListItem.setId(loggedInUser.getId());
     				accessResult = urlService.hasAccessUserOrganization(userListItem, organizationListItem, requestedUrl);
-    			} else if(user != null){
+    			} else if(loggedInUser != null){
     				UserListItem userListItem = new UserListItem();
-    				userListItem.setId(user.getId());
+    				userListItem.setId(loggedInUser.getId());
+    				if (loggedInUser.getRoleKey() != null && !"".equals(loggedInUser.getRoleKey())) {
+    					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
+    				}
     				accessResult = urlService.hasAccessUser(userListItem, requestedUrl);
-    			} else if(memberOrganization != null){
+    			} else if(loggedInOrganization != null){
     				OrganizationListItem organizationListItem = new OrganizationListItem();
-    				organizationListItem.setId(memberOrganization.getId());
-    				organizationListItem.setTypeKey(new OrganizationTypeKey(memberOrganization.getTypeKey()));
+    				organizationListItem.setId(loggedInOrganization.getId());
+    				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
     				accessResult = urlService.hasAccessOrganization(organizationListItem, requestedUrl);
     			} else {
     				accessResult = urlService.hasAccessNone(requestedUrl);
     			}
     			
     			if (accessResult.equals(AccessResult.logup)) {
-   	        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
+   	        		createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
     				redirectUrl = logUpUrl;
     			} else if (accessResult.equals(AccessResult.exclude)) {
     				redirectUrl = requestedUrl.getStringValue();
@@ -123,10 +122,10 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				}
     				if(this.createProxySession(response, requestedUrlText, group)){
         				// Great, done!
-    	        		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
+    	        		createXML(true, loggedInUser, loggedInOrganization, requestedUrl, document, element);
     	        		redirectUrl = "";
     				} else {
-    	        		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
+    	        		createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
     	        		element.appendChild(document.createElement("proxysessionerror"));
     		    		redirectUrl = logUpUrl;
     				}
@@ -134,7 +133,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
     		} else {
     			logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database\n" +
 	    			" or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
-    			createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
+    			createXML(true, loggedInUser, loggedInOrganization, requestedUrl, document, element);
 	    		redirectUrl = logUpUrl;
     		}
     	//}
@@ -144,22 +143,17 @@ public class ProxyLoginController extends HttpControllerPlugin {
             redirect(response, redirectUrl);
     	}
     }
-    private void createXML(boolean hasAccess, Object user, LoggedInOrganization organization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
+    private void createXML(boolean hasAccess, LoggedInUser loggedInUser, LoggedInOrganization loggedInOrganization, Url requestedUrl, Document document, Element element) throws ParserConfigurationException {
 		Element loggedin = document.createElement("loggedin");
-		if(user != null){
+		if(loggedInUser != null){
 //			proxyresult/loggedin/user
-			UserToXMLTranslator translator = new UserToXMLTranslator();
-			if(user instanceof User){
-				translator.translate((User) user, document, loggedin);
-			} else {
-				OrganizationUserToXMLTranslator orgTranslator = new OrganizationUserToXMLTranslator();
-				orgTranslator.translate((OrganizationUser) user, document, loggedin);
-			}
-		} else if(organization != null){
+			LoggedInUserToXMLTranslator translator = new LoggedInUserToXMLTranslator();
+			translator.translate(loggedInUser, document, loggedin);
+		} else if (loggedInOrganization != null){
 //			proxyresult/loggedin/organization
 			LoggedInOrganizationToXMLTranslator organizationTranslator = new LoggedInOrganizationToXMLTranslator();
-			organizationTranslator.translate(organization, document, loggedin);
-	} else {
+			organizationTranslator.translate(loggedInOrganization, document, loggedin);
+		} else {
 //			proxyresult/loggedin/none
     		loggedin.appendChild(document.createElement("none"));
 		}
@@ -230,18 +224,18 @@ public class ProxyLoginController extends HttpControllerPlugin {
             	logger.error("Failed redirect to url '" + url + "'", e);
             }
     }
-	public Object loggedInUser() {
+	public LoggedInUser loggedInUser() {
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
-		Object user = session.getAttribute(sessionLoggedInUserVarName);
-		if(user instanceof User || user instanceof OrganizationUser){
-			return user;
-		} else {
-			return null;
+		Object userObject = session.getAttribute(sessionLoggedInUserVarName);
+		LoggedInUser loggedInUser = null;
+		if (null != userObject && userObject instanceof LoggedInUser) {
+			loggedInUser = (LoggedInUser) userObject;
 		}
+		return loggedInUser;
 	}
 	private LoggedInOrganization loggedInOrganization(){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
+		return (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
 	}
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;

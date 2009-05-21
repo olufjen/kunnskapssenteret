@@ -230,6 +230,13 @@ public class URLServiceImpl implements URLService {
 					accessType = (accessTypeTmp = getAccessTypeForUserRole(role, url)) != null ? accessTypeTmp : accessType;
 				}
 			}
+			// Axis2 does not accept arrays of complex types
+			// This is a fix to be able to pass user roles to this service via Axis2
+			if (accessType.getCategory().equals(AccessTypeCategory.DENY) && accessType.getKey().equals(AccessTypeKey.general) && (userListItem.getRoleKeyValuesAsStrings() != null)) {
+				for (String roleKeyValue : userListItem.getRoleKeyValuesAsStrings()) {
+					accessType = (accessTypeTmp = getAccessTypeForUserRole(new UserRoleKey(roleKeyValue), url)) != null ? accessTypeTmp : accessType;
+				}
+			}
 		}
 		
 		return accessType;
