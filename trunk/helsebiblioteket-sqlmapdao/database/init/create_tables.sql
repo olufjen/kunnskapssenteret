@@ -157,9 +157,9 @@ CREATE TABLE tbl_system_reg
 
 CREATE TABLE tbl_supplier_source
 (
-	proxy_database_name VARCHAR				NULL,
-    supplier_source_name VARCHAR             NULL,
-    url                  VARCHAR             NULL,
+	proxy_database_name VARCHAR				NOT NULL,
+    supplier_source_name VARCHAR             NOT NULL,
+    url                  VARCHAR             NOT NULL,
     supplier_source_id   SERIAL             NOT NULL,
     deleted              BOOLEAN             NOT NULL DEFAULT FALSE,
     last_changed         TIMESTAMP           NULL,
