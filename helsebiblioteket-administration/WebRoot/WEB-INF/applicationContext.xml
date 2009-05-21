@@ -277,6 +277,7 @@ xmlns="http://www.springframework.org/schema/beans"
 				/forgotten-password.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				/forgotten-password-sent.faces=IS_AUTHENTICATED_ANONYMOUSLY
 				 -->
+				/importexport.faces=ROLE_administrator
 				/welcome.faces=ROLE_administrator
 				/organizations-overview.faces=ROLE_administrator
 				/organization-details.faces=ROLE_administrator
