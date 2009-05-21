@@ -106,22 +106,37 @@ public class URLServiceImpl implements URLService {
 		return this.translateUrlUserOrganizationInternal(user, memberOrganization, url);
 	}
 
-	
+	// TODO: Fase2 is the only actual safe solution to always proxify?
 	private SingleResultUrl translateUrlUserOrganizationInternal(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
 		Url newUrl = new Url();
-		boolean proxify = true;
+		url.setStringValue(url.getStringValue().replace("&amp;", "&"));
+		newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
+		return new ValueResultUrl(newUrl);
+	}
+	
+	// TODO fase2 fix
+	private SingleResultUrl translateUrlUserOrganizationInternalFixLater(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
+		Url newUrl = new Url();
+		boolean proxify = false;
 		
-		proxify = proxify && !proxyExclude(getAccessTypeForAll(url));
+		proxify = proxify || proxyInclude(getAccessTypeForAll(url));
 		
 		if (organizationListItem != null) {
-			proxify = proxify && !proxyExclude(getAccessTypeForOrganizationType(organizationListItem.getTypeKey(), url));
-			proxify = proxify && !proxyExclude(getAccessTypeForMemberOrganization(organizationListItem, url));
+			proxify = proxify || proxyInclude(getAccessTypeForOrganizationType(organizationListItem.getTypeKey(), url));
+			proxify = proxify || proxyInclude(getAccessTypeForMemberOrganization(organizationListItem, url));
 		}
 		
 		if (userListItem != null) {
 			if (userListItem.getRoleKeys() != null) {
 				for (UserRoleKey role : userListItem.getRoleKeys()) {
-					proxify = proxify && !proxyExclude(getAccessTypeForUserRole(role, url));
+					proxify = proxify || proxyInclude(getAccessTypeForUserRole(role, url));
+				}
+			}
+			// Axis2 does not accept arrays of complex types
+			// This is a fix to be able to pass user roles to this service via Axis2
+			if (userListItem.getRoleKeyValuesAsStrings() != null) {
+				for (String roleKeyValue : userListItem.getRoleKeyValuesAsStrings()) {
+					proxify = proxify || proxyInclude(getAccessTypeForUserRole(new UserRoleKey(roleKeyValue), url));
 				}
 			}
 			// TODO Fase2: handle user access
@@ -129,10 +144,10 @@ public class URLServiceImpl implements URLService {
 		
 		// TODO Fase2: add an image to link to illustrate whether requester has access or not.
 		
+		// TODO: In case any existing "&amp;'s in URL: double replace. Consider using negative lookahead regexp instead
+		//url.setStringValue(url.getStringValue().replace("&", "&amp;"));
+		url.setStringValue(url.getStringValue().replace("&amp;", "&"));
 		if (proxify) {
-			// TODO: In case any existing "&amp;'s in URL: double replace, or use negative lookahead regexp
-			url.setStringValue(url.getStringValue().replace("&amp;", "&"));
-			url.setStringValue(url.getStringValue().replace("&", "&amp;"));
 			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		} else {
 			newUrl.setStringValue(url.getStringValue());
@@ -140,13 +155,15 @@ public class URLServiceImpl implements URLService {
 		
 		return new ValueResultUrl(newUrl);
 	}
-	private boolean proxyExclude(AccessType accessType) {
+	
+	private boolean proxyInclude(AccessType accessType) {
+		boolean proxyInclude = false;
 		if (accessType != null &&
-				accessType.getKey().getValue().equals(AccessTypeKey.proxy_exclude.getValue()) &&
+				(accessType.getKey().getValue().equals(AccessTypeKey.proxy_include.getValue()) || accessType.getKey().getValue().equals(AccessTypeKey.proxy_include_all.getValue())) &&
 				accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue())) {
-			return true;
+			proxyInclude = true;
 		}
-		return false;
+		return proxyInclude;
 	}
 	
 	/**

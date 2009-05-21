@@ -64,18 +64,15 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		
     	while (m.find()) {
     		String oldLink = m.group(2);
-    		oldLink = oldLink.replace("&amp;", "&");
-    		//if (oldLink.contains("http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&holding=inohelib_fft_ndi&myncbishare=helsebiblioteket")) {
-    		//	logger.debug("breakpoint here");
-    		//}
+    		String oldLinkDeampified = oldLink.replace("&amp;", "&");
 			if (validHref(oldLink)) {
-				URL url = this.deproxify(oldLink);
+				URL url = this.deproxify(oldLinkDeampified);
 				if(url != null) {
 		    		if(this.isAffected(url)){
 		    			url = this.translate(user, memberOrganization, url);
 		    		}
 		    		String newLink = url.toExternalForm();
-		    		if (!oldLink.equals(newLink)) {
+		    		if (!oldLinkDeampified.equals(newLink)) {
 		    			// using map to avoid duplicate replacements
 		    			// also only adding links that are actually changed to the map.
 		    			linkReplaceMap.put(oldLink, newLink);
@@ -121,35 +118,31 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	
 	private boolean isAffected(URL url) {
 		boolean result = false;
-		try {
-			Url myurl = new Url();
-			myurl.setStringValue(url.toExternalForm());
-			result = this.urlService.isAffected(myurl);
-		} catch (NullPointerException npe) {
-			logger.error("url: " + ((url != null) ? url.toExternalForm() : "null") + ". urlService: " + urlService);
-		}
+		Url myurl = new Url();
+		myurl.setStringValue(url.toExternalForm());
+		result = this.urlService.isAffected(myurl);
 		return result;
 	}
 	
 	private URL translate(LoggedInUser user, LoggedInOrganization organization, URL url) throws MalformedURLException {
 		Url myUrl = new Url();
 		myUrl.setStringValue(url.toExternalForm());
-		if (myUrl.getStringValue().contains("http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&holding=inohelib_fft_ndi&myncbishare=helsebiblioteket")) {
-			logger.debug("breakpoint here");
-		}
 		
 		SingleResultUrl result;
 		if(user != null && organization != null){
 			UserListItem userL = new UserListItem();
 			userL.setId(user.getId());
 			userL.setRoleKeys(new UserRoleKey[]{new UserRoleKey(user.getRoleKey())});
+			userL.setRoleKeyValuesAsStrings(new String[] { user.getRoleKey() });
 			OrganizationListItem orgL = new OrganizationListItem();
 			orgL.setId(organization.getId());
+			orgL.setTypeKey(new OrganizationTypeKey(organization.getTypeKey()));
 			result = this.urlService.translateUrlUserOrganization(userL, orgL, myUrl);
 		} else if(user != null){
 			UserListItem userL = new UserListItem();
 			userL.setId(user.getId());
 			userL.setRoleKeys(new UserRoleKey[]{new UserRoleKey(user.getRoleKey())});
+			userL.setRoleKeyValuesAsStrings(new String[] { user.getRoleKey() });
 			result = this.urlService.translateUrlUser(userL, myUrl);
 		} else if(organization != null){
 			OrganizationListItem orgL = new OrganizationListItem();
@@ -165,6 +158,9 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 			return url;
 		} else {
 			ValueResultUrl value = (ValueResultUrl) result;
+			if (value == null) {
+				logger.error("value is null for attempted translated URL '" + myUrl + "'");
+			}
 			return new URL(value.getValue().getStringValue());
 		}
 	}
