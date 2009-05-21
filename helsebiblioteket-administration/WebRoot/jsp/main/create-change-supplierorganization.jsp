@@ -227,6 +227,7 @@
 					required="false"
 					binding="#{createAndChangeSupplierOrganizationBean.sourceNameUIInput}">
 				</h:inputText>
+				<h:message for="sourceName" styleClass="error" />
 				<h:outputText value=" - " />
 				<h:inputText 
 					size="10"
@@ -236,6 +237,7 @@
 					binding="#{createAndChangeSupplierOrganizationBean.sourceUrlUIInput}"
 					>
 				</h:inputText>
+				<h:message for="sourceUrl" styleClass="error" />
 				<h:outputText value=" - " />
 				<h:inputText
 					size="5" 
@@ -245,9 +247,8 @@
 					binding="#{createAndChangeSupplierOrganizationBean.sourceProxyDatabaseNameUIInput}"
 					>
 				</h:inputText>
+				<h:message for="sourceProxyDatabaseName" styleClass="error" />
 				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeSupplierOrganizationBean.actionAddSupplierSource}" />
-				<h:message for="sourceName" styleClass="error" />
-				<h:message for="sourceUrl" styleClass="error" />
 			</td>
 		</tr>
 		<tr>
@@ -281,4 +282,5 @@
 			</td>
 		</tr>
 	</table>
+	<h:messages showDetail="false" showSummary="true" layout="list"/>
 </h:form>

@@ -168,6 +168,9 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		setSourceName((getSourceNameUIInput().getSubmittedValue() != null) ? getSourceNameUIInput().getSubmittedValue().toString() : null);
 		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
 		setSourceProxyDatabaseName((getSourceProxyDatabaseNameUIInput().getSubmittedValue() != null) ? getSourceProxyDatabaseNameUIInput().getSubmittedValue().toString() : null);
+		if (! validateSupplierSource()) {
+			return;
+		}
 		SupplierSourceResource supplierSourceResource = new SupplierSourceResource();
 		SupplierSource supplierSource = new SupplierSource(getSourceName(), new Url(getSourceUrl()), getSourceProxyDatabaseName());
 		supplierSourceResource.setSupplierSource(supplierSource);
@@ -180,9 +183,9 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 			newList[i++] = resource;
 		}
 		newList[newList.length-1] = supplierSourceResource;
-
+		this.supplierOrganization.setResourceList(newList);
+		
 		// TODO: Fase2: why are values not being reset?
-		//this.supplierOrganization.setResourceList(newList);
 		//this.setSourceName("");
 		//this.setSourceUrl("");
 		//this.setSourceProxyDatabaseName("");
@@ -217,14 +220,45 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	}
 	
 	public String actionCancel(){
-		this.sourceName = "";
-		this.sourceUrl = "";
-		this.sourceNameUIInput = null;
-		this.sourceUrlUIInput = null;
+		setSourceName("");
+		setSourceUrl("");
+		setSourceProxyDatabaseName("");
+		setSourceNameUIInput(null);
+		setSourceUrlUIInput(null);
+		setSourceProxyDatabaseNameUIInput(null);
 		this.organizationBean.setOrganization(this.organization);
 		return this.organizationBean.actionDetailsSingle();
 	}
 
+	private boolean validateSupplierSource() {
+		String msg = "value_required";
+		boolean validation = true;
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault());
+		FacesMessage message = new FacesMessage(bundle.getString(msg));
+		if (!hasValue(getSourceName())) {
+			validation = false;
+			sourceNameUIInput.setValid(false);
+			facesContext.addMessage(sourceNameUIInput.getClientId(facesContext), message);
+		}
+		if (!hasValue(getSourceProxyDatabaseName())) {
+			validation = false;
+			sourceProxyDatabaseNameUIInput.setValid(false);
+			facesContext.addMessage(sourceProxyDatabaseNameUIInput.getClientId(facesContext), message);
+		}
+		if (!hasValue(getSourceUrl())) {
+			validation = false;
+			sourceUrlUIInput.setValid(false);
+			facesContext.addMessage(sourceUrlUIInput.getClientId(facesContext), message);
+		}
+		return validation;
+	}
+	
+	private boolean hasValue(String string) {
+		return (string != null && !"".equals(string));
+		
+	}
+	
 	public void validateEmail(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
 		String email = (String)newValue;
 		UIInput emailComponent = (UIInput)component;
