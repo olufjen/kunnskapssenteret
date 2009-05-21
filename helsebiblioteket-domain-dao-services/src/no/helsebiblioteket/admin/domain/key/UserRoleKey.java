@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain.key;
 
-public class UserRoleKey {
+import java.io.Serializable;
+
+public class UserRoleKey implements Serializable {
 	public static final UserRoleKey none = new UserRoleKey("none");
 	
 	public static final UserRoleKey administrator = new UserRoleKey("administrator");

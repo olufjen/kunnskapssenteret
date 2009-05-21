@@ -1,14 +1,18 @@
 package no.helsebiblioteket.admin.domain.list;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
-public class UserListItem {
+public class UserListItem implements Serializable {
 	private Integer id;
 	private String name;
 	private String username;
 	private String[] roleNames;
 	private String organizationName;
 	private UserRoleKey[] roleKeys;
+	private String[] roleKeyValuesAsStrings;
+	
 	@Override
 	public String toString() {
 		return "[" + id + ": " + username + ", " + name + "]";
@@ -48,5 +52,11 @@ public class UserListItem {
 	}
 	public void setOrganizationName(String organizationName) {
 		this.organizationName = organizationName;
+	}
+	public String[] getRoleKeyValuesAsStrings() {
+		return roleKeyValuesAsStrings;
+	}
+	public void setRoleKeyValuesAsStrings(String[] roleKeyValuesAsStrings) {
+		this.roleKeyValuesAsStrings = roleKeyValuesAsStrings;
 	}
 }
