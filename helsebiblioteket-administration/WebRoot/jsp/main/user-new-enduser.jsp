@@ -62,6 +62,22 @@
 				<h:message for="studentHprNo" styleClass="RED"/>
       		</td>
 	   	</tr>
+	   	
+	   	<tr>
+      		<td>
+        		<h:outputText value="#{msg_main.national_id_no}" />
+		    </td>
+      		<td colspan="3">
+        		<h:inputText value="#{newEndUserBean.user.person.nationalIdNumber}"
+      	  			id="nationalIdNo" size="50"
+      	  			required="#{newEndUserBean.showNationalIdNumber}"
+      	  			disabled="#{ ! newEndUserBean.showNationalIdNumber}"
+      	  			readonly="#{ ! newEndUserBean.showNationalIdNumber}"/>
+      		</td>
+      		<td>
+				<h:message for="nationalIdNo" styleClass="RED"/>
+      		</td>
+	   	</tr>
 
     	<tr>
 			<td>

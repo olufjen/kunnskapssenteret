@@ -230,8 +230,11 @@
     		<property-name>loginService</property-name>
         	<value>#{loginService}</value>
 		</managed-property>
+		<managed-property>
+    		<property-name>emailLostPassword</property-name>
+        	<value>#{emailLostPasswordAdmin}</value>
+		</managed-property>
 	</managed-bean>
-
 
 	<managed-bean>
     	<description>Backingbean related to Adding a user</description>

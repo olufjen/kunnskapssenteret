@@ -65,8 +65,23 @@
 					readonly="#{ ! userBean.showHprNumber}"
 					disabled="#{ ! userBean.showHprNumber}"/></td>
 			<td width="200"><h:message for="hprNumber" styleClass="RED"/></td>
-
 		</tr>
+		
+		<tr>
+      		<td>
+        		<h:outputText value="#{msg_main.national_id_no}" />
+		    </td>
+      		<td colspan="3">
+        		<h:inputText value="#{userBean.user.person.nationalIdNumber}"
+      	  			id="nationalIdNo" size="50"
+      	  			disabled="#{ ! userBean.showNationalIdNumber}"
+      	  			readonly="#{ ! userBean.showNationalIdNumber}"/>
+      		</td>
+      		<td>
+				<h:message for="nationalIdNo" styleClass="RED"/>
+      		</td>
+	   	</tr>
+		
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_student_employer_number}"  /></td>
 			<td><h:inputText value="#{userBean.user.person.studentNumber}" id="studentNumber"

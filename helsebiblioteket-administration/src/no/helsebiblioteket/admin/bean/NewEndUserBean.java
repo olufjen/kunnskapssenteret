@@ -33,6 +33,7 @@ public class NewEndUserBean extends NewUserBean {
 
 	private boolean showStudentNo;
 	private boolean showHpr;
+	private boolean showNationalIdNumber;
 	private boolean showEmployer;
 	private boolean showPositionText;
 	private boolean showPositionSelect;
@@ -55,9 +56,8 @@ public class NewEndUserBean extends NewUserBean {
     	} else if(this.role.getKey().getValue().equals(roleKeyEmployee)){
     	} else if(this.role.getKey().getValue().equals(roleKeyStudent)){
     	} else if(this.role.getKey().getValue().equals(roleKeyHealthWorker)){
-    		
     	} else {
-    		// Unknown user role
+    		logger.error("Unknown (and invalid) role selected");
     	}
 		Role[] list = new Role[1];
 		list[0] = this.allRolesMap.get(this.role.getKey().getValue());
@@ -74,11 +74,13 @@ public class NewEndUserBean extends NewUserBean {
     	if(this.role.getKey().getValue().equals(roleKeyAdministrator)){
         	this.showStudentNo = false;
         	this.showHpr = false;
+        	this.showNationalIdNumber = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = false;
     		this.showIsStudent = false;
     		this.user.getPerson().setHprNumber(null);
+    		this.user.getPerson().setNationalIdNumber(null);
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(null);
     		this.user.getPerson().setPosition(new Position());
@@ -87,6 +89,7 @@ public class NewEndUserBean extends NewUserBean {
     	} else if(this.role.getKey().getValue().equals(roleKeyEmployee)){
         	this.showStudentNo = false;
         	this.showHpr = false;
+        	this.showNationalIdNumber = true;
         	this.showEmployer = true;
         	this.showPositionText = true;
         	this.showPositionSelect = false;
@@ -99,31 +102,38 @@ public class NewEndUserBean extends NewUserBean {
     	} else if(this.role.getKey().getValue().equals(roleKeyHealthWorker)){
         	this.showStudentNo = false;
         	this.showHpr = true;
+        	this.showNationalIdNumber = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = true;
     		this.showIsStudent = false;
     		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setNationalIdNumber(null);
     		this.user.getPerson().setIsStudent(null);
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	} else if(this.role.getKey().getValue().equals(roleKeyStudent)){
         	this.showStudentNo = true;
         	this.showHpr = false;
+        	this.showNationalIdNumber = false;
         	this.showEmployer = true;
         	this.showPositionText = true;
         	this.showPositionSelect = false;
     		this.showIsStudent = true;
     		this.user.getPerson().setHprNumber(null);
+    		this.user.getPerson().setNationalIdNumber(null);
         	this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	} else {
         	this.showStudentNo = false;
         	this.showHpr = false;
+        	this.showNationalIdNumber = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = false;
     		this.showIsStudent = false;
     		this.user.getPerson().setHprNumber(null);
+    		this.user.getPerson().setNationalIdNumber(null);
+    		this.user.getPerson().setStudentNumber(null);
         	this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	}
@@ -184,6 +194,12 @@ public class NewEndUserBean extends NewUserBean {
 	}
 	public void setShowEmployer(boolean showEmployer) {
 		this.showEmployer = showEmployer;
+	}
+	public boolean isShowNationalIdNumber() {
+		return showNationalIdNumber;
+	}
+	public void setShowNationalIdNumber(boolean nationalIdNumber) {
+		this.showNationalIdNumber = nationalIdNumber;
 	}
 	public boolean isShowPositionText() {
 		return showPositionText;
