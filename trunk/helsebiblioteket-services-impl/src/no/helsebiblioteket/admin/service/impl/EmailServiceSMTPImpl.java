@@ -1,8 +1,10 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -21,24 +23,40 @@ public class EmailServiceSMTPImpl implements EmailService {
 	private String host;
 	private boolean noSend;
 	private boolean debug;
+	private String contentType;
+	
+	
+	private String charset;
 	public Boolean sendEmail(Email email) {
 		String to = email.getToName() + "<" + email.getToEmail() + ">";
 		String from = email.getFromName() + "<" + email.getFromEmail() + ">";
 		if(noSend){
-			this.logger.info("Would have sent email on host " + this.host + " to '" + to + "' with subject '" + email.getSubject() + "'.");
+			this.logger.info("Would have sent email on host " + this.host + " to '" + to + "' with subject '" + email.getSubject() + "' and body '" + email.getMessage() + "'");
 		} else {
 	        Properties props = new Properties();
 	        props.put("mail.smtp.host", this.host);
 	        props.put("mail.debug", this.debug);
+	        
 	        Session session = Session.getInstance(props);
+	        
 	        try {
-	            Message msg = new MimeMessage(session);
-	            msg.setFrom(new InternetAddress(from));
-	            InternetAddress[] address = {new InternetAddress(to)};
-	            msg.setRecipients(Message.RecipientType.TO, address);
+	            MimeMessage msg = new MimeMessage(session);
+	            InternetAddress internetAddressTo = new InternetAddress(email.getToEmail());
+	            msg.addRecipient(Message.RecipientType.TO, internetAddressTo);
+	            InternetAddress internetAddressFrom = new InternetAddress(email.getFromEmail());
+	            if (email.getFromName() != null && !"".equals(email.getFromName())) {
+	                try {
+						internetAddressFrom.setPersonal(email.getFromName());
+					} catch (UnsupportedEncodingException usee) {
+						logger.error("Error setting name for email sender", usee);
+					}
+	            }
+	            msg.setFrom(internetAddressFrom);
+	            msg.setReplyTo(new Address[]{internetAddressFrom});	         
 	            msg.setSubject(email.getSubject());
 	            msg.setSentDate(new Date());
-	            msg.setText(email.getMessage());
+	            // msg.setText(email.getMessage(), "UTF-8");
+	            msg.setContent(email.getMessage(), getMimeType());
 	            Transport.send(msg);
 	        } catch (MessagingException mex) {
 	            logger.error("Could not send email: " + mex.getLocalizedMessage());
@@ -46,6 +64,9 @@ public class EmailServiceSMTPImpl implements EmailService {
 	        }
 		}
         return true;
+	}
+	private String getMimeType() {
+		return "" + this.contentType + ";charset=\"" + this.charset + "\"";
 	}
 	public void setHost(String host) {
 		this.host = host;
@@ -55,5 +76,17 @@ public class EmailServiceSMTPImpl implements EmailService {
 	}
 	public void setDebug(boolean debug) {
 		this.debug = debug;
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+	public String getCharset() {
+		return charset;
+	}
+	public void setCharset(String charset) {
+		this.charset = charset;
 	}
 }
