@@ -9,7 +9,7 @@ public class RoleToXMLTranslator {
 
 	public void translate(Role role, Document document, Element element){
 		Element roleElement = document.createElement("role");
-		roleElement.appendChild(UserToXMLTranslator.element(document, "key", role.getKey().toString()));
+		roleElement.appendChild(UserToXMLTranslator.element(document, "key", role.getKey().getValue()));
 		roleElement.appendChild(UserToXMLTranslator.cDataElement(document, "name", role.getName()));
 		
 		

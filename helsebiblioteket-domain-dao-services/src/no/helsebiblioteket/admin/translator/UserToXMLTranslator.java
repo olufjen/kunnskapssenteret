@@ -23,7 +23,7 @@ public class UserToXMLTranslator {
 	public Document newDocument() {
 		return this.builder.newDocument();
 	}
-	public void translate(User user, Document document, Element element){
+	public void translate(User user, Document document, Element element) {
 		Element userElement = document.createElement("user");
 		userElement.appendChild(cDataElement(document, "username", user.getUsername()));
 

@@ -26,6 +26,7 @@ public class UserToLoggedInUserTranslator {
 			loggedInUser.setRoleName(user.getRoleList()[0].getName());
 		}
 		loggedInUser.setStudentNumber(user.getPerson().getStudentNumber());
+		loggedInUser.setNationalIdNumber(user.getPerson().getNationalIdNumber());
 		loggedInUser.setUsername(user.getUsername());
 		return loggedInUser;
 	}
