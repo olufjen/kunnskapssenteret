@@ -13,6 +13,7 @@ public class Person implements Serializable {
 	private String lastName;
 	private String employer;
 	private String studentNumber;
+	private String nationalIdNumber;
 	private String hprNumber;
 	private Date lastChanged;
 	private Boolean isStudent;
@@ -110,5 +111,11 @@ public class Person implements Serializable {
 	}
 	public void setPositionText(String positionText) {
 		this.positionText = positionText;
+	}
+	public String getNationalIdNumber() {
+		return nationalIdNumber;
+	}
+	public void setNationalIdNumber(String nationalIdNumber) {
+		this.nationalIdNumber = nationalIdNumber;
 	}
 }

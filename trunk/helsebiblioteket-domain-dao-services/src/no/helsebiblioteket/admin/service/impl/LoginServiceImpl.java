@@ -9,6 +9,7 @@ import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.translator.EmailMessageTranslator;
 import no.helsebiblioteket.admin.translator.OrganizationToLoggedInOrganizationTranslator;
 import no.helsebiblioteket.admin.translator.UserToLoggedInUserTranslator;
 import no.helsebiblioteket.admin.validator.EmailValidator;
@@ -33,10 +34,6 @@ public class LoginServiceImpl implements LoginService {
 	private UserService userService;
 	private EmailService emailService;
 	private OrganizationService organizationService;
-	private String emailFromName;
-	private String emailFromEmail;
-	private String emailSubject;
-	private String emailMessage;
 	
 	/**
 	 * Loads the user from the database and compares the passwords.
@@ -91,14 +88,17 @@ public class LoginServiceImpl implements LoginService {
 	 * Sends an email to the user. This is delegated to EmailService.
 	 */
 	@Override
-	public SendPasswordEmailResult sendPasswordEmail(String emailaddressOrUsername) {
+	public SendPasswordEmailResult sendPasswordEmail(String emailaddressOrUsername, Email email) {
 		SendPasswordEmailResult result = new SendPasswordEmailResult();
 		if(EmailValidator.getInstance().isValidEmailAdress(emailaddressOrUsername)){
 			User[] users = this.userService.getUserListByEmailAddress(emailaddressOrUsername).getList();
 			if(users.length == 0){
 				result.setValue(SendPasswordEmailResult.notFoundEmail);
 			} else if(users.length == 1){
-				this.sendEmail(users[0]);
+				if (email.getToEmail() == null || "".equals(email.getToEmail())) {
+					email.setToEmail(emailaddressOrUsername);
+				}
+				this.sendEmail(users[0], email);
 				result.setFailed(false);
 				result.setValue(SendPasswordEmailResult.sentEmail);
 			} else {
@@ -113,7 +113,10 @@ public class LoginServiceImpl implements LoginService {
 						user.getPerson().getContactInformation().getEmail() != null &&
 						EmailValidator.getInstance().isValidEmailAdress(
 								user.getPerson().getContactInformation().getEmail())){
-					this.sendEmail(user);
+					if (email.getToEmail() == null || "".equals(email.getToEmail())) {
+						email.setToEmail(user.getPerson().getContactInformation().getEmail());
+					}
+					this.sendEmail(user, email);
 					result.setFailed(false);
 					result.setValue(SendPasswordEmailResult.sentUser);
 				} else {
@@ -125,44 +128,27 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return result;
 	}
-	private void sendEmail(User user) {
+	
+	private void sendEmail(User user, Email email) {
 		user.setPassword(this.newPasssword());
 		this.userService.updateUser(user);
-		Email email = new Email();
-		email.setFromName(this.emailFromName);
-		email.setFromEmail(this.emailFromEmail);
-		email.setToName(user.getUsername());
-		email.setToEmail(user.getPerson().getContactInformation().getEmail());
-		email.setSubject(this.emailSubject);
-		email.setMessage(this.message(this.emailMessage, user));
+		EmailMessageTranslator emailMessageTranslator = new EmailMessageTranslator();
+		email.setMessage(emailMessageTranslator.translate(email.getMessage(), user));
 		emailService.sendEmail(email);
 		logger.debug("Sending email to user:" + user.getUsername());
 	}
+	
 	private String newPasssword() {
 		String password = "";
 		String values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		Random random = new Random();
-		for(int i=0; i<9;i++){
+		for(int i=0; i<9;i++) {
 			int val = random.nextInt(62);
 			password += values.substring(val, val+1);
 		}
 		return password;
 	}
-	private String message(String emailMessage, User user) {
-		return emailMessage.replace("##password##", user.getPassword());
-	}
-	public void setEmailFromName(String emailFromName) {
-		this.emailFromName = emailFromName;
-	}
-	public void setEmailFromEmail(String emailFromEmail) {
-		this.emailFromEmail = emailFromEmail;
-	}
-	public void setEmailSubject(String emailSubject) {
-		this.emailSubject = emailSubject;
-	}
-	public void setEmailMessage(String emailMessage) {
-		this.emailMessage = emailMessage;
-	}
+	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}

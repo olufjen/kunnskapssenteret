@@ -6,7 +6,7 @@ import org.w3c.dom.Element;
 import no.helsebiblioteket.admin.domain.LoggedInUser;
 
 public class LoggedInUserToXMLTranslator {
-	public void translate(LoggedInUser user, Document document, Element element){
+	public void translate(LoggedInUser user, Document document, Element element) {
 		Element userElement = document.createElement("user");
 		userElement.appendChild(UserToXMLTranslator.cDataElement(document, "username", user.getUsername()));
 
@@ -22,7 +22,10 @@ public class LoggedInUserToXMLTranslator {
 		personElement.appendChild(UserToXMLTranslator.cDataElement(document, "employer", user.getEmployer()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "hprnumber", user.getHprNumber()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "studentnumber", user.getStudentNumber()));
+		personElement.appendChild(UserToXMLTranslator.element(document, "nationalidnumber", user.getNationalIdNumber()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "positiontext", user.getPositionText()));
+		personElement.appendChild(UserToXMLTranslator.element(document, "isstudent", user.getIsStudent()));
+		personElement.appendChild(UserToXMLTranslator.element(document, "positionkey", user.getPositionKey()));
 
 		Element profileElement = document.createElement("profile");
 		profileElement.appendChild(UserToXMLTranslator.element(document, "survey", user.getParticipateSurvey()));
