@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.webservice;
 
+import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import javax.xml.namespace.QName;
 
@@ -41,8 +42,8 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public SendPasswordEmailResult sendPasswordEmail(String emailAddress) {
-		Object[] args = new Object[] { emailAddress };
+	public SendPasswordEmailResult sendPasswordEmail(String emailAddress, Email email) {
+		Object[] args = new Object[] { emailAddress, email };
 		Class[] returnTypes = new Class[] { SendPasswordEmailResult.class  };
 		return (SendPasswordEmailResult)invoke(this.sendPasswordEmailName, args, returnTypes);
 	}
