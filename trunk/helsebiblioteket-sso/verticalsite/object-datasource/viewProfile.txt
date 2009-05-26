@@ -5,5 +5,5 @@
     <methodname>loggedinuser.getUserAsXML</methodname>
       <parameters/>
   </datasource>
-  
+
 </datasources>

@@ -11,6 +11,7 @@
 		<result property="lastName" column="last_name" />
 		<result property="studentNumber" column="student_number" />
 		<result property="hprNumber" column="hpr_number" />
+		<result property="nationalIdNumber" column="national_id_number" />
 		<result property="contactInformation.id" column="contact_information_id" />
 		<result property="profile.id" column="profile_id" />
 		<result property="position.id" column="position_type_id" />
@@ -24,9 +25,9 @@
 			SELECT nextval('tbl_person_person_id_seq') as id;
 		</selectKey>
 		insert into tbl_person
-		(person_id, first_name, last_name, student_number, hpr_number, contact_information_id, profile_id, position_type_id, employer, position_text, is_student, last_changed)
+		(person_id, first_name, last_name, student_number, hpr_number, national_id_number, contact_information_id, profile_id, position_type_id, employer, position_text, is_student, last_changed)
 		values 
-		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #contactInformation.id#, #profile.id#, #position.id#, #employer#, #positionText#, #isStudent#, date_trunc('milliseconds', now()));
+		(#id#, #firstName#, #lastName#, #studentNumber#, #hprNumber#, #nationalIdNumber#, #contactInformation.id#, #profile.id#, #position.id#, #employer#, #positionText#, #isStudent#, date_trunc('milliseconds', now()));
 	</insert>
 	<update id="updatePerson" parameterClass="person">
 		update tbl_person set
@@ -34,6 +35,7 @@
 			last_name = #lastName#,
 			student_number = #studentNumber#,
 			hpr_number = #hprNumber#,
+			national_id_number = #nationalIdNumber#,
 			contact_information_id = #contactInformation.id#,
 			profile_id = #profile.id#,
 			employer = #employer#,
@@ -54,6 +56,7 @@
 			last_name,
 			student_number,
 			hpr_number,
+			national_id_number,
 			contact_information_id,
 			profile_id,
 			position_type_id,
@@ -71,6 +74,7 @@
 			last_name,
 			student_number,
 			hpr_number,
+			national_id_number,
 			contact_information_id,
 			profile_id,
 			position_type_id,
@@ -88,6 +92,7 @@
 			last_name,
 			student_number,
 			hpr_number,
+			national_id_number,
 			contact_information_id,
 			profile_id,
 			position_type_id,

@@ -7,5 +7,10 @@
         <parameter name="key" type="String">hbprofileresult</parameter>
       </parameters>
   </datasource>
+  
+  <datasource>
+    <methodname>loggedinuser.getPositionsAsXML</methodname>
+      <parameters/>
+  </datasource>
 
 </datasources>

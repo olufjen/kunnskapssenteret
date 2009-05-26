@@ -70,17 +70,17 @@
                     <div class="rightcolbox_main_right_wrapper">
 	            		<xsl:if test="$user/organization">
                             <!-- logget inn som organisasjon. -->
-                           	Du er logget inn som organisasjonen <xsl:value-of select="$user/organization/namenorwegiannormal"/>   
+                           	Du har tilgang via <xsl:value-of select="$user/organization/namenorwegiannormal"/>   
                             <br/>
 	            	    </xsl:if>
 	            	    <xsl:if test="$user/user">
                             <!-- logget inn som bruker -->
-                            Du er logget inn som brukeren <xsl:value-of select="$user/user/person/name"/>
+                            <br />Du er logget inn som brukeren <xsl:value-of select="$user/user/person/name"/>
                             <br/>
 	            	    </xsl:if>
 	            	    <xsl:if test="$user/nouser">
 	            	    	<!-- Ikke logget inn. -->
-                            Logge inn som bruker.
+                            <br />Logg inn som personlig bruker:
 							<form action="{portal:createPageUrl($loginServletPage, ())}" method="post"
                                 	onsubmit="return validateLoginForm(this)">
                                 <div>
@@ -117,28 +117,25 @@
                                             </xsl:choose>
                                         </xsl:attribute>
                                     </input>
-                                        	
 
-									<br/>
 	                                <xsl:if test="/verticaldata/hbloginresult/messages/username !=''">
                                         <div class="error_message">      
-                                            <b>Du må fylle inn brukernavn.</b>
+                                            <br/><b>Du må fylle inn brukernavn.</b>
                                         </div>
     	                            </xsl:if>
                                     <xsl:if test="/verticaldata/hbloginresult/messages/password !=''">
                                         <div class="error_message">      
-                                            <b>Du må fylle inn passord.</b>
+                                            <br/><b>Du må fylle inn passord.</b>
                                         </div>
                                     </xsl:if>
                                     <xsl:if test="/verticaldata/hbloginresult/summary !=''">
                                        <div class="error_message">      
-                                            <b>Brukeren finnes ikke!</b><br/>Du kan registrere deg som bruker ved å trykke 'Ny bruker' over.<br/><br/>
+                                            <br/><b>Kunne ikke logge deg på, vennligst sjekk brukernavn og passord.</b><br/>
                                         </div>
                                     </xsl:if>
 									<br/>
-                                    	   
+                                     
                                     <div class="normaltext">
-
                                         Brukernavn:<br/>
                                         <input id="inputfield1" name="uid" type="text"
                                         		value="{$errorUserLogin/values/username/text()}"/>

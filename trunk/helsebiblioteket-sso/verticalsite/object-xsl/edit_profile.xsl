@@ -38,13 +38,12 @@
             <h4 class="logon_column_heading">Din profil - Dine registrerte data</h4>
             <xsl:choose>
     			<xsl:when test="$result/empty">
-					Not ready. Try again!
+					
 				</xsl:when>
     			<xsl:when test="$result/notloggedin">
-					You are not logged in or logged in as an organization.
+					Du er ikke logget på som personlig bruker.
 				</xsl:when>
 				<xsl:otherwise>
-            
             
             <div class="column_content">
                 <form action="{portal:createPageUrl($editProfileServletPage, ())}" method="post">
@@ -62,7 +61,7 @@
                 		
                         <br/><br/>
                         <table cellspacing="2" width="450">
-                            <tr>                                    
+                            <tr>
                                 <td>Brukernavn:</td>
                                 <td><xsl:value-of select="$result/values/user/username"/></td>
                                 <td></td>
@@ -73,7 +72,9 @@
                                 	<input class="text" name="firstname" type="text"
                                 		value="{$result/values/user/person/firstname/text()}"/>
                                 </td>
-                                <td><xsl:value-of select="$result/messages/firstname/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/firstname/text()" /></xsl:call-template>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Etternavn:</td>
@@ -81,7 +82,9 @@
                                 	<input class="text" name="surname" type="text"
                                 		value="{$result/values/user/person/lastname/text()}"/>
                                 </td>
-                                <td><xsl:value-of select="$result/messages/lastname/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/lastname/text()" /></xsl:call-template>
+                                </td>
                             </tr>
                             <tr>                                
                                 <td>E-postadresse:</td>
@@ -89,7 +92,9 @@
                                 	<input class="text" name="email" type="text"
                                 		value="{$result/values/user/person/contactinformation/email/text()}"/>
                                 </td>
-                                <td><xsl:value-of select="$result/messages/emailaddress/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/emailaddress/text()" /></xsl:call-template>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Tilknytning:</td>
@@ -106,38 +111,44 @@
                                                 <xsl:attribute name="selected">true</xsl:attribute>                                     
                                             </xsl:if>
                                             Student
-                                        </option>                                       
-                                        <option value="administrator">
-                                            <xsl:if test="$result/values/user/role/key/text() = 'administrator'">
-                                                <xsl:attribute name="selected">true</xsl:attribute>                                               
-                                            </xsl:if>
-                                            Administrator
-                                        </option>
+                                        </option>            
                                         <option value="health_personnel_other">
                                             <xsl:if test="$result/values/user/role/key/text() = 'health_personnel_other'">
                                                 <xsl:attribute name="selected">true</xsl:attribute>                                               
                                             </xsl:if>
-                                            Andre
+                                            Helsepersonell - andre
                                         </option>
                                     </select>
                                 </td>
-                                <td><xsl:value-of select="$result/messages/role/text()"/></td>
-                            </tr>
-                            <tr>
-                                <td>HPR-nr:</td>
                                 <td>
-                                	<input class="text" name="uid" type="text"
-                                		value="{$result/values/user/person/hprnumber/text()}"/>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/role/text()" /></xsl:call-template>
                                 </td>
-                                <td><xsl:value-of select="$result/messages/hprnumber/text()"/></td>
                             </tr>
+                            <xsl:variable name="studentorhprornationalidnumber">
+                            	<xsl:choose>
+                            		<xsl:when test="$result/values/user/role/key/text() = 'health_personnel'">
+                            			<xsl:value-of select="$result/values/user/person/hprnumber/text()" />
+                            		</xsl:when>
+                            		<xsl:when test="$result/values/user/role/key/text() = 'health_personnel_other'">
+                            			<xsl:value-of select="$result/values/user/person/nationalidnumber/text()" />
+                            		</xsl:when>
+                            		<xsl:when test="$result/values/user/role/key/text() = 'student'">
+                            			<xsl:value-of select="$result/values/user/person/studentnumber/text()" />
+                            		</xsl:when>
+                            		<xsl:otherwise>
+                            			<xsl:text></xsl:text>
+                            		</xsl:otherwise>
+                            	</xsl:choose>
+                            </xsl:variable>
                             <tr>
-                                <td>Stud.nr:</td>
+                                <td>HPR-nr./stud.nr./født dato:</td>
                                 <td>
-                                	<input class="text" name="studentnumber" type="text"
-                                		value="{$result/values/user/person/studentnumber/text()}"/>
+                                	<input class="text" name="studentorhprornationalidnumber" type="text"
+                                		value="{$studentorhprornationalidnumber}"/>
                                 </td>
-                                <td><xsl:value-of select="$result/messages/studentnumber/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/studentorhprornationalidnumber/text()" /></xsl:call-template>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Arbeidsgiver/skole:</td>
@@ -145,7 +156,22 @@
                                 	<input class="text" name="org" type="text"
                                 		value="{$result/values/user/person/employer/text()}"/>
                                 </td>
-                                <td><xsl:value-of select="$result/messages/employer/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/employer/text()" /></xsl:call-template>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Stilling (kun aktuelt hvis helsepersonell):</td>
+                                <td>
+                                	<select name="position">
+	                                    <option value="choose">Velg</option>
+	                                    <xsl:apply-templates select="/verticaldata/positions/position"/>
+	                                </select>
+                                </td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/position" /></xsl:call-template>
+                                </td>
                             </tr>
                             
                             <tr>
@@ -160,7 +186,9 @@
                                         </xsl:if>
                                     </input>
                                 </td>  
-                                <td><xsl:value-of select="$result/messages/newsletter/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/newsletter/text()"/></xsl:call-template>
+                                </td>
                             </tr>
                             
                             <tr>
@@ -175,7 +203,9 @@
                                         </xsl:if>
                                     </input>
                                 </td>  
-                                <td><xsl:value-of select="$result/messages/survey/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/survey/text()"/></xsl:call-template>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="3"><xsl:comment>//</xsl:comment></td>
@@ -194,13 +224,50 @@
                     <input class="button" type="submit" name="cancel" value="Avbryt"/>
                 </form>
             </div>
-
-
     			</xsl:otherwise>
 			</xsl:choose>
 
-
             <div style="clear: both;"><xsl:comment>//</xsl:comment></div>                
         </div>    
+    </xsl:template>
+    
+    <xsl:template match="/verticaldata/positions/position">
+        <option>
+            <xsl:attribute name="value" select="key"/>
+            <xsl:if test="$result/values/user/person/position/key/text() = key">
+            	<xsl:attribute name="selected" />
+            </xsl:if>
+            <xsl:value-of select="name"/>
+        </option>
+    </xsl:template>
+    
+    <xsl:template name="lookup_error_code">
+    	<xsl:param name="lookupcode" />
+    	<xsl:choose>
+    		<xsl:when test="string-length($lookupcode)=0">
+    			<!-- no result -->
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_NUMBER'">
+    			<span class="error">Feltet har feil format, vennligst fyll inn et heltall</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NO_VALUE'">
+    			<span class="error">Feltet har har ingen verdi, vennligst legg til en verdi</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_EQUAL'">
+    			<span class="error">Feltene må være like</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_VALID'">
+    			<span class="error">Feltet har feil format.</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_SELECTED'">
+    			<span class="error">Et av valgene må velges.</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='USER_EXISTS'">
+    			<span class="error">En bruker med samme brukernavn finnes fra før, vennligst velg et annet brukernavn</span>
+    		</xsl:when>
+    		<xsl:otherwise>
+    			Mangler oversettelse for feilkoden <xsl:value-of select="$lookupcode" />
+    		</xsl:otherwise>
+    	</xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

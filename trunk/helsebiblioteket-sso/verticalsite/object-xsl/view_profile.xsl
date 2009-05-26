@@ -52,11 +52,15 @@
                         <table cellspacing="2" width="450">
                             <tr>
                                 <td>HPR-nr:</td>
-                                <td><xsl:value-of select="$loggedin//user/person/hprnumber"/></td>
+                                <td><xsl:value-of select="$loggedin/user/person/hprnumber"/></td>
                             </tr>
                             <tr>
                                 <td>Stud.nr:</td>
-                                <td><xsl:value-of select="$loggedin//user/person/studentnumber"/></td>
+                                <td><xsl:value-of select="$loggedin/user/person/studentnumber"/></td>
+                            </tr>
+                            <tr>
+                                <td>Fødselsdato:</td>
+                                <td><xsl:value-of select="$loggedin/user/person/nationalidnumber"/></td>
                             </tr>
                             <tr>                                    
                                 <td>Brukernavn:</td>
@@ -76,13 +80,18 @@
                             </tr>                               
                             <tr>                                    
                                 <td>Tilknytning:</td>
-                                <td><xsl:value-of select="$loggedin/user/role/name"/></td>
+                                <td>
+                                	<xsl:call-template name="translate_role"><xsl:with-param name="key" select="$loggedin/user/role/key/text()"/></xsl:call-template>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Arbeidsgiver/skole:</td>
-                                <td><xsl:value-of select="$loggedin//user/person/employer"/></td>
+                                <td><xsl:value-of select="$loggedin/user/person/employer"/></td>
                             </tr>
-                            
+                            <tr>
+                                <td>Stilling (kun aktuelt hvis helsepersonell):</td>
+                                <td><xsl:value-of select="$loggedin/user/person/position/name"/></td>
+                            </tr>
                             <tr>
                                 <td>Ønsker du å motta nyhetsbrev?</td> 
                                 <td>
@@ -135,4 +144,26 @@
             <div style="clear: both;"><xsl:comment>//</xsl:comment></div>                
         </div>    
     </xsl:template>
+    
+    <xsl:template name="translate_role">
+    	<xsl:param name="key" />
+    	<xsl:choose>
+    		<xsl:when test="string-length($key)=0">
+    			<!-- no result -->
+    		</xsl:when>
+    		<xsl:when test="$key='health_personnel'">
+    			Helsepersonellregisteret
+    		</xsl:when>
+    		<xsl:when test="$key='health_personnel_other'">
+    			Helsepersonell - andre
+    		</xsl:when>
+    		<xsl:when test="$key='student'">
+    			Student
+    		</xsl:when>
+    		<xsl:otherwise>
+    			Ukjent rolle
+    		</xsl:otherwise>
+    	</xsl:choose>
+    </xsl:template>
+    
 </xsl:stylesheet>

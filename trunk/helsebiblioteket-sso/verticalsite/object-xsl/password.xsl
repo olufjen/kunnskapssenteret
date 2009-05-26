@@ -64,14 +64,12 @@
         	</xsl:attribute>
         </input>
         
-        
-        
         <strong>Har du glemt brukernavn/passord?</strong><br/><br/>                                                    
         
         <xsl:choose>
             <xsl:when test="$totresult/empty">
                 <div class="error_message">
-                	Klart!
+                	
                 </div>
             </xsl:when>
             <xsl:when test="$totresult/success">
@@ -79,17 +77,17 @@
                     Nytt passord er sendt til din e-postadresse <xsl:value-of select="$totresult/values/email/text()"/>. 
                 </div>
             </xsl:when>
-            <xsl:otherwise>Det oppstod en feil.
+            <xsl:otherwise>
                 <div class="error_message">
                     <xsl:choose>
                         <xsl:when test="$totresult/messages/email/text() = 'NOT_VALID'">
-                          	Ugyldig epost-addresse.
+                          	Addressen du skrev er ikke en gyldig e-postadresse.
                         </xsl:when>
                         <xsl:when test="$totresult/summary/text() = 'NOT_SENT'">
-                          	Fikk ikke sent!
+                          	Beklager, en feil oppstod ved utsending av e-post. Vennligst prøv igjen og send eventuelt e-post til <a href="mailto:redaksjonen@helsebiblioteket.no">redaksjonen@helsebiblioteket.no</a> for å få hjelp dersom problemet oppstår flere ganger.
                         </xsl:when>
                         <xsl:otherwise>
-                        	Ukjent feil!
+                        	Beklager, en ukjent feil oppstod ved utsending av mail. Vennligst prøv igjen og send eventuelt e-post til <a href="mailto:redaksjonen@helsebiblioteket.no">redaksjonen@helsebiblioteket.no</a> for å få hjelp dersom problemet oppstår flere ganger.
                         </xsl:otherwise>
                     </xsl:choose>
                 </div>
@@ -117,6 +115,10 @@
             </tr>
         </table>
     </div>
+    <input type="hidden" name="emailFromAddressText" value="redaksjonen@helsebiblioteket.no" />
+	<input type="hidden" name="emailFromNameText" value="redaksjonen@helsebiblioteket.no" />
+	<input type="hidden" name="emailSubjectText" value="Nytt passord til Helsebiblioteket.no" />
+	<input type="hidden" name="emailMessageText" value="Her er ditt passord til Helsebiblioteket.no. Passordet er generert på nytt. \n\nBrukernavn: ##username##\nPassord: ##password##\n\nDu kan endre dette passordet til et du selv husker ved å logge inn på http://www.helsebiblioteket.no/ og velge Din profil i Logg inn-boksen til høyre på sidene." />
 </form>
 </xsl:template>
 </xsl:stylesheet>

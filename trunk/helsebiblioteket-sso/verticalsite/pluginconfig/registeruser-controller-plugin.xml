@@ -26,8 +26,9 @@
  		<property name="resultSessionVarName" value="hbregisterresult" />
  		<property name="parameterNames"><map>
  			<entry key="usertype" value="usertype"/>
- 			<entry key="hprnumber" value="uid"/>
+ 			<entry key="hprnumber" value="hprnumber"/>
  			<entry key="studentnumber" value="studentnumber"/>
+ 			<entry key="nationalidnumber" value="nationalidnumber"/>
  			<entry key="firstname" value="firstname"/>
  			<entry key="lastname" value="surname"/>
  			<entry key="employer" value="org"/>
@@ -50,12 +51,12 @@
  			<entry key="confirmName" value="confirm"/>
  			<entry key="confirmValue" value="true"/>
  			<entry key="formId" value="form_id"/>
+ 			<entry key="emailFromAddressText" value="emailFromAddressText" />
+			<entry key="emailFromNameText" value="emailFromNameText" />
+			<entry key="emailMessageText" value="emailMessageText" />
+			<entry key="emailSubjectText" value="emailSubjectText" />
  		</map></property>
  		<property name="emailService" ref="emailService" />
- 		<property name="fromEmailText" value="fromEmailText" />
- 		<property name="fromNameText" value="fromNameText" />
- 		<property name="messageText" value="messageText" />
- 		<property name="subjectText" value="subjectText" />
 	</bean>
 	<bean name="registerUserService" class="no.helsebiblioteket.admin.webservice.UserServiceWeb" init-method="init">
 		<property name="serviceClient" ref="userServiceClient" />
