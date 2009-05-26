@@ -9,6 +9,7 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.validator.EmailValidator;
@@ -30,6 +31,8 @@ public class LoginBean {
 	private String password;
 	private String username;
 	private boolean failed = false;
+	
+	private Email emailLostPassword;
 	
 	private boolean sentUser = false;
 	private boolean sentEmail = false;
@@ -62,9 +65,10 @@ public class LoginBean {
 		return "login"; 
 	}
 	public String send() {
-		logger.info("method 'send' invoked");
-		SendPasswordEmailResult result = this.loginService.sendPasswordEmail(
-				this.getEmail());
+		logger.debug("method 'send' invoked");
+		this.emailLostPassword.setToEmail(getEmail());
+		this.emailLostPassword.setToName(getEmail());
+		SendPasswordEmailResult result = this.loginService.sendPasswordEmail(this.getEmail(), this.emailLostPassword);
 		this.multipleEmail = false;
 		this.notFoundEmail = false;
 		this.notFoundUser = false;
@@ -156,5 +160,11 @@ public class LoginBean {
 	}
 	public void setMultipleEmail(boolean multipleEmail) {
 		this.multipleEmail = multipleEmail;
+	}
+	public void setEmailLostPassword(Email emailLostPassword) {
+		this.emailLostPassword = emailLostPassword;
+	}
+	public Email getEmailLostPassword() {
+		return this.emailLostPassword;
 	}
 }

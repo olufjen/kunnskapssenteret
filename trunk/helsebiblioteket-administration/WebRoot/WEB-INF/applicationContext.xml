@@ -107,6 +107,12 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
+	<bean id="emailLostPasswordAdmin" class="no.helsebiblioteket.admin.domain.Email">		
+		<property name="fromName" value="redaksjonen@helsebiblioteket.no" />
+		<property name="fromEmail" value="redaksjonen@helsebiblioteket.no" />
+		<property name="subject" value="Nytt passord til Helsebibliotekets administrasjonstjeneste" />
+		<property name="message" value="Her er ditt nye passord for tilgang til http://www.helsebiblioteket.no/helsebiblioteket-administration-web/login.faces:\n\nBrukernavn: ##username##\nPassord: ##password##" />
+	</bean>
 	
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
@@ -145,10 +151,6 @@ xmlns="http://www.springframework.org/schema/beans"
   	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userService" ref="userService"></property>
-    	<property name="emailFromName" value="redaksjonen@helsebiblioteket.no"></property>
-    	<property name="emailFromEmail" value="redaksjonen@helsebiblioteket.no"></property>
-    	<property name="emailSubject" value="tilgangsinformasjon for helsebiblioteket.no"></property>
-    	<property name="emailMessage" value="Her er ditt nye passord for tilgang til http://www.helsebiblioteket.no: ##password##"></property>
     	<property name="emailService" ref="emailService"></property>
   	</bean>
   	
@@ -182,6 +184,8 @@ xmlns="http://www.springframework.org/schema/beans"
     	<property name="host" value="${mail.smtp.host}"></property>
     	<property name="debug" value="${mail.debug}"></property>
     	<property name="noSend" value="${mail.nosend}"></property>
+    	<property name="contentType" value="${mail.content-type}"></property>
+    	<property name="charset" value="${mail.charset}"></property>
   	</bean>
 	
 <!--  Spring security bean classes start    -->
