@@ -141,20 +141,21 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         
         user.setUsername(ldapUser.getUid());
         
-        String studentOrHprNumber = null;
+        String studentOrHprOrNationalIdNumber = null;
         
-        studentOrHprNumber = ldapUser.getEmployeeNumber(); 
+        studentOrHprOrNationalIdNumber = ldapUser.getEmployeeNumber(); 
         
         if ("Emp".equalsIgnoreCase(ldapUser.getEmployeeType())) {
         	user.setRoleList(roleOtherArray);
+        	person.setNationalIdNumber(studentOrHprOrNationalIdNumber);
         }
         if ("Stud".equalsIgnoreCase(ldapUser.getEmployeeType())) {
         	user.setRoleList(roleStudentArray);
-        	person.setStudentNumber(studentOrHprNumber);
+        	person.setStudentNumber(studentOrHprOrNationalIdNumber);
         }
         if ("HPR".equalsIgnoreCase(ldapUser.getEmployeeType())) {
         	user.setRoleList(roleHealthPersonellArray);
-        	person.setHprNumber(studentOrHprNumber);
+        	person.setHprNumber(studentOrHprOrNationalIdNumber);
         }
         
         if (user.getRoleList() == null) {
