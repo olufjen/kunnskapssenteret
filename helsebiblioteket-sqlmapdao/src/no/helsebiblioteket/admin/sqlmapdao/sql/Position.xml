@@ -48,5 +48,6 @@
 	<select id="getPositionListAll" resultMap="PositionResultMap">
 		select position_type_id, descr, name, key, org_type_id
 		from tbl_position_type_reg
+		order by name asc
 	</select>
 </sqlMap>

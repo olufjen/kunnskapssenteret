@@ -75,14 +75,18 @@
                                 <td>
                                     <input class="text" name="password" type="password" value=""/>
                                 </td>
-                                <td><xsl:value-of select="$editpasswordresult/messages/password/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$editpasswordresult/messages/password/text()"/></xsl:call-template>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Bekreft passord:</td>
                                 <td>
                                     <input class="text" name="confirmpassword" type="password" value=""/>
                                 </td>
-                                <td><xsl:value-of select="$editpasswordresult/messages/passwordrepeat/text()"/></td>
+                                <td>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$editpasswordresult/messages/passwordrepeat/text()"/></xsl:call-template>
+                                </td>
                             </tr>                            
                             
                             <tr>
@@ -105,5 +109,33 @@
 
             <div style="clear: both;"><xsl:comment>//</xsl:comment></div>                
         </div>    
+    </xsl:template>
+    
+    <xsl:template name="lookup_error_code">
+    	<xsl:param name="lookupcode" />
+    	
+    	<xsl:choose>
+    		<xsl:when test="string-length($lookupcode)=0">
+    			<!-- no result -->
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_NUMBER'">
+    			<span class="error">Feltet har feil format, vennligst fyll inn et heltall</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NO_VALUE'">
+    			<span class="error">Feltet har har ingen verdi, vennligst legg til en verdi</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_EQUAL'">
+    			<span class="error">Feltene må være like</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_VALID'">
+    			<span class="error">Feltet har feil format.</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='USER_EXISTS'">
+    			<span class="error">En bruker med samme brukernavn finnes fra før, vennligst velg et annet brukernavn</span>
+    		</xsl:when>
+    		<xsl:otherwise>
+    			Mangler oversettelse for feilkoden <xsl:value-of select="$lookupcode" />
+    		</xsl:otherwise>
+    	</xsl:choose>
     </xsl:template>
 </xsl:stylesheet>

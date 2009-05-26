@@ -113,7 +113,7 @@
                                     <td colspan="2">
                                         <input size="20" type="text">
   	                                        <xsl:if test="$usertype='health_personnel'">
-	                                           	<xsl:attribute name="name">uid</xsl:attribute>
+	                                           	<xsl:attribute name="name">hprnumber</xsl:attribute>
 	                                           	<xsl:attribute name="value">
 		                                           	<xsl:value-of select="$hbresult/values/user/person/hprnumber/text()"/>
 	                                           	</xsl:attribute>
@@ -125,9 +125,9 @@
 	                                           	</xsl:attribute>
       	                                    </xsl:if>
   	                                        <xsl:if test="$usertype='health_personnel_other'">
-	                                           	<xsl:attribute name="name">studentnumber</xsl:attribute>
+	                                           	<xsl:attribute name="name">nationalidnumber</xsl:attribute>
 	                                           	<xsl:attribute name="value">
-		                                           	<xsl:value-of select="$hbresult/values/user/person/studentnumber/text()"/>
+		                                           	<xsl:value-of select="$hbresult/values/user/person/nationalidnumber/text()"/>
 	                                           	</xsl:attribute>
       	                                    </xsl:if>
                                         </input>
@@ -149,15 +149,24 @@
         		                            	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
         		                            		select="$hbresult/messages/hprnumber"/></xsl:call-template>
                                             </xsl:when>
-                                            <xsl:otherwise>
+                                            <xsl:when test="$usertype='student'">
 		                                    	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
 		                                    		select="$hbresult/messages/studentnumber"/></xsl:call-template>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+		                                    	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
+		                                    		select="$hbresult/messages/nationalidnumber"/></xsl:call-template>
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Brukernavn: Feltet kan ikke inneholde spesialtegn eller mellomrom</td>
+                                 <td colspan="2">
+                                    <strong>Brukernavn</strong>
+                                    <br/>Skriv inn brukernavnet du vil bruke til innlogging på Helsebiblioteket. Når du klikker Registrer deg-knappen nedenfor, vil du få en melding på skjermen dersom brukernavnet du skrev inn er opptatt. Du må da velge et annet brukernavn. Feltet kan ikke inneholde spesialtegn eller mellomrom</td>
+                              	</tr>
+                                <tr>
+                                    <td>Brukernavn:</td>
                                     <td colspan="2">
                                         <input name="username" size="20" type="text"
                                             value="{$hbresult/values/user/username/text()}"/>
@@ -165,19 +174,17 @@
                                     <td align="left"><xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/username"/></xsl:call-template></td>
                                 </tr>
                                 <tr>
+                                 <td colspan="2">
+                                    <strong>Passord</strong>
+                                    <br/>Passord må være minst 6 tegn langt, og må inneholde både bokstaver og tall. Spesialtegn er ikke tillatt.</td>
+                              	</tr>
+                                <tr>
                                     <td>Passord:</td>
                                     <td>
                                         <input class="text" name="password" type="password"/>
                                     </td>
                                     <td>
-                                        <xsl:choose>
-                                            <xsl:when test="$hbresult/messages/password != ''">
-                                                <xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/password"/></xsl:call-template>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                Passord må være minst 6 tegn langt, og må inneholde både bokstaver og siffer. Spesialtegn og mellomrom er ikke tillatt.
-                                            </xsl:otherwise>
-                                        </xsl:choose>
+	                                    <xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$hbresult/messages/password"/></xsl:call-template>
                                     </td>
                                 </tr>
                                 <tr>
@@ -246,7 +253,7 @@
 		                                            <xsl:attribute name="type">radio</xsl:attribute>
 	    	                                        <xsl:attribute name="name">studentansatt</xsl:attribute>
 	        	                                    <xsl:attribute name="value">student</xsl:attribute>
-	    	                                        <xsl:if test="$hbresult/values/user/person/isStudent = true">
+	    	                                        <xsl:if test="upper-case($hbresult/values/user/person/isstudent) = 'TRUE'">
 		                                            	<xsl:attribute name="checked"/>
 	        	                                    </xsl:if>
 	                                            </input>
@@ -255,7 +262,7 @@
 		                                            <xsl:attribute name="type">radio</xsl:attribute>
 	    	                                        <xsl:attribute name="name">studentansatt</xsl:attribute>
 	        	                                    <xsl:attribute name="value">ansatt</xsl:attribute>
-	    	                                        <xsl:if test="$hbresult/values/user/person/isStudent = true">
+	    	                                        <xsl:if test="upper-case($hbresult/values/user/person/isstudent) = 'FALSE'">
 		                                            	<xsl:attribute name="checked"/>
 	        	                                    </xsl:if>
 	                                            </input>
@@ -351,12 +358,18 @@
                                 </tr>                            
                             </table> 
                             <br/>
-                            Når du har registrert deg, kan du ta i bruk Helsebibliotekets ressurser umiddelbart.
-                            <br/><br/>      
+                            Når du har registrert deg, kan du ta i bruk Helsebibliotekets ressurser umiddelbart. Opplysningene du gir her blir ikke videreformidlet til utenforstående. Selv om du har samtykket i å motta nyhetsbrev og delta i Helsebibliotekets spørreundersøkelser, kan du senere endre dette via skjermbildet "brukerprofil".
+							<br/><br/>      
                             <input name="form_id" type="hidden" value="2" />                  
                             <input class="button" type="submit" value="Registrer deg"/>
-                            <input type="submit" name="cancel" value="Avbryt"/>
+                            <input type="Reset" name="reset" value="Tøm skjema"/>
                         </div>
+                        
+                        <input type="hidden" name="emailFromAddressText" value="redaksjonen@helsebiblioteket.no" />
+                        <input type="hidden" name="emailFromNameText" value="redaksjonen@helsebiblioteket.no" />
+						<input type="hidden" name="emailMessageText" value="Hei, ##name##.\n\nVelkommen som ny bruker av Helsebiblioteket.no. \n\nDitt registrerte brukernavn er: ##username##\n\nVennligst ta vare på denne informasjonen.\n\nDu kan selv se og endre egne registrerte opplysninger, herunder endre passord, ved å logge inn på http://www.helsebiblioteket.no/ og velge Din profil i Logg inn-boksen til høyre på sidene." />
+						<input type="hidden" name="emailSubjectText" value="Velkommen som registrert bruker av Helsebiblioteket.no" />
+						
                     </form>
                 </div>                
                 <div style="clear: both;"><xsl:comment>//</xsl:comment></div>                
@@ -367,6 +380,9 @@
     <xsl:template match="/verticaldata/positions/position">
         <option>
             <xsl:attribute name="value" select="key"/>
+            <xsl:if test="$hbresult/values/user/person/position/key/text() = key">
+            	<xsl:attribute name="selected" />
+            </xsl:if>
             <xsl:value-of select="name"/>
         </option>
     </xsl:template>
@@ -400,6 +416,9 @@
     		</xsl:when>
     		<xsl:when test="$lookupcode='NOT_VALID'">
     			<span class="error">Feltet har feil format.</span>
+    		</xsl:when>
+    		<xsl:when test="$lookupcode='NOT_SELECTED'">
+    			<span class="error">Et av valgene må velges.</span>
     		</xsl:when>
     		<xsl:when test="$lookupcode='USER_EXISTS'">
     			<span class="error">En bruker med samme brukernavn finnes fra før, vennligst velg et annet brukernavn</span>

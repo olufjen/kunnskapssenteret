@@ -14,16 +14,25 @@ import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.LoggedInUser;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.Person;
+import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
+import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
+import no.helsebiblioteket.admin.domain.requestresult.EmptyResultPosition;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
@@ -171,15 +180,13 @@ public class ProfileController extends HttpControllerPlugin {
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		session.setAttribute(this.editPasswordUserVarName, new Object());
 		String from = (String)session.getAttribute(this.editPasswordFromVarName);
+		String viewPage = request.getParameter(this.parameterNames.get("viewPage"));
+		String editPage = request.getParameter(this.parameterNames.get("editPage"));
 		if(from != null && from.equals("edit")){
-			String editPage = request.getParameter(this.parameterNames.get("editPage"));
-			response.sendRedirect(editPage);
+			response.sendRedirect(viewPage);
 		} else if(from != null && from.equals("view")){
-			String viewPage = request.getParameter(this.parameterNames.get("viewPage"));
 			response.sendRedirect(viewPage);
 		} else {
-			// Ok?
-			String viewPage = request.getParameter(this.parameterNames.get("viewPage"));
 			response.sendRedirect(viewPage);
 		}
 	}
@@ -268,12 +275,21 @@ public class ProfileController extends HttpControllerPlugin {
 		if(email == null) { email = "";}
 		String role = request.getParameter(this.parameterNames.get("role"));
 		if (role==null) {role = "";}
+		String position = request.getParameter(this.parameterNames.get("position"));
+		if(position == null) { position = ""; }
+		
+		String studentOrHprOrNationalIdNumber = request.getParameter(this.parameterNames.get("studentorhprornationalidnumber"));
+		if(studentOrHprOrNationalIdNumber == null) { studentOrHprOrNationalIdNumber = ""; }
+		
 		String hprno = request.getParameter(this.parameterNames.get("hprno"));
 		if(hprno == null) { hprno = ""; }
+		String nationalIdNumber = request.getParameter(this.parameterNames.get("nationalidnumber"));
+		if(nationalIdNumber == null) { nationalIdNumber = ""; }
 		String studentnumber = request.getParameter(this.parameterNames.get("studentnumber")); 
 		if(studentnumber == null) { studentnumber = ""; }
 		String employer = request.getParameter(this.parameterNames.get("employer"));
 		if(employer == null) { employer = "";}
+		
 		String receiveNewsletter = request.getParameter(this.parameterNames.get("newsletter"));
 		if(receiveNewsletter == null) { receiveNewsletter = "";}
 		String participateSurvey = request.getParameter(this.parameterNames.get("questionaire"));
@@ -295,17 +311,35 @@ public class ProfileController extends HttpControllerPlugin {
 				messages.appendChild(UserToXMLTranslator.element(document, "role", "NOT_VALID"));
 			}
 		}
-		if(hprno.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NO_VALUE"));
-		} else if( ! isInteger(hprno)){
-			messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NOT_NUMBER"));
-		}
-
-		if(studentnumber.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "studentnumber", "NO_VALUE"));
-		}
-		if(employer.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "employer", "NO_VALUE"));
+		
+		
+		
+		if (role.equals(UserRoleKey.health_personnel.getValue())) {
+			if (studentOrHprOrNationalIdNumber.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprornationalidnumber", "NO_VALUE"));
+			}
+			user.getPerson().setHprNumber(studentOrHprOrNationalIdNumber);
+			
+			if (position.length() == 0 || position.equals("choose")) {
+				messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_SELECTED"));	
+			} else {
+				Position selectedPosition = positionFromKey(position);
+				if(selectedPosition == null) {
+					messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));	
+				} else {
+					user.getPerson().setPosition(selectedPosition);
+				}
+			}
+		} else if (role.equals(UserRoleKey.student.getValue())) {
+			if (studentOrHprOrNationalIdNumber.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprornationalidnumber", "NO_VALUE"));
+			}
+			user.getPerson().setStudentNumber(studentOrHprOrNationalIdNumber);
+		} else if (role.equals(UserRoleKey.health_personnel_other.getValue())) { 
+			if (studentOrHprOrNationalIdNumber.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprornationalidnumber", "NO_VALUE"));
+			}
+			user.getPerson().setNationalIdNumber(studentOrHprOrNationalIdNumber);
 		}
 		
 		user.getPerson().setFirstName(firstName);
@@ -314,8 +348,7 @@ public class ProfileController extends HttpControllerPlugin {
 		user.setRoleList(new Role[1]);
 		user.getRoleList()[0] = new Role();
 		user.getRoleList()[0].setKey(new UserRoleKey(role));
-		user.getPerson().setHprNumber(hprno);
-		user.getPerson().setStudentNumber(studentnumber);
+		
 		user.getPerson().setEmployer(employer);
 		user.getPerson().getProfile().setReceiveNewsletter(new Boolean(receiveNewsletter));
 		user.getPerson().getProfile().setParticipateSurvey(new Boolean(participateSurvey));
@@ -334,6 +367,17 @@ public class ProfileController extends HttpControllerPlugin {
 		this.init(request, response);
 	}
 
+	private Position positionFromKey(String positionString)  {
+		SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+		OrganizationType organizationType = (OrganizationType) ((ValueResultOrganizationType) organizationTypeResult).getValue();
+		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString), organizationType);
+		if (positionResult instanceof EmptyResultPosition) {
+			return null;
+		} else {
+			return ((ValueResultPosition) positionResult).getValue();
+		}
+	}
+	
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		LoggedInUser user = this.loggedInUser();
 		UserToXMLTranslator translator = new UserToXMLTranslator();

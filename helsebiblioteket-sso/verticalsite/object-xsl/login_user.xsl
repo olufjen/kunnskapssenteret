@@ -33,22 +33,23 @@
     	<div>
 			<xsl:choose>
 				<xsl:when test="$proxyresult/empty">
-                	<!-- Ikke klar. -->
-                	Not ready. Please, try again!
+                	<!-- TODO: Vise feilmelding, anta at bruker har forsøk å logge seg på fra logonboksen med feil brukernavn eller passord? -->
 				</xsl:when>
 				<xsl:otherwise>
+					<xsl:if test="$proxyresult/noaccess">
+						<h1>Ikke tilgang</h1>
+					</xsl:if>
 					<xsl:choose>
 						<xsl:when test="$proxyresult/loggedin/user">
 							<div>
-                                Du er logget inn som bruker <xsl:value-of select="$proxyresult/loggedin/user/username"/>
+                                Du er logget inn som "<xsl:value-of select="$proxyresult/loggedin/user/person/name"/>"
                                 <br/>
                                 <xsl:call-template name="resource"/>
                                 <br/>
                                 <xsl:if test="$proxyresult/noaccess and $proxyresult/altorganization">
-                                	Fra din adresse vil du være logget inn som organisasjon
+                                	Fra din adresse har du også tilgang via
                                 	<xsl:value-of select="$proxyresult/altorganization/organization/name"/>
-                                	hvis du logger ut. Det er mulig organisasjonen har tillgang
-                                	til ressursen.
+                                	Det er mulig organisasjonen har tilgang. Forsøk eventuelt å logge ut som personlig bruker og deretter klikke på lenken på nytt.
                                 	<br/>
                                 	<a>
 										<xsl:attribute name="href">
@@ -114,7 +115,7 @@
                         </xsl:when>
                         <xsl:otherwise>
                             <div>
-                                Du er logget inn, men ikke som organisasjon eller bruker!!!!!
+                                Du er logget inn, men ikke som organisasjon eller bruker.
                             </div>
                         </xsl:otherwise>
 					</xsl:choose>
@@ -123,16 +124,14 @@
 		</div>
     </xsl:template>
 	<xsl:template name="resource">
-		Du har forsøkt å få tillgang til 
-		<xsl:value-of select="$proxyresult/resource/name"/>
-		med url
-		<xsl:value-of select="$proxyresult/resource/url"/>.
+		<br />
+		Du har forsøkt å få tilgang til <xsl:value-of select="$proxyresult/resource/url"/>.
 		<br/>
 		<xsl:if test="$proxyresult/access">
 			Du har tilgang til denne resursen.
 		</xsl:if>
 		<xsl:if test="$proxyresult/noaccess">
-			Du har <b>ikke</b> tilgang til denne resursen.
+			Du har dessverre ikke tilgang til denne ressursen. <a style="text-decoration: underline;" href="http://www.helsebiblioteket.no/Slik+bruker+du+oss/Sp%C3%B8rsm%C3%A5l+og+svar#05">Les mer</a>
 		</xsl:if>
 	</xsl:template>
 

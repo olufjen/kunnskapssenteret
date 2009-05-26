@@ -57,9 +57,33 @@
     </xsl:template> <!-- end content -->
     
     <xsl:template name="step1">
+    	
+    	<script type="text/javascript">
+	    <xsl:text>
+	    function validateForm(form) {                       
+		    	status = true;
+		    	chosen = "";
+				for (i = 0; ; i++) {
+					if (i == form.usertype.length) {
+						break;
+					}
+					if (form.usertype[i].checked) {
+						chosen = form.usertype[i].value;
+					}
+				}
+				if (chosen == "") {
+					status = false;
+		        	alert ('En av tilgangstypene må velges før du kan komme videre.');
+				}
+				return status;
+		    }
+		</xsl:text>
+	   	</script>
+	   	
+    
     	<h1 class="autoheading">Registering av ny bruker</h1>
         <h4 class="logon_column_heading">Steg 1 av 2: Velg type tilgang</h4>
-        <form action="{portal:createPageUrl($registerUserPage, ())}" method="get">
+        <form action="{portal:createPageUrl($registerUserPage, ())}" method="get" onsubmit="return validateForm(this)">
             <div class="column_content">
             	<p>
             		<br/><b>Kun studenter og ansatte innen helsesektoren oppfyller kravene for tilgang til passordbeskyttede tjenester i Helsebiblioteket.<br/>Type tilgang: velg et alternativ og trykk "Neste".</b><br/><br/>
@@ -67,7 +91,10 @@
                 <input class="radio" id="reg_form_1" name="usertype" type="radio" value="health_personnel"/>
             	<label for="reg_form_1"><b>Jeg er registrert i Helsepersonellregisteret</b></label>
                 <br/>
-								<p>Velg dette dersom du har helsepersonellnummer. Da får du tilgang til alle Helsebibliotekets tidsskrifter og databaser. Du kan finne helsepersonellnummeret ditt på SAFHs nettsider</p>
+					<p>Velg dette dersom du har helsepersonellnummer. Da får du tilgang til alle Helsebibliotekets tidsskrifter og databaser. Du kan finne helsepersonellnummeret ditt på <a href="http://www.safh.no/hpr/main.php" rel="external"
+                        title="Finn HPR-nummer hos Statens autorisasjonskontor for helsepersonell">
+                        <u>SAFHs nettsider</u>
+                     </a></p>
                 <input class="radio" id="reg_form_2" name="usertype" type="radio" value="student"/>
             		<label for="reg_form_2"><b>Jeg er student på helsefag eller er ansatt ved undervisningssted.</b></label>
                 <br/>
@@ -76,6 +103,10 @@
             		<label for="reg_form_3"><b>Jeg har IKKE helsepersonellnummer, men arbeider i helsetjenesten eller offentlig forvaltning</b></label>
                 <br/>
             	<p>Velg dette dersom du ikke har helsepersonellnummer, men likevel har en jobb knyttet til helsetjenesten, eller den offentlige helseforvaltningen. Du vil ikke få tilgang til Norsk Elektronisk Legehåndbok og LexiComp, men alle andre tidsskrifter og databaser vil være tilgjengelige.</p>
+                <p>
+                     <strong>Bruker du Mac?</strong> Dette registreringsskjemaet fungerer dessverre ikke i nettleseren Safari. Bruk for eksempel nettleseren <u>
+                        <a target="_blank" href="http://firefox.no/" title="Last ned Firefox-nettleseren">Firefox</a>
+                     </u> (gratis) i stedet.</p>
                 <input type="submit" value="Neste"/>
             </div>
         </form>

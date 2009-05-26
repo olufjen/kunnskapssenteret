@@ -22,17 +22,18 @@
 	<bean class="no.helsebiblioteket.evs.plugin.ProfileController">
  		<property name="urlPattern" value="/site/2/RedigerProfilServlet" />
  		<property name="userService" ref="profileUserService" />
+ 		<property name="organizationService" ref="profileOrganizationService" />
  		<property name="resultSessionVarName" value="hbprofileresult" />
  		<property name="editPasswordresultVarName" value="hbeditpasswordresult" />
  		<property name="editPasswordFromVarName" value="hbeditpasswordfrom" />
  		<property name="editPasswordUserVarName" value="hbeditpassworduser" />
  		
  		<property name="parameterNames"><map>
- 			<entry key="studentnumber" value="studentnumber"/>
- 			<entry key="hprno" value="uid"/>
+ 			<entry key="studentorhprornationalidnumber" value="studentorhprornationalidnumber"/>
  			<entry key="firstname" value="firstname"/>
  			<entry key="lastname" value="surname"/>
  			<entry key="employer" value="org"/>
+ 			<entry key="position" value="position"/>
  			<entry key="newsletter" value="newsletter"/>
  			<entry key="questionaire" value="survey"/>
  			<entry key="emailaddress" value="email"/>
@@ -73,13 +74,36 @@
 		<property name="findUserByUsernameName" ref="findUserByUsername" />
 		<property name="systemByKey" ref="systemByKeyName" />
 		<property name="roleByKeyName" ref="roleByKeyName" />
+		<property name="positionByKey" ref="getPositionByKey" />
 		<property name="cacheHelper" ref="methodCachingAdvice" />
 	</bean>
+	
+	<bean name="profileOrganizationService" class="no.helsebiblioteket.admin.webservice.OrganizationServiceWeb" init-method="init">
+		<property name="serviceClient" ref="organizationServiceClient" />
+		<property name="targetEPR" ref="organizationTargetEPR" />
+		<property name="organizationTypeByKeyName" ref="organizationTypeByKeyName" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
+	</bean>
+	
+	<bean name="organizationServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	
+	<bean name="organizationTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="${webservice.service.url.prefix}/organizationService" />
+	</bean>
+	
+	<bean name="organizationTypeByKeyName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="getOrganizationTypeByKey" />
+	</bean>
+	
 	<bean name="profileServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
 	</bean>
+	
 	<bean name="profileTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
 		<constructor-arg value="${webservice.service.url.prefix}/userService" />
 	</bean>
+	
 	<bean name="profileUpdateUser" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="updateUser" />
@@ -95,5 +119,9 @@
 	<bean name="roleByKeyName" class="javax.xml.namespace.QName">
 		<constructor-arg value="${webservice.domain.url}" />
 		<constructor-arg value="getRoleByKeySystem" />
+	</bean>
+	<bean name="getPositionByKey" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="getPositionByKey" />
 	</bean>
 </beans>

@@ -1,5 +1,6 @@
 package no.helsebiblioteket.evs.plugin;
 
+import java.net.URLDecoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +48,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.translator.EmailMessageTranslator;
 import no.helsebiblioteket.admin.translator.LoggedInUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToLoggedInUserTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -57,10 +59,11 @@ import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 public final class RegisterUserController extends HttpControllerPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
 	private EmailService emailService;
-	private String fromEmailText;
-	private String fromNameText;
-	private String messageText;
-	private String subjectText;
+	private Email emailNewUser;
+	private String emailFromAddressText;
+	private String emailFromNameText;
+	private String emailMessageText;
+	private String emailSubjectText;
 	private String sessionLoggedInUserVarName = "hbloggedinuser";
 	private String resultSessionVarName;
 	private Map<String, String> parameterNames;
@@ -71,6 +74,19 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String cancel = request.getParameter(this.parameterNames.get("cancelName"));
 		String confirm = request.getParameter(this.parameterNames.get("confirmName"));
+		
+		this.emailNewUser = new Email();
+		
+		this.emailFromAddressText = request.getParameter(this.parameterNames.get("emailFromAddressText")) != null ? request.getParameter(this.parameterNames.get("emailFromAddressText")) : "";
+    	this.emailFromNameText = request.getParameter(this.parameterNames.get("emailFromNameText")) != null ? request.getParameter(this.parameterNames.get("emailFromNameText")) : "";
+    	this.emailMessageText = request.getParameter(this.parameterNames.get("emailMessageText")) != null ? request.getParameter(this.parameterNames.get("emailMessageText")) : "";
+    	this.emailSubjectText = request.getParameter(this.parameterNames.get("emailSubjectText")) != null ? request.getParameter(this.parameterNames.get("emailSubjectText")) : "";
+    	
+    	emailNewUser.setFromEmail(URLDecoder.decode(this.emailFromAddressText, "UTF-8"));
+    	emailNewUser.setFromName(URLDecoder.decode(this.emailFromNameText, "UTF-8"));
+    	emailNewUser.setMessage(URLDecoder.decode(this.emailMessageText, "UTF-8"));
+    	emailNewUser.setSubject(URLDecoder.decode(this.emailSubjectText, "UTF-8"));
+		
     	if(save != null && save.equals(this.parameterNames.get("saveValue"))){
     		if(cancel != null && cancel.equals(this.parameterNames.get("cancelValue"))){
     			this.cancel(request, response);
@@ -169,28 +185,21 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		ResultHandler.setResult(this.resultSessionVarName, document);
     	response.sendRedirect(gotoUrl);
 	}
+	
 	private void loginNewUser(User user) {
 		UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		session.setAttribute(sessionLoggedInUserVarName, userTranslator.translate(user));
 	}
+	
 	private void sendNewUserEmail(User user) {
-		Email email = new Email();
-		
-		email.setFromName(this.fromNameText);
-		email.setFromEmail(this.fromEmailText);
-		email.setToName(user.getPerson().getName());
-		email.setToEmail(user.getPerson().getContactInformation().getEmail());
-		email.setSubject(this.subjectText);
-
-		String message = this.messageText;
-		message.replace("#username#", user.getUsername());
-		message.replace("#name#", user.getPerson().getName());
-		message.replace("#email#", user.getPerson().getContactInformation().getEmail());
-		email.setMessage(message);
-		
-		this.emailService.sendEmail(email);
+		this.emailNewUser.setToName(user.getPerson().getName());
+		this.emailNewUser.setToEmail(user.getPerson().getContactInformation().getEmail());
+		EmailMessageTranslator emailMessageTranslator = new EmailMessageTranslator();
+		this.emailNewUser.setMessage(emailMessageTranslator.translate(this.emailNewUser.getMessage(), user));
+		this.emailService.sendEmail(this.emailNewUser);
 	}
+	
 	private User createValidateUser(HttpServletRequest request, Document document, Element messages, Element values) throws Exception {
 		User user = new User();
 		user.setPerson(new Person());
@@ -203,6 +212,8 @@ public final class RegisterUserController extends HttpControllerPlugin {
         if(hprnumber == null){ hprnumber = ""; }
         String studentnumber = request.getParameter(this.parameterNames.get("studentnumber"));
         if(studentnumber == null){ studentnumber = ""; }
+        String nationalIdNumber = request.getParameter(this.parameterNames.get("nationalidnumber"));
+        if(nationalIdNumber == null){ nationalIdNumber = ""; }
         String username = request.getParameter(this.parameterNames.get("username"));
 		if(username == null) { username = "";}
 		String password = request.getParameter(this.parameterNames.get("password"));
@@ -238,19 +249,23 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		}
 		values.appendChild(UserToXMLTranslator.cDataElement(document, "usertype", usertype));
 
-		if(usertype.equals(UserRoleKey.health_personnel.getValue())){
+		if (usertype.equals(UserRoleKey.health_personnel.getValue())){
 			if(hprnumber.length() == 0){
 				messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NO_VALUE"));	
-			} else if( ! isInteger(hprnumber)){
-				messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NOT_VALID"));
 			}
 			user.getPerson().setHprNumber(hprnumber);
-		} else {
+		} else if (usertype.equals(UserRoleKey.student.getValue())) {
 			if(studentnumber.length() == 0){
 				messages.appendChild(UserToXMLTranslator.element(document, "studentnumber", "NO_VALUE"));	
 			}
 			user.getPerson().setStudentNumber(studentnumber);
+		} else if (usertype.equals(UserRoleKey.health_personnel_other.getValue())) {
+			if(nationalIdNumber.length() == 0){
+				messages.appendChild(UserToXMLTranslator.element(document, "nationalidnumber", "NO_VALUE"));	
+			}
+			user.getPerson().setNationalIdNumber(nationalIdNumber);
 		}
+		
 		if(username.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "username", "NO_VALUE"));
 		} else if(userExists(username)){
@@ -297,7 +312,7 @@ public final class RegisterUserController extends HttpControllerPlugin {
 			} else {
 				user.getPerson().setIsStudent(studentansatt.equals("student"));
 			}
-		} else {
+		}  else {
 			if(positiontext.length() == 0){
 				messages.appendChild(UserToXMLTranslator.element(document, "positiontext", "NO_VALUE"));	
 			}
@@ -387,18 +402,6 @@ public final class RegisterUserController extends HttpControllerPlugin {
 	}
 	public void setEmailService(EmailService emailService) {
 		this.emailService = emailService;
-	}
-	public void setFromEmailText(String fromEmailText) {
-		this.fromEmailText = fromEmailText;
-	}
-	public void setFromNameText(String fromNameText) {
-		this.fromNameText = fromNameText;
-	}
-	public void setMessageText(String messageText) {
-		this.messageText = messageText;
-	}
-	public void setSubjectText(String subjectText) {
-		this.subjectText = subjectText;
 	}
 	public void setSessionLoggedInUserVarName(String sessionLoggedInUserVarName) {
 		this.sessionLoggedInUserVarName = sessionLoggedInUserVarName;
