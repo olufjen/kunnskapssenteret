@@ -28,7 +28,7 @@
  			<entry key="usertype" value="usertype"/>
  			<entry key="hprnumber" value="hprnumber"/>
  			<entry key="studentnumber" value="studentnumber"/>
- 			<entry key="nationalidnumber" value="nationalidnumber"/>
+ 			<entry key="dateofbirth" value="dateofbirth"/>
  			<entry key="firstname" value="firstname"/>
  			<entry key="lastname" value="surname"/>
  			<entry key="employer" value="org"/>

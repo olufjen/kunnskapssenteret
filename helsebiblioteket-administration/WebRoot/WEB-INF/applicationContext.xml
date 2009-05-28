@@ -40,6 +40,12 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="url" value="${database.url}"></property>
 		<property name="username" value="${database.username}"></property>
 		<property name="password" value="${database.password}"></property>
+		<property name="initialSize" value="${database.initialsize}"></property>
+		<property name="maxActive" value="${database.maxactive}"></property>
+		<property name="maxIdle" value="${database.maxidle}"></property>
+		<property name="minIdle" value="${database.minidle}"></property>
+		<property name="maxWait" value="${database.maxwait}"></property>
+		<property name="validationQuery" value="${database.validationquery}"></property>
 	</bean>
 
 	<bean id="jdbcTemplateHelsebiblioteket" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -125,7 +131,7 @@ xmlns="http://www.springframework.org/schema/beans"
   	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportEndUsersServiceImpl">
  		<property name="userService" ref="userService"></property>
  		<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
- 		<property name="commonPassword" value="password" />
+ 		<!-- <property name="commonPassword" value="password" /> -->
 	</bean>
 	
 	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportMemberOrganizationsServiceImpl">

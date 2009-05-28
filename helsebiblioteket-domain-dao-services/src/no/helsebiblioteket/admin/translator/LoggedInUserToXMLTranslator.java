@@ -22,7 +22,7 @@ public class LoggedInUserToXMLTranslator {
 		personElement.appendChild(UserToXMLTranslator.cDataElement(document, "employer", user.getEmployer()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "hprnumber", user.getHprNumber()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "studentnumber", user.getStudentNumber()));
-		personElement.appendChild(UserToXMLTranslator.element(document, "nationalidnumber", user.getNationalIdNumber()));
+		personElement.appendChild(UserToXMLTranslator.element(document, "dateofbirth", user.getDateOfBirth()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "positiontext", user.getPositionText()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "isstudent", user.getIsStudent()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "positionkey", user.getPositionKey()));

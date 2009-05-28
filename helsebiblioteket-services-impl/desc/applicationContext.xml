@@ -168,6 +168,12 @@
 		<property name="url" value="${database.url}"></property>
 		<property name="username" value="${database.username}"></property>
 		<property name="password" value="${database.password}"></property>
+		<property name="initialSize" value="${database.initialsize}"></property>
+		<property name="maxActive" value="${database.maxactive}"></property>
+		<property name="maxIdle" value="${database.maxidle}"></property>
+		<property name="minIdle" value="${database.minidle}"></property>
+		<property name="maxWait" value="${database.maxwait}"></property>
+		<property name="validationQuery" value="${database.validationquery}"></property>
 	</bean>
 	
 	<!-- ==============================   CACHE   ============================= -->

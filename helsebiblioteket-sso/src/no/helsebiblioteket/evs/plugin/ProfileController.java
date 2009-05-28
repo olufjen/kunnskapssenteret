@@ -278,13 +278,13 @@ public class ProfileController extends HttpControllerPlugin {
 		String position = request.getParameter(this.parameterNames.get("position"));
 		if(position == null) { position = ""; }
 		
-		String studentOrHprOrNationalIdNumber = request.getParameter(this.parameterNames.get("studentorhprornationalidnumber"));
-		if(studentOrHprOrNationalIdNumber == null) { studentOrHprOrNationalIdNumber = ""; }
+		String studentOrHprOrDateOfBirth = request.getParameter(this.parameterNames.get("studentorhprordateofbirth"));
+		if(studentOrHprOrDateOfBirth == null) { studentOrHprOrDateOfBirth = ""; }
 		
 		String hprno = request.getParameter(this.parameterNames.get("hprno"));
 		if(hprno == null) { hprno = ""; }
-		String nationalIdNumber = request.getParameter(this.parameterNames.get("nationalidnumber"));
-		if(nationalIdNumber == null) { nationalIdNumber = ""; }
+		String dateOfBirth = request.getParameter(this.parameterNames.get("dateofbirth"));
+		if(dateOfBirth == null) { dateOfBirth = ""; }
 		String studentnumber = request.getParameter(this.parameterNames.get("studentnumber")); 
 		if(studentnumber == null) { studentnumber = ""; }
 		String employer = request.getParameter(this.parameterNames.get("employer"));
@@ -315,10 +315,10 @@ public class ProfileController extends HttpControllerPlugin {
 		
 		
 		if (role.equals(UserRoleKey.health_personnel.getValue())) {
-			if (studentOrHprOrNationalIdNumber.length() == 0) {
-				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprornationalidnumber", "NO_VALUE"));
+			if (studentOrHprOrDateOfBirth.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
 			}
-			user.getPerson().setHprNumber(studentOrHprOrNationalIdNumber);
+			user.getPerson().setHprNumber(studentOrHprOrDateOfBirth);
 			
 			if (position.length() == 0 || position.equals("choose")) {
 				messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_SELECTED"));	
@@ -331,15 +331,15 @@ public class ProfileController extends HttpControllerPlugin {
 				}
 			}
 		} else if (role.equals(UserRoleKey.student.getValue())) {
-			if (studentOrHprOrNationalIdNumber.length() == 0) {
-				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprornationalidnumber", "NO_VALUE"));
+			if (studentOrHprOrDateOfBirth.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
 			}
-			user.getPerson().setStudentNumber(studentOrHprOrNationalIdNumber);
+			user.getPerson().setStudentNumber(studentOrHprOrDateOfBirth);
 		} else if (role.equals(UserRoleKey.health_personnel_other.getValue())) { 
-			if (studentOrHprOrNationalIdNumber.length() == 0) {
-				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprornationalidnumber", "NO_VALUE"));
+			if (studentOrHprOrDateOfBirth.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
 			}
-			user.getPerson().setNationalIdNumber(studentOrHprOrNationalIdNumber);
+			user.getPerson().setDateOfBirth(studentOrHprOrDateOfBirth);
 		}
 		
 		user.getPerson().setFirstName(firstName);

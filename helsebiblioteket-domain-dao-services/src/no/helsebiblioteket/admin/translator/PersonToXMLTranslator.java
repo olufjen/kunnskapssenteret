@@ -20,7 +20,7 @@ public class PersonToXMLTranslator {
 
 		personElement.appendChild(UserToXMLTranslator.element(document, "hprnumber", person.getHprNumber()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "studentnumber", person.getStudentNumber()));
-		personElement.appendChild(UserToXMLTranslator.element(document, "nationalidnumber", person.getNationalIdNumber()));
+		personElement.appendChild(UserToXMLTranslator.element(document, "dateofbirth", person.getDateOfBirth()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "positiontext", person.getPositionText()));
 
 		this.profileToXMLTranslator.translate(person.getProfile(), document, personElement);

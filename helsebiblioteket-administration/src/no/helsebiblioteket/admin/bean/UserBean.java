@@ -63,7 +63,7 @@ public class UserBean {
 	private User user;
 	
 	private boolean showHprNumber;
-	private boolean showNationalIdNumber;
+	private boolean showDateOfBirth;
 	private boolean showEmployerNumber;
 	private boolean showIsStudent;
 	private boolean showEmployerText;
@@ -110,8 +110,8 @@ public class UserBean {
     	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
         	this.showHprNumber = false;
         	this.user.getPerson().setHprNumber("");
-        	this.showNationalIdNumber = false;        	
-        	this.user.getPerson().setNationalIdNumber("");
+        	this.showDateOfBirth = false;        	
+        	this.user.getPerson().setDateOfBirth("");
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber("");
     		this.showIsStudent = false;
@@ -123,7 +123,7 @@ public class UserBean {
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyEmployee)){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber("");
-    		this.showNationalIdNumber = true;
+    		this.showDateOfBirth = true;
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber("");
     		this.showIsStudent = false;
@@ -133,10 +133,10 @@ public class UserBean {
     		this.showProfile = true;
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyHealthWorker)){
     		this.showHprNumber = true;
-    		this.showNationalIdNumber = false;
+    		this.showDateOfBirth = false;
         	this.showEmployerNumber = false;
     		this.user.getPerson().setStudentNumber("");
-    		this.user.getPerson().setNationalIdNumber("");
+    		this.user.getPerson().setDateOfBirth("");
     		this.showIsStudent = false;
         	this.showEmployerText = true;
         	this.showPositionText = false;
@@ -145,8 +145,8 @@ public class UserBean {
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
     		this.showHprNumber = false;
     		this.user.getPerson().setHprNumber("");
-    		this.showNationalIdNumber = false;
-    		this.user.getPerson().setNationalIdNumber("");
+    		this.showDateOfBirth = false;
+    		this.user.getPerson().setDateOfBirth("");
         	this.showEmployerNumber = true;
     		this.showIsStudent = true;
         	this.showEmployerText = true;
@@ -230,7 +230,7 @@ public class UserBean {
     	this.mainRole(this.allRolesMap.get(this.selectedUserRole.getValue()));
     	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
         	this.user.getPerson().setHprNumber("");
-        	this.user.getPerson().setNationalIdNumber("");
+        	this.user.getPerson().setDateOfBirth("");
     		this.user.getPerson().setStudentNumber("");
 //    		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setEmployer("");
@@ -242,12 +242,12 @@ public class UserBean {
 //    		this.user.getPerson().setIsStudent(false);
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyHealthWorker)){
     		this.user.getPerson().setStudentNumber("");
-    		this.user.getPerson().setNationalIdNumber("");
+    		this.user.getPerson().setDateOfBirth("");
 //    		this.user.getPerson().setIsStudent(false);
     		this.user.getPerson().setPosition(this.allPositionsMap.get(this.user.getPerson().getPosition().getKey().getValue()));
     		this.user.getPerson().setPositionText("");
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
-    		this.user.getPerson().setNationalIdNumber("");
+    		this.user.getPerson().setDateOfBirth("");
         	this.user.getPerson().setHprNumber("");
         	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
 //    		this.user.getPerson().setPosition(new Position());
@@ -523,10 +523,10 @@ public class UserBean {
 	public void setPasswordRepeat(UIInput passwordRepeat) { this.passwordRepeat = passwordRepeat; }
 	public UIInput getPasswordInput() { return passwordInput; }
 	public void setPasswordInput(UIInput passwordInput) { this.passwordInput = passwordInput; }
-	public boolean isShowNationalIdNumber() {
-		return showNationalIdNumber;
+	public boolean isShowDateOfBirth() {
+		return showDateOfBirth;
 	}
-	public void setShowNationalIdNumber(boolean nationalIdNumber) {
-		this.showNationalIdNumber = nationalIdNumber;
+	public void setShowDateOfBirth(boolean showDateOfBirth) {
+		this.showDateOfBirth = showDateOfBirth;
 	}
 }

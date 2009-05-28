@@ -2,6 +2,8 @@ package no.helsebiblioteket.admin.service.importexport.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,17 +112,24 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
 			}
 			
 			User helsebibliotekUser = null;
-			Collection<User> allEndUsersAsHelsebibliotekUsers = new ArrayList();
+			Map<String, User> allEndUsersAsHelsebibliotekUsers = new HashMap<String, User>();
+			
 			for (LDAPUser ldapUser : allEndUsersAsLdapUsers) {
 				helsebibliotekUser = new User();
 				helsebibliotekUser = populateUser(ldapUser);
 				if (null != helsebibliotekUser) {
-					allEndUsersAsHelsebibliotekUsers.add(helsebibliotekUser);
+					if (null == helsebibliotekUser.getUsername() || "".equals(helsebibliotekUser.getUsername())) {
+						java.lang.System.out.println("En bruker uten brukernavn ble funnet, brukeren ble ikke lagt til. Brukerens toString er '" + helsebibliotekUser.toString() + "'");
+					} else if (allEndUsersAsHelsebibliotekUsers.get(helsebibliotekUser.getUsername()) != null) {
+						java.lang.System.out.println("Dupikat bruker ble funnet: '" + helsebibliotekUser.getUsername() + "'. Denne ble ikke lagt til, dette må gjøres manuelt"); 
+					} else {
+						allEndUsersAsHelsebibliotekUsers.put(helsebibliotekUser.getUsername(), helsebibliotekUser);
+					}
 				}
 			}
 			
-			for (User user : allEndUsersAsHelsebibliotekUsers) {
-				userService.insertUser(user);
+			for (String userName : allEndUsersAsHelsebibliotekUsers.keySet()) {
+				userService.insertUser(allEndUsersAsHelsebibliotekUsers.get(userName));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,21 +150,21 @@ public class ImportEndUsersServiceImpl implements ImportEndUsersService {
         
         user.setUsername(ldapUser.getUid());
         
-        String studentOrHprOrNationalIdNumber = null;
+        String studentOrHprOrDateOfBirth = null;
         
-        studentOrHprOrNationalIdNumber = ldapUser.getEmployeeNumber(); 
+        studentOrHprOrDateOfBirth = ldapUser.getEmployeeNumber(); 
         
         if ("Emp".equalsIgnoreCase(ldapUser.getEmployeeType())) {
         	user.setRoleList(roleOtherArray);
-        	person.setNationalIdNumber(studentOrHprOrNationalIdNumber);
+        	person.setDateOfBirth(studentOrHprOrDateOfBirth);
         }
         if ("Stud".equalsIgnoreCase(ldapUser.getEmployeeType())) {
         	user.setRoleList(roleStudentArray);
-        	person.setStudentNumber(studentOrHprOrNationalIdNumber);
+        	person.setStudentNumber(studentOrHprOrDateOfBirth);
         }
         if ("HPR".equalsIgnoreCase(ldapUser.getEmployeeType())) {
         	user.setRoleList(roleHealthPersonellArray);
-        	person.setHprNumber(studentOrHprOrNationalIdNumber);
+        	person.setHprNumber(studentOrHprOrDateOfBirth);
         }
         
         if (user.getRoleList() == null) {

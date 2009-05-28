@@ -124,13 +124,13 @@
                                 	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/role/text()" /></xsl:call-template>
                                 </td>
                             </tr>
-                            <xsl:variable name="studentorhprornationalidnumber">
+                            <xsl:variable name="studentorhprordateofbirth">
                             	<xsl:choose>
                             		<xsl:when test="$result/values/user/role/key/text() = 'health_personnel'">
                             			<xsl:value-of select="$result/values/user/person/hprnumber/text()" />
                             		</xsl:when>
                             		<xsl:when test="$result/values/user/role/key/text() = 'health_personnel_other'">
-                            			<xsl:value-of select="$result/values/user/person/nationalidnumber/text()" />
+                            			<xsl:value-of select="$result/values/user/person/dateofbirth/text()" />
                             		</xsl:when>
                             		<xsl:when test="$result/values/user/role/key/text() = 'student'">
                             			<xsl:value-of select="$result/values/user/person/studentnumber/text()" />
@@ -143,11 +143,11 @@
                             <tr>
                                 <td>HPR-nr./stud.nr./født dato:</td>
                                 <td>
-                                	<input class="text" name="studentorhprornationalidnumber" type="text"
-                                		value="{$studentorhprornationalidnumber}"/>
+                                	<input class="text" name="studentorhprordateofbirth" type="text"
+                                		value="{$studentorhprordateofbirth}"/>
                                 </td>
                                 <td>
-                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/studentorhprornationalidnumber/text()" /></xsl:call-template>
+                                	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode" select="$result/messages/studentorhprordateofbirth/text()" /></xsl:call-template>
                                 </td>
                             </tr>
                             <tr>
