@@ -272,7 +272,7 @@ CREATE TABLE tbl_person
     last_name            VARCHAR             NULL,
     student_number       VARCHAR             NULL,
     hpr_number           VARCHAR             NULL,
-    national_id_number   VARCHAR             NULL,
+    date_of_birth   	 VARCHAR             NULL,
     contact_information_id INTEGER           NULL,
     profile_id           INTEGER             NULL,
     position_type_id     INTEGER             NULL,

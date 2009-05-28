@@ -125,9 +125,9 @@
 	                                           	</xsl:attribute>
       	                                    </xsl:if>
   	                                        <xsl:if test="$usertype='health_personnel_other'">
-	                                           	<xsl:attribute name="name">nationalidnumber</xsl:attribute>
+	                                           	<xsl:attribute name="name">dateofbirth</xsl:attribute>
 	                                           	<xsl:attribute name="value">
-		                                           	<xsl:value-of select="$hbresult/values/user/person/nationalidnumber/text()"/>
+		                                           	<xsl:value-of select="$hbresult/values/user/person/dateofbirth/text()"/>
 	                                           	</xsl:attribute>
       	                                    </xsl:if>
                                         </input>
@@ -155,7 +155,7 @@
                                             </xsl:when>
                                             <xsl:otherwise>
 		                                    	<xsl:call-template name="lookup_error_code"><xsl:with-param name="lookupcode"
-		                                    		select="$hbresult/messages/nationalidnumber"/></xsl:call-template>
+		                                    		select="$hbresult/messages/dateofbirth"/></xsl:call-template>
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </td>

@@ -33,6 +33,21 @@
     	<div>
 			<xsl:choose>
 				<xsl:when test="$proxyresult/empty">
+					<xsl:if test="/verticaldata/hbloginresult/messages/username !=''">
+                    	<div class="error_message">      
+                        	<br/><b>Du må fylle inn brukernavn.</b>
+						</div>
+                    </xsl:if>
+                   	<xsl:if test="/verticaldata/hbloginresult/messages/password !=''">
+                        <div class="error_message">      
+                            <br/><b>Du må fylle inn passord.</b>
+                        </div>
+                    </xsl:if>
+                    <xsl:if test="/verticaldata/hbloginresult/summary !=''">
+                       <div class="error_message">      
+                            <br/><b>Kunne ikke logge deg på, vennligst sjekk brukernavn og passord.</b><br/>
+                        </div>
+                    </xsl:if>
                 	<!-- TODO: Vise feilmelding, anta at bruker har forsøk å logge seg på fra logonboksen med feil brukernavn eller passord? -->
 				</xsl:when>
 				<xsl:otherwise>

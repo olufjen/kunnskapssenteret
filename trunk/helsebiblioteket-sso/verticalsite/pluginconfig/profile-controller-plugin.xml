@@ -29,7 +29,7 @@
  		<property name="editPasswordUserVarName" value="hbeditpassworduser" />
  		
  		<property name="parameterNames"><map>
- 			<entry key="studentorhprornationalidnumber" value="studentorhprornationalidnumber"/>
+ 			<entry key="studentorhprordateofbirth" value="studentorhprordateofbirth"/>
  			<entry key="firstname" value="firstname"/>
  			<entry key="lastname" value="surname"/>
  			<entry key="employer" value="org"/>

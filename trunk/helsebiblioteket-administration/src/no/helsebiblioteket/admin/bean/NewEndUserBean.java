@@ -33,7 +33,7 @@ public class NewEndUserBean extends NewUserBean {
 
 	private boolean showStudentNo;
 	private boolean showHpr;
-	private boolean showNationalIdNumber;
+	private boolean dateOfBirth;
 	private boolean showEmployer;
 	private boolean showPositionText;
 	private boolean showPositionSelect;
@@ -74,13 +74,13 @@ public class NewEndUserBean extends NewUserBean {
     	if(this.role.getKey().getValue().equals(roleKeyAdministrator)){
         	this.showStudentNo = false;
         	this.showHpr = false;
-        	this.showNationalIdNumber = false;
+        	this.dateOfBirth = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = false;
     		this.showIsStudent = false;
     		this.user.getPerson().setHprNumber(null);
-    		this.user.getPerson().setNationalIdNumber(null);
+    		this.user.getPerson().setDateOfBirth(null);
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(null);
     		this.user.getPerson().setPosition(new Position());
@@ -89,7 +89,7 @@ public class NewEndUserBean extends NewUserBean {
     	} else if(this.role.getKey().getValue().equals(roleKeyEmployee)){
         	this.showStudentNo = false;
         	this.showHpr = false;
-        	this.showNationalIdNumber = true;
+        	this.dateOfBirth = true;
         	this.showEmployer = true;
         	this.showPositionText = true;
         	this.showPositionSelect = false;
@@ -102,37 +102,37 @@ public class NewEndUserBean extends NewUserBean {
     	} else if(this.role.getKey().getValue().equals(roleKeyHealthWorker)){
         	this.showStudentNo = false;
         	this.showHpr = true;
-        	this.showNationalIdNumber = false;
+        	this.dateOfBirth = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = true;
     		this.showIsStudent = false;
     		this.user.getPerson().setStudentNumber(null);
-    		this.user.getPerson().setNationalIdNumber(null);
+    		this.user.getPerson().setDateOfBirth(null);
     		this.user.getPerson().setIsStudent(null);
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	} else if(this.role.getKey().getValue().equals(roleKeyStudent)){
         	this.showStudentNo = true;
         	this.showHpr = false;
-        	this.showNationalIdNumber = false;
+        	this.dateOfBirth = false;
         	this.showEmployer = true;
         	this.showPositionText = true;
         	this.showPositionSelect = false;
     		this.showIsStudent = true;
     		this.user.getPerson().setHprNumber(null);
-    		this.user.getPerson().setNationalIdNumber(null);
+    		this.user.getPerson().setDateOfBirth(null);
         	this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	} else {
         	this.showStudentNo = false;
         	this.showHpr = false;
-        	this.showNationalIdNumber = false;
+        	this.dateOfBirth = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = false;
     		this.showIsStudent = false;
     		this.user.getPerson().setHprNumber(null);
-    		this.user.getPerson().setNationalIdNumber(null);
+    		this.user.getPerson().setDateOfBirth(null);
     		this.user.getPerson().setStudentNumber(null);
         	this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
@@ -195,11 +195,11 @@ public class NewEndUserBean extends NewUserBean {
 	public void setShowEmployer(boolean showEmployer) {
 		this.showEmployer = showEmployer;
 	}
-	public boolean isShowNationalIdNumber() {
-		return showNationalIdNumber;
+	public boolean isShowDateOfBirth() {
+		return dateOfBirth;
 	}
-	public void setShowNationalIdNumber(boolean nationalIdNumber) {
-		this.showNationalIdNumber = nationalIdNumber;
+	public void setShowDateOfBirth(boolean dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 	public boolean isShowPositionText() {
 		return showPositionText;

@@ -53,8 +53,8 @@
 			<td><h:outputText value="#{userBean.user.person.hprNumber}"/></td>
 		</tr>
 		<tr>
-			<td><h:outputText value="#{msg_main.user_details_national_id_number}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.nationalIdNumber}"/></td>
+			<td><h:outputText value="#{msg_main.user_details_date_of_birth}"  /></td>
+			<td><h:outputText value="#{userBean.user.person.dateOfBirth}"/></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_student_employer_number}"  /></td>

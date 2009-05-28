@@ -10,7 +10,7 @@ public class LoggedInUser {
 	private String employer;
 	private String studentNumber;
 	private String hprNumber;
-	private String nationalIdNumber;
+	private String dateOfBirth;
 	private Boolean isStudent;
 	private String positionText;
 	private Boolean receiveNewsletter;
@@ -132,10 +132,10 @@ public class LoggedInUser {
 	public void setPositionDescription(String positionDescription) {
 		this.positionDescription = positionDescription;
 	}
-	public String getNationalIdNumber() {
-		return nationalIdNumber;
+	public String getDateOfBirth() {
+		return dateOfBirth;
 	}
-	public void setNationalIdNumber(String nationalIdNumber) {
-		this.nationalIdNumber = nationalIdNumber;
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 }

@@ -78,34 +78,27 @@
                             <p>
                             	Velkommen som personlig bruker på Helsebiblioteket.no!
 								<br/>
-								Du har registrert følgende brukernavn:
-                            </p>
-                            <p>
-                            	<b><xsl:value-of select="$loggedin/user/username/text()" /></b>
+								Du har registrert følgende brukernavn: <b><xsl:value-of select="$loggedin/user/username/text()" /></b>
                             </p>
                             <p>
 								Bekreftelse er også sendt til: “
 								<xsl:value-of select="$loggedin/user/person/contactinformation/email/text()" />
-                            	”.<br />Dersom epostadressen ovenfor er feil, <a href="#">ta kontakt</a> med oss.
+                            	”.<br />Dersom epostadressen ovenfor er feil, ta kontakt med Helsebiblioteket på <a href="mailto:redaksjonen@helsebiblioteket.no"><u>redaksjonen@helsebiblioteket.no.</u></a>
                             </p>
                             <p>
-                            	For å endre ditt passord eller dine brukerdata, velg “Min Profil” øverst på nettsiden etter at du er logget inn.
+                            	For å endre passord eller andre registrerte opplysninger, velg Din profil i Logg inn-boksen til høyre på nettsidene når du er innlogget.
                             <br />
-	                        		For å logge deg inn, fyll inn feltene øverst i høyrespalten.
+	                        		For å logge deg inn, skriv inn brukernavn og passord i Logg inn-boksen oppe til høyre på sidene.
 	                        	</p>
                 			<xsl:choose>
 			                    <xsl:when test="$usertype='health_personnel'">
 									<!-- none -->
 			                    </xsl:when>
 				                <xsl:when test="$usertype='student'">
-				                	<b>Begrensninger</b>
-									<br/>Som student eller ansatt på høyskole har du desverre ikke tilgang til:
-									<br/>- Norsk Elektronisk Legehåndbok (NEL).
+									Som bruker uten helsepersonellnummer (HPR-nummer), har du dessverre ikke tilgang til Norsk Elektronisk Legehåndbok (NEL) og Lexi-Comp. <a href="http://www.helsebiblioteket.no/Slik+bruker+du+oss/Sp%C3%B8rsm%C3%A5l+og+svar#05"><u>Les mer</u></a>
 				                </xsl:when>
                     			<xsl:otherwise>
-									<b>Begrensninger</b>
-									<br/>Som ansatt uten helsepersonellnumer har du desverre ikke tilgang til:
-									<br/>- Norsk Elektronisk Legehåndbok (NEL).
+									Som bruker uten helsepersonellnummer (HPR-nummer), har du dessverre ikke tilgang til Norsk Elektronisk Legehåndbok (NEL) og Lexi-Comp. <a href="http://www.helsebiblioteket.no/Slik+bruker+du+oss/Sp%C3%B8rsm%C3%A5l+og+svar#05"><u>Les mer</u></a>
                     			</xsl:otherwise>
 			                </xsl:choose>
 
@@ -130,8 +123,8 @@
     
     <xsl:template name="usertype">
             <xsl:choose>
-                <xsl:when test="string-length($hbresult/values/usertype/text()) > 0">
-                    <xsl:value-of select="$hbresult/values/usertype/text()" />
+                <xsl:when test="string-length($loggedin/user/role/key/text()) > 0">
+                    <xsl:value-of select="$loggedin/user/role/key/text()" />
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="/verticaldata/context/querystring/parameter[@name = 'usertype']"/>

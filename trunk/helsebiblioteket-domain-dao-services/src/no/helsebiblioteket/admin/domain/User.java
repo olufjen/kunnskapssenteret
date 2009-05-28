@@ -25,10 +25,23 @@ public class User implements Serializable {
 	}
 	@Override
 	public int hashCode() {
-		// FOR LATER: Make this a little bit smarter
-//		return toString().hashCode();
-		return getId(); //BIT_STUFF
+		// FOR LATER: Make this a little bit smarter. Maybe.
+		return this.id != null ? this.id.hashCode() : this.getUsername() != null ? this.getUsername().hashCode() : -1;
 	}
+	public boolean equals(Object object) {
+		boolean equals = false;
+		User userObject = null;
+		if (object != null && object instanceof User) {
+			userObject = (User) object;
+			if (userObject.getId() != null && this.id != null) {
+				equals = userObject.getId().equals(this.id);
+			} else if (userObject.getUsername() != null && this.username != null) {
+				equals = userObject.getUsername().equals(this.username);
+			}
+		}
+		return equals;
+	}
+	
 	public boolean hasRole(Role role){
 		for (Role userRole : this.roleList) {
 			if(userRole.getKey().equals(role.getKey())){

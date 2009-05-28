@@ -60,7 +60,7 @@
                             </tr>
                             <tr>
                                 <td>Fødselsdato:</td>
-                                <td><xsl:value-of select="$loggedin/user/person/nationalidnumber"/></td>
+                                <td><xsl:value-of select="$loggedin/user/person/dateofbirth"/></td>
                             </tr>
                             <tr>                                    
                                 <td>Brukernavn:</td>

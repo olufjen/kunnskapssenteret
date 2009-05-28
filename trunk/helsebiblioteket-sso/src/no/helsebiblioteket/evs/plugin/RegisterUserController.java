@@ -212,8 +212,8 @@ public final class RegisterUserController extends HttpControllerPlugin {
         if(hprnumber == null){ hprnumber = ""; }
         String studentnumber = request.getParameter(this.parameterNames.get("studentnumber"));
         if(studentnumber == null){ studentnumber = ""; }
-        String nationalIdNumber = request.getParameter(this.parameterNames.get("nationalidnumber"));
-        if(nationalIdNumber == null){ nationalIdNumber = ""; }
+        String dateOfBirth = request.getParameter(this.parameterNames.get("dateofbirth"));
+        if(dateOfBirth == null){ dateOfBirth = ""; }
         String username = request.getParameter(this.parameterNames.get("username"));
 		if(username == null) { username = "";}
 		String password = request.getParameter(this.parameterNames.get("password"));
@@ -260,10 +260,10 @@ public final class RegisterUserController extends HttpControllerPlugin {
 			}
 			user.getPerson().setStudentNumber(studentnumber);
 		} else if (usertype.equals(UserRoleKey.health_personnel_other.getValue())) {
-			if(nationalIdNumber.length() == 0){
-				messages.appendChild(UserToXMLTranslator.element(document, "nationalidnumber", "NO_VALUE"));	
+			if(dateOfBirth.length() == 0){
+				messages.appendChild(UserToXMLTranslator.element(document, "dateofbirth", "NO_VALUE"));	
 			}
-			user.getPerson().setNationalIdNumber(nationalIdNumber);
+			user.getPerson().setDateOfBirth(dateOfBirth);
 		}
 		
 		if(username.length() == 0){

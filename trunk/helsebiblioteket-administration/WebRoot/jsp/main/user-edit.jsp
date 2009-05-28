@@ -69,16 +69,16 @@
 		
 		<tr>
       		<td>
-        		<h:outputText value="#{msg_main.national_id_no}" />
+        		<h:outputText value="#{msg_main.date_of_birth}" />
 		    </td>
       		<td colspan="3">
-        		<h:inputText value="#{userBean.user.person.nationalIdNumber}"
-      	  			id="nationalIdNo" size="50"
-      	  			disabled="#{ ! userBean.showNationalIdNumber}"
-      	  			readonly="#{ ! userBean.showNationalIdNumber}"/>
+        		<h:inputText value="#{userBean.user.person.dateOfBirth}"
+      	  			id="dateOfBirth" size="50"
+      	  			disabled="#{ ! userBean.showDateOfBirth}"
+      	  			readonly="#{ ! userBean.showDateOfBirth}"/>
       		</td>
       		<td>
-				<h:message for="nationalIdNo" styleClass="RED"/>
+				<h:message for="dateOfBirth" styleClass="RED"/>
       		</td>
 	   	</tr>
 		
