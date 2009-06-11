@@ -91,7 +91,8 @@
                                     </input>
                                     <input name="from" type="hidden">
                                         <xsl:attribute name="value">
-                                            <xsl:value-of select="portal:createPageUrl($loginPage, ())"/>
+                                            <!--<xsl:value-of select="portal:createPageUrl($loginPage, ())"/>-->
+                                            <xsl:value-of select="portal:createPageUrl($currentPageId, ())"/>
                                         </xsl:attribute>
                                     </input>
                                     <!-- TODO: Remove test! -->
