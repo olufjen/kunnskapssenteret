@@ -32,7 +32,7 @@
     <xsl:template match="/">
     	<div>
 			<xsl:choose>
-				<xsl:when test="$proxyresult/empty">
+				<xsl:when test="true != $proxyresult or $proxyresult/empty">
 					<xsl:if test="/verticaldata/hbloginresult/messages/username !=''">
                     	<div class="error_message">      
                         	<br/><b>Du må fylle inn brukernavn.</b>
