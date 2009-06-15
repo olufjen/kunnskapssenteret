@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.Position;
 
 @SuppressWarnings("serial")
-public class ValueResultPosition extends SingleResultPosition{
+public class ValueResultPosition extends SingleResultPosition implements Serializable {
 	private Position value;
 	public ValueResultPosition() { }
 	public ValueResultPosition(Position value){
