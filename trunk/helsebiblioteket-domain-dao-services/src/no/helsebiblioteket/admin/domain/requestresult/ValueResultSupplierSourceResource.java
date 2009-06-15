@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 
 @SuppressWarnings("serial")
-public class ValueResultSupplierSourceResource extends SingleResultSupplierSourceResource {
+public class ValueResultSupplierSourceResource extends SingleResultSupplierSourceResource implements Serializable {
 	private SupplierSourceResource value;
 	public ValueResultSupplierSourceResource() { }
 	public ValueResultSupplierSourceResource(SupplierSourceResource value){

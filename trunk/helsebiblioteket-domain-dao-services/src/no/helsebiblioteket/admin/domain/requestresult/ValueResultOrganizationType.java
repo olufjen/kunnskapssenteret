@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.OrganizationType;
 
 @SuppressWarnings("serial")
-public class ValueResultOrganizationType extends SingleResultOrganizationType{
+public class ValueResultOrganizationType extends SingleResultOrganizationType implements Serializable {
 	private OrganizationType value;
 	public ValueResultOrganizationType() { }
 	public ValueResultOrganizationType(OrganizationType value){

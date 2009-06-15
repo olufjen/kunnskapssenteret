@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.AccessType;
 
 @SuppressWarnings("serial")
-public class ValueResultAccessType extends SingleResultAccessType{
+public class ValueResultAccessType extends SingleResultAccessType implements Serializable {
 	private AccessType value;
 	public ValueResultAccessType() { }
 	public ValueResultAccessType(AccessType value){

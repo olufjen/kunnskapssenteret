@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.System;
 
 @SuppressWarnings("serial")
-public class ValueResultSystem extends SingleResultSystem{
+public class ValueResultSystem extends SingleResultSystem implements Serializable {
 	private System value;
 	public ValueResultSystem() { }
 	public ValueResultSystem(System value){

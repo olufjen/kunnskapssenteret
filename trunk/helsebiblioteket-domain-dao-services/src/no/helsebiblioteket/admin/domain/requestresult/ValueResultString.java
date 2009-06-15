@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 @SuppressWarnings("serial")
-public class ValueResultString extends SingleResultString{
+public class ValueResultString extends SingleResultString implements Serializable {
 	private String value;
 	public ValueResultString() { }
 	public ValueResultString(String value){

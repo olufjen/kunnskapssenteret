@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 @SuppressWarnings("serial")
-public class EmptyResultUrl extends SingleResultUrl{
+public class EmptyResultUrl extends SingleResultUrl implements Serializable {
 }

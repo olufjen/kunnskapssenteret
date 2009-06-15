@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 
 @SuppressWarnings("serial")
-public class ValueResultOrganizationUser extends SingleResultUser{
+public class ValueResultOrganizationUser extends SingleResultUser implements Serializable {
 	private OrganizationUser value;
 	public ValueResultOrganizationUser() { }
 	public ValueResultOrganizationUser(OrganizationUser value){

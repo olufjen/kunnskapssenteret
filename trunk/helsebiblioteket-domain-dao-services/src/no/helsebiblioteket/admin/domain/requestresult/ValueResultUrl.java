@@ -1,9 +1,11 @@
 package no.helsebiblioteket.admin.domain.requestresult;
 
+import java.io.Serializable;
+
 import no.helsebiblioteket.admin.domain.Url;
 
 @SuppressWarnings("serial")
-public class ValueResultUrl extends SingleResultUrl {
+public class ValueResultUrl extends SingleResultUrl implements Serializable {
 	private Url value;
 	public ValueResultUrl() { }
 	public ValueResultUrl(Url value){
