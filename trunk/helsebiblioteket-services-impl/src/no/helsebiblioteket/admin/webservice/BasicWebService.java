@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 
 
 @SuppressWarnings("serial")
@@ -45,10 +46,42 @@ public abstract class BasicWebService implements Serializable {
 			} else {
 				return response[0];
 			}
-		} catch (AxisFault e) {
-			getLogger().error("Axis fault caught while trying to execute 'invokeBlocking' with the following arguments: Qname=" + name + ", args=" + args + ", returnTypes=" + returnTypes + ". Message: " + e.getMessage() + ". Trace follows.", e);
+		} catch (AxisFault af) {
+			String argsAsString = null;
+			try {
+				argsAsString = objectArrayToString(args);
+			} catch (Exception e) {
+				getLogger().error("Problem generating string for error output: Could not generate string representation of argumet array", e);
+			}
+			String returnTypesAsString = null;
+			try {
+				returnTypesAsString = objectArrayToString(returnTypes);
+			} catch (Exception e) {
+				getLogger().error("Problem generating string for error output: Could not generate string representation of return type array", e);
+			}
+			getLogger().error(
+					"Axis fault caught while trying to execute 'invokeBlocking' with the following arguments:" +
+					" Qname=" + name + 
+					", args=" + argsAsString + 
+					", returnTypes=" + returnTypesAsString +
+					". Message: " + af.getMessage() + ". Trace follows.", af
+					);
 			return null;
 		} 
+	}
+	
+	public String objectArrayToString(Object[] objectArray) {
+		String objectArrayAsString = null;
+		if (objectArray != null) {
+			for (Object object : objectArray) {
+				if (object instanceof Array) {
+					objectArrayAsString = objectArrayAsString + ", " + objectArrayToString((Object[]) object);
+				} else {
+					objectArrayAsString = objectArrayAsString + ", " + object;
+				}
+			}
+		}
+		return objectArrayAsString;
 	}
 	
 	/**
