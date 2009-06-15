@@ -75,9 +75,9 @@ public abstract class BasicWebService implements Serializable {
 		if (objectArray != null) {
 			for (Object object : objectArray) {
 				if (object instanceof Array) {
-					objectArrayAsString = objectArrayAsString + ", " + objectArrayToString((Object[]) object);
+					objectArrayAsString = (objectArrayAsString != null) ? (objectArrayAsString + ", ") : "" + objectArrayToString((Object[]) object);
 				} else {
-					objectArrayAsString = objectArrayAsString + ", " + object;
+					objectArrayAsString = (objectArrayAsString != null) ? (objectArrayAsString + ", ") : "" + object;
 				}
 			}
 		}
