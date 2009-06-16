@@ -92,12 +92,12 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private URL deproxify(String href) {
 		if (href.contains("http://proxy.helsebiblioteket.no/login?url=")) {
 			href = href.replace("http://proxy.helsebiblioteket.no/login?url=", "");
-		} else if (href.contains("proxy.helsebiblioteket.no")) {
-			href = href.replace("proxy.helsebiblioteket.no", "");
+		} else if (href.contains(".proxy.helsebiblioteket.no")) {
+			href = href.replace(".proxy.helsebiblioteket.no", "");
 		} else if (href.contains("http://proxy-t.helsebiblioteket.no/login?url=")) {
 			href = href.replace("http://proxy-t.helsebiblioteket.no/login?url=", "");
-		} else if (href.contains("proxy-t.helsebiblioteket.no")) {
-			href = href.replace("proxy-t.helsebiblioteket.no", "");
+		} else if (href.contains(".proxy-t.helsebiblioteket.no")) {
+			href = href.replace(".proxy-t.helsebiblioteket.no", "");
 		}
 		URL url = null;
 		try {
