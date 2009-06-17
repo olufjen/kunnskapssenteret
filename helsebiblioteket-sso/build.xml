@@ -97,6 +97,8 @@
 		<copy todir="${evs.plugin.deploy.dir}">
 			<fileset file="${project.target.dir}/${project.target.filename}" />
 			<fileset dir="${project.plugin.config.dir}" includes="*-plugin.xml"/>
+			<fileset dir="${project.plugin.config.dir}" includes="ehcache-helsebiblioteket.xml"/>
+			<fileset dir="${project.plugin.config.dir}" includes="environment.properties"/>
 			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
 			

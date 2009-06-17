@@ -52,6 +52,10 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
     	// Do not use springinjected properties like loggedinfunction.
     	// See comments above
     	
+    	if (urlService == null) {
+			logger.error("urlService is null in beginning of method 'filterResponse'!");
+		}
+    	
     	HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		
     	LoggedInUser user = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
@@ -120,6 +124,9 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		boolean result = false;
 		Url myurl = new Url();
 		myurl.setStringValue(url.toExternalForm());
+		if (myurl == null) {
+			logger.error("myurl is null in method 'isAffected'!");
+		}
 		result = this.urlService.isAffected(myurl);
 		return result;
 	}

@@ -189,7 +189,7 @@ public class UserBean {
     public void prepareEdit(){
     	this.password = "";
     	this.repeatPassword = "";
-    	if(this.user.getPerson().getPosition() == null){
+    	if(this.user.getPerson().getPosition() == null || this.user.getPerson().getPosition().getKey() == null){
     		this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	}

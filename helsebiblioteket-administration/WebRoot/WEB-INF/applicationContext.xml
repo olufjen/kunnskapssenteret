@@ -113,7 +113,7 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
-	<bean id="emailLostPasswordAdmin" class="no.helsebiblioteket.admin.domain.Email">		
+	<bean id="emailLostPasswordAdminTemplate" class="no.helsebiblioteket.admin.domain.Email">		
 		<property name="fromName" value="redaksjonen@helsebiblioteket.no" />
 		<property name="fromEmail" value="redaksjonen@helsebiblioteket.no" />
 		<property name="subject" value="Nytt passord til Helsebibliotekets administrasjonstjeneste" />

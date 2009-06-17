@@ -181,11 +181,11 @@
 	leaving configuration commented for now-->
 	 <!--  <bean id="appCacheManager" class="net.sf.ehcache.CacheManager">
 	 <constructor-arg index="0"  type="java.lang.String"
-		value="classpath:ehcache.xml" />
+		value="${cms.home}/plugins/ehcache.xml" />
 	</bean>-->
 	<!--  <bean id="appCacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:ehcache-helsebiblioteket.xml" />
+		<property name="configLocation" value="${cms.home}/plugins/ehcache-helsebiblioteket.xml" />
 	</bean>
 	<bean id="methodCachingAdvice"
 		class="no.helsebiblioteket.admin.webservice.CacheHelper">
