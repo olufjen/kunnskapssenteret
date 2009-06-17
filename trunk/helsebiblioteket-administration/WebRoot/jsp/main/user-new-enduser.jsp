@@ -53,7 +53,7 @@
 		    </td>
       		<td colspan="3">
         		<h:inputText value="#{newEndUserBean.user.person.hprNumber}"
-      	  			id="studentHpr" size="50"
+      	  			id="studentHprNo" size="50"
       	  			required="#{newEndUserBean.showHpr}"
       	  			disabled="#{ ! newEndUserBean.showHpr}"
       	  			readonly="#{ ! newEndUserBean.showHpr}"/>
@@ -120,7 +120,7 @@
 					required="#{newEndUserBean.showPositionSelect}"
 					readonly="#{ ! newEndUserBean.showPositionSelect}"
 					disabled="#{ ! newEndUserBean.showPositionSelect}">
-						<f:selectItems value="#{userBean.availablePositions}"/>
+					<f:selectItems value="#{userBean.availablePositions}"/>
 				</h:selectOneMenu>
 			</td>
 			<td><h:message for="positionSelect" styleClass="RED"/></td>

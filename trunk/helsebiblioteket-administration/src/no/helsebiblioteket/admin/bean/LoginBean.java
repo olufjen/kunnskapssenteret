@@ -32,7 +32,7 @@ public class LoginBean {
 	private String username;
 	private boolean failed = false;
 	
-	private Email emailLostPassword;
+	private Email emailLostPasswordAdminTemplate;
 	
 	private boolean sentUser = false;
 	private boolean sentEmail = false;
@@ -65,10 +65,14 @@ public class LoginBean {
 		return "login"; 
 	}
 	public String send() {
-		logger.debug("method 'send' invoked");
-		this.emailLostPassword.setToEmail(getEmail());
-		this.emailLostPassword.setToName(getEmail());
-		SendPasswordEmailResult result = this.loginService.sendPasswordEmail(this.getEmail(), this.emailLostPassword);
+		Email emailLostPassword = new Email();
+		emailLostPassword.setFromEmail(emailLostPasswordAdminTemplate.getFromEmail());
+		emailLostPassword.setFromName(emailLostPasswordAdminTemplate.getFromName());
+		emailLostPassword.setMessage(emailLostPasswordAdminTemplate.getMessage());
+		emailLostPassword.setSubject(emailLostPasswordAdminTemplate.getSubject());
+		emailLostPassword.setToEmail(getEmail());
+		emailLostPassword.setToName(getEmail());
+		SendPasswordEmailResult result = this.loginService.sendPasswordEmail(this.getEmail(), emailLostPassword);
 		this.multipleEmail = false;
 		this.notFoundEmail = false;
 		this.notFoundUser = false;
@@ -161,10 +165,10 @@ public class LoginBean {
 	public void setMultipleEmail(boolean multipleEmail) {
 		this.multipleEmail = multipleEmail;
 	}
-	public void setEmailLostPassword(Email emailLostPassword) {
-		this.emailLostPassword = emailLostPassword;
+	public void setEmailLostPasswordAdminTemplate(Email emailLostPasswordAdminTemplate) {
+		this.emailLostPasswordAdminTemplate = emailLostPasswordAdminTemplate;
 	}
-	public Email getEmailLostPassword() {
-		return this.emailLostPassword;
+	public Email getEmailLostPasswordAdminTemplate() {
+		return this.emailLostPasswordAdminTemplate;
 	}
 }

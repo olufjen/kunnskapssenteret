@@ -59,15 +59,24 @@ public abstract class BasicWebService implements Serializable {
 			} catch (Exception e) {
 				getLogger().error("Problem generating string for error output: Could not generate string representation of return type array", e);
 			}
+			String serviceClientOptionsString = "";
+			if (serviceClient != null && serviceClient.getOptions() != null) {
+				if (serviceClient.getOptions().getTo() != null) {
+					serviceClientOptionsString = serviceClientOptionsString + "targetEPR address = " + serviceClient.getOptions().getTo().getAddress() + ". ";
+				}
+				serviceClientOptionsString = serviceClientOptionsString + "chunked = " + serviceClient.getOptions().getProperty(HTTPConstants.CHUNKED);
+			}
 			getLogger().error(
 					"Axis fault caught while trying to execute 'invokeBlocking' with the following arguments:" +
-					" Qname=" + name + 
-					", args=" + argsAsString + 
-					", returnTypes=" + returnTypesAsString +
+					" Qname:" + name + 
+					", args:" + argsAsString + 
+					", returnTypes:" + returnTypesAsString +
+					", serviceClient is " + (serviceClient == null ? "null" : "not null") +
+					". serviceClientOptions: " + serviceClientOptionsString +
 					". Message: " + af.getMessage() + ". Trace follows.", af
 					);
 			return null;
-		} 
+		}
 	}
 	
 	public String objectArrayToString(Object[] objectArray) {

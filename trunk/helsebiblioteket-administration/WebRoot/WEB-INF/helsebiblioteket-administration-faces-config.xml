@@ -231,8 +231,8 @@
         	<value>#{loginService}</value>
 		</managed-property>
 		<managed-property>
-    		<property-name>emailLostPassword</property-name>
-        	<value>#{emailLostPasswordAdmin}</value>
+    		<property-name>emailLostPasswordAdminTemplate</property-name>
+        	<value>#{emailLostPasswordAdminTemplate}</value>
 		</managed-property>
 	</managed-bean>
 
