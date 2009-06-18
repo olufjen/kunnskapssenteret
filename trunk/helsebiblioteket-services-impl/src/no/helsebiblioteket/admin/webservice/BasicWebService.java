@@ -36,7 +36,7 @@ public abstract class BasicWebService implements Serializable {
 	 * Invokes a generic webservice.
 	 */
 	@SuppressWarnings("unchecked")
-	public Object invoke(QName name, Object[] args, Class[] returnTypes) {
+	public synchronized Object invoke(QName name, Object[] args, Class[] returnTypes) {
 		Object[] response = null;
 		try {
 			response = this.serviceClient.invokeBlocking(name, args, returnTypes);
