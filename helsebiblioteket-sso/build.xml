@@ -8,11 +8,11 @@
 	<property name="project.lib.dir" value="${project.home}/lib"/>
 	<property name="project.target.dir" value="${project.home}/target"/>
 	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
-	<property name="project.plugin.config.dir" value="${project.home}/verticalsite/pluginconfig"/>
-
+	<property name="project.plugin.config.dir" value="${project.home}/verticalsite/pluginconfig" />
 	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
 	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl-home.dir}/target"/>
 	<property name="helsebiblioteket-administration-web-lib.dir" value="${helsebiblioteket-administration-web-home.dir}/lib"/>
+	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/target"/>
 	<property name="evs.cms.deploy.lib.dir" value="${evs.cms.deploy.dir}/WEB-INF/lib"/>
 	
 	
@@ -93,7 +93,7 @@
         </delete>
     </target>
 	
-	<target name="deploy" depends="package">
+	<target name="deploy-wsclient" depends="package">
 		<copy todir="${evs.plugin.deploy.dir}">
 			<fileset file="${project.target.dir}/${project.target.filename}" />
 			<fileset dir="${project.plugin.config.dir}" includes="*-plugin.xml"/>
@@ -101,31 +101,38 @@
 			<fileset dir="${project.plugin.config.dir}" includes="environment.properties"/>
 			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
-			
 			<!-- TODO: Copy all from folders. Make sure all are include from right source! -->
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/XmlSchema-1.4.2.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/neethi-2.0.4.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/annogen-0.1.0.jar" />
-				
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-kernel-1.4.1.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-adb-1.4.1.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-api-1.2.7.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-impl-1.2.7.jar" />
-			
 		</copy>
 		<copy todir="${evs.cms.deploy.lib.dir}">
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/aspectjweaver-1.5.3.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/ehcache-1.5.0.jar" />	
 		</copy>
-		<copy todir="${evs.cms.deploy.dir}/WEB-INF/classes">
-			<fileset 
-				dir="${project.plugin.config.dir}"
-				includes="*.properties"
-			/>
-			<fileset 
-				dir="${project.plugin.config.dir}"
-				includes="ehcache-helsebiblioteket.xml"
-			/>
+	</target>
+	
+	<target name="deploy-jdbcclient" depends="package">
+		<copy todir="${evs.plugin.deploy.dir}">
+			<fileset file="${project.target.dir}/${project.target.filename}" />
+			<fileset dir="${project.plugin.config.dir}" includes="sso-jdbc-plugins-all-plugin.xml"/>
+			<fileset dir="${project.plugin.config.dir}" includes="ehcache-helsebiblioteket.xml"/>
+			<fileset dir="${project.plugin.config.dir}" includes="sqlmap-config.xml" />
+			<fileset dir="${project.plugin.config.dir}" includes="environment.properties"/>
+		</copy>
+		<copy todir="${evs.cms.deploy.lib.dir}">
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/aspectjweaver-1.5.3.jar" />
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/ehcache-1.5.0.jar" />
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/ibatis-2.3.4.726.jar" />
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/commons-dbcp-1.2.2.jar" />
+			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/commons-pool-1.4.jar" />
+			<fileset dir="${helsebiblioteket-sqlmapdao-target.dir}" includes="**/*.jar" />
+			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
+			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
 		</copy>
 	</target>
 
