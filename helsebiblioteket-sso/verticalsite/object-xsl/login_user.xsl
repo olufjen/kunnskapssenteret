@@ -148,6 +148,11 @@
 		<xsl:if test="$proxyresult/noaccess">
 			Du har dessverre ikke tilgang til denne ressursen. <a style="text-decoration: underline;" href="http://www.helsebiblioteket.no/Slik+bruker+du+oss/Sp%C3%B8rsm%C3%A5l+og+svar#05">Les mer</a>
 		</xsl:if>
+		<xsl:if test="contains($proxyresult/resource/url,'ncbi.nlm.nih.gov')">
+			<br /><br />
+			Du får høyst sannsynlig denne feilmeldingen fordi du har vært inaktiv på siten i mer enn en time.
+			For å komme inn igjen på "pubmed fulltekst" vennligst klikk på denne lenken: <a style="font-weight:bold; text-decoration:underline" href="http://proxy.helsebiblioteket.no/login?url=http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&amp;holding=inohelib_fft_ndi&amp;myncbishare=helsebiblioteket">PubMed - fulltekst</a>
+		</xsl:if>
 	</xsl:template>
 
 </xsl:stylesheet>
