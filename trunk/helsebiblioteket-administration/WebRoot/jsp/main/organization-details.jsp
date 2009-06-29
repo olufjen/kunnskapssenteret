@@ -24,7 +24,10 @@
 			<td><h:outputText value="#{msg_main.organization_type}"  /></td>
 			<td><h:outputText value="#{organizationBean.organizationTypeName}" /></td>
 		</tr>
-
+		<tr>
+			<td><h:outputText value="#{msg_main.access_domain}"  /></td>
+			<td><h:outputText value="#{createAndChangeMemberOrganizationBean.organization.accessDomain}" /></td>
+		</tr>
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText rendered="#{organizationBean.isSupplierOrganization}"
 					value="#{msg_main.organization_supplier_support_information}"/></h5>

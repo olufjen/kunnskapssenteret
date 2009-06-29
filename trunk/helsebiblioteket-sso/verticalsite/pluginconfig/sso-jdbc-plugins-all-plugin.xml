@@ -163,14 +163,13 @@
 	
 	<!-- Plugin related from here -->
 	
-	
 	<bean id="userServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserServiceSso">
 		<property name="userService" ref="userService"></property>
 		<property name="cacheHelper" ref="methodCachingAdvice"></property>
 	</bean>
-	<!-- <bean id="userDetailsServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserDetailsServiceSso">
+	<!-- Disabled because of dependency on spring security. Not used in sso-project. 
+	<bean id="userDetailsServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserDetailsServiceSso">
 		<property name="userDetailsService" ref="userDetailsService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
 	</bean>-->
 	<bean id="urlServiceSso" class="no.helsebiblioteket.admin.ssoservice.URLServiceSso">
 		<property name="urlService" ref="urlService"></property>

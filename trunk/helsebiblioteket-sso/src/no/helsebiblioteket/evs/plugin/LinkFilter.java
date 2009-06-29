@@ -167,8 +167,10 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 			ValueResultUrl value = (ValueResultUrl) result;
 			if (value == null) {
 				logger.error("value is null for attempted translated URL '" + myUrl + "'");
+				return url;
+			} else {
+				return new URL(value.getValue().getStringValue());
 			}
-			return new URL(value.getValue().getStringValue());
 		}
 	}
 

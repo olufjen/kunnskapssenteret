@@ -1,19 +1,17 @@
 package no.helsebiblioteket.admin.ssoservice;
 
+
 import no.helsebiblioteket.admin.domain.Email;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import javax.xml.namespace.QName;
 
-import org.apache.axis2.addressing.EndpointReference;
-import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.LoginService;
+import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInUserResult;
 import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 @SuppressWarnings("serial")
 
 public class LoginServiceSso extends SsoService implements LoginService {
@@ -21,17 +19,35 @@ public class LoginServiceSso extends SsoService implements LoginService {
 	
 	private LoginService loginService;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public LoggedInUserResult loginUserByUsernamePassword(String username, String password) {
 		return loginService.loginUserByUsernamePassword(username, password);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
-	public LoggedInOrganizationResult loginOrganizationByIpAddress(IpAddress ipAddress) {
-		return loginService.loginOrganizationByIpAddress(ipAddress);
+	public LoggedInOrganizationResult loginOrganizationByIpAddress(IpAddress ipAddress) {		
+		String key = (
+				((ipAddress != null) ? (ipAddress.getAddress()) : "noip")
+				);
+		Object result = cacheHelper.findCache(CacheKey.loginServiceSsologinOrganizationByIpAddressCache, key);
+		if (null == result) {
+			result = loginService.loginOrganizationByIpAddress(ipAddress); 
+			cacheHelper.addCache(CacheKey.loginServiceSsologinOrganizationByIpAddressCache, key, result);
+		}
+		return (LoggedInOrganizationResult) result;
+		
 	}
-	@SuppressWarnings("unchecked")
+	@Override
+	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String accessDomain) {
+		String key = (
+				((accessDomain != null) ? (accessDomain) : "noreferrer")
+				);
+		Object result = cacheHelper.findCache(CacheKey.loginServiceSsologinOrganizationByReferringDomainCache, key);
+		if (null == result) {
+			result = loginService.loginOrganizationByReferringDomain(accessDomain); 
+			cacheHelper.addCache(CacheKey.loginServiceSsologinOrganizationByReferringDomainCache, key, result);
+		}
+		return (LoggedInOrganizationResult) result;
+	}
 	@Override
 	public SendPasswordEmailResult sendPasswordEmail(String emailAddress, Email email) {
 		return loginService.sendPasswordEmail(emailAddress, email);

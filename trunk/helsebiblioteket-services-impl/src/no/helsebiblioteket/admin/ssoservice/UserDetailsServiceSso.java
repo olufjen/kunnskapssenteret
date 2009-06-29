@@ -18,7 +18,6 @@ public class UserDetailsServiceSso extends SsoService implements UserDetailsServ
 	
 	private UserDetailsService userDetailsService;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		return userDetailsService.loadUserByUsername(username);

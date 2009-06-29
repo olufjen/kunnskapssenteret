@@ -10,7 +10,7 @@
 		overflowToDisk="false" 
 	/>
 	<cache 
-  		name="urlServiceWebIsAffectedCache" 
+  		name="urlServiceSsoIsAffectedCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -18,7 +18,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebTranslateUrlUserOrganizationCache" 
+  		name="urlServiceSsoTranslateUrlUserOrganizationCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -26,7 +26,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebTranslateUrlUserCache" 
+  		name="urlServiceSsoTranslateUrlUserCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -34,7 +34,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebTranslateUrlOrganizationCache" 
+  		name="urlServiceSsoTranslateUrlOrganizationCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -42,7 +42,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebTranslateUrlNoneCache" 
+  		name="urlServiceSsoTranslateUrlNoneCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -50,7 +50,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebHasAccessUserCache" 
+  		name="urlServiceSsoHasAccessUserCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -58,7 +58,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebHasAccessOrganizationCache" 
+  		name="urlServiceSsoHasAccessOrganizationCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -66,7 +66,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebHasAccessUserOrganizationCache" 
+  		name="urlServiceSsoHasAccessUserOrganizationCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -74,7 +74,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebHasAccessNoneCache" 
+  		name="urlServiceSsoHasAccessNoneCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -82,7 +82,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="urlServiceWebGroupCache" 
+  		name="loginServiceSsologinOrganizationByReferringDomainCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -90,7 +90,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="organizationServiceWebGetOrganizationTypeByKeyCache" 
+  		name="loginServiceSsologinOrganizationByIpAddressCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -98,7 +98,7 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="userServiceWebGetSystemByKeyCache" 
+  		name="urlServiceSsoGroupCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
@@ -106,7 +106,23 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
-  		name="userServiceWebGetRoleByKeySystemCache" 
+  		name="organizationServiceSsoGetOrganizationTypeByKeyCache" 
+  		maxElementsInMemory="5" 
+  		eternal="false"
+      	overflowToDisk="false" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="userServiceSsoGetSystemByKeyCache" 
+  		maxElementsInMemory="5" 
+  		eternal="false"
+      	overflowToDisk="false" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="userServiceSsoGetRoleByKeySystemCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 

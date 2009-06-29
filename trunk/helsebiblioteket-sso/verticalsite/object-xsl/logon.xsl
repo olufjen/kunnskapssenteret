@@ -70,7 +70,7 @@
                     <div class="rightcolbox_main_right_wrapper">
 	            		<xsl:if test="$user/organization">
                             <!-- logget inn som organisasjon. -->
-                           	Du har tilgang via <xsl:value-of select="$user/organization/namenorwegiannormal"/>   
+                           	Du er automatisk pålogget fra: <xsl:value-of select="$user/organization/namenorwegiannormal"/>   
                             <br/>
 	            	    </xsl:if>
 	            	    <xsl:if test="$user/user">
@@ -80,7 +80,15 @@
 	            	    </xsl:if>
 	            	    <xsl:if test="$user/nouser">
 	            	    	<!-- Ikke logget inn. -->
-                            <br />Logg inn som personlig bruker:
+                            <br />
+	            	        <xsl:choose>
+	            	            <xsl:when test="$user/organization">
+	            	                Du kan også logge deg på med brukernavn og passord (gratis):
+	            	            </xsl:when>
+	            	            <xsl:otherwise>
+	            	                Logg inn som personlig bruker (gratis):
+	            	            </xsl:otherwise>
+	            	        </xsl:choose>
 							<form action="{portal:createPageUrl($loginServletPage, ())}" method="post"
                                 	onsubmit="return validateLoginForm(this)">
                                 <div>
@@ -113,7 +121,7 @@
                                                     <xsl:value-of select="$referer"/>
                                                 </xsl:when>
                                                 <xsl:otherwise>
-                                                    <xsl:value-of select="portal:createPageUrl($frontPage, ())"/>
+                                                    <xsl:value-of select="portal:createPageUrl($frontPage, ())" />
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xsl:attribute>
@@ -166,8 +174,8 @@
                         </ul>
 						<xsl:if test="$user/user">
 							<br/>
-                            <a href="{portal:createPageUrl($logOutServletPage, ())}">
-                                <img alt="Logg ut knapp" id="logout" src="_public/Helsebiblioteket.no/images//logg-ut.png"/>
+                            <a href="{portal:createPageUrl($logOutServletPage, ('logoutuser', 'true'))}">
+                                <img alt="Logg ut knapp" id="logout" src="_public/Helsebiblioteket.no/images//logg-ut.png" />
                             </a>
 						</xsl:if>
                 	</div><!--rightcolbox_main_right_wrapper-->

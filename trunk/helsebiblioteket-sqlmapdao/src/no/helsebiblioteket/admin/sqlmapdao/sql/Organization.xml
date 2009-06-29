@@ -10,6 +10,7 @@
 
 	<resultMap id="OrganizationMap" class="Organization">
 		<result property="id" column="org_unit_id" />
+		<result property="accessDomain" column="access_domain" />
 		<result property="description" column="descr" />
 		<result property="type.id" column="org_type_id" />
 		<result property="contactInformation.id" column="contact_information_id" />

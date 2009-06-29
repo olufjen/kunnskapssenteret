@@ -108,6 +108,12 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListByIpAddress", ipAddress);
 		return translateList(list);
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrganizationListItem> getOrganizationListByAccessDomain(String accessDomain) {
+		List<OrgUnitNameJoin> list = getSqlMapClientTemplate().queryForList("getOrganizationListByAccessDomain", accessDomain);
+		return translateList(list);
+	}
 	@Override
 	public Integer getOrganizationNumberSearchString(String searchString) {
 		return (Integer) getSqlMapClientTemplate().queryForObject("getOrganizationCountSearchString", new SearchStringInput("%" + searchString + "%", searchString));

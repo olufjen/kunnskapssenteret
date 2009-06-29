@@ -19,80 +19,87 @@ public class URLServiceSso extends SsoService implements URLService {
 	
 	private URLService urlService;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean isAffected(Url url){
-		return urlService.isAffected(url); 
+		return urlService.isAffected(url);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlUser(UserListItem user, Url url){
 		String key = (
 				((user != null) ? (user.getId() + "-") : "") + 
 				((url != null) ? (url.getStringValue()) : "")
 				);
-		
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebTranslateUrlUserCache, key);
-		return (result != null) ? (SingleResultUrl) result : urlService.translateUrlUser(user, url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoTranslateUrlUserCache, key);
+		if (result == null) {
+			result = urlService.translateUrlUser(user, url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoTranslateUrlUserCache, key, result);
+		}
+		return (SingleResultUrl) result;
     }
-	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlOrganization(OrganizationListItem organization, Url url){
-		Object[] args = new Object[] { organization, url };
-		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		String key = (
 				((organization != null) ? (organization.getId() + "-") : "") + 
 				((url != null) ? (url.getStringValue()) : "")
 				);
-		
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebTranslateUrlOrganizationCache, key);
-		return (result != null) ? (SingleResultUrl) result : urlService.translateUrlOrganization(organization, url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoTranslateUrlOrganizationCache, key);
+		if (result == null) {
+			result = urlService.translateUrlOrganization(organization, url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoTranslateUrlOrganizationCache, key, result);
+		}
+		return (SingleResultUrl) result;
     }
 	
-	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultUrl translateUrlUserOrganization(UserListItem user, OrganizationListItem organization, Url url){
-		Object[] args = new Object[] { user, organization, url };
-		Class[] returnTypes = new Class[] { SingleResultUrl.class };
 		String key = (
 				((user != null) ? (user.getId() + "-") : "") + 
 				((organization) != null ? (organization.getId() + "-") : "") +
 				((url != null) ? (url.getStringValue()) : "")
 				);
-		
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebTranslateUrlUserOrganizationCache, key);
-		return (result != null) ? (SingleResultUrl) result : urlService.translateUrlUserOrganization(user, organization, url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoTranslateUrlUserOrganizationCache, key);
+		if (result == null) {
+			result = urlService.translateUrlUserOrganization(user, organization, url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoTranslateUrlUserOrganizationCache, key, result);
+		}
+		return (SingleResultUrl) result;
     }
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUrl translateUrlNone(Url url) {
-		Object[] args = new Object[] { url };
-		Class[] returnTypes = new Class[] { SingleResultUrl.class };
-		String key = (url != null) ? url.getStringValue() : "nokey";
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebTranslateUrlNoneCache, key);
-		return (result != null) ? (SingleResultUrl) result : urlService.translateUrlNone(url);
+		String key = (url != null) ? url.getStringValue() : "nourl";
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoTranslateUrlNoneCache, key);
+		if (result == null) {
+			result = urlService.translateUrlNone(url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoTranslateUrlNoneCache, key, result);
+		}
+		return (SingleResultUrl) result;
 	}
-	@SuppressWarnings("unchecked")
 	@Override
-    public AccessResult hasAccessUser(UserListItem user, Url url){
+    public AccessResult hasAccessUser(UserListItem user, Url url) {
 		String key = (
 				((user != null) ? (user.getId() + "-") : "") + 
 				((url != null) ? (url.getStringValue()) : "")
 				);
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebHasAccessUserCache, key);
-		return (result != null) ? (AccessResult) result : urlService.hasAccessUser(user, url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoHasAccessUserCache, key);
+		if (result == null) {
+			result = urlService.hasAccessUser(user, url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoHasAccessUserCache, key, result);
+		}
+		return (AccessResult) result;
     }
-	@SuppressWarnings("unchecked")
 	@Override
     public AccessResult hasAccessOrganization(OrganizationListItem organization, Url url){
 		String key = (
 				((organization != null) ? (organization.getId() + "-") : "") + 
 				((url != null) ? (url.getStringValue()) : "")
 				);
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebHasAccessOrganizationCache, key);
-		return (result != null) ? (AccessResult) result : urlService.hasAccessOrganization(organization, url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoHasAccessOrganizationCache, key);
+		if (result == null) {
+			result = urlService.hasAccessOrganization(organization, url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoHasAccessOrganizationCache, key, result);
+		}
+		return (AccessResult) result;
     }
-	@SuppressWarnings("unchecked")
 	@Override
     public AccessResult hasAccessUserOrganization(UserListItem user, OrganizationListItem organization, Url url){
 		String key = (
@@ -100,26 +107,36 @@ public class URLServiceSso extends SsoService implements URLService {
 				((user != null) ? (user.getId() + "-") : "") +
 				((url != null) ? (url.getStringValue()) : "")
 				);
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebHasAccessUserOrganizationCache, key);
-		return (result != null) ? (AccessResult) result : urlService.hasAccessUserOrganization(user, organization, url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoHasAccessUserOrganizationCache, key);
+		if (result == null) {
+			result = urlService.hasAccessUserOrganization(user, organization, url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoHasAccessUserOrganizationCache, key, result);
+		}
+		return (AccessResult) result;
     }
-	@SuppressWarnings("unchecked")
 	@Override
 	public AccessResult hasAccessNone(Url url) {
 		String key = (
 				((url != null) ? (url.getStringValue()) : "")
 				);
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebHasAccessNoneCache, key);
-		return (result != null) ? (AccessResult) result : urlService.hasAccessNone(url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoHasAccessNoneCache, key);
+		if (result == null) {
+			result = urlService.hasAccessNone(url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoHasAccessNoneCache, key, result);
+		}
+		return (AccessResult) result;
 	}
-	@SuppressWarnings("unchecked")
 	@Override
     public SingleResultString group(Url url) {
 		String key = (
 				((url != null) ? (url.getStringValue()) : "nokey")
 				);
-		Object result = cacheHelper.findCache(CacheKey.urlServiceWebGroupCache, key);
-		return (result != null) ? (SingleResultString) result : urlService.group(url);
+		Object result = cacheHelper.findCache(CacheKey.urlServiceSsoGroupCache, key);
+		if (result == null) {
+			result = urlService.group(url);
+			cacheHelper.addCache(CacheKey.urlServiceSsoGroupCache, key, result);
+		}
+		return (SingleResultString) result;
     }
 
 //    public AccessType getAccessTypeForUserAndMemberOrganization(User user, MemberOrganization memberOrganization, Url url) {

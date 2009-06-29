@@ -4,6 +4,7 @@ package no.helsebiblioteket.admin.sqlmapdao;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
+import no.helsebiblioteket.admin.domain.User;
 
 public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	@Override
@@ -20,7 +21,9 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	}
 	@Override
 	public void deleteUser(OrganizationUser user){
-		getSqlMapClientTemplate().delete("deleteUser", user);
+		user.getUser().setUsername(user.getUser().getId() + "_" + user.getUser().getUsername());
+		user.getUser().setDeleted(true);
+		getSqlMapClientTemplate().update("updateUser", user);
 	}
 	@Override
 	public OrganizationUser getUserByUsername(String username){

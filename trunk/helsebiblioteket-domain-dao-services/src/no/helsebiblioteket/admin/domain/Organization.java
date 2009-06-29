@@ -10,6 +10,7 @@ public class Organization implements Serializable {
 	
 	// Local values
 	private String description;
+	private String accessDomain;
 	private Date lastChanged;
 	// These are set directly. Actually loaded from OrganizationName.
 	private String nameEnglishNormal;
@@ -88,6 +89,12 @@ public class Organization implements Serializable {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getAccessDomain() {
+		return accessDomain;
+	}
+	public void setAccessDomain(String accessDomain) {
+		this.accessDomain = accessDomain;
 	}
 	public Date getLastChanged() {
 		return lastChanged;
