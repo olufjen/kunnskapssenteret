@@ -430,6 +430,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		return new ListResultOrganizationListItem(list);
 	}
+	
+	/**
+	 * Fetches all the organizations that have this access domain.
+	 */
+	@Override
+	public ListResultOrganizationListItem getOrganizationListByAccessDomain(String accessDomain) {
+		List<OrganizationListItem> all = this.organizationListDao.getOrganizationListByAccessDomain(accessDomain);
+		OrganizationListItem[] list = new OrganizationListItem[all.size()];
+		int i=0;
+		for (OrganizationListItem memberOrganization : all) {
+			list[i++]=memberOrganization;
+		}
+		return new ListResultOrganizationListItem(list);
+	}
+	
 	/**
 	 * Checks all values of the object for null.
 	 * @param organization

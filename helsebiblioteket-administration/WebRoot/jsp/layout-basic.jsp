@@ -15,6 +15,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <!--  <link rel="stylesheet" type="text/css" href="css/reset.css" />--> <!--stilsett som nuller ut alle marger, paddings, borders osv-->
         <link href="css/hb-adm/layout_vertical_listnav.css" rel="stylesheet" type="text/css"/>
+        
     </head>
 	<body>
 		<f:view>

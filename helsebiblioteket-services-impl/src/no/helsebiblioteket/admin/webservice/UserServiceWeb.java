@@ -41,6 +41,7 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	private QName insertOrganizationUserName;
 	private QName updateUserName;
 	private QName positionByKey;
+	private QName deleteUserName;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -149,7 +150,11 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Class[] returnTypes = new Class[] { ListResultUser.class };
 		return (ListResultUser)invoke(this.positionByKey, args, returnTypes);
 	}
-
+	@Override
+	public void deleteUser(User user) {
+		Object[] args = new Object[] { user };
+		invoke(this.deleteUserName, args, null);
+	}
 	public Log getLogger() {
 		return logger;
 	}
@@ -188,5 +193,8 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setInsertOrganizationUserName(QName insertOrganizationUserName) {
 		this.insertOrganizationUserName = insertOrganizationUserName;
+	}
+	public void setDeleteUserName(QName deleteUserName) {
+		this.deleteUserName = deleteUserName;
 	}
 }

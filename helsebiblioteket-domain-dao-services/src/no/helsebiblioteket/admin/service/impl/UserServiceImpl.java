@@ -429,6 +429,12 @@ public class UserServiceImpl implements UserService {
 		this.userDao.updateUser(organizationUser);
 		return Boolean.TRUE;
 	}
+	@Override
+	public void deleteUser(User user) {
+		OrganizationUser organizationUser = new OrganizationUser();
+		organizationUser.setUser(user);
+		this.userDao.deleteUser(organizationUser);
+	}
 	private List<UserRoleLine> translateRoles(Integer id, Role[] roleList){
 		List<UserRoleLine> result = new ArrayList<UserRoleLine>();
 		for (Role role : roleList) {

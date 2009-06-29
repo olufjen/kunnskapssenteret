@@ -48,4 +48,5 @@ public interface UserService extends Serializable {
 	public SingleResultUser insertUser(User user);
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser);
 	public Boolean updateUser(User user);
+	public void deleteUser(User user);
 }

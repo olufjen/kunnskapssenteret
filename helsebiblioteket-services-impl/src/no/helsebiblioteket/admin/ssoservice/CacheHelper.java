@@ -18,7 +18,11 @@ public class CacheHelper {
 	
 	  
 	private Cache getCache(CacheKey cacheKey) throws Exception {
-		return cacheManager.getCache(cacheKey.name());
+		Cache cache = null;
+		if (cacheKey != null) {
+			cache = cacheManager.getCache(cacheKey.name());
+		}
+		return cache;
 	}
 
 	public void addCache(String key, Object element) {
@@ -29,12 +33,16 @@ public class CacheHelper {
 		Cache cache = null;
 		try {
 			cache = getCache(cacheKey);
+			if (null == cache) {
+				logger.error("No cache found for cache key '" + cacheKey + "'.");
+			} else {
+				cache.put(new Element(key,element));
+			}
 		} catch (Exception e) {
 			logger.error("Exception occured when trying to get cache with cache key '" + cacheKey + "'. Exception message: " + e.getMessage());
 		}
-		cache.put(new Element(key,element));
 	}
-	   
+	  
 	public Object findCache(String key) {
 		return findCache(CacheKey.defaultCache, key);
 	}

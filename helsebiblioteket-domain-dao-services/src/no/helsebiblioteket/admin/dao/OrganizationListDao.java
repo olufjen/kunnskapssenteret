@@ -6,9 +6,9 @@ import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 
 public interface OrganizationListDao {
-
 	public Integer getOrganizationNumberSearchString(String searchString);
 	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max);
 	public List<OrganizationListItem> getOrganizationListByIpAddress(IpAddress ipAddress);
+	public List<OrganizationListItem> getOrganizationListByAccessDomain(String accessDomain);
 
 }

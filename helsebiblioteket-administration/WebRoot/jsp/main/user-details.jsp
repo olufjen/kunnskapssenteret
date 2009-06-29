@@ -80,7 +80,52 @@
 
 		</tr>
 		<tr>
-			<td></td>
+			<script type="text/javascript">
+			<!--
+			function confirmationDelete(link, text) {
+				if (confirmDelete(text)) {
+					link.fireEvent('onclick');
+					return true;
+				}
+				return false;
+			}
+
+			//function confirmDelete(text) {
+			//	var ans = confirm(text);
+			//	if (ans == true) {
+			//		return true;
+			//	} else {
+			//		return false;
+			//	}
+			//}
+
+			var deleteClick;
+            
+			function assignDeleteClick(link, text) {
+			  if (link.onclick == confirmDelete(text)) {
+			    return;
+			  }
+			  deleteClick = link.onclick;
+			  link.onclick = confirmDelete;
+			}
+			            
+			            
+			function confirmDelete() {
+			  var ans = confirm("Delete?");
+			  if (ans == true) {
+			    return deleteClick();
+			  } else {
+			    return false;
+			  }
+
+			}
+			-->
+			</script>
+			<%-- <td><h:commandLink value="#{msg_main.user_overview_delete}" onmousedown="return confirmationDelete(this, '#{msg_main.user_details_really_delete}');" action="#{userBean.actionDelete}" immediate="true"/></td>--%>
+			
+			<td><h:commandLink value="#{msg_main.user_overview_delete}" onclick="if (!confirm('#{msg_main.user_details_really_delete}')) return false" action="#{userBean.actionDelete}" immediate="true" /></td>
+			
+			
 			<td><h:commandLink value="#{msg_main.user_overview_change}" action="#{userBean.actionEditSingle}" immediate="true"/></td>
 		</tr>
 	</table>

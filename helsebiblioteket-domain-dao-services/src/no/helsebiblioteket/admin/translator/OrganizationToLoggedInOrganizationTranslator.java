@@ -11,9 +11,7 @@ public class OrganizationToLoggedInOrganizationTranslator {
 		loggedInOrganization.setNameEnglishShort(organization.getNameShortEnglish());
 		loggedInOrganization.setNameNorwegianNormal(organization.getNameNorwegian());
 		loggedInOrganization.setNameNorwegianShort(organization.getNameShortNorwegian());
-		
 		loggedInOrganization.setTypeKey(organization.getType().getKey().getValue());
-		
 		return loggedInOrganization;
 	}
 }

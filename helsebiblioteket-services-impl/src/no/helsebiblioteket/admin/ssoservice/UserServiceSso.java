@@ -33,59 +33,61 @@ public class UserServiceSso extends SsoService implements UserService {
 	
 	private UserService userService;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultSystem getSystemByKey(SystemKey systemKey) {
 		String key = (
 				((systemKey != null) ? (systemKey.getValue()) : "")
 				);
-		Object result = cacheHelper.findCache(CacheKey.userServiceWebGetSystemByKeyCache, key);
-		return (result != null) ? (SingleResultSystem) result : userService.getSystemByKey(systemKey);
-		
+		Object result = cacheHelper.findCache(CacheKey.userServiceSsoGetSystemByKeyCache, key);
+		if (result == null) {
+			result = userService.getSystemByKey(systemKey);
+			cacheHelper.addCache(CacheKey.userServiceSsoGetSystemByKeyCache, key, result);
+		}
+		return (SingleResultSystem) result;
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultRole getRoleListBySystem(System system) {
 		return userService.getRoleListBySystem(system);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultPosition getPositionListAll(String DUMMY) {
 		String key = "getPositionListAll";
 		Object result = cacheHelper.findCache(CacheKey.staticListCache, key);
-		return (result != null) ? (ListResultPosition) result : userService.getPositionListAll(DUMMY);
+		if (result == null) {
+			result = userService.getPositionListAll(DUMMY);
+			cacheHelper.addCache(CacheKey.staticListCache, key, result);
+		}
+		return (ListResultPosition) result;
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultRole getRoleByKeySystem(UserRoleKey roleKey, System system) {
 		String key = (
 				((roleKey != null) ? (roleKey.getValue() + "-") : "") +
 				((system != null && system.getKey() != null) ? (system.getKey().getValue()) : "")
 				);
-		Object result = cacheHelper.findCache(CacheKey.userServiceWebGetRoleByKeySystemCache, key);
-		return (result != null) ? (SingleResultRole) result : userService.getRoleByKeySystem(roleKey, system);
+		Object result = cacheHelper.findCache(CacheKey.userServiceSsoGetRoleByKeySystemCache, key);
+		if (result == null) {
+			result = userService.getRoleByKeySystem(roleKey, system);
+			cacheHelper.addCache(CacheKey.userServiceSsoGetRoleByKeySystemCache, key, result);
+		}
+		return (SingleResultRole) result;
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public PageResultUserListItem getUserListAll(PageRequest request){
 		return userService.getUserListAll(request);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public PageResultUserListItem findUsersBySearchStringRoles(String searchString, Role[] roles, PageRequest request){
 		return userService.findUsersBySearchStringRoles(searchString, roles, request);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser findUserByUsername(String username){
 		return userService.findUserByUsername(username);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser getUserByUserListItem(UserListItem userListItem) {
 		return getUserByUserListItem(userListItem);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser insertUser(User user){
 		// TODO Fase2: This test should not be here.
@@ -94,12 +96,10 @@ public class UserServiceSso extends SsoService implements UserService {
 		}
 		return userService.insertUser(user);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser) {
 		return userService.insertOrganizationUser(organizationUser);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean updateUser(User user){
 		// TODO Fase2: This test should not be here.
@@ -108,12 +108,10 @@ public class UserServiceSso extends SsoService implements UserService {
 		}
 		return userService.updateUser(user);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultPosition getPositionByKey(PositionTypeKey positionTypeKey, OrganizationType organizationType) {
 		return userService.getPositionByKey(positionTypeKey, organizationType);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultUser getUserListByEmailAddress(String emailAddress) {
 		return userService.getUserListByEmailAddress(emailAddress);
@@ -124,5 +122,9 @@ public class UserServiceSso extends SsoService implements UserService {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	@Override
+	public void deleteUser(User user) {
+		this.userService.deleteUser(user);
 	}
 }

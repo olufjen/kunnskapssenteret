@@ -13,7 +13,25 @@ public enum CacheKey {
 	urlServiceWebGroupCache,
 	organizationServiceWebGetOrganizationTypeByKeyCache,
 	userServiceWebGetSystemByKeyCache,
-	staticListCache,
 	userServiceWebGetRoleByKeySystemCache,
+	
+	urlServiceSsoIsAffectedCache,
+	urlServiceSsoTranslateUrlUserOrganizationCache,
+	urlServiceSsoTranslateUrlUserCache,
+	urlServiceSsoTranslateUrlOrganizationCache,
+	urlServiceSsoTranslateUrlNoneCache,
+	urlServiceSsoHasAccessUserCache,
+	urlServiceSsoHasAccessOrganizationCache,
+	urlServiceSsoHasAccessUserOrganizationCache,
+	urlServiceSsoHasAccessNoneCache,
+	urlServiceSsoGroupCache,
+	organizationServiceSsoGetOrganizationTypeByKeyCache,
+	userServiceSsoGetSystemByKeyCache,
+	userServiceSsoGetRoleByKeySystemCache,
+	organizationServiceSsoGetOrganizationListByAccessDomainCache,
+	loginServiceSsologinOrganizationByReferringDomainCache,
+	loginServiceSsologinOrganizationByIpAddressCache,
+	
+	staticListCache,
 	defaultCache
 }

@@ -93,14 +93,14 @@ public class ProxyLoginController extends HttpControllerPlugin {
     					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
     				}
     				accessResult = urlService.hasAccessUserOrganization(userListItem, organizationListItem, requestedUrl);
-    			} else if(loggedInUser != null){
+    			} else if(loggedInUser != null) {
     				UserListItem userListItem = new UserListItem();
     				userListItem.setId(loggedInUser.getId());
     				if (loggedInUser.getRoleKey() != null && !"".equals(loggedInUser.getRoleKey())) {
     					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
     				}
     				accessResult = urlService.hasAccessUser(userListItem, requestedUrl);
-    			} else if(loggedInOrganization != null){
+    			} else if(loggedInOrganization != null) {
     				OrganizationListItem organizationListItem = new OrganizationListItem();
     				organizationListItem.setId(loggedInOrganization.getId());
     				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
@@ -134,7 +134,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				}
     			}
     		} else {
-    			logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database\n" +
+    			logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database.\n" +
 	    			" or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
     			createXML(true, loggedInUser, loggedInOrganization, requestedUrl, document, element);
 	    		redirectUrl = logUpUrl;

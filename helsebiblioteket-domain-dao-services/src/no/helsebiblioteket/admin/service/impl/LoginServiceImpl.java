@@ -84,6 +84,34 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return returnThis;
 	}
+	
+	/**
+	 * Loads the organization from the database and returns the complete
+	 * object. Finding the organizations with the matching address is
+	 * delegated to IpRangeDao.
+	 * Returns the first found if there are more than one match.
+	 */
+	@Override
+	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String accessDomain) {
+		LoggedInOrganizationResult returnThis = new LoggedInOrganizationResult();
+		ListResultOrganizationListItem result = this.organizationService.getOrganizationListByAccessDomain(accessDomain);
+		OrganizationListItem[] list = result.getList();
+		if(list.length >= 1) {			
+			if (list.length > 1) {
+				logger.warn(list.length + " organizations found for access domain '" + accessDomain + "'. Expected only one");
+			}
+			SingleResultOrganization memberResult = this.organizationService.getOrganizationByListItem(list[0]);
+			if(memberResult instanceof ValueResultMemberOrganization) {
+				MemberOrganization memberOrganization = ((ValueResultMemberOrganization)memberResult).getValue();
+				OrganizationToLoggedInOrganizationTranslator translator = new OrganizationToLoggedInOrganizationTranslator();
+				returnThis.setOrganization(translator.translate(memberOrganization.getOrganization()));
+				returnThis.setSuccess(true);
+				return returnThis;
+			}
+		}
+		return returnThis;
+	}
+	
 	/**
 	 * Sends an email to the user. This is delegated to EmailService.
 	 */

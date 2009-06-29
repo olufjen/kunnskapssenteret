@@ -66,6 +66,21 @@
 		</tr>
 
 		<tr>
+			<td>
+				<h:outputText value="#{msg_main.access_domain}" />
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeMemberOrganizationBean.organization.accessDomain}"
+					id="organizationAccessDomain" 
+					required="false"
+					>
+				</h:inputText>
+				<h:message for="organizationAccessDomain" styleClass="error"/>
+			</td>
+		</tr>
+
+		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.organization_other_names}" /></h5></td>
 		</tr>
 

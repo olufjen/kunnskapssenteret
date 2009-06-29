@@ -1,5 +1,7 @@
 package no.helsebiblioteket.evs.plugin;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 
@@ -30,11 +32,16 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	}
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		LoggedInOrganization organization = this.loggedInOrganization();
-		if(organization == null){
+		
+		LoggedInOrganizationResult res = null;
+		res = this.loginService.loginOrganizationByReferringDomain(getRefererringDomainStringFromRequest(request));
+		if (null != res && res.isSuccess()) {
+			this.logInOrganization(res.getOrganization());
+		} else if(organization == null){
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
 	    	if(IpAddressValidator.getInstance().isValidIPAddress(ipAddress.getAddress())){
-		    	LoggedInOrganizationResult res = this.loginService.loginOrganizationByIpAddress(ipAddress);
+		    	res = this.loginService.loginOrganizationByIpAddress(ipAddress);
 	    		if (null == res) {
 	    			logger.error("loginService.loginOrganizationByIpAddress returned null for IP '" + ipAddress + "'. This was not expected.");
 	    		}
@@ -45,6 +52,21 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		}
 		return true;
 	}
+	
+	private String getRefererringDomainStringFromRequest(HttpServletRequest request) {
+		String referer = request.getHeader("referer");
+		String domainString = null;
+		if (referer != null && !"".equals(referer)) {
+			try {
+				URL url = new URL(referer);
+				domainString = url.getHost();
+			} catch (MalformedURLException mfue) {
+				logger.info("Unable to find referer for request. Message: " + mfue.getMessage());
+			}
+		}
+		return domainString;
+	}
+	
     @SuppressWarnings("unchecked")
 	public static String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
     	String XFF = "X-Forwarded-For";

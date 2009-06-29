@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 public class LoginServiceWeb extends BasicWebService implements LoginService {
 	protected static final Log logger = LogFactory.getLog(LoginServiceWeb.class);
 	private QName logInIpAddressName;
+	private QName logInAccessDomainName;
 	private QName logInUserName;
 	private QName sendPasswordEmailName;
 	// <paramtermap>
@@ -39,6 +40,12 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		Object[] args = new Object[] { ipAddress };
 		Class[] returnTypes = new Class[] { LoggedInOrganizationResult.class };
 		return (LoggedInOrganizationResult) invoke(this.logInIpAddressName, args, returnTypes);
+	}
+	@Override
+	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String domain) {
+		Object[] args = new Object[] { domain };
+		Class[] returnTypes = new Class[] { LoggedInOrganizationResult.class };
+		return (LoggedInOrganizationResult) invoke(this.logInAccessDomainName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -61,6 +68,9 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 	public void setSendPasswordEmailName(QName sendPasswordEmailName) {
 		this.sendPasswordEmailName = sendPasswordEmailName;
 	}
+	public void setLogInAccessDomainName(QName logInAccessDomainName) {
+		this.logInAccessDomainName = logInAccessDomainName;
+	}
 
 	
 	public static void main(String[] args) throws Exception {
@@ -81,5 +91,4 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 //    	Organization organization = null;
 //    	System.out.println("organization: " + organization.getName());
 	}
-
 }

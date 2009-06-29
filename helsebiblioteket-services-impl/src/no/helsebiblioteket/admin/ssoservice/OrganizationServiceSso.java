@@ -1,6 +1,5 @@
 package no.helsebiblioteket.admin.ssoservice;
 
-import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,38 +31,36 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 	
 	private OrganizationService organizationService;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY) {
 		return organizationService.getOrganizationTypeListAll(DUMMY);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey organizationTypeKey) {
 		String key = (
 				((organizationTypeKey != null) ? (organizationTypeKey.getValue()) : "")
 				);
 		Object result = cacheHelper.findCache(CacheKey.organizationServiceWebGetOrganizationTypeByKeyCache, key);
-		return (result != null) ? (SingleResultOrganizationType) result : organizationService.getOrganizationTypeByKey(organizationTypeKey);
+		if (null == result) {
+			result = organizationService.getOrganizationTypeByKey(organizationTypeKey);
+			cacheHelper.addCache(CacheKey.organizationServiceWebGetOrganizationTypeByKeyCache, key, result);
+		}
+		return (SingleResultOrganizationType) result;
 		
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
 		return organizationService.getOrganizationListAll(request);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString) {
 		return organizationService.getOrganizationListBySearchString(request, searchString);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem) {
 		return organizationService.getOrganizationByListItem(organizationListItem);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization) {
 		// TODO Fase2: These tests should not be here.
@@ -76,7 +73,6 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 		return organizationService.insertMemberOrganization(memberOrganization);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization) {
 		// TODO Fase2: These tests should not be here.
@@ -86,38 +82,35 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 		return organizationService.insertSupplierOrganization(supplierOrganization);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization updateOrganization(Organization organization) {
 		return organizationService.updateOrganization(organization);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSets) {
 		return organizationService.addIpAddresses(organization, ipAddressSets);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges) {
 		return organizationService.addIpAddressRanges(organization, ipAddressRanges);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean deleteIpAddresses(IpAddressSet[] ipAddressSets) {
 		return organizationService.deleteIpAddresses(ipAddressSets);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress) {
 		return organizationService.getOrganizationListByIpAddress(ipAddress);
 	}
-	@SuppressWarnings("unchecked")
+	@Override
+	public ListResultOrganizationListItem getOrganizationListByAccessDomain(String accessDomain) {
+		return organizationService.getOrganizationListByAccessDomain(accessDomain);
+	}
 	@Override
 	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources) {
 		return organizationService.addResources(resources);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean deleteResources(SupplierSourceResource[] resources) {
 		return organizationService.deleteResources(resources);

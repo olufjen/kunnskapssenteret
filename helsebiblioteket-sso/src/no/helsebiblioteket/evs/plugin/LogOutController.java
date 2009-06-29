@@ -10,10 +10,20 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 public class LogOutController extends HttpControllerPlugin {
 	private String gotoUrl;
 	private String sessionLoggedInUserVarName = "hbloggedinuser";
+	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String gotoUrl = request.getParameter("goto");
 		if(gotoUrl==null) gotoUrl = this.gotoUrl;
-		this.logOutUser();
+		String logoutUserString = request.getParameter("logoutuser");
+		String logoutOrganizationString = request.getParameter("logoutorganization");
+		boolean logoutUser = (logoutUserString != null && Boolean.valueOf(logoutUserString));
+		boolean logoutOrganization = (logoutOrganizationString != null && Boolean.valueOf(logoutOrganizationString));
+		if (logoutUser) {
+			this.logOutUser();
+		}
+		if (logoutOrganization) {
+			logOutOrganization();
+		}
 		response.sendRedirect(gotoUrl);
 	}
 	public void setGotoUrl(String gotoUrl) {
@@ -22,5 +32,9 @@ public class LogOutController extends HttpControllerPlugin {
 	public void logOutUser(){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		session.setAttribute(sessionLoggedInUserVarName, null);
+	}
+	public void logOutOrganization() {
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		session.setAttribute(sessionLoggedInOrganizationVarName, null);
 	}
 }

@@ -49,7 +49,7 @@
 			left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
 			left outer join tbl_contact_information as tcontact on tcontact.contact_information_id = tperson.contact_information_id
 		where
-			tcontact.email ilike #email#
+			tcontact.email ilike #email# and tuser.deleted is false
 		order by
 			tuser.user_id
 		desc
@@ -59,7 +59,7 @@
 		select
 			count(tuser.user_id)
 		from
-			tbl_user as tuser
+			tbl_user as tuser where deleted is false
 	</select>
 
 	<select id="getUserNumberSearchStringRoles" resultClass="int" parameterClass="SearchStringInput">
@@ -69,12 +69,15 @@
 			from
 				tbl_user as tuser
 				left outer join tbl_person as tperson on tperson.person_id = tuser.person_id
+				left outer join tbl_contact_information as tcontactinformation on tperson.contact_information_id = tcontactinformation.contact_information_id
 				left outer join tbl_user_role as userrole on userrole.user_id = tuser.user_id
 				left outer join tbl_user_role_reg as trole on trole.user_role_id = userrole.user_role_id
 			where
 				(tuser.username ilike #value# or tperson.first_name ilike #value# or tperson.last_name ilike #value#
-				or tperson.first_name || ' ' || tperson.last_name ilike #value#)
+				or tperson.first_name || ' ' || tperson.last_name ilike #value#
+				or tcontactinformation.email ilike #value#)
 				and trole.user_role_id in ( $otherValue$ )
+				and tuser.deleted is false
 			order by
 				tuser.user_id
 			desc
@@ -95,6 +98,7 @@
 			or tperson.first_name || ' ' || tperson.last_name ilike #value#
 			or tcontactinformation.email ilike #value#)
 			and trole.user_role_id in ( $otherValue$ )
+			and tuser.deleted is false
 		order by
 			tuser.user_id
 		desc
@@ -130,6 +134,7 @@
 					or tcontactinformation.email ilike #value#)
 					and trole.user_role_id in ( $otherValue$ )
 					and tuser.user_id &lt;= #fromId# and tuser.user_id &gt;= #toId#
+					and tuser.deleted is false
 			)
 		order by
 			tuser.user_id

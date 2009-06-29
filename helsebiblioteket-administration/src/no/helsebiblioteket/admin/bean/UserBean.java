@@ -171,6 +171,10 @@ public class UserBean {
     }
     public boolean getCannotShowUser(){ return false; }
     public boolean getCanShowUser(){ return true; }
+    public String actionDelete() {
+    	userService.deleteUser(this.user);
+    	return actionSearch();
+    }
     public String actionEdit(){
     	UserListItem item  = (UserListItem) this.usersTable.getRowData();
     	Object userObject = this.userService.getUserByUserListItem(item);

@@ -12,6 +12,7 @@ public class User implements Serializable {
 	private String username;
 	private String password;
 	private Date lastChanged;
+	private boolean deleted;
 
 	private Person person;
 
@@ -89,5 +90,11 @@ public class User implements Serializable {
 
 	public void setRoleList(Role[] roleList) {
 		this.roleList = roleList;
+	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

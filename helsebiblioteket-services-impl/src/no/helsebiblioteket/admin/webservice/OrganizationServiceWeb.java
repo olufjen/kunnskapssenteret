@@ -33,6 +33,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName organizationTypeByKeyName;
 	private QName organizationListAllName;
 	private QName organizationListIpAddressName;
+	private QName organizationListAccessDomainName;
 	private QName findOrganizationsBySearchString;
 	private QName organizationByListItemName;
 	private QName insertMemberOrganizationName;
@@ -145,6 +146,12 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
 		return (ListResultOrganizationListItem) invoke(this.organizationListIpAddressName, args, returnTypes);
 	}
+	@Override
+	public ListResultOrganizationListItem getOrganizationListByAccessDomain(String accessDomain) {
+		Object[] args = new Object[] { accessDomain  };
+		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
+		return (ListResultOrganizationListItem) invoke(this.organizationListAccessDomainName, args, returnTypes);
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources) {
@@ -200,5 +207,8 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	public void setOrganizationListIpAddressName(QName organizationListIpAddressName) {
 		this.organizationListIpAddressName = organizationListIpAddressName;
+	}
+	public void setOrganizationListAccessDomainName(QName organizationListAccessDomainName) {
+		this.organizationListAccessDomainName = organizationListAccessDomainName;
 	}
 }
