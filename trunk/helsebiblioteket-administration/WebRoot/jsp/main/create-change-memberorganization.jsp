@@ -174,6 +174,32 @@
 			</td>
 		</tr>
 		<tr>
+			<td>
+				<h:outputText value="#{msg_main.email_address_input}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeMemberOrganizationBean.organization.contactInformation.email}"
+					id="orgEmail" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.telephone_number}"></h:outputText>
+			</td>
+			<td>
+				<h:inputText 
+					value="#{createAndChangeMemberOrganizationBean.organization.contactInformation.telephoneNumber}"
+					id="orgTelephoneNumber" 
+					required="false"
+					>
+				</h:inputText>
+			</td>
+		</tr>
+		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.contact_information} - #{msg_main.contact_person}" /></h5></td>
 		</tr>
 		<tr>
