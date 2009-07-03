@@ -25,7 +25,7 @@ public class LoginServiceSso extends SsoService implements LoginService {
 	}
 	@Override
 	public LoggedInOrganizationResult loginOrganizationByIpAddress(IpAddress ipAddress) {		
-		String key = (
+		/*String key = (
 				((ipAddress != null) ? (ipAddress.getAddress()) : "noip")
 				);
 		Object result = cacheHelper.findCache(CacheKey.loginServiceSsologinOrganizationByIpAddressCache, key);
@@ -33,12 +33,12 @@ public class LoginServiceSso extends SsoService implements LoginService {
 			result = loginService.loginOrganizationByIpAddress(ipAddress); 
 			cacheHelper.addCache(CacheKey.loginServiceSsologinOrganizationByIpAddressCache, key, result);
 		}
-		return (LoggedInOrganizationResult) result;
-		
+		return (LoggedInOrganizationResult) result;*/
+		return loginService.loginOrganizationByIpAddress(ipAddress);
 	}
 	@Override
 	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String accessDomain) {
-		String key = (
+		/* String key = (
 				((accessDomain != null) ? (accessDomain) : "noreferrer")
 				);
 		Object result = cacheHelper.findCache(CacheKey.loginServiceSsologinOrganizationByReferringDomainCache, key);
@@ -46,7 +46,8 @@ public class LoginServiceSso extends SsoService implements LoginService {
 			result = loginService.loginOrganizationByReferringDomain(accessDomain); 
 			cacheHelper.addCache(CacheKey.loginServiceSsologinOrganizationByReferringDomainCache, key, result);
 		}
-		return (LoggedInOrganizationResult) result;
+		return (LoggedInOrganizationResult) result;*/
+		return loginService.loginOrganizationByReferringDomain(accessDomain);
 	}
 	@Override
 	public SendPasswordEmailResult sendPasswordEmail(String emailAddress, Email email) {

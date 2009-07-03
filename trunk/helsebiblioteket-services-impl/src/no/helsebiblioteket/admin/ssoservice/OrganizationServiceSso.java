@@ -37,7 +37,7 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 	}
 	@Override
 	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey organizationTypeKey) {
-		String key = (
+		/*String key = (
 				((organizationTypeKey != null) ? (organizationTypeKey.getValue()) : "")
 				);
 		Object result = cacheHelper.findCache(CacheKey.organizationServiceWebGetOrganizationTypeByKeyCache, key);
@@ -45,8 +45,8 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 			result = organizationService.getOrganizationTypeByKey(organizationTypeKey);
 			cacheHelper.addCache(CacheKey.organizationServiceWebGetOrganizationTypeByKeyCache, key, result);
 		}
-		return (SingleResultOrganizationType) result;
-		
+		return (SingleResultOrganizationType) result;*/
+		return organizationService.getOrganizationTypeByKey(organizationTypeKey);
 	}
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {

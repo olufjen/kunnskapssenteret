@@ -35,7 +35,7 @@ public class UserServiceSso extends SsoService implements UserService {
 
 	@Override
 	public SingleResultSystem getSystemByKey(SystemKey systemKey) {
-		String key = (
+		/*String key = (
 				((systemKey != null) ? (systemKey.getValue()) : "")
 				);
 		Object result = cacheHelper.findCache(CacheKey.userServiceSsoGetSystemByKeyCache, key);
@@ -43,7 +43,8 @@ public class UserServiceSso extends SsoService implements UserService {
 			result = userService.getSystemByKey(systemKey);
 			cacheHelper.addCache(CacheKey.userServiceSsoGetSystemByKeyCache, key, result);
 		}
-		return (SingleResultSystem) result;
+		return (SingleResultSystem) result;*/
+		return userService.getSystemByKey(systemKey);
 	}
 	@Override
 	public ListResultRole getRoleListBySystem(System system) {
@@ -51,17 +52,18 @@ public class UserServiceSso extends SsoService implements UserService {
 	}
 	@Override
 	public ListResultPosition getPositionListAll(String DUMMY) {
-		String key = "getPositionListAll";
+		/*String key = "getPositionListAll";
 		Object result = cacheHelper.findCache(CacheKey.staticListCache, key);
 		if (result == null) {
 			result = userService.getPositionListAll(DUMMY);
 			cacheHelper.addCache(CacheKey.staticListCache, key, result);
 		}
-		return (ListResultPosition) result;
+		return (ListResultPosition) result;*/
+		return userService.getPositionListAll(DUMMY);
 	}
 	@Override
 	public SingleResultRole getRoleByKeySystem(UserRoleKey roleKey, System system) {
-		String key = (
+		/*String key = (
 				((roleKey != null) ? (roleKey.getValue() + "-") : "") +
 				((system != null && system.getKey() != null) ? (system.getKey().getValue()) : "")
 				);
@@ -70,7 +72,8 @@ public class UserServiceSso extends SsoService implements UserService {
 			result = userService.getRoleByKeySystem(roleKey, system);
 			cacheHelper.addCache(CacheKey.userServiceSsoGetRoleByKeySystemCache, key, result);
 		}
-		return (SingleResultRole) result;
+		return (SingleResultRole) result;*/
+		return userService.getRoleByKeySystem(roleKey, system);
 	}
 	@Override
 	public PageResultUserListItem getUserListAll(PageRequest request){
