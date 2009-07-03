@@ -73,6 +73,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		if(this.isNew){
 //			this.memberOrganization = new MemberOrganization();
 			contactInformationOrganization = new ContactInformation();
+			contactInformationOrganization = organization.getContactInformation();
 			this.memberOrganization.getOrganization().setContactInformation(contactInformationOrganization);
 			OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
 					OrganizationTypeKey.health_enterprise)).getValue();
@@ -83,8 +84,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			contactInformationOrganization = this.memberOrganization.getOrganization().getContactInformation();
 			contactPersonProfile = this.memberOrganization.getOrganization().getContactPerson().getProfile();
 		}
-		contactInformationOrganization.setEmail("");
-		contactInformationOrganization.setTelephoneNumber("");
+		if (contactInformationOrganization.getEmail() == null) {
+			contactInformationOrganization.setEmail("");
+		}
+		if (contactInformationOrganization.getTelephoneNumber() == null) {
+			contactInformationOrganization.setTelephoneNumber("");
+		}
 		contactPersonProfile.setParticipateSurvey(false);
 		contactPersonProfile.setReceiveNewsletter(false);
 		

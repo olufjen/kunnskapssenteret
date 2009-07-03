@@ -26,7 +26,7 @@
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.access_domain}"  /></td>
-			<td><h:outputText value="#{createAndChangeMemberOrganizationBean.organization.accessDomain}" /></td>
+			<td><h:outputText value="#{organizationBean.organization.accessDomain}" /></td>
 		</tr>
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText rendered="#{organizationBean.isSupplierOrganization}"
