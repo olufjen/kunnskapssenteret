@@ -11,6 +11,7 @@ public class Profile implements Serializable {
 	// Local values
 	private Boolean receiveNewsletter;
 	private Boolean participateSurvey;
+	private String subscriptionKey;
 	private Date lastChanged;
 
 	// Helpers
@@ -36,5 +37,13 @@ public class Profile implements Serializable {
 	}
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+	
+	public String getSubscriptionKey() {
+		return subscriptionKey;
+	}
+
+	public void setSubscriptionKey(String subscriptionKey) {
+		this.subscriptionKey = subscriptionKey;
 	}
 }

@@ -49,4 +49,7 @@ public interface UserService extends Serializable {
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser);
 	public Boolean updateUser(User user);
 	public void deleteUser(User user);
+	
+	public boolean unsubscribeNewsletter(String subscriptionKey);
+	public boolean unsubscribeSurvey(String subscriptionKey);
 }

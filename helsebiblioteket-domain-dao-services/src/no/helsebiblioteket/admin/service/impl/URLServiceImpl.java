@@ -49,7 +49,7 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
 	public Boolean isAffected(Url url) {
-		SingleResultSupplierSource supplierSourceResult = accessService.getSupplierSourceByUrlStartsWith(url);
+		SingleResultSupplierSource supplierSourceResult = accessService.getSupplierSourceByDomain(url);
 		if (supplierSourceResult instanceof EmptyResultSupplierSource) {
 			return Boolean.FALSE;
 		} else {
@@ -111,6 +111,7 @@ public class URLServiceImpl implements URLService {
 		Url newUrl = new Url();
 		url.setStringValue(url.getStringValue().replace("&amp;", "&"));
 		newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
+		newUrl.setDomain(url.getDomain());
 		return new ValueResultUrl(newUrl);
 	}
 	
@@ -152,7 +153,7 @@ public class URLServiceImpl implements URLService {
 		} else {
 			newUrl.setStringValue(url.getStringValue());
 		}
-		
+		newUrl.setDomain(url.getDomain());
 		return new ValueResultUrl(newUrl);
 	}
 	
@@ -202,7 +203,7 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
 	public SingleResultString group(Url url){
-		SingleResultSupplierSource supplierSourceResult = accessService.getSupplierSourceByUrlStartsWith(url);
+		SingleResultSupplierSource supplierSourceResult = accessService.getSupplierSourceByDomain(url);
 		if (supplierSourceResult instanceof ValueResultSupplierSource) {
 			return new ValueResultString(((ValueResultSupplierSource) supplierSourceResult).getValue().getProxyDatabaseName());
 		}
@@ -289,7 +290,7 @@ public class URLServiceImpl implements URLService {
 	private AccessType getAccessTypeForResourceAccessList(Url url, ListResultResourceAccessListItem accessList) {
 		AccessType accessType = new AccessType();
 		for (ResourceAccessListItem access : accessList.getList()) {
-			if (url.getStringValue().startsWith(access.getUrl().getStringValue())) {
+			if (url.getDomain().endsWith(access.getUrl().getDomain())) {
 				accessType.setCategory(access.getCategory());
 				accessType.setKey(access.getKey());
 				return accessType;

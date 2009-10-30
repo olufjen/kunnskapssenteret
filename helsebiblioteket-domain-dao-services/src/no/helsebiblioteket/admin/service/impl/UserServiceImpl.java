@@ -3,6 +3,7 @@ package no.helsebiblioteket.admin.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
@@ -337,8 +338,39 @@ public class UserServiceImpl implements UserService {
 		}
 		return createOrganizationUser(organizationUser);
 	}
+	
+	public boolean unsubscribeNewsletter(String subscriptionKey) {
+		boolean ret = false;
+		Profile profile = profileDao.getProfileBySubscriptionKey(subscriptionKey);
+		if (null != profile) {
+			if (!profile.getReceiveNewsletter()) {
+				ret = false;
+			} else {
+				profile.setReceiveNewsletter(false);
+				profileDao.updateProfile(profile);
+				ret = true;
+			}
+		}
+		return ret;
+	}
+	
+	public boolean unsubscribeSurvey(String subscriptionKey) {
+		Profile profile = profileDao.getProfileBySubscriptionKey(subscriptionKey);
+		if (!profile.getReceiveNewsletter()) {
+			return false;
+		} else {
+			profile.setReceiveNewsletter(false);
+			profileDao.updateProfile(profile);
+			return true;
+		}
+	}
+	
 	private SingleResultUser createOrganizationUser(OrganizationUser organizationUser) {
 		this.contactInformationDao.insertContactInformation(organizationUser.getUser().getPerson().getContactInformation());
+		
+		String profileSubscriptionKey = generateUniqueSubscriptionKey();
+		organizationUser.getUser().getPerson().getProfile().setSubscriptionKey(profileSubscriptionKey);
+		
 		this.profileDao.insertProfile(organizationUser.getUser().getPerson().getProfile());
 		this.personDao.insertPerson(organizationUser.getUser().getPerson());
 		
@@ -445,6 +477,25 @@ public class UserServiceImpl implements UserService {
 			result.add(userRole);
 		}
 		return result;
+	}
+	
+	private String generateSubscriptionKey() {
+		String key = "";
+		String values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		Random random = new Random();
+		for(int i=0; i < 6;i++) {
+			int val = random.nextInt(62);
+			key += values.substring(val, val+1);
+		}
+		return key;
+	}
+	
+	private String generateUniqueSubscriptionKey() {
+		String key = generateSubscriptionKey();
+		while (null != profileDao.getProfileBySubscriptionKey(key)) {
+			key = generateSubscriptionKey();
+		}
+		return key;
 	}
 	
 	

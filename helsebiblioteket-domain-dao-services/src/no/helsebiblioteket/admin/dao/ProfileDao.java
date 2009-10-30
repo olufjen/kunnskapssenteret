@@ -10,4 +10,5 @@ public interface ProfileDao {
 
 	// Fetch
 	public Profile getProfileById(Integer profileId);
+	public Profile getProfileBySubscriptionKey(String subscriptionKey);
 }
