@@ -97,8 +97,16 @@
 	
     <target name="deploy" depends="build" description="Deploy application">
         <copy todir="${deploy.path}/${project.name}" preservelastmodified="true">
-            <fileset dir="${project.build.web.dir}"><include name="**/*.*"/></fileset>
+            <fileset dir="${project.build.web.dir}">
+            	<include name="**/*.*"/>
+            </fileset>
         </copy>
+    	<copy 
+    		todir="${deploy.path}/${project.name}" 
+    		preservelastmodified="true"
+    		file="${project.home.dir}/index.html"
+    	/>
+    	
     </target>
 
     <target name="deploywar" depends="build" description="Deploy application as a WAR file">

@@ -340,8 +340,8 @@
 					var="orgTypeAccess" >
 
 					<h:column id="urlColumn">
-      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
-      					<h:outputText id="orgTypeAccessUrl" value="#{orgTypeAccess.url.stringValue}" />
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_domain}"/></f:facet>
+      					<h:outputText id="orgTypeAccessUrl" value="#{orgTypeAccess.url.domain}" />
 		    		</h:column>
 					<h:column id="supplierSourceNameColumn">
       					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
@@ -401,8 +401,8 @@
 					binding="#{createAndChangeMemberOrganizationBean.orgAccessTable}">
 
 					<h:column id="urlOrgColumn">
-      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
-      					<h:outputText id="orgAccessUrl" value="#{orgAccess.url.stringValue}" />
+      					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_domain}"/></f:facet>
+      					<h:outputText id="orgAccessUrl" value="#{orgAccess.url.domain}" />
 		    		</h:column>
 					<h:column id="supplierSourceNameOrgColumn">
       					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
