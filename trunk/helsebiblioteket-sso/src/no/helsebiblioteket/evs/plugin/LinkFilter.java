@@ -38,6 +38,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private final Log logger = LogFactory.getLog(getClass());
 	private String sessionLoggedInUserVarName = "hbloggedinuser";
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
+	private static final String linkFilterOverrideUrlParam = "linkfilteroverride";
 	private URLService urlService;
 	private final static String invalidHrefRegExp = "javascript:.*|mailto:.*";
 	private final static String linkRegExp = "<a href=(['\"])(.*?)\\1";
@@ -65,14 +66,17 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		
 		Map<String, String> linkReplaceMap = new HashMap<String, String>();
 		Matcher m = linkPattern.matcher(response);
+		boolean linkFilterOverride = false;
 		
     	while (m.find()) {
     		String oldLink = m.group(2);
-    		String oldLinkDeampified = oldLink.replace("&amp;", "&");
+    		linkFilterOverride = oldLink.contains(LinkFilter.linkFilterOverrideUrlParam);
+			String oldLinkDeampified = oldLink.replace("&amp;", "&");
 			if (validHref(oldLink)) {
-				URL url = this.deproxify(oldLinkDeampified);
+				oldLinkDeampified = !linkFilterOverride ? deproxify(oldLinkDeampified) : oldLinkDeampified;
+				URL url = generateURL(oldLinkDeampified);
 				if(url != null) {
-		    		if(this.isAffected(url)){
+		    		if (!linkFilterOverride && this.isAffected(url)) {
 		    			url = this.translate(user, memberOrganization, url);
 		    		}
 		    		String newLink = url.toExternalForm();
@@ -93,7 +97,19 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
     	
 		return response;
     }
-	private URL deproxify(String href) {
+    
+    private URL generateURL(String href) {
+    	URL url = null;
+		try {
+			url = new URL(href);
+		} catch (MalformedURLException ignored) {
+			// This will happen each time a relative URL is encountered. 
+			// This is OK and is not to be treated as an error or logged as such.
+		}
+		return url;
+    }
+    
+	private String deproxify(String href) {
 		if (href.contains("http://proxy.helsebiblioteket.no/login?url=")) {
 			href = href.replace("http://proxy.helsebiblioteket.no/login?url=", "");
 		} else if (href.contains(".proxy.helsebiblioteket.no")) {
@@ -103,14 +119,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		} else if (href.contains(".proxy-t.helsebiblioteket.no")) {
 			href = href.replace(".proxy-t.helsebiblioteket.no", "");
 		}
-		URL url = null;
-		try {
-			url = new URL(href);
-		} catch (MalformedURLException ignored) {
-			// This will happen each time a relative URL is encountered. 
-			// This is OK and is not to be treated as an error or logged as such.
-		}
-		return url;
+		return href;
 	}
 	
 	private boolean validHref(String s) {
@@ -124,6 +133,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		boolean result = false;
 		Url myurl = new Url();
 		myurl.setStringValue(url.toExternalForm());
+		myurl.setDomain(url.getHost());
 		if (myurl == null) {
 			logger.error("myurl is null in method 'isAffected'!");
 		}
@@ -134,9 +144,9 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private URL translate(LoggedInUser user, LoggedInOrganization organization, URL url) throws MalformedURLException {
 		Url myUrl = new Url();
 		myUrl.setStringValue(url.toExternalForm());
-		
+		myUrl.setDomain(url.getHost());
 		SingleResultUrl result;
-		if(user != null && organization != null){
+ 		if(user != null && organization != null){
 			UserListItem userL = new UserListItem();
 			userL.setId(user.getId());
 			userL.setRoleKeys(new UserRoleKey[]{new UserRoleKey(user.getRoleKey())});

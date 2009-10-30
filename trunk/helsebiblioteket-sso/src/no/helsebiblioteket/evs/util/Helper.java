@@ -10,14 +10,36 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 /**
  * Common used helper methods.
  */
-public final class Helper 
-{
-	// TODO Fase2: Remove this helper!
-	
-	
+public final class Helper {
+    
+	public static void prettyPrint(org.w3c.dom.Document doc, OutputStream out) {
+		TransformerFactory tfactory = TransformerFactory.newInstance();
+        Transformer serializer;
+        try {
+            serializer = tfactory.newTransformer();
+            //Setup indenting to "pretty print"
+            serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+            serializer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            
+            serializer.transform(new DOMSource(doc), new StreamResult(out));
+        } catch (TransformerException e) {
+            // this is fatal, just dump the stack and throw a runtime exception
+            e.printStackTrace();
+            
+            throw new RuntimeException(e);
+        }
+	}
+
 	/**
 	 * Pretty print document.
 	 */

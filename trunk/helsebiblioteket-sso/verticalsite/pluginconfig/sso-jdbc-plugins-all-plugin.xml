@@ -11,14 +11,14 @@
 		</property>
 	</bean>
 	
-	<bean id="appCacheManager"
+	<!--  <bean id="appCacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="${cms.home}/plugins/ehcache-helsebiblioteket.xml" />
 	</bean>
 	<bean id="methodCachingAdvice"
 		class="no.helsebiblioteket.admin.ssoservice.CacheHelper">
 	  <property name="cacheManager" ref="appCacheManager" />
-	</bean>
+	</bean> -->
 
 	
 	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
@@ -165,7 +165,7 @@
 	
 	<bean id="userServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserServiceSso">
 		<property name="userService" ref="userService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
 	<!-- Disabled because of dependency on spring security. Not used in sso-project. 
 	<bean id="userDetailsServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserDetailsServiceSso">
@@ -173,33 +173,27 @@
 	</bean>-->
 	<bean id="urlServiceSso" class="no.helsebiblioteket.admin.ssoservice.URLServiceSso">
 		<property name="urlService" ref="urlService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
 	<bean id="organizationServiceSso" class="no.helsebiblioteket.admin.ssoservice.OrganizationServiceSso">
 		<property name="organizationService" ref="organizationService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
 	<bean id="loginServiceSso" class="no.helsebiblioteket.admin.ssoservice.LoginServiceSso">
 		<property name="loginService" ref="loginService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
 	<bean id="emailServiceSso" class="no.helsebiblioteket.admin.ssoservice.EmailServiceSso">
 		<property name="emailService" ref="emailService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
 	<bean id="actionServiceSso" class="no.helsebiblioteket.admin.ssoservice.ActionServiceSso">
 		<property name="actionService" ref="actionService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
 	<bean id="accessServiceSso" class="no.helsebiblioteket.admin.ssoservice.AccessServiceSso">
 		<property name="accessService" ref="accessService"></property>
-		<property name="cacheHelper" ref="methodCachingAdvice"></property>
-	</bean>
-	
-	
-	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
- 		<property name="urlPattern" value="/site/[0-3]/.*" />
- 		<property name="urlService" ref="urlServiceSso" />
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
 	
 	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
@@ -294,6 +288,13 @@
  		<property name="proxyUrl" value="${proxy.url}" />
  		<property name="logUpUrl" value="${proxy.logup.url}" />
  		<property name="urlService" ref="urlServiceSso" />
+ 		<property name="stripUrlParams" value="true" />
+ 		<property name="stripUrlParamsSet">
+ 			<set>
+ 				<value>pwd</value>
+ 				<value>referer</value>
+ 			</set>
+ 		</property>
 	</bean>
 	
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
@@ -353,6 +354,32 @@
 			<entry key="emailSubjectText" value="emailSubjectText" />
  		</map></property>
  		<property name="resultSessionVarName" value="hbpasswordresult" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.UnsubscribeNewsletterController">
+ 		<property name="urlPattern" value="/site/2/MeldAvNyhetsbrevServlet" />
+ 		<property name="gotoUrl" value="${plugin.unsubscribenewslettercontroller.gotourl}" />
+ 		<property name="userService" ref="userServiceSso" />
+ 		<property name="parameterNamesUrlParams"><map>
+ 			<entry key="subscriptionKey" value="key"/>
+ 		</map></property>
+ 		<property name="parameterNamesFields"><map>
+ 			<entry key="subscriptionKey" value="subscriptionkey"/>
+ 		</map></property>
+ 		<property name="resultSessionVarName" value="hbunsubscriberesult" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.UnsubscribeSurveyController">
+ 		<property name="urlPattern" value="/site/2/MeldAvSporreskjemaServlet" />
+ 		<property name="gotoUrl" value="${plugin.unsubscribesurveycontroller.gotourl}" />
+ 		<property name="userService" ref="userServiceSso" />
+ 		<property name="parameterNamesUrlParams"><map>
+ 			<entry key="subscriptionKey" value="key"/>
+ 		</map></property>
+ 		<property name="parameterNamesFields"><map>
+ 			<entry key="subscriptionKey" value="subscriptionkey"/>
+ 		</map></property>
+ 		<property name="resultSessionVarName" value="hbunsubscriberesult" />
 	</bean>
 	
 </beans>

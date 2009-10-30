@@ -5,14 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.Utilities;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
+import no.helsebiblioteket.evs.util.Helper;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.w3c.dom.Element;
+
 
 import com.enonic.cms.api.plugin.PluginEnvironment;
 
@@ -47,7 +50,8 @@ public class ResultHandler {
 		if(result == null){
 			result = emptyXML(key);
 		}
-		return XMLTranslator.translate(result);
+		Document translatedResult = XMLTranslator.translate(result);
+		return translatedResult;
 	}
 	private static org.w3c.dom.Document emptyXML(String key) throws ParserConfigurationException {
 		UserToXMLTranslator translator = new UserToXMLTranslator();
