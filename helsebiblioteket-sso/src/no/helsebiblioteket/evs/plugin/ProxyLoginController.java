@@ -35,7 +35,13 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class ProxyLoginController extends HttpControllerPlugin {
@@ -50,17 +56,23 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private boolean proxyUseGroup = true;
 	private int proxyTimeout = 0;
 	protected final Log logger = LogFactory.getLog(getClass());
-
+	
+	private boolean stripUrlParams = false;
+	
+	
+	private Set<String> stripUrlParamsSet = null;
+	
 	private URLService urlService;
 
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String requestedUrlText = request.getQueryString();
+		String requestedUrlText = (stripUrlParams) ? stripUrlParams(request.getQueryString()) : request.getQueryString();
 		requestedUrlText = requestedUrlText.substring(requestedUrlText.indexOf(this.urlParamName) + this.urlParamName.length() + 1);
-		
+
 		String redirectUrl = "";
 		Url requestedUrl = new Url();
-		
 		requestedUrl.setStringValue(requestedUrlText);
+		new URL(requestedUrlText).getHost();
+		requestedUrl.setDomain(new URL(requestedUrlText).getHost());
 		
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();
@@ -134,9 +146,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				}
     			}
     		} else {
-    			logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database.\n" +
+    			logger.warn("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database.\n" +
 	    			" or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
-    			createXML(true, loggedInUser, loggedInOrganization, requestedUrl, document, element);
+    			createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
 	    		redirectUrl = logUpUrl;
     		}
     	//}
@@ -177,6 +189,39 @@ public class ProxyLoginController extends HttpControllerPlugin {
 			element.appendChild(document.createElement("noaccess"));
 		}
 	}
+    
+    private String stripUrlParams(String queryString) {
+    	String result = queryString;
+    	Map<String, String> queryMap = getQueryMap(result);
+		if (queryMap != null && queryMap.size() > 0 && stripUrlParamsSet != null && stripUrlParamsSet.size() > 0) {
+			for (String parameter : stripUrlParamsSet) {
+				if (queryMap.containsKey(parameter)) {
+					result = result.replace(queryMap.get(parameter), "");
+				}
+			}
+		}
+		return result;
+    }
+    
+    private Map<String, String> getQueryMap(String query) {  
+    	String[] params = query.split("[&\\?]");
+    	Map<String, String> map = new HashMap<String, String>();
+    	String[] keyValuePair  = null;
+    	String name = null;
+    	String value = null;
+    	for (String param : params) {
+    		keyValuePair = param.split("=");
+    		if (keyValuePair != null && keyValuePair.length == 2) {
+    			name = keyValuePair[0];
+	    		value = keyValuePair[1];
+	    		if (name != null && value != null) {
+	    			map.put(name, value);
+	    		}
+    		}
+    	}
+    	return map;  
+    }
+
 	private boolean createProxySession(HttpServletResponse clientResponse, String destinationUrl, String group) {
         boolean sessionCreated = false;
         // Don't follow redirect returned from proxy. This redirect is to be given to user.
@@ -263,5 +308,17 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	}
 	public void setProxyTimeout(int proxyTimeout) {
 		this.proxyTimeout = proxyTimeout;
+	}
+	public Set<String> getStripUrlParamsSet() {
+		return stripUrlParamsSet;
+	}
+	public void setStripUrlParamsSet(Set<String> stripUrlParamsSet) {
+		this.stripUrlParamsSet = stripUrlParamsSet;
+	}
+	public boolean getStripUrlParams() {
+		return stripUrlParams;
+	}
+	public void setStripUrlParams(boolean stripUrlParams) {
+		this.stripUrlParams = stripUrlParams;
 	}
 }

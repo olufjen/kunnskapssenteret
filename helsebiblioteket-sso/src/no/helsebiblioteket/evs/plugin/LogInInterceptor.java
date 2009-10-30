@@ -4,8 +4,15 @@ package no.helsebiblioteket.evs.plugin;
  * @author Fredrik Sørensen (mail@fredriksorensen.com) and Leif Torger Grøndahl (ltg@kunnskapssenteret.no)
  */
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
 import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
@@ -20,6 +27,7 @@ import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.validator.IpAddressValidator;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
+import no.helsebiblioteket.util.Base64;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,10 +45,14 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		LoggedInOrganization organization = this.loggedInOrganization();	
 		LoggedInOrganizationResult res = null;
-		res = this.loginService.loginOrganizationByReferringDomain(getRefererringDomainStringFromRequest(request));
+		String referringDomain = getRefererringDomainStringFromRequest(request);
+		String domainKey = getKeyFromRequest(request);
+		if (referringDomain != null && domainKey != null && !"".equals(referringDomain) && !"".equals(domainKey)) {
+			res = this.loginService.loginOrganizationByReferringDomain(referringDomain, domainKey);
+		}
 		if (null != res && res.isSuccess()) {
 			this.logInOrganization(res.getOrganization());
-		} else if(organization == null){
+		} else if (organization == null) {
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
 	    	if(IpAddressValidator.getInstance().isValidIPAddress(ipAddress.getAddress())){
@@ -56,15 +68,24 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		return true;
 	}
 	
+	private String getKeyFromRequest(HttpServletRequest request) {
+		return request.getParameter("pwd");
+	}
+	
+	
 	private String getRefererringDomainStringFromRequest(HttpServletRequest request) {
-		String referer = request.getHeader("referer");
+		String referer = null;
 		String domainString = null;
-		if (referer != null && !"".equals(referer)) {
-			try {
-				URL url = new URL(referer);
-				domainString = url.getHost();
-			} catch (MalformedURLException mfue) {
-				logger.warn("Unable to find valid referer for request. Message: " + mfue.getMessage());
+		domainString = request.getParameter("referer");
+		if (null == domainString || "".equals(domainString)) {
+			referer = request.getHeader("referer");
+			if (referer != null && !"".equals(referer)) {
+				try {
+					URL url = new URL(referer);
+					domainString = url.getHost();
+				} catch (MalformedURLException mfue) {
+					logger.warn("Unable to find valid referer for request. Message: " + mfue.getMessage());
+				}
 			}
 		}
 		return domainString;

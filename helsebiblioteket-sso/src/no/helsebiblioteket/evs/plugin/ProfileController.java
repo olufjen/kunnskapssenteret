@@ -132,7 +132,7 @@ public class ProfileController extends HttpControllerPlugin {
 		}
 	}
 	private void editPassword(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		
 		String from = request.getParameter(this.parameterNames.get("fromform"));
 		session.setAttribute(this.editPasswordFromVarName, from);

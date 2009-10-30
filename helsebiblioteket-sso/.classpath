@@ -11,7 +11,6 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-services-impl/lib/axiom-impl-1.2.7.jar"/>
-	<classpathentry kind="lib" path="/helsebiblioteket-services-impl/lib/ehcache-1.5.0.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/mail-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>

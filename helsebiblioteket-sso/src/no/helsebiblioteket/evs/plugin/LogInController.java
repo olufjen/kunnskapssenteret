@@ -38,28 +38,34 @@ public final class LogInController extends HttpControllerPlugin {
     	String password = request.getParameter(this.parameterNames.get("password"));
     	if(username == null) { username = ""; }
     	if(password == null) { password = ""; }
+    	String redirectTo = null;
        	if(username.length() != 0 && password.length() != 0){
        		LoggedInUserResult resultUser = this.loginService.loginUserByUsernamePassword(username, password);
        		if( ! resultUser.isSuccess()){
         		makeXML(username, password, result, element);
         		String from = request.getParameter(this.parameterNames.get("from"));
-        		response.sendRedirect(from);
+        		redirectTo = from;
        		} else {
 	       		// Found user!
        			HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
        			session.setAttribute(this.sessionLoggedInUserVarName, resultUser.getUser());
 	       		element.appendChild(result.createElement("success"));
 	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
-	       		response.sendRedirect(gotoUrl);
+	       		redirectTo = gotoUrl;
         	}
        	} else {
-    		// Return!
     		makeXML(username, password, result, element);
     		String from = request.getParameter(this.parameterNames.get("from"));
-    		response.sendRedirect(from);
+    		redirectTo = from;
        	}
 		result.appendChild(element);
 		ResultHandler.setResult(this.resultSessionVarName, result);
+		// redirect must be done after "setResult". Or else: java.lang.IllegalStateException
+		if (redirectTo != null) {
+			response.sendRedirect(redirectTo);
+		} else {
+			logger.warn("tried to log in user, but do not know where to redirect");
+		}
 	}
 	private void makeXML(String username, String password, Document document, Element element) {
 		boolean lookup = true;

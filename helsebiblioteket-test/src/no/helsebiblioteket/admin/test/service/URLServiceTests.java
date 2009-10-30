@@ -151,6 +151,7 @@ public class URLServiceTests {
 		Url myUrl = new Url();
 		for (int i = 0; i < 100; i++) {
 			myUrl.setStringValue("http://www.legehandboka.no");
+			myUrl.setDomain("www.legehandboka.no");
 			beanFactory.getURLService().isAffected(myUrl);
 		}
 	}
