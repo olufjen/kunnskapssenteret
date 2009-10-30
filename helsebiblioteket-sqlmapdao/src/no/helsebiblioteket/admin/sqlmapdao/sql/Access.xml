@@ -26,7 +26,7 @@
 		<result property="id" column="access_id" />
 		<result property="category.value" column="category" />
 		<result property="key.value" column="key" />
-		<result property="url.stringValue" column="url" />
+		<result property="url.domain" column="domain" />
 		<result property="lastChanged" column="last_changed" />
 		<result property="supplierSourceName" column="supplier_source_name" />
 		<result property="providedBy" column="provided_by_org_unit" />
@@ -109,7 +109,7 @@
 			access_id,
 			category,
 			key,
-			url,
+			domain,
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -130,7 +130,7 @@
 			access_id,
 			category,
 			key,
-			url,
+			domain,
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -147,7 +147,7 @@
 			access_id,
 			category,
 			key,
-			url,
+			domain,
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -164,7 +164,7 @@
 			access_id,
 			category,
 			tbl_access_type_reg.key,
-			url,
+			domain,
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -182,7 +182,7 @@
 			access_id,
 			category,
 			tbl_access_type_reg.key,
-			url,
+			domain,
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,

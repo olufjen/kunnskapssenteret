@@ -21,4 +21,7 @@ public class SqlMapProfileDao extends SqlMapClientDaoSupport implements ProfileD
 	public Profile getProfileById(Integer profileId) {
 		return (Profile) getSqlMapClientTemplate().queryForObject("getProfileById", profileId);
 	}
+	public Profile getProfileBySubscriptionKey(String subscriptionKey) {
+		return (Profile) getSqlMapClientTemplate().queryForObject("getProfileBySubscriptionKey", subscriptionKey);
+	}
 }
