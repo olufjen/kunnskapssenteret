@@ -196,6 +196,8 @@
 			<fileset dir="${project.lib.dir}">
 				<include name="*.jar" />
 			</fileset>
+			<fileset file="${project.home.dir}/lib/ibatis-2.3.4.726.jar" />
 		</copy>
+			
 	</target>
 </project>

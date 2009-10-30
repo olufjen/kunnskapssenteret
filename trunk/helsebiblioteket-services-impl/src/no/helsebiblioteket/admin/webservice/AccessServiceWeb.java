@@ -165,7 +165,7 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url) {
+	public SingleResultSupplierSource getSupplierSourceByDomain(Url url) {
 		Object[] args = new Object[] { url };
 		Class[] returnTypes = new Class[] { SingleResultSupplierSource.class };
 		return (SingleResultSupplierSource) invoke(this.supplierSourceByUrlStartsWithName, args, returnTypes);

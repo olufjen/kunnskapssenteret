@@ -115,8 +115,8 @@ public class AccessServiceSso extends SsoService implements AccessService{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url) {
-		return accessService.getSupplierSourceByUrlStartsWith(url);
+	public SingleResultSupplierSource getSupplierSourceByDomain(Url url) {
+		return accessService.getSupplierSourceByDomain(url);
 	}
 	@Override
 	public Log getLogger() {

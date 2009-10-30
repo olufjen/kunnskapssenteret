@@ -155,6 +155,18 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Object[] args = new Object[] { user };
 		invoke(this.deleteUserName, args, null);
 	}
+	
+	@Override
+	public boolean unsubscribeNewsletter(String subscriptionKey) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean unsubscribeSurvey(String subscriptionKey) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	public Log getLogger() {
 		return logger;
 	}

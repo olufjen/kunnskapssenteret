@@ -19,7 +19,7 @@ import java.lang.reflect.Array;
 @SuppressWarnings("serial")
 public abstract class BasicWebService implements Serializable {
 	
-	private CacheHelper cacheHelper;
+	//private CacheHelper cacheHelper;
 	public abstract Log getLogger();
 	private Options options;
 	private RPCServiceClient serviceClient;
@@ -99,7 +99,7 @@ public abstract class BasicWebService implements Serializable {
 	 */
 	@SuppressWarnings("unchecked")
 	public Object invokeCached(String cacheKey, QName name, Object[] args, Class[] returnTypes) {
-		return invokeCached(CacheKey.defaultCache, cacheKey, name, args, returnTypes);
+		return null;
 	}
 	
 	/**
@@ -107,15 +107,7 @@ public abstract class BasicWebService implements Serializable {
 	 */
 	@SuppressWarnings("unchecked")
 	public Object invokeCached(CacheKey cacheKey, String key, QName name, Object[] args, Class[] returnTypes) {
-		Object response = cacheHelper.findCache(cacheKey, key);
-		if (response == null) {
-			response = invoke(name, args, returnTypes);
-			cacheHelper.addCache(cacheKey, key, response);
-			getLogger().debug("could not find cached content for key '" + key + "' in cache '" + cacheKey.name() + "', adding content to cache");
-		} else {
-			getLogger().debug("found cached result for key '" + key + "' in cache '" + cacheKey.name() + "'");
-		}
-		return response;
+		return null;
 	}
 	
 	public void setServiceClient(RPCServiceClient serviceClient) {
@@ -130,7 +122,7 @@ public abstract class BasicWebService implements Serializable {
 		this.chunked = chunked;
 	}
 
-	public void setCacheHelper(CacheHelper cacheHelper) {
-		this.cacheHelper = cacheHelper;
-	}
+	//public void setCacheHelper(CacheHelper cacheHelper) {
+	//	this.cacheHelper = cacheHelper;
+	//}
 }

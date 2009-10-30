@@ -37,7 +37,7 @@ public class LoginServiceSso extends SsoService implements LoginService {
 		return loginService.loginOrganizationByIpAddress(ipAddress);
 	}
 	@Override
-	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String accessDomain) {
+	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String accessDomain, String key) {
 		/* String key = (
 				((accessDomain != null) ? (accessDomain) : "noreferrer")
 				);
@@ -47,7 +47,7 @@ public class LoginServiceSso extends SsoService implements LoginService {
 			cacheHelper.addCache(CacheKey.loginServiceSsologinOrganizationByReferringDomainCache, key, result);
 		}
 		return (LoggedInOrganizationResult) result;*/
-		return loginService.loginOrganizationByReferringDomain(accessDomain);
+		return loginService.loginOrganizationByReferringDomain(accessDomain, key);
 	}
 	@Override
 	public SendPasswordEmailResult sendPasswordEmail(String emailAddress, Email email) {
