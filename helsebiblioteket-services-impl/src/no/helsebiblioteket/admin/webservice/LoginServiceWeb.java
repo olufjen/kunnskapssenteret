@@ -42,7 +42,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		return (LoggedInOrganizationResult) invoke(this.logInIpAddressName, args, returnTypes);
 	}
 	@Override
-	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String domain) {
+	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String domain, String key) {
 		Object[] args = new Object[] { domain };
 		Class[] returnTypes = new Class[] { LoggedInOrganizationResult.class };
 		return (LoggedInOrganizationResult) invoke(this.logInAccessDomainName, args, returnTypes);

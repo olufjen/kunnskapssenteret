@@ -198,8 +198,10 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 		OrganizationListItem organization = new OrganizationListItem();
 		Url url1 = new Url();
 		url1.setStringValue("http://proxy.helsebiblioteket.no/login?url=http://www.legehandboka.no");
+		url1.setDomain("proxy.helsebiblioteket.no");
 		Url url2 = new Url();
 		url2.setStringValue("http://www.g-i-n.net.proxy.helsebiblioteket.no/");
+		url1.setDomain("www.g-i-n.net.proxy.helsebiblioteket.no");
 		Boolean isAffected1 = loginService.isAffected(url1);
 		Boolean isAffected2 = loginService.isAffected(url2);
 		@SuppressWarnings("unused")

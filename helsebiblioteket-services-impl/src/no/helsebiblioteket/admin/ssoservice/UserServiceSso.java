@@ -130,4 +130,12 @@ public class UserServiceSso extends SsoService implements UserService {
 	public void deleteUser(User user) {
 		this.userService.deleteUser(user);
 	}
+	@Override
+	public boolean unsubscribeNewsletter(String subscriptionKey) {
+		return userService.unsubscribeNewsletter(subscriptionKey);
+	}
+	@Override
+	public boolean unsubscribeSurvey(String subscriptionKey) {
+		return userService.unsubscribeSurvey(subscriptionKey);
+	}
 }
