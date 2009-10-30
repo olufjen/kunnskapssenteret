@@ -50,6 +50,6 @@ public interface AccessService extends Serializable {
 	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationTypeKey organizationType);
 
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY);
-	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url);
+	public SingleResultSupplierSource getSupplierSourceByDomain(Url url);
 	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY);
 }

@@ -11,6 +11,6 @@ import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 public interface LoginService extends Serializable {
     public LoggedInUserResult loginUserByUsernamePassword(String username, String password);
     public LoggedInOrganizationResult loginOrganizationByIpAddress(IpAddress ipAddress);
-    public LoggedInOrganizationResult loginOrganizationByReferringDomain(String domain);
+    public LoggedInOrganizationResult loginOrganizationByReferringDomain(String domain, String key);
     public SendPasswordEmailResult sendPasswordEmail(String emailAddress, Email email);
 }

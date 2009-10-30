@@ -1,5 +1,12 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import org.apache.commons.logging.Log;
@@ -27,6 +34,7 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
+import no.helsebiblioteket.util.Base64;
 
 public class LoginServiceImpl implements LoginService {
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -92,11 +100,14 @@ public class LoginServiceImpl implements LoginService {
 	 * Returns the first found if there are more than one match.
 	 */
 	@Override
-	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String accessDomain) {
+	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String accessDomain, String key) {
 		LoggedInOrganizationResult returnThis = new LoggedInOrganizationResult();
+		if (! validateAccessDomainKey(key)) {
+			return returnThis;
+		}
 		ListResultOrganizationListItem result = this.organizationService.getOrganizationListByAccessDomain(accessDomain);
 		OrganizationListItem[] list = result.getList();
-		if(list.length >= 1) {			
+		if(list.length >= 1) {
 			if (list.length > 1) {
 				logger.warn(list.length + " organizations found for access domain '" + accessDomain + "'. Expected only one");
 			}
@@ -110,6 +121,34 @@ public class LoginServiceImpl implements LoginService {
 			}
 		}
 		return returnThis;
+	}
+	
+	private boolean validateAccessDomainKey(String key) {
+		boolean ret = false;
+		String urlDecodedKey = null;
+		try {
+			urlDecodedKey = URLDecoder.decode(key, "UTF-8");
+		} catch (UnsupportedEncodingException uee) {
+			logger.error("Could not perform url decoding for string '" + key + "'. Message: " + uee.getMessage());
+		}
+		String urlDecodedBase64DecodedKey = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			Base64.decode(urlDecodedKey, baos);
+		} catch (IOException ioe) {
+			logger.error("Could not base64 decode string '" + key + "'. Message: " + ioe.getMessage()); 
+		}
+		try {
+			urlDecodedBase64DecodedKey = new String(baos.toByteArray(), "UTF-8");
+		} catch (UnsupportedEncodingException uee) {
+			logger.error("Could not perform base64 decoding for string '" + key + "'. Message: " + uee.getMessage());
+		}
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateAsString = formatter.format(new Date());
+        if (dateAsString.equals(urlDecodedBase64DecodedKey)) {
+        	ret = true;
+        }
+		return ret;
 	}
 	
 	/**

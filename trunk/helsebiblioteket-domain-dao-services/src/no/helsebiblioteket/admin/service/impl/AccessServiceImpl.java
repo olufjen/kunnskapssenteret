@@ -256,8 +256,8 @@ public class AccessServiceImpl implements AccessService {
 	 * url has the URL text to search for.
 	 */
 	@Override
-	public SingleResultSupplierSource getSupplierSourceByUrlStartsWith(Url url) {
-		SupplierSource supplierSoruce = this.supplierSourceDao.getSupplierSourceByUrlStartsWith(url);
+	public SingleResultSupplierSource getSupplierSourceByDomain(Url url) {
+		SupplierSource supplierSoruce = this.supplierSourceDao.getSupplierSourceByDomain(url);
 		if(supplierSoruce == null){
 			return new EmptyResultSupplierSource();
 		} else {

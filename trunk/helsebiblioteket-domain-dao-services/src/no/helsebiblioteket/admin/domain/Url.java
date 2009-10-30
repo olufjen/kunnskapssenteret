@@ -6,6 +6,8 @@ import java.io.Serializable;
 public class Url implements Serializable {
 	// setStringValue is used by database!
 	private String stringValue;
+	private String domain;
+
 	public Url() { super(); }
 
 	public Url(String value) {
@@ -24,5 +26,13 @@ public class Url implements Serializable {
 	}
 	public void setStringValue(String value) {
 		this.stringValue = value;
+	}
+	
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 }

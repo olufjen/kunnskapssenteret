@@ -13,5 +13,5 @@ public interface SupplierSourceDao {
 	// Fetch
 	public List<SupplierSource> getSupplierSourceListAll();
 	public SupplierSource getSupplierSourceById(Integer id);
-	public SupplierSource getSupplierSourceByUrlStartsWith(Url url);
+	public SupplierSource getSupplierSourceByDomain(Url url);
 }
