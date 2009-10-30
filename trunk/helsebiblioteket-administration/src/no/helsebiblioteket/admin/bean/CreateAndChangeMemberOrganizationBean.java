@@ -292,7 +292,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		for (SupplierSourceResource resource : resources) {
 			SelectItem item = new SelectItem("" + resource.getResource().getId(), "" +
 					resource.getSupplierSource().getSupplierSourceName() + " " +
-					resource.getSupplierSource().getUrl().getStringValue());
+					resource.getSupplierSource().getUrl().getDomain());
 			list.add(item);
 		}
 		return list;

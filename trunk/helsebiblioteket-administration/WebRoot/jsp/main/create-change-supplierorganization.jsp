@@ -217,7 +217,7 @@
 		</tr>
 		<tr>
 			<td valign="top">
-				<h:outputText value="#{msg_main.source} (#{msg_main.name} - #{msg_main.url} - #{msg_main.proxy_database_name})" />
+				<h:outputText value="#{msg_main.source} (#{msg_main.name} - #{msg_main.domain} - #{msg_main.proxy_database_name})" />
 			</td>
 			<td>
 				<h:inputText 
@@ -260,7 +260,7 @@
 						value="#{createAndChangeSupplierOrganizationBean.supplierOrganization.resourceList}"
 						binding="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
 					<t:column>
-			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} - #{source.supplierSource.url.stringValue} - #{source.supplierSource.proxyDatabaseName}" />
+			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} - #{source.supplierSource.url.domain} - #{source.supplierSource.proxyDatabaseName}" />
 			    	</t:column>
 			    	<t:column style="vertical-align:top">
 			      		<t:commandLink id="sourceDeleteLink" action="#{createAndChangeSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">

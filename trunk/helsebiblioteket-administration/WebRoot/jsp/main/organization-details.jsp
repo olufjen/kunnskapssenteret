@@ -179,8 +179,8 @@
 			var="orgTypeAccess" rendered="#{organizationBean.isMemberOrganization}" >
 
 			<h:column id="urlColumn">
-      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
-      			<h:outputText id="orgTypeAccessUrl" value="#{orgTypeAccess.url.stringValue}" />
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_domain}"/></f:facet>
+      			<h:outputText id="orgTypeAccessUrl" value="#{orgTypeAccess.url.domain}" />
     		</h:column>
 			<h:column id="supplierSourceNameColumn">
       			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
@@ -206,8 +206,8 @@
 			var="orgAccess" rendered="#{organizationBean.isMemberOrganization}" >
 
 			<h:column id="urlColumnOrg">
-      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_url}"/></f:facet>
-      			<h:outputText id="orgAccessUrl" value="#{orgAccess.url.stringValue}" />
+      			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_domain}"/></f:facet>
+      			<h:outputText id="orgAccessUrl" value="#{orgAccess.url.domain}" />
     		</h:column>
 			<h:column id="supplierSourceNameColumnOrg">
       			<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
@@ -244,9 +244,9 @@
     		</h:column>
 			<h:column id="supplierSourceUrlColumn">
       			<f:facet name="header">
-      				<h:outputText value="#{msg_main.organization_supplier_source_url}"/>
+      				<h:outputText value="#{msg_main.organization_supplier_source_domain}"/>
       			</f:facet>
-      			<h:outputText id="supplier_source_url" value="#{resource.supplierSource.url.stringValue}" />
+      			<h:outputText id="supplier_source_url" value="#{resource.supplierSource.url.domain}" />
     		</h:column>
 		</h:dataTable>
 	</t:div>

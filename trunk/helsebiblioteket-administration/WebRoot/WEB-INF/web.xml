@@ -4,10 +4,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd"
 	id="springsecurity"
 	version="2.5">
-	<display-name>springsecurity</display-name>
-	<welcome-file-list>
-		<welcome-file>/login.jsp</welcome-file>
-	</welcome-file-list>
+	<display-name>Helsebiblioteket - administration</display-name>
+	
 	<description>debug web.xml</description>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -268,8 +266,7 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>welcome.faces</welcome-file>
-		<welcome-file>welcome.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
 </web-app>
