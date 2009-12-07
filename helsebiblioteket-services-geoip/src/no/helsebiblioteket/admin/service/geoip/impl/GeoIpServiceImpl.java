@@ -21,22 +21,22 @@ public class GeoIpServiceImpl implements GeoIpService {
 	private String licenseKey = null;
 	private static LookupService lookupService;
 	
-	public boolean hasAccess(InetAddress ipAddress, String countryCodes) {
+	public boolean hasAccess(String ipAddress, String countryCodes) {
 		if (!initiated) {
-			initGeoIpDb();
+			initiated = initGeoIpDb();
 		}
 		List<String> countryCodeList = Arrays.asList(countryCodes.split(","));
 		return validateIp(ipAddress, countryCodeList);
 	}
 	
 	
-	private boolean validateIp(InetAddress ipAddress, List<String> countrycodes) {
-        logger.debug("start looking up: " + ((ipAddress != null) ? ipAddress.toString() : null));
+	private boolean validateIp(String ipAddress, List<String> countrycodes) {
+        logger.debug("start looking up: " + ((ipAddress != null) ? ipAddress : null));
         Country country = lookupService.getCountry(ipAddress);
         String code = country.getCode();
         
         if (ipAddress != null) {
-            logger.debug("country for " + ipAddress.getHostAddress() + ": " + code + " / " + country.getName());
+            logger.debug("country for " + ipAddress + ": " + code + " / " + country.getName());
         }
 
         if (!"".equals(code) && !"--".equals(code)) {
@@ -52,6 +52,7 @@ public class GeoIpServiceImpl implements GeoIpService {
     }
 	
 	private boolean initGeoIpDb() {
+		boolean ret = false;
         try {
             File dbFile = new File(dataFileName);
             if (licenseKey != null && !"".equals(licenseKey)) {
@@ -61,14 +62,15 @@ public class GeoIpServiceImpl implements GeoIpService {
                 logger.debug("lookupService with GEOIP_MEMORY_CACHE");
                 lookupService = new LookupService(dbFile, LookupService.GEOIP_MEMORY_CACHE);
             }
-            initiated = true;
-            return true;
+            ret = true;
         } catch (IOException e) {
-            logger.warn("Failed to init LookupService", e);
+            logger.error("Failed to init LookupService", e);
+            ret = false;
         } catch (NullPointerException e) {
-            logger.warn("Failed to init LookupService", e);
+            logger.error("Failed to init LookupService", e);
+            ret = false;
         }
-        return false;
+        return ret;
     }
 	
 	public String getDataFileName() {
