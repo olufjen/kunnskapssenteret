@@ -2,7 +2,9 @@ package no.helsebiblioteket.admin.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
@@ -13,6 +15,7 @@ import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.SystemDao;
 import no.helsebiblioteket.admin.dao.UserDao;
+import no.helsebiblioteket.admin.dao.UserExportDao;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
@@ -30,6 +33,7 @@ import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.parameter.UserExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSystem;
@@ -65,8 +69,9 @@ public class UserServiceImpl implements UserService {
 	private PositionDao positionDao;
     private OrganizationDao organizationDao;
     private SystemDao systemDao;
+    private UserExportDao userExportDao;
 
-    /**
+	/**
      * Fetches the system with the given key from the
      * database.
      */
@@ -343,26 +348,30 @@ public class UserServiceImpl implements UserService {
 		boolean ret = false;
 		Profile profile = profileDao.getProfileBySubscriptionKey(subscriptionKey);
 		if (null != profile) {
-			if (!profile.getReceiveNewsletter()) {
-				ret = false;
-			} else {
+			ret = true;
+			if (profile.getReceiveNewsletter()) {
 				profile.setReceiveNewsletter(false);
 				profileDao.updateProfile(profile);
-				ret = true;
 			}
+		} else {
+			ret = false;
 		}
 		return ret;
 	}
 	
 	public boolean unsubscribeSurvey(String subscriptionKey) {
+		boolean ret = false;
 		Profile profile = profileDao.getProfileBySubscriptionKey(subscriptionKey);
-		if (!profile.getReceiveNewsletter()) {
-			return false;
+		if (profile != null) {
+			if (profile.getParticipateSurvey()) {
+				profile.setParticipateSurvey(false);
+				profileDao.updateProfile(profile);
+				ret = true;
+			}
 		} else {
-			profile.setReceiveNewsletter(false);
-			profileDao.updateProfile(profile);
-			return true;
+			ret = false;
 		}
+		return ret;
 	}
 	
 	private SingleResultUser createOrganizationUser(OrganizationUser organizationUser) {
@@ -498,6 +507,44 @@ public class UserServiceImpl implements UserService {
 		return key;
 	}
 	
+	@Override
+	public List<User> getUserExportList(UserExportParameter parameter) {
+		return userExportDao.getUserExportList(parameter);
+	}
+	
+	@Override
+	public String getUserExportCsv(UserExportParameter parameter) {
+		String columnSeparator = ",";
+		StringBuilder result = new StringBuilder();
+		List<User> userList = getUserExportList(parameter);
+		result
+			.append("User1").append(columnSeparator)
+			.append("EMail1Address").append(columnSeparator)
+			.append("FirstName").append(columnSeparator)
+			.append("LastName").append(columnSeparator)
+			.append("Spouse")
+			.append("\n")
+			;
+		if (null != userList) {
+			for (User user : userList) {
+				if (user.getUsername() != null) {
+					result.append(user.getUsername().replaceAll(",", " ")).append(columnSeparator);
+				}
+				if (user.getPerson() != null) {
+					if (user.getPerson().getContactInformation() != null) {
+						result.append(user.getPerson().getContactInformation().getEmail().replaceAll(",", " ")).append(columnSeparator);
+					}
+					result.append(user.getPerson().getFirstName().replaceAll(",", " ")).append(columnSeparator);
+					result.append(user.getPerson().getLastName().replaceAll(",", " ")).append(columnSeparator);
+					if (user.getPerson().getProfile() != null) {
+						result.append(user.getPerson().getProfile().getSubscriptionKey());
+					}
+				}
+				result.append("\n");
+			}
+		}
+		return result.toString();
+	}
 	
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -528,5 +575,11 @@ public class UserServiceImpl implements UserService {
 	}
 	public void setContactInformationDao(ContactInformationDao contactInformationDao) {
 		this.contactInformationDao = contactInformationDao;
+	}
+	public UserExportDao getUserExportDao() {
+		return userExportDao;
+	}
+	public void setUserExportDao(UserExportDao userExportDao) {
+		this.userExportDao = userExportDao;
 	}
 }

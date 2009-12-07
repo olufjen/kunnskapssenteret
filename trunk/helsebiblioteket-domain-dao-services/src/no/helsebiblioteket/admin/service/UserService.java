@@ -6,6 +6,8 @@ package no.helsebiblioteket.admin.service;
  */
 
 import java.io.Serializable;
+import java.util.List;
+
 import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
@@ -15,6 +17,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.parameter.UserExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultUser;
@@ -50,6 +53,8 @@ public interface UserService extends Serializable {
 	public Boolean updateUser(User user);
 	public void deleteUser(User user);
 	
+	public List<User> getUserExportList(UserExportParameter parameter);
+	public String getUserExportCsv(UserExportParameter parameter);
 	public boolean unsubscribeNewsletter(String subscriptionKey);
 	public boolean unsubscribeSurvey(String subscriptionKey);
 }

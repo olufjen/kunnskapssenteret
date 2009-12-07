@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class User implements Serializable {
@@ -18,6 +20,7 @@ public class User implements Serializable {
 
 	// Values loaded with UserRoleLine
 	private Role[] roleList;
+	
 	
 	// Helpers
 	@Override
@@ -91,6 +94,22 @@ public class User implements Serializable {
 	public void setRoleList(Role[] roleList) {
 		this.roleList = roleList;
 	}
+	public void setRoleListAsList(List<Role> roleList) {
+		if (roleList != null) {
+			this.roleList = (Role[]) roleList.toArray(new Role[roleList.size()]);
+		} else {
+			this.roleList = null;
+		}
+	}
+	
+	public List<Role> getRoleListAsList() {
+		if (this.roleList != null) {
+			return Arrays.asList(this.roleList);
+		} else {
+			return null;
+		}
+	}
+	
 	public boolean isDeleted() {
 		return deleted;
 	}

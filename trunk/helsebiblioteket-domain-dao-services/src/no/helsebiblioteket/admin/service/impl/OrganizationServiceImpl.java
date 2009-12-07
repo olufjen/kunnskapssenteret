@@ -6,9 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
@@ -60,6 +58,9 @@ import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.validator.IpAddressValidator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class OrganizationServiceImpl implements OrganizationService {
 	private final Log logger = LogFactory.getLog(getClass());
 	private static final long serialVersionUID = 1L;
@@ -75,8 +76,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 //	private ResourceTypeDao resourceTypeDao;
 	private PositionDao positionDao;
 	private SupplierSourceDao supplierSourceDao;
+	private AccessDao accessDao;
 	
 
+	
 	/**
 	 * Fetches all OrganizationType in the database. Delegates the task to
 	 * OrganizationTypeDao. The variable DUMMY is never used.
@@ -777,7 +780,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public Boolean deleteResources(SupplierSourceResource[] resources) {
 		for (SupplierSourceResource supplierSourceResource : resources) {
-			if(supplierSourceResource.getResource().getId() != null){
+			if(supplierSourceResource.getResource().getId() != null) {
+				this.accessDao.deleteAccessByResourceId(supplierSourceResource.getResource().getId());
 				this.resourceDao.deleteSupplierSourceResource(supplierSourceResource);
 				this.supplierSourceDao.deleteSupplierSource(supplierSourceResource.getSupplierSource());
 			}
@@ -820,5 +824,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	public void setPositionDao(PositionDao positionDao) {
 		this.positionDao = positionDao;
+	}
+	public AccessDao getAccessDao() {
+		return accessDao;
+	}
+	public void setAccessDao(AccessDao accessDao) {
+		this.accessDao = accessDao;
 	}
 }
