@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
 
-<project name="helsebiblioteket-importexport" basedir="." default="usage">
+<project name="helsebiblioteket-services-geoip" basedir="." default="usage">
     <property file="build.properties"/>
+	<property name="project.lib.dir" value="${project.home}/lib"/>
+	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
 	
     <path id="master-classpath">
-    	<fileset dir="${helsebiblioteket-domain-dao-services-lib.dir}">
-    		<include name="**/*.jar" />
-    	</fileset>
+    	<fileset dir="${project.lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
     </path>
 	
 	<path id="master-sourcedir">
