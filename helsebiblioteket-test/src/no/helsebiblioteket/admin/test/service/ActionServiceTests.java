@@ -52,7 +52,9 @@ public class ActionServiceTests {
 		AccessType general_GRANT = ((ValueResultAccessType)beanFactory.getAccessService().getAccessTypeByTypeCategory(AccessTypeKey.general, AccessTypeCategory.GRANT)).getValue();
 		ResourceType supplier_source = ((ValueResultResourceType)beanFactory.getAccessService().getResourceTypeByKey(ResourceTypeKey.supplier_source)).getValue();
 		SupplierSource source = SupplierSourceFactory.factory.completeSupplierSource();
-		source.setUrl(new Url("url_" + randomValue));
+		Url url = new Url();
+		url.setStringValue("url_" + randomValue);
+		source.setUrl(url);
 		
 		// Create objects
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(health_enterprise, vernepleier);

@@ -24,7 +24,9 @@ public class SupplierSourceDaoTests implements Runnable {
 		SupplierSource supplierSource = SupplierSourceFactory.factory.completeSupplierSource();
 		String url1 = "URL" + new Random().nextInt(1000000);
 		String url2 = "URL" + new Random().nextInt(1000000);
-		supplierSource.setUrl(new Url(url1));
+		Url url = new Url();
+		url.setStringValue(url1);
+		supplierSource.setUrl(url);
 		
 		// INSERT
 		supplierSourceDao.insertSupplierSource(supplierSource);
@@ -34,7 +36,9 @@ public class SupplierSourceDaoTests implements Runnable {
 		Assert.isTrue(found.getUrl().getStringValue().equals(url1), "Saved with wrong URL");
 		
 		// UPDATE
-		found.setUrl(new Url(url2));
+		url = new Url();
+		url.setStringValue(url2);
+		found.setUrl(url);
 		supplierSourceDao.updateSupplierSource(supplierSource);
 		found = supplierSourceDao.getSupplierSourceById(supplierSource.getId());
 		Assert.isTrue(found.getUrl().getStringValue().equals(url1), "Not updated");
