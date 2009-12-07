@@ -6,11 +6,21 @@
 	version="2.5">
 	<display-name>Helsebiblioteket - administration</display-name>
 	
+	<locale-encoding-mapping-list>
+		<locale-encoding-mapping>
+			<locale>en</locale>
+			<encoding>UTF-8</encoding>
+		</locale-encoding-mapping>
+		<locale-encoding-mapping>
+			<locale>no</locale>
+			<encoding>UTF-8</encoding>
+		</locale-encoding-mapping>
+	</locale-encoding-mapping-list>
+	
 	<description>debug web.xml</description>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value> /WEB-INF/applicationContext.xml
-					
+		<param-value> /WEB-INF/applicationContext.xml				
 		</param-value>
 	</context-param>
 

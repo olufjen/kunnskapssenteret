@@ -159,6 +159,12 @@
 		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
    	</definition>
 
+	<!-- Export user data online -->
+   	<definition name="export-user.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/export-user.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
 	<!-- Import and export og initial data -->
 	<definition name="importexport.tiles" extends="basicFrame">
 		<put name="main" value="/jsp/main/importexport.jsp" type="page" />

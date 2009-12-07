@@ -55,6 +55,9 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	<bean id="userExportDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserExportDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
@@ -172,10 +175,12 @@ xmlns="http://www.springframework.org/schema/beans"
     	<property name="profileDao" ref="profileDao"></property>
     	<property name="positionDao" ref="positionDao"></property>
     	<property name="resourceDao" ref="resourceDao"></property>
+    	<property name="accessDao" ref="accessDao"></property>
   	</bean>
  
   	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
   		<property name="userDao" ref="userDao"></property>
+  		<property name="userExportDao" ref="userExportDao"></property>
   		<property name="userListDao" ref="userListDao"></property>
   		<property name="roleDao" ref="roleDao"></property>
   		<property name="userRoleDao" ref="userRoleDao"></property>
@@ -307,6 +312,8 @@ xmlns="http://www.springframework.org/schema/beans"
 				/users-overview.faces=ROLE_administrator
 				/organization-types-overview.faces=ROLE_administrator
 				/organization-type-edit.faces=ROLE_administrator
+				/export.faces=ROLE_administrator
+				/export-user.faces=ROLE_administrator
 			</value>
 		</property>
 	</bean>

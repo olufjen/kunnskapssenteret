@@ -231,13 +231,13 @@
 				<h:outputText value=" - " />
 				<h:inputText 
 					size="10"
-					value="#{createAndChangeSupplierOrganizationBean.sourceUrl}"
-					id="sourceUrl" 
+					value="#{createAndChangeSupplierOrganizationBean.sourceDomain}"
+					id="sourceDomain" 
 					required="false"
-					binding="#{createAndChangeSupplierOrganizationBean.sourceUrlUIInput}"
+					binding="#{createAndChangeSupplierOrganizationBean.sourceDomainUIInput}"
 					>
 				</h:inputText>
-				<h:message for="sourceUrl" styleClass="error" />
+				<h:message for="sourceDomain" styleClass="error" />
 				<h:outputText value=" - " />
 				<h:inputText
 					size="5" 
@@ -251,6 +251,38 @@
 				<h:commandLink immediate="true" value="#{msg_main.add}" action="#{createAndChangeSupplierOrganizationBean.actionAddSupplierSource}" />
 			</td>
 		</tr>
+		<script type="text/javascript">
+			<!--
+			function confirmationDelete(link, text) {
+				if (confirmDelete(text)) {
+					link.fireEvent('onclick');
+					return true;
+				}
+				return false;
+			}
+
+			var deleteClick;
+            
+			function assignDeleteClick(link, text) {
+			  if (link.onclick == confirmDelete(text)) {
+			    return;
+			  }
+			  deleteClick = link.onclick;
+			  link.onclick = confirmDelete;
+			}
+			            
+			            
+			function confirmDelete() {
+			  var ans = confirm("Delete?");
+			  if (ans == true) {
+			    return deleteClick();
+			  } else {
+			    return false;
+			  }
+
+			}
+			-->
+			</script>
 		<tr>
 			<td valign="top">
 				<h:outputText value="#{msg_main.chosen} #{msg_main.sources}:" />
@@ -263,7 +295,7 @@
 			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} - #{source.supplierSource.url.domain} - #{source.supplierSource.proxyDatabaseName}" />
 			    	</t:column>
 			    	<t:column style="vertical-align:top">
-			      		<t:commandLink id="sourceDeleteLink" action="#{createAndChangeSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">
+			      		<t:commandLink id="sourceDeleteLink" onclick="if (!confirm('#{msg_main.really_delete}')) return false" action="#{createAndChangeSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">
 			      			<f:param id="sourceDeleteParam" name="sourceDeleteTableRowIndex" value="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable.rowIndex}"/>
 			      		</t:commandLink>
 			    	</t:column>
