@@ -1,5 +1,7 @@
 package no.helsebiblioteket.admin.webservice;
 
+import java.util.List;
+
 import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
@@ -17,6 +19,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.parameter.UserExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultUser;
@@ -208,5 +211,15 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setDeleteUserName(QName deleteUserName) {
 		this.deleteUserName = deleteUserName;
+	}
+	@Override
+	public String getUserExportCsv(UserExportParameter parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<User> getUserExportList(UserExportParameter parameter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
