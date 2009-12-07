@@ -46,7 +46,7 @@
 	<delete id="deleteSupplierSourceResource" parameterClass="SupplierSourceResource">
 		delete from tbl_resource
 		where resource_id = #resource.id# 
-		and date_trunc('milliseconds', last_changed) = #resource.lastChanged#
+		and date_trunc('milliseconds', last_changed) = #resource.lastChanged#;
 	</delete>
 	<select id="getSupplierSourceResourceById" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
 		select
@@ -66,7 +66,8 @@
 			inner join tbl_supplier_source as sup on res.supplier_source_id = sup.supplier_source_id
 			inner join tbl_resource_type_reg as type on res.resource_type_id = type.resource_type_id
 		where
-			res.resource_id = #id#;
+			res.resource_id = #id#
+			and res.deleted is false;
 	</select>
 	<select id="getSupplierSourceResourceByOrganizationId" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
 		select
