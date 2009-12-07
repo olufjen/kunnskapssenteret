@@ -12,7 +12,9 @@ public class SupplierSourceFactory {
 		SupplierSource supplierSource = new SupplierSource();
 		supplierSource.setLastChanged(new Date());
 		supplierSource.setSupplierSourceName("");
-		supplierSource.setUrl(new Url(""));
+		Url url = new Url();
+		url.setStringValue("");
+		supplierSource.setUrl(url);
 		return supplierSource;
 	}
 	public SupplierSource completeSupplierSource(){

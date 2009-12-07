@@ -24,4 +24,5 @@ public interface AccessDao {
 	public List<ResourceAccessListItem> getAccessListByOrganizationType(OrganizationTypeKey organizationType);
 
 	public List<ResourceAccessForeignKeys> getAccessListByResource(Resource resource);
+	public void deleteAccessByResourceId(Integer resourceId);
 }
