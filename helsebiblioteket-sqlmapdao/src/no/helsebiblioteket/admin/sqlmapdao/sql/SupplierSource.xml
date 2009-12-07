@@ -53,7 +53,6 @@
 	<delete id="deleteSupplierSource" parameterClass="SupplierSource">
 		delete from tbl_supplier_source
 		where supplier_source_id = #id#
-		and date_trunc('milliseconds', last_changed) = #lastChanged#
 	</delete>
 	<select id="getSupplierSourceListAll" resultMap="SupplierSourceMap">
 		select supplier_source_name, domain, supplier_source_id, proxy_database_name, deleted, date_trunc('milliseconds', last_changed) as last_changed

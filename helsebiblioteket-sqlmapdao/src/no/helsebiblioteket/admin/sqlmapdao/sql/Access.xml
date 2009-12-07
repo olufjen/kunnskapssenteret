@@ -86,6 +86,12 @@
   		where
   		access_id = #resourceAccess.access.id# and date_trunc('milliseconds', last_changed) = #resourceAccess.access.lastChanged#
     </delete>
+    
+    <delete id="deleteAccessByResourceId" parameterClass="integer">
+  		delete from tbl_access
+  		where
+  		resource_id = #id#;
+    </delete>
 
 	<select id="getResourceAccessForeignKeysByAccessId" resultMap="ResourceAccessResultMap" parameterClass="integer">
 		select access_type_id, 

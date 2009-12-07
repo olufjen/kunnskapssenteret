@@ -62,4 +62,8 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 	public List<ResourceAccessForeignKeys> getAccessListByResource(Resource resource) {
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByResource", resource);
 	}
+	@Override
+	public void deleteAccessByResourceId(Integer resourceId) {
+		getSqlMapClientTemplate().delete("deleteAccessByResourceId", resourceId);
+	}
 }

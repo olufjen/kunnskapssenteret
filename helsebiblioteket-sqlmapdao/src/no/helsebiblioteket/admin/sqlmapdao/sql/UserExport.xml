@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="UserExport">
+	<typeAlias alias="UserExport" type="no.helsebiblioteket.admin.domain.User"/>
+	<typeAlias alias="UserRoleExport" type="no.helsebiblioteket.admin.domain.Role"/>
+	<typeAlias alias="UserExportParameter" type="no.helsebiblioteket.admin.domain.parameter.UserExportParameter" />
+	<resultMap id="userRoleExportMap" class="UserRoleExport" groupBy="role_role_id">
+		<result property="id" column="role_role_id" />
+		<result property="key.value" column="role_key" />
+	</resultMap>
+	<resultMap id="userExportMap" class="UserExport">
+		<result property="id" column="user_user_id" />
+		<result property="username" column="user_username" />
+		<result property="person.firstName" column="person_first_name" />
+		<result property="person.lastName" column="person_last_name" />
+		<result property="roleListAsList" column="role_role_id" resultMap="UserExport.userRoleExportMap" />
+		<result property="person.contactInformation.email" column="contactinformation_email" />
+		<result property="person.profile.receiveNewsletter" column="profile_receive_newsletter" />
+		<result property="person.profile.participateSurvey" column="profile_participate_survey" />
+		<result property="person.profile.subscriptionKey" column="profile_subscription_key" />
+		<result property="person.profile.id" column="profile_profile_id" />
+	</resultMap>
+
+	<select id="getUserExportList" resultMap="userExportMap"  parameterClass="UserExportParameter">
+		select 
+			usr.user_id as user_user_id,
+			usr.username as user_username,
+			contactinformation.email as contactinformation_email,
+			person.first_name as person_first_name,
+			person.last_name as person_last_name,
+			role.user_role_id as role_role_id,
+			role.key as role_key,
+			profile.subscription_key as profile_subscription_key,
+			profile.receive_newsletter as profile_receive_newsletter,
+			profile.participate_survey as profile_participate_survey,
+			profile.profile_id as profile_profile_id
+		from 
+			tbl_user_role_reg role, 
+			tbl_user_role userrole, 
+			tbl_user usr, 
+			tbl_person person, 
+			tbl_profile profile,
+			tbl_contact_information contactinformation
+		where 
+			contactinformation.contact_information_id = person.contact_information_id
+			and person.person_id = usr.person_id
+			and usr.user_id = userrole.user_id
+			and userrole.user_role_id = role.user_role_id
+			and profile.profile_id = person.profile_id
+			and usr.deleted = false
+			<iterate prepend="and" property="roleKeyList" open="(" close=")" conjunction="OR">
+				role.key = #roleKeyList[]#
+			</iterate>
+			<isNotNull prepend="and" property="participateSurvey">
+		  		profile.participate_survey = #participateSurvey#
+		  	</isNotNull>
+			<isNotNull prepend="and" property="receiveNewsletter">
+				profile.receive_newsletter = #receiveNewsletter#
+			</isNotNull>
+		order by
+			<isEqual property="randomize" compareValue="true">
+				random()
+			</isEqual>
+			<isEqual property="randomize" compareValue="false">
+				usr.user_id desc
+			</isEqual>
+		<isGreaterThan property="limit" compareValue="1">
+			limit #limit#
+		</isGreaterThan>
+		;
+	</select>
+</sqlMap>
