@@ -13,6 +13,7 @@
 	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl-home.dir}/target"/>
 	<property name="helsebiblioteket-administration-web-lib.dir" value="${helsebiblioteket-administration-web-home.dir}/lib"/>
 	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/target"/>
+	<property name="helsebiblioteket-services-geoip-target.dir" value="${helsebiblioteket-services-geoip-home.dir}/target"/>
 	<property name="evs.cms.deploy.lib.dir" value="${evs.cms.deploy.dir}/WEB-INF/lib"/>
 	
 	
@@ -55,7 +56,9 @@
 	
 	<target name="prepare-dependencies" description="Compile main source tree java files">
 		<ant dir="${helsebiblioteket-domain-dao-services-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-services-geoip-home.dir}" inheritAll="false" target="package"/>
 		<ant dir="${helsebiblioteket-services-impl-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-sqlmapdao-home.dir}" inheritAll="false" target="package"/>
 	</target>
 
 	<target name="build" description="Compile main source tree java files" depends="prepare-dependencies">
@@ -133,9 +136,12 @@
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/ibatis-2.3.4.726.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/commons-dbcp-1.2.2.jar" />
 			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/commons-pool-1.4.jar" />
+			<fileset file="${helsebiblioteket-services-geoip-home.dir}/lib/maxmindgeoip.jar" />
 			<fileset dir="${helsebiblioteket-sqlmapdao-target.dir}" includes="**/*.jar" />
+			<fileset dir="${helsebiblioteket-services-geoip-target.dir}" includes="**/*.jar" />
 			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
 			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
+			
 		</copy>
 	</target>
 

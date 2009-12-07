@@ -4,18 +4,17 @@
     <xsl:include href="/shared/includes/formTemplates.xsl"/>
     <xsl:output indent="yes" method="xml" omit-xml-declaration="yes"/>
 
-    <xsl:param name="unsubscribeNewsletterServletPage">
+    <xsl:param name="unsubscribeSurveyServletPage">
         <type>page</type>
     </xsl:param>
     
-    
-	<xsl:variable name="referer" select="/verticaldata/context/querystring/parameter[@name = 'referer']"/>
-	<xsl:variable name="result" select="/verticaldata/context/querystring/parameter[@name ='res']"/>
-	<xsl:variable name="currentPageId" select="/verticaldata/context/querystring/parameter[@name = 'id']"/>
-	<xsl:variable name="user" select="/verticaldata/context/user"/>
-	<xsl:variable name="language" select="/verticaldata/context/@languagecode"/>
-	<xsl:variable name="regExpStandard" select="'/^.+$/'"/>
-	<xsl:variable name="regExpEmail" select="'/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*([,;]\s*\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)*$/'"/>
+    <xsl:variable name="referer" select="/verticaldata/context/querystring/parameter[@name = 'referer']"/>
+    <xsl:variable name="result" select="/verticaldata/context/querystring/parameter[@name ='res']"/>
+    <xsl:variable name="currentPageId" select="/verticaldata/context/querystring/parameter[@name = 'id']"/>
+    <xsl:variable name="user" select="/verticaldata/context/user"/>
+    <xsl:variable name="language" select="/verticaldata/context/@languagecode"/>
+    <xsl:variable name="regExpStandard" select="'/^.+$/'"/>
+    <xsl:variable name="regExpEmail" select="'/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*([,;]\s*\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)*$/'"/>
     
     <xsl:variable name="hbresult" select="/verticaldata/hbunsubscriberesult"/>
     <xsl:variable name="hbstatus" select="/verticaldata/hbunsubscriberesult/status"/>
@@ -36,14 +35,14 @@
     </xsl:template> <!-- end content -->
     
 	<xsl:template name="unsubscribe">
-    	<form action="{portal:createPageUrl($unsubscribeNewsletterServletPage, ())}" id="register" method="post" >
+    	<form action="{portal:createPageUrl($unsubscribeSurveyServletPage, ())}" id="register" method="post" >
     		<!--<br /><b>hbstatus - operationperformed: <xsl:value-of select="$hbstatus/operationperformed" /></b><br />
     		<br /><b>hbstatus - operationsucceeded: <xsl:value-of select="$hbstatus/operationsucceeded" /></b><br />
     		<br /><b>not operationsucceeded: <xsl:value-of select="not ($hbstatus/operationsucceeded = 'true')" /></b><br />
     		<br /><b>operationperformed = true and operationsucceeded = false: <xsl:value-of select="($hbstatus/operationperformed = 'true' and (not ($hbstatus/operationsucceeded = 'true')))" /></b><br />-->
 			<div class="wrap">
 				<div class="column_content">
-           		<h4 class="logon_column_heading">Avmelding av nyhetsbrev</h4>
+           		<h4 class="logon_column_heading">Avmelding av deltakelse på spørreskjema</h4>
            		<br />
            		<xsl:if test="not ($hbstatus) or ($hbstatus/operationperformed = 'false') or ($hbstatus/operationperformed = 'true' and $hbstatus/operationsucceeded = 'false')">
            			<xsl:text>Vennligst fyll inn din avmeldingskode i tekstfeltet nedenfor og trykk deretter på "Meld av"-knappen</xsl:text>
@@ -61,8 +60,8 @@
 	    		</xsl:if>
 			   
 	           <xsl:if test="$hbstatus/operationperformed = 'true' and $hbstatus/operationsucceeded = 'true'">
-	           		<xsl:text>Du er nå blitt meldt av nyhetsbrev fra Helsebiblioteket.</xsl:text><br />
-	           		<xsl:text>Du kan melde deg på nyhetsbrev igjen ved å logge deg inn og angi dette i din brukerprofil.</xsl:text>
+	           		<xsl:text>Du er nå blitt meldt av deltakelse på spørreskjema fra Helsebiblioteket.</xsl:text><br />
+	           		<xsl:text>Du kan melde deg på igjen ved å logge deg inn og angi dette i din brukerprofil.</xsl:text>
 	           		<br /><br />
 	           </xsl:if>
 	                          
