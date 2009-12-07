@@ -19,6 +19,11 @@
 			<li><a href="user-new.faces"></f:verbatim><h:outputText value="#{msg_menu.user_new}" /><f:verbatim></a></li>
 		</ul>
 	</li>
+	<li><a href="export-user.faces"></f:verbatim><h:outputText value="#{msg_menu.export}" /><f:verbatim></a>
+		<ul>
+			<li><a href="export-user.faces"></f:verbatim><h:outputText value="#{msg_menu.export_user}" /><f:verbatim></a></li>
+		</ul>
+	</li>
 	<!--<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.ip_addresses_overview}" /><f:verbatim></a>
 		<ul>
 			<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.overview}" /><f:verbatim></a></li>

@@ -10,9 +10,13 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
+import no.helsebiblioteket.admin.domain.key.SystemKey;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class AdminBean {
@@ -21,7 +25,21 @@ public class AdminBean {
 	private static final String accessTypeKeyBundle = "no.helsebiblioteket.admin.web.jsf.messageresources.domain_accesstypekey";
 
 	private OrganizationService organizationService;
+	private UserService userService;
+
 	private OrganizationType[] organizationTypeList;
+	
+	public List<SelectItem> getRoleSelectItemList() {
+		List<SelectItem> rolesSelectItemList = new ArrayList<SelectItem>();
+		Role[] roles = this.userService.getRoleListBySystem(
+				((ValueResultSystem)
+						this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue()).getList();
+		for (Role role : roles) {
+			SelectItem option = new SelectItem(role.getKey().getValue(), role.getName(), "", false);
+			rolesSelectItemList.add(option);
+		}
+		return rolesSelectItemList;
+	}
 	
 	public List<SelectItem> getOrganizationTypeSelectItemList() {
 		List<SelectItem> organizationTypeSelectItemList = new ArrayList<SelectItem>();
@@ -62,5 +80,13 @@ public class AdminBean {
 
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
+	}
+	
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

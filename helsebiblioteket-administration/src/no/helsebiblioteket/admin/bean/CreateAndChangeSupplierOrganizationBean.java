@@ -41,12 +41,12 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	private SupplierOrganization supplierOrganization = null;
 
 	private String sourceName = null;
-	private String sourceUrl = null;
+	private String sourceDomain = null;
 	private String sourceProxyDatabaseName = null;
 
 	private UIInput sourceNameUIInput = null;
 	private UIInput sourceProxyDatabaseNameUIInput = null;
-	private UIInput sourceUrlUIInput = null;
+	private UIInput sourceDomainUIInput = null;
 	
 	
 	
@@ -73,12 +73,12 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		return sourceProxyDatabaseNameUIInput;
 	}
 	
-	public UIInput getSourceUrlUIInput() {
-		return sourceUrlUIInput;
+	public UIInput getSourceDomainUIInput() {
+		return sourceDomainUIInput;
 	}
 
-	public void setSourceUrlUIInput(UIInput sourceUrlUIInput) {
-		this.sourceUrlUIInput = sourceUrlUIInput;
+	public void setSourceDomainUIInput(UIInput sourceDomainUIInput) {
+		this.sourceDomainUIInput = sourceDomainUIInput;
 	}
 
 	public String getSourceName() {
@@ -97,12 +97,12 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		this.sourceProxyDatabaseName = sourceProxyDatabaseName;
 	}
 
-	public String getSourceUrl() {
-		return sourceUrl;
+	public String getSourceDomain() {
+		return sourceDomain;
 	}
 
-	public void setSourceUrl(String sourceUrl) {
-		this.sourceUrl = sourceUrl;
+	public void setSourceDomain(String sourceDomain) {
+		this.sourceDomain = sourceDomain;
 	}
 	
 	public SupplierOrganization getSupplierOrganization() {
@@ -152,7 +152,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		}
 		
 		this.setSourceName("");
-		this.setSourceUrl("");
+		this.setSourceDomain("");
 		this.setSourceProxyDatabaseName("");
 		
 		this.organizationService.deleteResources(resourceList);
@@ -166,13 +166,15 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	public void actionAddSupplierSource() {
 		logger.debug("Method 'actionAddSupplierSource' invoked");
 		setSourceName((getSourceNameUIInput().getSubmittedValue() != null) ? getSourceNameUIInput().getSubmittedValue().toString() : null);
-		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
+		setSourceDomain((getSourceDomainUIInput().getSubmittedValue() != null) ? getSourceDomainUIInput().getSubmittedValue().toString() : null);
 		setSourceProxyDatabaseName((getSourceProxyDatabaseNameUIInput().getSubmittedValue() != null) ? getSourceProxyDatabaseNameUIInput().getSubmittedValue().toString() : null);
 		if (! validateSupplierSource()) {
 			return;
 		}
+		Url url = new Url();
+		url.setDomain(getSourceDomain());
 		SupplierSourceResource supplierSourceResource = new SupplierSourceResource();
-		SupplierSource supplierSource = new SupplierSource(getSourceName(), new Url(getSourceUrl()), getSourceProxyDatabaseName());
+		SupplierSource supplierSource = new SupplierSource(getSourceName(), url, getSourceProxyDatabaseName());
 		supplierSourceResource.setSupplierSource(supplierSource);
 		supplierSourceResource.setResource(new Resource());
 //		supplierSourceResource.getResource().setId(-1);
@@ -221,10 +223,10 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	
 	public String actionCancel(){
 		setSourceName("");
-		setSourceUrl("");
+		setSourceDomain("");
 		setSourceProxyDatabaseName("");
 		setSourceNameUIInput(null);
-		setSourceUrlUIInput(null);
+		setSourceDomainUIInput(null);
 		setSourceProxyDatabaseNameUIInput(null);
 		this.organizationBean.setOrganization(this.organization);
 		return this.organizationBean.actionDetailsSingle();
@@ -246,10 +248,10 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 			sourceProxyDatabaseNameUIInput.setValid(false);
 			facesContext.addMessage(sourceProxyDatabaseNameUIInput.getClientId(facesContext), message);
 		}
-		if (!hasValue(getSourceUrl())) {
+		if (!hasValue(getSourceDomain())) {
 			validation = false;
-			sourceUrlUIInput.setValid(false);
-			facesContext.addMessage(sourceUrlUIInput.getClientId(facesContext), message);
+			sourceDomainUIInput.setValid(false);
+			facesContext.addMessage(sourceDomainUIInput.getClientId(facesContext), message);
 		}
 		return validation;
 	}
