@@ -103,7 +103,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
                     String xFf = request.getHeader(h);
                     logger.debug("Header " + LogInInterceptor.XForwardedForHeaderName + "=" + xFf);
                     if (null != xFf) {
-	                    // xff-header should contain address separated by ", ", but is this always the case?
+	                    // According to spec xff-header should contain address separated by ", ", but is this always the case?
 	                    // removing all whitespaces before split just in case whitespaces are not always set.
 	                    xFf = xFf.replaceAll("\\s+", "");
 	                    String xFfArray[] = xFf.split(",");
@@ -144,6 +144,6 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
         if (xFfArray != null && (xFfArray.length > 0)) {
         	ret = (String) xFfArray[(xFfArray.length - 1)];
         	logger.info("Remote " + LogInInterceptor.XForwardedForHeaderName + " address=" + ret);
-        }   
+        }
 	}
 }

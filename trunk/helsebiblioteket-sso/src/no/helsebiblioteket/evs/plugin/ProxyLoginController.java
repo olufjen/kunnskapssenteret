@@ -71,7 +71,6 @@ public class ProxyLoginController extends HttpControllerPlugin {
 		String redirectUrl = "";
 		Url requestedUrl = new Url();
 		requestedUrl.setStringValue(requestedUrlText);
-		new URL(requestedUrlText).getHost();
 		requestedUrl.setDomain(new URL(requestedUrlText).getHost());
 		
         UserToXMLTranslator translator = new UserToXMLTranslator();

@@ -57,6 +57,7 @@
     	<property name="profileDao" ref="profileDao"></property>
     	<property name="positionDao" ref="positionDao"></property>
     	<property name="resourceDao" ref="resourceDao"></property>
+    	<property name="accessDao" ref="accessDao"></property>
   	</bean>
   	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
     	<property name="accessService" ref="accessService"></property>
@@ -67,6 +68,7 @@
   	</bean>-->
   	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
   		<property name="userDao" ref="userDao"></property>
+  		<property name="userExportDao" ref="userExportDao"></property>
   		<property name="userListDao" ref="userListDao"></property>
   		<property name="roleDao" ref="roleDao"></property>
   		<property name="userRoleDao" ref="userRoleDao"></property>
@@ -77,8 +79,15 @@
   		<property name="profileDao" ref="profileDao"></property>
   		<property name="contactInformationDao" ref="contactInformationDao"></property>
   	</bean>
+  	<bean id="geoIpService" class="no.helsebiblioteket.admin.service.geoip.impl.GeoIpServiceImpl">
+  		<property name="dataFileName" value="${geoip.databasefile}"></property>
+  		<property name="licenseKey" value="${geoip.licensekey}"></property>
+  	</bean>
   	
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userExportDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserExportDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao">
@@ -195,6 +204,10 @@
 		<property name="accessService" ref="accessService"></property>
 		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
 	</bean>
+	<bean id="geoIpServiceSso" class="no.helsebiblioteket.admin.ssoservice.geoip.GeoIpServiceSso">
+		<property name="geoIpService" ref="geoIpService"></property>
+		<!--  <property name="cacheHelper" ref="methodCachingAdvice"></property> -->
+	</bean>
 	
 	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
         <property name="name" value="loggedinuser"/>
@@ -204,6 +217,36 @@
     <bean name="loggedInFunction" class="no.helsebiblioteket.evs.plugin.LoggedInFunction">
     	<property name="userService" ref="userServiceSso" />
     </bean>
+    
+    <bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+        <property name="name" value="getContentByCategoryAccess" />
+        <property name="target" ref="getContentByCategoryAccessFunction" />
+    </bean>
+    
+    <bean name="getContentByCategoryAccessFunction" class="no.helsebiblioteket.evs.plugin.GetContentByCategoryAccessFunction">
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="noAccessTextName" value="noaccess" />
+	</bean>
+	
+	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+        <property name="name" value="getContentBySectionAccess" />
+        <property name="target" ref="getContentBySectionAccessFunction" />
+    </bean>
+    
+	<bean name="getContentBySectionAccessFunction" class="no.helsebiblioteket.evs.plugin.GetContentBySectionAccessFunction">
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="noAccessTextName" value="noaccess" />
+	</bean>
+	
+	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+        <property name="name" value="getContentAccess" />
+        <property name="target" ref="getContentAccessFunction" />
+    </bean>
+	
+	<bean name="getContentAccessFunction" class="no.helsebiblioteket.evs.plugin.GetContentAccessFunction">
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="noAccessTextName" value="noaccess" />
+	</bean>
     
     <bean class="no.helsebiblioteket.evs.plugin.LogInController">
  		<property name="urlPattern" value="/site/2/LoggInnServlet" />
@@ -223,6 +266,15 @@
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="urlService" ref="urlServiceSso" />
 	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.AccessFilter">
+ 		<property name="urlPattern" value="/site/[0-3]/.*" />
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="hbAccessTagName" value="hbaccess" />
+ 		<property name="attributeNoAccessTextName" value="noaccesstext" />
+ 		<property name="attributeCountryCodesName" value="countrycodes" />
+	</bean>
+	
 	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="priority" value="9999" />
@@ -288,7 +340,7 @@
  		<property name="proxyUrl" value="${proxy.url}" />
  		<property name="logUpUrl" value="${proxy.logup.url}" />
  		<property name="urlService" ref="urlServiceSso" />
- 		<property name="stripUrlParams" value="true" />
+ 		<property name="stripUrlParams" value="${plugin.proxylogincontroller.stripurlparams}" />
  		<property name="stripUrlParamsSet">
  			<set>
  				<value>pwd</value>
@@ -361,7 +413,7 @@
  		<property name="gotoUrl" value="${plugin.unsubscribenewslettercontroller.gotourl}" />
  		<property name="userService" ref="userServiceSso" />
  		<property name="parameterNamesUrlParams"><map>
- 			<entry key="subscriptionKey" value="key"/>
+ 			<entry key="subscriptionKey" value="hbkey"/>
  		</map></property>
  		<property name="parameterNamesFields"><map>
  			<entry key="subscriptionKey" value="subscriptionkey"/>
@@ -374,7 +426,7 @@
  		<property name="gotoUrl" value="${plugin.unsubscribesurveycontroller.gotourl}" />
  		<property name="userService" ref="userServiceSso" />
  		<property name="parameterNamesUrlParams"><map>
- 			<entry key="subscriptionKey" value="key"/>
+ 			<entry key="subscriptionKey" value="hbkey"/>
  		</map></property>
  		<property name="parameterNamesFields"><map>
  			<entry key="subscriptionKey" value="subscriptionkey"/>
