@@ -80,8 +80,9 @@
   		<property name="contactInformationDao" ref="contactInformationDao"></property>
   	</bean>
   	<bean id="geoIpService" class="no.helsebiblioteket.admin.service.geoip.impl.GeoIpServiceImpl">
-  		<property name="dataFileName" value="${geoip.databasefile}"></property>
-  		<property name="licenseKey" value="${geoip.licensekey}"></property>
+  		<property name="dataFileName" value="${geoip.databasefile}" />
+  		<property name="licenseKey" value="${geoip.licensekey}" />
+  		<property name="reloadIntervalSeconds" value="${geoip.reloadintervalseconds}" />
   	</bean>
   	
 	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
