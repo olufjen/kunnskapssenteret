@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import no.helsebiblioteket.admin.service.geoip.GeoIpService;
 
 import org.apache.commons.logging.Log;
@@ -17,13 +19,16 @@ import com.maxmind.geoip.LookupService;
 public class GeoIpServiceImpl implements GeoIpService {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static boolean initiated = false;
+	private Long reloadIntervalMilliseconds = null;
+	private Long lastTimeDatabaseReadMilliseconds = null;
 	private String dataFileName = null;
 	private String licenseKey = null;
 	private static LookupService lookupService;
 	
 	public boolean hasAccess(String ipAddress, String countryCodes) {
-		if (!initiated) {
-			initiated = initGeoIpDb();
+		if (!initiated && isTimeForRefresh()) {
+			initiated = true;
+			initGeoIpDb();
 		}
 		List<String> countryCodeList = Arrays.asList(countryCodes.split(","));
 		return validateIp(ipAddress, countryCodeList);
@@ -73,19 +78,27 @@ public class GeoIpServiceImpl implements GeoIpService {
         return ret;
     }
 	
-	public String getDataFileName() {
-		return dataFileName;
-	}
+	private boolean isTimeForRefresh() {
+        if (reloadIntervalMilliseconds <= 0) {
+            return false;
+        }
+        long now = System.currentTimeMillis();
+        if ((now - lastTimeDatabaseReadMilliseconds) > reloadIntervalMilliseconds) {
+            lastTimeDatabaseReadMilliseconds = now;
+            logger.debug("time for geoip database reload");
+            return true;
+        }
+        return false;
+    }
 
 	public void setDataFileName(String dataFileName) {
 		this.dataFileName = dataFileName;
 	}
 
-	public String getLicenseKey() {
-		return licenseKey;
-	}
-
 	public void setLicenseKey(String licenseKey) {
 		this.licenseKey = licenseKey;
+	}
+	public void setReloadIntervalSeconds(Integer reloadIntervalSeconds) {
+		this.reloadIntervalMilliseconds = (long) reloadIntervalSeconds*1000;
 	}
 }
