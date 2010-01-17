@@ -2,11 +2,8 @@ package no.helsebiblioteket.admin.service.geoip.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import no.helsebiblioteket.admin.service.geoip.GeoIpService;
 
@@ -20,20 +17,18 @@ public class GeoIpServiceImpl implements GeoIpService {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static boolean initiated = false;
 	private Long reloadIntervalMilliseconds = null;
-	private Long lastTimeDatabaseReadMilliseconds = null;
+	private Long lastTimeDatabaseReadMilliseconds = (long) 0;
 	private String dataFileName = null;
 	private String licenseKey = null;
 	private static LookupService lookupService;
 	
 	public boolean hasAccess(String ipAddress, String countryCodes) {
-		if (!initiated && isTimeForRefresh()) {
-			initiated = true;
-			initGeoIpDb();
+		if (!initiated || isTimeForRefresh()) {
+			initiated = initGeoIpDb();
 		}
 		List<String> countryCodeList = Arrays.asList(countryCodes.split(","));
 		return validateIp(ipAddress, countryCodeList);
 	}
-	
 	
 	private boolean validateIp(String ipAddress, List<String> countrycodes) {
         logger.debug("start looking up: " + ((ipAddress != null) ? ipAddress : null));
@@ -69,10 +64,10 @@ public class GeoIpServiceImpl implements GeoIpService {
             }
             ret = true;
         } catch (IOException e) {
-            logger.error("Failed to init LookupService", e);
+            logger.error("Failed initiate geoip database", e);
             ret = false;
         } catch (NullPointerException e) {
-            logger.error("Failed to init LookupService", e);
+            logger.error("Failed initiate geoip database", e);
             ret = false;
         }
         return ret;
