@@ -18,7 +18,7 @@
 	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl.dir}/target"/>
 	<property name="helsebiblioteket-importexport-target.dir" value="${helsebiblioteket-importexport.dir}/target"/>
 	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao.dir}/target"/>
-
+	
     <property name="test.dir" value="test"/>
 
     <path id="master-classpath">
