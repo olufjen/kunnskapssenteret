@@ -15,7 +15,7 @@
 	<t:commandLink action="welcome"><h:outputText value="#{msg_menu.welcome}" /></t:commandLink>
 	<t:outputText value=" | " />
 	<f:verbatim>
-		<a href="http://kunnskapssenteret.no/xwiki/bin/view/Brukerveiledninger/Helsebiblioteket+-+Administrasjon" target="_new">
+		<a href="http://kunnskapssenteret.no/xwiki/bin/view/Brukerveiledninger/Helsebiblioteket+-+Autentisering+og+administrasjon" target="_new">
 		</f:verbatim><h:outputText value="#{msg_global.help_and_doc}" /><f:verbatim>
 		</a></f:verbatim>
 	<t:outputText value=" | " />
