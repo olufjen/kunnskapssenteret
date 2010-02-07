@@ -115,6 +115,10 @@
 		<put name="main" value="/jsp/main/create-change-memberorganization.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
+   	<definition name="ip-change-emails.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/ip-change-emails.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
    	<definition name="organization-types-overview.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/organization-types-overview.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
@@ -162,6 +166,16 @@
 	<!-- Export user data online -->
    	<definition name="export-user.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/export-user.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
+	<!-- Export proxy data online -->
+   	<definition name="export-proxy.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/export-proxy.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="export-proxy-result.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/export-proxy-result.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
 
