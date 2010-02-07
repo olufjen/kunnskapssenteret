@@ -22,6 +22,7 @@
 	<li><a href="export-user.faces"></f:verbatim><h:outputText value="#{msg_menu.export}" /><f:verbatim></a>
 		<ul>
 			<li><a href="export-user.faces"></f:verbatim><h:outputText value="#{msg_menu.export_user}" /><f:verbatim></a></li>
+			<li><a href="export-proxy.faces"></f:verbatim><h:outputText value="#{msg_menu.export_proxy}" /><f:verbatim></a></li>
 		</ul>
 	</li>
 	<!--<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.ip_addresses_overview}" /><f:verbatim></a>
