@@ -68,6 +68,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		if (!validateOrganizationNames()) {
 			return "create_change_member_organization";
 		}
+		
+		if(true){
+			return "ip_change_emails";
+		}
+		
+		
 		ContactInformation contactInformationOrganization;
 		Profile contactPersonProfile;
 		if(this.isNew){
@@ -455,4 +461,33 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			this.selectedOrganizationType = null;
 		}
 	}
+
+
+	public String actionSendMember() {
+		return "";
+	}
+	public String actionSendSupplier() {
+		return "";
+	}
+	public String actionNoSend() {
+		return "";
+	}
+	public void getOptionMemberSendTo(){}
+	public List<SelectItem> getOptionMemberSendToItems(){
+		List<SelectItem> list = new ArrayList<SelectItem>();
+		SelectItem item = new SelectItem("all", "Send til medlemsorganisasjon");
+		list.add(item);
+		return list;
+	}
+	
+	public void getOptionSupplierSendTo(){}
+	public List<SelectItem> getOptionSupplierSendToItems(){
+		List<SelectItem> list = new ArrayList<SelectItem>();
+		SelectItem item = new SelectItem("all", "Send til tilbyder");
+		list.add(item);
+		return list;
+	}
+	
+	public void getOptionMemberLanguage(){}
+	public void getOptionSupplierLanguage(){}
 }
