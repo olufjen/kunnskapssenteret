@@ -162,6 +162,14 @@
 		<put name="main" value="/jsp/main/user-new-administrator.jsp" type="page" />
 		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
    	</definition>
+   	<definition name="roles-overview.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/roles-overview.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="role-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/role-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
 
 	<!-- Export user data online -->
    	<definition name="export-user.tiles" extends="standardFrame">

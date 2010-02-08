@@ -409,6 +409,44 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	public void setAccessTypeCategoryKey(HtmlSelectOneMenu accessTypeCategoryKey) {
 		this.accessTypeCategoryKey = accessTypeCategoryKey;
 	}
+	public List<String> getOptionMemberSendTo() {
+		return optionMemberSendTo;
+	}
+
+	public void setOptionMemberSendTo(List<String> optionMemberSendTo) {
+		this.optionMemberSendTo = optionMemberSendTo;
+	}
+
+	public List<String> getOptionSupplierSendTo() {
+		return optionSupplierSendTo;
+	}
+
+	public void setOptionSupplierSendTo(List<String> optionSupplierSendTo) {
+		this.optionSupplierSendTo = optionSupplierSendTo;
+	}
+	public String getOptionMemberLanguage() {
+		return optionMemberLanguage;
+	}
+
+	public void setOptionMemberLanguage(String optionMemberLanguage) {
+		this.optionMemberLanguage = optionMemberLanguage;
+	}
+
+	public String getOptionSupplierLanguage() {
+		return optionSupplierLanguage;
+	}
+
+	public void setOptionSupplierLanguage(String optionSupplierLanguage) {
+		this.optionSupplierLanguage = optionSupplierLanguage;
+	}
+
+	public List<String> getOptionNoSend() {
+		return optionNoSend;
+	}
+
+	public void setOptionNoSend(List<String> optionNoSend) {
+		this.optionNoSend = optionNoSend;
+	}
 
 	// Method is invoked by hidden init-field in JSP.
 	public String getInit() {
@@ -463,6 +501,16 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	}
 
 
+	
+	
+	
+	
+	private List<String> optionMemberSendTo;
+	private List<String> optionSupplierSendTo;
+	private List<String> optionNoSend;
+	private String optionMemberLanguage;
+	private String optionSupplierLanguage;
+	
 	public String actionSendMember() {
 		return "";
 	}
@@ -472,22 +520,28 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	public String actionNoSend() {
 		return "";
 	}
-	public void getOptionMemberSendTo(){}
 	public List<SelectItem> getOptionMemberSendToItems(){
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem item = new SelectItem("all", "Send til medlemsorganisasjon");
+		SelectItem item = new SelectItem("org", "Send til medlemsorganisasjon");
+		list.add(item);
+		item = new SelectItem("contact", "Send til kontaktperson");
+		list.add(item);
+		item = new SelectItem("contact", "Send til deg selv");
 		list.add(item);
 		return list;
 	}
-	
-	public void getOptionSupplierSendTo(){}
 	public List<SelectItem> getOptionSupplierSendToItems(){
 		List<SelectItem> list = new ArrayList<SelectItem>();
 		SelectItem item = new SelectItem("all", "Send til tilbyder");
 		list.add(item);
+		item = new SelectItem("contact", "Send til kontaktperson");
+		list.add(item);
+		item = new SelectItem("contact", "Send til deg selv");
+		list.add(item);
 		return list;
 	}
-	
-	public void getOptionMemberLanguage(){}
-	public void getOptionSupplierLanguage(){}
+	public String getOrganizationName(){ return "Ullevål sykehus"; }
+	public String getNewAddresses(){ return "192.101.101.1"; }
+	public String getDeletedAddresses(){ return "192.101.101.2"; }
+	public String getOverlappingAddresses(){ return "192.101.101.3"; }
 }
