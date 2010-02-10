@@ -274,6 +274,12 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		user.setUsername(username);
 		if(password.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_VALUE"));
+		} else if( ! PasswordValidator.getInstance().hasLength(password)){
+			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_LENGTH"));
+		} else if( ! PasswordValidator.getInstance().hasLetters(password)){
+			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_LETTERS"));
+		} else if( ! PasswordValidator.getInstance().hasNumbers(password)){
+			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_NUMBERS"));
 		} else if( ! PasswordValidator.getInstance().isValidPassword(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
 		} else if( ! password.equals(passwordrepeat)){
@@ -392,10 +398,10 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		SingleResultUser result = this.userService.findUserByUsername(username);
 		return (result instanceof ValueResultUser || result instanceof ValueResultOrganizationUser);
 	}
-	private boolean isInteger(String integer) {
-		try{Integer.parseInt(integer);} catch (NumberFormatException e) {return false;}
-		return true;
-	}
+//	private boolean isInteger(String integer) {
+//		try{Integer.parseInt(integer);} catch (NumberFormatException e) {return false;}
+//		return true;
+//	}
 	private void userXML(LoggedInUser user, Document document, Element element) throws ParserConfigurationException, TransformerException {
 		LoggedInUserToXMLTranslator loggedInUserToXMLTranslator = new LoggedInUserToXMLTranslator();
 		loggedInUserToXMLTranslator.translate(user, document, element);
