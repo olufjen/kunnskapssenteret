@@ -22,10 +22,12 @@
 		<result property="person.profile.participateSurvey" column="profile_participate_survey" />
 		<result property="person.profile.subscriptionKey" column="profile_subscription_key" />
 		<result property="person.profile.id" column="profile_profile_id" />
+		<result property="person.positionText" column="position_text" />
+		<result property="person.position.name" column="position_name" />
 	</resultMap>
 
 	<select id="getUserExportList" resultMap="userExportMap"  parameterClass="UserExportParameter">
-		select 
+select 
 			usr.user_id as user_user_id,
 			usr.username as user_username,
 			contactinformation.email as contactinformation_email,
@@ -36,21 +38,20 @@
 			profile.subscription_key as profile_subscription_key,
 			profile.receive_newsletter as profile_receive_newsletter,
 			profile.participate_survey as profile_participate_survey,
-			profile.profile_id as profile_profile_id
+			profile.profile_id as profile_profile_id,
+			person.position_text as position_text,
+			position.name as position_name
 		from 
-			tbl_user_role_reg role, 
-			tbl_user_role userrole, 
-			tbl_user usr, 
-			tbl_person person, 
-			tbl_profile profile,
-			tbl_contact_information contactinformation
-		where 
-			contactinformation.contact_information_id = person.contact_information_id
-			and person.person_id = usr.person_id
-			and usr.user_id = userrole.user_id
-			and userrole.user_role_id = role.user_role_id
-			and profile.profile_id = person.profile_id
-			and usr.deleted = false
+			tbl_user usr
+			inner join tbl_user_role userrole on usr.user_id = userrole.user_id
+			inner join tbl_user_role_reg role on userrole.user_role_id = role.user_role_id
+			inner join tbl_person person on person.person_id = usr.person_id
+			inner join tbl_profile profile on profile.profile_id = person.profile_id
+			inner join tbl_contact_information contactinformation on contactinformation.contact_information_id = person.contact_information_id
+			left outer join tbl_position_type_reg position on position.position_type_id = person.position_type_id
+
+	where 
+			usr.deleted = false
 			<iterate prepend="and" property="roleKeyList" open="(" close=")" conjunction="OR">
 				role.key = #roleKeyList[]#
 			</iterate>
