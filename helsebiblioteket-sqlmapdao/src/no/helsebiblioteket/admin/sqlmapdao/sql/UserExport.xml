@@ -68,7 +68,7 @@ select
 			<isEqual property="randomize" compareValue="false">
 				usr.user_id desc
 			</isEqual>
-		<isGreaterThan property="limit" compareValue="1">
+		<isGreaterThan property="limit" compareValue="0">
 			limit #limit#
 		</isGreaterThan>
 		;
