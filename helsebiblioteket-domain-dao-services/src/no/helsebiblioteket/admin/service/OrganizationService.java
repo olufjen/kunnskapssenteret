@@ -30,6 +30,8 @@ public interface OrganizationService extends Serializable {
 
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request);
 	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString);
+	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request);
+	public PageResultOrganizationListItem getSupplierOrganizationListAll(PageRequest request);
 	
 	public ListResultOrganizationListItem getOrganizationListByIpAddress(IpAddress ipAddress);
 	public ListResultOrganizationListItem getOrganizationListByAccessDomain(String accessDomain);

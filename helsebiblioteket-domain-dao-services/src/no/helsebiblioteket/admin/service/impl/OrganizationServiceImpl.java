@@ -122,6 +122,67 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return this.getOrganizationListBySearchString(request, "");
 	}
 	/**
+	 * Finds all the member organizations in the database. This method uses a page request
+	 * and only fetches the next X objects from the last one fetched. This can be used
+	 * for a paged view. Delegates the task of finding the organizations to
+	 * OrganizationListDao.
+	 * It only fetches the most important values needed in a list, like names, etc.
+	 * These are the values in the OrganizationListItem object.
+	 */
+	@Override
+	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request) {
+		OrganizationTypeKey[] types = new OrganizationTypeKey[1];
+		types[0] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier).getKey();
+		return getOrganizationListByTypes(request, types);
+	}
+	/**
+	 * Finds all the supplier organizations in the database. This method uses a page request
+	 * and only fetches the next X objects from the last one fetched. This can be used
+	 * for a paged view. Delegates the task of finding the organizations to
+	 * OrganizationListDao.
+	 * It only fetches the most important values needed in a list, like names, etc.
+	 * These are the values in the OrganizationListItem object.
+	 */
+	@Override
+	public PageResultOrganizationListItem getSupplierOrganizationListAll(PageRequest request) {
+		OrganizationTypeKey[] types = new OrganizationTypeKey[4];
+		
+		
+		// TODO: Replace by this: Fetch all, run through and remove content_supplier
+		types[0] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise).getKey();
+		types[1] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.public_administration).getKey();
+		types[2] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.teaching).getKey();
+		types[3] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.other).getKey();
+
+		
+		
+		return getOrganizationListByTypes(request, types);
+	}
+	private PageResultOrganizationListItem getOrganizationListByTypes(PageRequest request, OrganizationTypeKey[] typesArray) {
+		if(request.getMaxResult() > 200) {
+			throw new NullPointerException("Max result must be 200 or less.");
+		}
+
+		List<OrganizationTypeKey> types = new ArrayList<OrganizationTypeKey>();
+		for(OrganizationTypeKey key : typesArray){
+			types.add(key);
+		}
+		
+		List<OrganizationListItem> allOrganizations =
+			this.organizationListDao.getOrganizationListByTypes(types,
+					request.getSkip(),
+					request.getMaxResult());
+		Integer total = this.organizationListDao.getOrganizationNumberByTypes(types);
+
+		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
+		result.setSkipped( request.getSkip() );
+		result.setResult( translateList(allOrganizations) );
+		result.setNumber( allOrganizations.size() );
+		result.setTotal( total );
+		return result;
+	}
+
+	/**
 	 * Finds all the organizations in the database. This method uses a page request
 	 * and only fetches the next X objects from the last one fetched. This can be used
 	 * for a paged view. Delegates the task of finding the organizations to
