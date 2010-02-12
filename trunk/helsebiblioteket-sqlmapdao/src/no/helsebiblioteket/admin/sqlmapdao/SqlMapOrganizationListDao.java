@@ -1,14 +1,18 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
 import no.helsebiblioteket.admin.dao.join.OrgUnitNameJoin;
 import no.helsebiblioteket.admin.domain.IpAddress;
+import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
+import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.sqlmapdao.input.OrganizationTypeInput;
 import no.helsebiblioteket.admin.sqlmapdao.input.SearchStringInput;
 
 public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements OrganizationListDao {
@@ -92,13 +96,15 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max) {
-		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList("getOrganizationIdDistinctSearchString",
+		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList(
+				"getOrganizationIdDistinctSearchString",
 				new SearchStringInput("%" + searchString + "%", searchString),  from, max);
 		List<OrganizationListItem> someOrganizations = new ArrayList<OrganizationListItem>();
 		if(orgUnitIds.size()==0){
 			return someOrganizations;
 		}
-		List<OrgUnitNameJoin> foundOrganizations = getSqlMapClientTemplate().queryForList("getOrganizationListSearchString",
+		List<OrgUnitNameJoin> foundOrganizations = getSqlMapClientTemplate().queryForList(
+				"getOrganizationListSearchString",
 				new SearchStringInput("%" + searchString + "%", searchString, orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1)));
 		return translateList(foundOrganizations);
 	}
@@ -117,5 +123,29 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	@Override
 	public Integer getOrganizationNumberSearchString(String searchString) {
 		return (Integer) getSqlMapClientTemplate().queryForObject("getOrganizationCountSearchString", new SearchStringInput("%" + searchString + "%", searchString));
+	}
+	@Override
+	public List<OrganizationListItem> getOrganizationListByTypes(
+			List<OrganizationTypeKey> types, int from, int max) {
+		
+		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList(
+				"getOrganizationIdDistinctByTypes",
+				new OrganizationTypeInput(types, 0, 0));
+		List<OrganizationListItem> someOrganizations =
+			new ArrayList<OrganizationListItem>();
+		if(orgUnitIds.size()==0){
+			return someOrganizations;
+		}
+		List<OrgUnitNameJoin> foundOrganizations = getSqlMapClientTemplate().queryForList(
+				"getOrganizationListByTypes",
+				new OrganizationTypeInput(types,
+						orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1)));
+		return translateList(foundOrganizations);
+	}
+	@Override
+	public Integer getOrganizationNumberByTypes(List<OrganizationTypeKey> types) {
+		return (Integer) getSqlMapClientTemplate().queryForObject(
+				"getOrganizationCountByTypes",
+				new OrganizationTypeInput(types, 0, 0));
 	}
 }
