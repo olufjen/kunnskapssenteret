@@ -270,8 +270,8 @@
         <managed-bean-class>no.helsebiblioteket.admin.bean.ExportProxyBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     	<managed-property>
-    		<property-name>userService</property-name>
-        	<value>#{userService}</value>
+    		<property-name>organizationService</property-name>
+        	<value>#{organizationService}</value>
 		</managed-property>
 	</managed-bean> 
 	

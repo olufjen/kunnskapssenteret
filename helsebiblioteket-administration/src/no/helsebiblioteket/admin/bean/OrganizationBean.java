@@ -290,18 +290,7 @@ public class OrganizationBean implements IconProvider{
 		}
 		for (OrganizationListItem item : this.organizations) {
 			OrganizationTableItem tableItem = new OrganizationTableItem();
-			String name = null;
-			// avoiding potential blank names in organization overview
-			// (rule: at least one name type is defined for an organization)
-			if (hasValue(item.getNameNorwegian())) {
-				name = item.getNameNorwegian();
-			} else if (hasValue(item.getNameEnglish())) {
-				name = item.getNameEnglish();
-			} else if (hasValue(item.getNameShortNorwegian())) {
-				name = item.getNameShortNorwegian();
-			} else if (hasValue(item.getNameShortEnglish())) {
-				name = item.getNameShortEnglish();
-			}
+			String name = organizationName(item);
 			tableItem.setText(name);
 			tableItem.setOrganization(item);
 			tableItem.setShowLinks(true);
@@ -332,7 +321,23 @@ public class OrganizationBean implements IconProvider{
 		}
 	}
 	
-	private boolean hasValue(String string) {
+	public static String organizationName(OrganizationListItem item) {
+		String name = "";
+		// avoiding potential blank names in organization overview
+		// (rule: at least one name type is defined for an organization)
+		if (hasValue(item.getNameNorwegian())) {
+			name = item.getNameNorwegian();
+		} else if (hasValue(item.getNameEnglish())) {
+			name = item.getNameEnglish();
+		} else if (hasValue(item.getNameShortNorwegian())) {
+			name = item.getNameShortNorwegian();
+		} else if (hasValue(item.getNameShortEnglish())) {
+			name = item.getNameShortEnglish();
+		}
+		return name;
+	}
+
+	private static boolean hasValue(String string) {
 		return (null != string && !"".equals(string));
 	}
 

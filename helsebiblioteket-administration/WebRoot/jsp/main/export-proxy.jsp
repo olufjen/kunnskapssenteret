@@ -53,7 +53,8 @@
     <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_member}" /> </td>
       <td valign="top">
-      	<h:selectOneMenu id="member" value="#{exportProxyBean.member}">
+      	<h:selectOneMenu id="member" value="#{exportProxyBean.member}"
+      						disabled="true">
       	  <f:selectItems value="#{exportProxyBean.members}"/>
         </h:selectOneMenu>
       </td>

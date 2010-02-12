@@ -90,6 +90,12 @@
    		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
 
+   	<!-- NATIONAL ACCESS -->
+   	<definition name="national-access-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/national-access-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
    	<!-- ORGANIZATIONS -->
    	<definition name="organizations-overview.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/organizations-overview.jsp" type="page" />
