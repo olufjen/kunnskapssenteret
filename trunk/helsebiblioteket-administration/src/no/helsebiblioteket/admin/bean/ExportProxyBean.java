@@ -17,7 +17,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
 
+import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.parameter.UserExportParameter;
+import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.requestresult.PageRequest;
+import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
@@ -32,7 +36,9 @@ public class ExportProxyBean {
 	private String supplier;
 	private String optionAxis;
 	private String optionCharacterEncoding;
-	
+
+	private OrganizationService organizationService;
+	private OrganizationListItem[] supplierOrganizations;
 	
 	public String actionExportResultProxy(){
 		return "export_proxy_return";
@@ -46,21 +52,28 @@ public class ExportProxyBean {
 	public List<SelectItem> getMembers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
 		SelectItem item = new SelectItem("all", "Alle");
+		
+		
+		
 		list.add(item);
 		return list;
 	}
 	public List<SelectItem> getSuppliers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem item = new SelectItem("all", "Alle");
-		list.add(item);
+		SelectItem allItem = new SelectItem("all", "Alle");
+		list.add(allItem);
+		
+		if(this.supplierOrganizations == null){
+			PageResultOrganizationListItem orgs = this.organizationService.getSupplierOrganizationListAll(new PageRequest(0, 200));
+			this.supplierOrganizations = orgs.getResult();
+			for(OrganizationListItem org : this.supplierOrganizations){
+				SelectItem orgItem = new SelectItem(org.getId(),
+						OrganizationBean.organizationName(org));
+				list.add(orgItem);
+			}
+		}
 		return list;
 	}
-
-	
-	
-	
-
-	
 	public String getPeriod() {
 		return period;
 	}
@@ -103,7 +116,18 @@ public class ExportProxyBean {
 	public void setOptionCharacterEncoding(String optionCharacterEncoding) {
 		this.optionCharacterEncoding = optionCharacterEncoding;
 	}
+	public OrganizationService getOrganizationService() {
+		return organizationService;
+	}
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
+	}
 
+	
+	
+	
+	
+	
 	
 	
 	

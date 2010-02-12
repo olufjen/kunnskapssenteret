@@ -6,6 +6,11 @@
 <f:verbatim><ul id="submenu">
 	<li id="title"></f:verbatim><h:outputText value="#{msg_menu.title}" /><f:verbatim></li>
 	<li><a href="welcome.faces"></f:verbatim><h:outputText value="#{msg_menu.welcome}" /><f:verbatim></a></li>
+	<li><a href="national-access-edit.faces"></f:verbatim><h:outputText value="#{msg_menu.national_access}" /><f:verbatim></a>
+		<ul>
+			<li><a href="national-access-edit.faces"></f:verbatim><h:outputText value="#{msg_menu.edit_national_access}" /><f:verbatim></a></li>
+		</ul>
+	</li>			
 	<li><a href="organizations-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.organizations_overview}" /><f:verbatim></a>
 		<ul>
 			<li><a href="organizations-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.overview}" /><f:verbatim></a></li>
@@ -23,12 +28,7 @@
 	<li><a href="export-user.faces"></f:verbatim><h:outputText value="#{msg_menu.export}" /><f:verbatim></a>
 		<ul>
 			<li><a href="export-user.faces"></f:verbatim><h:outputText value="#{msg_menu.export_user}" /><f:verbatim></a></li>
+			<li><a href="export-proxy.faces"></f:verbatim><h:outputText value="#{msg_menu.export_proxy}" /><f:verbatim></a></li>
 		</ul>
 	</li>
-	<!--<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.ip_addresses_overview}" /><f:verbatim></a>
-		<ul>
-			<li><a href="ipaddresses-overview.faces"></f:verbatim><h:outputText value="#{msg_menu.overview}" /><f:verbatim></a></li>
-			<li><a href="ipaddress-new.faces"></f:verbatim><h:outputText value="#{msg_menu.ip_address_new}" /><f:verbatim></a></li>
-		</ul>
-	</li>-->
 </ul></f:verbatim>
