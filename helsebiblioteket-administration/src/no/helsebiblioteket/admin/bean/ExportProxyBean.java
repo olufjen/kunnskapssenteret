@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
@@ -26,6 +27,13 @@ import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 public class ExportProxyBean {
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -44,6 +52,31 @@ public class ExportProxyBean {
 		return "export_proxy_return";
 	}
 	public String actionShowResultProxy(){
+		
+		XYSeries series = new XYSeries("Average Size");
+		series.add(20.0, 10.0);
+		series.add(40.0, 20.0);
+		series.add(70.0, 50.0);
+		XYDataset xyDataset = new XYSeriesCollection(series);
+
+		JFreeChart chart = ChartFactory.createXYAreaChart(
+		                      "Sample XY Chart",  // Title
+		                      "Height",           // X-Axis label
+		                      "Weight",           // Y-Axis label
+		                      xyDataset,          // Dataset
+		                      PlotOrientation.HORIZONTAL,
+		                      true,
+		                      true,
+		                      true);              // Show legend
+
+		try {
+			ChartUtilities.saveChartAsJPEG(new File("/Users/fredrso/Install/apache-tomcat-6.0.18/chart.jpg"), chart, 500, 300);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		return "export_proxy_result";
 	}
 	public String actionReturn(){
@@ -63,11 +96,13 @@ public class ExportProxyBean {
 		SelectItem allItem = new SelectItem("all", "Alle");
 		list.add(allItem);
 		
+		this.supplierOrganizations = null;
+		
 		if(this.supplierOrganizations == null){
 			PageResultOrganizationListItem orgs = this.organizationService.getSupplierOrganizationListAll(new PageRequest(0, 200));
 			this.supplierOrganizations = orgs.getResult();
 			for(OrganizationListItem org : this.supplierOrganizations){
-				SelectItem orgItem = new SelectItem(org.getId(),
+				SelectItem orgItem = new SelectItem(""+org.getId(),
 						OrganizationBean.organizationName(org));
 				list.add(orgItem);
 			}

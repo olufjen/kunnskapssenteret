@@ -46,6 +46,7 @@
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_day}" itemValue="DAY" />
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_week}" itemValue="WEEK" />
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_month}" itemValue="MONTH" />
+      		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_month}" itemValue="YEAR" />
 		</h:selectOneMenu>
       	<h:message style="color:red" for="period" />
       </td>

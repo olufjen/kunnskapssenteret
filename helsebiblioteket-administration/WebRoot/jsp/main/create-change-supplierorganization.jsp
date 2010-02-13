@@ -7,13 +7,14 @@
 
 <h:inputHidden id="init" value="#{createAndChangeSupplierOrganizationBean.init}"></h:inputHidden>
 
-<f:verbatim><h2></f:verbatim>
+<h2>
 	<h:outputText value="#{msg_headings.supplier_organization_new}"
 		rendered="#{createAndChangeSupplierOrganizationBean.isNew}"/>
 	<h:outputText value="#{msg_headings.supplier_organization_change}"
 		rendered="#{createAndChangeSupplierOrganizationBean.notNew}"/>
-<f:verbatim></h2></f:verbatim>
-<hr />
+</h2>
+
+<hr/>
 <h:form>
 	<table>
 		<tr>
