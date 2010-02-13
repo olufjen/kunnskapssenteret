@@ -131,8 +131,18 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request) {
-		OrganizationTypeKey[] types = new OrganizationTypeKey[1];
-		types[0] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier).getKey();
+		OrganizationTypeKey[] types = new OrganizationTypeKey[4];
+		
+		
+		
+		// TODO: Replace by this: Fetch all, run through and remove content_supplier
+		types[0] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise).getKey();
+		types[1] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.public_administration).getKey();
+		types[2] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.teaching).getKey();
+		types[3] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.other).getKey();
+
+		
+		
 		return getOrganizationListByTypes(request, types);
 	}
 	/**
@@ -145,17 +155,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getSupplierOrganizationListAll(PageRequest request) {
-		OrganizationTypeKey[] types = new OrganizationTypeKey[4];
-		
-		
-		// TODO: Replace by this: Fetch all, run through and remove content_supplier
-		types[0] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise).getKey();
-		types[1] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.public_administration).getKey();
-		types[2] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.teaching).getKey();
-		types[3] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.other).getKey();
-
-		
-		
+		OrganizationTypeKey[] types = new OrganizationTypeKey[1];
+		types[0] = this.organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier).getKey();
 		return getOrganizationListByTypes(request, types);
 	}
 	private PageResultOrganizationListItem getOrganizationListByTypes(PageRequest request, OrganizationTypeKey[] typesArray) {
