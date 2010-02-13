@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ProxyExport">
+	<typeAlias alias="ProxyExportParameter" type="no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter" />
+	<typeAlias alias="ProxyResult" type="no.helsebiblioteket.admin.domain.export.ProxyResult"/>
+	<typeAlias alias="PeriodResult" type="no.helsebiblioteket.admin.domain.export.PeriodResult"/>
+
+	<resultMap id="periodResultMap" class="PeriodResult" groupBy="period">
+		<result property="period" column="period" />
+		<result property="count" column="sum" />
+	</resultMap>
+	<resultMap id="proxyResultMap" class="ProxyResult">
+		<result property="orgUnitId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="periods" column="period" resultMap="ProxyExport.periodResultMap" />
+	</resultMap>
+
+	<select id="getProxyExportList" resultMap="proxyResultMap"  parameterClass="ProxyExportParameter">
+		select
+			<isNotNull close="," property="memberId">
+			    hits.mem_org_unit_id as org_id
+		  	</isNotNull>
+			<isNotNull close="," property="supplierId">
+			    hits.sup_org_unit_id as org_id
+		  	</isNotNull>
+			name.name as org_name
+			<isEqual close="," property="period" compareValue="DAY">
+				hits.month as period
+			</isEqual>
+			<isEqual close="," property="period" compareValue="WEEK">
+				hits.day_of_week as period
+			</isEqual>
+			<isEqual close="," property="period" compareValue="MONTH">
+				hits.day_of_month as period
+			</isEqual>
+			<isEqual close="," property="period" compareValue="YEAR">
+				hits.month as period
+			</isEqual>
+		    sum(hits.count) as sum
+		from
+    		tbl_proxy_hits as hits
+    		<isNotNull close="," property="memberId">
+			    left outer join tbl_org_unit as org on org.org_unit_id = hits.mem_org_unit_id
+		  	</isNotNull>
+			<isNotNull close="," property="supplierId">
+    			left outer join tbl_org_unit as org on org.org_unit_id = hits.sup_org_unit_id
+		  	</isNotNull>
+		    left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
+		where
+		    year || month || day_of_month || hour >= #from and
+    		year || month || day_of_month || hour <= #to
+		    and name.language_code = 'no' and name.category = 'NORMAL'
+    		<isNotNull close="," property="memberId">
+--    and sup_org_unit_id = 8589
+		  	</isNotNull>
+			<isNotNull close="," property="supplierId">
+--    and sup_org_unit_id = 8589
+		  	</isNotNull>
+			group by org_id, org_name, period
+			order by org_id desc, org_name, period asc
+		;
+	</select>
+</sqlMap>
