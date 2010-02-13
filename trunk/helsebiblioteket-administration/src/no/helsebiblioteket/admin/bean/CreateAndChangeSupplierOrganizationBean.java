@@ -123,6 +123,13 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		if (!validateOrganizationNames()) {
 			return "create_change_supplier_organization";
 		}
+		
+		if(true){
+			
+			return "ip_change_emails";
+			
+		}
+		
 		if(this.isNew){
 			Person contactPerson;
 			contactPerson = this.supplierOrganization.getOrganization().getContactPerson();
