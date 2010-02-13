@@ -2,13 +2,11 @@ package no.helsebiblioteket.admin.sqlmapdao.input;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
-
 public class OrganizationTypeInput {
-	private List<OrganizationTypeKey> types;
+	private List<String> types;
 	private Integer fromId;
 	private Integer toId;
-	public OrganizationTypeInput(List<OrganizationTypeKey> types,
+	public OrganizationTypeInput(List<String> types,
 			Integer fromId, Integer toId) {
 		this.types = types;
 		this.fromId = fromId;
@@ -18,11 +16,11 @@ public class OrganizationTypeInput {
 	public OrganizationTypeInput() {
 	}
 	
-	public List<OrganizationTypeKey> getTypes() {
+	public List<String> getTypes() {
 		return types;
 	}
 
-	public void setTypes(List<OrganizationTypeKey> types) {
+	public void setTypes(List<String> types) {
 		this.types = types;
 	}
 

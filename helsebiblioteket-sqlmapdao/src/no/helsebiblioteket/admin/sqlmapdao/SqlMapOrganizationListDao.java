@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
@@ -130,7 +131,7 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 		
 		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList(
 				"getOrganizationIdDistinctByTypes",
-				new OrganizationTypeInput(types, 0, 0));
+				new OrganizationTypeInput(translateTypes(types), 0, 0));
 		List<OrganizationListItem> someOrganizations =
 			new ArrayList<OrganizationListItem>();
 		if(orgUnitIds.size()==0){
@@ -138,7 +139,7 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 		}
 		List<OrgUnitNameJoin> foundOrganizations = getSqlMapClientTemplate().queryForList(
 				"getOrganizationListByTypes",
-				new OrganizationTypeInput(types,
+				new OrganizationTypeInput(translateTypes(types),
 						orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1)));
 		return translateList(foundOrganizations);
 	}
@@ -146,6 +147,13 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	public Integer getOrganizationNumberByTypes(List<OrganizationTypeKey> types) {
 		return (Integer) getSqlMapClientTemplate().queryForObject(
 				"getOrganizationCountByTypes",
-				new OrganizationTypeInput(types, 0, 0));
+				new OrganizationTypeInput(translateTypes(types), 0, 0));
+	}
+	private List<String> translateTypes(List<OrganizationTypeKey> types){
+		List<String> result = new ArrayList<String>();
+		for (OrganizationTypeKey key : types) {
+			result.add(key.getValue());
+		}
+		return result;
 	}
 }
