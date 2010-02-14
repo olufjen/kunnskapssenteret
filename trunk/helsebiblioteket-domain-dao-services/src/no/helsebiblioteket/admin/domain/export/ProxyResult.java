@@ -23,5 +23,14 @@ public class ProxyResult {
 	}
 	public void setPeriods(List<PeriodResult> periods) {
 		this.periods = periods;
-	} 
+	}
+	@Override
+	public String toString() {
+		String result = "[" + this.orgUnitId + ", " + this.orgName + ", ";
+		for (PeriodResult period : this.periods) {
+			result += "{" + period.getPeriod();
+			result += ", " + period.getCount() + "}";
+		}
+		return result += "]";
+	}
 }

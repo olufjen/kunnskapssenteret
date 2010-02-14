@@ -5,6 +5,8 @@ package no.helsebiblioteket.admin.service;
  */
 
 import java.io.Serializable;
+import java.util.List;
+
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
 import no.helsebiblioteket.admin.domain.IpAddressSet;
@@ -13,8 +15,10 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.export.ProxyResult;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
@@ -48,4 +52,6 @@ public interface OrganizationService extends Serializable {
 
 	public Boolean deleteResources(SupplierSourceResource[] resources);
 	public ListResultSupplierSourceResource addResources(SupplierSourceResource[] resources);
+	
+	public List<ProxyResult> getProxyExportList(ProxyExportParameter parameter);
 }
