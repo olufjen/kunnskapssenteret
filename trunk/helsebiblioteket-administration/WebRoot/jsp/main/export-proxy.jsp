@@ -46,7 +46,7 @@
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_day}" itemValue="DAY" />
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_week}" itemValue="WEEK" />
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_month}" itemValue="MONTH" />
-      		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_month}" itemValue="YEAR" />
+      		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_year}" itemValue="YEAR" />
 		</h:selectOneMenu>
       	<h:message style="color:red" for="period" />
       </td>
@@ -74,8 +74,8 @@
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_axis}" /> </td>
       <td valign="top">
       	<h:selectOneRadio value="#{exportProxyBean.optionAxis}">
-      		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_axis_member}" itemValue="member" />
-      		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_axis_supplier}" itemValue="supplier" />
+      		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_axis_member}" itemValue="MEMBER"/>
+      		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_axis_supplier}" itemValue="SUPPLIER"/>
       	</h:selectOneRadio>
       </td>
     </tr>

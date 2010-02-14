@@ -3,14 +3,9 @@ package no.helsebiblioteket.admin.bean;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CharsetEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,12 +13,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
 
+import no.helsebiblioteket.admin.domain.export.PeriodResult;
+import no.helsebiblioteket.admin.domain.export.ProxyResult;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
-import no.helsebiblioteket.admin.domain.parameter.UserExportParameter;
+import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
-import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,60 +27,167 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class ExportProxyBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private String period;
-	private Date fromDate;
-	private Date toDate;
-	private String member;
-	private String supplier;
-	private String optionAxis;
+	private Date fromDate = new Date();
+	private Date toDate = new Date();
+	private String member = "ALL";
+	private String supplier = "ALL";
+	private String optionAxis = "MEMBER";
 	private String optionCharacterEncoding;
 
 	private OrganizationService organizationService;
 	private OrganizationListItem[] supplierOrganizations;
 	
 	public String actionExportResultProxy(){
+		List<ProxyResult> resultList = fetchResult();
+		
+		StringBuilder result;
+		if(this.period.equals("DAY")){
+			result = resultToString(24, resultList);
+		} else if (this.period.equals("WEEK")){
+			result = resultToString(7, resultList);
+		} else if (this.period.equals("MONTH")){
+			result = resultToString(31, resultList);
+		} else {
+			result = resultToString(12, resultList);
+		}
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+		response.setContentType("application/txt");
+		String filename = "proxy_helsebiblioteket_" + ((new SimpleDateFormat("yyyy-MM-dd")).format(new Date())) + ".csv";
+		response.setCharacterEncoding(this.optionCharacterEncoding);
+		response.setHeader("Content-Disposition", "attachment;filename=\"" +
+				   filename + "\"");
+		try {
+			PrintStream ps = new PrintStream(response.getOutputStream(), true, this.optionCharacterEncoding);
+			ps.append(result);
+			ps.flush();
+			ps.close();
+		} catch (IOException e) {
+			logger.error("unable to complete process of extracting user list, creating csv file and returning it to user. ",
+					e);
+		}
+		FacesContext.getCurrentInstance().responseComplete();
 		return "export_proxy_return";
 	}
 	public String actionShowResultProxy(){
+		List<ProxyResult> resultList = fetchResult();
 		
-		XYSeries series = new XYSeries("Average Size");
-		series.add(20.0, 10.0);
-		series.add(40.0, 20.0);
-		series.add(70.0, 50.0);
-		XYDataset xyDataset = new XYSeriesCollection(series);
+		String xLabel;
+		String yLabel = "Hits";
+		String chartTitle = "";
+		XYSeriesCollection xyDataset;
+		if(this.period.equals("DAY")){
+			xLabel = "Hour";
+			xyDataset = createDataSet(24, resultList);
+		} else if (this.period.equals("WEEK")){
+			xLabel = "Day";
+			xyDataset = createDataSet(7, resultList);
+		} else if (this.period.equals("MONTH")){
+			xLabel = "Date";
+			xyDataset = createDataSet(31, resultList);
+		} else {
+			xLabel = "Month";
+			xyDataset = createDataSet(12, resultList);
+		}
 
-		JFreeChart chart = ChartFactory.createXYAreaChart(
-		                      "Sample XY Chart",  // Title
-		                      "Height",           // X-Axis label
-		                      "Weight",           // Y-Axis label
-		                      xyDataset,          // Dataset
-		                      PlotOrientation.HORIZONTAL,
-		                      true,
-		                      true,
-		                      true);              // Show legend
-
+		JFreeChart chart = ChartFactory.createXYLineChart(
+							  chartTitle, xLabel, yLabel, xyDataset, PlotOrientation.VERTICAL,
+							  true, true, true);
 		try {
-			ChartUtilities.saveChartAsJPEG(new File("/Users/fredrso/Install/apache-tomcat-6.0.18/chart.jpg"), chart, 500, 300);
+			ChartUtilities.saveChartAsJPEG(new File("./webapps/helsebiblioteket-administration-web/images/charts/chart.jpg"), chart, 500, 300);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		return "export_proxy_result";
+	}
+	private List<ProxyResult> fetchResult() {
+		if(this.fromDate == null){ }
+		if(this.period == null){ }
+		if(this.member == null){ }
+		if(this.supplier == null){ }
+		if(this.optionAxis == null){ }
+		if(this.optionCharacterEncoding == null){ }
+
+		String fromDateString = translateDate(this.fromDate);
+		String toDateString = translateDate(this.toDate);
+		Integer memberValue = this.member.equals("ALL") ? null : new Integer(this.member);
+		Integer supplierValue = this.supplier.equals("ALL") ? null : new Integer(this.supplier);
+		boolean byMember = this.optionAxis.equals("MEMBER") ? true : false; 
+
+		ProxyExportParameter parameter = new ProxyExportParameter(
+				memberValue, supplierValue, byMember, this.period, fromDateString, toDateString);
+
+		List<ProxyResult> resultList = this.organizationService.getProxyExportList(parameter);
+		return resultList;
+	}
+	private StringBuilder resultToString(int periods, List<ProxyResult> resultList) {
+		String columnSeparator = ",";
+		StringBuilder result = new StringBuilder();
+		result
+			.append("OrgUnitId").append(columnSeparator)
+			.append("OrgUnitName").append(columnSeparator);
+		for(int i=1;i<periods;i++){
+			result.append(i).append(columnSeparator);
+		}
+		result.append(periods).append("\n");
+		for (ProxyResult proxyResult : resultList) {
+			result
+				.append(proxyResult.getOrgUnitId()).append(columnSeparator)
+				.append(proxyResult.getOrgName().replaceAll(",", " ")).append(columnSeparator);
+			int i = 1;
+			for (PeriodResult period : proxyResult.getPeriods()) {
+				while(i < Integer.valueOf(period.getPeriod())){
+					result.append("0").append(columnSeparator);
+					i++;
+				}
+				result.append(period.getCount()).append(columnSeparator);
+				i++;
+			}
+			while(i <= Integer.valueOf(periods)){
+				result.append("0").append(columnSeparator);
+				i++;
+			}
+			result.append("\n");
+		}
+		return result;
+	}
+	private XYSeriesCollection createDataSet(int periods, List<ProxyResult> resultList) {
+		XYSeriesCollection xyDataset = new XYSeriesCollection();
+		for (ProxyResult result : resultList) {
+			XYSeries series = new XYSeries(result.getOrgName());
+			int i = 1;
+			for (PeriodResult period : result.getPeriods()) {
+				while(i < Integer.valueOf(period.getPeriod())){
+					series.add(i, 0.0);
+					i++;
+				}
+				series.add(i, period.getCount());
+				i++;
+			}
+			while(i <= Integer.valueOf(periods)){
+				series.add(i, 0.0);
+				i++;
+			}
+			xyDataset.addSeries(series);
+		}
+		return xyDataset;
 	}
 	public String actionReturn(){
 		return "export_proxy_return";
 	}
 	public List<SelectItem> getMembers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem item = new SelectItem("all", "Alle");
+		SelectItem item = new SelectItem("ALL", "Alle");
+		
+		
 		
 		
 		
@@ -93,7 +196,7 @@ public class ExportProxyBean {
 	}
 	public List<SelectItem> getSuppliers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem allItem = new SelectItem("all", "Alle");
+		SelectItem allItem = new SelectItem("ALL", "Alle");
 		list.add(allItem);
 		
 		this.supplierOrganizations = null;
@@ -109,6 +212,14 @@ public class ExportProxyBean {
 		}
 		return list;
 	}
+	public String translateDate(Date date){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
+		return sdf.format(date);
+	}
+	
+	
 	public String getPeriod() {
 		return period;
 	}
@@ -157,127 +268,4 @@ public class ExportProxyBean {
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	private UserService userService;
-	UserExportParameter userExportParameter;
-	private String optionReceiveNewsletter;
-	private String optionParticipateSurvey;
-	private String optionRandomize;
-	private String optionLimit;
-	private List<String> optionRoleKeyList;
-	
-
-	public void actionExportUserList() {
-		userExportParameter = new UserExportParameter();
-		userExportParameter.setLimit((this.optionLimit == null || "".equals(this.optionLimit)) ? null : Integer.valueOf(this.optionLimit));
-		userExportParameter.setParticipateSurvey(("none".equals(this.optionParticipateSurvey)) ? null : Boolean.valueOf(this.optionParticipateSurvey));
-		userExportParameter.setReceiveNewsletter(("none".equals(this.optionReceiveNewsletter)) ? null : Boolean.valueOf(this.optionReceiveNewsletter));
-		userExportParameter.setRandomize(Boolean.valueOf(this.optionRandomize));
-		userExportParameter.setRoleKeyList(this.optionRoleKeyList);
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-		response.setContentType("application/txt");
-		String filename = "userlist_helsebiblioteket_" + ((new SimpleDateFormat("yyyy-MM-dd")).format(new Date())) + ".csv";
-		response.setCharacterEncoding(this.optionCharacterEncoding);
-		response.setHeader("Content-Disposition", "attachment;filename=\"" +
-				   filename + "\"");
-		try {
-			PrintStream ps = new PrintStream(response.getOutputStream(), true, this.optionCharacterEncoding);
-			ps.append(userService.getUserExportCsv(this.userExportParameter));
-			ps.flush();
-			ps.close();
-		} catch (IOException e) {
-			logger.error("unable to complete process of extracting user list, creating csv file and returning it to user. " +
-					"Export parameters: " + ((this.userExportParameter != null) ? userExportParameter.toString() : "null"),
-					e);
-		}
-		FacesContext.getCurrentInstance().responseComplete();
-	}
-	
-	private String convert(String in) {
-		String out = null;
-	    Charset charset = Charset.forName(this.optionCharacterEncoding);
-	    CharsetDecoder decoder = charset.newDecoder();
-	    CharsetEncoder encoder = charset.newEncoder();
-	    try {
-	        ByteBuffer bbuf = encoder.encode(CharBuffer.wrap(in));
-	        CharBuffer cbuf = decoder.decode(bbuf);
-	        out = cbuf.toString();
-	    } catch (CharacterCodingException cce) {
-	    	logger.error("Could not encode exported data to '" + this.optionCharacterEncoding + "'", cce);
-	    }
-	    return out;
-	}
-
-	public UserExportParameter getUserExportParameter() {
-		return userExportParameter;
-	}
-
-	public void setUserExportParameter(UserExportParameter userExportParameter) {
-		this.userExportParameter = userExportParameter;
-	}
-	
-	public UserService getUserService() {
-		return userService;
-	}
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-	public String getOptionReceiveNewsletter() {
-		return (this.optionReceiveNewsletter == null) ? "none" : this.optionReceiveNewsletter;
-	}
-
-	public void setOptionReceiveNewsletter(String optionReceiveNewsletter) {
-		this.optionReceiveNewsletter = optionReceiveNewsletter;
-	}
-
-	public String getOptionParticipateSurvey() {
-		return (this.optionParticipateSurvey == null) ? "none" : this.optionParticipateSurvey;
-	}
-
-	public void setOptionParticipateSurvey(String optionParticipateSurvey) {
-		this.optionParticipateSurvey = optionParticipateSurvey;
-	}
-
-	public String getOptionRandomize() {
-		return (this.optionRandomize == null) ? "false" : this.optionRandomize;
-	}
-
-	public void setOptionRandomize(String optionRandomize) {
-		this.optionRandomize = optionRandomize;
-	}
-
-	public String getOptionLimit() {
-		return this.optionLimit;
-	}
-
-	public void setOptionLimit(String optionLimit) {
-		this.optionLimit = optionLimit;
-	}
-	public List<String> getOptionRoleKeyList() {
-		return optionRoleKeyList;
-	}
-	public void setOptionRoleKeyList(List<String> optionRoleKeyList) {
-		this.optionRoleKeyList = optionRoleKeyList;
-	}
-	
 }

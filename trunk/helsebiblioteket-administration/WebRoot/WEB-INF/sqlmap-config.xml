@@ -25,4 +25,5 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserList.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserRole.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserExport.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/ProxyExport.xml" />
 </sqlMapConfig>
