@@ -16,3 +16,5 @@ ALTER TABLE tbl_proxy_hits
     ADD CONSTRAINT mem_org_unit_id_for_poxy_hits FOREIGN KEY ( mem_org_unit_id ) REFERENCES tbl_org_unit ( org_unit_id );
 ALTER TABLE tbl_proxy_hits
     ADD CONSTRAINT sup_org_unit_id_for_poxy_hits FOREIGN KEY ( sup_org_unit_id ) REFERENCES tbl_org_unit ( org_unit_id );
+ALTER TABLE tbl_proxy_hits 
+	OWNER TO helsebiblioteket;

@@ -8,11 +8,11 @@
 	<typeAlias alias="ProxyResult" type="no.helsebiblioteket.admin.domain.export.ProxyResult"/>
 	<typeAlias alias="PeriodResult" type="no.helsebiblioteket.admin.domain.export.PeriodResult"/>
 
-	<resultMap id="periodResultMap" class="PeriodResult" groupBy="period">
+	<resultMap id="periodResultMap" class="PeriodResult">
 		<result property="period" column="period" />
 		<result property="count" column="sum" />
 	</resultMap>
-	<resultMap id="proxyResultMap" class="ProxyResult">
+	<resultMap id="proxyResultMap" class="ProxyResult" groupBy="orgUnitId">
 		<result property="orgUnitId" column="org_id" />
 		<result property="orgName" column="org_name" />
 		<result property="periods" column="period" resultMap="ProxyExport.periodResultMap" />
@@ -20,13 +20,13 @@
 
 	<select id="getProxyExportList" resultMap="proxyResultMap"  parameterClass="ProxyExportParameter">
 		select
-			<isNotNull close="," property="memberId">
+			<isEqual close="," property="byMember" compareValue="true">
 			    hits.mem_org_unit_id as org_id
-		  	</isNotNull>
-			<isNotNull close="," property="supplierId">
+			</isEqual>
+			<isEqual close="," property="byMember" compareValue="false">
 			    hits.sup_org_unit_id as org_id
-		  	</isNotNull>
-			name.name as org_name
+			</isEqual>
+			name.name as org_name,
 			<isEqual close="," property="period" compareValue="DAY">
 				hits.month as period
 			</isEqual>
@@ -42,22 +42,28 @@
 		    sum(hits.count) as sum
 		from
     		tbl_proxy_hits as hits
-    		<isNotNull close="," property="memberId">
+			<isEqual property="byMember" compareValue="true">
 			    left outer join tbl_org_unit as org on org.org_unit_id = hits.mem_org_unit_id
-		  	</isNotNull>
-			<isNotNull close="," property="supplierId">
+			</isEqual>
+			<isEqual property="byMember" compareValue="false">
     			left outer join tbl_org_unit as org on org.org_unit_id = hits.sup_org_unit_id
-		  	</isNotNull>
+			</isEqual>
 		    left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
 		where
-		    year || month || day_of_month || hour >= #from and
-    		year || month || day_of_month || hour <= #to
-		    and name.language_code = 'no' and name.category = 'NORMAL'
-    		<isNotNull close="," property="memberId">
---    and sup_org_unit_id = 8589
+		    year || month || day_of_month || hour &gt;= #from# and
+    		year || month || day_of_month || hour &lt;= #to#
+
+			<isEqual property="byMember" compareValue="true">
+			    and name.language_code = 'no' and name.category = 'NORMAL'
+			</isEqual>
+			<isEqual property="byMember" compareValue="false">
+			    and name.language_code = 'en' and name.category = 'NORMAL'
+			</isEqual>
+    		<isNotNull open="and" property="memberId">
+				hits.mem_org_unit_id = #memberId#
 		  	</isNotNull>
-			<isNotNull close="," property="supplierId">
---    and sup_org_unit_id = 8589
+			<isNotNull open="and" property="supplierId">
+				hits.sup_org_unit_id = #supplierId#
 		  	</isNotNull>
 			group by org_id, org_name, period
 			order by org_id desc, org_name, period asc
