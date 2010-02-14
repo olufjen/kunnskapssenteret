@@ -1,17 +1,19 @@
 package no.helsebiblioteket.admin.domain.parameter;
 
 public class ProxyExportParameter {
-	private String memberId;
-	private String supplierId;
+	private Integer memberId;
+	private Integer supplierId;
+	private boolean byMember;
 	private String period;
 	private String from;
 	private String to;
 
-	public ProxyExportParameter(String memberId, String supplierId,
-			String period, String from, String to) {
+	public ProxyExportParameter(Integer memberId, Integer supplierId,
+			boolean byMember, String period, String from, String to) {
 		super();
 		this.memberId = memberId;
 		this.supplierId = supplierId;
+		this.byMember = byMember;
 		this.period = period;
 		this.from = from;
 		this.to = to;
@@ -20,19 +22,19 @@ public class ProxyExportParameter {
 	public ProxyExportParameter() {
 	}
 
-	public String getMemberId() {
+	public Integer getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(String memberId) {
+	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
 	}
 
-	public String getSupplierId() {
+	public Integer getSupplierId() {
 		return supplierId;
 	}
 
-	public void setSupplierId(String supplierId) {
+	public void setSupplierId(Integer supplierId) {
 		this.supplierId = supplierId;
 	}
 
@@ -60,4 +62,11 @@ public class ProxyExportParameter {
 		this.to = to;
 	}
 
+	public boolean getByMember() {
+		return byMember;
+	}
+
+	public void setByMember(boolean byMember) {
+		this.byMember = byMember;
+	}
 }

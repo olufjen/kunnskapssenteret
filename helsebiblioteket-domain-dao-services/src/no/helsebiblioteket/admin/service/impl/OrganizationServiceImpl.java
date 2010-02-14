@@ -16,6 +16,7 @@ import no.helsebiblioteket.admin.dao.OrganizationTypeDao;
 import no.helsebiblioteket.admin.dao.PersonDao;
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.dao.ProfileDao;
+import no.helsebiblioteket.admin.dao.ProxyExportDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
@@ -34,10 +35,12 @@ import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
+import no.helsebiblioteket.admin.domain.export.ProxyResult;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.line.IpAddressLine;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
@@ -77,8 +80,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private PositionDao positionDao;
 	private SupplierSourceDao supplierSourceDao;
 	private AccessDao accessDao;
-	
-
+	private ProxyExportDao proxyExportDao;
 	
 	/**
 	 * Fetches all OrganizationType in the database. Delegates the task to
@@ -851,6 +853,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return Boolean.TRUE;
 	}
 
+	@Override
+	public List<ProxyResult> getProxyExportList(ProxyExportParameter parameter) {
+		return this.proxyExportDao.getProxyExportList(parameter);
+	}
+
+	
 	public void setOrganizationDao(OrganizationDao organizationDao) {
 		this.organizationDao = organizationDao;
 	}
@@ -892,5 +900,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	public void setAccessDao(AccessDao accessDao) {
 		this.accessDao = accessDao;
+	}
+	public ProxyExportDao getProxyExportDao() {
+		return proxyExportDao;
+	}
+	public void setProxyExportDao(ProxyExportDao proxyExportDao) {
+		this.proxyExportDao = proxyExportDao;
 	}
 }
