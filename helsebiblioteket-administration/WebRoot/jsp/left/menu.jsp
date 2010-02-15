@@ -3,6 +3,7 @@
 <%@ taglib prefix="tiles" uri="http://struts.apache.org/tags-tiles"%>
 <f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.menu"/>
 
+<sec:authorize ifAllGranted="ROLE_administrator">
 <f:verbatim><ul id="submenu">
 	<li id="title"></f:verbatim><h:outputText value="#{msg_menu.title}" /><f:verbatim></li>
 	<li><a href="welcome.faces"></f:verbatim><h:outputText value="#{msg_menu.welcome}" /><f:verbatim></a></li>
@@ -32,3 +33,12 @@
 		</ul>
 	</li>
 </ul></f:verbatim>
+</sec:authorize>
+
+<sec:authorize ifNotGranted="ROLE_administrator">
+<f:verbatim><ul id="submenu">
+	<li id="title"></f:verbatim><h:outputText value="#{msg_menu.title}" /><f:verbatim></li>
+	<li><a href="welcome.faces"></f:verbatim><h:outputText value="#{msg_menu.welcome}" /><f:verbatim></a></li>
+</ul></f:verbatim>
+</sec:authorize>
+

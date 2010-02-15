@@ -68,12 +68,6 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		if (!validateOrganizationNames()) {
 			return "create_change_member_organization";
 		}
-		
-		if(true){
-			return "ip_change_emails";
-		}
-		
-		
 		ContactInformation contactInformationOrganization;
 		Profile contactPersonProfile;
 		if(this.isNew){
