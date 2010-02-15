@@ -536,22 +536,11 @@ public class UserServiceImpl implements UserService {
 					}
 					result.append(user.getPerson().getFirstName().replaceAll(",", " ")).append(columnSeparator);
 					result.append(user.getPerson().getLastName().replaceAll(",", " ")).append(columnSeparator);
-					
-					
-					
-					
-					
 					if (user.getRoleList() != null && user.getRoleList().length>=1) {
 						result.append(user.getRoleList()[0].getKey().getValue().replaceAll(",", " ")).append(columnSeparator);
 					} else {
 						result.append(columnSeparator);
 					}
-					
-					
-					
-					
-					
-					
 					if (user.getPerson().getPositionText() != null &&
 							! user.getPerson().getPositionText().trim().equals("")) {
 						result.append(user.getPerson().getPositionText().replaceAll(",", " ")).append(columnSeparator);
@@ -560,10 +549,6 @@ public class UserServiceImpl implements UserService {
 					} else {
 						result.append(columnSeparator);
 					}
-						
-					
-					
-					
 					if (user.getPerson().getProfile() != null) {
 						result.append(user.getPerson().getProfile().getSubscriptionKey());
 					}
