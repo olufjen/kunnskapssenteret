@@ -6,17 +6,20 @@ public class PasswordValidator {
 	private static PasswordValidator instance = null;
 	// Graph is: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
 	private static String lettersNumbersSpeecialAndLengthRegExpString = "[\\p{Graph}ÆØÅæøå]{6,}";
+	private static String lettersNumbersSpeecialAndTooLongRegExpString = "[\\p{Graph}ÆØÅæøå]{13,}";
 //			"//!@#�\\$%&/\\\\|\\(\\)\\[\\]\\{\\}<>=+-*,.;:-_^~'�]{6,}";
 //	private static String capitalLettersRegExpString = "[A-ZÆØÅ]";
 	private static String lettersRegExpString = "[A-ZÆØÅa-zæøå]";
 	private static String numbersRegExpString = "[0-9]";
 	
 	private static Pattern lettersNumbersSpeecialAndLengthPattern = null;
+	private static Pattern lettersNumbersSpeecialAndTooLongPattern = null;
 //	private static Pattern capitalLettersPatternPattern = null;
 	private static Pattern lettersPattern = null;
 	private static Pattern numbersPattern = null;
 	static {
 		lettersNumbersSpeecialAndLengthPattern = Pattern.compile(lettersNumbersSpeecialAndLengthRegExpString);
+		lettersNumbersSpeecialAndTooLongPattern = Pattern.compile(lettersNumbersSpeecialAndTooLongRegExpString);
 		lettersPattern = Pattern.compile(lettersRegExpString);
 //		capitalLettersPatternPattern = Pattern.compile(capitalLettersRegExpString);
 		numbersPattern = Pattern.compile(numbersRegExpString);
@@ -44,7 +47,9 @@ public class PasswordValidator {
 				// Must have capital letters
 //				capitalLettersPatternPattern.matcher(notNullPassword).find() &&
 				// Must have numbers
-				numbersPattern.matcher(notNullPassword).find()
+				numbersPattern.matcher(notNullPassword).find() &&
+				// No longer than 12 characters
+				( ! lettersNumbersSpeecialAndTooLongPattern.matcher(notNullPassword).find() )
 				);
 		return validPassword;
 	}
@@ -76,6 +81,14 @@ public class PasswordValidator {
 		validPassword = ( numbersPattern.matcher(notNullPassword).find() );
 		return validPassword;
 	}
+	public boolean notTooLong(String password){
+		boolean validPassword = false;
+		String notNullPassword = null == password ? "" : password;
+		// No longer than 12 characters
+		validPassword = ( ! lettersNumbersSpeecialAndTooLongPattern.matcher(notNullPassword).find() );
+		return validPassword;
+	}
+
 	public static void main(String[] args) {
 		PasswordValidator pv = new PasswordValidator();
 		
@@ -87,16 +100,18 @@ public class PasswordValidator {
 		System.out.println(pv.isValidPassword("12*'~ÆÅ"));
 		// OK
 		System.out.println(pv.isValidPassword("12*a_å"));
+		// OK
+		System.out.println(pv.isValidPassword("1;xEÅa_.9TøÅ"));
 
 		// FALSE - Too short
-		System.out.println(pv.isValidPassword("1;xE�"));
-		System.out.println(pv.hasLength("1;xE�"));
+		System.out.println(pv.isValidPassword("1;xEÅ"));
+		System.out.println(pv.hasLength("1;xEÅ"));
+		// FALSE - Too long
+		System.out.println(pv.isValidPassword("1;xEÅa_.9TøÅv"));
+		System.out.println(pv.notTooLong("1;xEÅa_.9TøÅv"));
 		// FALSE - No letters
 		System.out.println(pv.isValidPassword(";?_\\?6"));
 		System.out.println(pv.hasLetters(";?_\\?6"));
-		// FALSE - No caps
-//		System.out.println(pv.isValidPassword(";e_\\?6"));
-//		System.out.println(pv.hasCaps("1;xE�"));
 		// FALSE - No numbers
 		System.out.println(pv.isValidPassword(";e_\\?*"));
 		System.out.println(pv.hasNumbers(";e_\\?*"));

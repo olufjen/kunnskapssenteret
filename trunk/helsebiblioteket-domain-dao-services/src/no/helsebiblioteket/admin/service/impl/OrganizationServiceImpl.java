@@ -32,6 +32,7 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
+import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
@@ -41,11 +42,14 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.line.IpAddressLine;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
+import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameter;
+import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameterList;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultProxyResult;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
@@ -854,8 +858,36 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public List<ProxyResult> getProxyExportList(ProxyExportParameter parameter) {
-		return this.proxyExportDao.getProxyExportList(parameter);
+	public ListResultProxyResult getProxyExportList(ProxyExportParameter parameter) {
+		List<ProxyResult> all = this.proxyExportDao.getProxyExportList(parameter);
+		ProxyResult[] list = new ProxyResult[all.size()];
+		int i=0;
+		for (ProxyResult proxyResult : all) {
+			list[i++]=proxyResult;
+		}
+		return new ListResultProxyResult(list);
+	}
+
+	@Override
+	public Boolean insertProxyHits(ProxyHitParameterList list) {
+		for (ProxyHitParameter parameter : list.getList()) {
+			// Lookup member
+			IpAddress ipAddress = new IpAddress(parameter.getFromIP());
+			this.getOrganizationListByIpAddress(ipAddress);
+			
+			// Lookup supplier
+			parameter.getToDomain();
+			List<SupplierSource> all =
+				this.supplierSourceDao.getSupplierSourceListAll();
+			
+			// Period OK
+			parameter.getPeriod();
+			// insert hits
+			parameter.getHits();
+						
+		}
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
