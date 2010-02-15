@@ -18,6 +18,25 @@
 		<result property="periods" column="period" resultMap="ProxyExport.periodResultMap" />
 	</resultMap>
 
+	<insert id="insertProxyHits" parameterClass="ResourceAccessForeignKeys">
+		<selectKey resultClass="int" keyProperty="resourceAccess.access.id">
+			SELECT nextval('tbl_access_access_id_seq') as id;
+		</selectKey>
+		insert into tbl_proxy_hits (
+    		mem_org_unit_id,
+    		sup_org_unit_id,
+		    year,
+		    month,
+		    day_of_month,
+    		day_of_week,
+		    hour,
+		    count,
+		    last_changed,
+			) values (
+				#orgId#,
+				date_trunc('milliseconds', now()));
+	</insert>
+
 	<select id="getProxyExportList" resultMap="proxyResultMap"  parameterClass="ProxyExportParameter">
 		select
 			<isEqual close="," property="byMember" compareValue="true">
@@ -28,7 +47,7 @@
 			</isEqual>
 			name.name as org_name,
 			<isEqual close="," property="period" compareValue="DAY">
-				hits.month as period
+				hits.hour as period
 			</isEqual>
 			<isEqual close="," property="period" compareValue="WEEK">
 				hits.day_of_week as period
