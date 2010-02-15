@@ -280,6 +280,8 @@ public final class RegisterUserController extends HttpControllerPlugin {
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_LETTERS"));
 		} else if( ! PasswordValidator.getInstance().hasNumbers(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_NUMBERS"));
+		} else if( ! PasswordValidator.getInstance().notTooLong(password)){
+			messages.appendChild(UserToXMLTranslator.element(document, "password", "TOO_LONG"));
 		} else if( ! PasswordValidator.getInstance().isValidPassword(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
 		} else if( ! password.equals(passwordrepeat)){
