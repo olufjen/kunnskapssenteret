@@ -22,6 +22,7 @@ public class ImportProxyDataTask {
 	private String requestPatternString = "^[A-Z]{3,4} http://([a-zA-Z0-9\\-]+[\\.a-zA-Z0-9\\-]+):80/.*";
 	private String linePatternString = "^([\\d.]+) - - \\[([\\w:/]+\\s[\\+\\-]\\d{4})\\] \"(.+?)\".*";
 	private OrganizationService organizationService;
+	private String fileName;
 	protected void initLocalProperties(Properties taskProperties) { }
 	protected void initEvsClient() { }
 	protected String destroyEvsClient() { return ""; }
@@ -32,7 +33,7 @@ public class ImportProxyDataTask {
 		SimpleDateFormat fromDateFormat = new SimpleDateFormat("dd/MMM/yyyy:hh:mm:ss z");
 		SimpleDateFormat toDateFormat = new SimpleDateFormat("yyyyMMddhh");
 
-		File file = new File("C:\\dev\\Notater\\ezproxy_201002.log");
+		File file = new File(this.fileName);
 		FileInputStream fstream;
 		try {
 			fstream = new FileInputStream(file);
@@ -98,6 +99,12 @@ public class ImportProxyDataTask {
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public static void main(String[] args) {

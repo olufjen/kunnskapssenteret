@@ -61,6 +61,12 @@
       </td>
     </tr>
     <tr>
+      <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.option_member_unknown_hide}" /> </td>
+      <td valign="top">
+      	<h:selectBooleanCheckbox value="#{exportProxyBean.hideUnknown}"/>
+      </td>
+    </tr>
+    <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_supplier}" /> </td>
       <td valign="top">
       	<h:selectOneMenu id="supplier" value="#{exportProxyBean.supplier}">

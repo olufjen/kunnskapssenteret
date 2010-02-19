@@ -14,6 +14,14 @@ public class ProxyHitLine {
 	private Boolean multipleMembers;
 	private Date lastChanged;
 	
+	@Override
+	public String toString() {
+		return "" + memberOrgUnitId + ", " + supplierOrgUnitId + ", " +
+				year + ", " + month + ", " + dayOfMonth + ", " +
+				dayOfWeek + ", " + hour + ", " + count + ", " +
+				multipleMembers + ", " + lastChanged;
+	}
+	
 	// GET/SET
 	public Integer getMemberOrgUnitId() {
 		return memberOrgUnitId;
