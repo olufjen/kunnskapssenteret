@@ -99,6 +99,11 @@
 		<h:commandButton value="#{msg_page_export_proxydata.btn_show}" action="#{exportProxyBean.actionShowResultProxy}" />
       </td>
     </tr>
+    <tr>
+      <td colspan="2" align="right">
+		<h:commandButton value="IMPORT" action="#{exportProxyBean.actionImportProxy}" />
+      </td>
+    </tr>
   </table>
   
 </h:form>
