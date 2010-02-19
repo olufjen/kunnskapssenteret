@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.bean;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -20,6 +21,7 @@ import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.task.ImportProxyDataTask;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,7 +46,7 @@ public class ExportProxyBean {
 	private OrganizationListItem[] supplierOrganizations;
 	
 	public String actionExportResultProxy(){
-		List<ProxyResult> resultList = fetchResult();
+		ProxyResult[] resultList = fetchResult();
 		
 		StringBuilder result;
 		if(this.period.equals("DAY")){
@@ -77,7 +79,7 @@ public class ExportProxyBean {
 		return "export_proxy_return";
 	}
 	public String actionShowResultProxy(){
-		List<ProxyResult> resultList = fetchResult();
+		ProxyResult[] resultList = fetchResult();
 		
 		String xLabel;
 		String yLabel = "Hits";
@@ -108,7 +110,7 @@ public class ExportProxyBean {
 		}
 		return "export_proxy_result";
 	}
-	private List<ProxyResult> fetchResult() {
+	private ProxyResult[] fetchResult() {
 		if(this.fromDate == null){ }
 		if(this.period == null){ }
 		if(this.member == null){ }
@@ -125,10 +127,20 @@ public class ExportProxyBean {
 		ProxyExportParameter parameter = new ProxyExportParameter(
 				memberValue, supplierValue, byMember, this.period, fromDateString, toDateString);
 
-		List<ProxyResult> resultList = this.organizationService.getProxyExportList(parameter);
-		return resultList;
+		ProxyResult[] res = this.organizationService.getProxyExportList(parameter).getList();
+		
+		for (ProxyResult proxyResult : res) {
+			if(proxyResult.getKey().getOrgUnitId() == null){
+				if(proxyResult.getKey().isMultiple()){
+					proxyResult.setOrgName("Flere");
+				} else {
+					proxyResult.setOrgName("Ukjent");
+				}
+			}
+		}
+		return res;
 	}
-	private StringBuilder resultToString(int periods, List<ProxyResult> resultList) {
+	private StringBuilder resultToString(int periods, ProxyResult[] resultList) {
 		String columnSeparator = ",";
 		StringBuilder result = new StringBuilder();
 		result
@@ -140,7 +152,7 @@ public class ExportProxyBean {
 		result.append(periods).append("\n");
 		for (ProxyResult proxyResult : resultList) {
 			result
-				.append(proxyResult.getOrgUnitId()).append(columnSeparator)
+				.append(proxyResult.getKey().getOrgUnitId()).append(columnSeparator)
 				.append(proxyResult.getOrgName().replaceAll(",", " ")).append(columnSeparator);
 			int i = 1;
 			for (PeriodResult period : proxyResult.getPeriods()) {
@@ -159,7 +171,7 @@ public class ExportProxyBean {
 		}
 		return result;
 	}
-	private XYSeriesCollection createDataSet(int periods, List<ProxyResult> resultList) {
+	private XYSeriesCollection createDataSet(int periods, ProxyResult[] resultList) {
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
 		for (ProxyResult result : resultList) {
 			XYSeries series = new XYSeries(result.getOrgName());
@@ -218,6 +230,20 @@ public class ExportProxyBean {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
 		return sdf.format(date);
 	}
+	
+	
+	
+	
+	public String actionImportProxy(){
+		// TODO: Remove this method!!!
+		ImportProxyDataTask task = new ImportProxyDataTask();
+		task.setOrganizationService(this.organizationService);
+		task.importContent();
+		return "export_proxy_return";
+	}
+	
+	
+	
 	
 	
 	public String getPeriod() {
