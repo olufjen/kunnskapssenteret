@@ -1,8 +1,11 @@
 package no.helsebiblioteket.admin.service.impl;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -875,7 +878,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public Boolean insertProxyHits(ProxyHitParameterList list) {
 		Map<String, List<Integer>> memberOrgsFromIp = new HashMap<String, List<Integer>>();
 		Map<String, Integer> supplierOrgsFromDomain = new HashMap<String, Integer>();
+		Map<String, ProxyHitLine> hits = new HashMap<String, ProxyHitLine>();
 		List<SupplierSourceResource> allResources = this.resourceDao.getResourceListAll();
+		
+		SimpleDateFormat periodFormat = new SimpleDateFormat("yyyyMMddhh");
+		
 		for (SupplierSourceResource supplierSourceResource : allResources) {
 			String domain = supplierSourceResource.getSupplierSource().getUrl().getDomain();
 			Integer orgId = supplierSourceResource.getResource().getOfferedBy();
@@ -891,40 +898,81 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		for (ProxyHitParameter parameter : list.getList()) {
 			// Lookup member
-			IpAddress ipAddress = new IpAddress(normalizeIp(new IpAddress(
-					parameter.getFromIP())));
-			System.out.println("ipAddress=" + ipAddress);
+			String normalIP = normalizeIp(new IpAddress(
+					parameter.getFromIP()));
+			System.out.println("ipAddress=" + normalIP);
+			if( ! memberOrgsFromIp.containsKey(normalIP)){
+				OrganizationListItem[] memOrgs = this.getOrganizationListByIpAddress(new IpAddress(normalIP)).getList();
+				List<Integer> orgids = new ArrayList<Integer>();
+				for (OrganizationListItem item : memOrgs) {
+					orgids.add(item.getId());
+				}
+				memberOrgsFromIp.put(normalIP, orgids);
+			}
 			Integer memberOrgId;
 			boolean isMultiple;
-			if( ! memberOrgsFromIp.containsKey(ipAddress)){
-				OrganizationListItem[] memOrgs = this.getOrganizationListByIpAddress(ipAddress).getList();
-				List<Integer> orgids = new ArrayList<Integer>();
-
-				
+			if(memberOrgsFromIp.get(normalIP).size() == 0){
+				memberOrgId = null;
+				isMultiple = false;
+			} else if(memberOrgsFromIp.get(normalIP).size() == 1){
+				memberOrgId = memberOrgsFromIp.get(normalIP).get(0);
+				isMultiple = false;
+			} else {
+				memberOrgId = null;
+				isMultiple = true;				
 			}
 			
 			// Lookup supplier
-			parameter.getToDomain();
+			String domain = parameter.getToDomain();
+			Integer supplierOrgId = supplierOrgsFromDomain.get(domain);
 			
 			// Period OK
-			parameter.getPeriod();
+			String period = parameter.getPeriod();
+			
 			// insert hits
-			parameter.getHits();
-						
-			ProxyHitLine line = new ProxyHitLine();
-			//line.setMemberOrgUnitId(memberOrgId);
-			
-//			private Integer memberOrgUnitId;
-//			private Integer supplierOrgUnitId;
-//			private String year;
-//			private String month;
-//			private String dayOfMonth;
-//			private String dayOfWeek;
-//			private String hour;
-//			private Integer count;
-//			private Boolean multipleMembers;
-			
+			String key = ""+memberOrgId+"*"+supplierOrgId+"*"+isMultiple+"*"+period;
+			if(hits.containsKey(key)){
+				ProxyHitLine line = hits.get(key);
+				line.setCount(line.getCount().intValue()+parameter.getHits());
+			} else {
+				ProxyHitLine line = new ProxyHitLine();
+				line.setMemberOrgUnitId(memberOrgId);
+				line.setSupplierOrgUnitId(supplierOrgId);
+				String year = period.substring(0, 4);
+				line.setYear(year);
+				String month = period.substring(4, 6);
+				line.setMonth(month);
+				String dayOfMonth = period.substring(6, 8);
+				line.setDayOfMonth(dayOfMonth);
+				String hour = period.substring(8, 10);
+				line.setHour(hour);
+				
+				String dayOfWeek;
+				try {
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(periodFormat.parse(period));
+					dayOfWeek = "" + (calendar.get(Calendar.DAY_OF_WEEK)+6)%7;
+				} catch (ParseException e) {
+					dayOfWeek = null;
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				line.setDayOfWeek(dayOfWeek);
+				
+
+				Integer count = parameter.getHits();
+				line.setCount(count);
+				Boolean multipleMembers = isMultiple;
+				line.setMultipleMembers(multipleMembers);
+				hits.put(key, line);
+			}
 		}
+		
+		for (String key : hits.keySet()) {
+			System.out.println(hits.get(key));
+			this.proxyExportDao.insertHitsList(hits.get(key));
+		}
+		
 		return Boolean.TRUE;
 	}
 

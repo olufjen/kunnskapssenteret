@@ -41,7 +41,7 @@ public class ExportProxyBean {
 	private String supplier = "ALL";
 	private String optionAxis = "MEMBER";
 	private String optionCharacterEncoding;
-
+	private boolean hideUnknown;
 	private OrganizationService organizationService;
 	private OrganizationListItem[] supplierOrganizations;
 	
@@ -125,7 +125,7 @@ public class ExportProxyBean {
 		boolean byMember = this.optionAxis.equals("MEMBER") ? true : false; 
 
 		ProxyExportParameter parameter = new ProxyExportParameter(
-				memberValue, supplierValue, byMember, this.period, fromDateString, toDateString);
+				memberValue, supplierValue, byMember, this.period, fromDateString, toDateString, this.hideUnknown);
 
 		ProxyResult[] res = this.organizationService.getProxyExportList(parameter).getList();
 		
@@ -238,6 +238,7 @@ public class ExportProxyBean {
 		// TODO: Remove this method!!!
 		ImportProxyDataTask task = new ImportProxyDataTask();
 		task.setOrganizationService(this.organizationService);
+		task.setFileName("/Users/fredrso/Install/kunnskapssenteret/ezproxy_201002.log");
 		task.importContent();
 		return "export_proxy_return";
 	}
@@ -293,5 +294,11 @@ public class ExportProxyBean {
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
+	}
+	public boolean isHideUnknown() {
+		return hideUnknown;
+	}
+	public void setHideUnknown(boolean hideUnknown) {
+		this.hideUnknown = hideUnknown;
 	}
 }

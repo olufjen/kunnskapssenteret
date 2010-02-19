@@ -81,8 +81,14 @@
 		    year || month || day_of_month || hour &gt;= #from# and
     		year || month || day_of_month || hour &lt;= #to# and
 			<isEqual property="byMember" compareValue="true">
+				<isEqual property="hideUnknown" compareValue="true">
+			    ( name.language_code = 'no' and name.category = 'NORMAL'
+			      or ( hits.mem_org_unit_id is null and hits.multiple_members is true ) )
+			    </isEqual>
+				<isEqual property="hideUnknown" compareValue="false">
 			    ( name.language_code = 'no' and name.category = 'NORMAL'
 			      or hits.mem_org_unit_id is null)
+			    </isEqual>
 			</isEqual>
 			<isEqual property="byMember" compareValue="false">
 			    name.language_code = 'en' and name.category = 'NORMAL'
