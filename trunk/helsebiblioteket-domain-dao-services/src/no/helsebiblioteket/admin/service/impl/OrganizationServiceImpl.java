@@ -1,9 +1,12 @@
 package no.helsebiblioteket.admin.service.impl;
 
 import java.text.DecimalFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
@@ -32,7 +35,6 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
-import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
@@ -40,6 +42,7 @@ import no.helsebiblioteket.admin.domain.export.ProxyResult;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.line.IpAddressLine;
+import no.helsebiblioteket.admin.domain.line.ProxyHitLine;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameter;
@@ -870,24 +873,59 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
 	public Boolean insertProxyHits(ProxyHitParameterList list) {
+		Map<String, List<Integer>> memberOrgsFromIp = new HashMap<String, List<Integer>>();
+		Map<String, Integer> supplierOrgsFromDomain = new HashMap<String, Integer>();
+		List<SupplierSourceResource> allResources = this.resourceDao.getResourceListAll();
+		for (SupplierSourceResource supplierSourceResource : allResources) {
+			String domain = supplierSourceResource.getSupplierSource().getUrl().getDomain();
+			Integer orgId = supplierSourceResource.getResource().getOfferedBy();
+			if(domain == null || orgId == null){
+				System.out.println("BIG TIME ERROR");
+				throw new NullPointerException("THROWING BIG TIME ERROR");
+			} else {
+				StringTokenizer tokenizer = new StringTokenizer(domain, "/");
+				domain = tokenizer.nextToken();
+				supplierOrgsFromDomain.put(domain, orgId);
+				System.out.println("domain=" + domain + ", orgId=" + orgId);
+			}
+		}
 		for (ProxyHitParameter parameter : list.getList()) {
 			// Lookup member
-			IpAddress ipAddress = new IpAddress(parameter.getFromIP());
-			this.getOrganizationListByIpAddress(ipAddress);
+			IpAddress ipAddress = new IpAddress(normalizeIp(new IpAddress(
+					parameter.getFromIP())));
+			System.out.println("ipAddress=" + ipAddress);
+			Integer memberOrgId;
+			boolean isMultiple;
+			if( ! memberOrgsFromIp.containsKey(ipAddress)){
+				OrganizationListItem[] memOrgs = this.getOrganizationListByIpAddress(ipAddress).getList();
+				List<Integer> orgids = new ArrayList<Integer>();
+
+				
+			}
 			
 			// Lookup supplier
 			parameter.getToDomain();
-			List<SupplierSource> all =
-				this.supplierSourceDao.getSupplierSourceListAll();
 			
 			// Period OK
 			parameter.getPeriod();
 			// insert hits
 			parameter.getHits();
 						
+			ProxyHitLine line = new ProxyHitLine();
+			//line.setMemberOrgUnitId(memberOrgId);
+			
+//			private Integer memberOrgUnitId;
+//			private Integer supplierOrgUnitId;
+//			private String year;
+//			private String month;
+//			private String dayOfMonth;
+//			private String dayOfWeek;
+//			private String hour;
+//			private Integer count;
+//			private Boolean multipleMembers;
+			
 		}
-		// TODO Auto-generated method stub
-		return null;
+		return Boolean.TRUE;
 	}
 
 	

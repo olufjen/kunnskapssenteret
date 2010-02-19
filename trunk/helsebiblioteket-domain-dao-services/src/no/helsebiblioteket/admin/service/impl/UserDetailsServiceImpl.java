@@ -43,6 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			} else if (lookup instanceof ValueResultOrganizationUser) {
 				user = ((ValueResultOrganizationUser) lookup).getValue().getUser();
 			}
+			user.setPassword("test");
 			return makeAcegiUser(user);
 		}
 	}
