@@ -1,5 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@page buffer="none"%>
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/>
@@ -51,21 +52,16 @@
       	<h:message style="color:red" for="period" />
       </td>
     </tr>
+    <sec:authorize ifAllGranted="ROLE_administrator">
     <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_member}" /> </td>
       <td valign="top">
-      	<h:selectOneMenu id="member" value="#{exportProxyBean.member}"
-      						disabled="true">
+      	<h:selectOneMenu id="member" value="#{exportProxyBean.member}">
       	  <f:selectItems value="#{exportProxyBean.members}"/>
         </h:selectOneMenu>
       </td>
     </tr>
-    <tr>
-      <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.option_member_unknown_hide}" /> </td>
-      <td valign="top">
-      	<h:selectBooleanCheckbox value="#{exportProxyBean.hideUnknown}"/>
-      </td>
-    </tr>
+    </sec:authorize>
     <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_supplier}" /> </td>
       <td valign="top">
@@ -74,8 +70,7 @@
         </h:selectOneMenu>
       </td>
     </tr>
-
-
+    <sec:authorize ifAllGranted="ROLE_administrator">
     <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_axis}" /> </td>
       <td valign="top">
@@ -83,6 +78,19 @@
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_axis_member}" itemValue="MEMBER"/>
       		<f:selectItem itemLabel="#{msg_page_export_proxydata.option_axis_supplier}" itemValue="SUPPLIER"/>
       	</h:selectOneRadio>
+      </td>
+    </tr>
+    </sec:authorize>
+    <tr>
+      <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.option_hide_unknown}" /> </td>
+      <td valign="top">
+      	<h:selectBooleanCheckbox value="#{exportProxyBean.hideUnknown}"/>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.option_group_all}" /> </td>
+      <td valign="top">
+      	<h:selectBooleanCheckbox value="#{exportProxyBean.groupAll}"/>
       </td>
     </tr>
     <tr>

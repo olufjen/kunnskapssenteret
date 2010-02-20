@@ -42,8 +42,10 @@ public class ExportProxyBean {
 	private String optionAxis = "MEMBER";
 	private String optionCharacterEncoding;
 	private boolean hideUnknown;
+	private boolean groupAll;
 	private OrganizationService organizationService;
 	private OrganizationListItem[] supplierOrganizations;
+	private OrganizationListItem[] memberOrganizations;
 	
 	public String actionExportResultProxy(){
 		ProxyResult[] resultList = fetchResult();
@@ -103,7 +105,7 @@ public class ExportProxyBean {
 							  chartTitle, xLabel, yLabel, xyDataset, PlotOrientation.VERTICAL,
 							  true, true, true);
 		try {
-			ChartUtilities.saveChartAsJPEG(new File("./webapps/helsebiblioteket-administration-web/images/charts/chart.jpg"), chart, 500, 300);
+			ChartUtilities.saveChartAsJPEG(new File("./webapps/helsebiblioteket-administration-web/images/charts/chart.jpg"), chart, 500, 600);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,13 +121,20 @@ public class ExportProxyBean {
 		if(this.optionCharacterEncoding == null){ }
 
 		String fromDateString = translateDate(this.fromDate);
-		String toDateString = translateDate(this.toDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(this.toDate);
+		calendar.add(Calendar.DATE, 1); // To the end of selected date
+		String toDateString = translateDate(calendar.getTime());
 		Integer memberValue = this.member.equals("ALL") ? null : new Integer(this.member);
 		Integer supplierValue = this.supplier.equals("ALL") ? null : new Integer(this.supplier);
 		boolean byMember = this.optionAxis.equals("MEMBER") ? true : false; 
 
+		System.out.println("fromDateString="+fromDateString);
+		System.out.println("toDateString="+toDateString);
+		
 		ProxyExportParameter parameter = new ProxyExportParameter(
-				memberValue, supplierValue, byMember, this.period, fromDateString, toDateString, this.hideUnknown);
+				memberValue, supplierValue, byMember, this.period,
+				fromDateString, toDateString, this.hideUnknown, this.groupAll);
 
 		ProxyResult[] res = this.organizationService.getProxyExportList(parameter).getList();
 		
@@ -197,20 +206,34 @@ public class ExportProxyBean {
 	}
 	public List<SelectItem> getMembers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem item = new SelectItem("ALL", "Alle");
+		SelectItem allItem = new SelectItem("ALL", "Alle");
+		list.add(allItem);
 		
+		// TODO: Remove
+		this.memberOrganizations = null;
 		
+		if(this.memberOrganizations == null){
+			PageResultOrganizationListItem orgs = this.organizationService.getMemberOrganizationListAll(new PageRequest(0, 200));
+			this.memberOrganizations = orgs.getResult();
+			for(OrganizationListItem org : this.memberOrganizations){
+				SelectItem orgItem = new SelectItem(""+org.getId(),
+						subStringMax(OrganizationBean.organizationName(org), 40));
+				list.add(orgItem);
+			}
+		}
 		
-		
-		
-		list.add(item);
 		return list;
 	}
+	private String subStringMax(String from, int max) {
+		if(from.length() >= max){ return from.substring(0, max) + " ..."; } else { return from; }
+	}
+
 	public List<SelectItem> getSuppliers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
 		SelectItem allItem = new SelectItem("ALL", "Alle");
 		list.add(allItem);
 		
+		// TODO: Remove
 		this.supplierOrganizations = null;
 		
 		if(this.supplierOrganizations == null){
@@ -300,5 +323,11 @@ public class ExportProxyBean {
 	}
 	public void setHideUnknown(boolean hideUnknown) {
 		this.hideUnknown = hideUnknown;
+	}
+	public boolean isGroupAll() {
+		return groupAll;
+	}
+	public void setGroupAll(boolean groupAll) {
+		this.groupAll = groupAll;
 	}
 }

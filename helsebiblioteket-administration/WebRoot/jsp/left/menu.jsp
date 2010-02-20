@@ -1,8 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://struts.apache.org/tags-tiles"%>
 <f:loadBundle var="msg_menu" basename="no.helsebiblioteket.admin.web.jsf.messageresources.menu"/>
 
+<h:form>
 <sec:authorize ifAllGranted="ROLE_administrator">
 <f:verbatim><ul id="submenu">
 	<li id="title"></f:verbatim><h:outputText value="#{msg_menu.title}" /><f:verbatim></li>
@@ -35,10 +37,22 @@
 </ul></f:verbatim>
 </sec:authorize>
 
-<sec:authorize ifNotGranted="ROLE_administrator">
+<sec:authorize ifAllGranted="ROLE_org_admin">
+<f:verbatim><ul id="submenu">
+	<li id="title"></f:verbatim><h:outputText value="#{msg_menu.title}" /><f:verbatim></li>
+	<li><a href="welcome.faces"></f:verbatim><h:outputText value="#{msg_menu.welcome}" /><f:verbatim></a></li>
+	<li><a href="export-proxy.faces"></f:verbatim><h:outputText value="#{msg_menu.export}" /><f:verbatim></a>
+		<ul>
+			<li><a href="export-proxy.faces"></f:verbatim><h:outputText value="#{msg_menu.export_proxy}" /><f:verbatim></a></li>
+		</ul>
+	</li>
+</ul></f:verbatim>
+</sec:authorize>
+
+<sec:authorize ifNotGranted="ROLE_administrator, ROLE_org_admin">
 <f:verbatim><ul id="submenu">
 	<li id="title"></f:verbatim><h:outputText value="#{msg_menu.title}" /><f:verbatim></li>
 	<li><a href="welcome.faces"></f:verbatim><h:outputText value="#{msg_menu.welcome}" /><f:verbatim></a></li>
 </ul></f:verbatim>
 </sec:authorize>
-
+</h:form>
