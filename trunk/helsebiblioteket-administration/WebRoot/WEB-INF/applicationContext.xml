@@ -316,11 +316,13 @@ xmlns="http://www.springframework.org/schema/beans"
 				/users-overview.faces=ROLE_administrator
 				/organization-types-overview.faces=ROLE_administrator
 				/organization-type-edit.faces=ROLE_administrator
-				/role-types-overview.faces=ROLE_administrator
-				/role-type-edit.faces=ROLE_administrator
+				/roles-overview.faces=ROLE_administrator
+				/role-edit.faces=ROLE_administrator
+				/national-access-edit.faces=ROLE_administrator
 				/export.faces=ROLE_administrator
 				/export-user.faces=ROLE_administrator
-				/export-proxy.faces=ROLE_administrator
+				/export-proxy.faces=ROLE_administrator,ROLE_org_admin
+				/export-proxy-result.faces=ROLE_administrator,ROLE_org_admin
 			</value>
 		</property>
 	</bean>
