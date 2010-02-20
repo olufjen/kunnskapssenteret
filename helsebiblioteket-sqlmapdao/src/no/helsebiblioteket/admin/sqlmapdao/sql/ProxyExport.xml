@@ -47,13 +47,19 @@
  
 	<select id="getProxyExportList" resultMap="proxyResultMap"  parameterClass="ProxyExportParameter">
 		select
-			<isEqual close="," property="byMember" compareValue="true">
-			    hits.mem_org_unit_id as org_id
+			<isEqual property="groupAll" compareValue="false">
+				<isEqual close="," property="byMember" compareValue="true">
+				    hits.mem_org_unit_id as org_id
+				</isEqual>
+				<isEqual close="," property="byMember" compareValue="false">
+				    hits.sup_org_unit_id as org_id
+				</isEqual>
+				name.name as org_name,
 			</isEqual>
-			<isEqual close="," property="byMember" compareValue="false">
-			    hits.sup_org_unit_id as org_id
+			<isEqual property="groupAll" compareValue="true">
+				0 as org_id,
+				'Alle' as org_name,
 			</isEqual>
-			name.name as org_name,
 			<isEqual close="," property="period" compareValue="DAY">
 				hits.hour as period
 			</isEqual>
@@ -67,7 +73,17 @@
 				hits.month as period
 			</isEqual>
 		    sum(hits.count) as sum,
-		    hits.multiple_members as multiple_members
+			<isEqual property="groupAll" compareValue="false">
+				<isEqual property="byMember" compareValue="true">
+				    hits.multiple_members as multiple_members
+				</isEqual>
+				<isEqual property="byMember" compareValue="false">
+				    false as multiple_members
+				</isEqual>
+			</isEqual>
+			<isEqual property="groupAll" compareValue="true">
+			    false as multiple_members
+			</isEqual>
 		from
     		tbl_proxy_hits as hits
 			<isEqual property="byMember" compareValue="true">
@@ -79,7 +95,7 @@
 		    left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
 		where
 		    year || month || day_of_month || hour &gt;= #from# and
-    		year || month || day_of_month || hour &lt;= #to# and
+    		year || month || day_of_month || hour &lt; #to# and
 			<isEqual property="byMember" compareValue="true">
 				<isEqual property="hideUnknown" compareValue="true">
 			    ( name.language_code = 'no' and name.category = 'NORMAL'
@@ -91,7 +107,13 @@
 			    </isEqual>
 			</isEqual>
 			<isEqual property="byMember" compareValue="false">
-			    name.language_code = 'en' and name.category = 'NORMAL'
+				<isEqual property="hideUnknown" compareValue="true">
+				    name.language_code = 'en' and name.category = 'NORMAL'
+			    </isEqual>
+				<isEqual property="hideUnknown" compareValue="false">
+				    ( name.language_code = 'en' and name.category = 'NORMAL'
+    	              or hits.sup_org_unit_id is null )
+			    </isEqual>
 			</isEqual>
     		<isNotNull open="and" property="memberId">
 				hits.mem_org_unit_id = #memberId#
@@ -99,8 +121,22 @@
 			<isNotNull open="and" property="supplierId">
 				hits.sup_org_unit_id = #supplierId#
 		  	</isNotNull>
-			group by org_id, org_name, multiple_members, period
-			order by org_id desc, org_name, multiple_members, period asc
+			group by
+			<isEqual property="groupAll" compareValue="false">
+				org_id, org_name,
+				<isEqual property="byMember" compareValue="true">
+				 	multiple_members,
+				</isEqual>
+			</isEqual>
+			period
+			order by
+			<isEqual property="groupAll" compareValue="false">
+				org_id desc, org_name,
+				<isEqual property="byMember" compareValue="true">
+				 	multiple_members,
+				</isEqual>
+			</isEqual>
+			 period asc
 		;
 	</select>
 </sqlMap>

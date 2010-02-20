@@ -1,4 +1,4 @@
-DROP TABLE tbl_proxy_hits;
+--DROP TABLE tbl_proxy_hits;
 
 CREATE TABLE tbl_proxy_hits
 (
