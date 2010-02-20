@@ -125,6 +125,7 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	public Integer getOrganizationNumberSearchString(String searchString) {
 		return (Integer) getSqlMapClientTemplate().queryForObject("getOrganizationCountSearchString", new SearchStringInput("%" + searchString + "%", searchString));
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrganizationListItem> getOrganizationListByTypes(
 			List<OrganizationTypeKey> types, int from, int max) {
