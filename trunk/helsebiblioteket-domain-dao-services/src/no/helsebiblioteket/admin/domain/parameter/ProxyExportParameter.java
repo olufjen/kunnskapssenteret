@@ -8,9 +8,11 @@ public class ProxyExportParameter {
 	private String from;
 	private String to;
 	private boolean hideUnknown;
+	private boolean groupAll;
 
 	public ProxyExportParameter(Integer memberId, Integer supplierId,
-			boolean byMember, String period, String from, String to, boolean hideUnknown) {
+			boolean byMember, String period, String from, String to,
+			boolean hideUnknown, boolean groupAll) {
 		super();
 		this.memberId = memberId;
 		this.supplierId = supplierId;
@@ -19,6 +21,7 @@ public class ProxyExportParameter {
 		this.from = from;
 		this.to = to;
 		this.hideUnknown = hideUnknown;
+		this.groupAll = groupAll;
 	}
 
 	public ProxyExportParameter() {
@@ -76,5 +79,12 @@ public class ProxyExportParameter {
 	}
 	public void setHideUnknown(boolean hideUnknown) {
 		this.hideUnknown = hideUnknown;
+	}
+	public boolean isGroupAll() {
+		return groupAll;
+	}
+
+	public void setGroupAll(boolean groupAll) {
+		this.groupAll = groupAll;
 	}
 }
