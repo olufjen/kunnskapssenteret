@@ -25,4 +25,8 @@ public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements Org
 	public Organization getOrganizationById(Integer id){
 		return (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationById", id);
 	}
+	@Override
+	public Organization getOrganizationByAdminUserId(Integer id) {
+		return (Organization) getSqlMapClientTemplate().queryForObject("getOrganizationByAdminUserId", id);
+	}
 }

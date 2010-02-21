@@ -59,6 +59,18 @@ public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao
 	}
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<ResourceAccessListItem> getAccessListNational() {
+//		try{
+//			getSqlMapClientTemplate().queryForList("getAccessListNational");
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			System.out.print(e);
+//		}
+		return (List<ResourceAccessListItem>) getSqlMapClientTemplate().queryForList("getAccessListNational");
+ 
+	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<ResourceAccessForeignKeys> getAccessListByResource(Resource resource) {
 		return (List<ResourceAccessForeignKeys>) getSqlMapClientTemplate().queryForList("getAccessListByResource", resource);
 	}
