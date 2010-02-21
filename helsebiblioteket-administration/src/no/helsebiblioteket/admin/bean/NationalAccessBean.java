@@ -16,67 +16,51 @@ import no.helsebiblioteket.admin.domain.AccessType;
 import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.ResourceAccess;
 import no.helsebiblioteket.admin.domain.ResourceType;
-import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSource;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
-import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultAccessType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultResourceType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganization;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 
-public class RoleBean {
+public class NationalAccessBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private UserService userService;
 	private OrganizationService organizationService;
 	private AccessService accessService;
-	private Role[] roles;
-	private ResourceAccessListItem[] roleAccessList;
-	private Role role;
-	private HtmlDataTable roleTable;
+	private ResourceAccessListItem[] nationalAccessList;
 	private HtmlSelectOneMenu supplierSource;
 	private HtmlSelectOneMenu accessTypeCategoryKey;
-	private HtmlDataTable roleAccessTable;
+	private HtmlDataTable nationalAccessTable;
 	private List<ResourceAccessListItem> deltetedResources;
 
-	public String actionEdit(){
-		this.role = (Role) this.roleTable.getRowData();
-		loadRoles();
-		loadAccess();
-		this.deltetedResources = new ArrayList<ResourceAccessListItem>();
-		return "edit_role";
-	}
-	public void loadRoles(){
-		this.roles = this.userService.getRoleListBySystem(((ValueResultSystem)this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue()).getList();
-	}
 	private void loadAccess() {
-		if(this.role != null){
-			this.roleAccessList = this.accessService.getAccessListByRole(this.role.getKey()).getList();
-		} else {
-			this.roleAccessList = new ResourceAccessListItem[0];
-		}
+		this.deltetedResources = new ArrayList<ResourceAccessListItem>();
+		this.nationalAccessList = this.accessService.getAccessListNational().getList();
 	}
 	public String actionCancel(){
-		this.role = null;
 		this.supplierSource = null;
 		this.accessTypeCategoryKey = null;
-		return "roles_overview";
+		this.deltetedResources = new ArrayList<ResourceAccessListItem>();
+		this.nationalAccessList = null;
+		this.nationalAccessTable = null;
+		return "cancel_national_access";
 	}
 	public String actionSave() {
+		if(this.deltetedResources == null){ this.deltetedResources = new ArrayList<ResourceAccessListItem>(); }
 		for (ResourceAccessListItem accessItem : this.deltetedResources) {
 			if(accessItem.getId() == null){ continue; }
 			this.accessService.deleteResourceAccess(accessItem);
 		}
-		for (ResourceAccessListItem accessItem : this.roleAccessList) {
+		for (ResourceAccessListItem accessItem : this.getNationalAccessList()) {
 			if(accessItem.getId() != null){ continue; }
 
 			ResourceAccess resourceAccess = new ResourceAccess();
@@ -108,12 +92,14 @@ public class RoleBean {
 			supplierSourceResource.setSupplierSource(supplierSource);
 			
 			resourceAccess.setResource(supplierSourceResource);
-			this.accessService.insertUserRoleResourceAccess(this.role, resourceAccess);
+			this.accessService.insertNationalResourceAccess(resourceAccess);
 		}
-		this.role = null;
 		this.supplierSource = null;
 		this.accessTypeCategoryKey = null;
-		return "roles_overview";
+		this.deltetedResources = new ArrayList<ResourceAccessListItem>();
+		this.nationalAccessList = null;
+		this.nationalAccessTable = null;
+		return "save_national_access";
 	}
 	
 	public String actionAddSource(){
@@ -130,9 +116,9 @@ public class RoleBean {
 				addedResource = supplierSourceResource;
 			}
 		}
-		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.roleAccessList.length + 1];
-		for(int i=0; i<this.roleAccessList.length;i++){
-			newList[i] = this.roleAccessList[i];
+		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.getNationalAccessList().length + 1];
+		for(int i=0; i<this.nationalAccessList.length;i++){
+			newList[i] = this.nationalAccessList[i];
 		}
 		newList[newList.length-1] = new ResourceAccessListItem();
 		newList[newList.length-1].setSupplierSourceName(addedResource.getSupplierSource().getSupplierSourceName());
@@ -143,19 +129,19 @@ public class RoleBean {
 		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
 		newList[newList.length-1].setSupplierSourceId(addedResource.getSupplierSource().getId());
 
-		this.roleAccessList = newList;
+		this.nationalAccessList = newList;
 		return "";
 	}
 	
 	public void actionDeleteSource(){
-		int index = this.roleAccessTable.getRowIndex();
-		this.deltetedResources.add(this.roleAccessList[index]);
-		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.roleAccessList.length - 1];
+		int index = this.nationalAccessTable.getRowIndex();
+		this.deltetedResources.add(this.getNationalAccessList()[index]);
+		ResourceAccessListItem[] newList = new ResourceAccessListItem[this.nationalAccessList.length - 1];
 		int j=0; int i=0;
-		for (ResourceAccessListItem access : this.roleAccessList) {
+		for (ResourceAccessListItem access : this.nationalAccessList) {
 			if(j != index){ newList[i++] = access; } j++;
 		}
-		this.roleAccessList = newList;
+		this.nationalAccessList = newList;
 	}
 	
 	public List<SelectItem> getSupplierSourceList() {
@@ -185,37 +171,18 @@ public class RoleBean {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	public Role[] getRoles() {
-		if(this.roles==null){ loadRoles(); }
-		return roles;
+	public ResourceAccessListItem[] getNationalAccessList() {
+		if(this.nationalAccessList==null) { loadAccess(); }
+		return nationalAccessList;
 	}
-	public void setRoles(Role[] roles) {
-		this.roles = roles;
+	public void setNationalAccessList(ResourceAccessListItem[] nationalAccessList) {
+		this.nationalAccessList = nationalAccessList;
 	}
-	public Role getRole() {
-		return role;
+	public HtmlDataTable getNationalAccessTable() {
+		return nationalAccessTable;
 	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	public HtmlDataTable getRoleTable() {
-		return roleTable;
-	}
-	public void setRoleTable(HtmlDataTable roleTable) {
-		this.roleTable = roleTable;
-	}
-	public ResourceAccessListItem[] getRoleAccessList() {
-		if(this.roleAccessList==null) { loadAccess(); }
-		return roleAccessList;
-	}
-	public void setRoleAccessList(ResourceAccessListItem[] roleAccessList) {
-		this.roleAccessList = roleAccessList;
-	}
-	public HtmlDataTable getRoleAccessTable() {
-		return roleAccessTable;
-	}
-	public void setRoleAccessTable(HtmlDataTable roleAccessTable) {
-		this.roleAccessTable = roleAccessTable;
+	public void setNationalAccessTable(HtmlDataTable nationalAccessTable) {
+		this.nationalAccessTable = nationalAccessTable;
 	}
 	public HtmlSelectOneMenu getAccessTypeCategoryKey() {
 		return accessTypeCategoryKey;
