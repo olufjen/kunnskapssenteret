@@ -22,6 +22,7 @@ public interface AccessDao {
 	public List<ResourceAccessListItem> getAccessListByUserRole(UserRoleKey userRole);
 	public List<ResourceAccessListItem> getAccessListByOrganization(OrganizationListItem organization);
 	public List<ResourceAccessListItem> getAccessListByOrganizationType(OrganizationTypeKey organizationType);
+	public List<ResourceAccessListItem> getAccessListNational();
 
 	public List<ResourceAccessForeignKeys> getAccessListByResource(Resource resource);
 	public void deleteAccessByResourceId(Integer resourceId);

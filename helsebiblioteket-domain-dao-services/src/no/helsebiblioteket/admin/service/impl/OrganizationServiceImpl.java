@@ -39,6 +39,7 @@ import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.export.ProxyResult;
@@ -281,6 +282,17 @@ public class OrganizationServiceImpl implements OrganizationService {
 			memberOrganization.setOrganization(organization);
 			populateMemberOrganization(memberOrganization);
 			return new ValueResultMemberOrganization(memberOrganization);
+		}
+	}
+	@Override
+	public SingleResultOrganization getOrganizationByAdminUser(User user) {
+		Organization organization = organizationDao.getOrganizationByAdminUserId(user.getId());
+		if(organization == null){
+			return new EmptyResultOrganization();
+		} else {
+			OrganizationListItem item = new OrganizationListItem();
+			item.setId(organization.getId());
+			return this.getOrganizationByListItem(item);
 		}
 	}
 	private void populateMemberOrganization(MemberOrganization memberOrganization) {

@@ -19,6 +19,7 @@ public class Access implements Serializable {
 	// Local values
 	private Date validFrom;
 	private Date validTo;
+	private boolean isNational = false;
 	private boolean deleted = false;
 	private Date lastChanged;
 
@@ -70,6 +71,12 @@ public class Access implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public boolean isNational() {
+		return isNational;
+	}
+	public void setNational(boolean isNational) {
+		this.isNational = isNational;
 	}
 	public boolean isDeleted() {
 		return deleted;

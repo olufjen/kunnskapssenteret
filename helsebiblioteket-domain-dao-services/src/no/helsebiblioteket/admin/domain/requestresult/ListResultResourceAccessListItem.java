@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 
+@SuppressWarnings("serial")
 public class ListResultResourceAccessListItem implements Serializable {
 	private ResourceAccessListItem[] list;
 

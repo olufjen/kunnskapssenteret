@@ -14,6 +14,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
@@ -41,6 +42,7 @@ public interface OrganizationService extends Serializable {
 	public ListResultOrganizationListItem getOrganizationListByAccessDomain(String accessDomain);
 
 	public SingleResultOrganization getOrganizationByListItem(OrganizationListItem organizationListItem);
+	public SingleResultOrganization getOrganizationByAdminUser(User user);
 
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization);
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization);
