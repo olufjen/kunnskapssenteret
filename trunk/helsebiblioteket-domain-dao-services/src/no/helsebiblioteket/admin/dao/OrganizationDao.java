@@ -18,4 +18,5 @@ public interface OrganizationDao {
 	// Fetch
 	// Parents not in use yet.
 	public Organization getOrganizationById(Integer id);
+	public Organization getOrganizationByAdminUserId(Integer id);
 }

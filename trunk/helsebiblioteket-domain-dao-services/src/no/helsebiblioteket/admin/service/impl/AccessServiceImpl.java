@@ -139,6 +139,16 @@ public class AccessServiceImpl implements AccessService {
 		this.accessDao.insertResourceAccessForeignKeys(keys);
 		return true;
 	}
+	@Override
+	public Boolean insertNationalResourceAccess(ResourceAccess access) {
+
+		access.getAccess().setNational(true);
+		
+		ResourceAccessForeignKeys keys = new ResourceAccessForeignKeys();
+		keys.setResourceAccess(access);
+		this.accessDao.insertResourceAccessForeignKeys(keys);
+		return true;
+	}
 	/**
 	 * Retrieves all the accesses a user has. This is not used to check if a user
 	 * has access to a resource. A user may have access through the user role,
@@ -187,6 +197,11 @@ public class AccessServiceImpl implements AccessService {
 	public ListResultResourceAccessListItem getAccessListForAll() {
 		return translateList(this.accessDao.getAccessListForAll());
 	}
+	@Override
+	public ListResultResourceAccessListItem getAccessListNational() {
+		return translateList(this.accessDao.getAccessListNational());
+	}
+
 	/**
 	 * Retrieves a list of all the supplier sources. The list result should perhaps
 	 * be replaced by a paged result, but there are still just a few of these in

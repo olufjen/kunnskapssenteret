@@ -39,6 +39,7 @@ public interface AccessService extends Serializable {
 	public Boolean insertUserRoleResourceAccess(Role userRole, ResourceAccess access);
 	public Boolean insertOrganizationResourceAccess(Organization organization, ResourceAccess access);
 	public Boolean insertOrganizationTypeResourceAccess(OrganizationType organizationType, ResourceAccess access);
+	public Boolean insertNationalResourceAccess(ResourceAccess access);
 
 	public SingleResultAccessType getAccessTypeByTypeCategory(AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory);
 	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey);
@@ -48,6 +49,7 @@ public interface AccessService extends Serializable {
 	public ListResultResourceAccessListItem getAccessListByRole(UserRoleKey role);
 	public ListResultResourceAccessListItem getAccessListByOrganization(OrganizationListItem organization);
 	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationTypeKey organizationType);
+	public ListResultResourceAccessListItem getAccessListNational();
 
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY);
 	public SingleResultSupplierSource getSupplierSourceByDomain(Url url);
