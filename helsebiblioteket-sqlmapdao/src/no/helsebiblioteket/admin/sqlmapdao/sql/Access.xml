@@ -19,8 +19,9 @@
 		<result property="orgTypeId" column="org_type_id" />
 		<result property="resourceAccess.access.providedBy.organization.id" column="provided_by_org_unit" />
 		<result property="orgUnitId" column="org_unit_id" />
-		<result property="resourceAccess.access.lastChanged" column="last_changed" />
+		<result property="resourceAccess.access.isNational" column="is_national" />
 		<result property="resourceAccess.access.deleted" column="deleted" />
+		<result property="resourceAccess.access.lastChanged" column="last_changed" />
 	</resultMap>
 	<resultMap id="ResourceAccessListItemResultMap" class="ResourceAccessListItem">
 		<result property="id" column="access_id" />
@@ -49,6 +50,7 @@
 			org_type_id, 
 			provided_by_org_unit,
 			org_unit_id,
+			is_national,
 			deleted,
 			last_changed
 			)
@@ -62,6 +64,7 @@
 				#orgTypeId#,
 				#resourceAccess.access.providedBy.organization.id#,
 				#orgUnitId#,
+				#resourceAccess.access.isNational#,
 				#resourceAccess.access.deleted#,
 				date_trunc('milliseconds', now()));
 	</insert>
@@ -77,6 +80,7 @@
 			org_type_id = #orgTypeId#,
 			provided_by_org_unit = #resourceAccess.access.providedBy.organization.id#,
 			org_unit_id = #orgUnitId#,
+			is_national = #resourceAccess.access.isNational#,
 			deleted = #resourceAccess.access.deleted#,
 			last_changed = date_trunc('milliseconds', now())
 		where access_id = #resourceAccess.access.id# and last_changed = #resourceAccess.access.lastChanged#
@@ -104,6 +108,7 @@
 			org_type_id, 
 			provided_by_org_unit,
 			org_unit_id,
+			is_national, 
 			deleted, 
 			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_access
@@ -116,6 +121,7 @@
 			category,
 			key,
 			domain,
+			is_national, 
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -137,6 +143,7 @@
 			category,
 			key,
 			domain,
+			is_national, 
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -154,6 +161,7 @@
 			category,
 			key,
 			domain,
+			is_national, 
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -171,6 +179,7 @@
 			category,
 			tbl_access_type_reg.key,
 			domain,
+			is_national, 
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -189,6 +198,7 @@
 			category,
 			tbl_access_type_reg.key,
 			domain,
+			is_national, 
 			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
 			supplier_source_name,
 			provided_by_org_unit,
@@ -201,6 +211,24 @@
 			inner join tbl_user_role_reg on tbl_user_role_reg.user_role_id = tbl_access.user_role_id
 		where tbl_user_role_reg.key = #value# and tbl_access.deleted is false;
 	</select>
+	<select id="getAccessListNational" resultMap="ResourceAccessListItemResultMap" parameterClass="String">
+		select
+			access_id,
+			category,
+			tbl_access_type_reg.key,
+			domain,
+			is_national, 
+			date_trunc('milliseconds', tbl_access.last_changed) as last_changed,
+			supplier_source_name,
+			provided_by_org_unit,
+			tbl_resource.resource_id,
+			tbl_supplier_source.supplier_source_id
+		from tbl_access
+			inner join tbl_access_type_reg on tbl_access.access_type_id = tbl_access_type_reg.access_type_id
+			inner join tbl_resource on tbl_access.resource_id = tbl_resource.resource_id
+			inner join tbl_supplier_source on tbl_resource.supplier_source_id = tbl_supplier_source.supplier_source_id
+		where tbl_access.is_national = true and tbl_access.deleted is false;
+	</select>
 	<select id="getAccessListByResource" resultMap="ResourceAccessResultMap" parameterClass="Resource">
 		select access_type_id, 
 			user_id, 
@@ -212,6 +240,7 @@
 			org_type_id, 
 			provided_by_org_unit,
 			org_unit_id,
+			is_national, 
 			deleted, 
 			date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_access
