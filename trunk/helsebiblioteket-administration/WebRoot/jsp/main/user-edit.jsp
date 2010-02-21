@@ -46,6 +46,14 @@
 			<td><h:message for="roles" styleClass="RED"/></td>
 		</tr>
 		<tr>
+	    	<td valign="top"> <h:outputText value="#{msg_main.user_details_select_member_org}" /> </td>
+      		<td valign="top">
+      			<h:selectOneMenu id="member" value="#{userBean.member}">
+      				 <f:selectItems value="#{userBean.members}"/>
+    	    	</h:selectOneMenu>
+      		</td>
+    	</tr>
+		<tr>
 			<td><h:outputText value="#{msg_main.user_details_position}"  /></td>
 			<td><h:inputText value="#{userBean.user.person.positionText}" id="position"
 					readonly="#{ ! userBean.showPositionText}"

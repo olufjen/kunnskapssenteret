@@ -52,16 +52,21 @@
       	<h:message style="color:red" for="period" />
       </td>
     </tr>
-    <sec:authorize ifAllGranted="ROLE_administrator">
     <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_member}" /> </td>
       <td valign="top">
-      	<h:selectOneMenu id="member" value="#{exportProxyBean.member}">
-      	  <f:selectItems value="#{exportProxyBean.members}"/>
-        </h:selectOneMenu>
+    	<sec:authorize ifAllGranted="ROLE_administrator">
+      		<h:selectOneMenu id="member" value="#{exportProxyBean.member}">
+      		  <f:selectItems value="#{exportProxyBean.members}"/>
+    	    </h:selectOneMenu>
+	    </sec:authorize>
+    	<sec:authorize ifNotGranted="ROLE_administrator">
+      		<h:selectOneMenu id="member" value="#{exportProxyBean.member}" disabled="true">
+      		  <f:selectItems value="#{exportProxyBean.members}"/>
+    	    </h:selectOneMenu>
+	    </sec:authorize>
       </td>
     </tr>
-    </sec:authorize>
     <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_supplier}" /> </td>
       <td valign="top">

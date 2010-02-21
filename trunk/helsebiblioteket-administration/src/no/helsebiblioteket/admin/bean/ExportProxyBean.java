@@ -14,13 +14,18 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
 
+import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.export.PeriodResult;
 import no.helsebiblioteket.admin.domain.export.ProxyResult;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.task.ImportProxyDataTask;
 
 import org.apache.commons.logging.Log;
@@ -31,6 +36,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.context.SecurityContextHolder;
 
 public class ExportProxyBean {
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -44,6 +51,7 @@ public class ExportProxyBean {
 	private boolean hideUnknown;
 	private boolean groupAll;
 	private OrganizationService organizationService;
+	private UserService userService;
 	private OrganizationListItem[] supplierOrganizations;
 	private OrganizationListItem[] memberOrganizations;
 	
@@ -119,6 +127,12 @@ public class ExportProxyBean {
 		if(this.supplier == null){ }
 		if(this.optionAxis == null){ }
 		if(this.optionCharacterEncoding == null){ }
+		
+		// Set values for org admin
+		if( ! isAdministrator()){
+			this.member = findMemberOrg();
+			this.optionAxis = "SUPPLIER";
+		}
 
 		String fromDateString = translateDate(this.fromDate);
 		Calendar calendar = Calendar.getInstance();
@@ -149,6 +163,26 @@ public class ExportProxyBean {
 		}
 		return res;
 	}
+	private String findMemberOrg() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		System.out.println("username="+username);
+		User user = ((ValueResultUser)this.userService.findUserByUsername(username)).getValue();
+		
+		MemberOrganization org = ((ValueResultMemberOrganization)this.organizationService.getOrganizationByAdminUser(user)).getValue();
+		
+		return ""+org.getOrganization().getId();
+	}
+	private boolean isAdministrator() {
+		boolean test = false;
+		GrantedAuthority[] auths = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		for (GrantedAuthority grantedAuthority : auths) {
+			//System.out.println("grantedAuthority="+grantedAuthority);
+			if(grantedAuthority.getAuthority().equals("ROLE_administrator")){ test = true; }
+		}
+		return test;
+	}
+
 	private StringBuilder resultToString(int periods, ProxyResult[] resultList) {
 		String columnSeparator = ",";
 		StringBuilder result = new StringBuilder();
@@ -206,22 +240,38 @@ public class ExportProxyBean {
 	}
 	public List<SelectItem> getMembers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem allItem = new SelectItem("ALL", "Alle");
-		list.add(allItem);
-		
+
 		// TODO: Remove
 		this.memberOrganizations = null;
 		
-		if(this.memberOrganizations == null){
-			PageResultOrganizationListItem orgs = this.organizationService.getMemberOrganizationListAll(new PageRequest(0, 200));
-			this.memberOrganizations = orgs.getResult();
-			for(OrganizationListItem org : this.memberOrganizations){
-				SelectItem orgItem = new SelectItem(""+org.getId(),
-						subStringMax(OrganizationBean.organizationName(org), 40));
-				list.add(orgItem);
+		if(!isAdministrator()){
+			if(this.memberOrganizations == null){
+				this.member = findMemberOrg();
+				System.out.println("this.member=" + this.member);
+				PageResultOrganizationListItem orgs = this.organizationService.getMemberOrganizationListAll(new PageRequest(0, 200));
+				this.memberOrganizations = orgs.getResult();
+				for(OrganizationListItem org : this.memberOrganizations){
+					if(this.member.equals(""+org.getId())){
+						System.out.println("org.getId()=" + org.getId());
+						SelectItem orgItem = new SelectItem(""+org.getId(),
+								subStringMax(OrganizationBean.organizationName(org), 40));
+						list.add(orgItem);
+					}
+				}
+			}
+		} else {
+			if(this.memberOrganizations == null){
+				SelectItem allItem = new SelectItem("ALL", "Alle");
+				list.add(allItem);
+				PageResultOrganizationListItem orgs = this.organizationService.getMemberOrganizationListAll(new PageRequest(0, 200));
+				this.memberOrganizations = orgs.getResult();
+				for(OrganizationListItem org : this.memberOrganizations){
+					SelectItem orgItem = new SelectItem(""+org.getId(),
+							subStringMax(OrganizationBean.organizationName(org), 40));
+					list.add(orgItem);
+				}
 			}
 		}
-		
 		return list;
 	}
 	private String subStringMax(String from, int max) {
@@ -230,13 +280,13 @@ public class ExportProxyBean {
 
 	public List<SelectItem> getSuppliers() {
 		List<SelectItem> list = new ArrayList<SelectItem>();
-		SelectItem allItem = new SelectItem("ALL", "Alle");
-		list.add(allItem);
-		
+
 		// TODO: Remove
 		this.supplierOrganizations = null;
 		
 		if(this.supplierOrganizations == null){
+			SelectItem allItem = new SelectItem("ALL", "Alle");
+			list.add(allItem);
 			PageResultOrganizationListItem orgs = this.organizationService.getSupplierOrganizationListAll(new PageRequest(0, 200));
 			this.supplierOrganizations = orgs.getResult();
 			for(OrganizationListItem org : this.supplierOrganizations){
@@ -277,6 +327,9 @@ public class ExportProxyBean {
 		this.period = period;
 	}
 	public String getMember() {
+		if(this.member == null && ! isAdministrator()){
+			this.member = findMemberOrg();
+		}
 		return member;
 	}
 	public void setMember(String member) {
@@ -301,6 +354,9 @@ public class ExportProxyBean {
 		this.supplier = supplier;
 	}
 	public String getOptionAxis() {
+		if(this.optionAxis == null && ! isAdministrator()){
+			this.optionAxis = "SUPPLIER";
+		}
 		return optionAxis;
 	}
 	public void setOptionAxis(String optionAxis) {
@@ -329,5 +385,11 @@ public class ExportProxyBean {
 	}
 	public void setGroupAll(boolean groupAll) {
 		this.groupAll = groupAll;
+	}
+	public UserService getUserService() {
+		return userService;
+	}
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

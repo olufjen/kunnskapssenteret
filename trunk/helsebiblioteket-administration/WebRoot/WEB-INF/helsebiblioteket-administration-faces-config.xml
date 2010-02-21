@@ -152,6 +152,17 @@
 	
 	<navigation-rule>
 		<navigation-case>
+			<from-outcome>cancel_national_access</from-outcome>
+			<to-view-id>/welcome.faces</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>save_national_access</from-outcome>
+			<to-view-id>/welcome.faces</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
 	    	<from-action>#{exportBean.actionExportUserList}</from-action>
 		    <to-view-id>/export.faces</to-view-id>
 		</navigation-case>
@@ -272,6 +283,10 @@
     	<managed-property>
     		<property-name>organizationService</property-name>
         	<value>#{organizationService}</value>
+		</managed-property>
+    	<managed-property>
+    		<property-name>userService</property-name>
+        	<value>#{userService}</value>
 		</managed-property>
 	</managed-bean> 
 	
@@ -457,6 +472,30 @@
     		<property-name>accessService</property-name>
         	<value>#{accessService}</value>
 		</managed-property>
+		<managed-property>
+            <property-name>organizationService</property-name>
+            <value>#{organizationService}</value>
+        </managed-property>
+	</managed-bean>
+
+	<managed-bean>
+    	<description>Backingbean related to national access</description>
+        <display-name>nationalAccessBean</display-name>
+        <managed-bean-name>nationalAccessBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.NationalAccessBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+            <property-name>userService</property-name>
+            <value>#{userService}</value>
+        </managed-property>
+        <managed-property>
+    		<property-name>accessService</property-name>
+        	<value>#{accessService}</value>
+		</managed-property>
+		<managed-property>
+            <property-name>organizationService</property-name>
+            <value>#{organizationService}</value>
+        </managed-property>
 	</managed-bean>
 	
 	<!-- <managed-bean>

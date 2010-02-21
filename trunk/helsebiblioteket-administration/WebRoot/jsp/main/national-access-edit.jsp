@@ -9,31 +9,27 @@
 <br/>
 <h:form>
 	<p>
-		<t:outputText value="#{msg_main.role_edit_text}" />
-		<b><t:outputText value="#{roleBean.role.name}" /></b>
-	</p>
-	<p>
-		<t:outputText value="#{roleBean.role.description}" />
+		<t:outputText value="#{msg_main.national_access_edit_text}" />
 	</p>
 
 	<table>
 		<tr>
 			<td colspan="2">
 				<br />
-				<h5><h:outputText value="#{msg_main.role_select_source}" /></h5>
+				<h5><h:outputText value="#{msg_main.national_access_select_source}" /></h5>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<h:selectOneMenu id="supplierSources"
 					style="width: 200px;"
-					binding="#{roleBean.supplierSource}">
-					<f:selectItems value="#{roleBean.supplierSourceList}"/>
+					binding="#{nationalAccessBean.supplierSource}">
+					<f:selectItems value="#{nationalAccessBean.supplierSourceList}"/>
 				</h:selectOneMenu>
 			</td>
 			<td>
 				<h:selectOneMenu id="accessTypeCategoryKey"
-					binding="#{roleBean.accessTypeCategoryKey}">
+					binding="#{nationalAccessBean.accessTypeCategoryKey}">
 					<f:selectItems value="#{adminBean.accessTypeCategoryKeySelectItemList}"/>
 				</h:selectOneMenu>
 			</td>
@@ -41,44 +37,44 @@
 		<tr>
 			<td colspan="2" align="left"">
 				<h:commandLink value="#{msg_main.add}"
-					action="#{roleBean.actionAddSource}"
+					action="#{nationalAccessBean.actionAddSource}"
 					immediate="true"/>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<br />
-				<h5><h:outputText value="#{msg_main.role_access_list}" /></h5>
+				<h5><h:outputText value="#{msg_main.national_access_list}" /></h5>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<h:dataTable id="orgAccessTable"
-					value="#{roleBean.roleAccessList}"
-					var="roleAccess"
-					binding="#{roleBean.roleAccessTable}">
+					value="#{nationalAccessBean.nationalAccessList}"
+					var="nationalAccess"
+					binding="#{nationalAccessBean.nationalAccessTable}">
 
 					<h:column id="urlOrgColumn">
-      					<f:facet name="header"><h:outputText value="#{msg_main.role_access_domain}"/></f:facet>
-      					<h:outputText id="orgAccessUrl" value="#{roleAccess.url.domain}" />
+      					<f:facet name="header"><h:outputText value="#{msg_main.national_access_domain}"/></f:facet>
+      					<h:outputText id="orgAccessUrl" value="#{nationalAccess.url.domain}" />
 		    		</h:column>
 					<h:column id="supplierSourceNameOrgColumn">
-      					<f:facet name="header"><h:outputText value="#{msg_main.role_access_source_name}"/></f:facet>
-		      			<h:outputText id="orgAccessSourceName" value="#{roleAccess.supplierSourceName}" />
+      					<f:facet name="header"><h:outputText value="#{msg_main.national_access_source_name}"/></f:facet>
+		      			<h:outputText id="orgAccessSourceName" value="#{nationalAccess.supplierSourceName}" />
     				</h:column>
 					<h:column id="categoryOrgColumn">
-      					<f:facet name="header"><h:outputText value="#{msg_main.role_access_category}"/></f:facet>
-      					<h:outputText id="orgAccessCategory" value="#{roleAccess.category.value}" />
+      					<f:facet name="header"><h:outputText value="#{msg_main.national_access_category}"/></f:facet>
+      					<h:outputText id="orgAccessCategory" value="#{nationalAccess.category.value}" />
     				</h:column>
 					<h:column id="keyOrgColumn">
-      					<f:facet name="header"><h:outputText value="#{msg_main.role_access_key}"/></f:facet>
-      					<h:outputText id="orgAccessKey" value="#{roleAccess.key.value}" />
+      					<f:facet name="header"><h:outputText value="#{msg_main.national_access_key}"/></f:facet>
+      					<h:outputText id="orgAccessKey" value="#{nationalAccess.key.value}" />
 		    		</h:column>
 
 					<h:column id="deleteOrgColumn">
       					<f:facet name="header"><h:outputText value="#{msg_main.delete}"/></f:facet>
 						<h:commandLink value="#{msg_main.delete}"
-							action="#{roleBean.actionDeleteSource}"
+							action="#{nationalAccessBean.actionDeleteSource}"
 							immediate="true"/>
 		    		</h:column>
 
@@ -88,12 +84,12 @@
 		<tr>
 			<td align="left">
 				<h:commandButton value="#{msg_main.cancel}"
-					action="#{roleBean.actionCancel}"
+					action="#{nationalAccessBean.actionCancel}"
 					immediate="true"/>
 			</td>
 			<td align="right">
 				<h:commandButton value="#{msg_main.save}"
-				action="#{roleBean.actionSave}" />
+				action="#{nationalAccessBean.actionSave}" />
 			</td>
 		</tr>
 	</table>
