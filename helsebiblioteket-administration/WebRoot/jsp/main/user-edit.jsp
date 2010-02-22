@@ -48,7 +48,7 @@
 		<tr>
 	    	<td valign="top"> <h:outputText value="#{msg_main.user_details_select_member_org}" /> </td>
       		<td valign="top">
-      			<h:selectOneMenu id="member" value="#{userBean.member}">
+      			<h:selectOneMenu id="member" value="#{userBean.memberOrgId}">
       				 <f:selectItems value="#{userBean.members}"/>
     	    	</h:selectOneMenu>
       		</td>

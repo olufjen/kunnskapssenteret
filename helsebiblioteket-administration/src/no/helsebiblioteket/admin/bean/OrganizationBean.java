@@ -337,6 +337,22 @@ public class OrganizationBean implements IconProvider{
 		return name;
 	}
 
+	public static String organizationName(Organization org) {
+		String name = "";
+		// avoiding potential blank names in organization overview
+		// (rule: at least one name type is defined for an organization)
+		if (hasValue(org.getNameNorwegian())) {
+			name = org.getNameNorwegian();
+		} else if (hasValue(org.getNameEnglish())) {
+			name = org.getNameEnglish();
+		} else if (hasValue(org.getNameShortNorwegian())) {
+			name = org.getNameShortNorwegian();
+		} else if (hasValue(org.getNameShortEnglish())) {
+			name = org.getNameShortEnglish();
+		}
+		return name;
+	}
+
 	private static boolean hasValue(String string) {
 		return (null != string && !"".equals(string));
 	}

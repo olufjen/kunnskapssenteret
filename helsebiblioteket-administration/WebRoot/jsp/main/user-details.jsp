@@ -34,10 +34,12 @@
 			
 		</tr>
 		<tr>
-			
 			<td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
 			<td><h:outputText value="#{userBean.user.roleList[0].name}"/></td>
-
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.user_details_admin_for_org}"  /></td>
+			<td><h:outputText value="#{userBean.adminOrgName}"/></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_position}"  /></td>

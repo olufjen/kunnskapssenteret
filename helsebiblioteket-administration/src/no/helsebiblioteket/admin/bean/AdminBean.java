@@ -78,6 +78,10 @@ public class AdminBean {
 		return accessTypeSelectItemList;
 	}
 
+	public static String subStringMax(String from, int max) {
+		if(from.length() >= max){ return from.substring(0, max) + " ..."; } else { return from; }
+	}
+
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}

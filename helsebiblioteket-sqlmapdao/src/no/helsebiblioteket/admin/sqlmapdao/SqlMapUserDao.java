@@ -4,7 +4,6 @@ package no.helsebiblioteket.admin.sqlmapdao;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
-import no.helsebiblioteket.admin.domain.User;
 
 public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	@Override

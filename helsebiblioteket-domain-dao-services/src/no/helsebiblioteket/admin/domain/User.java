@@ -17,6 +17,8 @@ public class User implements Serializable {
 	private boolean deleted;
 
 	private Person person;
+	
+	private Organization orgAdminFor;
 
 	// Values loaded with UserRoleLine
 	private Role[] roleList;
@@ -115,5 +117,12 @@ public class User implements Serializable {
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public Organization getOrgAdminFor() {
+		return orgAdminFor;
+	}
+	public void setOrgAdminFor(Organization orgAdminFor) {
+		this.orgAdminFor = orgAdminFor;
 	}
 }
