@@ -21,11 +21,14 @@ import no.helsebiblioteket.admin.domain.export.ProxyResult;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.task.ExportProxySetupTask;
 import no.helsebiblioteket.admin.task.ImportProxyDataTask;
 
 import org.apache.commons.logging.Log;
@@ -165,12 +168,16 @@ public class ExportProxyBean {
 	}
 	private String findMemberOrg() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		
-		System.out.println("username="+username);
-		User user = ((ValueResultUser)this.userService.findUserByUsername(username)).getValue();
-		
+		User user;
+		SingleResultUser userRes = this.userService.findUserByUsername(username);
+		if(userRes instanceof ValueResultUser){
+			user = ((ValueResultUser)userRes).getValue();
+		} else if(userRes instanceof ValueResultOrganizationUser){
+			user = ((ValueResultOrganizationUser)userRes).getValue().getUser();
+		} else {
+			user = null;
+		}
 		MemberOrganization org = ((ValueResultMemberOrganization)this.organizationService.getOrganizationByAdminUser(user)).getValue();
-		
 		return ""+org.getOrganization().getId();
 	}
 	private boolean isAdministrator() {
@@ -254,7 +261,7 @@ public class ExportProxyBean {
 					if(this.member.equals(""+org.getId())){
 						System.out.println("org.getId()=" + org.getId());
 						SelectItem orgItem = new SelectItem(""+org.getId(),
-								subStringMax(OrganizationBean.organizationName(org), 40));
+								AdminBean.subStringMax(OrganizationBean.organizationName(org), 40));
 						list.add(orgItem);
 					}
 				}
@@ -267,15 +274,12 @@ public class ExportProxyBean {
 				this.memberOrganizations = orgs.getResult();
 				for(OrganizationListItem org : this.memberOrganizations){
 					SelectItem orgItem = new SelectItem(""+org.getId(),
-							subStringMax(OrganizationBean.organizationName(org), 40));
+							AdminBean.subStringMax(OrganizationBean.organizationName(org), 40));
 					list.add(orgItem);
 				}
 			}
 		}
 		return list;
-	}
-	private String subStringMax(String from, int max) {
-		if(from.length() >= max){ return from.substring(0, max) + " ..."; } else { return from; }
 	}
 
 	public List<SelectItem> getSuppliers() {
@@ -309,10 +313,26 @@ public class ExportProxyBean {
 	
 	public String actionImportProxy(){
 		// TODO: Remove this method!!!
+//	    <tr>
+//	      <td colspan="2" align="right">
+//			<h:commandButton value="IMPORT" action="#{exportProxyBean.actionImportProxy}" />
+//	      </td>
+//	    </tr>
 		ImportProxyDataTask task = new ImportProxyDataTask();
 		task.setOrganizationService(this.organizationService);
 		task.setFileName("/Users/fredrso/Install/kunnskapssenteret/ezproxy_201002.log");
 		task.importContent();
+		return "export_proxy_return";
+	}
+	public String actionExportProxy(){
+		// TODO: Remove this method!!!
+//	    <tr>
+//	      <td colspan="2" align="right">
+//			<h:commandButton value="EXPORT" action="#{exportProxyBean.actionExportProxy}" />
+//	      </td>
+//	    </tr>
+		ExportProxySetupTask task = new ExportProxySetupTask();
+		task.exportSetup();
 		return "export_proxy_return";
 	}
 	

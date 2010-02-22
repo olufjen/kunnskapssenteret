@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.bean;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
+import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.User;
@@ -30,7 +32,9 @@ import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
+import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
+import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
@@ -61,7 +65,9 @@ public class UserBean {
 	private Map<String, Position> allPositionsMap;
 	private UserListItem[] users;
 	private User user;
-	
+	private Integer memberOrgId;
+	private OrganizationListItem[] memberOrganizations;
+	private String adminOrgName;
 	private boolean showHprNumber;
 	private boolean showDateOfBirth;
 	private boolean showEmployerNumber;
@@ -193,6 +199,11 @@ public class UserBean {
     public void prepareEdit(){
     	this.password = "";
     	this.repeatPassword = "";
+    	if(this.user.getOrgAdminFor() != null){
+        	this.memberOrgId = this.user.getOrgAdminFor().getId();
+    	} else {
+    		this.memberOrgId = null;
+    	}
     	if(this.user.getPerson().getPosition() == null || this.user.getPerson().getPosition().getKey() == null){
     		this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
@@ -256,6 +267,12 @@ public class UserBean {
         	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
 //    		this.user.getPerson().setPosition(new Position());
     	}
+    	this.user.setOrgAdminFor(new Organization());
+    	if(this.memberOrgId != null && this.memberOrgId.intValue()>=0){
+        	this.user.getOrgAdminFor().setId(this.memberOrgId);
+    	} else {
+        	this.user.getOrgAdminFor().setId(null);
+    	}
     	if(this.isNew()){
     		this.userService.insertUser(this.user);
     	} else {
@@ -272,7 +289,7 @@ public class UserBean {
     		this.user = ((ValueResultOrganizationUser) userObject).getValue().getUser();
     	}
     	
-    	return "user_details";
+    	return details();
     }
     public String actionCancel(){
     	SingleResultUser result = this.userService.findUserByUsername(this.user.getUsername());
@@ -281,12 +298,19 @@ public class UserBean {
     	} else {
     		this.user = null;
     	}
-    	return "user_details";
+    	return details();
     }
     public String getErrorMsg() { return ""; }
     public boolean getFailed() { return true; }
     public String details(){
 		logger.info("USER: " + user.getPerson().getName());
+		this.adminOrgName = "Ingen";
+		if(this.user.getOrgAdminFor() != null && this.user.getOrgAdminFor().getId() != null){
+			SingleResultOrganization orgRes = this.organizationService.getOrganizationByAdminUser(this.user);
+			if(orgRes instanceof ValueResultMemberOrganization){
+				this.adminOrgName = OrganizationBean.organizationName(((ValueResultMemberOrganization)orgRes).getValue().getOrganization());
+			}
+		}
 		return "user_details";
     }
     public String actionDetails(){
@@ -295,7 +319,7 @@ public class UserBean {
 		if (lookup instanceof ValueResultUser) {
 			this.user = ((ValueResultUser)lookup).getValue();
 		} else if (lookup instanceof ValueResultOrganizationUser) {
-			user = ((ValueResultOrganizationUser) lookup).getValue().getUser();
+			this.user = ((ValueResultOrganizationUser) lookup).getValue().getUser();
 		}
 		if(this.user.getPerson().getPosition() == null){
 			this.user.getPerson().setPosition(new Position());
@@ -496,6 +520,26 @@ public class UserBean {
 		}
 	}
 
+	public List<SelectItem> getMembers() {
+		List<SelectItem> list = new ArrayList<SelectItem>();
+
+		// TODO: Remove
+		this.memberOrganizations = null;
+		
+		if(this.memberOrganizations == null){
+			SelectItem allItem = new SelectItem(new Integer(-1), "Ingen");
+			list.add(allItem);
+			PageResultOrganizationListItem orgs = this.organizationService.getMemberOrganizationListAll(new PageRequest(0, 200));
+			this.memberOrganizations = orgs.getResult();
+			for(OrganizationListItem org : this.memberOrganizations){
+				SelectItem orgItem = new SelectItem(org.getId(),
+						AdminBean.subStringMax(OrganizationBean.organizationName(org), 40));
+				list.add(orgItem);
+			}
+		}
+		return list;
+	}
+
 	
 	public UIData getUsersTable() { return usersTable; }
 	public void setUsersTable(UIData usersTable) { this.usersTable = usersTable; }
@@ -527,10 +571,12 @@ public class UserBean {
 	public void setPasswordRepeat(UIInput passwordRepeat) { this.passwordRepeat = passwordRepeat; }
 	public UIInput getPasswordInput() { return passwordInput; }
 	public void setPasswordInput(UIInput passwordInput) { this.passwordInput = passwordInput; }
-	public boolean isShowDateOfBirth() {
-		return showDateOfBirth;
-	}
-	public void setShowDateOfBirth(boolean showDateOfBirth) {
-		this.showDateOfBirth = showDateOfBirth;
-	}
+	public boolean isShowDateOfBirth() { return showDateOfBirth; }
+	public void setShowDateOfBirth(boolean showDateOfBirth) { this.showDateOfBirth = showDateOfBirth; }
+	public Integer getMemberOrgId() { return memberOrgId; }
+	public void setMemberOrgId(Integer memberOrgId) { this.memberOrgId = memberOrgId; }
+	public OrganizationListItem[] getMemberOrganizations() { return memberOrganizations; }
+	public void setMemberOrganizations(OrganizationListItem[] memberOrganizations) { this.memberOrganizations = memberOrganizations; }
+	public String getAdminOrgName() { return adminOrgName; }
+	public void setAdminOrgName(String adminOrgName) { this.adminOrgName = adminOrgName; }
 }

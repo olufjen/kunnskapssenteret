@@ -47,7 +47,6 @@ public interface UserService extends Serializable {
 	public SingleResultUser getUserByUserListItem(UserListItem userListItem);
 	public SingleResultUser findUserByUsername(String username);
 	
-
 	public SingleResultUser insertUser(User user);
 	public SingleResultUser insertOrganizationUser(OrganizationUser organizationUser);
 	public Boolean updateUser(User user);
