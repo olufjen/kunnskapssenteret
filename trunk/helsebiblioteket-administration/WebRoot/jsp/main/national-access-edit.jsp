@@ -28,10 +28,6 @@
 				</h:selectOneMenu>
 			</td>
 			<td>
-				<h:selectOneMenu id="accessTypeCategoryKey"
-					binding="#{nationalAccessBean.accessTypeCategoryKey}">
-					<f:selectItems value="#{adminBean.accessTypeCategoryKeySelectItemList}"/>
-				</h:selectOneMenu>
 			</td>
 		</tr>
 		<tr>

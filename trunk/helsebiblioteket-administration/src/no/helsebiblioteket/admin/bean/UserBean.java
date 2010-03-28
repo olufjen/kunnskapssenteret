@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIData;
 import javax.faces.component.UIInput;
+import javax.faces.component.UISelectBoolean;
 import javax.faces.component.UISelectMany;
 import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
@@ -55,7 +56,8 @@ public class UserBean {
 	private List<String> selectedRoles;
 	private UserRoleKey selectedUserRole;
 	private String selectedIsStudent;
-	
+	private boolean isOrgAdmin;
+	private boolean showSelectMemberOrg;
 	private String password;
 	private String repeatPassword;
 
@@ -88,20 +90,43 @@ public class UserBean {
 	private UIData usersTable;
 	private UIInput passwordRepeat;
 	private UIInput passwordInput;
+	private UISelectBoolean isOrgAdminSelectBooleanCheckbox;
 	
 	private PageResultUserListItem lastPageResult;
 	private String searchedString;
 	private Role[] searchedRoles;
 	private int SHOW_MAX = 40;
 	
-	
     protected final Log logger = LogFactory.getLog(getClass());
 
     private boolean isNew(){ return this.user.getId() == null; }
 
-    private Role mainRole(){ return this.user.getRoleList()[0]; }
-    private void mainRole(Role role){ this.user.setRoleList(new Role[1]); this.user.getRoleList()[0]=role; }
-    
+    private Role mainRole(){
+    	Role[] roleList = this.user.getRoleList();
+    	if(roleList.length == 1){
+        	return roleList[0];
+    	} else {
+    		if( ! roleList[0].getKey().getValue().equals(UserRoleKey.organization_administrator.getValue())){
+        		return roleList[0];
+    		} else {
+        		return roleList[1];
+    		}
+    	}
+    }
+    private void mainRole(Role role){
+    	Role[] roleList = this.user.getRoleList();
+    	if(roleList == null){ roleList = new Role[1]; }
+    	if(roleList.length == 1){
+        	roleList[0] = role;
+    	} else {
+    		if( ! roleList[0].getKey().getValue().equals(UserRoleKey.organization_administrator.getValue())){
+        		roleList[0] = role;
+    		} else {
+        		roleList[1] = role;
+    		}
+    	}
+    	this.user.setRoleList(roleList);
+    }
     public void initSelectedIsStudent(){
 		if(this.availableIsStudent == null){
 			this.availableIsStudent = new ArrayList<SelectItem>();
@@ -160,6 +185,35 @@ public class UserBean {
         	this.showPositionMenu = false;
     		this.showProfile = true;
     	}
+    	this.showSelectMemberOrg = this.isOrgAdmin;
+    }
+    public void isOrgAdminChanged(ValueChangeEvent event){
+    	Boolean newVal = (Boolean) event.getNewValue();
+    	this.isOrgAdmin = newVal;
+    	Role[] roleList = this.user.getRoleList();
+    	if(roleList == null){ roleList = new Role[1]; }
+    	if(this.isOrgAdmin){
+        	if(roleList.length == 1 && ( ! roleList[0].getKey().getValue().equals(UserRoleKey.organization_administrator.getValue()))){
+        		Role old = roleList[0];
+            	roleList = new Role[2];
+            	roleList[0] = old;
+            	roleList[1] = this.allRolesMap.get(UserRoleKey.organization_administrator.getValue());
+        	}
+    	} else {
+    		this.memberOrgId = -1;
+        	if(roleList.length == 2){
+        		Role old;
+        		if(roleList[0].getKey().getValue() == UserRoleKey.organization_administrator.getValue()){
+            		old = roleList[1];
+        		} else {
+            		old = roleList[0];
+        		}
+            	roleList = new Role[1];
+            	roleList[0] = old;
+        	}
+    	}
+    	this.user.setRoleList(roleList);
+    	this.enableDisableFields();
     }
     public void roleChanged(ValueChangeEvent event){
     	if(this.allRolesMap.containsKey(event.getNewValue())){
@@ -209,6 +263,7 @@ public class UserBean {
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	}
 		this.selectedUserRole = this.mainRole().getKey();
+		this.isOrgAdmin = (this.user.getOrgAdminFor() != null);
 		this.enableDisableFields();
     }
     public String getUserRole(){
@@ -268,8 +323,12 @@ public class UserBean {
 //    		this.user.getPerson().setPosition(new Position());
     	}
     	this.user.setOrgAdminFor(new Organization());
-    	if(this.memberOrgId != null && this.memberOrgId.intValue()>=0){
-        	this.user.getOrgAdminFor().setId(this.memberOrgId);
+    	if(this.isOrgAdmin){
+        	if(this.memberOrgId != null && this.memberOrgId.intValue()>=0){
+            	this.user.getOrgAdminFor().setId(this.memberOrgId);
+        	} else {
+            	this.user.getOrgAdminFor().setId(null);
+        	}
     	} else {
         	this.user.getOrgAdminFor().setId(null);
     	}
@@ -363,11 +422,16 @@ public class UserBean {
 		if(this.availableRoles == null) {
 			this.availableRoles = new ArrayList<SelectItem>();
 			logger.info("STARTROLES");
-			this.logger.info("this.userService=" + this.userService);
+			this.logger.debug("this.userService=" + this.userService);
 			for (Role role : this.getAllRoles()) {
-				logger.info("role: " + role.getKey());
-				SelectItem option = new SelectItem(role.getKey().getValue(), role.getName(), "", false);
-				this.availableRoles.add(option);
+				if( ! (role.getKey().getValue().equals(UserRoleKey.organization_administrator.getValue()) ||
+						role.getKey().getValue().equals(UserRoleKey.administrator.getValue()))){
+//					administrator
+//					org_admin
+					logger.debug("role: " + role.getKey());
+					SelectItem option = new SelectItem(role.getKey().getValue(), role.getName(), "", false);
+					this.availableRoles.add(option);
+				}
 			}
 			logger.debug("DONEROLES");
 			
@@ -579,4 +643,10 @@ public class UserBean {
 	public void setMemberOrganizations(OrganizationListItem[] memberOrganizations) { this.memberOrganizations = memberOrganizations; }
 	public String getAdminOrgName() { return adminOrgName; }
 	public void setAdminOrgName(String adminOrgName) { this.adminOrgName = adminOrgName; }
+	public boolean getIsOrgAdmin() { return isOrgAdmin; }
+	public void setIsOrgAdmin(boolean isOrgAdmin) { this.isOrgAdmin = isOrgAdmin; }
+	public boolean isShowSelectMemberOrg() { return showSelectMemberOrg; }
+	public void setShowSelectMemberOrg(boolean showSelectMemberOrg) { this.showSelectMemberOrg = showSelectMemberOrg; }
+	public UISelectBoolean getIsOrgAdminSelectBooleanCheckbox() { return isOrgAdminSelectBooleanCheckbox; }
+	public void setIsOrgAdminSelectBooleanCheckbox(UISelectBoolean isOrgAdminSelectBooleanCheckbox) { this.isOrgAdminSelectBooleanCheckbox = isOrgAdminSelectBooleanCheckbox; }
 }
