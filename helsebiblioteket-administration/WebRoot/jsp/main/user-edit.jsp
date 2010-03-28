@@ -46,9 +46,19 @@
 			<td><h:message for="roles" styleClass="RED"/></td>
 		</tr>
 		<tr>
+			<td><h:outputText value="#{msg_main.user_details_org_admin}"  /></td>
+			<td><h:selectBooleanCheckbox id="isOrgAdminSelect"
+					value="#{userBean.isOrgAdmin}"
+					binding="#{userBean.isOrgAdminSelectBooleanCheckbox}"
+					valueChangeListener="#{userBean.isOrgAdminChanged}" onchange="submit()"/></td>
+			<td><h:message for="isOrgAdminSelect" styleClass="RED"/></td>
+		</tr>
+		<tr>
 	    	<td valign="top"> <h:outputText value="#{msg_main.user_details_select_member_org}" /> </td>
       		<td valign="top">
-      			<h:selectOneMenu id="member" value="#{userBean.memberOrgId}">
+      			<h:selectOneMenu id="member" value="#{userBean.memberOrgId}"
+      				disabled="#{ ! userBean.showSelectMemberOrg}"
+					readonly="#{ ! userBean.showSelectMemberOrg}">
       				 <f:selectItems value="#{userBean.members}"/>
     	    	</h:selectOneMenu>
       		</td>

@@ -552,6 +552,23 @@ public class UserServiceImpl implements UserService {
 					if (user.getPerson().getProfile() != null) {
 						result.append(user.getPerson().getProfile().getSubscriptionKey());
 					}
+					result.append(columnSeparator);
+					if (user.getPerson().getProfile() != null) {
+						if(user.getPerson().getProfile().getParticipateSurvey() != null){
+							result.append(user.getPerson().getProfile().getParticipateSurvey());
+						} else{
+							result.append("false");
+						}
+						result.append(columnSeparator);
+						if(user.getPerson().getProfile().getReceiveNewsletter() != null){
+							result.append(user.getPerson().getProfile().getReceiveNewsletter());
+						} else{
+							result.append("false");
+						}
+						result.append(columnSeparator);
+					} else {
+						result.append("false").append(columnSeparator).append("false").append(columnSeparator);
+					}
 				}
 				result.append("\n");
 			}

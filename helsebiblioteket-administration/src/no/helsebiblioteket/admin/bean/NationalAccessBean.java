@@ -38,7 +38,6 @@ public class NationalAccessBean {
 	private AccessService accessService;
 	private ResourceAccessListItem[] nationalAccessList;
 	private HtmlSelectOneMenu supplierSource;
-	private HtmlSelectOneMenu accessTypeCategoryKey;
 	private HtmlDataTable nationalAccessTable;
 	private List<ResourceAccessListItem> deltetedResources;
 
@@ -48,7 +47,6 @@ public class NationalAccessBean {
 	}
 	public String actionCancel(){
 		this.supplierSource = null;
-		this.accessTypeCategoryKey = null;
 		this.deltetedResources = new ArrayList<ResourceAccessListItem>();
 		this.nationalAccessList = null;
 		this.nationalAccessTable = null;
@@ -95,7 +93,6 @@ public class NationalAccessBean {
 			this.accessService.insertNationalResourceAccess(resourceAccess);
 		}
 		this.supplierSource = null;
-		this.accessTypeCategoryKey = null;
 		this.deltetedResources = new ArrayList<ResourceAccessListItem>();
 		this.nationalAccessList = null;
 		this.nationalAccessTable = null;
@@ -104,11 +101,8 @@ public class NationalAccessBean {
 	
 	public String actionAddSource(){
 		String selectedSourceValue = this.supplierSource.getSubmittedValue().toString();
-		String selectedAccessTypeCategoryKeyValue = this.accessTypeCategoryKey.getSubmittedValue().toString();
-		String selectedAccessTypeCategoryKeyValueArray[] = selectedAccessTypeCategoryKeyValue.split(System.getProperty("path.separator"));
-		String selectedAccessTypeCategoryValue = selectedAccessTypeCategoryKeyValueArray[0];
-		String selectedAccessTypeKeyValue = selectedAccessTypeCategoryKeyValueArray[1];
-
+		AccessType accessTypeGrantProxyInclude = ((ValueResultAccessType)this.accessService.getAccessTypeByTypeCategory(AccessTypeKey.proxy_include, AccessTypeCategory.GRANT)).getValue();
+		
 		SupplierSourceResource addedResource = null;
 		SupplierSourceResource[] resources = this.accessService.getSupplierSourceResourceListAll("").getList();
 		for (SupplierSourceResource supplierSourceResource : resources) {
@@ -122,8 +116,8 @@ public class NationalAccessBean {
 		}
 		newList[newList.length-1] = new ResourceAccessListItem();
 		newList[newList.length-1].setSupplierSourceName(addedResource.getSupplierSource().getSupplierSourceName());
-		newList[newList.length-1].setCategory(new AccessTypeCategory(selectedAccessTypeCategoryValue));
-		newList[newList.length-1].setKey(new AccessTypeKey(selectedAccessTypeKeyValue));
+		newList[newList.length-1].setCategory(accessTypeGrantProxyInclude.getCategory());
+		newList[newList.length-1].setKey(accessTypeGrantProxyInclude.getKey());
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
 		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
 		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
@@ -183,12 +177,6 @@ public class NationalAccessBean {
 	}
 	public void setNationalAccessTable(HtmlDataTable nationalAccessTable) {
 		this.nationalAccessTable = nationalAccessTable;
-	}
-	public HtmlSelectOneMenu getAccessTypeCategoryKey() {
-		return accessTypeCategoryKey;
-	}
-	public void setAccessTypeCategoryKey(HtmlSelectOneMenu accessTypeCategoryKey) {
-		this.accessTypeCategoryKey = accessTypeCategoryKey;
 	}
 	public OrganizationService getOrganizationService() {
 		return organizationService;

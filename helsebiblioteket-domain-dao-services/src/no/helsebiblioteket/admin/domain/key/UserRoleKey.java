@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.key;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class UserRoleKey implements Serializable {
 	public static final UserRoleKey none = new UserRoleKey("none");
 	
@@ -9,6 +10,7 @@ public class UserRoleKey implements Serializable {
 	public static final UserRoleKey health_personnel = new UserRoleKey("health_personnel");
 	public static final UserRoleKey student = new UserRoleKey("student");
 	public static final UserRoleKey health_personnel_other = new UserRoleKey("health_personnel_other");
+	public static final UserRoleKey organization_administrator = new UserRoleKey("org_admin");
 
 	private String value;
 	public UserRoleKey() { }
