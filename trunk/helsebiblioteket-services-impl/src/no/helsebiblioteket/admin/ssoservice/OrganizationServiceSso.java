@@ -12,12 +12,15 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
-import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
+import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
+import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameterList;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultProxyResult;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
@@ -53,8 +56,8 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 		return organizationService.getOrganizationListAll(request);
 	}
 	@Override
-	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString) {
-		return organizationService.getOrganizationListBySearchString(request, searchString);
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString, boolean orderByOrgType){
+		return organizationService.getOrganizationListBySearchString(request, searchString, orderByOrgType);
 	}
 
 	@Override
@@ -121,5 +124,25 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
+	}
+	@Override
+	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request) {
+		return this.organizationService.getMemberOrganizationListAll(request);
+	}
+	@Override
+	public SingleResultOrganization getOrganizationByAdminUser(User user) {
+		return this.organizationService.getOrganizationByAdminUser(user);
+	}
+	@Override
+	public ListResultProxyResult getProxyExportList(ProxyExportParameter parameter) {
+		return this.organizationService.getProxyExportList(parameter);
+	}
+	@Override
+	public PageResultOrganizationListItem getSupplierOrganizationListAll(PageRequest request) {
+		return this.organizationService.getSupplierOrganizationListAll(request);
+	}
+	@Override
+	public Boolean insertProxyHits(ProxyHitParameterList parameter) {
+		return this.organizationService.insertProxyHits(parameter);
 	}
 }

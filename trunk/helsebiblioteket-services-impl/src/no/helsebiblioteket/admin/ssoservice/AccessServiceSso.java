@@ -33,87 +33,70 @@ public class AccessServiceSso extends SsoService implements AccessService{
 	protected static final Log logger = LogFactory.getLog(AccessServiceSso.class);
 	private AccessService accessService;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultSupplierSourceResource insertSupplierSourceResource(SupplierSourceResource resource) {
 		return accessService.insertSupplierSourceResource(resource);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean deleteSupplierSourceResource(SupplierSourceResource resource) {
 		return accessService.deleteSupplierSourceResource(resource);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean deleteResourceAccess(ResourceAccessListItem access) {
 		return accessService.deleteResourceAccess(access);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListForAll() {
 		return accessService.getAccessListForAll();
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByOrganization(OrganizationListItem organization) {
 		return getAccessListByOrganization(organization);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByOrganizationType(OrganizationTypeKey organizationType) {
 		return accessService.getAccessListByOrganizationType(organizationType);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByRole(UserRoleKey role) {
 		return accessService.getAccessListByRole(role);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultResourceAccessListItem getAccessListByUser(UserListItem user) {
 		return accessService.getAccessListByUser(user);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultAccessType getAccessTypeByTypeCategory(AccessTypeKey accessTypeKey, AccessTypeCategory accessTypeCategory) {
 		return accessService.getAccessTypeByTypeCategory(accessTypeKey, accessTypeCategory);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultResourceType getResourceTypeByKey(ResourceTypeKey resourceTypeKey){
 		return accessService.getResourceTypeByKey(resourceTypeKey);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY) {
 		return accessService.getSupplierSourceListAll(DUMMY);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertOrganizationResourceAccess(Organization organization, ResourceAccess access) {
 		return accessService.insertOrganizationResourceAccess(organization, access);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertOrganizationTypeResourceAccess(OrganizationType organizationType, ResourceAccess access) {
 		return accessService.insertOrganizationTypeResourceAccess(organizationType, access);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertUserResourceAccess(User user, ResourceAccess access) {
 		return accessService.insertUserResourceAccess(user, access);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertUserRoleResourceAccess(Role userRole, ResourceAccess access) {
 		return accessService.insertUserRoleResourceAccess(userRole, access);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY) {
 		return accessService.getSupplierSourceResourceListAll(DUMMY);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultSupplierSource getSupplierSourceByDomain(Url url) {
 		return accessService.getSupplierSourceByDomain(url);
@@ -124,5 +107,13 @@ public class AccessServiceSso extends SsoService implements AccessService{
 	}
 	public void setAccessService(AccessService accessService) {
 		this.accessService = accessService;
+	}
+	@Override
+	public ListResultResourceAccessListItem getAccessListNational() {
+		return this.accessService.getAccessListNational();
+	}
+	@Override
+	public Boolean insertNationalResourceAccess(ResourceAccess access) {
+		return this.accessService.insertNationalResourceAccess(access);
 	}
 }

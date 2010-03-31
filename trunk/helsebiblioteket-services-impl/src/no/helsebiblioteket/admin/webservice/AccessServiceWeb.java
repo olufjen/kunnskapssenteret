@@ -20,7 +20,6 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
-import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccess;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
@@ -50,6 +49,8 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	private QName insertUserRoleAccess;
 	private QName supplierSourceResourceListAll;
 	private QName supplierSourceByUrlStartsWithName;
+	private QName accessListNational;
+	private QName insertNationalResourceAccess;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -170,6 +171,21 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 		Class[] returnTypes = new Class[] { SingleResultSupplierSource.class };
 		return (SingleResultSupplierSource) invoke(this.supplierSourceByUrlStartsWithName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public ListResultResourceAccessListItem getAccessListNational() {
+		Object[] args = new Object[] { };
+		Class[] returnTypes = new Class[] { ListResultResourceAccessListItem.class };
+		return (ListResultResourceAccessListItem) invoke(this.accessListNational, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Boolean insertNationalResourceAccess(ResourceAccess access) {
+		Object[] args = new Object[] { access };
+		Class[] returnTypes = new Class[] { ListResultResourceAccessListItem.class };
+		return (Boolean) invoke(this.insertNationalResourceAccess, args, returnTypes);
+	}
+
 	@Override
 	public Log getLogger() {
 		return logger;
