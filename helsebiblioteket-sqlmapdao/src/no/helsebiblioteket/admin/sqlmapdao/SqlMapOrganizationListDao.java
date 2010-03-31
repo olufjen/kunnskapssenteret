@@ -2,13 +2,11 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
 import no.helsebiblioteket.admin.dao.join.OrgUnitNameJoin;
 import no.helsebiblioteket.admin.domain.IpAddress;
-import no.helsebiblioteket.admin.domain.OrganizationType;
 import no.helsebiblioteket.admin.domain.category.LanguageCategory;
 import no.helsebiblioteket.admin.domain.category.OrganizationNameCategory;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
@@ -96,17 +94,19 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max) {
+	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, boolean orderByOrgType, int from, int max) {
+		String orderBy = orderByOrgType ? "ORGTYPE" : "";
 		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList(
 				"getOrganizationIdDistinctSearchString",
-				new SearchStringInput("%" + searchString + "%", searchString),  from, max);
-		List<OrganizationListItem> someOrganizations = new ArrayList<OrganizationListItem>();
+				new SearchStringInput("%" + searchString + "%", searchString, orderBy),  from, max);
+		System.out.println("ids:" + orgUnitIds.size());
 		if(orgUnitIds.size()==0){
-			return someOrganizations;
+			return new ArrayList<OrganizationListItem>();
 		}
 		List<OrgUnitNameJoin> foundOrganizations = getSqlMapClientTemplate().queryForList(
 				"getOrganizationListSearchString",
-				new SearchStringInput("%" + searchString + "%", searchString, orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1)));
+				new SearchStringInput("%" + searchString + "%", searchString, orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1), orderBy));
+		System.out.println("found:" + foundOrganizations.size());
 		return translateList(foundOrganizations);
 	}
 	@SuppressWarnings("unchecked")

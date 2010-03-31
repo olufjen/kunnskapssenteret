@@ -42,9 +42,10 @@
 	</select>
 	
 	<select id="getOrganizationIdDistinctSearchString" resultClass="int" parameterClass="SearchStringInput">
-		select distinct org_unit_id as org_unit_id_distinct from(
+		select distinct org_unit_id, key as org_unit_id_distinct from(
 			select
-				org.org_unit_id
+				org.org_unit_id,
+				type.key
 			from tbl_org_unit as org
 				inner join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 				left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
@@ -55,7 +56,11 @@
                 (org.descr ilike #value#) or
                 (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#)
 		) as org_unit_id_distinct_query
-		order by org_unit_id desc
+		order by 
+		<isEqual property="orderBy" compareValue="ORGTYPE">
+			key,
+		</isEqual>
+		org_unit_id desc
 	</select>
 
 	<select id="getOrganizationCountSearchString" resultClass="int"
@@ -108,7 +113,11 @@
         		    (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#))
 		      		and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId#
 		     )
-		order by org_unit_id desc, language_code desc, category desc
+		order by
+		<isEqual property="orderBy" compareValue="ORGTYPE">
+			org_type_key,
+		</isEqual>
+		org_unit_id desc, language_code desc, category desc
 	</select>
 
 	<select id="getOrganizationListByIpAddress" resultMap="OrgUnitNameJoinMap" parameterClass="IpAddress">
