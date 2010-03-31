@@ -57,9 +57,6 @@
                 (ip.ip_address_from &lt;= #otherValue# and ip.ip_address_to &gt;= #otherValue#)
 		) as org_unit_id_distinct_query
 		order by 
-		<isEqual property="orderBy" compareValue="ORGTYPE">
-			key,
-		</isEqual>
 		org_unit_id desc
 	</select>
 
@@ -114,9 +111,6 @@
 		      		and org.org_unit_id &lt;= #fromId# and org.org_unit_id &gt;= #toId#
 		     )
 		order by
-		<isEqual property="orderBy" compareValue="ORGTYPE">
-			org_type_key,
-		</isEqual>
 		org_unit_id desc, language_code desc, category desc
 	</select>
 

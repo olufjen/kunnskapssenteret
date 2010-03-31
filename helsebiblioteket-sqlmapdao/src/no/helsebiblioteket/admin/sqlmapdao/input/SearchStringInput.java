@@ -6,29 +6,21 @@ public class SearchStringInput {
 	private Integer number;
 	private Integer fromId;
 	private Integer toId;
-	private String orderBy;
-	private SearchStringInput(String value, String otherValue, Integer number, Integer fromId, Integer toId, String orderBy) {
+	private SearchStringInput(String value, String otherValue, Integer number, Integer fromId, Integer toId) {
 		this.value = value;
 		this.otherValue = otherValue;
 		this.number = number;
 		this.fromId = fromId;
 		this.toId = toId;
-		this.orderBy = orderBy;
 	}
 	public SearchStringInput(String value, Integer fromId, Integer toId) {
-		this(value, null, (Integer)null, fromId, toId, "");
+		this(value, null, (Integer)null, fromId, toId);
 	}
 	public SearchStringInput(String value, String otherValue, Integer fromId, Integer toId) {
-		this(value, otherValue, (Integer)null, fromId, toId, "");
-	}
-	public SearchStringInput(String value, String otherValue, Integer fromId, Integer toId, String orderBy) {
-		this(value, otherValue, (Integer)null, fromId, toId, orderBy);
-	}
-	public SearchStringInput(String value, String otherValue, String orderBy) {
-		this(value, otherValue, (Integer)null, (Integer)null, (Integer)null, orderBy);
+		this(value, otherValue, (Integer)null, fromId, toId);
 	}
 	public SearchStringInput(String value, String otherValue) {
-		this(value, otherValue, (Integer)null, (Integer)null, (Integer)null, "");
+		this(value, otherValue, (Integer)null, (Integer)null, (Integer)null);
 	}
 	// Do not use!
 	public SearchStringInput() { }
@@ -61,11 +53,5 @@ public class SearchStringInput {
 	}
 	public void setOtherValue(String otherValue) {
 		this.otherValue = otherValue;
-	}
-	public String getOrderBy() {
-		return orderBy;
-	}
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
 	}
 }

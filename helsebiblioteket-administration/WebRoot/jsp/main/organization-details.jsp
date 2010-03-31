@@ -251,5 +251,10 @@
 		</h:dataTable>
 	</t:div>
 
-	<h:commandLink value="#{msg_main.organization_edit}" action="#{organizationBean.actionEditSingle}" immediate="true"/>
+	<table>
+		<tr>
+			<td><h:commandLink value="#{msg_main.organization_delete}" onclick="if (!confirm('#{msg_main.organization_really_delete}')) return false" action="#{organizationBean.actionDelete}" immediate="true" /></td>
+			<td><h:commandLink value="#{msg_main.organization_edit}" action="#{organizationBean.actionEditSingle}" immediate="true"/></td>
+		</tr>
+	</table>
 </h:form>

@@ -9,11 +9,11 @@
 	<typeAlias alias="ProxyHitLine" type="no.helsebiblioteket.admin.domain.line.ProxyHitLine"/>
 	<typeAlias alias="PeriodResult" type="no.helsebiblioteket.admin.domain.export.PeriodResult"/>
 
-	<resultMap id="proxyResultMap" class="ProxyResult" groupBy="key.orgUnitId, key.isMultiple">
+	<resultMap id="proxyResultMap" class="ProxyResult" groupBy="key.orgUnitId, key.isMultiple, key.orgTypeKey">
 		<result property="key.orgUnitId" column="org_id" />
 		<result property="key.isMultiple" column="multiple_members" />
+		<result property="key.orgTypeKey" column="org_type_key" />
 		<result property="orgName" column="org_name" />
-		<result property="orgTypeKey" column="org_type_key" />
 		<result property="orgTypeDescription" column="org_type_descr" />
 		<result property="periods" column="period" resultMap="ProxyExport.periodResultMap" />
 	</resultMap>
@@ -66,7 +66,7 @@
 			</isEqual>
 			<isEqual property="groupAll" compareValue="true">
 				0 as org_id,
-				'Alle' as org_name,
+				'' as org_name,
 			</isEqual>
 			<isEqual close="," property="period" compareValue="DAY">
 				hits.hour as period
