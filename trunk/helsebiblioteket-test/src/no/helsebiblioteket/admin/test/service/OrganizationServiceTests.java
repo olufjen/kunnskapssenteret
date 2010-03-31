@@ -82,7 +82,7 @@ public class OrganizationServiceTests {
 		PageRequest request = new PageRequest(0, 5);
 		String sub = findMeName.substring(3);
 //		TEST: public PageResultOrganizationListItem findOrganizationsBySearchString(String searchString, PageRequest request);
-		PageResultOrganizationListItem result = organizationService.getOrganizationListBySearchString(request, sub);
+		PageResultOrganizationListItem result = organizationService.getOrganizationListBySearchString(request, sub, false);
 		Assert.notNull(result, "Null result");
 		Assert.notEmpty(result.getResult(), "Empty result");
 		Assert.isTrue(result.getResult().length == 1, "Too many organizations");
