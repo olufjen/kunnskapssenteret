@@ -13,6 +13,8 @@
 		<result property="key.orgUnitId" column="org_id" />
 		<result property="key.isMultiple" column="multiple_members" />
 		<result property="orgName" column="org_name" />
+		<result property="orgTypeKey" column="org_type_key" />
+		<result property="orgTypeDescription" column="org_type_descr" />
 		<result property="periods" column="period" resultMap="ProxyExport.periodResultMap" />
 	</resultMap>
 	<resultMap id="periodResultMap" class="PeriodResult">
@@ -48,13 +50,19 @@
 	<select id="getProxyExportList" resultMap="proxyResultMap"  parameterClass="ProxyExportParameter">
 		select
 			<isEqual property="groupAll" compareValue="false">
-				<isEqual close="," property="byMember" compareValue="true">
-				    hits.mem_org_unit_id as org_id
+				<isEqual property="groupType" compareValue="false">
+					<isEqual close="," property="byMember" compareValue="true">
+					    hits.mem_org_unit_id as org_id
+					</isEqual>
+					<isEqual close="," property="byMember" compareValue="false">
+					    hits.sup_org_unit_id as org_id
+					</isEqual>
+					name.name as org_name,
 				</isEqual>
-				<isEqual close="," property="byMember" compareValue="false">
-				    hits.sup_org_unit_id as org_id
+				<isEqual property="groupType" compareValue="true">
+					0 as org_id,
+					'' as org_name,
 				</isEqual>
-				name.name as org_name,
 			</isEqual>
 			<isEqual property="groupAll" compareValue="true">
 				0 as org_id,
@@ -75,14 +83,18 @@
 		    sum(hits.count) as sum,
 			<isEqual property="groupAll" compareValue="false">
 				<isEqual property="byMember" compareValue="true">
-				    hits.multiple_members as multiple_members
+				    hits.multiple_members as multiple_members,
 				</isEqual>
 				<isEqual property="byMember" compareValue="false">
-				    false as multiple_members
+				    false as multiple_members,
 				</isEqual>
+			    type.key as org_type_key,
+			    type.descr as org_type_descr
 			</isEqual>
 			<isEqual property="groupAll" compareValue="true">
-			    false as multiple_members
+			    false as multiple_members,
+			    '' as org_type_key,
+			    '' as org_type_descr
 			</isEqual>
 		from
     		tbl_proxy_hits as hits
@@ -91,6 +103,9 @@
 			</isEqual>
 			<isEqual property="byMember" compareValue="false">
     			left outer join tbl_org_unit as org on org.org_unit_id = hits.sup_org_unit_id
+			</isEqual>
+			<isEqual property="groupAll" compareValue="false">
+	   			left outer join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
 			</isEqual>
 		    left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
 		where
@@ -127,16 +142,20 @@
 				<isEqual property="byMember" compareValue="true">
 				 	multiple_members,
 				</isEqual>
+		    	type.key,
+		    	type.descr,
 			</isEqual>
-			period
+				period
 			order by
 			<isEqual property="groupAll" compareValue="false">
 				org_id desc, org_name,
 				<isEqual property="byMember" compareValue="true">
 				 	multiple_members,
 				</isEqual>
+		    	org_type_key,
+		    	org_type_descr,
 			</isEqual>
-			 period asc
+		    	period asc
 		;
 	</select>
 </sqlMap>

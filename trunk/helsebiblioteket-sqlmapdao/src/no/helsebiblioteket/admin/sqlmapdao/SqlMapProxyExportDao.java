@@ -11,6 +11,7 @@ import no.helsebiblioteket.admin.domain.line.ProxyHitLine;
 import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
 
 public class SqlMapProxyExportDao extends SqlMapClientDaoSupport implements ProxyExportDao {
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProxyResult> getProxyExportList(ProxyExportParameter parameter) {
 		return (List<ProxyResult>) getSqlMapClientTemplate().queryForList("getProxyExportList", parameter);
