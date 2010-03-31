@@ -132,7 +132,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
-		return this.getOrganizationListBySearchString(request, "");
+		return this.getOrganizationListBySearchString(request, "", false);
 	}
 	/**
 	 * Finds all the member organizations in the database. This method uses a page request
@@ -204,7 +204,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * These are the values in the OrganizationListItem object.
 	 */
 	@Override
-	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString, boolean orderByOrgType){
 		if(request.getMaxResult() > 40) {
 			throw new NullPointerException("Max result must be 40 or less.");
 		}
@@ -214,7 +214,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString,
-				request.getSkip(), request.getMaxResult());
+				orderByOrgType, request.getSkip(), request.getMaxResult());
 		Integer total = this.organizationListDao.getOrganizationNumberSearchString(searchString);
 		
 		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
