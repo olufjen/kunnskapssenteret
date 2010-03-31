@@ -29,10 +29,10 @@ public class OrganizationListDaoTests {
 		IpRangeDao ipRangeDao = beanFactory.getIpRangeDao();
 
 		// Can never find this!
-		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPagedSearchString(""+new Random().nextInt(), 0, Integer.MAX_VALUE);
+		List<OrganizationListItem> organizationList = organizationListDao.getOrganizationListPagedSearchString(""+new Random().nextInt(), false, 0, Integer.MAX_VALUE);
 		Assert.isTrue(organizationList.size()==0, "Should find no orgs");
 
-		organizationList = organizationListDao.getOrganizationListPagedSearchString("", 0, 20);
+		organizationList = organizationListDao.getOrganizationListPagedSearchString("", false, 0, 20);
 		OrganizationListItem item = organizationList.get(0);
 //		OrganizationNameDao organizationNameDao = beanFactory.getOrganizationNameDao();
 		Assert.isTrue(organizationList.size()<=20, "Too many orgs");
