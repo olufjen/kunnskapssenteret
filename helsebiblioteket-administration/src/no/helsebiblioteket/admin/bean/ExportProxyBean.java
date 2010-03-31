@@ -53,6 +53,7 @@ public class ExportProxyBean {
 	private String optionCharacterEncoding;
 	private boolean hideUnknown;
 	private boolean groupAll;
+	private boolean groupType;
 	private OrganizationService organizationService;
 	private UserService userService;
 	private OrganizationListItem[] supplierOrganizations;
@@ -151,7 +152,7 @@ public class ExportProxyBean {
 		
 		ProxyExportParameter parameter = new ProxyExportParameter(
 				memberValue, supplierValue, byMember, this.period,
-				fromDateString, toDateString, this.hideUnknown, this.groupAll);
+				fromDateString, toDateString, this.hideUnknown, this.groupAll, this.groupType);
 
 		ProxyResult[] res = this.organizationService.getProxyExportList(parameter).getList();
 		
@@ -224,7 +225,16 @@ public class ExportProxyBean {
 	private XYSeriesCollection createDataSet(int periods, ProxyResult[] resultList) {
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
 		for (ProxyResult result : resultList) {
-			XYSeries series = new XYSeries(result.getOrgName());
+			String orgName;
+			if(this.groupType && ( ! this.groupAll)){
+				orgName = result.getOrgTypeDescription();
+				if(orgName == null){
+					orgName = "Ukjent";
+				}
+			} else {
+				orgName = result.getOrgName();
+			}
+			XYSeries series = new XYSeries(orgName);
 			int i = 1;
 			for (PeriodResult period : result.getPeriods()) {
 				while(i < Integer.valueOf(period.getPeriod())){
@@ -411,5 +421,11 @@ public class ExportProxyBean {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	public boolean isGroupType() {
+		return groupType;
+	}
+	public void setGroupType(boolean groupType) {
+		this.groupType = groupType;
 	}
 }
