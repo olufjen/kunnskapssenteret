@@ -80,7 +80,7 @@ public class OrganizationBean implements IconProvider{
 			if(this.searchedString == null) this.searchedString = "";
 			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() + SHOW_MAX,
 					SHOW_MAX);
-			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString);
+			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString, false);
 			this.organizations = this.lastPageResult.getResult();
 			this.resetTreeModel();
 		}
@@ -91,7 +91,7 @@ public class OrganizationBean implements IconProvider{
 			if(this.searchedString == null) this.searchedString = "";
 			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() - SHOW_MAX,
 					SHOW_MAX);
-			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString);
+			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString, false);
 			this.organizations = this.lastPageResult.getResult();
 			this.resetTreeModel();
 		}
@@ -210,7 +210,7 @@ public class OrganizationBean implements IconProvider{
 	public void runSearch() {
 		PageRequest request = new PageRequest(0, SHOW_MAX);
 		if(this.searchedString == null) this.searchedString = "";
-		this.lastPageResult = this.organizationService.getOrganizationListBySearchString(request, this.searchedString);
+		this.lastPageResult = this.organizationService.getOrganizationListBySearchString(request, this.searchedString, false);
 		this.organizations = this.lastPageResult.getResult();
 		this.resetTreeModel();
 	}
@@ -219,7 +219,9 @@ public class OrganizationBean implements IconProvider{
 		PageRequest request = new PageRequest(0, SHOW_MAX);
 		String searchString = this.searchedString;
 		if(searchString == null){ searchString = ""; }
-		PageResultOrganizationListItem result = this.organizationService.getOrganizationListBySearchString(request, searchString);
+		System.out.println("LOAD");
+		PageResultOrganizationListItem result = this.organizationService.getOrganizationListBySearchString(request, searchString, true);
+		System.out.println("DONE");
 		while (true){
 			for (OrganizationListItem item : result.getResult()) {
 				String group = item.getTypeText();
@@ -234,17 +236,17 @@ public class OrganizationBean implements IconProvider{
 					String IPTo = item.getIpAddressesTo()[i++];
 
 					lines.add(group + ";" + name + ";" + IPFrom + ";" + IPTo);
-					
-					group = "";
-					name = "";
 				}
 			}
 			if(result.getSkipped() + result.getNumber() >= result.getTotal()){
 				break;
 			} else {
 				request = new PageRequest(result.getSkipped() + result.getNumber(), SHOW_MAX);
-				result = this.organizationService.getOrganizationListBySearchString(request, searchString);
+				result = this.organizationService.getOrganizationListBySearchString(request, searchString, true);
 			}
+			System.out.println("skipped:" + result.getSkipped());
+			System.out.println("number:" + result.getNumber());
+			System.out.println("total:" + result.getTotal());
 		}
 		this.sendFile(lines);
 	}

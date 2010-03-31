@@ -99,6 +99,12 @@
       </td>
     </tr>
     <tr>
+      <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.option_group_member}" /> </td>
+      <td valign="top">
+      	<h:selectBooleanCheckbox value="#{exportProxyBean.groupType}"/>
+      </td>
+    </tr>
+    <tr>
       <td valign="top"> <h:outputText value="#{msg_page_export_proxydata.select_charset}" /> </td>
       <td valign="top">
       	<h:selectOneMenu id="character_encoding" value="#{exportProxyBean.optionCharacterEncoding}">
