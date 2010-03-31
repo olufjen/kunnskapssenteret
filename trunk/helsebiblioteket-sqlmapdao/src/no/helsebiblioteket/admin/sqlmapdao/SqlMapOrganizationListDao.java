@@ -94,19 +94,16 @@ public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, boolean orderByOrgType, int from, int max) {
-		String orderBy = orderByOrgType ? "ORGTYPE" : "";
+	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max) {
 		List<Integer> orgUnitIds = getSqlMapClientTemplate().queryForList(
 				"getOrganizationIdDistinctSearchString",
-				new SearchStringInput("%" + searchString + "%", searchString, orderBy),  from, max);
-		System.out.println("ids:" + orgUnitIds.size());
+				new SearchStringInput("%" + searchString + "%", searchString),  from, max);
 		if(orgUnitIds.size()==0){
 			return new ArrayList<OrganizationListItem>();
 		}
 		List<OrgUnitNameJoin> foundOrganizations = getSqlMapClientTemplate().queryForList(
 				"getOrganizationListSearchString",
-				new SearchStringInput("%" + searchString + "%", searchString, orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1), orderBy));
-		System.out.println("found:" + foundOrganizations.size());
+				new SearchStringInput("%" + searchString + "%", searchString, orgUnitIds.get(0), orgUnitIds.get(orgUnitIds.size()-1)));
 		return translateList(foundOrganizations);
 	}
 	@SuppressWarnings("unchecked")

@@ -80,7 +80,7 @@ public class OrganizationBean implements IconProvider{
 			if(this.searchedString == null) this.searchedString = "";
 			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() + SHOW_MAX,
 					SHOW_MAX);
-			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString, false);
+			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString);
 			this.organizations = this.lastPageResult.getResult();
 			this.resetTreeModel();
 		}
@@ -91,7 +91,7 @@ public class OrganizationBean implements IconProvider{
 			if(this.searchedString == null) this.searchedString = "";
 			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() - SHOW_MAX,
 					SHOW_MAX);
-			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString, false);
+			this.lastPageResult = this.organizationService.getOrganizationListBySearchString(pageRequest, this.searchedString);
 			this.organizations = this.lastPageResult.getResult();
 			this.resetTreeModel();
 		}
@@ -103,6 +103,16 @@ public class OrganizationBean implements IconProvider{
 	public String actionEdit() {
 		return this.actionDetailsEdit(true, true);
 	}
+	public String actionDelete() {
+		if(this.organizationService.deleteOrganization(this.organization).booleanValue()){
+			this.logger.info("ORG DELETED");
+			return "organizations_overview";
+		} else {
+			this.logger.info("ORG NOT DELETED");
+			return "organization_details";
+		}
+	}
+	
 	private String actionDetailsEdit(boolean edit, boolean fromTree){
 		OrganizationListItem item;
 		if(fromTree){
@@ -210,7 +220,7 @@ public class OrganizationBean implements IconProvider{
 	public void runSearch() {
 		PageRequest request = new PageRequest(0, SHOW_MAX);
 		if(this.searchedString == null) this.searchedString = "";
-		this.lastPageResult = this.organizationService.getOrganizationListBySearchString(request, this.searchedString, false);
+		this.lastPageResult = this.organizationService.getOrganizationListBySearchString(request, this.searchedString);
 		this.organizations = this.lastPageResult.getResult();
 		this.resetTreeModel();
 	}
@@ -219,34 +229,29 @@ public class OrganizationBean implements IconProvider{
 		PageRequest request = new PageRequest(0, SHOW_MAX);
 		String searchString = this.searchedString;
 		if(searchString == null){ searchString = ""; }
-		System.out.println("LOAD");
-		PageResultOrganizationListItem result = this.organizationService.getOrganizationListBySearchString(request, searchString, true);
-		System.out.println("DONE");
+		PageResultOrganizationListItem result = this.organizationService.getOrganizationListBySearchString(request, searchString);
 		while (true){
 			for (OrganizationListItem item : result.getResult()) {
 				String group = item.getTypeText();
+				String key = item.getTypeKey().getValue();
 				String name = item.getNameNorwegian();
 				if(name.equals("")) name = item.getNameEnglish();
 				int i=0;
 				if(item.getIpAddressesFrom().length == 0){
-					lines.add(group + ";" + name + ";;");
+					lines.add(key + ";" + group + ";" + name + ";;");
 				}
 				for (String ip : item.getIpAddressesFrom()) {
 					String IPFrom = ip;
 					String IPTo = item.getIpAddressesTo()[i++];
-
-					lines.add(group + ";" + name + ";" + IPFrom + ";" + IPTo);
+					lines.add(key + ";" + group + ";" + name + ";" + IPFrom + ";" + IPTo);
 				}
 			}
 			if(result.getSkipped() + result.getNumber() >= result.getTotal()){
 				break;
 			} else {
 				request = new PageRequest(result.getSkipped() + result.getNumber(), SHOW_MAX);
-				result = this.organizationService.getOrganizationListBySearchString(request, searchString, true);
+				result = this.organizationService.getOrganizationListBySearchString(request, searchString);
 			}
-			System.out.println("skipped:" + result.getSkipped());
-			System.out.println("number:" + result.getNumber());
-			System.out.println("total:" + result.getTotal());
 		}
 		this.sendFile(lines);
 	}

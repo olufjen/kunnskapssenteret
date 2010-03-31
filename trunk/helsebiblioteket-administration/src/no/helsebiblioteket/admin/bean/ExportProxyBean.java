@@ -160,8 +160,24 @@ public class ExportProxyBean {
 			if(proxyResult.getKey().getOrgUnitId() == null){
 				if(proxyResult.getKey().isMultiple()){
 					proxyResult.setOrgName("Flere");
+					proxyResult.setOrgTypeDescription("Flere");
+					proxyResult.getKey().setOrgTypeKey("more");
 				} else {
 					proxyResult.setOrgName("Ukjent");
+					proxyResult.setOrgTypeDescription("Ukjent");
+					proxyResult.getKey().setOrgTypeKey("unknown");
+				}
+			} else if(proxyResult.getKey().getOrgUnitId() == 0){
+				if(this.groupAll){
+					proxyResult.setOrgName("Alle");
+				} else if(this.groupType && proxyResult.getKey().getOrgTypeKey() == null){
+					if(proxyResult.getKey().isMultiple()){
+						proxyResult.setOrgTypeDescription("Flere");
+						proxyResult.getKey().setOrgTypeKey("more");
+					} else {
+						proxyResult.setOrgTypeDescription("Ukjent");
+						proxyResult.getKey().setOrgTypeKey("unknown");
+					}
 				}
 			}
 		}
@@ -195,14 +211,19 @@ public class ExportProxyBean {
 		String columnSeparator = ",";
 		StringBuilder result = new StringBuilder();
 		result
-			.append("OrgUnitId").append(columnSeparator)
-			.append("OrgUnitName").append(columnSeparator);
+		.append("OrgTypeKey").append(columnSeparator)
+		.append("OrgTypeDesc").append(columnSeparator)
+		.append("OrgUnitId").append(columnSeparator)
+		.append("OrgUnitName").append(columnSeparator);
+		
 		for(int i=1;i<periods;i++){
 			result.append(i).append(columnSeparator);
 		}
 		result.append(periods).append("\n");
 		for (ProxyResult proxyResult : resultList) {
 			result
+				.append(proxyResult.getKey().getOrgTypeKey()).append(columnSeparator)
+				.append(proxyResult.getOrgTypeDescription().replaceAll(",", " ")).append(columnSeparator)
 				.append(proxyResult.getKey().getOrgUnitId()).append(columnSeparator)
 				.append(proxyResult.getOrgName().replaceAll(",", " ")).append(columnSeparator);
 			int i = 1;
@@ -225,16 +246,13 @@ public class ExportProxyBean {
 	private XYSeriesCollection createDataSet(int periods, ProxyResult[] resultList) {
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
 		for (ProxyResult result : resultList) {
-			String orgName;
+			String name;
 			if(this.groupType && ( ! this.groupAll)){
-				orgName = result.getOrgTypeDescription();
-				if(orgName == null){
-					orgName = "Ukjent";
-				}
+				name = result.getOrgTypeDescription();
 			} else {
-				orgName = result.getOrgName();
+				name = result.getOrgName();
 			}
-			XYSeries series = new XYSeries(orgName);
+			XYSeries series = new XYSeries(name);
 			int i = 1;
 			for (PeriodResult period : result.getPeriods()) {
 				while(i < Integer.valueOf(period.getPeriod())){

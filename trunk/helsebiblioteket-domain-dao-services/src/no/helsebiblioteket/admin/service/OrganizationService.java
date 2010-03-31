@@ -34,7 +34,7 @@ public interface OrganizationService extends Serializable {
 	public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key);
 
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request);
-	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString, boolean orderByOrgType);
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString);
 	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request);
 	public PageResultOrganizationListItem getSupplierOrganizationListAll(PageRequest request);
 	
@@ -47,6 +47,8 @@ public interface OrganizationService extends Serializable {
 	public SingleResultOrganization insertMemberOrganization(MemberOrganization memberOrganization);
 	public SingleResultOrganization insertSupplierOrganization(SupplierOrganization supplierOrganization);
 	public SingleResultOrganization updateOrganization(Organization organization);
+	
+	public Boolean deleteOrganization(Organization organization);
 
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSingles);
 	public ListResultIpAddressSet addIpAddressRanges(Organization organization, IpAddressRange[] ipAddressRanges);

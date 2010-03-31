@@ -8,7 +8,7 @@ import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 
 public interface OrganizationListDao {
 	public Integer getOrganizationNumberSearchString(String searchString);
-	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, boolean orderByOrgType, int from, int max);
+	public List<OrganizationListItem> getOrganizationListPagedSearchString(String searchString, int from, int max);
 
 	public Integer getOrganizationNumberByTypes(List<OrganizationTypeKey> types);
 	public List<OrganizationListItem> getOrganizationListByTypes(List<OrganizationTypeKey> types, int from, int max);

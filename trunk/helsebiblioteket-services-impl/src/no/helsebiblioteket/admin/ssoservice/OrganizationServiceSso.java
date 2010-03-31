@@ -56,8 +56,8 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 		return organizationService.getOrganizationListAll(request);
 	}
 	@Override
-	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString, boolean orderByOrgType){
-		return organizationService.getOrganizationListBySearchString(request, searchString, orderByOrgType);
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
+		return organizationService.getOrganizationListBySearchString(request, searchString);
 	}
 
 	@Override
@@ -144,5 +144,9 @@ public class OrganizationServiceSso extends SsoService implements OrganizationSe
 	@Override
 	public Boolean insertProxyHits(ProxyHitParameterList parameter) {
 		return this.organizationService.insertProxyHits(parameter);
+	}
+	@Override
+	public Boolean deleteOrganization(Organization organization) {
+		return this.organizationService.deleteOrganization(organization);
 	}
 }

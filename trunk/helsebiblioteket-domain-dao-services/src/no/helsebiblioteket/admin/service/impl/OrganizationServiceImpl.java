@@ -132,7 +132,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 */
 	@Override
 	public PageResultOrganizationListItem getOrganizationListAll(PageRequest request) {
-		return this.getOrganizationListBySearchString(request, "", false);
+		return this.getOrganizationListBySearchString(request, "");
 	}
 	/**
 	 * Finds all the member organizations in the database. This method uses a page request
@@ -204,7 +204,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	 * These are the values in the OrganizationListItem object.
 	 */
 	@Override
-	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString, boolean orderByOrgType){
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
 		if(request.getMaxResult() > 40) {
 			throw new NullPointerException("Max result must be 40 or less.");
 		}
@@ -214,7 +214,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		List<OrganizationListItem> allOrganizations = this.organizationListDao.getOrganizationListPagedSearchString(searchString,
-				orderByOrgType, request.getSkip(), request.getMaxResult());
+				request.getSkip(), request.getMaxResult());
 		Integer total = this.organizationListDao.getOrganizationNumberSearchString(searchString);
 		
 		PageResultOrganizationListItem result = new PageResultOrganizationListItem();
@@ -453,6 +453,59 @@ public class OrganizationServiceImpl implements OrganizationService {
 		this.organizationDao.updateOrganization(organization);
 		return new ValueResultOrganization(organization);
 	}
+	
+	@Override
+	public Boolean deleteOrganization(Organization organization) {
+		OrganizationListItem organizationListItem = new OrganizationListItem();
+		organizationListItem.setId(organization.getId());
+
+		SingleResultOrganization result = this.getOrganizationByListItem(organizationListItem);
+		Organization old;
+		SupplierOrganization sup;
+		MemberOrganization mem;
+		if(result instanceof EmptyResultOrganization){
+			throw new NullPointerException("Tried to delete non-existing organization");
+		} else {
+			if(result instanceof ValueResultSupplierOrganization){
+				sup = ((ValueResultSupplierOrganization)result).getValue();
+				old = sup.getOrganization();
+				mem = null;
+			} else {
+				mem = ((ValueResultMemberOrganization)result).getValue();
+				old = mem.getOrganization();
+				sup = null;
+			}
+		}
+		
+		if(false){
+			old.getAccessDomain();
+			old.getContactInformation();
+			old.getContactPerson();
+			old.getNameEnglish();
+			old.getSupportInformation();
+			old.getType();
+
+			// Do not delete organization users
+			// Do not delete organization administrator
+
+			if(mem != null){
+				mem.getIpAddressRangeList();
+				mem.getIpAddressSingleList();
+			} else {
+				sup.getResourceList();
+				sup.getSupportEmail();
+				sup.getSupportTelephone();
+			}
+
+			this.organizationDao.deleteOrganization(organization);
+
+			return Boolean.TRUE;
+		} else {
+			return Boolean.FALSE;
+		}
+	}
+	
+	
 	@Override
 	public ListResultIpAddressSet addIpAddresses(Organization organization, IpAddressSingle[] ipAddressSingles) {
 		IpAddressSet[] list = new IpAddressSet[ipAddressSingles.length];

@@ -48,7 +48,13 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	private QName insertSupplierOrganizationName;
 	private QName deleteResourcesName;
 	private QName addResourcesName;
-
+	private QName getMemberOrganizationListAll;
+	private QName getOrganizationByAdminUser;
+	private QName getProxyExportList;
+	private QName getSupplierOrganizationListAll;
+	private QName insertProxyHits;
+	private QName deleteOrganization;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultOrganizationType getOrganizationTypeListAll(String DUMMY) {
@@ -75,8 +81,8 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString, boolean orderByOrgType){
-		Object[] args = new Object[] { request, searchString, orderByOrgType  };
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString){
+		Object[] args = new Object[] { request, searchString };
 		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
 		return (PageResultOrganizationListItem) invoke(this.findOrganizationsBySearchString, args, returnTypes);
 	}
@@ -171,6 +177,48 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { Boolean.class };
 		return (Boolean) invoke(this.deleteResourcesName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request) {
+		Object[] args = new Object[] { request  };
+		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
+		return (PageResultOrganizationListItem) invoke(this.getMemberOrganizationListAll, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public SingleResultOrganization getOrganizationByAdminUser(User user) {
+		Object[] args = new Object[] { user  };
+		Class[] returnTypes = new Class[] { SingleResultOrganization.class };
+		return (SingleResultOrganization) invoke(this.getOrganizationByAdminUser, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public ListResultProxyResult getProxyExportList(ProxyExportParameter parameter) {
+		Object[] args = new Object[] { parameter  };
+		Class[] returnTypes = new Class[] { ListResultProxyResult.class };
+		return (ListResultProxyResult) invoke(this.getProxyExportList, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public PageResultOrganizationListItem getSupplierOrganizationListAll(PageRequest request) {
+		Object[] args = new Object[] { request };
+		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
+		return (PageResultOrganizationListItem) invoke(this.getSupplierOrganizationListAll, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Boolean insertProxyHits(ProxyHitParameterList parameter) {
+		Object[] args = new Object[] { parameter };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean) invoke(this.insertProxyHits, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Boolean deleteOrganization(Organization organization) {
+		Object[] args = new Object[] { organization };
+		Class[] returnTypes = new Class[] { Boolean.class };
+		return (Boolean) invoke(this.deleteOrganization, args, returnTypes);
+	}
 
 	
 	public Log getLogger() {
@@ -215,31 +263,5 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	public void setOrganizationListAccessDomainName(QName organizationListAccessDomainName) {
 		this.organizationListAccessDomainName = organizationListAccessDomainName;
-	}
-	@Override
-	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public SingleResultOrganization getOrganizationByAdminUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public ListResultProxyResult getProxyExportList(ProxyExportParameter parameter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public PageResultOrganizationListItem getSupplierOrganizationListAll(
-			PageRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public Boolean insertProxyHits(ProxyHitParameterList parameter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
