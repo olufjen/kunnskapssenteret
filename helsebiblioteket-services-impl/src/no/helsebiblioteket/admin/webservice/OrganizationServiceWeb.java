@@ -13,12 +13,16 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
+import no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter;
+import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameterList;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultIpAddressSet;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultOrganizationType;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultProxyResult;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
 import no.helsebiblioteket.admin.domain.requestresult.PageResultOrganizationListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganization;
@@ -71,8 +75,8 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString) {
-		Object[] args = new Object[] { request, searchString  };
+	public PageResultOrganizationListItem getOrganizationListBySearchString(PageRequest request, String searchString, boolean orderByOrgType){
+		Object[] args = new Object[] { request, searchString, orderByOrgType  };
 		Class[] returnTypes = new Class[] { PageResultOrganizationListItem.class };
 		return (PageResultOrganizationListItem) invoke(this.findOrganizationsBySearchString, args, returnTypes);
 	}
@@ -146,6 +150,7 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 		Class[] returnTypes = new Class[] { ListResultOrganizationListItem.class };
 		return (ListResultOrganizationListItem) invoke(this.organizationListIpAddressName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultOrganizationListItem getOrganizationListByAccessDomain(String accessDomain) {
 		Object[] args = new Object[] { accessDomain  };
@@ -210,5 +215,31 @@ public class OrganizationServiceWeb extends BasicWebService implements Organizat
 	}
 	public void setOrganizationListAccessDomainName(QName organizationListAccessDomainName) {
 		this.organizationListAccessDomainName = organizationListAccessDomainName;
+	}
+	@Override
+	public PageResultOrganizationListItem getMemberOrganizationListAll(PageRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public SingleResultOrganization getOrganizationByAdminUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public ListResultProxyResult getProxyExportList(ProxyExportParameter parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public PageResultOrganizationListItem getSupplierOrganizationListAll(
+			PageRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Boolean insertProxyHits(ProxyHitParameterList parameter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
