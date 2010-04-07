@@ -106,6 +106,9 @@ public class OrganizationBean implements IconProvider{
 	public String actionDelete() {
 		if(this.organizationService.deleteOrganization(this.organization).booleanValue()){
 			this.logger.info("ORG DELETED");
+			
+			this.runSearch();
+			
 			return "organizations_overview";
 		} else {
 			this.logger.info("ORG NOT DELETED");

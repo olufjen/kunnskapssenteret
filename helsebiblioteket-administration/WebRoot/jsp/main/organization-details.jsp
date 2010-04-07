@@ -37,25 +37,13 @@
 			<td><h:outputText rendered="#{organizationBean.isSupplierOrganization}"
 					value="#{msg_main.organization_supplier_support_email}"  /></td>
 			<td><h:outputText rendered="#{organizationBean.isSupplierOrganization}"
-					value="#{organizationBean.supplierOrganization.supportEmail}"/></td>
+					value="#{organizationBean.organization.supportInformation.email}"/></td>
 		</tr>
 		<tr>
 			<td><h:outputText rendered="#{organizationBean.isSupplierOrganization}"
 					value="#{msg_main.organization_supplier_support_telephone}"  /></td>
 			<td><h:outputText rendered="#{organizationBean.isSupplierOrganization}"
-					value="#{organizationBean.supplierOrganization.supportTelephone}"/></td>
-		</tr>
-
-		<tr>
-			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.organization_support_information}"/></h5></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.organization_email}"  /></td>
-			<td><h:outputText value="#{organizationBean.organization.supportInformation.email}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.organization_telephone_number}"  /></td>
-			<td><h:outputText value="#{organizationBean.organization.supportInformation.telephoneNumber}"/></td>
+					value="#{organizationBean.organization.supportInformation.telephoneNumber}"/></td>
 		</tr>
 
 		<tr>
