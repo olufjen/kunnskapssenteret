@@ -25,6 +25,7 @@ import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.ProxyExportDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
+import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
 import no.helsebiblioteket.admin.domain.IpAddressRange;
@@ -477,27 +478,60 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 		
-		if(false){
+		if(true){
 			old.getAccessDomain();
-			old.getContactInformation();
-			old.getContactPerson();
-			old.getNameEnglish();
-			old.getSupportInformation();
-			old.getType();
+			ContactInformation contactInformation = old.getContactInformation();
+			Person person = old.getContactPerson();
+			ContactInformation personContactInformation = person.getContactInformation();
+			Profile profile = person.getProfile();
+			ContactInformation supportInformation = old.getSupportInformation();
 
 			// Do not delete organization users
 			// Do not delete organization administrator
+			// Set administration users org_id to NULL
 
 			if(mem != null){
-				mem.getIpAddressRangeList();
-				mem.getIpAddressSingleList();
-			} else {
-				sup.getResourceList();
-				sup.getSupportEmail();
-				sup.getSupportTelephone();
+				IpAddressRange[] rangeList = mem.getIpAddressRangeList();
+				IpAddressSingle[] singleList = mem.getIpAddressSingleList();
+				IpAddressSet[] rangeSetsList = new IpAddressSet[rangeList.length];
+				IpAddressSet[] singleSetsList = new IpAddressSet[singleList.length];
+				int i=0;
+				for (IpAddressRange range : rangeList) {
+					rangeSetsList[i++] = range.getIpAddressSet();
+				}
+				i=0;
+				for (IpAddressSingle single : singleList) {
+					singleSetsList[i++] = single.getIpAddressSet();
+				}
+				this.deleteIpAddresses(rangeSetsList);
+				this.deleteIpAddresses(singleSetsList);
+				
+			}
+			if(sup != null){
+				SupplierSourceResource[] resourceList = sup.getResourceList();
+				for (SupplierSourceResource resource : resourceList) {
+					List<ResourceAccessForeignKeys> accessList =
+						this.accessDao.getAccessListByResource(resource.getResource());
+					for (ResourceAccessForeignKeys access : accessList) {
+						this.accessDao.deleteResourceAccessForeignKeys(access);
+					}
+					this.resourceDao.deleteSupplierSourceResource(resource);
+					this.supplierSourceDao.deleteSupplierSource(resource.getSupplierSource());
+				}
+			}
+			
+			List<OrganizationName> orgNameList = this.organizationNameDao.
+				getOrganizationNameListByOrganization(organization);
+			for (OrganizationName organizationName : orgNameList) {
+				this.organizationNameDao.deleteOrganizationName(organizationName);
 			}
 
 			this.organizationDao.deleteOrganization(organization);
+			this.contactInformationDao.deleteContactInformation(contactInformation);
+			this.contactInformationDao.deleteContactInformation(supportInformation);
+			this.personDao.deletePerson(person);
+			this.profileDao.deleteProfile(profile);
+			this.contactInformationDao.deleteContactInformation(personContactInformation);
 
 			return Boolean.TRUE;
 		} else {
