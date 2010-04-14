@@ -9,19 +9,21 @@ import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.service.AccessService;
 
 public class ExportProxySetupTask {
-	private String name; // proxy-t.helsebiblioteket.no
-	private int loginPort; // 80
-	private int loginPortSSL; // 443
-	private String adminPassword; // password
-	private String proxyPassword; // password
-	private String proxyServletURL; // http://www-t.helsebiblioteket.no/ProxyServlet?
 	private AccessService accessService;
+	private String name;
+	private int loginPort;
+	private int loginPortSSL;
+	private String adminPassword;
+	private String proxyPassword;
+	private String proxyServletURL;
+	private String configFileName;
+	private String userFileName;
 	
 	public void exportSetup(){
-		File configFile = new File("C:\\dev\\config.txt");
-		File userFile = new File("C:\\dev\\user.txt");
+		File configFile = new File(this.configFileName);
+		File userFile = new File(this.userFileName);
 
-		SupplierSourceResource[] list = accessService.getSupplierSourceResourceListAll("").getList();
+		SupplierSourceResource[] list = this.accessService.getSupplierSourceResourceListAll("").getList();
 
 		try{
 			FileWriter fstream = new FileWriter(configFile);
@@ -56,5 +58,60 @@ public class ExportProxySetupTask {
 		} catch (IOException e){
 	    	System.err.println("Error: " + e.getMessage());
 	    }
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getLoginPort() {
+		return loginPort;
+	}
+	public void setLoginPort(int loginPort) {
+		this.loginPort = loginPort;
+	}
+	public int getLoginPortSSL() {
+		return loginPortSSL;
+	}
+	public void setLoginPortSSL(int loginPortSSL) {
+		this.loginPortSSL = loginPortSSL;
+	}
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+	public String getProxyPassword() {
+		return proxyPassword;
+	}
+	public void setProxyPassword(String proxyPassword) {
+		this.proxyPassword = proxyPassword;
+	}
+	public String getProxyServletURL() {
+		return proxyServletURL;
+	}
+	public void setProxyServletURL(String proxyServletURL) {
+		this.proxyServletURL = proxyServletURL;
+	}
+	public AccessService getAccessService() {
+		return accessService;
+	}
+	public void setAccessService(AccessService accessService) {
+		this.accessService = accessService;
+	}
+	public String getConfigFileName() {
+		return configFileName;
+	}
+	public void setConfigFileName(String configFileName) {
+		this.configFileName = configFileName;
+	}
+	public String getUserFileName() {
+		return userFileName;
+	}
+	public void setUserFileName(String userFileName) {
+		this.userFileName = userFileName;
 	}
 }
