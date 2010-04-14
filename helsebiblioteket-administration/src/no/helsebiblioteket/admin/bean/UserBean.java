@@ -424,9 +424,7 @@ public class UserBean {
 			logger.info("STARTROLES");
 			this.logger.debug("this.userService=" + this.userService);
 			for (Role role : this.getAllRoles()) {
-				if( ! (role.getKey().getValue().equals(UserRoleKey.organization_administrator.getValue()) ||
-						role.getKey().getValue().equals(UserRoleKey.administrator.getValue()))){
-//					administrator
+				if( ! role.getKey().getValue().equals(UserRoleKey.organization_administrator.getValue())){
 //					org_admin
 					logger.debug("role: " + role.getKey());
 					SelectItem option = new SelectItem(role.getKey().getValue(), role.getName(), "", false);

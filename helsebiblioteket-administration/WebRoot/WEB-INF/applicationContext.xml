@@ -31,6 +31,7 @@ xmlns="http://www.springframework.org/schema/beans"
 	 			<value>/WEB-INF/application.properties</value>
 	 			<value>/WEB-INF/jdbc.properties</value>
 	 			<value>/WEB-INF/mail.properties</value>
+	 			<value>/WEB-INF/proxy.properties</value>
 	 		</list>
 		</property>
 	</bean>
@@ -346,6 +347,8 @@ xmlns="http://www.springframework.org/schema/beans"
        </property>
     </bean>
 	
+<!-- End of spring security  -->	
+	
 	<bean
         id="daoAuthenticationProvider"
         class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
@@ -356,13 +359,50 @@ xmlns="http://www.springframework.org/schema/beans"
      <bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl">
           <constructor-arg ref="userService" />
      </bean>
-        
+     
+
+	<bean id="importProxyDataTask" class="no.helsebiblioteket.admin.task.ImportProxyDataTask">
+		<property name="organizationService" ref="organizationService" />
+		<property name="readLogFileName" value="${proxy.readlogfilename}" />
+	</bean>
+	<bean id="exportProxySetupTask" class="no.helsebiblioteket.admin.task.ExportProxySetupTask">
+		<property name="accessService" ref="accessService" />
+		<property name="name" value="${proxy.name}"></property>
+		<property name="loginPort" value="${proxy.loginport}"></property>
+		<property name="loginPortSSL" value="${proxy.loginportssl}"></property>
+		<property name="adminPassword" value="${proxy.adminpassword}"></property>
+		<property name="proxyPassword" value="${proxy.proxypassword}"></property>
+		<property name="proxyServletURL" value="${proxy.proxyservleturl}"></property>
+	</bean>
+	<bean id="importProxyDataTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="importProxyDataTask" />
+		<property name="targetMethod" value="importProxyData" />
+	</bean>
+	<bean id="exportProxySetupTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="exportProxySetupTask" />
+		<property name="targetMethod" value="exportSetup" />
+	</bean>
+	<bean id="importProxyDataTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="importProxyDataTaskJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="${proxy.importcronexpression}" />
+	</bean>
+	<bean id="exportProxySetupTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="exportProxySetupTaskJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="${proxy.exportcronexpression}" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="importProxyDataTaskJobCronTrigger" />
+				<ref bean="exportProxySetupTaskJobCronTrigger" />
+			</list>
+		</property>
+	</bean>
+
+
  <!--    <bean id="userRepository"  class="no.helsebiblioteket.admin.dao.JdbcUserDao"></bean>  --> 
  
  
- 
-                           
-<!-- End of spring security  -->	
-
- </beans>
-
+</beans>

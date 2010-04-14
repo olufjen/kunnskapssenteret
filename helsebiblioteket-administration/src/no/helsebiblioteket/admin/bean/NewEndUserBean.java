@@ -13,6 +13,7 @@ import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
+import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
 
 import org.apache.commons.logging.Log;
@@ -142,9 +143,11 @@ public class NewEndUserBean extends NewUserBean {
 		if(this.availableRoles == null) {
 			this.availableRoles = new ArrayList<SelectItem>();
 			for (Role role : this.getAllRoles()) {
-				SelectItem option = new SelectItem(role.getKey().getValue(),
-						role.getName(), "", false);
-				this.availableRoles.add(option);
+				if( ! role.getKey().getValue().equals(UserRoleKey.organization_administrator.getValue())){
+					SelectItem option = new SelectItem(role.getKey().getValue(),
+							role.getName(), "", false);
+					this.availableRoles.add(option);
+				}
 			}
 		}
 		return this.availableRoles;
