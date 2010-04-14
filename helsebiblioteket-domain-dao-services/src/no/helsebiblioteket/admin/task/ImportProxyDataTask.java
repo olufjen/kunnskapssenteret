@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameter;
@@ -19,28 +18,25 @@ import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameterList;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class ImportProxyDataTask {
-	private String requestPatternString = "^[A-Z]{3,4} http://([a-zA-Z0-9\\-]+[\\.a-zA-Z0-9\\-]+):80/.*";
-	private String linePatternString = "^([\\d.]+) - - \\[([\\w:/]+\\s[\\+\\-]\\d{4})\\] \"(.+?)\".*";
+	private static final String requestPatternString = "^[A-Z]{3,4} http://([a-zA-Z0-9\\-]+[\\.a-zA-Z0-9\\-]+):80/.*";
+	private static final String linePatternString = "^([\\d.]+) - - \\[([\\w:/]+\\s[\\+\\-]\\d{4})\\] \"(.+?)\".*";
 	private OrganizationService organizationService;
-	private String fileName;
-	protected void initLocalProperties(Properties taskProperties) { }
-	protected void initEvsClient() { }
-	protected String destroyEvsClient() { return ""; }
-	public void importContent() {
+	private String readLogFileName;
+	public void importProxyData() {
 		Map<String, ProxyHitParameter> map = new HashMap<String, ProxyHitParameter>();
-		Pattern requestPattern = Pattern.compile(this.requestPatternString);
-		Pattern linePattern = Pattern.compile(this.linePatternString);
+		Pattern requestPattern = Pattern.compile(requestPatternString);
+		Pattern linePattern = Pattern.compile(linePatternString);
 		SimpleDateFormat fromDateFormat = new SimpleDateFormat("dd/MMM/yyyy:hh:mm:ss z");
 		SimpleDateFormat toDateFormat = new SimpleDateFormat("yyyyMMddhh");
 
-		File file = new File(this.fileName);
-		FileInputStream fstream;
+		File readFile = new File(this.readLogFileName);
+		FileInputStream readFstream;
 		try {
-			fstream = new FileInputStream(file);
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			readFstream = new FileInputStream(readFile);
+			DataInputStream in = new DataInputStream(readFstream);
+			BufferedReader inBr = new BufferedReader(new InputStreamReader(in));
 			String line;
-			while ((line = br.readLine()) != null)   {
+			while ((line = inBr.readLine()) != null)   {
 				Matcher lineMatcher = linePattern.matcher(line);
 				if(!lineMatcher.matches()){
 					// TODO: Deal with this!
@@ -94,21 +90,16 @@ public class ImportProxyDataTask {
 		
 	}
 	
+	public String getReadLogFileName() {
+		return readLogFileName;
+	}
+	public void setReadLogFileName(String readLogFileName) {
+		this.readLogFileName = readLogFileName;
+	}
 	public OrganizationService getOrganizationService() {
 		return organizationService;
 	}
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
-	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public static void main(String[] args) {
-		ImportProxyDataTask task = new ImportProxyDataTask();
-		task.importContent();
 	}
 }
