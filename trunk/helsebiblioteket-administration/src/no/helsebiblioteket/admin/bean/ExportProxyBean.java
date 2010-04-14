@@ -28,8 +28,6 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
-import no.helsebiblioteket.admin.task.ExportProxySetupTask;
-import no.helsebiblioteket.admin.task.ImportProxyDataTask;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -117,7 +115,7 @@ public class ExportProxyBean {
 							  chartTitle, xLabel, yLabel, xyDataset, PlotOrientation.VERTICAL,
 							  true, true, true);
 		try {
-			ChartUtilities.saveChartAsJPEG(new File("./webapps/helsebiblioteket-administration-web/images/charts/chart.jpg"), chart, 500, 600);
+			ChartUtilities.saveChartAsJPEG(new File("/www/nkh/tomcat/www-t.helsebiblioteket.no/helsebiblioteket-administration-web/images/charts/chart.jpg"), chart, 500, 600);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -335,38 +333,6 @@ public class ExportProxyBean {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
 		return sdf.format(date);
 	}
-	
-	
-	
-	
-	public String actionImportProxy(){
-		// TODO: Remove this method!!!
-//	    <tr>
-//	      <td colspan="2" align="right">
-//			<h:commandButton value="IMPORT" action="#{exportProxyBean.actionImportProxy}" />
-//	      </td>
-//	    </tr>
-		ImportProxyDataTask task = new ImportProxyDataTask();
-		task.setOrganizationService(this.organizationService);
-		task.setFileName("/Users/fredrso/Install/kunnskapssenteret/ezproxy_201002.log");
-		task.importContent();
-		return "export_proxy_return";
-	}
-	public String actionExportProxy(){
-		// TODO: Remove this method!!!
-//	    <tr>
-//	      <td colspan="2" align="right">
-//			<h:commandButton value="EXPORT" action="#{exportProxyBean.actionExportProxy}" />
-//	      </td>
-//	    </tr>
-		ExportProxySetupTask task = new ExportProxySetupTask();
-		task.exportSetup();
-		return "export_proxy_return";
-	}
-	
-	
-	
-	
 	
 	public String getPeriod() {
 		return period;
