@@ -523,8 +523,8 @@ public class UserServiceImpl implements UserService {
 			.append("Group").append(columnSeparator)
 			.append("Position").append(columnSeparator)
 			.append("Spouse").append(columnSeparator)
-			.append("Survey").append(columnSeparator)
-			.append("Newsletter")
+			.append("Hobby").append(columnSeparator)
+			.append("Profession")
 			.append("\n")
 			;
 		if (null != userList) {
