@@ -77,13 +77,19 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 				URL url = generateURL(oldLinkDeampified);
 				if(url != null) {
 		    		if (!linkFilterOverride && this.isAffected(url)) {
-		    			url = this.translate(user, memberOrganization, url);
+		    			try {
+		    				url = this.translate(user, memberOrganization, url);
+		    			} catch (MalformedURLException e) {
+		    				url = null;
+						}
 		    		}
-		    		String newLink = url.toExternalForm();
-		    		if (!oldLinkDeampified.equals(newLink)) {
-		    			// using map to avoid duplicate replacements
-		    			// also only adding links that are actually changed to the map.
-		    			linkReplaceMap.put(oldLink, newLink);
+		    		if(url != null){
+			    		String newLink = url.toExternalForm();
+			    		if (!oldLinkDeampified.equals(newLink)) {
+			    			// using map to avoid duplicate replacements
+			    			// also only adding links that are actually changed to the map.
+			    			linkReplaceMap.put(oldLink, newLink);
+			    		}
 		    		}
 				}
 			}
