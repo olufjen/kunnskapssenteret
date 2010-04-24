@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@ taglib uri="http://myfaces.apache.org/sandbox" prefix="s"%>
 <%@page buffer="none"%>
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/>
 <f:loadBundle var="msg_page_export_proxydata" basename="no.helsebiblioteket.admin.web.jsf.messageresources.page_export_proxydata"/>
@@ -11,5 +12,6 @@
 <br />
 <h:form>
   <h:commandButton value="#{msg_page_export_proxydata.btn_return}" action="#{exportProxyBean.actionReturn}" />
-  <t:graphicImage url="./images/charts/chart.jpg"></t:graphicImage>
+  <s:graphicImageDynamic imageRendererClass="#{exportProxyBean.imageRenderer}" >
+  </s:graphicImageDynamic>
 </h:form>

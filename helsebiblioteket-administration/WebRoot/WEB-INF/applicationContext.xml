@@ -373,6 +373,8 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="adminPassword" value="${proxy.adminpassword}"></property>
 		<property name="proxyPassword" value="${proxy.proxypassword}"></property>
 		<property name="proxyServletURL" value="${proxy.proxyservleturl}"></property>
+		<property name="waitRestart" value="${proxy.waitrestart}"></property>
+		<property name="restartCommand" value="${proxy.restartcommand}"></property>
 	</bean>
 	<bean id="importProxyDataTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="importProxyDataTask" />
