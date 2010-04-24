@@ -13,11 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameter;
 import no.helsebiblioteket.admin.domain.parameter.ProxyHitParameterList;
 import no.helsebiblioteket.admin.service.OrganizationService;
 
 public class ImportProxyDataTask {
+	private final Log logger = LogFactory.getLog(getClass());
 	private static final String requestPatternString = "^[A-Z]{3,4} http://([a-zA-Z0-9\\-]+[\\.a-zA-Z0-9\\-]+):80/.*";
 	private static final String linePatternString = "^([\\d.]+) - - \\[([\\w:/]+\\s[\\+\\-]\\d{4})\\] \"(.+?)\".*";
 	private OrganizationService organizationService;
@@ -39,8 +44,7 @@ public class ImportProxyDataTask {
 			while ((line = inBr.readLine()) != null)   {
 				Matcher lineMatcher = linePattern.matcher(line);
 				if(!lineMatcher.matches()){
-					// TODO: Deal with this!
-					System.out.println("Bad log entry: " + line);
+					this.logger.warn("Bad log entry: " + line);
 					break;
 				}
 				String ipAddress = lineMatcher.group(1);
@@ -48,20 +52,15 @@ public class ImportProxyDataTask {
 				String request = lineMatcher.group(3);
 				Matcher m = requestPattern.matcher(request);
 				if(!m.matches()){
-					// TODO: Deal with this!
-					System.out.println("Bad log entry: " + request);
+					this.logger.warn("Bad log entry: " + request);
 					break;
 				}
 				String domain = m.group(1);
-				// TODO: Remove this!
-//				System.out.println (date + " -- " + ipAddress + " -- " + domain);
-
 				String fromIP = ipAddress;
 				String toDomain = domain;
 				String period = toDateFormat.format(fromDateFormat.parse(date));
 				
 				String lookup = fromIP+"*"+toDomain+"*"+period;
-				System.out.println ("lookup=" + lookup);
 				
 				if(map.containsKey(lookup)){
 					map.get(lookup).inc();
@@ -72,11 +71,9 @@ public class ImportProxyDataTask {
 			}
 			in.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.logger.warn("IO Exception: " + e);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.logger.warn("Parse Exception: " + e);
 		}
 		
 		ProxyHitParameterList list = new ProxyHitParameterList();
@@ -85,9 +82,8 @@ public class ImportProxyDataTask {
 		}
 		boolean result = this.organizationService.insertProxyHits(list);
 		if( ! result){
-			// TODO: Deal with this!
+			this.logger.error("Inserting proxy data failed");
 		}
-		
 	}
 	
 	public String getReadLogFileName() {

@@ -5,10 +5,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 import no.helsebiblioteket.admin.service.AccessService;
 
 public class ExportProxySetupTask {
+	private final Log logger = LogFactory.getLog(getClass());
 	private AccessService accessService;
 	private String name;
 	private int loginPort;
@@ -18,6 +22,8 @@ public class ExportProxySetupTask {
 	private String proxyServletURL;
 	private String configFileName;
 	private String userFileName;
+	private String waitRestart;
+	private String restartCommand;
 	
 	public void exportSetup(){
 		File configFile = new File(this.configFileName);
@@ -55,9 +61,20 @@ public class ExportProxySetupTask {
 		    			this.proxyServletURL); out.newLine();
 		    	out.newLine();
 			}
+			
 		} catch (IOException e){
-	    	System.err.println("Error: " + e.getMessage());
+	    	this.logger.error(e.getMessage());
 	    }
+		try {
+			long wait = new Integer(this.waitRestart).longValue();
+			Thread.sleep(wait);
+			
+		    Runtime runtime = Runtime.getRuntime();
+		    Process process = runtime.exec(this.restartCommand); 
+		    process.waitFor();
+	    } catch (Exception e) {
+	    	this.logger.error(e.getMessage());
+	    } 
 	}
 	
 	public String getName() {
@@ -113,5 +130,17 @@ public class ExportProxySetupTask {
 	}
 	public void setUserFileName(String userFileName) {
 		this.userFileName = userFileName;
+	}
+	public String getWaitRestart() {
+		return waitRestart;
+	}
+	public void setWaitRestart(String waitRestart) {
+		this.waitRestart = waitRestart;
+	}
+	public String getRestartCommand() {
+		return restartCommand;
+	}
+	public void setRestartCommand(String restartCommand) {
+		this.restartCommand = restartCommand;
 	}
 }

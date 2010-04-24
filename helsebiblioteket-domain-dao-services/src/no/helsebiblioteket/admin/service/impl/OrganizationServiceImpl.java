@@ -982,20 +982,18 @@ public class OrganizationServiceImpl implements OrganizationService {
 			String domain = supplierSourceResource.getSupplierSource().getUrl().getDomain();
 			Integer orgId = supplierSourceResource.getResource().getOfferedBy();
 			if(domain == null || orgId == null){
-				System.out.println("BIG TIME ERROR");
+				this.logger.error("No domain or organization for inserting proxy hits");
 				throw new NullPointerException("THROWING BIG TIME ERROR");
 			} else {
 				StringTokenizer tokenizer = new StringTokenizer(domain, "/");
 				domain = tokenizer.nextToken();
 				supplierOrgsFromDomain.put(domain, orgId);
-				System.out.println("domain=" + domain + ", orgId=" + orgId);
 			}
 		}
 		for (ProxyHitParameter parameter : list.getList()) {
 			// Lookup member
 			String normalIP = normalizeIp(new IpAddress(
 					parameter.getFromIP()));
-			System.out.println("ipAddress=" + normalIP);
 			if( ! memberOrgsFromIp.containsKey(normalIP)){
 				OrganizationListItem[] memOrgs = this.getOrganizationListByIpAddress(new IpAddress(normalIP)).getList();
 				List<Integer> orgids = new ArrayList<Integer>();
@@ -1020,6 +1018,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 			// Lookup supplier
 			String domain = parameter.getToDomain();
 			Integer supplierOrgId = supplierOrgsFromDomain.get(domain);
+			if(supplierOrgId == null){
+				this.logger.warn("Missing supplier for domain " + domain);
+			}
 			
 			// Period OK
 			String period = parameter.getPeriod();
@@ -1049,8 +1050,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 					dayOfWeek = "" + (calendar.get(Calendar.DAY_OF_WEEK)+6)%7;
 				} catch (ParseException e) {
 					dayOfWeek = null;
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					this.logger.error("Unable to parse date " + period);
 				}
 				line.setDayOfWeek(dayOfWeek);
 				
