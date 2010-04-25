@@ -58,7 +58,12 @@ public class URLServiceImpl implements URLService {
 	}
 	@Override
 	public SingleResultUrl translateUrlNone(Url url) {
-		return this.translateUrlUserOrganizationInternal(null, null, url);
+		return this.translateUrlUserOrganizationInternal(null, null, url, false);
+	}
+	@Override
+	public SingleResultUrl translateUrlNational(Url url) {
+		// TODO Auto-generated method stub
+		return this.translateUrlUserOrganizationInternal(null, null, url, true);
 	}
 	/**
 	 * Translates a URL. If the user has Access he will
@@ -68,7 +73,7 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
 	public SingleResultUrl translateUrlUser(UserListItem user, Url url) {
-		return this.translateUrlUserOrganizationInternal(user, null, url);
+		return this.translateUrlUserOrganizationInternal(user, null, url, true);
 	}
 	/**
 	 * Translates a URL for an organization. If the organization
@@ -78,7 +83,7 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
 	public SingleResultUrl translateUrlOrganization(OrganizationListItem organization, Url url) {
-		return this.translateUrlUserOrganizationInternal(null, organization, url);
+		return this.translateUrlUserOrganizationInternal(null, organization, url, true);
 	}
 	/**
 	 * Translates a URL for either organization or user.
@@ -103,11 +108,11 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
 	public SingleResultUrl translateUrlUserOrganization(UserListItem user, OrganizationListItem memberOrganization, Url url) {
-		return this.translateUrlUserOrganizationInternal(user, memberOrganization, url);
+		return this.translateUrlUserOrganizationInternal(user, memberOrganization, url, true);
 	}
 
 	// TODO: Fase2 is the only actual safe solution to always proxify?
-	private SingleResultUrl translateUrlUserOrganizationInternal(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
+	private SingleResultUrl translateUrlUserOrganizationInternal(UserListItem userListItem, OrganizationListItem organizationListItem, Url url, boolean national) {
 		Url newUrl = new Url();
 		url.setStringValue(url.getStringValue().replace("&amp;", "&"));
 		newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
@@ -116,7 +121,7 @@ public class URLServiceImpl implements URLService {
 	}
 	
 	// TODO fase2 fix
-	private SingleResultUrl translateUrlUserOrganizationInternalFixLater(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
+	private SingleResultUrl translateUrlUserOrganizationInternalFixLater(UserListItem userListItem, OrganizationListItem organizationListItem, Url url, boolean national) {
 		Url newUrl = new Url();
 		boolean proxify = false;
 		
@@ -173,7 +178,7 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
     public AccessResult hasAccessUser(UserListItem user, Url url) {
-		return this.getAccessResultForUserAndMemberOrganization(user, null, url);
+		return this.getAccessResultForUserAndMemberOrganization(user, null, url, true);
 	}
 	/**
 	 * Loads the Access list for an organization and checks if the URL
@@ -181,7 +186,7 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
 	public AccessResult hasAccessOrganization(OrganizationListItem organization, Url url) {
-		return this.getAccessResultForUserAndMemberOrganization(null, organization, url);
+		return this.getAccessResultForUserAndMemberOrganization(null, organization, url, true);
 	}
 	/**
 	 * Checks if an organization has access first, then check the user.
@@ -190,12 +195,17 @@ public class URLServiceImpl implements URLService {
 	 */
 	@Override
 	public AccessResult hasAccessUserOrganization(UserListItem user, OrganizationListItem organization, Url url) {
-		return this.getAccessResultForUserAndMemberOrganization(user, organization, url);
+		return this.getAccessResultForUserAndMemberOrganization(user, organization, url, true);
 	}
 	@Override
 	public AccessResult hasAccessNone(Url url) {
-		return this.getAccessResultForUserAndMemberOrganization(null, null, url);
+		return this.getAccessResultForUserAndMemberOrganization(null, null, url, false);
 	}
+	@Override
+	public AccessResult hasAccessNational(Url url) {
+		return this.getAccessResultForUserAndMemberOrganization(null, null, url, true);
+	}
+
 	/**
 	 * Finds the group value for a URL. Loads the resources, finds
 	 * the URL and the group name for it.
@@ -210,8 +220,8 @@ public class URLServiceImpl implements URLService {
 		return new EmptyResultString();
 	}
 
-	private AccessResult getAccessResultForUserAndMemberOrganization(UserListItem user, OrganizationListItem memberOrganization, Url url) {
-		AccessType accessType = this.getAccessTypeForUserAndMemberOrganization(user, memberOrganization, url);
+	private AccessResult getAccessResultForUserAndMemberOrganization(UserListItem user, OrganizationListItem memberOrganization, Url url, boolean national) {
+		AccessType accessType = this.getAccessTypeForUserAndMemberOrganization(user, memberOrganization, url, national);
 		if(accessType.getCategory().getValue().equals(AccessTypeCategory.DENY.getValue())){
 			return AccessResult.logup;
 		}else if(accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue()) &&
@@ -231,11 +241,15 @@ public class URLServiceImpl implements URLService {
 		}
 	}
 
-	private AccessType getAccessTypeForUserAndMemberOrganization(UserListItem userListItem, OrganizationListItem organizationListItem, Url url) {
+	private AccessType getAccessTypeForUserAndMemberOrganization(UserListItem userListItem, OrganizationListItem organizationListItem, Url url, boolean national) {
 		AccessType accessType = new AccessType(AccessTypeCategory.DENY, AccessTypeKey.general);
 		AccessType accessTypeTmp = null;
 		
 		accessType = (accessTypeTmp = getAccessTypeForAll(url)) != null ? accessTypeTmp : accessType;
+		
+		if(national){
+			accessType = (accessTypeTmp = getAccessTypeNational(url)) != null ? accessTypeTmp : accessType;
+		}
 		
 		if (organizationListItem != null) {
 			accessType = (accessTypeTmp = getAccessTypeForOrganizationType(organizationListItem.getTypeKey(), url)) != null ? accessTypeTmp : accessType;
@@ -279,7 +293,14 @@ public class URLServiceImpl implements URLService {
 		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);
 		return accessType;
 	}
-	
+
+	private AccessType getAccessTypeNational(Url url) {
+		AccessType accessType = null;
+		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListNational();
+		accessType = getAccessTypeForResourceAccessList(url, organizationTypeAccessList);
+		return accessType;
+	}
+
 	private AccessType getAccessTypeForUserRole(UserRoleKey userRole, Url url) {
 		AccessType accessType = null;
 		ListResultResourceAccessListItem organizationTypeAccessList = this.accessService.getAccessListByRole(userRole);

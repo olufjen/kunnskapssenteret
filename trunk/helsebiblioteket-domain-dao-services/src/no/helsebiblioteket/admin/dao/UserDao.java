@@ -1,7 +1,6 @@
 package no.helsebiblioteket.admin.dao;
 
 import no.helsebiblioteket.admin.domain.OrganizationUser;
-import no.helsebiblioteket.admin.domain.User;
 
 public interface UserDao {
 	// Edit
@@ -11,5 +10,6 @@ public interface UserDao {
 
 	// Fetch
 	public OrganizationUser getUserByUsername(String username);
+	public OrganizationUser getDeletedUserByUsername(String username);
 	public OrganizationUser getUserById(Integer id);
 }
