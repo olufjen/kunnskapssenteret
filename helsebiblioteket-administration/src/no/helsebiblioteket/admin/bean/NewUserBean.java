@@ -19,8 +19,6 @@ import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
-import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUser;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
@@ -195,8 +193,7 @@ public class NewUserBean {
     public void validateUserExists(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
 		String username = (String)newValue;
 		UIInput input = (UIInput)component;
-		SingleResultUser result = this.userService.findUserByUsername(username);
-		if( ! (result instanceof EmptyResultUser)){
+		if(this.userService.usernameTaken(username, null)){
 			input.setValid(false);
 			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
 			FacesMessage message = new FacesMessage(bundle.getString("user_exists"));

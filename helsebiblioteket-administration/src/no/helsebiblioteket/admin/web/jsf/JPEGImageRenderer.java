@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseStream;
-
 import org.apache.myfaces.custom.dynamicResources.ResourceContext;
 import org.apache.myfaces.custom.graphicimagedynamic.ImageRenderer;
 import org.jfree.chart.encoders.ImageEncoder;
@@ -14,6 +13,7 @@ import org.jfree.chart.encoders.ImageEncoderFactory;
 import org.jfree.chart.encoders.ImageFormat;
 
 public class JPEGImageRenderer implements ImageRenderer{
+	private String imageFolder;
 	private BufferedImage image;
 	private byte[] bytes = null;
 	public int getContentLength() { return -1; }
@@ -22,18 +22,19 @@ public class JPEGImageRenderer implements ImageRenderer{
 	public void setContext(FacesContext facesContext, ResourceContext resourceContext) throws Exception {
 		ByteArrayOutputStream baout = new ByteArrayOutputStream();
 		ImageEncoder imageEncoder = ImageEncoderFactory.newInstance(ImageFormat.JPEG);
-		imageEncoder.encode(image, baout);
-		bytes = baout.toByteArray();
-
-		//		try {
-		//			 
-		//			ChartUtilities.saveChartAsJPEG(new File("/www/nkh/tomcat/www-t.helsebiblioteket.no/helsebiblioteket-administration-web/images/charts/chart.jpg"), chart, 500, 600);
-		//		} catch (IOException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-
+		imageEncoder.encode(this.image, baout);
+		this.bytes = baout.toByteArray();
 	}
-
-
+	public BufferedImage getImage() {
+		return image;
+	}
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+	public String getImageFolder() {
+		return imageFolder;
+	}
+	public void setImageFolder(String imageFolder) {
+		this.imageFolder = imageFolder;
+	}
 }

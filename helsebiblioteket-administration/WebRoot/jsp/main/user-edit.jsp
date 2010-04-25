@@ -17,7 +17,8 @@
 	<table>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_username}"  /></td>
-			<td><h:inputText value="#{userBean.user.username}" id="username" /></td>
+			<td><h:inputText value="#{userBean.user.username}" id="username"
+					binding="#{userBean.usernameInput}"/></td>
 			<td><h:message for="username" styleClass="RED"/></td>
 		</tr>
 		<tr>
