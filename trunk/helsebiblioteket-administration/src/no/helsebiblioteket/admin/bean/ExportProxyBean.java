@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.bean;
 
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -28,10 +30,12 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
+import no.helsebiblioteket.admin.web.jsf.JPEGImageRenderer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
@@ -56,7 +60,9 @@ public class ExportProxyBean {
 	private OrganizationListItem[] supplierOrganizations;
 	private OrganizationListItem[] memberOrganizations;
 	private BufferedImage image;
-	
+	private String imageUrl;
+	private JPEGImageRenderer imageRenderer;
+
 	public String actionExportResultProxy(){
 		ProxyResult[] resultList = fetchResult();
 		
@@ -114,12 +120,17 @@ public class ExportProxyBean {
 		JFreeChart chart = ChartFactory.createXYLineChart(
 							  chartTitle, xLabel, yLabel, xyDataset, PlotOrientation.VERTICAL,
 							  true, true, true);
-		this.image = chart.createBufferedImage(500, 600, BufferedImage.TYPE_INT_RGB, null);
+//		this.setImage(chart.createBufferedImage(500, 600, BufferedImage.TYPE_INT_RGB, null));
+		
+		String fName = "chart" + new Random().nextInt(1073741824) + ".jpg";
+		this.imageUrl = "images/charts/" + fName;
+		try {
+			ChartUtilities.saveChartAsJPEG(new File(this.imageRenderer.getImageFolder() + "/" + fName), chart, 500, 600);
+		} catch (IOException e) {
+			this.logger.error("Unable to write chart " + fName + " to chart image folder " + this.imageRenderer.getImageFolder());
+			e.printStackTrace();
+		}
 		return "export_proxy_result";
-	}
-	@SuppressWarnings("unchecked")
-	public Class getImageRenderer() {
-		return this.getClass();
 	}
 
 	private ProxyResult[] fetchResult() {
@@ -411,5 +422,23 @@ public class ExportProxyBean {
 	}
 	public void setGroupType(boolean groupType) {
 		this.groupType = groupType;
+	}
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+	public BufferedImage getImage() {
+		return image;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	public JPEGImageRenderer getImageRenderer() {
+		return this.imageRenderer;
+	}
+	public void setImageRenderer(JPEGImageRenderer imageRenderer) {
+		this.imageRenderer = imageRenderer;
 	}
 }

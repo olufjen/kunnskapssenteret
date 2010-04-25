@@ -90,6 +90,7 @@ public class UserBean {
 	private UIData usersTable;
 	private UIInput passwordRepeat;
 	private UIInput passwordInput;
+	private UIInput usernameInput;
 	private UISelectBoolean isOrgAdminSelectBooleanCheckbox;
 	
 	private PageResultUserListItem lastPageResult;
@@ -296,6 +297,14 @@ public class UserBean {
     			this.user.setPassword(this.password);
     		}
     	}
+		if(userExists(this.user.getUsername() == null ? "" : this.user.getUsername())){
+			String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+			String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "user_exists", "The username is taken");
+			FacesContext.getCurrentInstance().addMessage(
+					this.usernameInput.getClientId(FacesContext.getCurrentInstance()),
+					new FacesMessage(FacesMessage.SEVERITY_INFO, messageValue, messageValue));
+			return null;
+		}
     	
     	this.mainRole(this.allRolesMap.get(this.selectedUserRole.getValue()));
     	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
@@ -350,6 +359,13 @@ public class UserBean {
     	
     	return details();
     }
+	private boolean userExists(String username) {
+		if(isNew()){
+			return this.userService.usernameTaken(username, null);
+		} else {
+			return this.userService.usernameTaken(username, this.user.getId());
+		}
+	}
     public String actionCancel(){
     	SingleResultUser result = this.userService.findUserByUsername(this.user.getUsername());
     	if(result instanceof ValueResultUser){
@@ -647,4 +663,6 @@ public class UserBean {
 	public void setShowSelectMemberOrg(boolean showSelectMemberOrg) { this.showSelectMemberOrg = showSelectMemberOrg; }
 	public UISelectBoolean getIsOrgAdminSelectBooleanCheckbox() { return isOrgAdminSelectBooleanCheckbox; }
 	public void setIsOrgAdminSelectBooleanCheckbox(UISelectBoolean isOrgAdminSelectBooleanCheckbox) { this.isOrgAdminSelectBooleanCheckbox = isOrgAdminSelectBooleanCheckbox; }
+	public UIInput getUsernameInput() { return usernameInput; }
+	public void setUsernameInput(UIInput usernameInput) { this.usernameInput = usernameInput; }
 }
