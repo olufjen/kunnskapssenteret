@@ -24,12 +24,14 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	private QName translateUrlOrganizationName;
 	private QName translateUrlUserOrganizationName;
 	private QName translateUrlNoneName;
+	private QName translateUrlNationalName;
 	private QName hasAccessUserName;
 	private QName hasAccessOrganizationName;
 	private QName hasAccessUserOrganizationName;
 	private QName hasAccessNoneName;
-	
+	private QName hasAccessNationalName;
 	private QName groupName;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean isAffected(Url url){
@@ -81,6 +83,14 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
+	public SingleResultUrl translateUrlNational(Url url) {
+		Object[] args = new Object[] { url };
+		Class[] returnTypes = new Class[] { SingleResultUrl.class };
+		String key = (url != null) ? url.getStringValue() : "";
+		return (SingleResultUrl)invokeCached(CacheKey.urlServiceWebTranslateUrlNationalCache, key, this.translateUrlNationalName, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
     public AccessResult hasAccessUser(UserListItem user, Url url){
 		Object[] args = new Object[] { user, url };
 		Class[] returnTypes = new Class[] { AccessResult.class };
@@ -122,6 +132,16 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 				((url != null) ? (url.getStringValue()) : "")
 				);
 		return (AccessResult)invokeCached(CacheKey.urlServiceWebHasAccessNoneCache, key, this.hasAccessNoneName, args, returnTypes);
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public AccessResult hasAccessNational(Url url) {
+		Object[] args = new Object[] { url };
+		Class[] returnTypes = new Class[] { AccessResult.class };
+		String key = (
+				((url != null) ? (url.getStringValue()) : "")
+				);
+		return (AccessResult)invokeCached(CacheKey.urlServiceWebHasAccessNationalCache, key, this.hasAccessNationalName, args, returnTypes);
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -178,6 +198,18 @@ public class URLServiceWeb extends BasicWebService implements URLService {
 	}
 	public void setHasAccessNoneName(QName hasAccessNoneName) {
 		this.hasAccessNoneName = hasAccessNoneName;
+	}
+	public QName getHasAccessNationalName() {
+		return hasAccessNationalName;
+	}
+	public void setHasAccessNationalName(QName hasAccessNationalName) {
+		this.hasAccessNationalName = hasAccessNationalName;
+	}
+	public QName getTranslateUrlNationalName() {
+		return translateUrlNationalName;
+	}
+	public void setTranslateUrlNationalName(QName translateUrlNationalName) {
+		this.translateUrlNationalName = translateUrlNationalName;
 	}
 
 	@SuppressWarnings("null")
