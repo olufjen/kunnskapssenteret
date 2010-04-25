@@ -2,7 +2,6 @@ package no.helsebiblioteket.admin.bean;
 
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
@@ -12,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseStream;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,13 +31,8 @@ import no.helsebiblioteket.admin.service.UserService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.myfaces.custom.dynamicResources.ResourceContext;
-import org.apache.myfaces.custom.graphicimagedynamic.ImageRenderer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.encoders.ImageEncoder;
-import org.jfree.chart.encoders.ImageEncoderFactory;
-import org.jfree.chart.encoders.ImageFormat;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -47,30 +40,6 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;
 
 public class ExportProxyBean {
-	public class ChartImageRenderer implements ImageRenderer {
-		public ChartImageRenderer() {}
-		private byte[] bytes = null;
-		public int getContentLength() { return -1; }
-		public String getContentType() { return "image/jpeg"; }
-		public void renderResource(ResponseStream out) throws IOException { out.write( this.bytes ); }
-		public void setContext(FacesContext facesContext, ResourceContext resourceContext) throws Exception {
-			ByteArrayOutputStream baout = new ByteArrayOutputStream();
-			ImageEncoder imageEncoder = ImageEncoderFactory.newInstance(ImageFormat.JPEG);
-			imageEncoder.encode(image, baout);
-			bytes = baout.toByteArray();
-
-			//		try {
-			//			 
-			//			ChartUtilities.saveChartAsJPEG(new File("/www/nkh/tomcat/www-t.helsebiblioteket.no/helsebiblioteket-administration-web/images/charts/chart.jpg"), chart, 500, 600);
-			//		} catch (IOException e) {
-			//			// TODO Auto-generated catch block
-			//			e.printStackTrace();
-			//		}
-
-		}
-
-	}
-	
 	protected final Log logger = LogFactory.getLog(getClass());
 	private String period;
 	private Date fromDate = new Date();
@@ -150,7 +119,7 @@ public class ExportProxyBean {
 	}
 	@SuppressWarnings("unchecked")
 	public Class getImageRenderer() {
-		return ChartImageRenderer.class;
+		return this.getClass();
 	}
 
 	private ProxyResult[] fetchResult() {
