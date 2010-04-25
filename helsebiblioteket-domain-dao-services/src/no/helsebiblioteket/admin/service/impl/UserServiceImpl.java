@@ -285,6 +285,24 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 	}
+	
+	@Override
+	public Boolean usernameTaken(String username, Integer userId){
+		OrganizationUser organizationUser = this.userDao.getUserByUsername(username);
+		if(organizationUser == null){
+			organizationUser = this.userDao.getDeletedUserByUsername(username);
+		}
+		if(organizationUser == null || organizationUser.getUser() == null){
+			return false;
+		} else if(userId == null){
+			return true;
+		} else if(organizationUser.getUser().getId().intValue() == userId.intValue()){
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	/**
 	 * Fetches user from a user list item. Uses findUserByUsername.
 	 * 
