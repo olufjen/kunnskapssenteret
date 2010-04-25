@@ -288,6 +288,10 @@
     		<property-name>userService</property-name>
         	<value>#{userService}</value>
 		</managed-property>
+    	<managed-property>
+    		<property-name>imageRenderer</property-name>
+        	<value>#{imageRenderer}</value>
+		</managed-property>
 	</managed-bean> 
 	
 	<managed-bean>
