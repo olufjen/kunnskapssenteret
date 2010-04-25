@@ -30,6 +30,7 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultUrl;
 import no.helsebiblioteket.admin.service.URLService;
+import no.helsebiblioteket.admin.service.geoip.GeoIpService;
 
 import com.enonic.cms.api.plugin.HttpResponseFilterPlugin;
 import com.enonic.cms.api.plugin.PluginEnvironment;
@@ -43,6 +44,8 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private final static String invalidHrefRegExp = "javascript:.*|mailto:.*";
 	private final static String linkRegExp = "<a href=(['\"])(.*?)\\1";
 	private final static Pattern linkPattern;
+	private GeoIpService geoIpService;
+	private String countryCodes;
 
 	static {
 		// precompile patterns
@@ -78,7 +81,8 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 				if(url != null) {
 		    		if (!linkFilterOverride && this.isAffected(url)) {
 		    			try {
-		    				url = this.translate(user, memberOrganization, url);
+		    				boolean national = this.geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), this.countryCodes);
+		    				url = this.translate(user, memberOrganization, url, national);
 		    			} catch (MalformedURLException e) {
 		    				url = null;
 						}
@@ -147,7 +151,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		return result;
 	}
 	
-	private URL translate(LoggedInUser user, LoggedInOrganization organization, URL url) throws MalformedURLException {
+	private URL translate(LoggedInUser user, LoggedInOrganization organization, URL url, boolean national) throws MalformedURLException {
 		Url myUrl = new Url();
 		myUrl.setStringValue(url.toExternalForm());
 		myUrl.setDomain(url.getHost());
@@ -172,6 +176,8 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 			orgL.setId(organization.getId());
 			orgL.setTypeKey(new OrganizationTypeKey(organization.getTypeKey()));
 			result = this.urlService.translateUrlOrganization(orgL, myUrl);
+		} else if(national){
+			result = this.urlService.translateUrlNational(myUrl);
 		} else {
 			result = this.urlService.translateUrlNone(myUrl);
 		}
@@ -192,5 +198,11 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;
+	}
+	public void setGeoIpService(GeoIpService geoIpService) {
+		this.geoIpService = geoIpService;
+	}
+	public void setCountryCodes(String countryCodes) {
+		this.countryCodes = countryCodes;
 	}
 }

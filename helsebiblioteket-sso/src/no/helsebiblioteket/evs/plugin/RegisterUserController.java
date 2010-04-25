@@ -38,13 +38,10 @@ import no.helsebiblioteket.admin.domain.requestresult.SingleResultOrganizationTy
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationUser;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
-import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.service.EmailService;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
@@ -342,6 +339,9 @@ public final class RegisterUserController extends HttpControllerPlugin {
 
 		return user;
 	}
+	private boolean userExists(String username) {
+		return this.userService.usernameTaken(username, null);
+	}
 	private Position positionFromKey(String positionString) throws Exception {
 		SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
 		OrganizationType organizationType = (OrganizationType) ((ValueResultOrganizationType) organizationTypeResult).getValue();
@@ -395,10 +395,6 @@ public final class RegisterUserController extends HttpControllerPlugin {
 				usertype.equals(UserRoleKey.health_personnel.getValue()) ||
 				usertype.equals(UserRoleKey.student.getValue()) ||
 				usertype.equals(UserRoleKey.health_personnel_other.getValue());
-	}
-	private boolean userExists(String username) {
-		SingleResultUser result = this.userService.findUserByUsername(username);
-		return (result instanceof ValueResultUser || result instanceof ValueResultOrganizationUser);
 	}
 //	private boolean isInteger(String integer) {
 //		try{Integer.parseInt(integer);} catch (NumberFormatException e) {return false;}

@@ -12,11 +12,8 @@ import org.w3c.dom.Element;
 
 import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.domain.LoggedInUser;
-import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Url;
-import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
-import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
@@ -24,9 +21,9 @@ import no.helsebiblioteket.admin.domain.requestresult.EmptyResultString;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultString;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultString;
 import no.helsebiblioteket.admin.service.URLService;
+import no.helsebiblioteket.admin.service.geoip.GeoIpService;
 import no.helsebiblioteket.admin.translator.LoggedInOrganizationToXMLTranslator;
 import no.helsebiblioteket.admin.translator.LoggedInUserToXMLTranslator;
-import no.helsebiblioteket.admin.translator.OrganizationUserToXMLTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
@@ -35,11 +32,8 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,14 +49,13 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	private String logUpUrl;
 	private boolean proxyUseGroup = true;
 	private int proxyTimeout = 0;
-	protected final Log logger = LogFactory.getLog(getClass());
-	
+	protected final Log logger = LogFactory.getLog(getClass());	
 	private boolean stripUrlParams = false;
-	
-	
 	private Set<String> stripUrlParamsSet = null;
-	
 	private URLService urlService;
+	private GeoIpService geoIpService;
+	private String countryCodes;
+
 
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String requestedUrlText = (stripUrlParams) ? stripUrlParams(request.getQueryString()) : request.getQueryString();
@@ -78,6 +71,7 @@ public class ProxyLoginController extends HttpControllerPlugin {
         Element element = document.createElement(this.resultSessionVarName);
 		LoggedInUser loggedInUser = loggedInUser();
 		LoggedInOrganization loggedInOrganization = this.loggedInOrganization();
+		boolean national = this.geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), this.countryCodes);
     	//if(objectUser == null && memberOrganization == null){
 		//	if(this.urlService.isAffected(requestedUrl)){
 		//		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
@@ -116,6 +110,8 @@ public class ProxyLoginController extends HttpControllerPlugin {
     				organizationListItem.setId(loggedInOrganization.getId());
     				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
     				accessResult = urlService.hasAccessOrganization(organizationListItem, requestedUrl);
+    			} else if(national) {
+    				accessResult = urlService.hasAccessNational(requestedUrl);
     			} else {
     				accessResult = urlService.hasAccessNone(requestedUrl);
     			}
@@ -319,5 +315,11 @@ public class ProxyLoginController extends HttpControllerPlugin {
 	}
 	public void setStripUrlParams(boolean stripUrlParams) {
 		this.stripUrlParams = stripUrlParams;
+	}
+	public void setGeoIpService(GeoIpService geoIpService) {
+		this.geoIpService = geoIpService;
+	}
+	public void setCountryCodes(String countryCodes) {
+		this.countryCodes = countryCodes;
 	}
 }

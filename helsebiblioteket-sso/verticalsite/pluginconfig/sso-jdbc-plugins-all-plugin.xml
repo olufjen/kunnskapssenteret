@@ -266,6 +266,8 @@
 	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
  		<property name="urlPattern" value="/site/[0-3]/.*" />
  		<property name="urlService" ref="urlServiceSso" />
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="countryCodes" value="${plugin.countrycodes}" />
 	</bean>
 	
 	<bean class="no.helsebiblioteket.evs.plugin.AccessFilter">
@@ -348,6 +350,8 @@
  				<value>referer</value>
  			</set>
  		</property>
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="countryCodes" value="${plugin.countrycodes}" />
 	</bean>
 	
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
