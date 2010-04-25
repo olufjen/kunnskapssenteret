@@ -32,4 +32,8 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	public OrganizationUser getUserById(Integer id) {
 		return (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserById", id);
 	}
+	@Override
+	public OrganizationUser getDeletedUserByUsername(String username) {
+		return (OrganizationUser) getSqlMapClientTemplate().queryForObject("getDeletedUserByUsername", username);
+	}
 }

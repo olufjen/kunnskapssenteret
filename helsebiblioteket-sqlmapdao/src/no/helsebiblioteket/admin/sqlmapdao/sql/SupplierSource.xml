@@ -67,6 +67,6 @@
 	<select id="getSupplierSourceByDomain" resultMap="SupplierSourceMap" parameterClass="Url">
 		select supplier_source_name, domain, supplier_source_id, proxy_database_name, deleted, date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_supplier_source
-		where #domain# LIKE '%' || domain and deleted is false;
+		where #domain# LIKE domain and deleted is false;
 	</select>
 </sqlMap>
