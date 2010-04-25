@@ -158,7 +158,6 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		Object[] args = new Object[] { user };
 		invoke(this.deleteUserName, args, null);
 	}
-	
 	@Override
 	public boolean unsubscribeNewsletter(String subscriptionKey) {
 		// TODO Auto-generated method stub
@@ -169,7 +168,21 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+	@Override
+	public String getUserExportCsv(UserExportParameter parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<User> getUserExportList(UserExportParameter parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Boolean usernameTaken(String username, Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	public Log getLogger() {
 		return logger;
 	}
@@ -211,15 +224,5 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	}
 	public void setDeleteUserName(QName deleteUserName) {
 		this.deleteUserName = deleteUserName;
-	}
-	@Override
-	public String getUserExportCsv(UserExportParameter parameter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public List<User> getUserExportList(UserExportParameter parameter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

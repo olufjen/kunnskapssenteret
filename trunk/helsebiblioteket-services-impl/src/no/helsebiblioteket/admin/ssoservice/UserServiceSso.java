@@ -2,8 +2,6 @@ package no.helsebiblioteket.admin.ssoservice;
 
 import java.util.List;
 
-import javax.xml.namespace.QName;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,7 +12,6 @@ import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.User;
-import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
@@ -27,7 +24,6 @@ import no.helsebiblioteket.admin.domain.requestresult.PageResultUserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultPosition;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultRole;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultSystem;
-import no.helsebiblioteket.admin.domain.requestresult.SingleResultUrl;
 import no.helsebiblioteket.admin.domain.requestresult.SingleResultUser;
 @SuppressWarnings("serial")
 
@@ -143,12 +139,14 @@ public class UserServiceSso extends SsoService implements UserService {
 	}
 	@Override
 	public String getUserExportCsv(UserExportParameter parameter) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userService.getUserExportCsv(parameter);
 	}
 	@Override
 	public List<User> getUserExportList(UserExportParameter parameter) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userService.getUserExportList(parameter);
+	}
+	@Override
+	public Boolean usernameTaken(String username, Integer userId) {
+		return this.userService.usernameTaken(username, userId);
 	}
 }

@@ -166,4 +166,12 @@ public class URLServiceSso extends SsoService implements URLService {
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;
 	}
+	@Override
+	public AccessResult hasAccessNational(Url url) {
+		return this.urlService.hasAccessNational(url);
+	}
+	@Override
+	public SingleResultUrl translateUrlNational(Url url) {
+		return this.urlService.translateUrlNational(url);
+	}
 }
