@@ -117,5 +117,10 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 	public void updateUser(OrganizationUser organizationUser) {
 		
 	}
+	@Override
+	public OrganizationUser getDeletedUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
