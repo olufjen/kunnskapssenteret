@@ -16,6 +16,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Person.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Position.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Profile.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/ProxyConfig.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Resource.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/ResourceType.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Role.xml" />
@@ -24,4 +25,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/User.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserList.xml" />
 <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserRole.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserExport.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/ProxyExport.xml" />
 </sqlMapConfig>

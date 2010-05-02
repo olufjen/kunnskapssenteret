@@ -20,6 +20,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultProxyConfig;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
@@ -237,5 +238,10 @@ public class AccessServiceWeb extends BasicWebService implements AccessService{
 	}
 	public void setSupplierSourceByUrlStartsWithName(QName supplierSourceByUrlStartsWithName) {
 		this.supplierSourceByUrlStartsWithName = supplierSourceByUrlStartsWithName;
+	}
+	@Override
+	public ListResultProxyConfig getProxyConfigListAll(String DUMMY) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
