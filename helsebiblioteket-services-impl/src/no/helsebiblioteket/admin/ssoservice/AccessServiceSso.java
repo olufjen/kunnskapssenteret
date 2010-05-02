@@ -19,6 +19,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultProxyConfig;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
@@ -115,5 +116,9 @@ public class AccessServiceSso extends SsoService implements AccessService{
 	@Override
 	public Boolean insertNationalResourceAccess(ResourceAccess access) {
 		return this.accessService.insertNationalResourceAccess(access);
+	}
+	@Override
+	public ListResultProxyConfig getProxyConfigListAll(String DUMMY) {
+		return this.accessService.getProxyConfigListAll(DUMMY);
 	}
 }
