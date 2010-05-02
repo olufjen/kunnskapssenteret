@@ -18,6 +18,8 @@
 		<result property="url.domain" column="domain" />
 		<result property="id" column="supplier_source_id" />
 		<result property="proxyDatabaseName" column="proxy_database_name" />
+		<result property="url.stringValue" column="url" />
+		<result property="host" column="host" />
 		<result property="deleted" column="deleted" />
 		<result property="lastChanged" column="last_changed" />
 	</resultMap>
@@ -30,6 +32,8 @@
 			domain,
 			supplier_source_id,
 			proxy_database_name,
+			url,
+			host,
 			deleted,
 			last_changed
 		) values (
@@ -37,6 +41,8 @@
 			#url.domain#,
 			#id#,
 			#proxyDatabaseName#,
+			#url.stringValue#,
+			#host#,
 			#deleted#,
 			date_trunc('milliseconds', now())
 		);
@@ -46,6 +52,8 @@
 	      	supplier_source_name = #supplierSourceName#,
       		domain = #url.domain#,
       		proxy_database_name = #proxyDatabaseName#,
+			url = #url.stringValue#,
+			host = #host#,
       		deleted = #deleted#,
     	  	last_changed = date_trunc('milliseconds', now())
     	where supplier_source_id = #id# and date_trunc('milliseconds', last_changed) = #lastChanged#;
@@ -55,18 +63,19 @@
 		where supplier_source_id = #id#
 	</delete>
 	<select id="getSupplierSourceListAll" resultMap="SupplierSourceMap">
-		select supplier_source_name, domain, supplier_source_id, proxy_database_name, deleted, date_trunc('milliseconds', last_changed) as last_changed
+		select supplier_source_name, domain, supplier_source_id, proxy_database_name, url, host, deleted, date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_supplier_source
-		where deleted is false;
+		where deleted is false
+		sort by domain, host;
 	</select>
 	<select id="getSupplierSourceById" resultMap="SupplierSourceMap" parameterClass="integer">
-		select supplier_source_name, domain, supplier_source_id, proxy_database_name, deleted, date_trunc('milliseconds', last_changed) as last_changed
+		select supplier_source_name, domain, supplier_source_id, proxy_database_name, url, host, deleted, date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_supplier_source
 		where supplier_source_id = #id# and deleted is false;
 	</select>
 	<select id="getSupplierSourceByDomain" resultMap="SupplierSourceMap" parameterClass="Url">
-		select supplier_source_name, domain, supplier_source_id, proxy_database_name, deleted, date_trunc('milliseconds', last_changed) as last_changed
+		select supplier_source_name, domain, supplier_source_id, proxy_database_name, url, host, deleted, date_trunc('milliseconds', last_changed) as last_changed
 		from tbl_supplier_source
-		where #domain# LIKE domain and deleted is false;
+		where #domain# LIKE host and deleted is false;
 	</select>
 </sqlMap>
