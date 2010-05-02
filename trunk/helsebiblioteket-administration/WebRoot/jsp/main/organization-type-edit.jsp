@@ -56,7 +56,7 @@
 
 					<h:column id="urlOrgColumn">
       					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_domain}"/></f:facet>
-      					<h:outputText id="orgAccessUrl" value="#{orgTypeAccess.url.domain}" />
+      					<h:outputText id="orgAccessUrl" value="#{orgTypeAccess.host}" />
 		    		</h:column>
 					<h:column id="supplierSourceNameOrgColumn">
       					<f:facet name="header"><h:outputText value="#{msg_main.organization_type_access_source_name}"/></f:facet>
