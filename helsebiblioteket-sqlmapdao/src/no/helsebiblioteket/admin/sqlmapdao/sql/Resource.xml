@@ -17,8 +17,10 @@
 		<result property="resource.id" column="resource_id" />
 		<result property="supplierSource.id" column="supplier_source_id" />
 		<result property="supplierSource.supplierSourceName" column="supplier_source_name" />
-		<result property="supplierSource.proxyDatabaseName" column="proxy_database_name" />
 		<result property="supplierSource.url.domain" column="domain" />
+		<result property="supplierSource.url.stringValue" column="url" />
+		<result property="supplierSource.host" column="host" />
+		<result property="supplierSource.proxyDatabaseName" column="proxy_database_name" />
 		<result property="resource.resourceType.id" column="resource_type_id" />
 		<result property="resource.resourceType.key.value" column="key" />
 		<result property="resource.resourceType.description" column="descr" />
@@ -51,8 +53,10 @@
 	<select id="getSupplierSourceResourceById" resultMap="SupplierSourceResourceResultListMap" parameterClass="integer">
 		select
 			sup.supplier_source_name,
-			sup.proxy_database_name,
 			sup.domain,
+			sup.url,
+			sup.host,
+			sup.proxy_database_name,
 			type.key,
 			type.descr,
 			type.name,
@@ -73,6 +77,8 @@
 		select
 			sup.supplier_source_name,
 			sup.domain,
+			sup.url,
+			sup.host,
 			sup.proxy_database_name,
 			type.key,
 			type.descr,
@@ -93,8 +99,10 @@
 	<select id="getSupplierSourceResourcesAll" resultMap="SupplierSourceResourceResultListMap">
 		select
 			sup.supplier_source_name,
-			sup.proxy_database_name,
 			sup.domain,
+			sup.url,
+			sup.host,
+			sup.proxy_database_name,
 			type.key,
 			type.descr,
 			type.name,
@@ -108,7 +116,9 @@
 			inner join tbl_supplier_source as sup on res.supplier_source_id = sup.supplier_source_id
 			inner join tbl_resource_type_reg as type on res.resource_type_id = type.resource_type_id
 		where
-			res.deleted is false;
-	</select>
+			res.deleted is false
+		order by
+		    proxy_database_name, domain, host;
+    </select>
 
 </sqlMap>

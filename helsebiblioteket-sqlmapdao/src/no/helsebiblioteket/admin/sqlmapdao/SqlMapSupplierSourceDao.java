@@ -27,6 +27,7 @@ public class SqlMapSupplierSourceDao extends SqlMapClientDaoSupport implements S
 	public SupplierSource getSupplierSourceById(Integer id){
 		return (SupplierSource) getSqlMapClientTemplate().queryForObject("getSupplierSourceById", id);
 	}
+	@SuppressWarnings("unchecked")
 	public SupplierSource getSupplierSourceByDomain(Url url) {
 		List<SupplierSource> supplierSourceList = (List<SupplierSource>) getSqlMapClientTemplate().queryForList("getSupplierSourceByDomain", url);
 		SupplierSource supplierSource = (supplierSourceList != null && supplierSourceList.size() > 0) ? supplierSourceList.get(0) : null;
