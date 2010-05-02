@@ -17,6 +17,11 @@ public class ProxyHitParameter {
 		this.period = period;
 		this.hits = hits;
 	}
+	
+	@Override
+	public String toString() {
+		return this.fromIP + ", " + this.toDomain + ", " + this.period + ", " + hits;
+	}
 
 	public String getFromIP() {
 		return fromIP;
