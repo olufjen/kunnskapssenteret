@@ -1,10 +1,15 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.AccessTypeDao;
 import no.helsebiblioteket.admin.dao.ActionDao;
+import no.helsebiblioteket.admin.dao.ProxyConfigDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.ResourceTypeDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
@@ -23,10 +28,13 @@ import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.ResourceTypeKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.line.ActionLine;
+import no.helsebiblioteket.admin.domain.line.ProxyConfigLine;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.proxy.ProxyConfig;
 import no.helsebiblioteket.admin.domain.requestresult.EmptyResultSupplierSource;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultProxyConfig;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
@@ -49,6 +57,8 @@ public class AccessServiceImpl implements AccessService {
 	private ResourceTypeDao resourceTypeDao;
 	private AccessTypeDao accessTypeDao;
 	private ResourceDao resourceDao;
+	private ProxyConfigDao proxyConfigDao;
+
 	/**
 	 * Inserts a new resource. Uses the DAO.
 	 */
@@ -280,6 +290,54 @@ public class AccessServiceImpl implements AccessService {
 		}
 	}
 
+	@Override
+	public ListResultProxyConfig getProxyConfigListAll(String DUMMY) {
+		List<ProxyConfigLine> found = this.proxyConfigDao.getProxyConfigListAll();
+		Map<String, ProxyConfig> map = new HashMap<String, ProxyConfig>();
+		for (ProxyConfigLine line : found) {
+			ProxyConfig config;
+			if( ! map.containsKey(line.getGroupName())){
+				config = new ProxyConfig();
+				// group
+				config.setGroup(line.getGroupName());
+				map.put(config.getGroup(), config);
+			} else {
+				config = map.get(line.getGroupName());
+			}
+			if(line.getProperty().equals("ExcludeDomain") && line.getPropertyValue().equals("true")){
+				// excludeDomain
+				config.setExcludeDomain(true);
+			} else if(line.getProperty().equals("DomainCookieOnly") && line.getPropertyValue().equals("true")){
+				// domainCookieOnly
+				config.setDomainCookieOnly(true);
+			} else if(line.getProperty().equals("DJ")){
+				// DJ
+				config.setDomainJavaScript(insertString(config.getDomainJavaScript(), line.getPropertyValue()));
+			} else if(line.getProperty().equals("HJ")){
+				// HJ
+				config.setHostJavaScript(insertString(config.getHostJavaScript(), line.getPropertyValue()));
+			} else if(line.getProperty().equals("Find")){
+				// Find
+				config.setFind(insertString(config.getFind(), line.getPropertyValue()));
+			} else if(line.getProperty().equals("Replace")){
+				// Replace
+				config.setReplace(insertString(config.getReplace(), line.getPropertyValue()));
+			}
+		}
+		List<ProxyConfig> list = new ArrayList<ProxyConfig>(map.values());
+		Collections.sort(list);
+		return new ListResultProxyConfig(list.toArray(new ProxyConfig[]{}));
+	}
+	
+	private String[] insertString(String[] oldArray, String value) {
+		String[] newArray = new String[oldArray.length + 1];
+		for (int i = 0; i < oldArray.length; i++) {
+			newArray[i] = oldArray[i];
+		}
+		newArray[newArray.length - 1] = value;
+		return newArray;
+	}
+	
 	// DAO. Set by dependency injection.
 	public void setAccessDao(AccessDao accessDao) {
 		this.accessDao = accessDao;
@@ -298,5 +356,8 @@ public class AccessServiceImpl implements AccessService {
 	}
 	public void setActionDao(ActionDao actionDao) {
 		this.actionDao = actionDao;
+	}
+	public void setProxyConfigDao(ProxyConfigDao proxyConfigDao) {
+		this.proxyConfigDao = proxyConfigDao;
 	}
 }

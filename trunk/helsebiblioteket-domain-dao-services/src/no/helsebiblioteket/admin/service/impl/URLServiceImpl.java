@@ -311,7 +311,7 @@ public class URLServiceImpl implements URLService {
 	private AccessType getAccessTypeForResourceAccessList(Url url, ListResultResourceAccessListItem accessList) {
 		AccessType accessType = new AccessType();
 		for (ResourceAccessListItem access : accessList.getList()) {
-			if (url.getDomain().endsWith(access.getUrl().getDomain())) {
+			if (url.getDomain().endsWith(access.getHost())) {
 				accessType.setCategory(access.getCategory());
 				accessType.setKey(access.getKey());
 				return accessType;

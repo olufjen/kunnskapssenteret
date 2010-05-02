@@ -12,8 +12,9 @@ public class SupplierSource implements Serializable {
 	private String supplierSourceName;
 	// url from database table is set to url.stringValue
 	private Url url;
-	private Date lastChanged;
 	private String proxyDatabaseName;
+	private String host;
+	private Date lastChanged;
 	private boolean deleted = false;
 
 	// Constructors
@@ -67,5 +68,11 @@ public class SupplierSource implements Serializable {
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	public String getHost() {
+		return host;
+	}
+	public void setHost(String host) {
+		this.host = host;
 	}
 }

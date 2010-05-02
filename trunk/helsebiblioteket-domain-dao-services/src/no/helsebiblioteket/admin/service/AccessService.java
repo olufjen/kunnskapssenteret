@@ -22,6 +22,7 @@ import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
+import no.helsebiblioteket.admin.domain.requestresult.ListResultProxyConfig;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultResourceAccessListItem;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSource;
 import no.helsebiblioteket.admin.domain.requestresult.ListResultSupplierSourceResource;
@@ -54,4 +55,6 @@ public interface AccessService extends Serializable {
 	public ListResultSupplierSource getSupplierSourceListAll(String DUMMY);
 	public SingleResultSupplierSource getSupplierSourceByDomain(Url url);
 	public ListResultSupplierSourceResource getSupplierSourceResourceListAll(String DUMMY);
+	
+	public ListResultProxyConfig getProxyConfigListAll(String DUMMY);
 }

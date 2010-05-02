@@ -11,6 +11,7 @@ public class ResourceAccessListItem {
 	private AccessTypeCategory category;
 	private AccessTypeKey key;
 	private Url url;
+	private String host;
 	private Date lastChanged;
 	private String supplierSourceName;
 	private Integer providedBy;
@@ -69,5 +70,11 @@ public class ResourceAccessListItem {
 	}
 	public void setSupplierSourceId(Integer supplierSourceId) {
 		this.supplierSourceId = supplierSourceId;
+	}
+	public String getHost() {
+		return host;
+	}
+	public void setHost(String host) {
+		this.host = host;
 	}
 }
