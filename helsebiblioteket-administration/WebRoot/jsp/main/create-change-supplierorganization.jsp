@@ -218,7 +218,9 @@
 		</tr>
 		<tr>
 			<td valign="top">
-				<h:outputText value="#{msg_main.source} (#{msg_main.name} - #{msg_main.domain} - #{msg_main.proxy_database_name})" />
+				<h:outputText value="#{msg_main.source} (#{msg_main.name} - #{msg_main.domain} -
+				                     #{msg_main.proxy_url} - #{msg_main.proxy_host} -
+                                     #{msg_main.proxy_database_name})" />
 			</td>
 			<td>
 				<h:inputText 
@@ -239,6 +241,26 @@
 					>
 				</h:inputText>
 				<h:message for="sourceDomain" styleClass="error" />
+				<h:outputText value=" - " />
+				<h:inputText
+					size="5" 
+					value="#{createAndChangeSupplierOrganizationBean.sourceUrl}"
+					id="sourceUrl" 
+					required="false"
+					binding="#{createAndChangeSupplierOrganizationBean.sourceUrlUIInput}"
+					>
+				</h:inputText>
+				<h:message for="sourceUrl" styleClass="error" />
+				<h:outputText value=" - " />
+				<h:inputText
+					size="5" 
+					value="#{createAndChangeSupplierOrganizationBean.sourceHost}"
+					id="sourceHost" 
+					required="false"
+					binding="#{createAndChangeSupplierOrganizationBean.sourceHostUIInput}"
+					>
+				</h:inputText>
+				<h:message for="sourceHost" styleClass="error" />
 				<h:outputText value=" - " />
 				<h:inputText
 					size="5" 
@@ -293,7 +315,9 @@
 						value="#{createAndChangeSupplierOrganizationBean.supplierOrganization.resourceList}"
 						binding="#{createAndChangeSupplierOrganizationBean.supplierSourceListHtmlDataTable}">
 					<t:column>
-			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} - #{source.supplierSource.url.domain} - #{source.supplierSource.proxyDatabaseName}" />
+			      		<t:outputText id="source" value="#{source.supplierSource.supplierSourceName} -
+                                                         #{source.supplierSource.url.domain} - #{source.supplierSource.url.stringValue} -
+                                                         #{source.supplierSource.host} - #{source.supplierSource.proxyDatabaseName}" />
 			    	</t:column>
 			    	<t:column style="vertical-align:top">
 			      		<t:commandLink id="sourceDeleteLink" onclick="if (!confirm('#{msg_main.really_delete}')) return false" action="#{createAndChangeSupplierOrganizationBean.actionDeleteSource}" value="#{msg_main.delete}" immediate="true">

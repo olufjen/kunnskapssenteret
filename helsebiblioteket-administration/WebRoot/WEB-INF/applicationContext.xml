@@ -119,6 +119,9 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="proxyExportDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProxyExportDao">
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
+	<bean id="proxyConfigDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProxyConfigDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
 	
 	<bean id="emailLostPasswordAdminTemplate" class="no.helsebiblioteket.admin.domain.Email">		
 		<property name="fromName" value="redaksjonen@helsebiblioteket.no" />
@@ -161,6 +164,7 @@ xmlns="http://www.springframework.org/schema/beans"
   		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
   		<property name="resourceDao" ref="resourceDao"></property>
   		<property name="resourceTypeDao" ref="resourceTypeDao"></property>
+  		<property name="proxyConfigDao" ref="proxyConfigDao"></property>
   	</bean>
   	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
   		<property name="userService" ref="userService"></property>
@@ -367,15 +371,25 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="importProxyDataTask" class="no.helsebiblioteket.admin.task.ImportProxyDataTask">
 		<property name="organizationService" ref="organizationService" />
 		<property name="readLogFileName" value="${proxy.readlogfilename}" />
+		<property name="proxyDomainName" value="${proxy.proxydomainname}" />
 	</bean>
 	<bean id="exportProxySetupTask" class="no.helsebiblioteket.admin.task.ExportProxySetupTask">
 		<property name="accessService" ref="accessService" />
+		<property name="comment" value="${proxy.comment}"></property>
 		<property name="name" value="${proxy.name}"></property>
 		<property name="loginPort" value="${proxy.loginport}"></property>
 		<property name="loginPortSSL" value="${proxy.loginportssl}"></property>
 		<property name="adminPassword" value="${proxy.adminpassword}"></property>
 		<property name="proxyPassword" value="${proxy.proxypassword}"></property>
 		<property name="proxyServletURL" value="${proxy.proxyservleturl}"></property>
+		<property name="maxConcurrentTransfers" value="${proxy.maxconcurrenttransfers}"></property>
+		<property name="maxVirtualHosts" value="${proxy.maxvirtualhosts}"></property>
+		<property name="maxSessions" value="${proxy.maxsessions}"></property>
+		<property name="maxLifetime" value="${proxy.maxlifetime}"></property>
+		<property name="logFile" value="${proxy.logfile}"></property>
+
+		<property name="configFileName" value="${proxy.configfilename}"></property>
+		<property name="userFileName" value="${proxy.userfilename}"></property>
 		<property name="waitRestart" value="${proxy.waitrestart}"></property>
 		<property name="restartCommand" value="${proxy.restartcommand}"></property>
 	</bean>

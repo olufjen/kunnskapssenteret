@@ -86,6 +86,7 @@ public class NationalAccessBean {
 			supplierSource.setId(accessItem.getSupplierSourceId());
 			supplierSource.setSupplierSourceName(accessItem.getSupplierSourceName());
 			supplierSource.setUrl(accessItem.getUrl());
+			supplierSource.setHost(accessItem.getHost());
 			supplierSourceResource.setResource(resource);
 			supplierSourceResource.setSupplierSource(supplierSource);
 			
@@ -119,6 +120,7 @@ public class NationalAccessBean {
 		newList[newList.length-1].setCategory(accessTypeGrantProxyInclude.getCategory());
 		newList[newList.length-1].setKey(accessTypeGrantProxyInclude.getKey());
 		newList[newList.length-1].setUrl(addedResource.getSupplierSource().getUrl());
+		newList[newList.length-1].setHost(addedResource.getSupplierSource().getHost());
 		newList[newList.length-1].setProvidedBy(addedResource.getResource().getOfferedBy());
 		newList[newList.length-1].setResourceId(addedResource.getResource().getId());
 		newList[newList.length-1].setSupplierSourceId(addedResource.getSupplierSource().getId());
@@ -144,7 +146,7 @@ public class NationalAccessBean {
 		for (SupplierSourceResource resource : resources) {
 			SelectItem item = new SelectItem("" + resource.getResource().getId(), "" +
 					resource.getSupplierSource().getSupplierSourceName() + " " +
-					resource.getSupplierSource().getUrl().getDomain());
+					resource.getSupplierSource().getHost());
 			list.add(item);
 		}
 		return list;

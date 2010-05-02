@@ -124,7 +124,6 @@
 		<h:commandButton value="#{msg_page_export_proxydata.btn_show}" action="#{exportProxyBean.actionShowResultProxy}" />
       </td>
     </tr>
-
   </table>
   
 </h:form>

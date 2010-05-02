@@ -43,12 +43,14 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 	private String sourceName = null;
 	private String sourceDomain = null;
 	private String sourceProxyDatabaseName = null;
+	private String sourceUrl = null;
+	private String sourceHost = null;
 
 	private UIInput sourceNameUIInput = null;
 	private UIInput sourceProxyDatabaseNameUIInput = null;
 	private UIInput sourceDomainUIInput = null;
-	
-	
+	private UIInput sourceUrlUIInput = null;
+	private UIInput sourceHostUIInput = null;
 	
 	private HtmlDataTable supplierSourceListHtmlDataTable = null;
 	
@@ -57,66 +59,6 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		
 	}
 	
-	public UIInput getSourceNameUIInput() {
-		return sourceNameUIInput;
-	}
-
-	public void setSourceNameUIInput(UIInput sourceNameUIInput) {
-		this.sourceNameUIInput = sourceNameUIInput;
-	}
-
-	public void setSourceProxyDatabaseNameUIInput(UIInput sourceProxyDatabaseNameUIInput) {
-		this.sourceProxyDatabaseNameUIInput = sourceProxyDatabaseNameUIInput;
-	}
-	
-	public UIInput getSourceProxyDatabaseNameUIInput() {
-		return sourceProxyDatabaseNameUIInput;
-	}
-	
-	public UIInput getSourceDomainUIInput() {
-		return sourceDomainUIInput;
-	}
-
-	public void setSourceDomainUIInput(UIInput sourceDomainUIInput) {
-		this.sourceDomainUIInput = sourceDomainUIInput;
-	}
-
-	public String getSourceName() {
-		return sourceName;
-	}
-
-	public void setSourceName(String sourceName) {
-		this.sourceName = sourceName;
-	}
-	
-	public String getSourceProxyDatabaseName() {
-		return sourceProxyDatabaseName;
-	}
-
-	public void setSourceProxyDatabaseName(String sourceProxyDatabaseName) {
-		this.sourceProxyDatabaseName = sourceProxyDatabaseName;
-	}
-
-	public String getSourceDomain() {
-		return sourceDomain;
-	}
-
-	public void setSourceDomain(String sourceDomain) {
-		this.sourceDomain = sourceDomain;
-	}
-	
-	public SupplierOrganization getSupplierOrganization() {
-		initOrganization();
-		return this.supplierOrganization;
-	}
-	
-	public HtmlDataTable getSupplierSourceListHtmlDataTable() {
-		return this.supplierSourceListHtmlDataTable;
-	}
-	
-	public void setSupplierSourceListHtmlDataTable(HtmlDataTable supplierSourceListHtmlDataTable) {
-		this.supplierSourceListHtmlDataTable = supplierSourceListHtmlDataTable;
-	}
 	
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
@@ -153,6 +95,8 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		
 		this.setSourceName("");
 		this.setSourceDomain("");
+		this.setSourceUrl("");
+		this.setSourceHost("");
 		this.setSourceProxyDatabaseName("");
 		
 		this.organizationService.deleteResources(resourceList);
@@ -168,6 +112,8 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		setSourceName((getSourceNameUIInput().getSubmittedValue() != null) ? getSourceNameUIInput().getSubmittedValue().toString() : null);
 		setSourceDomain((getSourceDomainUIInput().getSubmittedValue() != null) ? getSourceDomainUIInput().getSubmittedValue().toString() : null);
 		setSourceProxyDatabaseName((getSourceProxyDatabaseNameUIInput().getSubmittedValue() != null) ? getSourceProxyDatabaseNameUIInput().getSubmittedValue().toString() : null);
+		setSourceUrl((getSourceUrlUIInput().getSubmittedValue() != null) ? getSourceUrlUIInput().getSubmittedValue().toString() : null);
+		setSourceHost((getSourceHostUIInput().getSubmittedValue() != null) ? getSourceHostUIInput().getSubmittedValue().toString() : null);
 		if (! validateSupplierSource()) {
 			return;
 		}
@@ -177,6 +123,8 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		SupplierSource supplierSource = new SupplierSource(getSourceName(), url, getSourceProxyDatabaseName());
 		supplierSourceResource.setSupplierSource(supplierSource);
 		supplierSourceResource.setResource(new Resource());
+		supplierSourceResource.getSupplierSource().getUrl().setStringValue(this.getSourceUrl());
+		supplierSourceResource.getSupplierSource().setHost(this.getSourceHost());
 //		supplierSourceResource.getResource().setId(-1);
 		
 		SupplierSourceResource[] newList = new SupplierSourceResource[this.supplierOrganization.getResourceList().length + 1];
@@ -253,6 +201,16 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 			sourceDomainUIInput.setValid(false);
 			facesContext.addMessage(sourceDomainUIInput.getClientId(facesContext), message);
 		}
+		if (!hasValue(getSourceUrl())) {
+			validation = false;
+			sourceUrlUIInput.setValid(false);
+			facesContext.addMessage(sourceUrlUIInput.getClientId(facesContext), message);
+		}
+		if (!hasValue(getSourceHost())) {
+			validation = false;
+			sourceHostUIInput.setValid(false);
+			facesContext.addMessage(sourceHostUIInput.getClientId(facesContext), message);
+		}
 		return validation;
 	}
 	
@@ -291,5 +249,76 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 		if(this.supplierOrganization.getResourceList() == null){
 			this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
 		}
+	}
+	
+	public UIInput getSourceNameUIInput() {
+		return sourceNameUIInput;
+	}
+	public void setSourceNameUIInput(UIInput sourceNameUIInput) {
+		this.sourceNameUIInput = sourceNameUIInput;
+	}
+	public void setSourceProxyDatabaseNameUIInput(UIInput sourceProxyDatabaseNameUIInput) {
+		this.sourceProxyDatabaseNameUIInput = sourceProxyDatabaseNameUIInput;
+	}
+	public UIInput getSourceProxyDatabaseNameUIInput() {
+		return sourceProxyDatabaseNameUIInput;
+	}
+	public UIInput getSourceDomainUIInput() {
+		return sourceDomainUIInput;
+	}
+	public void setSourceDomainUIInput(UIInput sourceDomainUIInput) {
+		this.sourceDomainUIInput = sourceDomainUIInput;
+	}
+	public String getSourceName() {
+		return sourceName;
+	}
+	public void setSourceName(String sourceName) {
+		this.sourceName = sourceName;
+	}
+	public String getSourceProxyDatabaseName() {
+		return sourceProxyDatabaseName;
+	}
+	public void setSourceProxyDatabaseName(String sourceProxyDatabaseName) {
+		this.sourceProxyDatabaseName = sourceProxyDatabaseName;
+	}
+	public String getSourceDomain() {
+		return sourceDomain;
+	}
+	public void setSourceDomain(String sourceDomain) {
+		this.sourceDomain = sourceDomain;
+	}
+	public SupplierOrganization getSupplierOrganization() {
+		initOrganization();
+		return this.supplierOrganization;
+	}
+	public HtmlDataTable getSupplierSourceListHtmlDataTable() {
+		return this.supplierSourceListHtmlDataTable;
+	}
+	public void setSupplierSourceListHtmlDataTable(HtmlDataTable supplierSourceListHtmlDataTable) {
+		this.supplierSourceListHtmlDataTable = supplierSourceListHtmlDataTable;
+	}
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+	public String getSourceHost() {
+		return sourceHost;
+	}
+	public void setSourceHost(String sourceHost) {
+		this.sourceHost = sourceHost;
+	}
+	public UIInput getSourceUrlUIInput() {
+		return sourceUrlUIInput;
+	}
+	public void setSourceUrlUIInput(UIInput sourceUrlUIInput) {
+		this.sourceUrlUIInput = sourceUrlUIInput;
+	}
+	public UIInput getSourceHostUIInput() {
+		return sourceHostUIInput;
+	}
+	public void setSourceHostUIInput(UIInput sourceHostUIInput) {
+		this.sourceHostUIInput = sourceHostUIInput;
 	}
 }
