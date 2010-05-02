@@ -50,6 +50,14 @@
       	timeToLiveSeconds="30" 
     />
     <cache 
+  		name="urlServiceSsoTranslateUrlNationalCache" 
+  		maxElementsInMemory="5" 
+  		eternal="false"
+      	overflowToDisk="false" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
   		name="urlServiceSsoHasAccessUserCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
@@ -75,6 +83,14 @@
     />
     <cache 
   		name="urlServiceSsoHasAccessNoneCache" 
+  		maxElementsInMemory="5" 
+  		eternal="false"
+      	overflowToDisk="false" 
+      	timeToIdleSeconds="0" 
+      	timeToLiveSeconds="30" 
+    />
+    <cache 
+  		name="urlServiceSsoHasAccessNationalCache" 
   		maxElementsInMemory="5" 
   		eternal="false"
       	overflowToDisk="false" 
