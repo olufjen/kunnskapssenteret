@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+ -->
+
+<beans
+
+xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop
+       	   http://www.springframework.org/schema/aop/spring-aop-2.5.xsd "
+>
+
+<context:annotation-config />
+	<context:component-scan
+		base-package="no.helsebiblioteket.admin" />
+	<bean
+		id="loggerListener"
+		class="org.springframework.security.event.authentication.LoggerListener" />
+
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>/WEB-INF/application.properties</value>
+	 			<value>/WEB-INF/jdbc.properties</value>
+	 			<value>/WEB-INF/mail.properties</value>
+	 			<value>/WEB-INF/proxy.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSourceHelsebiblioteket" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+		<property name="initialSize" value="${database.initialsize}"></property>
+		<property name="maxActive" value="${database.maxactive}"></property>
+		<property name="maxIdle" value="${database.maxidle}"></property>
+		<property name="minIdle" value="${database.minidle}"></property>
+		<property name="maxWait" value="${database.maxwait}"></property>
+		<property name="validationQuery" value="${database.validationquery}"></property>
+	</bean>
+
+	<bean id="jdbcTemplateHelsebiblioteket" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
+	</bean>
+	
+	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userExportDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserExportDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="positionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPositionDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="actionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapActionDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationNameDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="ipRangeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapIpRangeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="resourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="resourceTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="proxyExportDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProxyExportDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="proxyConfigDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProxyConfigDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	<bean id="emailLostPasswordAdminTemplate" class="no.helsebiblioteket.admin.domain.Email">		
+		<property name="fromName" value="redaksjonen@helsebiblioteket.no" />
+		<property name="fromEmail" value="redaksjonen@helsebiblioteket.no" />
+		<property name="subject" value="Nytt passord til Helsebibliotekets administrasjonstjeneste" />
+		<property name="message" value="Her er ditt nye passord for tilgang til http://www.helsebiblioteket.no/helsebiblioteket-administration-web/login.faces:\n\nBrukernavn: ##username##\nPassord: ##password##" />
+	</bean>
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+    	<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
+    	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
+   	</bean>
+   	
+   	<bean id="LDAPLookupUtil" class="no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil">
+	</bean>
+	
+  	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportEndUsersServiceImpl">
+ 		<property name="userService" ref="userService"></property>
+ 		<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
+ 		<!-- <property name="commonPassword" value="password" /> -->
+	</bean>
+	
+	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportMemberOrganizationsServiceImpl">
+	 	<property name="organizationService" ref="organizationService"></property>
+	 	<property name="userService" ref="userService"></property>
+	</bean>
+
+	<!-- 
+		A service for accessing (relative) static properties like types of entities etc.
+		Example: types of organizations, types of roles, types of access etc
+	-->
+	
+	<!--  <bean id="adminService" class="no.helsebiblioteket.admin.service.impl.AdminServiceImpl">
+	</bean>-->
+
+	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
+  		<property name="accessDao" ref="accessDao"></property>
+  		<property name="actionDao" ref="actionDao"></property>
+  		<property name="accessTypeDao" ref="accessTypeDao"></property>
+  		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  		<property name="resourceDao" ref="resourceDao"></property>
+  		<property name="resourceTypeDao" ref="resourceTypeDao"></property>
+  		<property name="proxyConfigDao" ref="proxyConfigDao"></property>
+  	</bean>
+  	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
+  		<property name="userService" ref="userService"></property>
+    	<property name="emailService" ref="emailService"></property>
+  	</bean>
+  	
+  	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
+    	<property name="organizationDao" ref="organizationDao"></property>
+    	<property name="organizationListDao" ref="organizationListDao"></property>
+    	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
+    	<property name="organizationNameDao" ref="organizationNameDao"></property>
+    	<property name="personDao" ref="personDao"></property>
+    	<property name="contactInformationDao" ref="contactInformationDao"></property>
+    	<property name="ipRangeDao" ref="ipRangeDao"></property>
+    	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+    	<property name="profileDao" ref="profileDao"></property>
+    	<property name="positionDao" ref="positionDao"></property>
+    	<property name="resourceDao" ref="resourceDao"></property>
+    	<property name="accessDao" ref="accessDao"></property>
+    	<property name="proxyExportDao" ref="proxyExportDao"></property>
+  	</bean>
+ 
+  	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
+  		<property name="userDao" ref="userDao"></property>
+  		<property name="userExportDao" ref="userExportDao"></property>
+  		<property name="userListDao" ref="userListDao"></property>
+  		<property name="roleDao" ref="roleDao"></property>
+  		<property name="userRoleDao" ref="userRoleDao"></property>
+  		<property name="personDao" ref="personDao"></property>
+  		<property name="positionDao" ref="positionDao"></property>
+  		<property name="organizationDao" ref="organizationDao"></property>
+  		<property name="systemDao" ref="systemDao"></property>
+  		<property name="profileDao" ref="profileDao"></property>
+  		<property name="contactInformationDao" ref="contactInformationDao"></property>
+  	</bean>
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
+    	<property name="host" value="${mail.smtp.host}"></property>
+    	<property name="debug" value="${mail.debug}"></property>
+    	<property name="noSend" value="${mail.nosend}"></property>
+    	<property name="contentType" value="${mail.content-type}"></property>
+    	<property name="charset" value="${mail.charset}"></property>
+  	</bean>
+	
+<!--  Spring security bean classes start    -->
+
+
+	<bean id="filterChainProxy"
+         class="org.springframework.security.util.FilterChainProxy">
+         <property name="filterInvocationDefinitionSource">
+	         <value>
+	         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+	         PATTERN_TYPE_APACHE_ANT
+	         /error/*=#NONE#
+	         /back*=#NONE#
+	         /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+	         </value>
+         </property>
+    </bean>
+		
+	<bean id="httpSessionContextIntegrationFilter" class="org.springframework.security.context.HttpSessionContextIntegrationFilter"/>
+
+	<bean id="logoutFilter" 
+		class="org.springframework.security.ui.logout.LogoutFilter">
+		<constructor-arg value="/login.faces" />
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+		<property name="filterProcessesUrl">
+			<value>/j_spring_security_logout.jsp</value>
+		</property>
+	</bean>
+	
+	<bean id="authenticationProcessingFilter"   class="org.springframework.security.ui.webapp.AuthenticationProcessingFilter">
+       <property name="filterProcessesUrl">
+       <value>/j_spring_security_check.jsp</value>
+       </property>
+       <property name="authenticationFailureUrl">
+       <value>/login.faces</value>
+       </property>
+       <property name="defaultTargetUrl">
+       <value>/welcome.faces</value>
+       </property>
+  
+       <property name="authenticationManager">
+       <ref bean="authenticationManager" />
+       </property>
+    </bean>
+	
+	<bean id="securityContextHolderAwareRequestFilter"	class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter" />
+	
+	 <bean id="anonymousProcessingFilter"
+		class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
+		<property name="key" value="changeThis" />
+		<property name="userAttribute"
+			value="anonymousUser,ROLE_ANONYMOUS,ADMIN" />
+	</bean>
+	 
+	<bean id="exceptionTranslationFilter" class="org.springframework.security.ui.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<bean
+				class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+				<property name="loginFormUrl" value="/login.faces" />
+				<property name="forceHttps" value="false" />
+			</bean>
+		</property>
+		<property name="accessDeniedHandler">
+			<bean
+				class="org.springframework.security.ui.AccessDeniedHandlerImpl">
+				<property name="errorPage" value="/welcome.faces" />
+			</bean>
+		</property>
+	</bean>
+	 
+	 
+	 <bean id="filterInvocationInterceptor"
+		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager"
+			ref="authenticationManager" />
+		<property name="accessDecisionManager"
+			ref="accessDecisionManager" />
+		<property name="objectDefinitionSource">
+			<value>
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
+				
+				<!-- 
+				LOWERCASE
+				ROLE_ADMINISTRATOR
+				/login.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/welcome.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/forgotten-password.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				/forgotten-password-sent.faces=IS_AUTHENTICATED_ANONYMOUSLY
+				 -->
+				/importexport.faces=ROLE_administrator
+				/welcome.faces=ROLE_administrator
+				/organizations-overview.faces=ROLE_administrator
+				/organization-details.faces=ROLE_administrator
+				/organization-edit.faces=ROLE_administrator
+				/new-organization.faces=ROLE_administrator
+				/new-supplierorganization.faces=ROLE_administrator
+				/new-memberorganization.faces=ROLE_administrator
+				/users-overview.tiles.faces=ROLE_administrator
+				/user-details.faces=ROLE_administrator
+				/user-edit.faces=ROLE_administrator
+				/edit-enduser.faces=ROLE_administrator
+				/edit-administrator.faces=ROLE_administrator
+				/user-new.faces=ROLE_administrator
+				/new-enduser.faces=ROLE_administrator
+				/new-administrator.faces=ROLE_administrator
+				/user.faces=ROLE_administrator
+				/users-overview.faces=ROLE_administrator
+				/organization-types-overview.faces=ROLE_administrator
+				/organization-type-edit.faces=ROLE_administrator
+				/roles-overview.faces=ROLE_administrator
+				/role-edit.faces=ROLE_administrator
+				/national-access-edit.faces=ROLE_administrator
+				/export.faces=ROLE_administrator
+				/export-user.faces=ROLE_administrator
+				/export-proxy.faces=ROLE_administrator,ROLE_org_admin
+				/export-proxy-result.faces=ROLE_administrator,ROLE_org_admin
+			</value>
+		</property>
+	</bean>
+	 
+	 <bean id="accessDecisionManager"
+		class="org.springframework.security.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions" value="false" />
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.vote.RoleVoter" />
+				<bean class="org.springframework.security.vote.AuthenticatedVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
+       <property name="providers">
+       <list>
+       <ref local="daoAuthenticationProvider" />
+       </list>
+       </property>
+    </bean>
+	
+<!-- End of spring security  -->	
+	
+	<bean
+        id="daoAuthenticationProvider"
+        class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService" />
+    </bean>
+            
+            
+     <bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl">
+          <constructor-arg ref="userService" />
+     </bean>
+
+	<bean id="imageRenderer" class="no.helsebiblioteket.admin.web.jsf.JPEGImageRenderer">
+		<property name="imageFolder" value="${application.imagefolder}" />
+	</bean>     
+
+	<bean id="importProxyDataTask" class="no.helsebiblioteket.admin.task.ImportProxyDataTask">
+		<property name="organizationService" ref="organizationService" />
+		<property name="readLogFileName" value="${proxy.readlogfilename}" />
+		<property name="proxyDomainName" value="${proxy.proxydomainname}" />
+	</bean>
+	<bean id="exportProxySetupTask" class="no.helsebiblioteket.admin.task.ExportProxySetupTask">
+		<property name="accessService" ref="accessService" />
+		<property name="comment" value="${proxy.comment}"></property>
+		<property name="name" value="${proxy.name}"></property>
+		<property name="loginPort" value="${proxy.loginport}"></property>
+		<property name="loginPortSSL" value="${proxy.loginportssl}"></property>
+		<property name="adminPassword" value="${proxy.adminpassword}"></property>
+		<property name="proxyPassword" value="${proxy.proxypassword}"></property>
+		<property name="proxyServletURL" value="${proxy.proxyservleturl}"></property>
+		<property name="maxConcurrentTransfers" value="${proxy.maxconcurrenttransfers}"></property>
+		<property name="maxVirtualHosts" value="${proxy.maxvirtualhosts}"></property>
+		<property name="maxSessions" value="${proxy.maxsessions}"></property>
+		<property name="maxLifetime" value="${proxy.maxlifetime}"></property>
+		<property name="logFile" value="${proxy.logfile}"></property>
+
+		<property name="configFileName" value="${proxy.configfilename}"></property>
+		<property name="userFileName" value="${proxy.userfilename}"></property>
+		<property name="waitRestart" value="${proxy.waitrestart}"></property>
+		<property name="restartCommand" value="${proxy.restartcommand}"></property>
+	</bean>
+	<bean id="importProxyDataTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="importProxyDataTask" />
+		<property name="targetMethod" value="importProxyData" />
+	</bean>
+	<bean id="exportProxySetupTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="exportProxySetupTask" />
+		<property name="targetMethod" value="exportSetup" />
+	</bean>
+	<bean id="importProxyDataTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="importProxyDataTaskJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="${proxy.importcronexpression}" />
+	</bean>
+	<bean id="exportProxySetupTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="exportProxySetupTaskJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="${proxy.exportcronexpression}" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="importProxyDataTaskJobCronTrigger" />
+				<ref bean="exportProxySetupTaskJobCronTrigger" />
+			</list>
+		</property>
+	</bean>
+
+
+ <!--    <bean id="userRepository"  class="no.helsebiblioteket.admin.dao.JdbcUserDao"></bean>  --> 
+ 
+ 
+</beans>

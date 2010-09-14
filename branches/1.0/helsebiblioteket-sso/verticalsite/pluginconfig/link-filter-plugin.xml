@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>${cms.home}/plugins/environment.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	<bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="${cms.home}/plugins/ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>
+	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
+ 		<property name="urlPattern" value="/site/[0-3]/.*" />
+ 		<property name="urlService" ref="urlService" />
+	</bean>
+	<bean name="urlService" class="no.helsebiblioteket.admin.webservice.URLServiceWeb" init-method="init">
+		<property name="serviceClient" ref="urlServiceClient" />
+		<property name="targetEPR" ref="urlTargetEPR" />
+		<property name="isAffectedName" ref="isAffectedName" />
+		<property name="translateUrlUserName" ref="translateUrlUserName" />
+		<property name="translateUrlOrganizationName" ref="translateUrlOrganizationName" />
+		<property name="translateUrlUserOrganizationName" ref="translateUrlUserOrganizationName" />
+		<property name="translateUrlNoneName" ref="translateUrlNoneName" />
+		<property name="cacheHelper" ref="methodCachingAdvice" />
+	</bean>
+	<bean name="urlServiceClient" class="org.apache.axis2.rpc.client.RPCServiceClient">
+	</bean>
+	<bean name="urlTargetEPR" class="org.apache.axis2.addressing.EndpointReference">
+		<constructor-arg value="${webservice.service.url.prefix}/urlService" />
+	</bean>
+	<bean name="isAffectedName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="isAffected" />
+	</bean>
+	<bean name="translateUrlUserName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="translateUrlUser" />
+	</bean>
+	<bean name="translateUrlOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="translateUrlOrganization" />
+	</bean>
+	<bean name="translateUrlUserOrganizationName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="translateUrlUserOrganization" />
+	</bean>
+	<bean name="translateUrlNoneName" class="javax.xml.namespace.QName">
+		<constructor-arg value="${webservice.domain.url}" />
+		<constructor-arg value="translateUrlNone" />
+	</bean>
+</beans>

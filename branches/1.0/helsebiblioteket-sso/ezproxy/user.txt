@@ -1,0 +1,7 @@
+admin:password:admin
+
+::group=site1
+site1:proxypassword:cgi=http://www-t.helsebiblioteket.no/ProxyServlet?
+
+::group=site2
+site2:proxypassword:cgi=http://www-t.helsebiblioteket.no/ProxyServlet?

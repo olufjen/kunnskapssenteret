@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements. See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership. The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied. See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>./jdbc.properties</value>
+	 			<value>./mail.properties</value>
+	 			<value>./proxy.properties</value>
+	 		</list>
+		</property>
+	</bean>
+  	<bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
+	
+  	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
+  		<property name="accessDao" ref="accessDao"></property>
+  		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  		<property name="resourceTypeDao" ref="resourceTypeDao"></property>
+  		<property name="accessTypeDao" ref="accessTypeDao"></property>
+  		<property name="resourceDao" ref="resourceDao"></property>
+  	</bean>
+  	<bean id="actionService" class="no.helsebiblioteket.admin.service.impl.ActionServiceImpl">
+  		<property name="actionDao" ref="actionDao"></property>
+  		<property name="userService" ref="userService"></property>
+  		<property name="organizationService" ref="organizationService"></property>
+  	</bean>
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
+    	<property name="host" value="${mail.smtp.host}"></property>
+    	<property name="debug" value="${mail.debug}"></property>
+    	<property name="noSend" value="${mail.nosend}"></property>
+    	<property name="contentType" value="${mail.content-type}"></property>
+    	<property name="charset" value="${mail.charset}"></property>
+  	</bean>
+  	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
+  		<property name="userService" ref="userService"></property>
+  		<property name="organizationService" ref="organizationService"></property>
+  		<property name="emailService" ref="emailService"></property>
+  	</bean>
+  	
+  	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
+    	<property name="organizationDao" ref="organizationDao"></property>
+    	<property name="organizationListDao" ref="organizationListDao"></property>
+    	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
+    	<property name="organizationNameDao" ref="organizationNameDao"></property>
+    	<property name="personDao" ref="personDao"></property>
+    	<property name="contactInformationDao" ref="contactInformationDao"></property>
+    	<property name="ipRangeDao" ref="ipRangeDao"></property>
+    	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+    	<property name="profileDao" ref="profileDao"></property>
+    	<property name="positionDao" ref="positionDao"></property>
+    	<property name="resourceDao" ref="resourceDao"></property>
+  	</bean>
+
+  	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
+    	<property name="accessService" ref="accessService"></property>
+    	<property name="proxyPrefix" value="${proxy.prefix}"></property>
+  	</bean>
+
+  	<bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl">
+  		<property name="userService" ref="userService"></property>
+  	</bean>
+  
+  	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
+  		<property name="userDao" ref="userDao"></property>
+  		<property name="userListDao" ref="userListDao"></property>
+  		<property name="roleDao" ref="roleDao"></property>
+  		<property name="userRoleDao" ref="userRoleDao"></property>
+  		<property name="personDao" ref="personDao"></property>
+  		<property name="positionDao" ref="positionDao"></property>
+  		<property name="organizationDao" ref="organizationDao"></property>
+  		<property name="systemDao" ref="systemDao"></property>
+  		<property name="profileDao" ref="profileDao"></property>
+  		<property name="contactInformationDao" ref="contactInformationDao"></property>
+  	</bean>
+  	
+	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="positionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPositionDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="organizationNameDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="ipRangeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapIpRangeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="resourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserListDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="resourceTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="actionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapActionDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+    	<property name="configLocation" value="/sqlmap-config.xml"/>
+    	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
+   	</bean>
+	
+	<bean id="jdbcTemplateHelsebiblioteket" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceHelsebiblioteket"></property>
+	</bean>
+	<bean id="dataSourceHelsebiblioteket" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driver}"></property>
+		<property name="url" value="${database.url}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+		<property name="initialSize" value="${database.initialsize}"></property>
+		<property name="maxActive" value="${database.maxactive}"></property>
+		<property name="maxIdle" value="${database.maxidle}"></property>
+		<property name="minIdle" value="${database.minidle}"></property>
+		<property name="maxWait" value="${database.maxwait}"></property>
+		<property name="validationQuery" value="${database.validationquery}"></property>
+	</bean>
+	
+	<!-- ==============================   CACHE   ============================= -->
+	<!-- Cache used only on client in dev/test/prod, but might be enabled here also (on server) for testing purposes
+	leaving configuration commented for now-->
+	 <!--  <bean id="appCacheManager" class="net.sf.ehcache.CacheManager">
+	 <constructor-arg index="0"  type="java.lang.String"
+		value="${cms.home}/plugins/ehcache.xml" />
+	</bean>-->
+	<!--  <bean id="appCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="${cms.home}/plugins/ehcache-helsebiblioteket.xml" />
+	</bean>
+	<bean id="methodCachingAdvice"
+		class="no.helsebiblioteket.admin.webservice.CacheHelper">
+	  <property name="cacheManager" ref="appCacheManager" />
+	</bean>-->
+	
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig
+PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<!-- Always ensure to use the correct XML header as above! -->
+<sqlMapConfig>
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Access.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/AccessType.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Action.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/ContactInformation.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/IpRange.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Organization.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/OrganizationList.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/OrganizationName.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/OrganizationType.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Person.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Position.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Profile.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Resource.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/ResourceType.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/Role.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/SupplierSource.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/System.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/User.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserList.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserRole.xml" />
+<sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserExport.xml" />
+</sqlMapConfig>

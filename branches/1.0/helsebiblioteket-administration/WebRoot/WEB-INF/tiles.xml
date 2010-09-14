@@ -1,0 +1,206 @@
+<!DOCTYPE tiles-definitions
+    [
+        <!ELEMENT component-definitions (definition+)>
+        <!ELEMENT tiles-definitions (definition+)>
+        <!ELEMENT definition (put*, putList*)>
+        <!ATTLIST definition
+            name CDATA #REQUIRED
+            page CDATA #IMPLIED
+            path CDATA #IMPLIED
+            extends CDATA #IMPLIED
+            role CDATA #IMPLIED
+            template CDATA #IMPLIED
+            controllerClass CDATA #IMPLIED
+            controllerUrl CDATA #IMPLIED>
+        <!ELEMENT put (#PCDATA)>
+        <!ATTLIST put
+            name CDATA #REQUIRED
+            value CDATA #IMPLIED
+            type (string | page | template | definition) #IMPLIED
+            content CDATA #IMPLIED
+            direct (true | false) #IMPLIED>
+        <!ELEMENT putList ( (add* | item* | bean* | putList*)+) >
+        <!ATTLIST putList
+            name CDATA #REQUIRED>
+        <!ELEMENT putListElements (add | item | bean)>
+        <!ELEMENT add (#PCDATA)>
+        <!ATTLIST add
+            value CDATA #IMPLIED
+            type (string | page | template | definition) #IMPLIED
+            content CDATA #IMPLIED
+            direct (true | false) #IMPLIED>
+        <!ELEMENT bean (#PCDATA)>
+        <!ATTLIST bean
+            classtype CDATA #REQUIRED>
+        <!ELEMENT item (#PCDATA)>
+        <!ATTLIST item
+            value CDATA #REQUIRED
+            link CDATA #REQUIRED
+            classtype CDATA #IMPLIED
+            icon CDATA #IMPLIED
+            tooltip CDATA #IMPLIED>
+    ]>
+
+<tiles-definitions>
+	<definition name="default" path="/jsp/layout.jsp">
+		<put name="nav" value="/jsp/top/nav.jsp" type="page"/>
+   		<put name="topnav" value="/jsp/top/topnav.jsp" type="page"/>
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="left" value="/jsp/left/menu.jsp" type="page"/>
+   		<put name="right" value="/jsp/right/right.jsp" type="page"/>
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   		<put name="user" value="/jsp/main/empty.jsp" type="page"/>
+   	</definition>
+   	<definition name="standardFrame" path="/jsp/layout.jsp">
+   		<put name="nav" value="/jsp/top/nav.jsp" type="page"/>
+   		<put name="topnav" value="/jsp/top/topnav.jsp" type="page"/>
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="left" value="/jsp/left/menu.jsp" type="page"/>
+   		<put name="right" value="/jsp/right/right.jsp" type="page"/>
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
+   	<definition name="loginFrame" path="/jsp/layout-login.jsp">
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
+   	<definition name="basicFrame" path="/jsp/layout-basic.jsp">
+   		<put name="topheading" value="/jsp/top/topheading.jsp" type="page"/>	
+   		<put name="bottom" value="/jsp/bottom/bottom.jsp" type="page"/>
+   	</definition>
+   	
+	<!-- INDEX -->
+   	<definition name="index.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/welcome.jsp" type="page" />
+   	</definition>
+   	
+   	<!-- LOGIN -->
+   	<definition name="login.tiles" extends="loginFrame">
+		<put name="main" value="/jsp/main/login.jsp" type="page" />
+   	</definition>
+   	<definition name="forgotten-password.tiles" extends="loginFrame">
+		<put name="main" value="/jsp/main/forgotten-password.jsp" type="page" />
+   	</definition>
+   	<definition name="forgotten-password-sent.tiles" extends="loginFrame">
+		<put name="main" value="/jsp/main/forgotten-password-sent.jsp" type="page" />
+   	</definition>
+   	
+   	<!-- WELCOME -->
+   	<definition name="welcome.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/welcome.jsp" type="page" />
+   		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
+   	<!-- NATIONAL ACCESS -->
+   	<definition name="national-access-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/national-access-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
+   	<!-- ORGANIZATIONS -->
+   	<definition name="organizations-overview.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/organizations-overview.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="organization-details.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/organization-details.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="organization-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/organization-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="new-organization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/new-organization.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="create-change-supplierorganization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/create-change-supplierorganization.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="create-change-memberorganization.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/create-change-memberorganization.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="ip-change-emails.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/ip-change-emails.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="organization-types-overview.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/organization-types-overview.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="organization-type-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/organization-type-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	
+   	
+   	<!-- USERS -->
+   	<definition name="users-overview.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/users-overview.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="user-details.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user-details.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="user-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="edit-enduser.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/edit-enduser.jsp" type="page" />
+		<put name="user" value="/jsp/main/enduser.jsp" type="page" />
+   	</definition>
+   	<definition name="edit-administrator.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/edit-administrator.jsp" type="page" />
+		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
+   	</definition>
+   	<definition name="user-new.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user-new.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="new-enduser.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user-new-enduser.jsp" type="page" />
+		<put name="user" value="/jsp/main/enduser.jsp" type="page" />
+   	</definition>
+   	<definition name="new-administrator.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user-new-administrator.jsp" type="page" />
+		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
+   	</definition>
+   	<definition name="roles-overview.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/roles-overview.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="role-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/role-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
+	<!-- Export user data online -->
+   	<definition name="export-user.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/export-user.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
+	<!-- Export proxy data online -->
+   	<definition name="export-proxy.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/export-proxy.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="export-proxy-result.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/export-proxy-result.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+
+	<!-- Import and export og initial data -->
+	<definition name="importexport.tiles" extends="basicFrame">
+		<put name="main" value="/jsp/main/importexport.jsp" type="page" />
+   	</definition>
+   	
+	<!--OLD USER TODO: Remove? -->
+   	<definition name="user.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/user.jsp" type="page" />
+   	</definition>
+   	
+</tiles-definitions>
