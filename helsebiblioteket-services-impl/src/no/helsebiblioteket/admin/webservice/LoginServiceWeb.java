@@ -41,6 +41,7 @@ public class LoginServiceWeb extends BasicWebService implements LoginService {
 		Class[] returnTypes = new Class[] { LoggedInOrganizationResult.class };
 		return (LoggedInOrganizationResult) invoke(this.logInIpAddressName, args, returnTypes);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public LoggedInOrganizationResult loginOrganizationByReferringDomain(String domain, String key) {
 		Object[] args = new Object[] { domain };

@@ -6,7 +6,6 @@ import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.URLService;
 import no.helsebiblioteket.admin.domain.Url;
-import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.domain.requestresult.AccessResult;
