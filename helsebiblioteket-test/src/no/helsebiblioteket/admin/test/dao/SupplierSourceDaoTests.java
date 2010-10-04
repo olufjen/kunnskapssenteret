@@ -82,6 +82,6 @@ public class SupplierSourceDaoTests implements Runnable {
 	
 	public void run() {
 		SupplierSourceDao supplierSourceDao = beanFactory.getSupplierSourceDao();
-		//supplierSourceDao.getSupplierSourceByDomain(new Url(this.url));
+		supplierSourceDao.getSupplierSourceByDomain(new Url(this.url));
 	}
 }

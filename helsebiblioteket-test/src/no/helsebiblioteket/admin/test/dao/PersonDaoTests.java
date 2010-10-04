@@ -23,7 +23,7 @@ public class PersonDaoTests {
 	@org.junit.Test
 	public void testPerson(){
 		Position position = beanFactory.getPositionDao().getPositionByKey(PositionTypeKey.ambulansearbeider);
-		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey.public_administration);
+		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey._government);
 		String firstName = "FN" + new Random().nextInt(1000000);
 		Person person = PersonFactory.factory.completePerson(position);
 		person.setFirstName(firstName);

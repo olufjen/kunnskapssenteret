@@ -60,7 +60,7 @@ public class AccessDaoTests {
 		AccessTypeDao accessTypeDao = beanFactory.getAccessTypeDao();
 
 		// Fetch 'static data'
-		OrganizationType organizationType = organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+		OrganizationType organizationType = organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise);
 		Position position = positionDao.getPositionByKey(PositionTypeKey.ambulansearbeider);
 		Role userRole = roleDao.getRoleByKeySystem(UserRoleKey.student, system);
 		AccessType accessType = accessTypeDao.getAccessTypeByKey(AccessTypeKey.general, AccessTypeCategory.GRANT);

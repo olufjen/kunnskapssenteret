@@ -34,7 +34,7 @@ public class IpRangeDaoTests {
 		addressLine.setIpAddressFrom("999.168.101.001");
 		addressLine.setIpAddressTo("999.168.101.004");
 		addressLine.setLastChanged(new Date());
-		OrganizationType organizationType = organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
+		OrganizationType organizationType = organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey._content_supplier);
 		Position position = positionDao.getPositionByKey(PositionTypeKey.ambulansearbeider);
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		organizationDaoTests.insertMemberOrganization(organization);

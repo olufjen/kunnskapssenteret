@@ -37,7 +37,7 @@ public class UserServiceTests {
 	private BeanFactory beanFactory = BeanFactory.factory();
 	public void testAll(){
 		// 'static' values
-		OrganizationType health_enterprise = ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
+		OrganizationType health_enterprise = ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise)).getValue();
 		
 		UserService userService = beanFactory.getUserService();
 		

@@ -26,7 +26,7 @@ public class UserDetailsServiceTests {
 		String username = "username_" + randomValue;
 		
 		// 'static' values
-		OrganizationType health_enterprise = ((ValueResultOrganizationType) beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
+		OrganizationType health_enterprise = ((ValueResultOrganizationType) beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise)).getValue();
 		Position kiropraktor = ((ValueResultPosition) beanFactory.getUserService().getPositionByKey(PositionTypeKey.kiropraktor, health_enterprise)).getValue();
 
 		// New objects

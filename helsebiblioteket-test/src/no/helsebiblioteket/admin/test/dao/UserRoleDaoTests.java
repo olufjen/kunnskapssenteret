@@ -33,7 +33,7 @@ public class UserRoleDaoTests {
 		Role healthPersonnelRole = roleDao.getRoleByKeySystem(UserRoleKey.health_personnel, system);
 		Role studentRole = roleDao.getRoleByKeySystem(UserRoleKey.student, system);
 		Position position = beanFactory.getPositionDao().getPositionByKey(PositionTypeKey.ambulansearbeider);
-		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise);
 
 		// User
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);

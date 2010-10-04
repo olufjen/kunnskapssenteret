@@ -25,7 +25,7 @@ public class OrganizationDaoTests {
 		OrganizationDao organizationDao = beanFactory.getOrganizationDao();
 
 		// 'Static' values
-		OrganizationType organizationType = organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
+		OrganizationType organizationType = organizationTypeDao.getOrganizationTypeByKey(OrganizationTypeKey._content_supplier);
 		Position position = positionDao.getPositionByKey(PositionTypeKey.ambulansearbeider);
 		
 		// MemberOrganization

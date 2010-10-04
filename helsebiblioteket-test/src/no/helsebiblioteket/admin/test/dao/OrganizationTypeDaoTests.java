@@ -14,7 +14,7 @@ public class OrganizationTypeDaoTests {
 	@org.junit.Test
 	public void testOrganizationType(){
 		OrganizationTypeDao typeDao = beanFactory.getOrganizationTypeDao();
-		OrganizationType type = typeDao.getOrganizationTypeByKey(OrganizationTypeKey.teaching);
+		OrganizationType type = typeDao.getOrganizationTypeByKey(OrganizationTypeKey._teaching);
 		Assert.notNull(type, "Did not find teaching");
 		List<OrganizationType> list = typeDao.getOrganizationTypeListAll();
 		Assert.isTrue(list.size()>=5, "Org types are misssing");
