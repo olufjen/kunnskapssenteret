@@ -2,12 +2,6 @@ package no.helsebiblioteket.admin.bean;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CharsetEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -61,20 +55,20 @@ public class ExportBean {
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 	
-	private String convert(String in) {
-		String out = null;
-	    Charset charset = Charset.forName(this.optionCharacterEncoding);
-	    CharsetDecoder decoder = charset.newDecoder();
-	    CharsetEncoder encoder = charset.newEncoder();
-	    try {
-	        ByteBuffer bbuf = encoder.encode(CharBuffer.wrap(in));
-	        CharBuffer cbuf = decoder.decode(bbuf);
-	        out = cbuf.toString();
-	    } catch (CharacterCodingException cce) {
-	    	logger.error("Could not encode exported data to '" + this.optionCharacterEncoding + "'", cce);
-	    }
-	    return out;
-	}
+//	private String convert(String in) {
+//		String out = null;
+//	    Charset charset = Charset.forName(this.optionCharacterEncoding);
+//	    CharsetDecoder decoder = charset.newDecoder();
+//	    CharsetEncoder encoder = charset.newEncoder();
+//	    try {
+//	        ByteBuffer bbuf = encoder.encode(CharBuffer.wrap(in));
+//	        CharBuffer cbuf = decoder.decode(bbuf);
+//	        out = cbuf.toString();
+//	    } catch (CharacterCodingException cce) {
+//	    	logger.error("Could not encode exported data to '" + this.optionCharacterEncoding + "'", cce);
+//	    }
+//	    return out;
+//	}
 
 	public UserExportParameter getUserExportParameter() {
 		return userExportParameter;
