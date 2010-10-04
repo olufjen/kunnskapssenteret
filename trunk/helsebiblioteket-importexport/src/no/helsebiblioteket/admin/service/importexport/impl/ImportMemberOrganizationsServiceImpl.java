@@ -81,7 +81,7 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
     	Collection<MemberOrganization> memberOrganizationList = getAllMemberOrganizations().values();
     	
     	OrganizationType health_enterprise = ((ValueResultOrganizationType)
-    			this.organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
+    			this.organizationService.getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise)).getValue();
     	Position none = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, health_enterprise)).getValue();
     	
     	for (MemberOrganization organization : memberOrganizationList) {
@@ -149,19 +149,19 @@ public class ImportMemberOrganizationsServiceImpl implements ImportMemberOrganiz
         Map<String, MemberOrganization> organizationMap = new HashMap<String, MemberOrganization>();
         MemberOrganization organization = null;
         
-        SingleResultOrganizationType orgTypeHPRRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+        SingleResultOrganizationType orgTypeHPRRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise);
         OrganizationType orgTypeHPR = (orgTypeHPRRes instanceof ValueResultOrganizationType) ?
         		((ValueResultOrganizationType)orgTypeHPRRes).getValue() :
         			null;
-        SingleResultOrganizationType orgTypeStudRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.teaching);
+        SingleResultOrganizationType orgTypeStudRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey._teaching);
         OrganizationType orgTypeStud = (orgTypeStudRes instanceof ValueResultOrganizationType) ?
         		((ValueResultOrganizationType)orgTypeStudRes).getValue() :
         			null;
-        SingleResultOrganizationType orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.other);
+        SingleResultOrganizationType orgTypeEmpRes = organizationService.getOrganizationTypeByKey(OrganizationTypeKey._other);
         OrganizationType orgTypeEmp = (orgTypeEmpRes instanceof ValueResultOrganizationType) ?
         		((ValueResultOrganizationType)orgTypeEmpRes).getValue() :
         			null;
-        
+        		
         boolean hasContactInformationValue = false;
 //        boolean hasContactPersonValue = false;
 //        String nodeValue = null;
