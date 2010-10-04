@@ -6,8 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -20,7 +18,7 @@ import com.enonic.cms.api.plugin.HttpControllerPlugin;
  * 
  */
 public abstract class EcmsController extends HttpControllerPlugin {
-	private final Log logger = LogFactory.getLog(getClass());
+//	private final Log logger = LogFactory.getLog(getClass());
 	protected String resultSessionVarName;
 	protected Map<String, String> parameterNamesUrlParams;
 	protected Map<String, String> parameterNamesFields;

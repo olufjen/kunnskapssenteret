@@ -32,6 +32,7 @@ import com.enonic.cms.api.plugin.PluginEnvironment;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +65,13 @@ public class ProxyLoginController extends HttpControllerPlugin {
 		String redirectUrl = "";
 		Url requestedUrl = new Url();
 		requestedUrl.setStringValue(requestedUrlText);
-		requestedUrl.setDomain(new URL(requestedUrlText).getHost());
+		try{
+			requestedUrl.setDomain(new URL(requestedUrlText).getHost());
+		} catch (MalformedURLException e) {
+			if(logger.isInfoEnabled())
+			logger.info("ProxyLoginController recieved Malformed URL: " + requestedUrlText);
+			requestedUrl.setDomain("");
+		}
 		
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();

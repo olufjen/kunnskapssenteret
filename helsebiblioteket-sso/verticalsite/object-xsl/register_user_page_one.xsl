@@ -107,6 +107,11 @@
                      <strong>Bruker du Mac?</strong> Dette registreringsskjemaet fungerer dessverre ikke i nettleseren Safari. Bruk for eksempel nettleseren <u>
                         <a target="_blank" href="http://firefox.no/" title="Last ned Firefox-nettleseren">Firefox</a>
                      </u> (gratis) i stedet.</p>
+                <input name="referer" type="hidden">
+	                <xsl:attribute name="value">
+	                    <xsl:value-of select="$referer"/>
+	                </xsl:attribute>
+                </input>
                 <input type="submit" value="Neste"/>
             </div>
         </form>

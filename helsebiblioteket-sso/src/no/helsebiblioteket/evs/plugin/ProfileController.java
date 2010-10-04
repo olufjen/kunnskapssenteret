@@ -181,7 +181,7 @@ public class ProfileController extends HttpControllerPlugin {
 		session.setAttribute(this.editPasswordUserVarName, new Object());
 		String from = (String)session.getAttribute(this.editPasswordFromVarName);
 		String viewPage = request.getParameter(this.parameterNames.get("viewPage"));
-		String editPage = request.getParameter(this.parameterNames.get("editPage"));
+//		String editPage = request.getParameter(this.parameterNames.get("editPage"));
 		if(from != null && from.equals("edit")){
 			response.sendRedirect(viewPage);
 		} else if(from != null && from.equals("view")){
@@ -368,7 +368,7 @@ public class ProfileController extends HttpControllerPlugin {
 	}
 
 	private Position positionFromKey(String positionString)  {
-		SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+		SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise);
 		OrganizationType organizationType = (OrganizationType) ((ValueResultOrganizationType) organizationTypeResult).getValue();
 		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString), organizationType);
 		if (positionResult instanceof EmptyResultPosition) {

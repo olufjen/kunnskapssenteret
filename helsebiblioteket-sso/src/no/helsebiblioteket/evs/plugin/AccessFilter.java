@@ -34,6 +34,7 @@ public final class AccessFilter extends HttpResponseFilterPlugin {
 	private String attributeNoAccessTextName =  null;
 	
 
+	@SuppressWarnings("unchecked")
 	public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
     	int firstIndexAccessElements = response.indexOf(hbAccessTagName);
     	if (firstIndexAccessElements != -1) {

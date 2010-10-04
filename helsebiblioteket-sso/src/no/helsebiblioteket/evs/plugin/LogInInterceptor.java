@@ -4,15 +4,8 @@ package no.helsebiblioteket.evs.plugin;
  * @author Fredrik Sørensen (mail@fredriksorensen.com) and Leif Torger Grøndahl (ltg@kunnskapssenteret.no)
  */
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Enumeration;
 
 import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
@@ -27,7 +20,6 @@ import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.validator.IpAddressValidator;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
-import no.helsebiblioteket.util.Base64;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
