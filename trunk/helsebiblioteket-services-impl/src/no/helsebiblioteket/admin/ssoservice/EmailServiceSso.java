@@ -1,7 +1,5 @@
 package no.helsebiblioteket.admin.ssoservice;
 
-import javax.xml.namespace.QName;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

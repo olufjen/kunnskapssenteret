@@ -29,7 +29,7 @@ public class EmailServiceSMTPImpl implements EmailService {
 	private String charset;
 	public Boolean sendEmail(Email email) {
 		String to = email.getToName() + "<" + email.getToEmail() + ">";
-		String from = email.getFromName() + "<" + email.getFromEmail() + ">";
+//		String from = email.getFromName() + "<" + email.getFromEmail() + ">";
 		if(noSend){
 			this.logger.info("Would have sent email on host " + this.host + " to '" + to + "' with subject '" + email.getSubject() + "' and body '" + email.getMessage() + "'");
 		} else {

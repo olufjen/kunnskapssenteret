@@ -8,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import no.helsebiblioteket.admin.service.LoginService;
-import no.helsebiblioteket.admin.domain.cache.key.CacheKey;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInUserResult;
 import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;

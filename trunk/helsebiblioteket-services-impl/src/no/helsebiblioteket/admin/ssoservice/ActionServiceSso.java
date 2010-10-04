@@ -1,7 +1,5 @@
 package no.helsebiblioteket.admin.ssoservice;
 
-import javax.xml.namespace.QName;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -22,42 +20,34 @@ public class ActionServiceSso extends SsoService implements ActionService{
 	
 	@Override
 	public Log getLogger() { return logger; }
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertUserAction(User user, Resource resource, AccessType accessType) {
 		return actionService.insertUserAction(user, resource, accessType);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean insertOrganizationAction(Organization organization, Resource resource, AccessType accessType) {
 		return actionService.insertOrganizationAction(organization, resource, accessType);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultUser getUserByAction(Action action) {
 		return actionService.getUserByAction(action);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public SingleResultOrganization getOrganizationByAction(Action action) {
 		return actionService.getOrganizationByAction(action);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultAction getActionListByUser(User user) {
 		return actionService.getActionListByUser(user);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultAction getActionListByOrganization(Organization organization) {
 		return actionService.getActionListByOrganization(organization);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultAction getActionListByResource(Resource resource) {
 		return actionService.getActionListByResource(resource);
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public ListResultAction getActionListByAccessType(AccessType accessType) {
 		return actionService.getActionListByAccessType(accessType);
