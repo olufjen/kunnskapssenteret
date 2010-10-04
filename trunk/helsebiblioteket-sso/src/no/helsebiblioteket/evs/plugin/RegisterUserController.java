@@ -343,7 +343,7 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		return this.userService.usernameTaken(username, null);
 	}
 	private Position positionFromKey(String positionString) throws Exception {
-		SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+		SingleResultOrganizationType organizationTypeResult = organizationService.getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise);
 		OrganizationType organizationType = (OrganizationType) ((ValueResultOrganizationType) organizationTypeResult).getValue();
 		SingleResultPosition positionResult = userService.getPositionByKey(PositionTypeKey.valueOf(positionString), organizationType);
 		if (positionResult instanceof EmptyResultPosition) {

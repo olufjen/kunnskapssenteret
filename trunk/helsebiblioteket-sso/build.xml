@@ -156,7 +156,7 @@
 	            <include name="catalina-ant.jar"/>
 	        </fileset>
 	    </path>
-
+<!--
 	    <taskdef name="install" classname="org.apache.catalina.ant.InstallTask">
 	        <classpath refid="catalina-ant-classpath"/>
 	    </taskdef>
@@ -207,6 +207,6 @@
 	                 username="${tomcat.manager.username}"
 	                 password="${tomcat.manager.password}"/>
 	    </target>
-
+-->
 	<!-- End Tomcat tasks -->
 </project>

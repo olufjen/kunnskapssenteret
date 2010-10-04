@@ -5,12 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.text.Utilities;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
-import no.helsebiblioteket.evs.util.Helper;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
