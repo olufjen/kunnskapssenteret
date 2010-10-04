@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.Role;
 
+@SuppressWarnings("serial")
 public class ListResultRole implements Serializable {
 	private Role[] list;
 	

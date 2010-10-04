@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.IpAddressSet;
 
+@SuppressWarnings("serial")
 public class ListResultIpAddressSet implements Serializable {
 	private IpAddressSet[] list;
 

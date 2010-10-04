@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class SendPasswordEmailResult implements Serializable {
 	public static final String sentUser = "sentUser";
 	public static final String sentEmail = "sentEmail";

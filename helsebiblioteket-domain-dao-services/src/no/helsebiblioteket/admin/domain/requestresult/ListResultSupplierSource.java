@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.SupplierSource;
 
+@SuppressWarnings("serial")
 public class ListResultSupplierSource implements Serializable {
 	private SupplierSource[] list;
 

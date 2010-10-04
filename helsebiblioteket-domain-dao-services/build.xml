@@ -53,7 +53,7 @@
         
         <!-- Separate copy-target to make sure property files are included -->
 		<copy 
-			todir="${project.build.dir}">
+			todir="${project.classes.dir}">
 			<fileset 
 				dir="${project.src}"
 				excludes="**/*.java"

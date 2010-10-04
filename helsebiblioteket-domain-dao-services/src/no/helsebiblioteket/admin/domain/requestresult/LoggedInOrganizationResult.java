@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.LoggedInOrganization;
 
+@SuppressWarnings("serial")
 public class LoggedInOrganizationResult implements Serializable {
 	private LoggedInOrganization organization;
 	private boolean success = false;

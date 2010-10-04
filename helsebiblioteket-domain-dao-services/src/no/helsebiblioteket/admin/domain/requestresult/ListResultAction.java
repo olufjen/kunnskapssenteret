@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.Action;
 
+@SuppressWarnings("serial")
 public class ListResultAction implements Serializable {
 	private Action[] list;
 
