@@ -22,7 +22,7 @@ public class ResourceDaoTests {
 	@org.junit.Test
 	public void testResource(){
 		// 'Static' value
-		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
+		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey._content_supplier);
 		Position position = beanFactory.getPositionDao().getPositionByKey(PositionTypeKey.fotterapeut);
 		ResourceType resourceType = beanFactory.getResourceTypeDao().getResourceTypeByKey(ResourceTypeKey.supplier_source);
 		

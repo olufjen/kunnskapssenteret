@@ -55,8 +55,8 @@ public class AccessServiceTests {
 		String randomValue = "" + new Random().nextInt(1000000000);
 		
 		System helsebiblioteket_admin = ((ValueResultSystem)this.beanFactory.getUserService().getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue();
-		OrganizationType healthEnterprice = ((ValueResultOrganizationType)this.beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
-		OrganizationType contentSupplier = ((ValueResultOrganizationType)this.beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.content_supplier)).getValue();
+		OrganizationType healthEnterprice = ((ValueResultOrganizationType)this.beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise)).getValue();
+		OrganizationType contentSupplier = ((ValueResultOrganizationType)this.beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey._content_supplier)).getValue();
 		Position fotterapeut = ((ValueResultPosition) this.beanFactory.getUserService().getPositionByKey(PositionTypeKey.fotterapeut, healthEnterprice)).getValue();
 		Role health_personnel_other = ((ValueResultRole)this.beanFactory.getUserService().getRoleByKeySystem(UserRoleKey.health_personnel_other, helsebiblioteket_admin)).getValue();
 		MemberOrganization memberOrganization = MemberOrganizationFactory.factory.completeOrganization(healthEnterprice, fotterapeut);

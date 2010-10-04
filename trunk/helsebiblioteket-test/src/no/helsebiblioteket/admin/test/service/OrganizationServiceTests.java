@@ -61,10 +61,10 @@ public class OrganizationServiceTests {
 	public void testGetOrganizationTypeByKey(){
 //		TEST: public SingleResultOrganizationType getOrganizationTypeByKey(OrganizationTypeKey key);
 		SingleResultOrganizationType result = beanFactory.getOrganizationService().getOrganizationTypeByKey(
-				OrganizationTypeKey.content_supplier);
+				OrganizationTypeKey._content_supplier);
 		Assert.isTrue(result instanceof ValueResultOrganizationType, "No result");
 		Assert.isTrue(((ValueResultOrganizationType)result).getValue().getKey().getValue().equals(
-				OrganizationTypeKey.content_supplier.getValue()), "Wrong organization type");
+				OrganizationTypeKey._content_supplier.getValue()), "Wrong organization type");
 	}
 	@org.junit.Test
 	public void testGetOrganizationListAll(){
@@ -195,7 +195,7 @@ public class OrganizationServiceTests {
 
 	
 	private OrganizationType createOrganizationType(){
-		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
+		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise)).getValue();
 	}
 	private Position createPosition(OrganizationType organizationType){
 		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.ortoptist, organizationType)).getValue();

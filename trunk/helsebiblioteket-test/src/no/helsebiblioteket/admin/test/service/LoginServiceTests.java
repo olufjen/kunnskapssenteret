@@ -16,7 +16,6 @@ import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInOrganizationResult;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInUserResult;
-import no.helsebiblioteket.admin.domain.requestresult.SendPasswordEmailResult;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultMemberOrganization;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultOrganizationType;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultPosition;
@@ -98,9 +97,9 @@ public class LoginServiceTests {
 	}
 	@org.junit.Test
 	public void testSendPasswordEmail() {
-		LoginService loginService = beanFactory.getLoginService();
-		MemberOrganization memberOrganization = createMemberOrganization();
-		User user = createUser(memberOrganization);
+//		LoginService loginService = beanFactory.getLoginService();
+//		MemberOrganization memberOrganization = createMemberOrganization();
+//		User user = createUser(memberOrganization);
 
 //	    TEST: public Boolean sendPasswordEmail(User user);
 //		Look in the log for the result of this!
@@ -111,7 +110,7 @@ public class LoginServiceTests {
 	}
 
 	private OrganizationType createOrganizationHealthEnterprise(){
-		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise)).getValue();
+		return ((ValueResultOrganizationType)beanFactory.getOrganizationService().getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise)).getValue();
 	}
 	private Position createPositionJordmor(OrganizationType organizationType){
 		return ((ValueResultPosition)beanFactory.getUserService().getPositionByKey(PositionTypeKey.jordmor, organizationType)).getValue();

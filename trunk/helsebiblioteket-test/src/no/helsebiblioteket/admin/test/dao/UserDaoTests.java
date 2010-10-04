@@ -21,7 +21,7 @@ public class UserDaoTests {
 	public void testUser(){
 		// 'Static' data
 		Position position = beanFactory.getPositionDao().getPositionByKey(PositionTypeKey.bioingenior);
-		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey.health_enterprise);
+		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey._health_enterprise);
 		
 		// Organization
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);

@@ -46,7 +46,7 @@ public class ActionDaoTests {
 		ResourceType resourceType  = beanFactory.getResourceTypeDao().getResourceTypeByKey(
 				ResourceTypeKey.supplier_source);
 		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(
-				OrganizationTypeKey.content_supplier);
+				OrganizationTypeKey._content_supplier);
 
 		// New objects
 		SupplierSource supplierSource = SupplierSourceFactory.factory.completeSupplierSource();

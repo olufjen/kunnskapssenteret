@@ -37,7 +37,7 @@ public class ContactInformationDaoTests {
 		ContactInformation personContactInformation = contactInformationDao.getContactInformationByPerson(person);
 		Assert.notNull(personContactInformation, "No contact information for user");
 		
-		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey.other);
+		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey._other);
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		new OrganizationDaoTests().insertMemberOrganization(organization);
 		

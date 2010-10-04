@@ -22,7 +22,7 @@ public class OrganizationNameDaoTests {
 	@org.junit.Test
 	public void testOrganizationName(){
 		OrganizationDaoTests organizationDaoTests = new OrganizationDaoTests();
-		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey.public_administration);
+		OrganizationType organizationType = beanFactory.getOrganizationTypeDao().getOrganizationTypeByKey(OrganizationTypeKey._government);
 		Position position = PositionFactory.factory.completePosition(organizationType);
 		MemberOrganization organization = MemberOrganizationFactory.factory.completeOrganization(organizationType, position);
 		organizationDaoTests.insertMemberOrganization(organization);
