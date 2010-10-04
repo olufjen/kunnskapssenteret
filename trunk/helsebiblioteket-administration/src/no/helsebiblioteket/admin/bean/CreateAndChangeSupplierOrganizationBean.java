@@ -69,7 +69,7 @@ public class CreateAndChangeSupplierOrganizationBean extends NewOrganizationBean
 			Person contactPerson;
 			contactPerson = this.supplierOrganization.getOrganization().getContactPerson();
 			OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
-					OrganizationTypeKey.health_enterprise)).getValue();
+					OrganizationTypeKey._health_enterprise)).getValue();
 			contactPerson.setPosition(((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, organizationType)).getValue());
 		} else {
 		}

@@ -2,7 +2,6 @@ package no.helsebiblioteket.admin.bean;
 
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
@@ -10,11 +9,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.User;
@@ -30,12 +30,10 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultUser;
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
-import no.helsebiblioteket.admin.web.jsf.JPEGImageRenderer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
@@ -59,9 +57,7 @@ public class ExportProxyBean {
 	private UserService userService;
 	private OrganizationListItem[] supplierOrganizations;
 	private OrganizationListItem[] memberOrganizations;
-	private BufferedImage image;
-	private String imageUrl;
-	private JPEGImageRenderer imageRenderer;
+	private String imageRenderer;
 
 	public String actionExportResultProxy(){
 		ProxyResult[] resultList = fetchResult();
@@ -90,7 +86,7 @@ public class ExportProxyBean {
 			ps.flush();
 			ps.close();
 		} catch (IOException e) {
-			logger.error("unable to complete process of extracting user list, creating csv file and returning it to user. ",
+			logger.error("unable to complete process of extracting proxy data, creating csv file and returning it to user. ",
 					e);
 		}
 		FacesContext.getCurrentInstance().responseComplete();
@@ -120,16 +116,11 @@ public class ExportProxyBean {
 		JFreeChart chart = ChartFactory.createXYLineChart(
 							  chartTitle, xLabel, yLabel, xyDataset, PlotOrientation.VERTICAL,
 							  true, true, true);
-//		this.setImage(chart.createBufferedImage(500, 600, BufferedImage.TYPE_INT_RGB, null));
+		BufferedImage image = chart.createBufferedImage(500, 600, BufferedImage.TYPE_INT_RGB, null);
+		ExternalContext G = FacesContext.getCurrentInstance().getExternalContext();
+		HttpSession session = (HttpSession) G.getSession(true);
+		session.setAttribute("resultImage", image);
 		
-		String fName = "chart" + new Random().nextInt(1073741824) + ".jpg";
-		this.imageUrl = "images/charts/" + fName;
-		try {
-			ChartUtilities.saveChartAsJPEG(new File(this.imageRenderer.getImageFolder() + "/" + fName), chart, 500, 600);
-		} catch (IOException e) {
-			this.logger.error("Unable to write chart " + fName + " to chart image folder " + this.imageRenderer.getImageFolder());
-			e.printStackTrace();
-		}
 		return "export_proxy_result";
 	}
 
@@ -156,9 +147,6 @@ public class ExportProxyBean {
 		Integer supplierValue = this.supplier.equals("ALL") ? null : new Integer(this.supplier);
 		boolean byMember = this.optionAxis.equals("MEMBER") ? true : false; 
 
-		System.out.println("fromDateString="+fromDateString);
-		System.out.println("toDateString="+toDateString);
-		
 		ProxyExportParameter parameter = new ProxyExportParameter(
 				memberValue, supplierValue, byMember, this.period,
 				fromDateString, toDateString, this.hideUnknown, this.groupAll, this.groupType);
@@ -210,7 +198,6 @@ public class ExportProxyBean {
 		boolean test = false;
 		GrantedAuthority[] auths = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		for (GrantedAuthority grantedAuthority : auths) {
-			//System.out.println("grantedAuthority="+grantedAuthority);
 			if(grantedAuthority.getAuthority().equals("ROLE_administrator")){ test = true; }
 		}
 		return test;
@@ -291,12 +278,12 @@ public class ExportProxyBean {
 		if(!isAdministrator()){
 			if(this.memberOrganizations == null){
 				this.member = findMemberOrg();
-				System.out.println("this.member=" + this.member);
+//				System.out.println("this.member=" + this.member);
 				PageResultOrganizationListItem orgs = this.organizationService.getMemberOrganizationListAll(new PageRequest(0, 200));
 				this.memberOrganizations = orgs.getResult();
 				for(OrganizationListItem org : this.memberOrganizations){
 					if(this.member.equals(""+org.getId())){
-						System.out.println("org.getId()=" + org.getId());
+//						System.out.println("org.getId()=" + org.getId());
 						SelectItem orgItem = new SelectItem(""+org.getId(),
 								AdminBean.subStringMax(OrganizationBean.organizationName(org), 40));
 						list.add(orgItem);
@@ -423,22 +410,10 @@ public class ExportProxyBean {
 	public void setGroupType(boolean groupType) {
 		this.groupType = groupType;
 	}
-	public void setImage(BufferedImage image) {
-		this.image = image;
-	}
-	public BufferedImage getImage() {
-		return image;
-	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-	public JPEGImageRenderer getImageRenderer() {
+	public String getImageRenderer() {
 		return this.imageRenderer;
 	}
-	public void setImageRenderer(JPEGImageRenderer imageRenderer) {
+	public void setImageRenderer(String imageRenderer) {
 		this.imageRenderer = imageRenderer;
 	}
 }

@@ -83,7 +83,7 @@ public class NewUserBean {
     }
     public String actionSaveNewEndUser() {
     	OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
-    			OrganizationTypeKey.health_enterprise)).getValue();
+    			OrganizationTypeKey._health_enterprise)).getValue();
     	Position position = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none,
     			organizationType)).getValue();
     	this.user.getPerson().setPosition(position);
@@ -106,7 +106,7 @@ public class NewUserBean {
     	person.setFirstName(this.firstname);
     	person.setLastName(this.lastname);
     	OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
-    			OrganizationTypeKey.health_enterprise)).getValue();
+    			OrganizationTypeKey._health_enterprise)).getValue();
     	Position position = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none,
     			organizationType)).getValue();
     	Profile profile = new Profile();

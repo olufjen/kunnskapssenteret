@@ -290,7 +290,7 @@
 		</managed-property>
     	<managed-property>
     		<property-name>imageRenderer</property-name>
-        	<value>#{imageRenderer}</value>
+        	<value>no.helsebiblioteket.admin.web.jsf.JPEGImageRenderer</value>
 		</managed-property>
 	</managed-bean> 
 	

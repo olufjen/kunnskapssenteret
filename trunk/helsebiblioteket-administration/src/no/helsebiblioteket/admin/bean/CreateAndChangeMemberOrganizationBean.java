@@ -76,7 +76,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 			contactInformationOrganization = organization.getContactInformation();
 			this.memberOrganization.getOrganization().setContactInformation(contactInformationOrganization);
 			OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
-					OrganizationTypeKey.health_enterprise)).getValue();
+					OrganizationTypeKey._health_enterprise)).getValue();
 			Person contactPerson = this.memberOrganization.getOrganization().getContactPerson();
 			contactPerson.setPosition(((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, organizationType)).getValue());
 			contactPersonProfile = this.memberOrganization.getOrganization().getContactPerson().getProfile();

@@ -364,10 +364,6 @@ xmlns="http://www.springframework.org/schema/beans"
           <constructor-arg ref="userService" />
      </bean>
 
-	<bean id="imageRenderer" class="no.helsebiblioteket.admin.web.jsf.JPEGImageRenderer">
-		<property name="imageFolder" value="${application.imagefolder}" />
-	</bean>     
-
 	<bean id="importProxyDataTask" class="no.helsebiblioteket.admin.task.ImportProxyDataTask">
 		<property name="organizationService" ref="organizationService" />
 		<property name="readLogFileName" value="${proxy.readlogfilename}" />

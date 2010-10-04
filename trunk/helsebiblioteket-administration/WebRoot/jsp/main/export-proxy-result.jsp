@@ -12,5 +12,5 @@
 <br />
 <h:form>
   <h:commandButton value="#{msg_page_export_proxydata.btn_return}" action="#{exportProxyBean.actionReturn}" />
-  <t:graphicImage value="#{exportProxyBean.imageUrl}" />
+  <s:graphicImageDynamic imageRendererClass="#{exportProxyBean.imageRenderer}"></s:graphicImageDynamic>
 </h:form>

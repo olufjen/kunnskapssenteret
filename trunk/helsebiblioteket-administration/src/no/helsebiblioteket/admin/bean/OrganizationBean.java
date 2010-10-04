@@ -185,7 +185,7 @@ public class OrganizationBean implements IconProvider{
 		this.supplierOrganization.getOrganization().getContactPerson().setContactInformation(new ContactInformation());
 		this.supplierOrganization.getOrganization().getContactPerson().setProfile(new Profile());
 		this.supplierOrganization.setResourceList(new SupplierSourceResource[0]);
-		SingleResultOrganizationType result = organizationService.getOrganizationTypeByKey(OrganizationTypeKey.content_supplier);
+		SingleResultOrganizationType result = organizationService.getOrganizationTypeByKey(OrganizationTypeKey._content_supplier);
     	if(result instanceof ValueResultOrganizationType){
 			this.supplierOrganization.getOrganization().setType(((ValueResultOrganizationType) result).getValue());
 		}
@@ -374,7 +374,7 @@ public class OrganizationBean implements IconProvider{
 			if(item==null || item.getOrganization() == null){
 				return "images/empty.gif";
 			} else {
-				if(item.getOrganization().getTypeKey().equals(OrganizationTypeKey.content_supplier.getValue())){
+				if(item.getOrganization().getTypeKey().equals(OrganizationTypeKey._content_supplier.getValue())){
 					return "images/supplier.gif";
 				} else {
 					return "images/not_supplier.gif";
