@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 
+@SuppressWarnings("serial")
 public class ListResultOrganizationListItem implements Serializable {
 	private OrganizationListItem[] list;
 	

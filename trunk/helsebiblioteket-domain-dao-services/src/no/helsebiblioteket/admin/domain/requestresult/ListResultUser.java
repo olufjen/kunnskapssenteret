@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.User;
 
+@SuppressWarnings("serial")
 public class ListResultUser implements Serializable {
 	private User[] list;
 	

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.OrganizationType;
 
+@SuppressWarnings("serial")
 public class ListResultOrganizationType implements Serializable {
 	private OrganizationType[] list;
 

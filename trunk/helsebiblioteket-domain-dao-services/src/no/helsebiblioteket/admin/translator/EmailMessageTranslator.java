@@ -1,13 +1,10 @@
 package no.helsebiblioteket.admin.translator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import no.helsebiblioteket.admin.domain.User;
 
 
 public class EmailMessageTranslator {
-	private Log logger = LogFactory.getLog(getClass());
+//	private Log logger = LogFactory.getLog(getClass());
 	
 	public String translate(String emailMessage, User user) {
 		String tmp = emailMessage;

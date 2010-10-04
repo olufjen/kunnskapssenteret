@@ -5,6 +5,7 @@ import java.io.Serializable;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.requestresult.PageResult;
 
+@SuppressWarnings("serial")
 public class PageResultOrganizationListItem extends PageResult implements Serializable {
 	private OrganizationListItem[] result;
 	public OrganizationListItem[] getResult() {

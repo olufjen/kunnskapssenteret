@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.requestresult;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PageResult implements Serializable {
 	private Integer number;
 	private Integer skipped;

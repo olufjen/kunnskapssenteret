@@ -2,6 +2,7 @@ package no.helsebiblioteket.admin.domain.requestresult;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class AccessResult implements Serializable {
 	public static final AccessResult logup = new AccessResult("logup");
 	public static final AccessResult include = new AccessResult("include");

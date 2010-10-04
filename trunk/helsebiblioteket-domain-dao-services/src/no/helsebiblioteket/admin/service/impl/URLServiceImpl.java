@@ -121,56 +121,56 @@ public class URLServiceImpl implements URLService {
 	}
 	
 	// TODO fase2 fix
-	private SingleResultUrl translateUrlUserOrganizationInternalFixLater(UserListItem userListItem, OrganizationListItem organizationListItem, Url url, boolean national) {
-		Url newUrl = new Url();
-		boolean proxify = false;
-		
-		proxify = proxify || proxyInclude(getAccessTypeForAll(url));
-		
-		if (organizationListItem != null) {
-			proxify = proxify || proxyInclude(getAccessTypeForOrganizationType(organizationListItem.getTypeKey(), url));
-			proxify = proxify || proxyInclude(getAccessTypeForMemberOrganization(organizationListItem, url));
-		}
-		
-		if (userListItem != null) {
-			if (userListItem.getRoleKeys() != null) {
-				for (UserRoleKey role : userListItem.getRoleKeys()) {
-					proxify = proxify || proxyInclude(getAccessTypeForUserRole(role, url));
-				}
-			}
-			// Axis2 does not accept arrays of complex types
-			// This is a fix to be able to pass user roles to this service via Axis2
-			if (userListItem.getRoleKeyValuesAsStrings() != null) {
-				for (String roleKeyValue : userListItem.getRoleKeyValuesAsStrings()) {
-					proxify = proxify || proxyInclude(getAccessTypeForUserRole(new UserRoleKey(roleKeyValue), url));
-				}
-			}
-			// TODO Fase2: handle user access
-		}
-		
-		// TODO Fase2: add an image to link to illustrate whether requester has access or not.
-		
-		// TODO: In case any existing "&amp;'s in URL: double replace. Consider using negative lookahead regexp instead
-		//url.setStringValue(url.getStringValue().replace("&", "&amp;"));
-		url.setStringValue(url.getStringValue().replace("&amp;", "&"));
-		if (proxify) {
-			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
-		} else {
-			newUrl.setStringValue(url.getStringValue());
-		}
-		newUrl.setDomain(url.getDomain());
-		return new ValueResultUrl(newUrl);
-	}
-	
-	private boolean proxyInclude(AccessType accessType) {
-		boolean proxyInclude = false;
-		if (accessType != null &&
-				(accessType.getKey().getValue().equals(AccessTypeKey.proxy_include.getValue()) || accessType.getKey().getValue().equals(AccessTypeKey.proxy_include_all.getValue())) &&
-				accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue())) {
-			proxyInclude = true;
-		}
-		return proxyInclude;
-	}
+//	private SingleResultUrl translateUrlUserOrganizationInternalFixLater(UserListItem userListItem, OrganizationListItem organizationListItem, Url url, boolean national) {
+//		Url newUrl = new Url();
+//		boolean proxify = false;
+//		
+//		proxify = proxify || proxyInclude(getAccessTypeForAll(url));
+//		
+//		if (organizationListItem != null) {
+//			proxify = proxify || proxyInclude(getAccessTypeForOrganizationType(organizationListItem.getTypeKey(), url));
+//			proxify = proxify || proxyInclude(getAccessTypeForMemberOrganization(organizationListItem, url));
+//		}
+//		
+//		if (userListItem != null) {
+//			if (userListItem.getRoleKeys() != null) {
+//				for (UserRoleKey role : userListItem.getRoleKeys()) {
+//					proxify = proxify || proxyInclude(getAccessTypeForUserRole(role, url));
+//				}
+//			}
+//			// Axis2 does not accept arrays of complex types
+//			// This is a fix to be able to pass user roles to this service via Axis2
+//			if (userListItem.getRoleKeyValuesAsStrings() != null) {
+//				for (String roleKeyValue : userListItem.getRoleKeyValuesAsStrings()) {
+//					proxify = proxify || proxyInclude(getAccessTypeForUserRole(new UserRoleKey(roleKeyValue), url));
+//				}
+//			}
+//			// TODO Fase2: handle user access
+//		}
+//		
+//		// TODO Fase2: add an image to link to illustrate whether requester has access or not.
+//		
+//		// TODO: In case any existing "&amp;'s in URL: double replace. Consider using negative lookahead regexp instead
+//		//url.setStringValue(url.getStringValue().replace("&", "&amp;"));
+//		url.setStringValue(url.getStringValue().replace("&amp;", "&"));
+//		if (proxify) {
+//			newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
+//		} else {
+//			newUrl.setStringValue(url.getStringValue());
+//		}
+//		newUrl.setDomain(url.getDomain());
+//		return new ValueResultUrl(newUrl);
+//	}
+
+//	private boolean proxyInclude(AccessType accessType) {
+//		boolean proxyInclude = false;
+//		if (accessType != null &&
+//				(accessType.getKey().getValue().equals(AccessTypeKey.proxy_include.getValue()) || accessType.getKey().getValue().equals(AccessTypeKey.proxy_include_all.getValue())) &&
+//				accessType.getCategory().getValue().equals(AccessTypeCategory.GRANT.getValue())) {
+//			proxyInclude = true;
+//		}
+//		return proxyInclude;
+//	}
 	
 	/**
 	 * Loads the Access list for a user and checks if the URL

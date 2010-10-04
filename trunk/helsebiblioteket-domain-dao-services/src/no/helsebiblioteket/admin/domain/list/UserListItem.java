@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
+@SuppressWarnings("serial")
 public class UserListItem implements Serializable {
 	private Integer id;
 	private String name;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.Position;
 
+@SuppressWarnings("serial")
 public class ListResultPosition implements Serializable {
 	private Position[] list;
 	

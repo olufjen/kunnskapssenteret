@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import no.helsebiblioteket.admin.domain.LoggedInUser;
 
+@SuppressWarnings("serial")
 public class LoggedInUserResult implements Serializable {
 	private LoggedInUser user;
 	private boolean success = false;
