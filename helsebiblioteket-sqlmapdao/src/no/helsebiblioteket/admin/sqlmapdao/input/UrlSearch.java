@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class UrlSearch {
-    private List keywordList = new ArrayList();
+    private List<String> keywordList = new ArrayList<String>();
     
     public UrlSearch(String keywords) {
     	StringTokenizer splitter = new StringTokenizer(keywords, " ", false);
@@ -14,7 +14,7 @@ public class UrlSearch {
         }
     }
 
-    public List getKeywordList() {
+    public List<String> getKeywordList() {
       return keywordList;
     }
 
