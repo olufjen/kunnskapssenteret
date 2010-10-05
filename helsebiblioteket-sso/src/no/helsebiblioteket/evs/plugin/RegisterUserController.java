@@ -225,6 +225,8 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		if(employer == null) { employer = ""; }
 		String position = request.getParameter(this.parameterNames.get("position"));
 		if(position == null) { position = ""; }
+		String altposition = request.getParameter(this.parameterNames.get("altposition"));
+		if(altposition == null) { altposition = ""; }
 		String studentansatt = request.getParameter(this.parameterNames.get("studentansatt"));
 		if(studentansatt == null) { studentansatt = ""; }
 		String positiontext = request.getParameter(this.parameterNames.get("positiontext"));
@@ -246,22 +248,22 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		}
 		values.appendChild(UserToXMLTranslator.cDataElement(document, "usertype", usertype));
 
-		if (usertype.equals(UserRoleKey.health_personnel.getValue())){
-			if(hprnumber.length() == 0){
-				messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NO_VALUE"));	
-			}
-			user.getPerson().setHprNumber(hprnumber);
-		} else if (usertype.equals(UserRoleKey.student.getValue())) {
-			if(studentnumber.length() == 0){
-				messages.appendChild(UserToXMLTranslator.element(document, "studentnumber", "NO_VALUE"));	
-			}
-			user.getPerson().setStudentNumber(studentnumber);
-		} else if (usertype.equals(UserRoleKey.health_personnel_other.getValue())) {
-			if(dateOfBirth.length() == 0){
-				messages.appendChild(UserToXMLTranslator.element(document, "dateofbirth", "NO_VALUE"));	
-			}
-			user.getPerson().setDateOfBirth(dateOfBirth);
-		}
+//		if (usertype.equals(UserRoleKey.health_personnel.getValue())){
+//			if(hprnumber.length() == 0){
+//				messages.appendChild(UserToXMLTranslator.element(document, "hprnumber", "NO_VALUE"));	
+//			}
+//			user.getPerson().setHprNumber(hprnumber);
+//		} else if (usertype.equals(UserRoleKey.student.getValue())) {
+//			if(studentnumber.length() == 0){
+//				messages.appendChild(UserToXMLTranslator.element(document, "studentnumber", "NO_VALUE"));	
+//			}
+//			user.getPerson().setStudentNumber(studentnumber);
+//		} else if (usertype.equals(UserRoleKey.health_personnel_other.getValue())) {
+//			if(dateOfBirth.length() == 0){
+//				messages.appendChild(UserToXMLTranslator.element(document, "dateofbirth", "NO_VALUE"));	
+//			}
+//			user.getPerson().setDateOfBirth(dateOfBirth);
+//		}
 		
 		if(username.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "username", "NO_VALUE"));
@@ -312,10 +314,10 @@ public final class RegisterUserController extends HttpControllerPlugin {
 				}
 			}
 		} else if(usertype.equals(UserRoleKey.student.getValue())){
-			if(studentansatt.length() == 0){
-				messages.appendChild(UserToXMLTranslator.element(document, "studentansatt", "NO_VALUE"));	
+			if(altposition.length() == 0 || altposition.equals("choose")){
+				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_SELECTED"));
 			} else {
-				user.getPerson().setIsStudent(studentansatt.equals("student"));
+				user.getPerson().setPositionText(altposition);
 			}
 		}  else {
 			if(positiontext.length() == 0){
