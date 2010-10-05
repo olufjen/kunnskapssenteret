@@ -8,6 +8,7 @@ package no.helsebiblioteket.evs.plugin;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,12 @@ import no.helsebiblioteket.admin.service.geoip.GeoIpService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdom.Attribute;
+import org.jdom.Content;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.Parent;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
@@ -44,19 +48,48 @@ public final class AccessFilter extends HttpResponseFilterPlugin {
     		//					"</" + surroundingEndTagName + ">";
     		try {
     			Document doc = new SAXBuilder().build(new ByteArrayInputStream(response.getBytes()));
-        		XPath accessPath = XPath.newInstance("/descendant-or-self::" + hbAccessTagName);
+        		XPath accessPath = XPath.newInstance("//*[name()='" + hbAccessTagName +"']");
         		List<Element> accessElements = accessPath.selectNodes(doc);
-        		boolean contentChanged = false;
         		for (Element accessElement : accessElements) {
         			String countryCodes = accessElement.getAttributeValue(attributeCountryCodesName);
-        			if (! geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), countryCodes)) {
-        				contentChanged = true;
-        				String noAccessText = accessElement.getAttributeValue(attributeNoAccessTextName);
-        				accessElement.removeContent();
-        				accessElement.setText(noAccessText);
-        			}
+    				String noAccessText = accessElement.getAttributeValue(attributeNoAccessTextName);
+    				Parent parentTmp = accessElement.getParent();
+    				if(parentTmp instanceof Element){
+    					Element parent = (Element) parentTmp;
+    					int index = parent.indexOf(accessElement);
+    					if(noAccessText != null){
+    						accessElement.setName("div");
+    	    				List<Attribute> attributes = new ArrayList<Attribute>();
+    	    				attributes.addAll(accessElement.getAttributes());
+    	    				for (Attribute attribute : attributes) {
+    		    				accessElement.removeAttribute(attribute);
+    						}
+    	    				if ( ! geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), countryCodes)) {
+        	    				accessElement.removeContent();
+        	    				accessElement.setText(noAccessText);    					
+    	    				}
+    					} else {
+    						Element pos = accessElement.getChild("hasaccess", accessElement.getNamespace());
+    						Element neg = accessElement.getChild("noaccess", accessElement.getNamespace());
+    	    				List<Content> children = new ArrayList<Content>();
+    	    				if (geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), countryCodes)) {
+    		    				if(pos != null){
+    			    				children.addAll(pos.getContent());
+    		    				}
+    	    				} else {
+    	    					if(neg != null){
+    	    	   					children.addAll(neg.getContent());
+    	    					}
+    	    				}
+    	    				for (Content elem : children) {
+    	    					elem.detach();
+    							parent.addContent(index, elem);
+    	    				}
+    	    				accessElement.detach();
+    					}
+    				}
         		}
-        		if (contentChanged) {
+        		if (!accessElements.isEmpty()) {
         			StringWriter writer = new StringWriter();
         	        XMLOutputter prettyOut = new XMLOutputter();
         	        try {
@@ -107,4 +140,5 @@ public final class AccessFilter extends HttpResponseFilterPlugin {
 	public void setGeoIpService(GeoIpService geoIpService) {
 		this.geoIpService = geoIpService;
 	}
+	
 }
