@@ -182,7 +182,7 @@ public class UserBean {
         	this.showEmployerNumber = true;
     		this.showIsStudent = true;
         	this.showEmployerText = true;
-        	this.showPositionText = false;
+        	this.showPositionText = true;
         	this.showPositionMenu = false;
     		this.showProfile = true;
     	}
@@ -437,8 +437,10 @@ public class UserBean {
 	public List<SelectItem> getAvailableRoles() {
 		if(this.availableRoles == null) {
 			this.availableRoles = new ArrayList<SelectItem>();
-			logger.info("STARTROLES");
-			this.logger.debug("this.userService=" + this.userService);
+			if(logger.isDebugEnabled()){
+				logger.debug("STARTROLES");
+				logger.debug("this.userService=" + this.userService);
+			}
 			for (Role role : this.getAllRoles()) {
 				if( ! role.getKey().getValue().equals(UserRoleKey.organization_administrator.getValue())){
 //					org_admin
@@ -447,7 +449,9 @@ public class UserBean {
 					this.availableRoles.add(option);
 				}
 			}
-			logger.debug("DONEROLES");
+			if(logger.isDebugEnabled()){
+				logger.debug("DONEROLES");
+			}
 			
 		}
 		return this.availableRoles;
