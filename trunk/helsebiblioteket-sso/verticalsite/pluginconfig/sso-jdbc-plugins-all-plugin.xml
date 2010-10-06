@@ -303,6 +303,7 @@
  			<entry key="lastname" value="surname"/>
  			<entry key="employer" value="org"/>
  			<entry key="position" value="position"/>
+ 			<entry key="altposition" value="altposition"/>
  			<entry key="newsletter" value="newsletter"/>
  			<entry key="questionaire" value="survey"/>
  			<entry key="emailaddress" value="email"/>
