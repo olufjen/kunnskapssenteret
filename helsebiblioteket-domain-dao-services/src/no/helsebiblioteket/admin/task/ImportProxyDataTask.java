@@ -42,7 +42,7 @@ public class ImportProxyDataTask {
 		Calendar today = Calendar.getInstance();
 	    String startOfToday = todayFormatter.format(today.getTime()) + " 00:00:00.000000000";
 
-		File readFile = new File(this.readLogFileName);
+		File readFile = new File(createReadLogFileName());
 		FileInputStream readFstream;
 		int lines = 0;
 		try {
@@ -115,6 +115,13 @@ public class ImportProxyDataTask {
 		}
 	}
 	
+	private String createReadLogFileName() {
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat todayFormatter = new SimpleDateFormat("yyyyMM");
+		String date = todayFormatter.format(cal.getTime());
+		return this.readLogFileName + date + ".log";
+	}
+
 	public String getReadLogFileName() {
 		return readLogFileName;
 	}
@@ -132,5 +139,11 @@ public class ImportProxyDataTask {
 	}
 	public void setProxyDomainName(String proxyDomainName) {
 		this.proxyDomainName = proxyDomainName;
+	}
+	public static void main(String[] args) {
+		ImportProxyDataTask dataTask = new ImportProxyDataTask();
+		dataTask.readLogFileName = "/var/log/ezproxy/ezproxy_";
+		String name = dataTask.createReadLogFileName();
+		System.out.println(name);
 	}
 }
