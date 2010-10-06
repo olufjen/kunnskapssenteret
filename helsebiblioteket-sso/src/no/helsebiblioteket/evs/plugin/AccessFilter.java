@@ -47,7 +47,10 @@ public final class AccessFilter extends HttpResponseFilterPlugin {
     		//					response.substring(firstIndexAccessElements-1, (lastIndexAccessElements + endTagName.length() + 1)) + 
     		//					"</" + surroundingEndTagName + ">";
     		try {
-    			Document doc = new SAXBuilder().build(new ByteArrayInputStream(response.getBytes()));
+    			SAXBuilder saxb = new SAXBuilder();
+    			saxb.setValidation(false);
+    			saxb.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+    			Document doc = saxb.build(new ByteArrayInputStream(response.getBytes()));
         		XPath accessPath = XPath.newInstance("//*[name()='" + hbAccessTagName +"']");
         		List<Element> accessElements = accessPath.selectNodes(doc);
         		for (Element accessElement : accessElements) {
@@ -83,9 +86,9 @@ public final class AccessFilter extends HttpResponseFilterPlugin {
     	    				}
     	    				for (Content elem : children) {
     	    					elem.detach();
-    							parent.addContent(index, elem);
     	    				}
-    	    				accessElement.detach();
+   							parent.addContent(index, children);
+   							accessElement.detach();
     					}
     				}
         		}
