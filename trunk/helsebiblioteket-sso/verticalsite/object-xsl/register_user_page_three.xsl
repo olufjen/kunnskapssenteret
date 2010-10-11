@@ -72,6 +72,16 @@
                                     <xsl:value-of select="portal:createPageUrl($viewProfilePage, ())"/>
                                 </xsl:attribute>
                             </input>
+                            
+                            
+                            <input name="url" type="hidden">
+	        	    	    	<xsl:attribute name="value">
+									<xsl:value-of select="$hbresult/values/url/text()"/>
+	        	    	    	</xsl:attribute>
+	        	    	    </input>
+                            
+                            
+                            
                             <input name="confirm" type="hidden" value="true"/>
                             
                             

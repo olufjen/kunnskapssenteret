@@ -87,6 +87,15 @@
                                     <xsl:value-of select="portal:createPageUrl($registerUserPage, ())"/>
                                 </xsl:attribute>
                             </input>
+
+
+                            <input name="url" type="hidden">
+	        	    	    	<xsl:attribute name="value">
+									<xsl:value-of select="$hbresult/values/url/text()"/>
+	        	    	    	</xsl:attribute>
+	        	    	    </input>
+
+
                             <input name="save" type="hidden" value="true"/>
                             <br/>
                             <i>Alle felter må fylles ut</i>

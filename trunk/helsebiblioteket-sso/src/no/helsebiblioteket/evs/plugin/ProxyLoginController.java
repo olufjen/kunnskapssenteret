@@ -182,6 +182,9 @@ public class ProxyLoginController extends HttpControllerPlugin {
 //		proxyresult/resource/url
 		resource.appendChild(UserToXMLTranslator.cDataElement(document, "url", requestedUrl.getStringValue()));
 		element.appendChild(resource);
+////		proxyresult/resource/encodedurl
+//		resource.appendChild(UserToXMLTranslator.cDataElement(document, "encodedurl", encodeURL(requestedUrl.getStringValue())));
+		element.appendChild(resource);
 		
 		if(hasAccess){
 //			proxyresult/access
@@ -191,6 +194,17 @@ public class ProxyLoginController extends HttpControllerPlugin {
 			element.appendChild(document.createElement("noaccess"));
 		}
 	}
+    
+//    private String encodeURL(String requestedUrl){
+//    	try {
+//			return URLEncoder.encode(requestedUrl, "UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			if(logger.isErrorEnabled()){
+//				logger.error("UnsupportedEncodingException in Proxy Login Controller: " + e.getMessage());
+//			}
+//			return "";
+//		}
+//    }
     
     private String stripUrlParams(String queryString) {
     	String result = queryString;

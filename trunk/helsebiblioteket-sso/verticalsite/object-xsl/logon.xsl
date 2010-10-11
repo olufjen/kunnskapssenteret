@@ -167,10 +167,40 @@
             	        	<xsl:if test="$user/user">
                                 <li><a href="{portal:createPageUrl($profilePage, ())}">Din profil</a></li>
 	            	    	</xsl:if>
+	            	    		
+	            	    		
             	        	<xsl:if test="$user/nouser">
-                                <li><a href="{portal:createPageUrl($registerPage, ())}">Ny bruker</a></li>
+	            	    		<form action="{portal:createPageUrl($registerUserServletPage, ())}" method="post" 
+	            	    			name="newuser">
+		            	    		<input name="goto" type="hidden"
+		            	    			value="{portal:createPageUrl($registerPage, ())}" />
+	    	        	    		<input name="url" type="hidden">
+	        	    	    			<xsl:attribute name="value">
+	            		    				<xsl:choose>
+	            		    					<xsl:when test="$proxyresult/resource/url">
+	            	    							<xsl:value-of select="portal:createPageUrl($proxyServletPage, ())"
+	            	    								/>?url=<xsl:value-of
+	            	    								select="$proxyresult/resource/url"/>
+                                    	        </xsl:when>
+                                        	    <xsl:otherwise>
+                                            		<xsl:value-of select="portal:createPageUrl($frontPage, ())" />
+		            	    					</xsl:otherwise>
+		            	    				</xsl:choose>
+	    	        	    			</xsl:attribute>
+	        	    	    		</input>
+<script language="JavaScript" type="text/javascript">
+function submitNewUser ( )
+{
+  document.submitNewUser.submit() ;
+}
+-->
+</script>
+                                <li><a href="javascript:submitNewUser()" onclick="javascript:submitNewUser()">Ny bruker</a></li>
                                 <li><a href="{portal:createPageUrl($passportPage, ())}">Glemt passord</a></li>
+	        	    	    	</form>
 	            	    	</xsl:if>
+	            	    	
+	            	    	
                         </ul>
 						<xsl:if test="$user/user">
 							<br/>
