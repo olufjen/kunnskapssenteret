@@ -98,22 +98,23 @@ public final class RegisterUserController extends HttpControllerPlugin {
     		}
     	}
 	}
+	
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String usertype = request.getParameter(this.parameterNames.get("usertype"));
-		if (null == usertype || "".equals(usertype)) {
-			usertype = request.getParameter("form_3");
-		}
+		String url = request.getParameter(this.parameterNames.get("url"));
 		UserToXMLTranslator translator = new UserToXMLTranslator();
 		Document document = translator.newDocument();
 		Element element = document.createElement(this.resultSessionVarName);
 		Element values = document.createElement("values");
-		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
+		if ( ! (null == url || "".equals(url))) {
+			values.appendChild(UserToXMLTranslator.element(document, "url", url));
+		}
 		element.appendChild(values);
 		document.appendChild(element);
 		ResultHandler.setResult(this.resultSessionVarName, document);
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
+	
 	private void confirm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String usertype = request.getParameter(this.parameterNames.get("usertype"));
 		UserToXMLTranslator translator = new UserToXMLTranslator();
@@ -124,7 +125,13 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		element.appendChild(values);
 		document.appendChild(element);
 		ResultHandler.setResult(this.resultSessionVarName, document);
-		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+		String gotoUrl = null;
+		String url = request.getParameter(this.parameterNames.get("url"));
+		if ( ! (null == url || "".equals(url))) {
+			gotoUrl = url;
+		} else {
+			gotoUrl = request.getParameter(this.parameterNames.get("goto"));
+		}
 		response.sendRedirect(gotoUrl);
 	}
 	
@@ -167,6 +174,11 @@ public final class RegisterUserController extends HttpControllerPlugin {
 	    	this.sendNewUserEmail(user);
 			loginNewUser(user);
 			element.appendChild(document.createElement("success"));
+			String url = request.getParameter(this.parameterNames.get("url"));
+			if ( ! (null == url || "".equals(url))) {
+				values.appendChild(UserToXMLTranslator.element(document, "url", url));
+			}
+			element.appendChild(values);
 			gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		} else {
 			UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
