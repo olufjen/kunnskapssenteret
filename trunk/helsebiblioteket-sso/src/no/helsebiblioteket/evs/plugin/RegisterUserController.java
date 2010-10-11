@@ -174,22 +174,22 @@ public final class RegisterUserController extends HttpControllerPlugin {
 	    	this.sendNewUserEmail(user);
 			loginNewUser(user);
 			element.appendChild(document.createElement("success"));
-			String url = request.getParameter(this.parameterNames.get("url"));
-			if ( ! (null == url || "".equals(url))) {
-				values.appendChild(UserToXMLTranslator.element(document, "url", url));
-			}
-			element.appendChild(values);
 			gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		} else {
 			UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
 			userXML(userTranslator.translate(user), document, values);
-			element.appendChild(values);
 			element.appendChild(messages);
 			if(summary.length() != 0){
 				element.appendChild(UserToXMLTranslator.element(document, "summary", summary));
 			}
 			gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		}
+		String url = request.getParameter(this.parameterNames.get("url"));
+		logger.error("url=" + url);
+		if ( ! (null == url || "".equals(url))) {
+			values.appendChild(UserToXMLTranslator.element(document, "url", url));
+		}
+		element.appendChild(values);
 		document.appendChild(element);
 		ResultHandler.setResult(this.resultSessionVarName, document);
     	response.sendRedirect(gotoUrl);
