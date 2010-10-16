@@ -86,6 +86,7 @@ public final class AccessFilter extends HttpResponseFilterPlugin {
     	    				}
     	    				for (Content elem : children) {
     	    					elem.detach();
+//       							parent.addContent(index++, elem);
     	    				}
    							parent.addContent(index, children);
    							accessElement.detach();
