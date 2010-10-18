@@ -1,0 +1,470 @@
+package no.helsebiblioteket.plugin;
+
+import com.enonic.cms.api.client.Client;
+import com.enonic.cms.api.client.ClientFactory;
+
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import com.enonic.cms.api.client.model.CreateContentParams;
+import com.enonic.cms.api.client.model.GetCategoriesParams;
+import com.enonic.cms.api.client.model.GetContentByCategoryParams;
+import com.enonic.cms.api.client.model.content.ContentDataInput;
+import com.enonic.cms.api.client.model.content.HtmlAreaInput;
+import com.enonic.cms.api.client.model.content.TextInput;
+import com.enonic.cms.api.plugin.TaskPlugin;
+import org.jdom.Document;
+import org.jdom.filter.ElementFilter;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+/**
+ * Plugin used for testing urls stored in Enonic CMS. Uses a xml file for declaring which categories and fields within
+ * the category that should be checked. The content is extracted from Enonic CMS. The urls found in the content
+ * is accessed and the response code is received. The urls returning non-OK codes is sent as an email.
+ *
+ * @author David Aasterud
+ * @version 1.0
+ * 
+ */
+
+public class LinkCheckerPlugin implements TaskPlugin {
+
+    private Client client;
+    private int linksChecked = 0;
+    private int erroneousLinks = 0;
+    private int notWellFormedLinks = 0;
+    private ArrayList<String> generatedMail = new ArrayList<String>();
+    private String hostName;
+    private String[] receivers;
+    private String sender;
+    private String saveFolder;
+    private ArrayList<Category> allCategories = new ArrayList<Category>();
+
+    public LinkCheckerPlugin()
+    {
+          // default contructor needed for Task Plugin to work
+    }
+
+
+    public LinkCheckerPlugin(Client client){
+        this.client = client;
+    }
+
+    public void execute(Properties props){
+
+        System.out.println("LinkCheckerPlugin started");
+
+        if( client == null )
+        {
+            //client = ClientFactory.getLocalClient();
+            client = ClientFactory.getRemoteClient("http://www-t.helsebiblioteket.no/rpc/bin");
+        }
+
+        // login user
+        client.login("admin", "f5weuTs9");
+
+        // time taker
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timeStarted = sdf.format(cal.getTime());
+
+        ArrayList<Category> cat = readConfigFile();
+
+        // structure for going through array of categories to be checked
+        for(Category c : cat){
+            getSubCategories(c.getCategoryKey(), c.getFieldList(), c.getIsHtmlArea());
+        }
+
+        // Runs the linkcheck across all categories and subcategories
+        for(Category a : allCategories){
+            checkOnCategories(a.getCategoryKey(), a.getFieldList(), a.getIsHtmlArea());
+        }
+
+        // simple way of generating html markup for a mail
+        String mailContent = "<div id='parent'><div>Total amount of links checked: " + linksChecked +
+                "<br/> Total amount of links with errors: " + erroneousLinks +
+                "<br/> Total amount of exceptions: " + notWellFormedLinks +"</div>";
+
+        mailContent += "<table border='1px'>";
+        mailContent += "<tr><th>content key</th><th>content title</th><th>url</th><th>response</th></tr>";
+
+
+        for(String s : generatedMail){
+            mailContent += s;
+        }
+
+        mailContent += "</table></div>";
+
+        cal = Calendar.getInstance();
+        String timeEnded = sdf.format(cal.getTime());
+
+        // to be used, instad of hardcoding
+        //int save_folder =  Integer.parseInt(this.saveFolder);
+
+        try{
+            createContent(1151, "linkCheckerResult", mailContent);
+            sendMail(receivers, mailContent, "linkCheckerResult " + timeStarted + " - " + timeEnded, sender, hostName);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Returns all subCategories of a supplied category in the config file
+     * Field information and if it is a html area that is inherited from the parent
+     * This is passed to the member variable allCategories
+     * 
+     * @param catKey        An integer that is a category key from the config
+     * @param fields        An ArrayList<String> holding the fieldnames that will be checked within the category
+     * @param isHtmlArea    An ArrayList<String> holding true/false values corresponding to the fieldname param 
+     */
+     public void getSubCategories(int catKey, ArrayList<String> fields, ArrayList<String> isHtmlArea){
+
+        GetCategoriesParams catPars = new GetCategoriesParams();
+        catPars.categoryKey = catKey;
+        catPars.levels = 1;
+
+        // get categories
+        Document cat = this.client.getCategories(catPars);
+        Element categoryRoot = cat.getRootElement();
+
+        // add to member variable
+        Category catHolder = new Category(catKey, fields, isHtmlArea);
+        this.allCategories.add(catHolder);
+
+        List<Element> categories = categoryRoot.getChildren("category");
+        ListIterator<Element> categoryiterator = categories.listIterator();
+        while (categoryiterator.hasNext()) {
+            Element temp = categoryiterator.next();
+            String catID = temp.getAttributeValue("key");
+
+            // call recursively to get all subcategories as well
+            getSubCategories(Integer.parseInt(catID), fields, isHtmlArea);
+        }
+    }
+
+
+    /**
+     * Runs the url check on a category
+     *
+     * @param catKey        An integer that is a category key from the config
+     * @param fields        An ArrayList<String> holding the fieldnames that will be checked within the category
+     * @param isHtmlArea    An ArrayList<String> holding true/false values corresponding to the fieldname param
+     */
+    public void checkOnCategories(int catKey, ArrayList<String> fields, ArrayList<String> isHtmlArea){
+        GetContentByCategoryParams gcp = new GetContentByCategoryParams();
+        gcp.categoryKeys = new int[]{catKey};
+        gcp.childrenLevel = 0;
+        gcp.parentLevel = 0;
+        gcp.includeData = true;
+        gcp.includeUserRights = false;
+        gcp.index = 0;
+        gcp.levels = 1;
+        gcp.count = 10000;
+        
+
+        // content from category as jdom
+        Document cont = this.client.getContentByCategory(gcp);
+
+        // get root
+        Element temp1 = cont.getRootElement();
+        List<Element> contents = temp1.getChildren("content");
+
+        ListIterator<Element> contentiterator = contents.listIterator();
+        while (contentiterator.hasNext()) {
+            // get the contentdata for each content
+            Element temp = contentiterator.next();
+            String contentKey = temp.getAttributeValue("key");
+            Element contentdata = temp.getChild("contentdata");
+
+
+            String contentTitle;
+
+            // test to ensure that a title is selected, to avoid null pointer
+            if(contentdata.getChild("heading") != null){
+                contentTitle = contentdata.getChild("heading").getText();
+            }
+            else if(contentdata.getChild("title") != null){
+                contentTitle = contentdata.getChild("title").getText();
+            }
+            else{
+                contentTitle = "fant ingen innholdstittel";
+            }
+
+
+            int counter = 0;
+            // go through the fields from the config file
+            ListIterator<String> iter = fields.listIterator();
+            while(iter.hasNext()){
+                String field = iter.next();
+
+                // get any descendants of contentdata that has the same name as field
+                Iterator fieldIter = contentdata.getDescendants(new ElementFilter(field));
+                while(fieldIter.hasNext()){
+
+                   Element ele = (Element) fieldIter.next();
+                    String urlText = ele.getText();
+
+                    if(isHtmlArea.get(counter).equals("true")){
+                        Iterator aIterator = ele.getDescendants(new ElementFilter("a"));
+                        while(aIterator.hasNext()){
+                            Element aTag = (Element) aIterator.next();
+                            String message = this.checkURL(aTag.getAttributeValue("href"));
+
+                            if(!message.equals("")){
+                                // make html markup
+                                this.generatedMail.add("<tr><td>" + contentKey + "</td>" + "<td>" + contentTitle + "</td>" + message + "<tr/>");
+                            }
+                        }
+                    }
+                    else if(!urlText.equals(""))
+                    {
+                        String message = this.checkURL(urlText);
+
+                        if(!message.equals("")){
+                            // make html markup
+                            this.generatedMail.add("<tr>" + "<td>" + contentKey + "</td>" + "<td>" + contentTitle + "</td>" + message + "<tr/>");
+                        }
+                    }
+                }
+                counter++;
+            }    
+        }
+    }
+
+
+    /**
+     * Checks a url a and returns the response code it generates
+     *
+     * @param url   A string containing a url
+     *
+     * @return      A string containing html table markup returning a link to the checked url as well as the response
+     *              code with its' explanation
+     */
+
+
+    public String checkURL(String url){
+        try{
+            // setup connection to url
+            HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+            con.setRequestMethod("HEAD");
+            con.setReadTimeout(6000);
+            //con.setConnectTimeout(10000);
+            int response = con.getResponseCode();
+
+            String response_message;
+
+            switch(response){
+                case 200: response_message = ""; break;  // all 200 codes is a success
+                case 201: response_message = ""; break;
+                case 202: response_message = ""; break;
+                case 203: response_message = ""; break;
+                case 204: response_message = ""; break;
+                case 205: response_message = ""; break;
+                case 206: response_message = ""; break;
+                case 300: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Multiple Choices</td>"; ++this.erroneousLinks; break;
+                case 301: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Moved Permanently</td>"; ++this.erroneousLinks; break;
+                case 302: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Found</td>"; ++this.erroneousLinks; break;
+                case 303: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " See other</td>"; ++this.erroneousLinks; break;
+                case 304: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Not Modified</td>"; ++this.erroneousLinks; break;
+                case 305: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Use Proxy</td>"; ++this.erroneousLinks; break;
+                case 307: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Temporary Redirect</td>"; ++this.erroneousLinks; break;
+                case 400: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Bad request</td>"; ++this.erroneousLinks; break;
+                case 401: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Unauthorized</td>"; ++this.erroneousLinks; break;
+                case 403: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Forbidden</td>"; ++this.erroneousLinks; break;
+                case 404: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Not Found</td>"; ++this.erroneousLinks; break;
+                case 405: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Method Not Allowed</td>"; ++this.erroneousLinks; break;
+                case 406: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Not Acceptable</td>"; ++this.erroneousLinks; break;
+                case 407: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Proxy Authentication Required</td>"; ++this.erroneousLinks; break;
+                case 408: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Request Timeout</td>"; ++this.erroneousLinks; break;
+                case 415: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Unsupported Media Type</td>"; ++this.erroneousLinks; break;
+                case 500: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Internal Server Error</td>"; ++this.erroneousLinks; break;
+                case 501: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Not Implemented</td>"; ++this.erroneousLinks; break;
+                case 502: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Bad Gateway</td>"; ++this.erroneousLinks; break;
+                case 503: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Service Unavailable</td>"; ++this.erroneousLinks; break;
+                case 504: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " Gateway Timeout</td>"; ++this.erroneousLinks; break;
+                case 505: response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + response + " HTTP Version Not Supported</td>"; ++this.erroneousLinks; break;
+                default:  response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>"  + " Something unexpected happened</td>"; ++this.erroneousLinks; break;
+            }
+            ++this.linksChecked;
+            return response_message;
+        }
+        catch (SocketTimeoutException e){
+            String response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>Connection timed out</td>";
+            ++this.linksChecked;
+            this.notWellFormedLinks++;
+            return response_message;
+        }
+        catch (Exception e) {
+            //e.printStackTrace();
+            String response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>Exception was thrown</td>";
+            ++this.linksChecked;
+            this.notWellFormedLinks++;
+            return response_message;
+        }
+    }
+
+
+    /**
+     * Reads the config for being able to specify what categories and fields should be checked
+     * config file is embedded in the package. Also returns some config to the member variables.
+     *
+     *
+     * @return      An ArrayList containing Category objects
+     */
+    public ArrayList<Category> readConfigFile(){
+        SAXBuilder parser = new SAXBuilder();
+
+        ArrayList<Category> catCollection = new ArrayList<Category>();
+
+        InputStream xml = this.getClass().getResourceAsStream("config.xml");
+        if(xml == null){
+            throw new IllegalStateException("no xml");
+        }
+
+        try{
+             System.out.println(xml);
+            Document doc = parser.build(xml);
+            Element root = doc.getRootElement();
+
+            // config stuff for the mail process
+            Element mailConf = root.getChild("mail");
+            this.hostName = mailConf.getChild("host-name").getText();
+            //this.authUser = mailConf.getChild("auth-user").getText();
+            //this.authPwd = mailConf.getChild("auth-pwd").getText();
+            this.sender = mailConf.getChild("sender").getText();
+            this.saveFolder = mailConf.getChild("save-folder").getText();
+
+            // get multiple receivers
+            Element receiver = mailConf.getChild("receivers");
+            List<Element> receivers = receiver.getChildren("receiver");
+            this.receivers = new String[receivers.size()];
+            ListIterator<Element> receiveriterator = receivers.listIterator();
+            int counter = 0;
+            while (receiveriterator.hasNext()) {
+                Element current = receiveriterator.next();
+                this.receivers[counter] = current.getText();
+                ++counter;
+            }
+            
+            List<Element> categories = root.getChildren("category");
+
+            // find all the categories and the fields that should be checked
+            ListIterator<Element> contentiterator = categories.listIterator();
+            while (contentiterator.hasNext()) {
+                Element current = contentiterator.next();
+                Element fields = current.getChild("fields");
+                List field = fields.getChildren("field");
+
+                int key = Integer.parseInt(current.getAttributeValue("key"));
+
+                Category cat = new Category(key);
+
+                // iterate all children of fields as well
+                ListIterator<Element> fielditerator = field.listIterator();
+                while (fielditerator.hasNext()) {
+                    Element currentfield = fielditerator.next();
+                    cat.setFieldValue(currentfield.getAttributeValue("name"));
+                    if(currentfield.getAttributeValue("htmlarea") != null){
+                        cat.setIsHtmlArea("true");
+                    }else{
+                        cat.setIsHtmlArea("false");
+                    }
+                }
+                catCollection.add(cat);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return catCollection;
+    }
+
+    public void createContent(int categoryKey, String contentType, String contentText){
+
+        /* create a content */
+        //String contenttype = "linkCheckerResult";
+        CreateContentParams cc = new CreateContentParams();
+        ContentDataInput cdi = new ContentDataInput(contentType);
+
+        // time taker
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timeStarted = sdf.format(cal.getTime());
+
+        // heading and checker result
+        TextInput heading = new TextInput("heading", "Checker report " + timeStarted);
+        HtmlAreaInput checkerResult = new HtmlAreaInput("htmlarea_input", contentText);
+
+        cdi.add(heading);
+        cdi.add(checkerResult);
+        cc.publishTo = null;
+        cc.publishFrom = new Date();
+        cc.status = 2;
+        cc.contentData = cdi;
+        cc.categoryKey = categoryKey;
+
+        client.createContent(cc);
+    }
+    public static void sendMail(String[] mailaddress, String mailcontent, String mailsubject, String mailfrom, String hostname) {
+        mailcontent = convertStringtoUTF8(mailcontent);
+
+        Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.setProperty("mail.host", hostname);
+
+        Session mailSession = Session.getDefaultInstance(props, null);
+        mailSession.setDebug(true);
+        try {
+            Transport transport = mailSession.getTransport();
+            MimeMessage message = new MimeMessage(mailSession);
+            message.setSubject(mailsubject);
+            message.setFrom(new InternetAddress(mailfrom));
+            message.setContent(mailcontent, "text/html; charset=utf-8");
+
+            // message.setText("", "UTF-8");
+            for(String c : mailaddress){
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(c));
+            }
+
+            transport.connect();
+            transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+            transport.close();
+        } catch (MessagingException me) {
+            me.printStackTrace();
+        }
+    }
+
+    /**
+     * Converts a String to an UTF-8 encoded String
+     *
+     * @param brS
+     * @return
+     */
+    protected static String convertStringtoUTF8(String brS) {
+        String utf8str;
+        try {
+            // Converts from Unicode to UTF-8
+            byte[] utf8 = brS.getBytes("UTF-8");
+            utf8str = new String(utf8, "UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            // This should never happen.
+            throw new IllegalStateException("Java VM error.  UTF-8 not recognized as a charset.");
+        }
+        return utf8str;
+    }
+}
