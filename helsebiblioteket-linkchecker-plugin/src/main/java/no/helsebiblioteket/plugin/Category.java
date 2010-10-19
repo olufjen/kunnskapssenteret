@@ -34,6 +34,10 @@ public class Category {
         return this.categoryKey;
     }
 
+    public void setCategoryKey(int categoryKey) {
+        this.categoryKey = categoryKey;
+    }
+
     public ArrayList<String> getFieldList(){
         return this.fields;
     }

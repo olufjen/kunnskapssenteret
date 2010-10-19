@@ -3,7 +3,7 @@
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.helsebiblioteket.plugin</groupId>
-    <artifactId>linkCheckerPlugin</artifactId>
+    <artifactId>helsebiblioteket-linkchecker-plugin</artifactId>
     <name>LinkCheckerPlugin</name>
     <version>1.0</version>
     <packaging>jar</packaging>
@@ -53,6 +53,11 @@
             <groupId>jdom</groupId>
             <artifactId>jdom</artifactId>
             <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 
