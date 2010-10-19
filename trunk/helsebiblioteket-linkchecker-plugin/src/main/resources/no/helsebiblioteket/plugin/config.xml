@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <!-- everything except category is configured in the enonic task/job -->
     <mail>
         <host-name>mail.osl.basefarm.net</host-name>
         <sender>david.p1ngviner@gmail.com</sender>
