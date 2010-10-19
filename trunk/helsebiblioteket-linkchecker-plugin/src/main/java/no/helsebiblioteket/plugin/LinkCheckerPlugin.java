@@ -60,7 +60,7 @@ public class LinkCheckerPlugin implements TaskPlugin {
     private int saveFolder = 0;
     private int linkTimeoutMillis = 6000;
     private List<String> generatedMail = new ArrayList<String>();
-    private String hostName;
+    private String hostName; // smtp host
     private List<String> receivers = new ArrayList<String>();
     private List<Category> allCategories = new ArrayList<Category>();
     private List<Category> configCategories = new ArrayList<Category>();
@@ -73,7 +73,7 @@ public class LinkCheckerPlugin implements TaskPlugin {
     private String cmsLinkTimeoutMillis;
     private String cmsUser;
     private String cmsPassword;
-    private String cmsCategoriesString;
+    private String cmsCategoriesString; // catKey1,fieldName1,ishtml1, ... fieldNameN,ishtmlN;catKey2,fieldName2,ishtml2 ...
 
     protected enum TaskPropertyKeys {
         cmsReceivers,
@@ -622,7 +622,7 @@ public class LinkCheckerPlugin implements TaskPlugin {
         props.setProperty("mail.host", hostname);
 
         Session mailSession = Session.getDefaultInstance(props, null);
-        mailSession.setDebug(true);
+        mailSession.setDebug(false);
         try {
             Transport transport = mailSession.getTransport();
             MimeMessage message = new MimeMessage(mailSession);
