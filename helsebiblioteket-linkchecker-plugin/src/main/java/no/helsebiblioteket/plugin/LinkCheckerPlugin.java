@@ -42,9 +42,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Plugin used for testing urls stored in Enonic CMS. Uses a xml file for declaring which categories and fields within
- * the category that should be checked. The content is extracted from Enonic CMS. The urls found in the content
- * is accessed and the response code is received. The urls returning non-OK codes is sent as an email.
+ * Plugin used for testing urls stored in Enonic CMS. The content is extracted from Enonic CMS.
+ * The urls found in the content is accessed and the response code is received. The urls
+ * returning non-OK codes is sent as an email.
  *
  * @author David Aasterud
  * @version 1.0
@@ -85,12 +85,6 @@ public class LinkCheckerPlugin implements TaskPlugin {
         cmsPassword,
         cmsHostname,
         cmsCategoriesString
-    }
-
-    protected enum CategoryKeys {
-        catNum,
-        fieldName,
-        isHtmlArea
     }
 
     public LinkCheckerPlugin() {
@@ -177,7 +171,7 @@ public class LinkCheckerPlugin implements TaskPlugin {
                 }
                 if (cat.getIsHtmlArea().size() != cat.getFieldList().size()) {
                     okCat = false;
-                    log.error("Un-even number of fields and htmlAreaflags");
+                    log.error("Un-even number of fields and htmlAreaflags.");
                 }
 
                 if (okCat) {
