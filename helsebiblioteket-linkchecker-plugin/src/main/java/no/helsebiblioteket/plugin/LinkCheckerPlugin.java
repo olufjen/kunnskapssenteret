@@ -371,6 +371,7 @@ public class LinkCheckerPlugin implements TaskPlugin {
     public String checkURL(String url) {
         try {
             // setup connection to url
+            log.info("Checking url: " + url);
             HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
             con.setRequestMethod("HEAD");
             con.setReadTimeout(linkTimeoutMillis);
@@ -502,8 +503,8 @@ public class LinkCheckerPlugin implements TaskPlugin {
             this.notWellFormedLinks++;
             return response_message;
         } catch (Exception e) {
-            //e.printStackTrace();
-            String response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>Exception was thrown</td>";
+            log.error("Error checking link.", e);
+            String response_message = "<td><a href='" + url + "'>" + url + "</a></td>" + "<td>Exception was thrown (and logged): " +e.getMessage() + "</td>";
             ++this.linksChecked;
             this.notWellFormedLinks++;
             return response_message;
