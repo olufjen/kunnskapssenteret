@@ -515,7 +515,7 @@ public class LinkCheckerPlugin implements TaskPlugin {
      * Reads the config for being able to specify what categories and fields should be checked
      * config file is embedded in the package. Also returns some config to the member variables.
      *
-     *
+     * @deprecated
      * @return      An ArrayList containing Category objects
      */
     public ArrayList<Category> readConfigFile() {
