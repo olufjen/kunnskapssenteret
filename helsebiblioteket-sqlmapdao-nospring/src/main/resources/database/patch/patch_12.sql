@@ -1,0 +1,1 @@
+ALTER TABLE tbl_access ADD is_national BOOLEAN NOT NULL DEFAULT FALSE;
