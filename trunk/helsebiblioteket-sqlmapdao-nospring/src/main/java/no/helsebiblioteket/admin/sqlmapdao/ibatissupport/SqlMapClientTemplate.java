@@ -24,14 +24,11 @@ public class SqlMapClientTemplate implements SqlMapClient {
 
     static {
         try {
-            String resource = "com/ibatis/example/sqlMap-config.xml";
+            String resource = "META-INF/ibatis/sqlMap-config.xml";
             Reader reader = Resources.getResourceAsReader(resource);
             sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
         } catch (Exception e) {
-
-            e.printStackTrace();
             throw new RuntimeException("Error initializing ibatis.", e);
-
         }
     }
 
