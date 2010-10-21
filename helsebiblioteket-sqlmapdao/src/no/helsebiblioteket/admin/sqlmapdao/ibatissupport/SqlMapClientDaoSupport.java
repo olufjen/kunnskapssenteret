@@ -3,7 +3,7 @@
  package no.helsebiblioteket.admin.sqlmapdao.ibatissupport;
  
  import javax.sql.DataSource;
-  import com.ibatis.sqlmap.client.SqlMapClient;
+ import com.ibatis.sqlmap.client.SqlMapClient;
  
  
  /**
@@ -23,10 +23,14 @@
   * @see org.springframework.orm.ibatis.SqlMapClientTemplate
   * @see org.springframework.orm.ibatis.SqlMapClientTemplate#setExceptionTranslator
   */
- public abstract class SqlMapClientDaoSupport extends DaoSupport {
+ public abstract class SqlMapClientDaoSupport  {
  
-     private SqlMapClientTemplate sqlMapClientTemplate = new SqlMapClientTemplate();
+     //private SqlMapClientTemplate sqlMapClientTemplate = new SqlMapClientTemplate();
  
+	 private class SqlMapClientTemplate {
+		 public SqlMapClientTemplate() { super(); }
+	 } // dummy
+	 
      private boolean externalTemplate = false;
  
      /**
@@ -35,14 +39,14 @@
       * @see #setSqlMapClient
       */
      public final void setDataSource(DataSource   dataSource) {
-       this.sqlMapClientTemplate.setDataSource(dataSource);
+      // this.sqlMapClientTemplate.setDataSource(dataSource);
      }
  
      /**
       * Return the JDBC DataSource used by this DAO.
       */
      public final DataSource   getDataSource() {
-         return (this.sqlMapClientTemplate != null ? this.sqlMapClientTemplate.getDataSource() : null);
+      return null;//   return (this.sqlMapClientTemplate != null ? this.sqlMapClientTemplate.getDataSource() : null);
      }
  
      /**
@@ -51,14 +55,14 @@
       * @see #setSqlMapClientTemplate
      */
      public final void setSqlMapClient(SqlMapClient sqlMapClient) {
-         this.sqlMapClientTemplate.setSqlMapClient(sqlMapClient);
+         //this.sqlMapClientTemplate.setSqlMapClient(sqlMapClient);
      }
  
      /**
       * Return the iBATIS Database Layer SqlMapClient that this template works with.
       */
      public final SqlMapClient getSqlMapClient() {
-         return this.sqlMapClientTemplate.getSqlMapClient();
+         return null;//return this.sqlMapClientTemplate.getSqlMapClient();
      }
  
      /**
@@ -67,11 +71,11 @@
       * @see #setSqlMapClient
       */
      public final void setSqlMapClientTemplate(SqlMapClientTemplate sqlMapClientTemplate) {
-         if (sqlMapClientTemplate == null) {
-             throw new IllegalArgumentException  ("Cannot set sqlMapClientTemplate to null");
-         }
-         this.sqlMapClientTemplate = sqlMapClientTemplate;
-         this.externalTemplate = true;
+        // if (sqlMapClientTemplate == null) {
+        //     throw new IllegalArgumentException  ("Cannot set sqlMapClientTemplate to null");
+        // }
+       //  this.sqlMapClientTemplate = sqlMapClientTemplate;
+       //  this.externalTemplate = true;
      }
  
      /**
@@ -79,13 +83,13 @@
       * pre-initialized with the SqlMapClient or set explicitly.
       */
      public final SqlMapClientTemplate getSqlMapClientTemplate() {
-       return sqlMapClientTemplate;
+      return null;// return sqlMapClientTemplate;
      }
  
      protected final void checkDaoConfig() {
-         if (!this.externalTemplate) {
-             this.sqlMapClientTemplate.afterPropertiesSet();
-         }
+        // if (!this.externalTemplate) {
+        //     this.sqlMapClientTemplate.afterPropertiesSet();
+        // }
      }
  
  }
