@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.ActionDao;
 import no.helsebiblioteket.admin.domain.AccessType;
@@ -11,7 +11,7 @@ import no.helsebiblioteket.admin.domain.Resource;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.line.ActionLine;
 
-public class SqlMapActionDao extends SqlMapClientDaoSupport implements ActionDao {
+public class SqlMapActionDao extends IbatisSqlMapClientDaoSupport implements ActionDao {
 	@Override
 	public void insertAction(ActionLine actionLine) {
 		getSqlMapClientTemplate().insert("insertAction", actionLine);

@@ -1,12 +1,12 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationNameDao;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
 
-public class SqlMapOrganizationNameDao extends SqlMapClientDaoSupport implements OrganizationNameDao {
+public class SqlMapOrganizationNameDao extends IbatisSqlMapClientDaoSupport implements OrganizationNameDao {
 	public void insertOrganizationName(Organization organization, OrganizationName organizationName) {
 		organizationName.setOrgUnitId(organization.getId());
 		getSqlMapClientTemplate().insert("insertOrganizationName", organizationName);

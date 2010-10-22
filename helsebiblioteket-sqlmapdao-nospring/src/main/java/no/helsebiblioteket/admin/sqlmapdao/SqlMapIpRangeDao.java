@@ -1,12 +1,12 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.IpRangeDao;
 import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.line.IpAddressLine;
 
-public class SqlMapIpRangeDao extends SqlMapClientDaoSupport implements IpRangeDao {
+public class SqlMapIpRangeDao extends IbatisSqlMapClientDaoSupport implements IpRangeDao {
 	public void insertIpRange(IpAddressLine ipRange){
 		getSqlMapClientTemplate().insert("insertIpRange", ipRange);
 		IpAddressLine tmp = (IpAddressLine) getSqlMapClientTemplate().queryForObject("getIpRangeById", ipRange.getId());

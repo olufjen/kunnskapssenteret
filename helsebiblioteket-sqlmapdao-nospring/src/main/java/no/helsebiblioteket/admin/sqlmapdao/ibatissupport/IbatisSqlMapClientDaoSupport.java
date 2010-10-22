@@ -7,9 +7,9 @@
  import javax.sql.DataSource;
  import com.ibatis.sqlmap.client.SqlMapClient;
 
- public abstract class SqlMapClientDaoSupport  {
+ public abstract class IbatisSqlMapClientDaoSupport  {
  
-     private SqlMapClientTemplate sqlMapClientTemplate = new SqlMapClientTemplate();
+     private IbatisSqlMapClientTemplate sqlMapClientTemplate = new IbatisSqlMapClientTemplate();
 
      /**
       * Return the JDBC DataSource used by this DAO.
@@ -30,7 +30,7 @@
       * as an alternative to specifying a SqlMapClient.
       * @see #setSqlMapClient
       */
-     public final void setSqlMapClientTemplate(SqlMapClientTemplate sqlMapClientTemplate) {
+     public final void setSqlMapClientTemplate(IbatisSqlMapClientTemplate sqlMapClientTemplate) {
          if (sqlMapClientTemplate == null) {
              throw new IllegalArgumentException  ("Cannot set sqlMapClientTemplate to null");
          }
@@ -41,7 +41,7 @@
       * Return the SqlMapClientTemplate for this DAO,
       * pre-initialized with the SqlMapClient or set explicitly.
       */
-     public final SqlMapClientTemplate getSqlMapClientTemplate() {
+     public final IbatisSqlMapClientTemplate getSqlMapClientTemplate() {
       return sqlMapClientTemplate;
      }
  

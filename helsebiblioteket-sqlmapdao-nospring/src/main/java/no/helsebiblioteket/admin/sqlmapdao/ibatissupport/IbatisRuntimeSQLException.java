@@ -4,13 +4,13 @@
 
 package no.helsebiblioteket.admin.sqlmapdao.ibatissupport;
 
-public class RuntimeSQLException extends NestedRuntimeException {
+public class IbatisRuntimeSQLException extends IbatisNestedRuntimeException {
 
     /**
      * Constructor for DataAccessException.
     :             * @param msg the detail message
      */
-    public RuntimeSQLException(String msg) {
+    public IbatisRuntimeSQLException(String msg) {
         super(msg);
     }
 
@@ -20,7 +20,7 @@ public class RuntimeSQLException extends NestedRuntimeException {
      * @param cause the root cause (usually from using a underlying
      * data access API such as JDBC)
      */
-    public RuntimeSQLException(String msg, Throwable cause) {
+    public IbatisRuntimeSQLException(String msg, Throwable cause) {
         super(msg, cause);
     }
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import no.helsebiblioteket.admin.dao.ProxyConfigDao;
 import no.helsebiblioteket.admin.domain.line.ProxyConfigLine;
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 
-public class SqlMapProxyConfigDao extends SqlMapClientDaoSupport implements ProxyConfigDao {
+public class SqlMapProxyConfigDao extends IbatisSqlMapClientDaoSupport implements ProxyConfigDao {
 
 	@SuppressWarnings("unchecked")
 	@Override

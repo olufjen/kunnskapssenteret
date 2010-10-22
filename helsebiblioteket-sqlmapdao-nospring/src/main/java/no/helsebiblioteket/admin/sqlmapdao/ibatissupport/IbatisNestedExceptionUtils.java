@@ -4,7 +4,7 @@
 
 package no.helsebiblioteket.admin.sqlmapdao.ibatissupport;
 
-public abstract class NestedExceptionUtils {
+public abstract class IbatisNestedExceptionUtils {
 
     public static String buildMessage(String message, Throwable cause) {
         if (cause != null) {

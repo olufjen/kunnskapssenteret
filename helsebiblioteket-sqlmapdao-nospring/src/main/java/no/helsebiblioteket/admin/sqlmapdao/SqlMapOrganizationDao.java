@@ -1,10 +1,10 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationDao;
 import no.helsebiblioteket.admin.domain.Organization;
 
-public class SqlMapOrganizationDao extends SqlMapClientDaoSupport implements OrganizationDao {
+public class SqlMapOrganizationDao extends IbatisSqlMapClientDaoSupport implements OrganizationDao {
 	@Override
 	public void insertOrganization(Organization organization) {
 		getSqlMapClientTemplate().insert("insertOrganization", organization);

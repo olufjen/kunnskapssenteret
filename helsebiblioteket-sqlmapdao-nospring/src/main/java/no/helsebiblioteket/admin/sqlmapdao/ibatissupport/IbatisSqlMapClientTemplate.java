@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 
-public class SqlMapClientTemplate implements SqlMapClient {
+public class IbatisSqlMapClientTemplate implements SqlMapClient {
 
     private static final SqlMapClient sqlMap;
 
     static {
         try {
-            String resource = "META-INF/ibatis/sqlMap-config.xml";
+            String resource = "sqlmap-config.xml";
             Reader reader = Resources.getResourceAsReader(resource);
             sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
     }
 
     public SqlMapClient getSqlMapClient() {
-        return SqlMapClientTemplate.getSqlMapInstance();
+        return IbatisSqlMapClientTemplate.getSqlMapInstance();
     }
 
     public SqlMapSession openSession() {
@@ -60,84 +60,84 @@ public class SqlMapClientTemplate implements SqlMapClient {
         sqlMap.flushDataCache(string);
     }
 
-    public Object insert(String string, Object o) throws RuntimeSQLException {
+    public Object insert(String string, Object o) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.insert(string, o);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public Object insert(String string) throws RuntimeSQLException {
+    public Object insert(String string) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.insert(string);
 
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public int update(String string, Object o) throws RuntimeSQLException {
+    public int update(String string, Object o) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.update(string, o);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public int update(String string) throws RuntimeSQLException {
+    public int update(String string) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.update(string);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public int delete(String string, Object o) throws RuntimeSQLException {
+    public int delete(String string, Object o) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.delete(string, o);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public int delete(String string) throws RuntimeSQLException {
+    public int delete(String string) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.delete(string);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public Object queryForObject(String string, Object o) throws RuntimeSQLException {
+    public Object queryForObject(String string, Object o) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForObject(string, o);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public Object queryForObject(String string) throws RuntimeSQLException {
+    public Object queryForObject(String string) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForObject(string);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public Object queryForObject(String string, Object o, Object o1) throws RuntimeSQLException {
+    public Object queryForObject(String string, Object o, Object o1) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForObject(string, o, o1);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public List queryForList(String string, Object o) throws RuntimeSQLException {
+    public List queryForList(String string, Object o) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForList(string, o);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -145,71 +145,71 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             return sqlMap.queryForList(string);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public List queryForList(String string, Object o, int i, int i1) throws RuntimeSQLException {
+    public List queryForList(String string, Object o, int i, int i1) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForList(string, o, i, i1);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public List queryForList(String string, int i, int i1) throws RuntimeSQLException {
+    public List queryForList(String string, int i, int i1) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForList(string, i, i1);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public void queryWithRowHandler(String string, Object o, RowHandler rh) throws RuntimeSQLException {
+    public void queryWithRowHandler(String string, Object o, RowHandler rh) throws IbatisRuntimeSQLException {
         try {
             sqlMap.queryWithRowHandler(string, o, rh);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public void queryWithRowHandler(String string, RowHandler rh) throws RuntimeSQLException {
+    public void queryWithRowHandler(String string, RowHandler rh) throws IbatisRuntimeSQLException {
         try {
             sqlMap.queryWithRowHandler(string, rh);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public PaginatedList queryForPaginatedList(String string, Object o, int i) throws RuntimeSQLException {
+    public PaginatedList queryForPaginatedList(String string, Object o, int i) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForPaginatedList(string, o, i);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public PaginatedList queryForPaginatedList(String string, int i) throws RuntimeSQLException {
+    public PaginatedList queryForPaginatedList(String string, int i) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForPaginatedList(string, i);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public Map queryForMap(String string, Object o, String string1) throws RuntimeSQLException {
+    public Map queryForMap(String string, Object o, String string1) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForMap(string, o, string1);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
-    public Map queryForMap(String string, Object o, String string1, String string2) throws RuntimeSQLException {
+    public Map queryForMap(String string, Object o, String string1, String string2) throws IbatisRuntimeSQLException {
         try {
             return sqlMap.queryForMap(string, o, string1, string2);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -217,7 +217,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             sqlMap.startBatch();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -225,7 +225,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             return sqlMap.executeBatch();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -233,7 +233,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             return sqlMap.executeBatchDetailed();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -241,7 +241,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             sqlMap.startTransaction();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -249,7 +249,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             sqlMap.startTransaction(i);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -257,7 +257,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             sqlMap.commitTransaction();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -265,7 +265,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             sqlMap.endTransaction();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -273,7 +273,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             sqlMap.setUserConnection(cnctn);
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -281,7 +281,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             return sqlMap.getUserConnection();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 
@@ -289,7 +289,7 @@ public class SqlMapClientTemplate implements SqlMapClient {
         try {
             return sqlMap.getCurrentConnection();
         } catch (SQLException sex) {
-            throw new RuntimeSQLException("SQL error performing ibatis operation.", sex);
+            throw new IbatisRuntimeSQLException("SQL error performing ibatis operation.", sex);
         }
     }
 

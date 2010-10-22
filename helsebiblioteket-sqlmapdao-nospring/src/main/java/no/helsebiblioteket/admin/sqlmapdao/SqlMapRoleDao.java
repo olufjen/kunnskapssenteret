@@ -2,14 +2,14 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 
 import java.util.List;
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.RoleDao;
 import no.helsebiblioteket.admin.dao.keys.RoleSystemCompositeKey;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.System;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 
-public class SqlMapRoleDao extends SqlMapClientDaoSupport implements RoleDao {
+public class SqlMapRoleDao extends IbatisSqlMapClientDaoSupport implements RoleDao {
 	@Override
 	public Role getRoleByKeySystem(UserRoleKey roleKey, System system) {
 		RoleSystemCompositeKey compositeKey = new RoleSystemCompositeKey();

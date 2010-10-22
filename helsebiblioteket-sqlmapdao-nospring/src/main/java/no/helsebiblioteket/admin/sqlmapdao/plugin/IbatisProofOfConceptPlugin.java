@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 
+package no.helsebiblioteket.admin.sqlmapdao.plugin;
+
 import com.enonic.cms.api.plugin.HttpControllerPlugin;
 
 import javax.servlet.http.HttpServletRequest;

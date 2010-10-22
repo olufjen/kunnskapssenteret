@@ -2,13 +2,13 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
 
 
-public class SqlMapResourceDao extends SqlMapClientDaoSupport implements ResourceDao {
+public class SqlMapResourceDao extends IbatisSqlMapClientDaoSupport implements ResourceDao {
 	public void insertSupplierSourceResource(SupplierSourceResource resource) {
 		getSqlMapClientTemplate().insert("insertSupplierSourceResource", resource);
 		SupplierSourceResource tmp = (SupplierSourceResource) getSqlMapClientTemplate().queryForObject("getSupplierSourceResourceById", resource.getResource().getId());
