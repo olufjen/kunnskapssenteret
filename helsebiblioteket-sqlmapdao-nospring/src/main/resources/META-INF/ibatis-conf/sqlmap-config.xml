@@ -24,7 +24,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
     <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserList.xml" />
     <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserRole.xml" />
     <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/sql/UserExport.xml" />
-
+<transactionManager type="JDBC">
     <dataSource type="DBCP">
         <property name="driverClassName" value="org.postgresql.driver"/>
         <property name="url" value="jdbc:postgresql://192.168.2.50/helsebiblioteket_admin"/>
@@ -39,5 +39,5 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
         <property name="testOnBorrow" value="true"/>
 
     </dataSource>
-    
+    </transactionManager>
 </sqlMapConfig>
