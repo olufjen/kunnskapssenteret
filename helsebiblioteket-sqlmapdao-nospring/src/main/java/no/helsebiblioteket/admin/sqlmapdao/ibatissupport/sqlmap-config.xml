@@ -4,7 +4,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 <!-- Always ensure to use the correct XML header as above! -->
 <sqlMapConfig>
-
     <dataSource type="DBCP">
         <property name="driverClassName" value="org.postgresql.driver"/>
         <property name="url" value="jdbc:postgresql://192.168.2.50/helsebiblioteket_admin"/>
