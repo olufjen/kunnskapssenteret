@@ -11,6 +11,7 @@ import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 import com.ibatis.sqlmap.client.SqlMapSession;
 import com.ibatis.sqlmap.client.event.RowHandler;
 import com.ibatis.sqlmap.engine.execution.BatchException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,8 +26,9 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
     static {
         try {
             String resource = "sqlmap-config.xml";
-            Reader reader = Resources.getResourceAsReader(resource);
-            sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
+            //Reader reader = Resources.getResourceAsReader(resource);
+            InputStream istream = IbatisSqlMapClientTemplate.class.getResourceAsStream(resource);
+            sqlMap = SqlMapClientBuilder.buildSqlMapClient(istream);
         } catch (Exception e) {
             throw new RuntimeException("Error initializing ibatis.", e);
         }
