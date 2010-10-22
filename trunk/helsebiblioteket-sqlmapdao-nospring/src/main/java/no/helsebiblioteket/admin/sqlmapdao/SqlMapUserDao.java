@@ -1,11 +1,11 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
 
-public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
+public class SqlMapUserDao extends IbatisSqlMapClientDaoSupport implements UserDao {
 	@Override
 	public void insertUser(OrganizationUser user){
 		getSqlMapClientTemplate().insert("insertUser", user);

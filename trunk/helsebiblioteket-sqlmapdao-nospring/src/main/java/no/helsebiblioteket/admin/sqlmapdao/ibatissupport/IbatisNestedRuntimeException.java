@@ -4,13 +4,13 @@
 
 package no.helsebiblioteket.admin.sqlmapdao.ibatissupport;
 
-public abstract class NestedRuntimeException extends RuntimeException {
+public abstract class IbatisNestedRuntimeException extends RuntimeException {
 
-    public NestedRuntimeException(String msg) {
+    public IbatisNestedRuntimeException(String msg) {
         super(msg);
     }
 
-    public NestedRuntimeException(String msg, Throwable cause) {
+    public IbatisNestedRuntimeException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
@@ -19,7 +19,7 @@ public abstract class NestedRuntimeException extends RuntimeException {
      * if there is one.
      */
     public String getMessage() {
-        return NestedExceptionUtils.buildMessage(super.getMessage(),
+        return IbatisNestedExceptionUtils.buildMessage(super.getMessage(),
                 getCause());
     }
 
@@ -69,8 +69,8 @@ public abstract class NestedRuntimeException extends RuntimeException {
         if (cause == this) {
             return false;
         }
-        if (cause instanceof NestedRuntimeException) {
-            return ((NestedRuntimeException) cause).contains(exType);
+        if (cause instanceof IbatisNestedRuntimeException) {
+            return ((IbatisNestedRuntimeException) cause).contains(exType);
         } else {
             while (cause != null) {
                 if (exType.isInstance(cause)) {

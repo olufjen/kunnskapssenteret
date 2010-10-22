@@ -1,12 +1,12 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserRoleDao;
 import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.line.UserRoleLine;
 
-public class SqlMapUserRoleDao extends SqlMapClientDaoSupport implements UserRoleDao {
+public class SqlMapUserRoleDao extends IbatisSqlMapClientDaoSupport implements UserRoleDao {
 	@Override
 	public void insertUserRole(UserRoleLine userRole) {
 		getSqlMapClientTemplate().insert("insertUserRole", userRole);

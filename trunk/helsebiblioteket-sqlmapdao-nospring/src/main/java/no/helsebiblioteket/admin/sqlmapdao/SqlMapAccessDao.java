@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.AccessDao;
 import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.Resource;
@@ -18,7 +18,7 @@ import no.helsebiblioteket.admin.domain.list.UserListItem;
  * 
  * Should also be extended for OrganizationAccess.
  */
-public class SqlMapAccessDao extends SqlMapClientDaoSupport implements AccessDao {
+public class SqlMapAccessDao extends IbatisSqlMapClientDaoSupport implements AccessDao {
 	public void insertResourceAccessForeignKeys(ResourceAccessForeignKeys access) {
 		getSqlMapClientTemplate().insert("insertResourceAccessForeignKeys", access);
 		ResourceAccessForeignKeys tmp = (ResourceAccessForeignKeys) getSqlMapClientTemplate().queryForObject("getResourceAccessForeignKeysByAccessId", access.getResourceAccess().getAccess().getId());

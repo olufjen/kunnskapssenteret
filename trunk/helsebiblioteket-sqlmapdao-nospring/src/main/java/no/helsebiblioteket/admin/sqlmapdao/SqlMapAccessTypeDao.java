@@ -2,7 +2,7 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 
 import java.util.List;
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.AccessTypeDao;
 import no.helsebiblioteket.admin.dao.keys.AccessTypeCompositeKey;
 import no.helsebiblioteket.admin.domain.AccessType;
@@ -10,7 +10,7 @@ import no.helsebiblioteket.admin.domain.category.AccessTypeCategory;
 import no.helsebiblioteket.admin.domain.key.AccessTypeKey;
 
 
-public class SqlMapAccessTypeDao extends SqlMapClientDaoSupport implements AccessTypeDao {
+public class SqlMapAccessTypeDao extends IbatisSqlMapClientDaoSupport implements AccessTypeDao {
 	public AccessType getAccessTypeByKey(AccessTypeKey key, AccessTypeCategory category) {
 		AccessTypeCompositeKey compositeKey = new AccessTypeCompositeKey();
 		compositeKey.setCategory(category.getValue());

@@ -1,12 +1,12 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.ContactInformationDao;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.Person;
 
-public class SqlMapContactInformationDao extends SqlMapClientDaoSupport implements ContactInformationDao {
+public class SqlMapContactInformationDao extends IbatisSqlMapClientDaoSupport implements ContactInformationDao {
 	public void insertContactInformation(ContactInformation contactInformation){
 		getSqlMapClientTemplate().insert("insertContactInformation", contactInformation);
 		ContactInformation tmp = (ContactInformation) getSqlMapClientTemplate().queryForObject("getContactInformationById", contactInformation.getId());

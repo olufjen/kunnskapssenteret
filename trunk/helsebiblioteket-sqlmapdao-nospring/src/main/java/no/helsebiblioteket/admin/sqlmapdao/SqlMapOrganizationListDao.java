@@ -3,7 +3,7 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.ArrayList;
 import java.util.List;
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.OrganizationListDao;
 import no.helsebiblioteket.admin.dao.join.OrgUnitNameJoin;
 import no.helsebiblioteket.admin.domain.IpAddress;
@@ -14,7 +14,7 @@ import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.sqlmapdao.input.OrganizationTypeInput;
 import no.helsebiblioteket.admin.sqlmapdao.input.SearchStringInput;
 
-public class SqlMapOrganizationListDao extends SqlMapClientDaoSupport implements OrganizationListDao {
+public class SqlMapOrganizationListDao extends IbatisSqlMapClientDaoSupport implements OrganizationListDao {
 	private List<OrganizationListItem> translateList(List<OrgUnitNameJoin> list){
 		List<OrganizationListItem> result = new ArrayList<OrganizationListItem>();
 		if(list.size()==0){ return result; }

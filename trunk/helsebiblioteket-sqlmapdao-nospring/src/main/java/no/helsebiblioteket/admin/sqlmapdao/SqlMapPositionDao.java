@@ -2,13 +2,13 @@ package no.helsebiblioteket.admin.sqlmapdao;
 
 import java.util.List;
 
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 
 import no.helsebiblioteket.admin.dao.PositionDao;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 
-public class SqlMapPositionDao extends SqlMapClientDaoSupport implements PositionDao {
+public class SqlMapPositionDao extends IbatisSqlMapClientDaoSupport implements PositionDao {
 	@Override
 	public void insertPosition(Position position) {
 		getSqlMapClientTemplate().insert("insertPosition", position);

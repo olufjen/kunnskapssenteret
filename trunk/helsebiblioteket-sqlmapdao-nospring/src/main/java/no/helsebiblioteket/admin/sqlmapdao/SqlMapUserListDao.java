@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.SqlMapClientDaoSupport;
+import no.helsebiblioteket.admin.sqlmapdao.ibatissupport.IbatisSqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserListDao;
 import no.helsebiblioteket.admin.domain.Role;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
@@ -14,7 +14,7 @@ import no.helsebiblioteket.admin.domain.line.UserListLine;
 import no.helsebiblioteket.admin.domain.list.UserListItem;
 import no.helsebiblioteket.admin.sqlmapdao.input.SearchStringInput;
 
-public class SqlMapUserListDao extends SqlMapClientDaoSupport implements UserListDao {
+public class SqlMapUserListDao extends IbatisSqlMapClientDaoSupport implements UserListDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserListItem> getUserListPaged(int skip, int max) {
