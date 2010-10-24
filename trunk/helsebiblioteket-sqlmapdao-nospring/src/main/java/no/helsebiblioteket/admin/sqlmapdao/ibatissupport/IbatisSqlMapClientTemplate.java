@@ -25,7 +25,8 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
     static {
         try {
 
-            // enten sånn
+            // enten sånn ... men nå enten sette classloader her også
+            // eller loade sqlMaps'ene med url istedenfor resource.
             // String resource = "sqlmap-config-single.xml";
             // InputStream istream = IbatisSqlMapClientTemplate.class.getResourceAsStream(resource);
             // sqlMap = SqlMapClientBuilder.buildSqlMapClient(istream);
