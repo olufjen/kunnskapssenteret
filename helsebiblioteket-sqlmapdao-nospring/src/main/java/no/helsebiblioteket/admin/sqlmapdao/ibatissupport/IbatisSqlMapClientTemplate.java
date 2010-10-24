@@ -33,7 +33,7 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
             // eller sånn
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
             Thread.currentThread().setContextClassLoader(IbatisSqlMapClientTemplate.class.getClassLoader());
-            Reader reader = Resources.getResourceAsReader("/no/helsebiblioteket/admin/sqlmapdao/ibatissupport/sqlmap-config-single.xml");
+            Reader reader = Resources.getResourceAsReader("/no/helsebiblioteket/admin/sqlmapdao/ibatissupport/sqlmap-config.xml");
             sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
             Thread.currentThread().setContextClassLoader(cl);
         } catch (Exception e) {
