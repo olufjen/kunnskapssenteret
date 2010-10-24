@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="IpRange">
+	<typeAlias alias="ipRange" type="no.helsebiblioteket.admin.domain.line.IpAddressLine"/>
+	<resultMap id="getIpRangeResultMap" class="ipRange">
+		<result property="id" column="ip_address_id" />
+		<result property="ipAddressFrom" column="ip_address_from" />
+		<result property="ipAddressTo" column="ip_address_to" />
+		<result property="orgUnitId" column="org_unit_id" />
+		<result property="lastChanged" column="last_changed" />
+	</resultMap>
+	<insert id="insertIpRange" parameterClass="ipRange">
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT nextval('tbl_ip_address_ip_address_id_seq') as id;
+		</selectKey>
+		insert into tbl_ip_address (ip_address_id, ip_address_from, ip_address_to, org_unit_id, last_changed) 
+		values (#id#, #ipAddressFrom#, #ipAddressTo#, #orgUnitId#, date_trunc('milliseconds', now()));
+	</insert>
+	<update id="updateIpRange" parameterClass="ipRange">
+		update tbl_ip_address set
+		ip_address_from = #ipAddressFrom#,
+		ip_address_to = #ipAddressTo#,
+		org_unit_id = #orgUnitId#,
+      	last_changed = date_trunc('milliseconds', now())
+    	where ip_address_id = #id# and date_trunc('milliseconds', last_changed) = #lastChanged#;
+	</update>
+	<delete id="deleteIpRange" parameterClass="ipRange">
+		delete from tbl_ip_address
+		where ip_address_id = #id#
+		 	and date_trunc('milliseconds', last_changed) = #lastChanged#;
+	</delete>
+	<select id="getIpRangeById" resultMap="getIpRangeResultMap" parameterClass="integer">
+		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, date_trunc('milliseconds', last_changed) as last_changed
+		from tbl_ip_address where ip_address_id = #id#
+	</select>
+	<select id="getIpRangeListByOrganizationId" resultMap="getIpRangeResultMap" parameterClass="integer">
+		select ip_address_id, ip_address_from, ip_address_to, org_unit_id, date_trunc('milliseconds', last_changed) as last_changed
+		from tbl_ip_address where org_unit_id = #orgUnitId#
+	</select>
+</sqlMap>
