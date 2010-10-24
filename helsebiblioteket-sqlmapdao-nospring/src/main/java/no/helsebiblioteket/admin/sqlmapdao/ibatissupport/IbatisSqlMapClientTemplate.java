@@ -3,6 +3,7 @@
  */
 package no.helsebiblioteket.admin.sqlmapdao.ibatissupport;
 
+import com.ibatis.common.resources.Resources;
 import com.ibatis.common.util.PaginatedList;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
@@ -10,6 +11,7 @@ import com.ibatis.sqlmap.client.SqlMapSession;
 import com.ibatis.sqlmap.client.event.RowHandler;
 import com.ibatis.sqlmap.engine.execution.BatchException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -23,13 +25,17 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
     static {
         try {
 
-            String resource = "sqlmap-config.xml";
-            InputStream istream = IbatisSqlMapClientTemplate.class.getResourceAsStream(resource);
-            sqlMap = SqlMapClientBuilder.buildSqlMapClient(istream);
+            // enten sånn
+            // String resource = "sqlmap-config-single.xml";
+            // InputStream istream = IbatisSqlMapClientTemplate.class.getResourceAsStream(resource);
+            // sqlMap = SqlMapClientBuilder.buildSqlMapClient(istream);
 
-            //Reader reader = Resources.getResourceAsReader("sqlmap-config.xml");
-            //sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
-            
+            // eller sånn
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
+            Thread.currentThread().setContextClassLoader(IbatisSqlMapClientTemplate.class.getClassLoader());
+            Reader reader = Resources.getResourceAsReader("/no/helsebiblioteket/admin/sqlmapdao/ibatissupport/sqlmap-config-single.xml");
+            sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
+            Thread.currentThread().setContextClassLoader(cl);
         } catch (Exception e) {
             throw new RuntimeException("Error initializing ibatis.", e);
         }
