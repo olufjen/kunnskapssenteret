@@ -13,10 +13,10 @@ public abstract class IbatisSqlMapClientDaoSupport {
 
     public IbatisSqlMapClientDaoSupport() {
         super();
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+       // ClassLoader cl = Thread.currentThread().getContextClassLoader();
+       // Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
         sqlMapClientTemplate = new IbatisSqlMapClientTemplate();
-        Thread.currentThread().setContextClassLoader(cl);
+       // Thread.currentThread().setContextClassLoader(cl);
     }
 
     /**
