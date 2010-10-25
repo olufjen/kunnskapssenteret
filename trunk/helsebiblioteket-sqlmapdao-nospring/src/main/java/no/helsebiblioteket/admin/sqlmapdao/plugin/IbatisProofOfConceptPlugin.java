@@ -17,12 +17,24 @@ import no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao;
 
 public class IbatisProofOfConceptPlugin extends HttpControllerPlugin {
 
+    public PersonDao personDao = null;
+
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
+    }
+
+    public PersonDao getPersonDao() {
+        return this.personDao;
+    }
+
+
+
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String content = null;
         User user = new User();
         user.setId(1);
-        PersonDao personDao = new SqlMapPersonDao();
+        //PersonDao personDao = new SqlMapPersonDao();
 
         Person person = personDao.getPersonByUser(user);
 
