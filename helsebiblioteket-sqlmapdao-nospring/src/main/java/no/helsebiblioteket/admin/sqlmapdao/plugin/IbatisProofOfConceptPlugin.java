@@ -21,10 +21,16 @@ public class IbatisProofOfConceptPlugin extends HttpControllerPlugin {
 
         String content = null;
         User user = new User();
-        user.setUsername("hpfadmin");
+        user.setId(1);
         PersonDao personDao = new SqlMapPersonDao();
 
         Person person = personDao.getPersonByUser(user);
+
+        if (person != null) {
+            content = "First name: " + person.getFirstName();
+        } else {
+            content ="Nothing found.";
+        }
 
         response.setContentType("text/plain");
         response.setContentLength(content.getBytes().length);
