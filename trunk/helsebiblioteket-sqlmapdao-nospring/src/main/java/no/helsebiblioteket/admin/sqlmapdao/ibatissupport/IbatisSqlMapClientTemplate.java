@@ -10,7 +10,6 @@ import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 import com.ibatis.sqlmap.client.SqlMapSession;
 import com.ibatis.sqlmap.client.event.RowHandler;
 import com.ibatis.sqlmap.engine.execution.BatchException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,17 +20,17 @@ import javax.sql.DataSource;
 public class IbatisSqlMapClientTemplate implements SqlMapClient {
 
     private static final SqlMapClient sqlMap;
-    //private SqlMapClient sqlMap;
+
     static {
         try {
 
-            // enten sånn ... men nå enten sette classloader her også
+            // enten sÃ¥nn ... men nÃ¥ enten sette classloader her ogsÃ¥
             // eller loade sqlMaps'ene med url istedenfor resource.
             // String resource = "sqlmap-config-single.xml";
             // InputStream istream = IbatisSqlMapClientTemplate.class.getResourceAsStream(resource);
             // sqlMap = SqlMapClientBuilder.buildSqlMapClient(istream);
 
-            // eller sånn
+            // eller sÃ¥nn
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
             Thread.currentThread().setContextClassLoader(IbatisSqlMapClientTemplate.class.getClassLoader());
             Reader reader = Resources.getResourceAsReader("/no/helsebiblioteket/admin/sqlmapdao/ibatissupport/sqlmap-config.xml");
