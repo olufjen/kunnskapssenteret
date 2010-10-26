@@ -24,13 +24,13 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
     static {
         try {
 
-            // enten sÃ¥nn ... men nÃ¥ enten sette classloader her ogsÃ¥
+            // enten sånn ... men nå enten sette classloader her også
             // eller loade sqlMaps'ene med url istedenfor resource.
             // String resource = "sqlmap-config-single.xml";
             // InputStream istream = IbatisSqlMapClientTemplate.class.getResourceAsStream(resource);
             // sqlMap = SqlMapClientBuilder.buildSqlMapClient(istream);
 
-            // eller sÃ¥nn
+            // eller sånn
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
             Thread.currentThread().setContextClassLoader(IbatisSqlMapClientTemplate.class.getClassLoader());
             Reader reader = Resources.getResourceAsReader("/no/helsebiblioteket/admin/sqlmapdao/ibatissupport/sqlmap-config.xml");
