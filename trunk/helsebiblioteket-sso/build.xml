@@ -11,20 +11,15 @@
 	<property name="project.plugin.config.dir" value="${project.home}/verticalsite/pluginconfig" />
 	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
 	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl-home.dir}/target"/>
-	<property name="helsebiblioteket-administration-web-lib.dir" value="${helsebiblioteket-administration-web-home.dir}/lib"/>
+	<property name="helsebiblioteket-sqlmapdap-lib.dir" value="${helsebiblioteket-sqlmapdap-home.dir}/lib"/>
 	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/target"/>
 	<property name="helsebiblioteket-services-geoip-target.dir" value="${helsebiblioteket-services-geoip-home.dir}/target"/>
-	<property name="evs.cms.deploy.lib.dir" value="${evs.cms.deploy.dir}/WEB-INF/lib"/>
-	
-	
+	<property name="helsebiblioteket-sqlmapdao-sql.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/src/no/helsebiblioteket/admin/sqlmapdao/sql" />
     <path id="master-classpath">
     	<fileset dir="${project.lib.dir}">
             <include name="**/*.jar"/>
         </fileset>
     	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
-            <include name="**/*.jar"/>
-        </fileset>
-    	<fileset dir="${helsebiblioteket-administration-web-lib.dir}">
             <include name="**/*.jar"/>
         </fileset>
     </path>
@@ -78,9 +73,27 @@
 	</target>
 	
 	<target name="package" depends="build">
-		<mkdir dir="${project.target.dir}"/>
-		<jar destfile="${project.target.dir}/${project.target.filename}"
-			basedir="${project.classes.dir}" />
+		<delete includeemptydirs="true" dir="${tmp.prebuild.plugin.location}"></delete>
+		<mkdir dir="${tmp.prebuild.plugin.location}"/>
+		<mkdir dir="${tmp.prebuild.plugin.location}/META-INF"/>
+		<mkdir dir="${tmp.prebuild.plugin.location}/META-INF/lib"/>
+		<mkdir dir="${tmp.prebuild.plugin.location}/META-INF/spring"/>
+		<copy includeemptydirs="true" todir="${tmp.prebuild.plugin.location}">
+			<fileset dir="${project.classes.dir}" includes="**" />
+		</copy>
+		<copy todir="${tmp.prebuild.plugin.location}/META-INF/lib">
+			<fileset file="${helsebiblioteket-sqlmapdao-home.dir}/lib/ibatis-2.3.4.726.jar" />
+			<fileset file="${helsebiblioteket-services-geoip-home.dir}/lib/maxmindgeoip.jar" />
+			<fileset dir="${helsebiblioteket-sqlmapdao-target.dir}" includes="**/*.jar" />
+			<fileset dir="${helsebiblioteket-services-geoip-target.dir}" includes="**/*.jar" />
+			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
+			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
+			<fileset dir="${project.lib.dir}" includes="**/*.jar"/>
+		</copy>
+		<copy tofile="${tmp.prebuild.plugin.location}/META-INF/spring/context.xml" file="${project.plugin.config.dir}/context.xml"/>		
+		<mkdir dir="${project.target.dir}" />
+		<jar destfile="${project.target.dir}/${project.target.filename}" basedir="${tmp.prebuild.plugin.location}" />
+		<delete includeemptydirs="true" dir="${tmp.prebuild.plugin.location}"></delete>
 	</target>
 
 	<target name="clean" description="Clean output directories">
@@ -99,114 +112,11 @@
         </delete>
     </target>
 	
-	<target name="deploy-wsclient" depends="package">
-		<copy todir="${evs.plugin.deploy.dir}">
-			<fileset file="${project.target.dir}/${project.target.filename}" />
-			<fileset dir="${project.plugin.config.dir}" includes="*-plugin.xml"/>
-			<fileset dir="${project.plugin.config.dir}" includes="ehcache-helsebiblioteket.xml"/>
-			<fileset dir="${project.plugin.config.dir}" includes="environment.properties"/>
-			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
-			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
-			<!-- TODO: Copy all from folders. Make sure all are include from right source! -->
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/XmlSchema-1.4.2.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/neethi-2.0.4.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/annogen-0.1.0.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-kernel-1.4.1.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axis2-adb-1.4.1.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-api-1.2.7.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/axiom-impl-1.2.7.jar" />
-		</copy>
-		<!--<copy todir="${evs.cms.deploy.lib.dir}">
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/aspectjweaver-1.5.3.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/ehcache-1.5.0.jar" />	
-		</copy>-->
-	</target>
-	
 	<target name="deploy-jdbcclient" depends="package">
-		<copy todir="${evs.plugin.deploy.dir}">
-			<fileset file="${project.target.dir}/${project.target.filename}" />
-			<fileset dir="${project.plugin.config.dir}" includes="sso-jdbc-plugins-all-plugin.xml"/>
-			<fileset dir="${project.plugin.config.dir}" includes="ehcache-helsebiblioteket.xml"/>
-			<fileset dir="${project.plugin.config.dir}" includes="sqlmap-config.xml" />
-			<fileset dir="${project.plugin.config.dir}" includes="environment.properties"/>
-		</copy>
-		<copy todir="${evs.cms.deploy.lib.dir}">
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/aspectjweaver-1.5.3.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/ehcache-1.5.0.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/ibatis-2.3.4.726.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/commons-dbcp-1.2.2.jar" />
-			<fileset file="${helsebiblioteket-services-impl-home.dir}/lib/commons-pool-1.4.jar" />
-			<fileset file="${helsebiblioteket-services-geoip-home.dir}/lib/maxmindgeoip.jar" />
-			<fileset dir="${helsebiblioteket-sqlmapdao-target.dir}" includes="**/*.jar" />
-			<fileset dir="${helsebiblioteket-services-geoip-target.dir}" includes="**/*.jar" />
-			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
-			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
-			
+		<copy tofile="${evs.plugin.deploy.dir}/${project.target.filename}" file="${project.target.dir}/${project.target.filename}"/>
+		<copy tofile="${evs.plugin.deploy.dir}" file="${project.plugin.config.dir}/environment.properties" />
+		<copy todir="${evs.plugin.deploy.dir}/ibatis-config">
+			<fileset dir="${helsebiblioteket-sqlmapdao-sql.dir}" includes="**/*.xml"/>
 		</copy>
 	</target>
-
-	<!-- ============================================================== -->
-	<!-- Tomcat tasks - remove these if you don't have Tomcat installed -->
-	<!-- ============================================================== -->
-
-	    <path id="catalina-ant-classpath">
-	        <!-- We need the Catalina jars for Tomcat -->
-	        <!--  * for other app servers - check the docs -->
-	        <fileset dir="${appserver.lib.dir}">
-	            <include name="catalina-ant.jar"/>
-	        </fileset>
-	    </path>
-<!--
-	    <taskdef name="install" classname="org.apache.catalina.ant.InstallTask">
-	        <classpath refid="catalina-ant-classpath"/>
-	    </taskdef>
-	    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
-	        <classpath refid="catalina-ant-classpath"/>
-	    </taskdef>
-	    <taskdef name="list" classname="org.apache.catalina.ant.ListTask">
-	        <classpath refid="catalina-ant-classpath"/>
-	    </taskdef>
-	    <taskdef name="start" classname="org.apache.catalina.ant.StartTask">
-	        <classpath refid="catalina-ant-classpath"/>
-	    </taskdef>
-	    <taskdef name="stop" classname="org.apache.catalina.ant.StopTask">
-	        <classpath refid="catalina-ant-classpath"/>
-	    </taskdef>
-
-	    <target name="install" description="Install application in Tomcat">
-	        <install url="${tomcat.manager.url}"
-	                 username="${tomcat.manager.username}"
-	                 password="${tomcat.manager.password}"
-	                 path="/${name}"
-	                 war="${name}"/>
-	    </target>
-
-	    <target name="reload" description="Reload application in Tomcat">
-	        <reload url="${tomcat.manager.url}"
-	                 username="${tomcat.manager.username}"
-	                 password="${tomcat.manager.password}"
-	                 path="/${name}"/>
-	    </target>
-
-	    <target name="start" description="Start Tomcat application">
-	        <start url="${tomcat.manager.url}"
-	                 username="${tomcat.manager.username}"
-	                 password="${tomcat.manager.password}"
-	                 path="/${name}"/>
-	    </target>
-
-	    <target name="stop" description="Stop Tomcat application">
-	        <stop url="${tomcat.manager.url}"
-	                 username="${tomcat.manager.username}"
-	                 password="${tomcat.manager.password}"
-	                 path="/${name}"/>
-	    </target>
-
-	    <target name="list" description="List Tomcat applications">
-	        <list url="${tomcat.manager.url}"
-	                 username="${tomcat.manager.username}"
-	                 password="${tomcat.manager.password}"/>
-	    </target>
--->
-	<!-- End Tomcat tasks -->
 </project>
