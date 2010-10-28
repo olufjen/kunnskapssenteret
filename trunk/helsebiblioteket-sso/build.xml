@@ -39,9 +39,6 @@
         <echo message="build     --> Build the application"/>
         <echo message="package   --> Create a jar for this project"/>
     	<echo message="clean     --> Remove class- and jar-files for this project"/>
-    	<echo message="reload    --> Reload application in Tomcat"/>
-    	<echo message="start     --> Start Tomcat application"/>
-    	<echo message="stop      --> Stop Tomcat application"/>
         <echo message=""/>
     </target>
 
@@ -112,7 +109,7 @@
         </delete>
     </target>
 	
-	<target name="deploy-jdbcclient" depends="package">
+	<target name="deploy-plugin" depends="package">
 		<copy tofile="${evs.plugin.deploy.dir}/${project.target.filename}" file="${project.target.dir}/${project.target.filename}"/>
 		<copy tofile="${evs.plugin.deploy.dir}" file="${project.plugin.config.dir}/environment.properties" />
 		<copy todir="${evs.plugin.deploy.dir}/ibatis-config">
