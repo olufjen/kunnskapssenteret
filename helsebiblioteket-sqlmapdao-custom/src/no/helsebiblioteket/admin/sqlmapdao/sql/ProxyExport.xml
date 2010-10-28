@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ProxyExport">
+	<typeAlias alias="ProxyExportParameter" type="no.helsebiblioteket.admin.domain.parameter.ProxyExportParameter" />
+	<typeAlias alias="ProxyResult" type="no.helsebiblioteket.admin.domain.export.ProxyResult"/>
+	<typeAlias alias="ProxyHitLine" type="no.helsebiblioteket.admin.domain.line.ProxyHitLine"/>
+	<typeAlias alias="PeriodResult" type="no.helsebiblioteket.admin.domain.export.PeriodResult"/>
+
+	<resultMap id="proxyResultMap" class="ProxyResult" groupBy="key.orgUnitId, key.isMultiple, key.orgTypeKey">
+		<result property="key.orgUnitId" column="org_id" />
+		<result property="key.isMultiple" column="multiple_members" />
+		<result property="key.orgTypeKey" column="org_type_key" />
+		<result property="orgName" column="org_name" />
+		<result property="orgTypeDescription" column="org_type_descr" />
+		<result property="periods" column="period" resultMap="ProxyExport.periodResultMap" />
+	</resultMap>
+	<resultMap id="periodResultMap" class="PeriodResult">
+		<result property="period" column="period" />
+		<result property="count" column="sum" />
+	</resultMap>
+
+	<insert id="insertProxyHit" parameterClass="ProxyHitLine">
+		insert into tbl_proxy_hits (
+    		mem_org_unit_id,
+    		sup_org_unit_id,
+		    year,
+		    month,
+		    day_of_month,
+    		day_of_week,
+		    hour,
+		    count,
+			multiple_members,
+		    last_changed
+		) values (
+    		#memberOrgUnitId#,
+    		#supplierOrgUnitId#,
+    		#year#,
+    		#month#,
+    		#dayOfMonth#,
+    		#dayOfWeek#,
+    		#hour#,
+    		#count#,
+    		#multipleMembers#,
+			date_trunc('milliseconds', now()));
+	</insert>
+ 
+	<select id="getProxyExportList" resultMap="proxyResultMap"  parameterClass="ProxyExportParameter">
+		select
+			<isEqual property="groupAll" compareValue="false">
+				<isEqual property="groupType" compareValue="false">
+					<isEqual close="," property="byMember" compareValue="true">
+					    hits.mem_org_unit_id as org_id
+					</isEqual>
+					<isEqual close="," property="byMember" compareValue="false">
+					    hits.sup_org_unit_id as org_id
+					</isEqual>
+					name.name as org_name,
+				</isEqual>
+				<isEqual property="groupType" compareValue="true">
+					0 as org_id,
+					'' as org_name,
+				</isEqual>
+			</isEqual>
+			<isEqual property="groupAll" compareValue="true">
+				0 as org_id,
+				'' as org_name,
+			</isEqual>
+			<isEqual close="," property="period" compareValue="DAY">
+				hits.hour as period
+			</isEqual>
+			<isEqual close="," property="period" compareValue="WEEK">
+				hits.day_of_week as period
+			</isEqual>
+			<isEqual close="," property="period" compareValue="MONTH">
+				hits.day_of_month as period
+			</isEqual>
+			<isEqual close="," property="period" compareValue="YEAR">
+				hits.month as period
+			</isEqual>
+		    sum(hits.count) as sum,
+			<isEqual property="groupAll" compareValue="false">
+				<isEqual property="byMember" compareValue="true">
+				    hits.multiple_members as multiple_members,
+				</isEqual>
+				<isEqual property="byMember" compareValue="false">
+				    false as multiple_members,
+				</isEqual>
+			    type.key as org_type_key,
+			    type.descr as org_type_descr
+			</isEqual>
+			<isEqual property="groupAll" compareValue="true">
+			    false as multiple_members,
+			    '' as org_type_key,
+			    '' as org_type_descr
+			</isEqual>
+		from
+    		tbl_proxy_hits as hits
+			<isEqual property="byMember" compareValue="true">
+			    left outer join tbl_org_unit as org on org.org_unit_id = hits.mem_org_unit_id
+			</isEqual>
+			<isEqual property="byMember" compareValue="false">
+    			left outer join tbl_org_unit as org on org.org_unit_id = hits.sup_org_unit_id
+			</isEqual>
+			<isEqual property="groupAll" compareValue="false">
+	   			left outer join tbl_org_type_reg as type on org.org_type_id = type.org_type_id
+			</isEqual>
+		    left outer join tbl_org_unit_name as name on org.org_unit_id = name.org_unit_id
+		where
+		    year || month || day_of_month || hour &gt;= #from# and
+    		year || month || day_of_month || hour &lt; #to# and
+			<isEqual property="byMember" compareValue="true">
+				<isEqual property="hideUnknown" compareValue="true">
+			    ( name.language_code = 'no' and name.category = 'NORMAL'
+			      or ( hits.mem_org_unit_id is null and hits.multiple_members is true ) )
+			    </isEqual>
+				<isEqual property="hideUnknown" compareValue="false">
+			    ( name.language_code = 'no' and name.category = 'NORMAL'
+			      or hits.mem_org_unit_id is null)
+			    </isEqual>
+			</isEqual>
+			<isEqual property="byMember" compareValue="false">
+				<isEqual property="hideUnknown" compareValue="true">
+				    name.language_code = 'en' and name.category = 'NORMAL'
+			    </isEqual>
+				<isEqual property="hideUnknown" compareValue="false">
+				    ( name.language_code = 'en' and name.category = 'NORMAL'
+    	              or hits.sup_org_unit_id is null )
+			    </isEqual>
+			</isEqual>
+    		<isNotNull open="and" property="memberId">
+				hits.mem_org_unit_id = #memberId#
+		  	</isNotNull>
+			<isNotNull open="and" property="supplierId">
+				hits.sup_org_unit_id = #supplierId#
+		  	</isNotNull>
+			group by
+			<isEqual property="groupAll" compareValue="false">
+				org_id, org_name,
+				<isEqual property="byMember" compareValue="true">
+				 	multiple_members,
+				</isEqual>
+		    	type.key,
+		    	type.descr,
+			</isEqual>
+				period
+			order by
+			<isEqual property="groupAll" compareValue="false">
+				org_id desc, org_name,
+				<isEqual property="byMember" compareValue="true">
+				 	multiple_members,
+				</isEqual>
+		    	org_type_key,
+		    	org_type_descr,
+			</isEqual>
+		    	period asc
+		;
+	</select>
+</sqlMap>
