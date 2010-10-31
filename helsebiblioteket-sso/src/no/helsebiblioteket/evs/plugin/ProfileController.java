@@ -1,7 +1,9 @@
 package no.helsebiblioteket.evs.plugin;
 
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +59,15 @@ public class ProfileController extends HttpControllerPlugin {
 	protected OrganizationService organizationService;
 	protected Map<String, String> parameterNames;
 	private String sessionLoggedInUserVarName = "hbloggedinuser";
-	
+    private static final Set<String> studentPosSet = new HashSet<String>();
+    static {
+    	studentPosSet.add("pos_student"); 
+    	studentPosSet.add("pos_teacher");
+    	studentPosSet.add("pos_administration");
+    	studentPosSet.add("pos_researcher");
+    	studentPosSet.add("pos_other");
+    }
+
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String delete = request.getParameter(this.parameterNames.get("deleteName"));
@@ -275,18 +285,21 @@ public class ProfileController extends HttpControllerPlugin {
 		if(email == null) { email = "";}
 		String role = request.getParameter(this.parameterNames.get("role"));
 		if (role==null) {role = "";}
-		String position = request.getParameter(this.parameterNames.get("position"));
-		if(position == null) { position = ""; }
+		String hpPosition = request.getParameter(this.parameterNames.get("hp_position"));
+		if(hpPosition == null) { hpPosition = ""; }
+		String studPosition = request.getParameter(this.parameterNames.get("stud_position"));
+		if(studPosition == null) { studPosition = ""; }
+		String otherPosition = request.getParameter(this.parameterNames.get("other_position"));
+		if(otherPosition == null) { otherPosition = ""; }
 		
-		String studentOrHprOrDateOfBirth = request.getParameter(this.parameterNames.get("studentorhprordateofbirth"));
-		if(studentOrHprOrDateOfBirth == null) { studentOrHprOrDateOfBirth = ""; }
-		
-		String hprno = request.getParameter(this.parameterNames.get("hprno"));
-		if(hprno == null) { hprno = ""; }
-		String dateOfBirth = request.getParameter(this.parameterNames.get("dateofbirth"));
-		if(dateOfBirth == null) { dateOfBirth = ""; }
-		String studentnumber = request.getParameter(this.parameterNames.get("studentnumber")); 
-		if(studentnumber == null) { studentnumber = ""; }
+//		String studentOrHprOrDateOfBirth = request.getParameter(this.parameterNames.get("studentorhprordateofbirth"));
+//		if(studentOrHprOrDateOfBirth == null) { studentOrHprOrDateOfBirth = ""; }
+//		String hprno = request.getParameter(this.parameterNames.get("hprno"));
+//		if(hprno == null) { hprno = ""; }
+//		String dateOfBirth = request.getParameter(this.parameterNames.get("dateofbirth"));
+//		if(dateOfBirth == null) { dateOfBirth = ""; }
+//		String studentnumber = request.getParameter(this.parameterNames.get("studentnumber")); 
+//		if(studentnumber == null) { studentnumber = ""; }
 		String employer = request.getParameter(this.parameterNames.get("employer"));
 		if(employer == null) { employer = "";}
 		
@@ -312,34 +325,46 @@ public class ProfileController extends HttpControllerPlugin {
 			}
 		}
 		
-		
-		
 		if (role.equals(UserRoleKey.health_personnel.getValue())) {
-			if (studentOrHprOrDateOfBirth.length() == 0) {
-				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
-			}
-			user.getPerson().setHprNumber(studentOrHprOrDateOfBirth);
+//			if (studentOrHprOrDateOfBirth.length() == 0) {
+//				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
+//			}
+//			user.getPerson().setHprNumber(studentOrHprOrDateOfBirth);
 			
-			if (position.length() == 0 || position.equals("choose")) {
-				messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_SELECTED"));	
+			if (hpPosition.length() == 0 || hpPosition.equals("choose")) {
+				messages.appendChild(UserToXMLTranslator.element(document, "hp_position", "NOT_SELECTED"));	
 			} else {
-				Position selectedPosition = positionFromKey(position);
+				Position selectedPosition = positionFromKey(hpPosition);
 				if(selectedPosition == null) {
-					messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));	
+					messages.appendChild(UserToXMLTranslator.element(document, "hp_position", "NOT_VALID"));	
 				} else {
 					user.getPerson().setPosition(selectedPosition);
 				}
 			}
 		} else if (role.equals(UserRoleKey.student.getValue())) {
-			if (studentOrHprOrDateOfBirth.length() == 0) {
-				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
+			if (studPosition.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "stud_position", "NOT_VALID"));	
+			} else if(studPosition.equals("choose")){
+				messages.appendChild(UserToXMLTranslator.element(document, "stud_position", "NOT_SELECTED"));	
+			} else if(validStudPos(studPosition)){
+				messages.appendChild(UserToXMLTranslator.element(document, "stud_position", "NOT_VALID"));	
+			} else {
+				user.getPerson().setPositionText(studPosition);
 			}
-			user.getPerson().setStudentNumber(studentOrHprOrDateOfBirth);
-		} else if (role.equals(UserRoleKey.health_personnel_other.getValue())) { 
-			if (studentOrHprOrDateOfBirth.length() == 0) {
-				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
+//			if (studentOrHprOrDateOfBirth.length() == 0) {
+//				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
+//			}
+//			user.getPerson().setStudentNumber(studentOrHprOrDateOfBirth);
+		} else if (role.equals(UserRoleKey.health_personnel_other.getValue())) {
+			if(otherPosition.length() == 0){
+				messages.appendChild(UserToXMLTranslator.element(document, "other_position", "NO_VALUE"));
+			} else {
+				user.getPerson().setPositionText(otherPosition);
 			}
-			user.getPerson().setDateOfBirth(studentOrHprOrDateOfBirth);
+//			if (studentOrHprOrDateOfBirth.length() == 0) {
+//				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
+//			}
+//			user.getPerson().setDateOfBirth(studentOrHprOrDateOfBirth);
 		}
 		
 		user.getPerson().setFirstName(firstName);
@@ -376,6 +401,10 @@ public class ProfileController extends HttpControllerPlugin {
 		} else {
 			return ((ValueResultPosition) positionResult).getValue();
 		}
+	}
+	
+	private boolean validStudPos(String key){
+		return studentPosSet.contains(key);
 	}
 	
 	private void init(HttpServletRequest request, HttpServletResponse response) throws Exception {
