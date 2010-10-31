@@ -54,7 +54,7 @@ public class UserBean {
 	private List<SelectItem> availableEmployers;
 	private List<SelectItem> availableIsStudent;
 	private List<String> selectedRoles;
-	private UserRoleKey selectedUserRole;
+	private String selectedUserRole;
 	private String selectedIsStudent;
 	private boolean isOrgAdmin;
 	private boolean showSelectMemberOrg;
@@ -99,6 +99,29 @@ public class UserBean {
 	private int SHOW_MAX = 40;
 	
     protected final Log logger = LogFactory.getLog(getClass());
+    private static final String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+
+    private static final Map<String, String> studentPosMap = new HashMap<String, String>();
+    private static final List<String> studentPosList = new ArrayList<String>();
+    
+    static {
+    	studentPosMap.put("pos_student", posBundle("pos_student")); 
+    	studentPosMap.put("pos_teacher", posBundle("pos_teacher"));
+    	studentPosMap.put("pos_administration", posBundle("pos_administration"));
+    	studentPosMap.put("pos_researcher", posBundle("pos_researcher"));
+    	studentPosMap.put("pos_other", posBundle("pos_other"));
+    	
+    	studentPosList.add("pos_student");
+    	studentPosList.add("pos_teacher");
+    	studentPosList.add("pos_administration");
+    	studentPosList.add("pos_researcher");
+    	studentPosList.add("pos_other");
+    }
+    
+    private static String posBundle(String key){
+    	return MessageResourceReader.getMessageResourceString(bundleMain, key, key);	
+    }
+    
 
     private boolean isNew(){ return this.user.getId() == null; }
 
@@ -131,12 +154,24 @@ public class UserBean {
     public void initSelectedIsStudent(){
 		if(this.availableIsStudent == null){
 			this.availableIsStudent = new ArrayList<SelectItem>();
-			this.availableIsStudent.add(new SelectItem("Y", "Student"));
-			this.availableIsStudent.add(new SelectItem("N", "Employee"));
-			this.selectedIsStudent = "N";
-			if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
+			
+			for (String key : studentPosList) {
+				this.availableIsStudent.add(new SelectItem(key, studentPosMap.get(key)));
+			}
+			
     	}
+		this.selectedIsStudent = "";
+		if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
+			if(this.user != null && this.user.getPerson() != null){
+				if( this.user.getPerson().getPositionText() != null){
+					this.selectedIsStudent = this.user.getPerson().getPositionText();
+				}
+				this.user.getPerson().setPositionText("");
+			}
+		}
+		if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
     }
+    
     public void enableDisableFields(){
     	this.initSelectedIsStudent();
     	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
@@ -182,7 +217,7 @@ public class UserBean {
         	this.showEmployerNumber = true;
     		this.showIsStudent = true;
         	this.showEmployerText = true;
-        	this.showPositionText = true;
+        	this.showPositionText = false;
         	this.showPositionMenu = false;
     		this.showProfile = true;
     	}
@@ -222,7 +257,8 @@ public class UserBean {
     	}
 		this.user.getPerson().setPosition(new Position());
 		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
-		this.selectedUserRole = this.mainRole().getKey();
+		this.user.getPerson().setPositionText("");
+		this.selectedUserRole = this.mainRole().getKey().getValue();
     	this.enableDisableFields();
     }
     public void studentChanged(ValueChangeEvent event){
@@ -248,6 +284,14 @@ public class UserBean {
     	return "user_edit";
     }
     public String actionEditSingle(){
+//    	UserListItem item  = new UserListItem();
+//    	item.setId(user.getId());
+//    	Object userObject = this.userService.getUserByUserListItem(item);
+//    	if (userObject instanceof ValueResultUser) {
+//    		this.user = ((ValueResultUser) userObject).getValue(); 
+//    	} else if (userObject instanceof ValueResultOrganizationUser) {
+//    		this.user = ((ValueResultOrganizationUser) userObject).getValue().getUser();
+//    	}
     	this.prepareEdit();
     	return "user_edit";
     }
@@ -263,7 +307,10 @@ public class UserBean {
     		this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	}
-		this.selectedUserRole = this.mainRole().getKey();
+		this.selectedUserRole = this.mainRole().getKey().getValue();
+		if(this.userRolesSelectOne != null && this.selectedUserRole != null){
+			this.userRolesSelectOne.setValue(this.selectedUserRole);
+		}
 		this.isOrgAdmin = (this.user.getOrgAdminFor() != null);
 		this.enableDisableFields();
     }
@@ -306,7 +353,7 @@ public class UserBean {
 			return null;
 		}
     	
-    	this.mainRole(this.allRolesMap.get(this.selectedUserRole.getValue()));
+    	this.mainRole(this.allRolesMap.get(this.selectedUserRole));
     	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
         	this.user.getPerson().setHprNumber("");
         	this.user.getPerson().setDateOfBirth("");
@@ -328,7 +375,7 @@ public class UserBean {
     	} else if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
     		this.user.getPerson().setDateOfBirth("");
         	this.user.getPerson().setHprNumber("");
-        	this.user.getPerson().setIsStudent(this.selectedIsStudent.equals("Y"));
+        	this.user.getPerson().setPositionText(this.selectedIsStudent);
 //    		this.user.getPerson().setPosition(new Position());
     	}
     	this.user.setOrgAdminFor(new Organization());
@@ -373,6 +420,10 @@ public class UserBean {
     	} else {
     		this.user = null;
     	}
+    	
+    	// TODO: Reset role?
+    	this.userRolesSelectOne = null;
+    	
     	return details();
     }
     public String getErrorMsg() { return ""; }
@@ -386,6 +437,20 @@ public class UserBean {
 				this.adminOrgName = OrganizationBean.organizationName(((ValueResultMemberOrganization)orgRes).getValue().getOrganization());
 			}
 		}
+		if(this.user.getPerson().getPosition() == null){
+			this.user.getPerson().setPosition(new Position());
+			if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
+				this.user.getPerson().getPosition().setName("");
+				if (this.user.getPerson().getPositionText() != null){
+					String posText = studentPosMap.get(this.user.getPerson().getPositionText());
+					if(posText != null){
+						this.user.getPerson().getPosition().setName(posText);
+					}
+				}
+			} else {
+				this.user.getPerson().getPosition().setName(this.user.getPerson().getPositionText());
+			}
+		}
 		return "user_details";
     }
     public String actionDetails(){
@@ -395,10 +460,6 @@ public class UserBean {
 			this.user = ((ValueResultUser)lookup).getValue();
 		} else if (lookup instanceof ValueResultOrganizationUser) {
 			this.user = ((ValueResultOrganizationUser) lookup).getValue().getUser();
-		}
-		if(this.user.getPerson().getPosition() == null){
-			this.user.getPerson().setPosition(new Position());
-			this.user.getPerson().getPosition().setName(this.user.getPerson().getPositionText());
 		}
 		return details();
 	}
@@ -502,8 +563,8 @@ public class UserBean {
 		}
 		return this.selectedRoles;
 	}
-	public UserRoleKey getSelectedUserRole() {
-		this.selectedUserRole = this.mainRole().getKey();
+	public String getSelectedUserRole() {
+		this.selectedUserRole = this.mainRole().getKey().getValue();
 		return this.selectedUserRole;
 	}
 	public List<Role> getAllRoles() {
@@ -632,7 +693,7 @@ public class UserBean {
 	public UISelectOne getIsStudentSelectOne() { return isStudentSelectOne; }
 	public void setIsStudentSelectOne(UISelectOne isStudentSelectOne) { this.isStudentSelectOne = isStudentSelectOne; }
 	public void setSelectedRoles(List<String> selectedRoles) { this.selectedRoles = selectedRoles; }
-	public void setSelectedUserRole(UserRoleKey selectedUserRole) { this.selectedUserRole = selectedUserRole; }
+	public void setSelectedUserRole(String selectedUserRole) { this.selectedUserRole = selectedUserRole; }
 	public String getSearchinput() { return searchinput; }
 	public void setSearchinput(String searchinput) { this.searchinput = searchinput; }
 	public User getUser() { return user; }
