@@ -39,7 +39,7 @@
 		</tr>
 		<tr>
 		<td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
-			<td><h:selectOneRadio value="#{userBean.selectedUserRole.value}" id="roles" 
+			<td><h:selectOneRadio value="#{userBean.selectedUserRole}" id="roles" 
 				layout="pageDirection" binding="#{userBean.userRolesSelectOne}"
 				valueChangeListener="#{userBean.roleChanged}" onchange="submit()">
         		<f:selectItems value="#{userBean.availableRoles}"/>
@@ -65,7 +65,29 @@
       		</td>
     	</tr>
 		<tr>
-			<td><h:outputText value="#{msg_main.user_details_position}"  /></td>
+			<td><h:outputText value="#{msg_main.user_details_position_h_personnel}"  /></td>
+			<td>
+				<h:selectOneMenu value="#{userBean.user.person.position.key.value}" id="position_select"
+					readonly="#{ ! userBean.showPositionMenu}"
+					disabled="#{ ! userBean.showPositionMenu}">
+					<f:selectItems value="#{userBean.availablePositions}"/>
+				</h:selectOneMenu>
+			</td>
+			<td><h:message for="position_select" styleClass="RED"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.user_details_position_student}"  /></td>
+			<td>
+				<h:selectOneMenu value="#{userBean.selectedIsStudent}" id="isStudent"
+					readonly="#{ ! userBean.showIsStudent}"
+					disabled="#{ ! userBean.showIsStudent}">
+					<f:selectItems value="#{userBean.availableIsStudent}"/>
+				</h:selectOneMenu>
+			</td>
+			<td><h:message for="isStudent" styleClass="RED"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="#{msg_main.user_details_position_other}"  /></td>
 			<td><h:inputText value="#{userBean.user.person.positionText}" id="position"
 					readonly="#{ ! userBean.showPositionText}"
 					disabled="#{ ! userBean.showPositionText}"/></td>
@@ -77,36 +99,6 @@
 					readonly="#{ ! userBean.showEmployerText}"
 					disabled="#{ ! userBean.showEmployerText}"/></td>
 			<td><h:message for="employer" styleClass="RED"/></td>
-		</tr>
-		<tr>
-			<td width="300"><h:outputText value="#{msg_main.user_details_health_personnel_numer}"  /></td>
-			<td width="300"><h:inputText value="#{userBean.user.person.hprNumber}" id="hprNumber"
-					readonly="#{ ! userBean.showHprNumber}"
-					disabled="#{ ! userBean.showHprNumber}"/></td>
-			<td width="200"><h:message for="hprNumber" styleClass="RED"/></td>
-		</tr>
-		
-		<tr>
-      		<td>
-        		<h:outputText value="#{msg_main.date_of_birth}" />
-		    </td>
-      		<td colspan="3">
-        		<h:inputText value="#{userBean.user.person.dateOfBirth}"
-      	  			id="dateOfBirth" size="50"
-      	  			disabled="#{ ! userBean.showDateOfBirth}"
-      	  			readonly="#{ ! userBean.showDateOfBirth}"/>
-      		</td>
-      		<td>
-				<h:message for="dateOfBirth" styleClass="RED"/>
-      		</td>
-	   	</tr>
-		
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_student_employer_number}"  /></td>
-			<td><h:inputText value="#{userBean.user.person.studentNumber}" id="studentNumber"
-					readonly="#{ ! userBean.showEmployerNumber}"
-					disabled="#{ ! userBean.showEmployerNumber}"/></td>
-			<td><h:message for="studentNumber" styleClass="RED"/></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="#{msg_main.user_details_password}"  /></td>
@@ -134,33 +126,6 @@
 					readonly="#{ ! userBean.showProfile}"/></td>
 			<td><h:message for="participateSurvey" styleClass="RED"/></td>
 		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_position_select}"  /></td>
-			<td>
-			<h:selectOneMenu value="#{userBean.user.person.position.key.value}" id="position_select"
-				readonly="#{ ! userBean.showPositionMenu}"
-				disabled="#{ ! userBean.showPositionMenu}">
-				<f:selectItems value="#{userBean.availablePositions}"/>
-			</h:selectOneMenu></td>
-			<td><h:message for="position_select" styleClass="RED"/></td>
-		
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_is_student}"  /></td>
-			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}"
-					id="isStudent" 
-					layout="pageDirection" required="true" 
-					disabled="true"
-					valueChangeListener="#{userBean.studentChanged}"
-					onchange="submit()"
-					readonly="#{ ! userBean.showIsStudent}"
-					disabled="#{ ! userBean.showIsStudent}">
-					<f:selectItems value="#{userBean.availableIsStudent}"/>
-        		</h:selectOneRadio></td>
-			<td><h:message for="isStudent" styleClass="RED"/></td>
-
-		</tr>
-
 		<tr>
 			<td><h:commandButton value="#{msg_main.user_details_save}" action="#{userBean.actionSave}" /></td>
 			<td><h:commandButton value="#{msg_main.user_details_cancel}" action="#{userBean.actionCancel}" immediate="true" /></td>

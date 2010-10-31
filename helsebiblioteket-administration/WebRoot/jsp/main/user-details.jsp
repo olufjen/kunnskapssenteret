@@ -51,18 +51,6 @@
 			<td><h:outputText value="#{userBean.user.person.employer}"/></td>
 		</tr>
 		<tr>
-			<td><h:outputText value="#{msg_main.user_details_health_personnel_numer}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.hprNumber}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_date_of_birth}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.dateOfBirth}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="#{msg_main.user_details_student_employer_number}"  /></td>
-			<td><h:outputText value="#{userBean.user.person.studentNumber}"/></td>
-		</tr>
-		<tr>
 			<td><h:outputText value="#{msg_main.user_details_survey}"  /></td>
 			<td><h:selectBooleanCheckbox id="participateSurvey" disabled="true"
 					value="#{userBean.user.person.profile.participateSurvey}"/></td>
@@ -71,15 +59,6 @@
 			<td><h:outputText value="#{msg_main.user_details_newsletter}"  /></td>
 			<td><h:selectBooleanCheckbox id="receiveNewsletter" disabled="true"
 					value="#{userBean.user.person.profile.receiveNewsletter}"/></td>
-		</tr>
-		<tr>
-			
-			<td><h:outputText value="#{msg_main.user_details_is_student}"  /></td>
-			<td><h:selectOneRadio value="#{userBean.selectedIsStudent}" id="isStudent" 
-					layout="pageDirection" disabled="true" binding="#{userBean.isStudentSelectOne}">
-				<f:selectItems value="#{userBean.availableIsStudent}"/>
-        		</h:selectOneRadio></td>
-
 		</tr>
 		<tr>
 			<script type="text/javascript">
