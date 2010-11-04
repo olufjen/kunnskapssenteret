@@ -2,10 +2,10 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean class="no.kunnskapssenteret.evs.plugins.mcmaster.GetDoctorArticlesByDisciplineTask" />
-	<bean class="no.kunnskapssenteret.evs.plugins.mcmaster.GetDoctorDisciplinesTask" />
-	<bean class="no.kunnskapssenteret.evs.plugins.mcmaster.GetNurseArticlesByDisciplineTask" />
-	<bean class="no.kunnskapssenteret.evs.plugins.mcmaster.GetNursingDisciplinesTask" />
-	<bean class="no.kunnskapssenteret.evs.plugins.mcmaster.GetRehabArticlesByDisciplineTask" />
-	<bean class="no.kunnskapssenteret.evs.plugins.mcmaster.GetRehabDisciplinesTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetDoctorArticlesByDisciplineTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetDoctorDisciplinesTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetNurseArticlesByDisciplineTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetNursingDisciplinesTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetRehabArticlesByDisciplineTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetRehabDisciplinesTask" />
 </beans>
