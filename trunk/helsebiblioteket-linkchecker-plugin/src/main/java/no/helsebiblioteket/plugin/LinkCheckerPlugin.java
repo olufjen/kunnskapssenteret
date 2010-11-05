@@ -1,4 +1,4 @@
-/* test */
+
 package no.helsebiblioteket.plugin;
 
 import java.io.InputStream;
