@@ -256,6 +256,8 @@ public class LinkCheckerPlugin implements TaskPlugin {
      */
     public void getSubCategories(int catKey, ArrayList<String> fields, ArrayList<String> isHtmlArea) {
 
+        log.info("finding subcategories for category key " + catKey);
+
         GetCategoriesParams catPars = new GetCategoriesParams();
         catPars.categoryKey = catKey;
         catPars.levels = 1;
@@ -273,7 +275,7 @@ public class LinkCheckerPlugin implements TaskPlugin {
         while (categoryiterator.hasNext()) {
             Element temp = categoryiterator.next();
             String catID = temp.getAttributeValue("key");
-
+            log.info("found subcategory key " + catID);
             // call recursively to get all subcategories as well
             getSubCategories(Integer.parseInt(catID), fields, isHtmlArea);
         }
@@ -287,6 +289,9 @@ public class LinkCheckerPlugin implements TaskPlugin {
      * @param isHtmlArea    An ArrayList<String> holding true/false values corresponding to the fieldname param
      */
     public void checkOnCategories(int catKey, ArrayList<String> fields, ArrayList<String> isHtmlArea) {
+
+        log.info("checking category key " + catKey);
+
         GetContentByCategoryParams gcp = new GetContentByCategoryParams();
         gcp.categoryKeys = new int[]{catKey};
         gcp.childrenLevel = 0;
@@ -310,6 +315,9 @@ public class LinkCheckerPlugin implements TaskPlugin {
             // get the contentdata for each content
             Element temp = contentiterator.next();
             String contentKey = temp.getAttributeValue("key");
+
+            log.info("chekcing content key " + contentKey);
+
             Element contentdata = temp.getChild("contentdata");
 
             String contentTitle;
