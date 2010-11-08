@@ -51,7 +51,8 @@ import org.apache.commons.logging.LogFactory;
  * @version 1.0
  * 
  */
-public class LinkCheckerPlugin implements TaskPlugin {
+
+public class LinkCheckerPlugin extends TaskPlugin {
 
     private Log log = LogFactory.getLog(this.getClass());
     private Client client;
@@ -102,6 +103,10 @@ public class LinkCheckerPlugin implements TaskPlugin {
      * @param taskProperties
      */
     public void handleProperties(Properties taskProperties) {
+
+        allCategories.clear();
+        configCategories.clear();
+        
         if (taskProperties != null && !taskProperties.isEmpty()) {
 
             cmsUser = taskProperties.getProperty(TaskPropertyKeys.cmsUser.name());
