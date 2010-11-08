@@ -12,16 +12,21 @@ import com.enonic.cms.api.client.ClientFactory;
 public class LinkCheckerPluginTest
 {
 
-    @Test
+    //@Test
     public void readingConfigFile()
     {
         new LinkCheckerPlugin().readConfigFile();
+    }
+
+    @Test
+    public void dummy() {
+        
     }
     
     //@Test
     public void testX()
     {
-        Client client = ClientFactory.getRemoteClient( "http://localhost:9080/rpc/bin" );
+        Client client = ClientFactory.getRemoteClient( "http://localhost:18081/rpc/bin" );
         LinkCheckerPlugin linkCheckerPlugin = new LinkCheckerPlugin( client );
 
         linkCheckerPlugin.execute( null );
