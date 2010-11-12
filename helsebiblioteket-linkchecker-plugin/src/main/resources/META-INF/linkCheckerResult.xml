@@ -1,15 +1,14 @@
-<!-- this is for enonic config of document type for checker result -->
 <contenttype>
     <config name="linkCheckerResult" version="1.0">
         <form>
             <title name="heading"/>
-            <block name="LinkCheckerResult">
+            <block name="Linkchecker result">
                 <input name="heading" required="true" type="text">
                     <display>Heading</display>
                     <xpath>contentdata/heading</xpath>
                 </input>
                 <input mode="cdata" name="htmlarea_input" type="htmlarea">
-                    <display>HTMLArea</display>
+                    <display>HTMLarea</display>
                     <xpath>contentdata/htmlarea</xpath>
                 </input>
             </block>
@@ -17,4 +16,3 @@
     </config>
     <indexparameters/>
 </contenttype>
-​
