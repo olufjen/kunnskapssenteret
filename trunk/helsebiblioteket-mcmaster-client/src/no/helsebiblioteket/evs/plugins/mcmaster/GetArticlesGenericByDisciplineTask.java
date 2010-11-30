@@ -6,6 +6,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -35,6 +37,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 	private Integer cmsArticlePatientPopulationsArchiveKey;
 	private String cmsImportArticleDisciplineAndRatingsName;
 	private String cmsImportArticlePatientPopulationsName;
+	private String cmsRemoteClientUrl;
 	private List<Integer> serviceDisciplineIdList;
 	private List<Integer> cmsArticleArchiveKeyList;
 	private Integer cmsArticleArchiveKey;
@@ -70,7 +73,8 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 		cmsImportArticlePatientPopulationsName, 
 		serviceDisciplineIdList, 
 		serviceKey, 
-		serviceIV
+		serviceIV,
+		cmsRemoteClientUrl
 	}
 	
 	public GetArticlesGenericByDisciplineTask() {
@@ -86,7 +90,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 			this.cmsImportArticleCommentsName = taskProperties.getProperty(TaskPropertyKeys.cmsImportArticleCommentsName.name());
 			this.cmsImportArticlePatientPopulationsName = taskProperties.getProperty(TaskPropertyKeys.cmsImportArticlePatientPopulationsName.name());
 			this.cmsImportArticleDisciplineAndRatingsName = taskProperties.getProperty(TaskPropertyKeys.cmsImportArticleDisciplineAndRatingsName.name());			
-			
+			this.cmsRemoteClientUrl = taskProperties.getProperty(TaskPropertyKeys.cmsRemoteClientUrl.name());
 			Integer archiveKeyTmp = null;
 			try {
 				archiveKeyTmp = Integer.parseInt(taskProperties.getProperty(TaskPropertyKeys.cmsArticleCommentsArchiveKey.name()));
@@ -151,7 +155,8 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 	
 	protected void initEvsClient() {
 		if (this.cmsClient == null) {
-			this.cmsClient = ClientFactory.getLocalClient();
+			logger.info("Logging in using remote client.");
+			this.cmsClient = ClientFactory.getRemoteClient(this.cmsRemoteClientUrl, false);
 			this.cmsClient.login(this.cmsUsername, this.cmsPassword);
 		}
 	}
@@ -168,23 +173,41 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 	 * Import articles before rest because articles need to exist in the cms archive before the "rest" is imported.
 	 */
 	protected void importAllContent(List<String> compositeKeyXpathNodeList, List<String> potentialInvalidXmlNodeNameList) {
+		logger.info("importAllContent starting ..:");
 		if ((this.cmsArticleArchiveKeyList != null && this.cmsArticleArchiveKeyList.size() > 0) && (serviceDisciplineIdList != null && serviceDisciplineIdList.size() > 0)) {
+			logger.info("content found (non-empty)");
 			String xmlString = null;
 			Map<Integer, String> xmlResponseAsStringMap = new HashMap<Integer, String>();
 			for (Integer disciplineId : this.disciplineIdArvhiveKeyMap.keySet()) {
 				xmlString = fixResponseString(getServiceResponseAsString(disciplineId), compositeKeyXpathNodeList, potentialInvalidXmlNodeNameList);
 				xmlResponseAsStringMap.put(disciplineId, xmlString);
-				System.out.println("\n=========== " + disciplineId + " ===========");
-				System.out.println(xmlString);
+				logger.info("Importing discipline id " + disciplineId);
 			}
+			
+			Set<Integer> failedDisciplineIds = new HashSet<Integer>();
+			
 			for (Integer discId : xmlResponseAsStringMap.keySet()) {
-				importArticles(xmlResponseAsStringMap.get(discId), this.disciplineIdArvhiveKeyMap.get(discId));
+				try {
+					importArticles(xmlResponseAsStringMap.get(discId), this.disciplineIdArvhiveKeyMap.get(discId));
+				} catch (Exception e) {
+					logger.error("Failed importing article with discipline id " + discId, e);
+					failedDisciplineIds.add(discId);
+				}
 			}
+			
 			for (Integer archiveKey : xmlResponseAsStringMap.keySet()) {
-				importRest(xmlResponseAsStringMap.get(archiveKey));
+				if (failedDisciplineIds.contains(archiveKey)) {
+					logger.warn("Skipping importRest for failed article with archive key/discipline id " + archiveKey);
+				} else {
+					try {
+						importRest(xmlResponseAsStringMap.get(archiveKey));
+					} catch (Exception e) {
+						logger.error("Failed importing rest of article with archive key/discipline id " + archiveKey, e);
+					}
+				}
 			}
 		} else {
-			logger.error("Plugins wants to import content from McMaster, but archive key list or discipline id list is not set in pluginconfig. Plugin cannot perform any action. Please correct plugin configuration in admin gui");
+			logger.error("Plugins want to import content from McMaster, but archive key list or discipline id list is not set in pluginconfig. Plugin cannot perform any action. Please correct plugin configuration in admin gui");
 		}
 	}
 	

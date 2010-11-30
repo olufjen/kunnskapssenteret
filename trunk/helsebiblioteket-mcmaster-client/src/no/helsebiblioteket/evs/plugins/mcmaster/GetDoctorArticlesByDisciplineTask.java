@@ -40,12 +40,16 @@ public class GetDoctorArticlesByDisciplineTask extends GetArticlesGenericByDisci
 	
 	@Override
 	public void execute(Properties taskProperties) {
+		java.util.Date start = new java.util.Date();
+		logger.info(this.getClass().getName() + " starting at " + start);
 		synchronized (GetDoctorArticlesByDisciplineTask.class) {
 			super.initLocalProperties(taskProperties);
 			super.initEvsClient();
 			super.importAllContent(GetDoctorArticlesByDisciplineTask.compositeKeyXpathNodeList, GetDoctorArticlesByDisciplineTask.potentialInvalidXmlNodeNameList);
 			super.destroyEvsClient();
 		}
+		java.util.Date end = new java.util.Date();
+		logger.info(this.getClass().getName() + " done at " +  end + ", millisec spent " + (end.getTime() - start.getTime()));
 	}
 
 	protected String getServiceResponseAsString(int disciplineId) {
@@ -76,21 +80,21 @@ public class GetDoctorArticlesByDisciplineTask extends GetArticlesGenericByDisci
 		properties.setProperty(TaskPropertyKeys.cmsPassword.name(), "password");
 		
 		properties.setProperty(TaskPropertyKeys.cmsImportArticleCommentsName.name(), "McMaster article comments");
-		properties.setProperty(TaskPropertyKeys.cmsArticleCommentsArchiveKey.name(), "801");
+		properties.setProperty(TaskPropertyKeys.cmsArticleCommentsArchiveKey.name(), "885"); //801
 		
 		properties.setProperty(TaskPropertyKeys.cmsImportArticleDisciplineAndRatingsName.name(), "McMaster discipline and ratings");
-		properties.setProperty(TaskPropertyKeys.cmsArticleDisciplineAndRatingsKey.name(), "800");
+		properties.setProperty(TaskPropertyKeys.cmsArticleDisciplineAndRatingsKey.name(), "887"); // 800
 		
 		properties.setProperty(TaskPropertyKeys.cmsImportArticlePatientPopulationsName.name(), "McMaster patient population");
-		properties.setProperty(TaskPropertyKeys.cmsArticlePatientPopulationsArchiveKey.name(), "802");
+		properties.setProperty(TaskPropertyKeys.cmsArticlePatientPopulationsArchiveKey.name(), "886"); // 802
 		
 		properties.setProperty(TaskPropertyKeys.cmsImportArticlesName.name(), "McMaster articles doctor");
 		
-		properties.setProperty(TaskPropertyKeys.cmsArticleArchiveKeyList.name(), "796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796,796");
+		properties.setProperty(TaskPropertyKeys.cmsArticleArchiveKeyList.name(), "878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878,878");
 		properties.setProperty(TaskPropertyKeys.serviceDisciplineIdList.name(), "279,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,251,253,254,255,256,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,280,283,284,285,286,287,288,289,290,292,296");
 		
-		properties.setProperty(TaskPropertyKeys.serviceKey.name(), "EDzvuye3drZopliXsbW2eIvFvfmKFwliLIiEV9d0orA=");
-		properties.setProperty(TaskPropertyKeys.serviceIV.name(), "O3QMXrEUjxkp48o15CSHBA==");
+		properties.setProperty(TaskPropertyKeys.serviceKey.name(), "");
+		properties.setProperty(TaskPropertyKeys.serviceIV.name(), "");
 		
 		//properties.setProperty("serviceKey", "B6D0DEE3D4DFBFE4DCE88FD2D5DCD4ECB2D3");
 		GetDoctorArticlesByDisciplineTask task = new GetDoctorArticlesByDisciplineTask();

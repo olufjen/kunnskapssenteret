@@ -42,12 +42,17 @@ public class GetRehabDisciplinesTask extends GetDisciplinesGenericTask {
 	
 	@Override
 	public void execute(Properties taskProperties) {
+		java.util.Date start = new java.util.Date();
+		logger.info(this.getClass().getName() + " starting at " + start);
 		synchronized (GetRehabDisciplinesTask.class) {
 			super.initLocalProperties(taskProperties);
 			super.initEvsClient();
 			super.importContent();
 			super.destroyEvsClient();
 		}
+		java.util.Date end = new java.util.Date();
+		logger.info(this.getClass().getName() + " done at " +  end + ", millisec spent " + (end.getTime() - start.getTime()));
+
 	}
 	
 	public static void main(String args[]) {

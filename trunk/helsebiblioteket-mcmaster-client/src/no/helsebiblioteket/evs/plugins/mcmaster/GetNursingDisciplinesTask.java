@@ -42,12 +42,16 @@ public class GetNursingDisciplinesTask extends GetDisciplinesGenericTask {
 	
 	@Override
 	public void execute(Properties taskProperties) {
+		java.util.Date start = new java.util.Date();
+		logger.info(this.getClass().getName() + " starting at " + start);
 		synchronized (GetNursingDisciplinesTask.class) {
 			super.initLocalProperties(taskProperties);
 			super.initEvsClient();
 			super.importContent();
 			super.destroyEvsClient();
 		}
+		java.util.Date end = new java.util.Date();
+		logger.info(this.getClass().getName() + " done at " +  end + ", millisec spent " + (end.getTime() - start.getTime()));
 	}
 	
 	public static void main(String args[]) {
@@ -56,10 +60,10 @@ public class GetNursingDisciplinesTask extends GetDisciplinesGenericTask {
 		properties.setProperty(TaskPropertyKeys.cmsPassword.name(), "password");
 		
 		properties.setProperty(TaskPropertyKeys.cmsImportDisciplinesName.name(), "McMaster nurse disciplines");
-		properties.setProperty(TaskPropertyKeys.cmsDisciplinesArchiveKey.name(), "805");
+		properties.setProperty(TaskPropertyKeys.cmsDisciplinesArchiveKey.name(), "882"); //805
 		
-		properties.setProperty(TaskPropertyKeys.serviceKey.name(), "EDzvuye3drZopliXsbW2eIvFvfmKFwliLIiEV9d0orA=");
-		properties.setProperty(TaskPropertyKeys.serviceIV.name(), "O3QMXrEUjxkp48o15CSHBA==");
+		properties.setProperty(TaskPropertyKeys.serviceKey.name(), " =");
+		properties.setProperty(TaskPropertyKeys.serviceIV.name(), " ==");
 		
 		//properties.setProperty("serviceKey", "B6D0DEE3D4DFBFE4DCE88FD2D5DCD4ECB2D3");
 		GetNursingDisciplinesTask task = new GetNursingDisciplinesTask();
