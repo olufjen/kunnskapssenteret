@@ -63,8 +63,8 @@ public class GetRehabDisciplinesTask extends GetDisciplinesGenericTask {
 		properties.setProperty(TaskPropertyKeys.cmsImportDisciplinesName.name(), "McMaster rehab disciplines");
 		properties.setProperty(TaskPropertyKeys.cmsDisciplinesArchiveKey.name(), "804");
 		
-		properties.setProperty(TaskPropertyKeys.serviceKey.name(), "EDzvuye3drZopliXsbW2eIvFvfmKFwliLIiEV9d0orA=");
-		properties.setProperty(TaskPropertyKeys.serviceIV.name(), "O3QMXrEUjxkp48o15CSHBA==");
+		properties.setProperty(TaskPropertyKeys.serviceKey.name(), "=");
+		properties.setProperty(TaskPropertyKeys.serviceIV.name(), "==");
 		
 		//properties.setProperty("serviceKey", "B6D0DEE3D4DFBFE4DCE88FD2D5DCD4ECB2D3");
 		GetRehabDisciplinesTask task = new GetRehabDisciplinesTask();
