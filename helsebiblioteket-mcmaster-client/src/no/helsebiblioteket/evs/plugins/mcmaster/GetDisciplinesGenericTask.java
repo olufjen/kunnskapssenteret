@@ -19,6 +19,8 @@ public abstract class GetDisciplinesGenericTask extends McMasterFeed {
 	protected String cmsImportDisciplinesName;
 	protected Integer cmsDisciplinesArchiveKey;
 	
+	protected String cmsRemoteClientUrl;
+	
 	protected enum TaskPropertyKeys {
 		cmsUsername, 
 		cmsPassword,  
@@ -26,7 +28,8 @@ public abstract class GetDisciplinesGenericTask extends McMasterFeed {
 		cmsDisciplinesArchiveKey,
 		cmsImportDisciplinesName,
 		serviceKey, 
-		serviceIV
+		serviceIV,
+		cmsRemoteClientUrl
 	}
 	
 	public GetDisciplinesGenericTask() {
@@ -37,7 +40,7 @@ public abstract class GetDisciplinesGenericTask extends McMasterFeed {
 			this.cmsUsername = taskProperties.getProperty(TaskPropertyKeys.cmsUsername.name());
 			this.cmsPassword = taskProperties.getProperty(TaskPropertyKeys.cmsPassword.name());
 			this.cmsImportDisciplinesName = taskProperties.getProperty(TaskPropertyKeys.cmsImportDisciplinesName.name());			
-			
+			this.cmsRemoteClientUrl = taskProperties.getProperty(TaskPropertyKeys.cmsRemoteClientUrl.name());
 			Integer archiveKeyTmp = null;
 			try {
 				archiveKeyTmp = Integer.parseInt(taskProperties.getProperty(TaskPropertyKeys.cmsDisciplinesArchiveKey.name()));
@@ -52,7 +55,8 @@ public abstract class GetDisciplinesGenericTask extends McMasterFeed {
 	
 	protected void initEvsClient() {
 		if (this.cmsClient == null) {
-			this.cmsClient = ClientFactory.getLocalClient();
+			logger.info("Logging in using remote client.");
+			this.cmsClient = ClientFactory.getRemoteClient(this.cmsRemoteClientUrl, false);
 			this.cmsClient.login(this.cmsUsername, this.cmsPassword);
 		}
 	}

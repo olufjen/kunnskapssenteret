@@ -41,12 +41,17 @@ public class GetRehabArticlesByDisciplineTask extends GetArticlesGenericByDiscip
 	
 	@Override
 	public void execute(Properties taskProperties) {
+		java.util.Date start = new java.util.Date();
+		logger.info(this.getClass().getName() + " starting at " + start);
 		synchronized (GetRehabArticlesByDisciplineTask.class) {
 			super.initLocalProperties(taskProperties);
 			super.initEvsClient();
 			super.importAllContent(GetRehabArticlesByDisciplineTask.compositeKeyXpathList, GetRehabArticlesByDisciplineTask.potentialInvalidXmlNodeNameList);
 			super.destroyEvsClient();
 		}
+		java.util.Date end = new java.util.Date();
+		logger.info(this.getClass().getName() + " done at " +  end + ", millisec spent " + (end.getTime() - start.getTime()));
+
 	}
 
 	protected String getServiceResponseAsString(int disciplineId) {
@@ -90,8 +95,8 @@ public class GetRehabArticlesByDisciplineTask extends GetArticlesGenericByDiscip
 		properties.setProperty(TaskPropertyKeys.cmsArticleArchiveKeyList.name(), "798,798,798,798,798,798,798,798,798,798,798,798,798,798,798,798,798,798,798,798,798");
 		properties.setProperty(TaskPropertyKeys.serviceDisciplineIdList.name(), "1,6,8,7,9,10,23,11,12,13,2,14,3,4,5,16,17,18,21,19,20");
 		
-		properties.setProperty(TaskPropertyKeys.serviceKey.name(), "EDzvuye3drZopliXsbW2eIvFvfmKFwliLIiEV9d0orA=");
-		properties.setProperty(TaskPropertyKeys.serviceIV.name(), "O3QMXrEUjxkp48o15CSHBA==");
+		properties.setProperty(TaskPropertyKeys.serviceKey.name(), " =");
+		properties.setProperty(TaskPropertyKeys.serviceIV.name(), " ==");
 		
 		//properties.setProperty("serviceKey", "B6D0DEE3D4DFBFE4DCE88FD2D5DCD4ECB2D3");
 		GetRehabArticlesByDisciplineTask task = new GetRehabArticlesByDisciplineTask();
