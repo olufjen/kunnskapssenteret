@@ -3,6 +3,8 @@
  */
 package no.helsebiblioteket.admin.sqlmapdao.ibatissupport;
 
+import com.ibatis.common.logging.Log;
+import com.ibatis.common.logging.LogFactory;
 import com.ibatis.common.resources.Resources;
 import com.ibatis.common.util.PaginatedList;
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -21,11 +23,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+
 import javax.sql.DataSource;
 
 public class IbatisSqlMapClientTemplate implements SqlMapClient {
-    private static final SqlMapClient sqlMap;
+    
+	private static final SqlMapClient sqlMap;
 
+    private static final Log logger = LogFactory.getLog(IbatisSqlMapClientTemplate.class);
+    
     static {
         try {
 
@@ -35,7 +42,9 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
         	//String resource = configLocation + "/sqlmap-config.xml";
             
         	String sqlmapConfigUrl = System.getProperty("helsebiblioteket-sso-sqlmapconfig");
-            
+
+        	logger.debug("property helsebiblioteket-sso-sqlmapconfig: " + sqlmapConfigUrl);
+        	
         	URL url = new URL(sqlmapConfigUrl);
             
             /*File file = null;
