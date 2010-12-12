@@ -19,11 +19,13 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -36,35 +38,25 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
     static {
         try {
 
-            // enten sånn ... men nå enten sette classloader her også
-            // eller loade sqlMaps'ene med url istedenfor resource.
-        	//String configLocation = "d:/data/dev/cms_home_helsebiblioteket/plugins"; //System.getProperty("helsebiblioteket-sso-config-location");
-        	//String resource = configLocation + "/sqlmap-config.xml";
-            
-        	String sqlmapConfigUrl = System.getProperty("helsebiblioteket-sso-sqlmapconfig");
-
-        	logger.debug("property helsebiblioteket-sso-sqlmapconfig: " + sqlmapConfigUrl);
+        	Properties properties = new Properties();
         	
-        	URL url = new URL(sqlmapConfigUrl);
-            
-            /*File file = null;
-            try {
-            	file = new File(url.toURI());
-            } catch(URISyntaxException e) {
-            	file = new File(url.getPath());
-            }*/
-            
-            InputStream is = url.openStream(); // new FileInputStream(file);
-            //FileInputStream fis = new FileInputStream(new File("d:/data/dev/cms_home_helsebiblioteket/plugins/ibatis-config/sqlmap-config.xml"));
-            //InputStream istream = IbatisSqlMapClientTemplate.class.getResourceAsStream("file:" +resource);
-            sqlMap = SqlMapClientBuilder.buildSqlMapClient(is);
+        	properties.load(new FileInputStream(
+        			new File(
+        					new URI(System.getProperty("cms.home") + File.separator
+        							+ "plugins" + File.separator + "environment.properties"))));
+        	
+        	String sqlmapConfigUrl = properties.getProperty("helsebiblioteket-sso-sqlmapconfig");
+        	
+        	if (sqlmapConfigUrl == null) {
+        		logger.error("ibatis config is null:" + sqlmapConfigUrl);
+        	} else {
+        		logger.debug("ibatis config:" + sqlmapConfigUrl);
+        	}
 
-            // eller sånn
-            /*ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            Thread.currentThread().setContextClassLoader(IbatisSqlMapClientTemplate.class.getClassLoader());
-            Reader reader = Resources.getResourceAsReader("/no/helsebiblioteket/admin/sqlmapdao/ibatissupport/sqlmap-config.xml");
-            sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
-            Thread.currentThread().setContextClassLoader(cl);*/
+        	URL url = new URL(sqlmapConfigUrl);
+            InputStream is = url.openStream(); // new FileInputStream(file);
+        	sqlMap = SqlMapClientBuilder.buildSqlMapClient(is);
+
         } catch (Exception e) {
             throw new RuntimeException("Error initializing ibatis.", e);
         }
