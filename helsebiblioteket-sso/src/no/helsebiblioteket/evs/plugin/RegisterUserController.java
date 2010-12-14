@@ -156,6 +156,10 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		Element values = document.createElement("values");
 		User user = createValidateUser(request, document, messages, values);
 		
+		if (user == null) {
+			logger.error("user==null");
+		}
+		
 		boolean success = false;
 		String summary = "";
 		// TODO Fase2: Bad test!
@@ -169,6 +173,7 @@ public final class RegisterUserController extends HttpControllerPlugin {
 	    		success = true;
 	    	}
     	}
+				
 		String gotoUrl = "";
 		if(success){
 	    	this.sendNewUserEmail(user);
@@ -254,6 +259,7 @@ public final class RegisterUserController extends HttpControllerPlugin {
 
 		if( ! validUserType(usertype)){
 			messages.appendChild(UserToXMLTranslator.element(document, "usertype", "NOT_VALID"));
+			logger.error("usertype NOT_VALID");
 			user.setRoleList(new Role[0]);
 		} else {
 			user.setRoleList(roleListFromKey(usertype));
@@ -279,48 +285,62 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		
 		if(username.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "username", "NO_VALUE"));
+			logger.error("username NO_VALUE");
 		} else if(userExists(username)){
 			messages.appendChild(UserToXMLTranslator.element(document, "username", "USER_EXISTS"));
+			logger.error("username USER_EXISTS");
 		}
 		user.setUsername(username);
 		if(password.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_VALUE"));
+			logger.error("password NO_VALUE");
 		} else if( ! PasswordValidator.getInstance().hasLength(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_LENGTH"));
+			logger.error("password NOT_LENGTH");
 		} else if( ! PasswordValidator.getInstance().hasLetters(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_LETTERS"));
+			logger.error("password NO_LETTERS");
 		} else if( ! PasswordValidator.getInstance().hasNumbers(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_NUMBERS"));
+			logger.error("password NO_NUMBERS");
 		} else if( ! PasswordValidator.getInstance().notTooLong(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "TOO_LONG"));
+			logger.error("password TOO_LONG");
 		} else if( ! PasswordValidator.getInstance().isValidPassword(password)){
 			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_VALID"));
+			logger.error("password NOT_VALID");
 		} else if( ! password.equals(passwordrepeat)){
 			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
+			logger.error("passwordrepeat NOT_EQUAL");
 		} else {
 			user.setPassword(password);
 		}
 		if(firstname.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "firstname", "NO_VALUE"));	
+			messages.appendChild(UserToXMLTranslator.element(document, "firstname", "NO_VALUE"));
+			logger.error("firstname NO_VALUE");
 		}
 		user.getPerson().setFirstName(firstname);
 		if(lastname.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "lastname", "NO_VALUE"));	
+			messages.appendChild(UserToXMLTranslator.element(document, "lastname", "NO_VALUE"));
+			logger.error("lastname NO_VALUE");
 		}
 		user.getPerson().setLastName(lastname);
 		
 		if(employer.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "employer", "NO_VALUE"));	
+			messages.appendChild(UserToXMLTranslator.element(document, "employer", "NO_VALUE"));
+			logger.error("employer NO_VALUE");
 		}
 		user.getPerson().setEmployer(employer);
 
 		if(usertype.equals(UserRoleKey.health_personnel.getValue())){
 			if (position.length() == 0 || position.equals("choose")) {
 				messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_SELECTED"));	
+				logger.error("position NOT_SELECTED");
 			} else {
 				Position selectedPosition = positionFromKey(position);
 				if(selectedPosition == null) {
 					messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));	
+					logger.error("position NOT_VALID");
 				} else {
 					user.getPerson().setPosition(selectedPosition);
 				}
@@ -328,22 +348,27 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		} else if(usertype.equals(UserRoleKey.student.getValue())){
 			if(altposition.length() == 0 || altposition.equals("choose")){
 				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_SELECTED"));
+				logger.error("altposition NOT_SELECTED");
 			} else {
 				user.getPerson().setPositionText(altposition);
 			}
 		}  else {
 			if(positiontext.length() == 0){
-				messages.appendChild(UserToXMLTranslator.element(document, "positiontext", "NO_VALUE"));	
+				messages.appendChild(UserToXMLTranslator.element(document, "positiontext", "NO_VALUE"));
+				logger.error("positiontext NO_VALUE");
 			}
 			user.getPerson().setPositionText(positiontext);
 		}
 		
 		if(emailaddress.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NO_VALUE"));
+			logger.error("emailaddress NO_VALUE");
 		} else if( ! EmailValidator.getInstance().isValidEmailAdress(emailaddress)){
 			messages.appendChild(UserToXMLTranslator.element(document, "emailaddress", "NOT_VALID"));
+			logger.error("emailaddress NOT_VALID");
 		} else if( ! emailaddress.equals(repeatemail)){
 			messages.appendChild(UserToXMLTranslator.element(document, "repeatemail", "NOT_EQUAL"));
+			logger.error("repeatemail NOT_EQUAL");
 		}
 		user.getPerson().getContactInformation().setEmail(emailaddress);
 		values.appendChild(UserToXMLTranslator.cDataElement(document, "repeatemail", repeatemail));
