@@ -337,7 +337,7 @@
  			<entry key="passwordrepeat" value="confirmpassword"/>
  			<entry key="position" value="position"/>
  			<!--  adding altposition, jms, 15.12.2010 -->
- 			<entry key="altpostition" value="altposition"/>
+ 			<entry key="altposition" value="altposition"/>
  			<entry key="positiontext" value="positiontext"/>
  			<entry key="from" value="from"/>
  			<entry key="goto" value="goto"/>
