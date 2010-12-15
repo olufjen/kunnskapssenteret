@@ -191,7 +191,7 @@ public final class RegisterUserController extends HttpControllerPlugin {
 			gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		}
 		String url = request.getParameter(this.parameterNames.get("url"));
-		logger.error("url=" + url);
+		//logger.error("url=" + url);
 		if ( ! (null == url || "".equals(url))) {
 			values.appendChild(UserToXMLTranslator.element(document, "url", url));
 		}
