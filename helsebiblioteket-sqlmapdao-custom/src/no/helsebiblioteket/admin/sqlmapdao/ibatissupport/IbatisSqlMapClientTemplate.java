@@ -100,7 +100,6 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
         try {
             return sqlMap.insert(string, o);
         } catch (SQLException sex) {
-        	
         	logger.error(ERROR_MSG, sex);
             throw new IbatisRuntimeSQLException(ERROR_MSG, sex);
         }
