@@ -60,6 +60,7 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
         	sqlMap = SqlMapClientBuilder.buildSqlMapClient(is);
 
         } catch (Exception e) {
+        	logger.error("Error initializing ibatis.",e);
             throw new RuntimeException("Error initializing Ibatis.", e);
         }
     }
