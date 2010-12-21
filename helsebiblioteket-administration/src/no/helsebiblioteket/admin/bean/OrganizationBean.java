@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.bean;
 
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Profile;
 import no.helsebiblioteket.admin.domain.SupplierOrganization;
 import no.helsebiblioteket.admin.domain.SupplierSourceResource;
+import no.helsebiblioteket.admin.domain.User;
 import no.helsebiblioteket.admin.domain.key.OrganizationTypeKey;
 import no.helsebiblioteket.admin.domain.list.OrganizationListItem;
 import no.helsebiblioteket.admin.domain.list.ResourceAccessListItem;
@@ -42,6 +44,7 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganiz
 import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.AccessService;
 import no.helsebiblioteket.admin.service.OrganizationService;
+import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class OrganizationBean implements IconProvider{
@@ -104,6 +107,23 @@ public class OrganizationBean implements IconProvider{
 		return this.actionDetailsEdit(true, true);
 	}
 	public String actionDelete() {
+		
+		OrganizationListItem orgItem = new OrganizationListItem();
+		orgItem.setId(this.organization.getId());
+		ResourceAccessListItem[] accessList = this.accessService.getAccessListByOrganization(orgItem).getList();
+		for (ResourceAccessListItem resourceAccessListItem : accessList) {
+			accessService.deleteResourceAccess(resourceAccessListItem);
+		}
+		
+//		User[] users = this.userService.getAdminUserByOrganization(organization).getList();
+//		for (User user : users) {
+//			System.out.println("id=" + user.getId());
+//			System.out.println("username=" + user.getUsername());
+//			System.out.println("orgFor=" + user.getOrgAdminFor());
+//			user.getOrgAdminFor().setId(null);
+//			this.userService.updateUser(user);
+//		}
+		
 		if(this.organizationService.deleteOrganization(this.organization).booleanValue()){
 			this.logger.info("ORG DELETED");
 			
