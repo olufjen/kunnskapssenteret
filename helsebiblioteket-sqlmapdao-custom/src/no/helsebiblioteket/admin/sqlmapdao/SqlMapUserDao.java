@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
 
+import java.util.List;
+
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
@@ -36,5 +38,9 @@ public class SqlMapUserDao extends IbatisSqlMapClientDaoSupport implements UserD
 	@Override
 	public OrganizationUser getDeletedUserByUsername(String username) {
 		return (OrganizationUser) getSqlMapClientTemplate().queryForObject("getDeletedUserByUsername", username);
+	}
+	@Override
+	public List<OrganizationUser> getAdminUserByOrganizationId(Integer id) {
+		return (List<OrganizationUser>) getSqlMapClientTemplate().queryForList("getAdminUserByOrganizationId", id);	
 	}
 }
