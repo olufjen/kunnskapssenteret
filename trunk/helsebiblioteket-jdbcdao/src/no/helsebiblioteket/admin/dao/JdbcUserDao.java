@@ -122,5 +122,10 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public List<OrganizationUser> getAdminUserByOrganizationId(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
