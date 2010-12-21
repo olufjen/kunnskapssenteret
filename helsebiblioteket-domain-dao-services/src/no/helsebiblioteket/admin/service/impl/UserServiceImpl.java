@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.service.impl;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -455,6 +457,7 @@ public class UserServiceImpl implements UserService {
 		OrganizationUser oldUser = userDao.getUserById(user.getId());
 		existingUsername = oldUser.getUser().getUsername();
 		
+		// TODO: Is this needed?
 		SingleResultUser oldResult = this.findUserByUsername(existingUsername);
 		if(oldResult instanceof EmptyResultUser){
 			throw new NullPointerException("User does not exist.");
@@ -492,6 +495,16 @@ public class UserServiceImpl implements UserService {
 		organizationUser.setUser(user);
 		this.userDao.deleteUser(organizationUser);
 	}
+//	@Override
+//	public ListResultUser getAdminUserByOrganization(Organization organization) {
+//		List<User> users = new ArrayList<User>();
+//		List<OrganizationUser> orgUsers = this.userDao.getAdminUserByOrganizationId(organization.getId());
+//		for (OrganizationUser organizationUser : orgUsers) {
+//			users.add(organizationUser.getUser());
+//		}
+//
+//		return new ListResultUser(users.toArray(new User[]{})); 
+//	}
 	private List<UserRoleLine> translateRoles(Integer id, Role[] roleList){
 		List<UserRoleLine> result = new ArrayList<UserRoleLine>();
 		for (Role role : roleList) {
