@@ -25,6 +25,7 @@ import no.helsebiblioteket.admin.dao.ProfileDao;
 import no.helsebiblioteket.admin.dao.ProxyExportDao;
 import no.helsebiblioteket.admin.dao.ResourceDao;
 import no.helsebiblioteket.admin.dao.SupplierSourceDao;
+import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.dao.keys.ResourceAccessForeignKeys;
 import no.helsebiblioteket.admin.domain.ContactInformation;
 import no.helsebiblioteket.admin.domain.IpAddress;
@@ -35,6 +36,7 @@ import no.helsebiblioteket.admin.domain.MemberOrganization;
 import no.helsebiblioteket.admin.domain.Organization;
 import no.helsebiblioteket.admin.domain.OrganizationName;
 import no.helsebiblioteket.admin.domain.OrganizationType;
+import no.helsebiblioteket.admin.domain.OrganizationUser;
 import no.helsebiblioteket.admin.domain.Person;
 import no.helsebiblioteket.admin.domain.Position;
 import no.helsebiblioteket.admin.domain.Profile;
@@ -93,6 +95,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private SupplierSourceDao supplierSourceDao;
 	private AccessDao accessDao;
 	private ProxyExportDao proxyExportDao;
+	private UserDao userDao;
 	
 	/**
 	 * Fetches all OrganizationType in the database. Delegates the task to
@@ -528,7 +531,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 			for (OrganizationName organizationName : orgNameList) {
 				this.organizationNameDao.deleteOrganizationName(organizationName);
 			}
-
+			
+			List<OrganizationUser> adminUsers = this.userDao.getAdminUserByOrganizationId(organization.getId());
+			for (OrganizationUser user : adminUsers) {
+				user.getUser().getOrgAdminFor().setId(null);
+				
+				this.userDao.updateUser(user);
+			}
+			
 			this.organizationDao.deleteOrganization(organization);
 			this.contactInformationDao.deleteContactInformation(contactInformation);
 			this.contactInformationDao.deleteContactInformation(supportInformation);
@@ -1122,5 +1132,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	public void setProxyExportDao(ProxyExportDao proxyExportDao) {
 		this.proxyExportDao = proxyExportDao;
+	}
+	public UserDao getUserDao() {
+		return userDao;
+	}
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 }
