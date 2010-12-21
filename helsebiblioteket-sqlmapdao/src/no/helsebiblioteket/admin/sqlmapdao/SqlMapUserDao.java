@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.sqlmapdao;
 
 
+import java.util.List;
+
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import no.helsebiblioteket.admin.dao.UserDao;
 import no.helsebiblioteket.admin.domain.OrganizationUser;
@@ -16,6 +18,8 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	public void updateUser(OrganizationUser user){
 		getSqlMapClientTemplate().update("updateUser", user);
 		OrganizationUser tmp = (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserByUsername", user.getUser().getUsername());
+		System.out.println("user=" + user);
+		System.out.println("tmp=" + tmp);
 		user.getUser().setLastChanged(tmp.getUser().getLastChanged());
 	}
 	@Override
@@ -35,5 +39,9 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	@Override
 	public OrganizationUser getDeletedUserByUsername(String username) {
 		return (OrganizationUser) getSqlMapClientTemplate().queryForObject("getDeletedUserByUsername", username);
+	}
+	@Override
+	public List<OrganizationUser> getAdminUserByOrganizationId(Integer id) {
+		return (List<OrganizationUser>) getSqlMapClientTemplate().queryForList("getAdminUserByOrganizationId", id);	
 	}
 }

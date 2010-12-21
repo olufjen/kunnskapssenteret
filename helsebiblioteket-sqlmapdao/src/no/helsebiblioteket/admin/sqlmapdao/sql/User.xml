@@ -51,4 +51,9 @@
 		from tbl_user
 		where user_id = #id#;
 	</select>
+	<select id="getAdminUserByOrganizationId" resultMap="getUserResultMap" parameterClass="integer">
+		select user_id, deleted, username, password, org_unit_id, person_id, admin_org_unit_id, date_trunc('milliseconds', last_changed) as last_changed
+		from tbl_user
+		where admin_org_unit_id = #id#;
+	</select>
 </sqlMap>
