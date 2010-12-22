@@ -17,9 +17,7 @@ public class SqlMapUserDao extends SqlMapClientDaoSupport implements UserDao {
 	@Override
 	public void updateUser(OrganizationUser user){
 		getSqlMapClientTemplate().update("updateUser", user);
-		OrganizationUser tmp = (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserByUsername", user.getUser().getUsername());
-		System.out.println("user=" + user);
-		System.out.println("tmp=" + tmp);
+		OrganizationUser tmp = (OrganizationUser) getSqlMapClientTemplate().queryForObject("getUserById", user.getUser().getId());
 		user.getUser().setLastChanged(tmp.getUser().getLastChanged());
 	}
 	@Override
