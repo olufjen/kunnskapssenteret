@@ -58,6 +58,8 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
         	URL url = new URL(sqlmapConfigUrl);
             InputStream is = url.openStream(); // new FileInputStream(file);
         	sqlMap = SqlMapClientBuilder.buildSqlMapClient(is);
+        	
+        	
 
         } catch (Exception e) {
         	logger.error("Error initializing ibatis.",e);

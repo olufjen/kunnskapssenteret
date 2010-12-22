@@ -39,5 +39,4 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
     <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/UserList.xml" />
     <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/UserRole.xml" />
     <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/UserExport.xml" />
-
 </sqlMapConfig>
