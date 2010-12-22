@@ -17,7 +17,7 @@
 	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
 	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl.dir}/target"/>
 	<property name="helsebiblioteket-importexport-target.dir" value="${helsebiblioteket-importexport.dir}/target"/>
-	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao.dir}/target"/>
+	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao-custom.dir}/target"/>
 	
     <property name="test.dir" value="test"/>
 
@@ -59,7 +59,7 @@
 		<ant dir="${helsebiblioteket-domain-dao-services-home.dir}" inheritAll="false" target="package"/>
 		<ant dir="${helsebiblioteket-services-impl.dir}" inheritAll="false" target="package"/>
 		<ant dir="${helsebiblioteket-importexport.dir}" inheritAll="false" target="package"/>
-		<ant dir="${helsebiblioteket-sqlmapdao.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-sqlmapdao-custom.dir}" inheritAll="false" target="package"/>
 	</target>
 
 
