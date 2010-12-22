@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetDoctorArticlesByDisciplineTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetDoctorDisciplinesTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetNurseArticlesByDisciplineTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetNursingDisciplinesTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetRehabArticlesByDisciplineTask" />
+	<bean class="no.helsebiblioteket.evs.plugins.mcmaster.GetRehabDisciplinesTask" />
+</beans>

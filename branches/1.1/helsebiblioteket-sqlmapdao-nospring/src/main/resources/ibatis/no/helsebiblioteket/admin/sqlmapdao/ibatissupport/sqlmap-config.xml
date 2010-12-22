@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig
+PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+    <transactionManager type="JDBC">
+        <dataSource type="DBCP">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url" value="jdbc:postgresql://192.168.2.51/helsebiblioteket_admin"/>
+            <property name="username" value="helsebiblioteket"/>
+            <property name="password" value="helsebiblioteket"/>
+            <property name="initialSize" value="20"/>
+            <property name="maxActive" value="50"/>
+            <property name="maxIdle" value="30"/>
+            <property name="maxWait" value="60000"/>
+            <property name="poolPreparedStatements" value="true"/>
+            <property name="validationQuery" value="select version();"/>
+            <property name="testOnBorrow" value="true"/>
+
+        </dataSource>
+    </transactionManager>
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Access.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/AccessType.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Action.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/ContactInformation.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/IpRange.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Organization.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/OrganizationList.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/OrganizationName.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/OrganizationType.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Person.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Position.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Profile.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Resource.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/ResourceType.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/Role.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/SupplierSource.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/System.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/User.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/UserList.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/UserRole.xml" />
+    <sqlMap resource="no/helsebiblioteket/admin/sqlmapdao/ibatissupport/UserExport.xml" />
+
+</sqlMapConfig>

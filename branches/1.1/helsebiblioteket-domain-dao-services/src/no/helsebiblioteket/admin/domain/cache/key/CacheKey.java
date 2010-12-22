@@ -1,0 +1,41 @@
+package no.helsebiblioteket.admin.domain.cache.key;
+
+public enum CacheKey {
+	urlServiceWebIsAffectedCache,
+	urlServiceWebTranslateUrlUserOrganizationCache,
+	urlServiceWebTranslateUrlUserCache,
+	urlServiceWebTranslateUrlOrganizationCache,
+	urlServiceWebTranslateUrlNoneCache,
+	urlServiceWebTranslateUrlNationalCache,
+	urlServiceWebHasAccessUserCache,
+	urlServiceWebHasAccessOrganizationCache,
+	urlServiceWebHasAccessUserOrganizationCache,
+	urlServiceWebHasAccessNoneCache,
+	urlServiceWebHasAccessNationalCache,
+	urlServiceWebGroupCache,
+	organizationServiceWebGetOrganizationTypeByKeyCache,
+	userServiceWebGetSystemByKeyCache,
+	userServiceWebGetRoleByKeySystemCache,
+	
+	urlServiceSsoIsAffectedCache,
+	urlServiceSsoTranslateUrlUserOrganizationCache,
+	urlServiceSsoTranslateUrlUserCache,
+	urlServiceSsoTranslateUrlOrganizationCache,
+	urlServiceSsoTranslateUrlNoneCache,
+	urlServiceSsoTranslateUrlNationalCache,
+	urlServiceSsoHasAccessUserCache,
+	urlServiceSsoHasAccessOrganizationCache,
+	urlServiceSsoHasAccessUserOrganizationCache,
+	urlServiceSsoHasAccessNoneCache,
+	urlServiceSsoHasAccessNationalCache,
+	urlServiceSsoGroupCache,
+	organizationServiceSsoGetOrganizationTypeByKeyCache,
+	userServiceSsoGetSystemByKeyCache,
+	userServiceSsoGetRoleByKeySystemCache,
+	organizationServiceSsoGetOrganizationListByAccessDomainCache,
+	loginServiceSsologinOrganizationByReferringDomainCache,
+	loginServiceSsologinOrganizationByIpAddressCache,
+	
+	staticListCache,
+	defaultCache
+}

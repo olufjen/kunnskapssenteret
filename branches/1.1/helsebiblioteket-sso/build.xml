@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+
+<project name="helsebiblioteket-sso" basedir="." default="usage">
+    <property file="build.properties"/>
+    <property name="project.src.dir" value="${project.home}/src"/>
+	<property name="project.build.dir" value="${project.home}/build"/>
+	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
+	<property name="project.lib.dir" value="${project.home}/lib"/>
+	<property name="project.target.dir" value="${project.home}/target"/>
+	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
+	<property name="project.plugin.config.dir" value="${project.home}/verticalsite/pluginconfig" />
+	<property name="helsebiblioteket-domain-dao-services-target.dir" value="${helsebiblioteket-domain-dao-services-home.dir}/target"/>
+	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl-home.dir}/target"/>
+	<property name="helsebiblioteket-sqlmapdap-lib.dir" value="${helsebiblioteket-sqlmapdap-home.dir}/lib"/>
+	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/target"/>
+	<property name="helsebiblioteket-services-geoip-target.dir" value="${helsebiblioteket-services-geoip-home.dir}/target"/>
+	<property name="helsebiblioteket-sqlmapdao-sql.dir" value="${helsebiblioteket-sqlmapdao-home.dir}/src/no/helsebiblioteket/admin/sqlmapdao/sql" />
+    <path id="master-classpath">
+    	<fileset dir="${project.lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+	<path id="master-sourcedir">
+    	<fileset dir="${project.src.dir}">
+            <include name="*.java"/>
+        </fileset>
+    </path>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message="${name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="build     --> Build the application"/>
+        <echo message="package   --> Create a jar for this project"/>
+    	<echo message="clean     --> Remove class- and jar-files for this project"/>
+        <echo message=""/>
+    </target>
+
+	<target name="echo-debug-params">
+		<echo message="kunnskapssenteret.common.lib: ${kunnskapssenteret.common.lib}" />
+	</target>
+	
+	<target name="prepare-dependencies" description="Compile main source tree java files">
+		<ant dir="${helsebiblioteket-domain-dao-services-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-services-geoip-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-services-impl-home.dir}" inheritAll="false" target="package"/>
+		<ant dir="${helsebiblioteket-sqlmapdao-home.dir}" inheritAll="false" target="package"/>
+	</target>
+
+	<target name="build" description="Compile main source tree java files" depends="prepare-dependencies">
+		<mkdir dir="${project.build.dir}"/>
+		<mkdir dir="${project.classes.dir}"/>
+        <javac destdir="${project.classes.dir}" source="1.5" target="1.5" debug="true"
+            deprecation="false" optimize="false" failonerror="true">
+            <src path="${project.src.dir}"/>
+            <classpath refid="master-classpath" />
+        	
+        </javac>
+        
+        <!-- Separate copy-target to make sure property files are included -->
+		<copy todir="${project.classes.dir}">
+			<fileset dir="${project.src.dir}" excludes="**/*.java" />
+		</copy>
+	</target>
+	
+	<target name="package" depends="build">
+		<delete includeemptydirs="true" dir="${tmp.prebuild.plugin.location}"></delete>
+		<mkdir dir="${tmp.prebuild.plugin.location}"/>
+		<mkdir dir="${tmp.prebuild.plugin.location}/META-INF"/>
+		<mkdir dir="${tmp.prebuild.plugin.location}/META-INF/lib"/>
+		<mkdir dir="${tmp.prebuild.plugin.location}/META-INF/spring"/>
+		<copy includeemptydirs="true" todir="${tmp.prebuild.plugin.location}">
+			<fileset dir="${project.classes.dir}" includes="**" />
+		</copy>
+		<copy todir="${tmp.prebuild.plugin.location}/META-INF/lib">
+			<fileset file="${helsebiblioteket-sqlmapdao-home.dir}/lib/ibatis-2.3.4.726.jar" />
+			<fileset file="${helsebiblioteket-services-geoip-home.dir}/lib/maxmindgeoip.jar" />
+			<fileset dir="${helsebiblioteket-sqlmapdao-target.dir}" includes="**/*.jar" />
+			<fileset dir="${helsebiblioteket-services-geoip-target.dir}" includes="**/*.jar" />
+			<fileset dir="${helsebiblioteket-services-impl-target.dir}" includes="**/*.jar"/>
+			<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="**/*.jar"/>
+			<fileset dir="${project.lib.dir}" includes="**/*.jar"/>
+		</copy>
+		<copy tofile="${tmp.prebuild.plugin.location}/META-INF/spring/context.xml" file="${project.plugin.config.dir}/context.xml"/>		
+		<mkdir dir="${project.target.dir}" />
+		<jar destfile="${project.target.dir}/${project.target.filename}" basedir="${tmp.prebuild.plugin.location}" />
+		<delete includeemptydirs="true" dir="${tmp.prebuild.plugin.location}"></delete>
+	</target>
+
+	<target name="clean" description="Clean output directories">
+        <delete includeemptydirs="true">
+            <fileset dir="${project.build.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </delete>
+    </target>
+	
+	<target name="clean-target" description="Clean output directories">
+        <delete includeemptydirs="true">
+        	<fileset dir="${project.target.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </delete>
+    </target>
+	
+	<target name="deploy-plugin" depends="package">
+		<copy tofile="${evs.plugin.deploy.dir}/${project.target.filename}" file="${project.target.dir}/${project.target.filename}"/>
+		<copy tofile="${evs.plugin.deploy.dir}" file="${project.plugin.config.dir}/environment.properties" />
+		<copy todir="${evs.plugin.deploy.dir}/ibatis-config">
+			<fileset dir="${helsebiblioteket-sqlmapdao-sql.dir}" includes="**/*.xml"/>
+		</copy>
+	</target>
+</project>

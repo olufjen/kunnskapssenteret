@@ -1,0 +1,19 @@
+<contenttype>
+  <config name="linkCheckerResult" version="1.0">
+    <form>
+      <title name="heading"/>
+      <block name="LinkCheckerResult">
+        <input name="heading" required="true" type="text">
+          <display>Heading</display>
+          <xpath>contentdata/heading</xpath>
+        </input>
+        <input mode="cdata" name="htmlarea_input" type="htmlarea">
+          <display>HTMLArea</display>
+          <xpath>contentdata/htmlarea</xpath>
+        </input>
+      </block>
+    </form>
+  </config>
+  <indexparameters/>
+</contenttype>
+​

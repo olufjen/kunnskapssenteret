@@ -1,0 +1,94 @@
+Setup for EVS:
+
+***  MENU  ***
+LoggInnServlet            [Page (Standard)]
+LoggUtServlet             [Page (Standard)]
+PassordServlet            [Page (Standard)]
+RedigerProfilServlet      [Page (Standard)]
+RegistreringBrukerServlet [Page (Standard)]
+ProxyServlet              [Page (Standard)]
+Vis profil                [Page (Enkeltside - Logg Inn)]
+  center-top: viewProfile
+Rediger profil            [Page (Enkeltside - Logg Inn)]
+  center-top: editProfile
+Registrering av ny bruker del 1[Page (Enkeltside - Logg Inn)]
+  center-top: registerUserPartOne
+Registrering av ny bruker del 2[Page (Enkeltside - Logg Inn)]
+  center-top: registerUserPartTwo
+Registrering av ny bruker del 3[Page (Enkeltside - Logg Inn)]
+  center-top: registerUserPartThree
+Logg inn                  [Page (Enkeltside - Logg Inn)]
+  center-top: loginUser
+Passord                   [Page (Enkeltside - Logg Inn)]
+  center-top: password
+Rediger passord           [Page (Enkeltside - Logg Inn)]
+  center-top: editPassword
+
+*** OBJECTS ***
+viewProfile
+  Stylesheet: view_profile.xsl
+  editProfileServletPage: RedigerProfilServlet
+  editProfilePage: Rediger profil
+  viewProfilePage: Vis profil
+  editPasswordPage: Rediger passord
+  datasource: viewProfile.txt
+editProfile
+  Stylesheet: edit_profile.xsl
+  editProfileServletPage: RedigerProfilServlet
+  editProfilePage: Rediger profil
+  viewProfilePage: Vis profil
+  editPasswordPage: Rediger passord
+  datasource: editProfile.txt
+registerUserPartOne
+  Stylesheet: register_user_page_one.xsl
+  viewProfilePage: Vis profil
+  registerUserPage: Registrering av ny bruker del 2
+  (linjen ovenfor: det skal altså være del 2, ikke 1)
+  registerUserServletPage: RegistreringBrukerServlet
+  <Other props not set, or default!>
+  datasource: registerUserPartOne.txt
+registerUserPartTwo
+  Stylesheet: register_user_page_two.xsl
+  viewProfilePage: Registrering av ny bruker del 3
+  registerUserPage: Registrering av ny bruker del 2
+  registerUserServletPage: RegistreringBrukerServlet
+  <Other props not set, or default!>
+  datasource: registerUserPartOne.txt
+registerUserPartThree
+  Stylesheet: register_user_page_three.xsl
+  viewProfilePage: Vis profil
+  registerUserServletPage: RegistreringBrukerServlet
+  <Other props not set, or default!>
+  datasource: registerUserPartThree.txt
+password
+  Stylesheet: password.xsl
+  passwordPage: Passord
+  passwordServletPage: PassordServlet
+  frontPage: Helsebiblioteket
+  <Other props not set, or default!>
+  datasource: password.txt
+loginUser
+  Stylesheet: login_user.xsl
+  proxyLoginPage: Logg inn
+  proxyServletPage: ProxyServlet
+  logOutServletPage: LoggUtServlet
+  loginServletPage: LoggInnServlet
+  datasource: loginUser.txt
+logon [Used in Position: right, as default, etc]
+  Stylesheet: logon.xsl
+  frontPage: Helsebiblioteket
+  passportPage: Passord
+  registerPage: Registrering av ny bruker del 1
+  profilePage: Vis profil
+  loginPage: Logg inn
+  logOutServletPage: LoggUtServlet
+  loginServletPage: LoggInnServlet
+  datasource: logon.txt
+editPassword
+  Stylesheet: edit_password.xsl
+  editProfileServletPage: RedigerProfilServlet
+  editProfilePage: Rediger profil
+  viewProfilePage: Vis profil
+  editPasswordPage: Rediger passord
+  <Other props not set, or default!>
+  datasource: editPassword.txt

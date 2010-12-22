@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<value>${cms.home}/plugins/environment.properties</value>
+	 		</list>
+		</property>
+	</bean>
+	
+	
+	<!--
+	<bean id="accessService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/AccessService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.AccessService"/>
+  	</bean>
+  	<bean id="actionService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/ActionService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.ActionService"/>
+  	</bean>
+  	<bean id="emailService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/EmailService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.EmailService"/>
+  	</bean>
+  	<bean id="loginService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/LoginService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.LoginService"/>
+  	</bean>
+  	<bean id="organizationService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/OrganizationService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.OrganizationService"/>
+  	</bean>
+  	<bean id="urlService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/UrlService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.URLService"/>
+  	</bean>
+  	<bean id="userService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/UserService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.UserService"/>
+  	</bean>
+  	<bean id="geoIpService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/GeoIpService"/>
+		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.geoip.GeoIpService"/>
+  	</bean>
+  	-->
+  		
+  		
+  	
+	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
+  		<property name="accessDao" ref="accessDao"></property>
+  		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+  		<property name="resourceTypeDao" ref="resourceTypeDao"></property>
+  		<property name="accessTypeDao" ref="accessTypeDao"></property>
+  		<property name="resourceDao" ref="resourceDao"></property>
+  	</bean>
+  	<bean id="actionService" class="no.helsebiblioteket.admin.service.impl.ActionServiceImpl">
+  		<property name="actionDao" ref="actionDao"></property>
+  		<property name="userService" ref="userService"></property>
+  		<property name="organizationService" ref="organizationService"></property>
+  	</bean>
+  	<bean id="emailService" class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
+    	<property name="host" value="${mail.smtp.host}"></property>
+    	<property name="debug" value="${mail.debug}"></property>
+    	<property name="noSend" value="${mail.nosend}"></property>
+    	<property name="contentType" value="${mail.content-type}"></property>
+    	<property name="charset" value="${mail.charset}"></property>
+  	</bean>
+  	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
+  		<property name="userService" ref="userService"></property>
+  		<property name="organizationService" ref="organizationService"></property>
+  		<property name="emailService" ref="emailService"></property>
+  	</bean>
+  	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
+    	<property name="organizationDao" ref="organizationDao"></property>
+    	<property name="organizationListDao" ref="organizationListDao"></property>
+    	<property name="organizationTypeDao" ref="organizationTypeDao"></property>
+    	<property name="organizationNameDao" ref="organizationNameDao"></property>
+    	<property name="personDao" ref="personDao"></property>
+    	<property name="contactInformationDao" ref="contactInformationDao"></property>
+    	<property name="ipRangeDao" ref="ipRangeDao"></property>
+    	<property name="supplierSourceDao" ref="supplierSourceDao"></property>
+    	<property name="profileDao" ref="profileDao"></property>
+    	<property name="positionDao" ref="positionDao"></property>
+    	<property name="resourceDao" ref="resourceDao"></property>
+    	<property name="accessDao" ref="accessDao"></property>
+  	</bean>
+  	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
+    	<property name="accessService" ref="accessService"></property>
+    	<property name="proxyPrefix" value="${proxy.prefix}"></property>
+  	</bean>
+  	<!--  <bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl">
+  		<property name="userService" ref="userService"></property>
+  	</bean>-->
+  	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
+  		<property name="userDao" ref="userDao"></property>
+  		<property name="userExportDao" ref="userExportDao"></property>
+  		<property name="userListDao" ref="userListDao"></property>
+  		<property name="roleDao" ref="roleDao"></property>
+  		<property name="userRoleDao" ref="userRoleDao"></property>
+  		<property name="personDao" ref="personDao"></property>
+  		<property name="positionDao" ref="positionDao"></property>
+  		<property name="organizationDao" ref="organizationDao"></property>
+  		<property name="systemDao" ref="systemDao"></property>
+  		<property name="profileDao" ref="profileDao"></property>
+  		<property name="contactInformationDao" ref="contactInformationDao"></property>
+  	</bean>
+  	<bean id="geoIpService" class="no.helsebiblioteket.admin.service.geoip.impl.GeoIpServiceImpl">
+  		<property name="dataFileName" value="${geoip.databasefile}" />
+  		<property name="licenseKey" value="${geoip.licensekey}" />
+  		<property name="reloadIntervalSeconds" value="${geoip.reloadintervalseconds}" />
+  	</bean>
+  	
+  	<!-- initiated via custom sqlmapdao-project, no need to configure each dao here -->
+	<bean id="userDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserDao" />
+	<bean id="userExportDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserExportDao" />
+	<bean id="roleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapRoleDao" />
+	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao" />
+	<bean id="positionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPositionDao" />
+	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao" />
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao" />
+	<bean id="organizationListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationListDao" />
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationTypeDao" />
+	<bean id="organizationNameDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao" />
+	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao" />
+	<bean id="ipRangeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapIpRangeDao" />
+	<bean id="resourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceDao" />
+	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao" />
+	<bean id="userListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserListDao" />
+	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao" />
+	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao" />
+	<bean id="resourceTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceTypeDao" />
+	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao" />
+	<bean id="actionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapActionDao" />
+	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao" />
+  	
+  	
+	<!-- Plugin related from here -->
+	
+	<bean id="userServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserServiceSso">
+		<property name="userService" ref="userService"></property>
+		
+	</bean>
+	<!-- Disabled because of dependency on spring security. Not used in sso-project. 
+	<bean id="userDetailsServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserDetailsServiceSso">
+		<property name="userDetailsService" ref="userDetailsService"></property>
+	</bean>-->
+	<bean id="urlServiceSso" class="no.helsebiblioteket.admin.ssoservice.URLServiceSso">
+		<property name="urlService" ref="urlService"></property>
+	</bean>
+	<bean id="organizationServiceSso" class="no.helsebiblioteket.admin.ssoservice.OrganizationServiceSso">
+		<property name="organizationService" ref="organizationService"></property>
+	</bean>
+	<bean id="loginServiceSso" class="no.helsebiblioteket.admin.ssoservice.LoginServiceSso">
+		<property name="loginService" ref="loginService"></property>
+	</bean>
+	<bean id="emailServiceSso" class="no.helsebiblioteket.admin.ssoservice.EmailServiceSso">
+		<property name="emailService" ref="emailService"></property>
+	</bean>
+	<bean id="actionServiceSso" class="no.helsebiblioteket.admin.ssoservice.ActionServiceSso">
+		<property name="actionService" ref="actionService"></property>
+	</bean>
+	<bean id="accessServiceSso" class="no.helsebiblioteket.admin.ssoservice.AccessServiceSso">
+		<property name="accessService" ref="accessService"></property>
+	</bean>
+	<bean id="geoIpServiceSso" class="no.helsebiblioteket.admin.ssoservice.geoip.GeoIpServiceSso">
+		<property name="geoIpService" ref="geoIpService"></property>
+	</bean>
+	
+	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+        <property name="name" value="loggedinuser"/>
+        <property name="target" ref="loggedInFunction" />
+    </bean>
+    
+    <bean name="loggedInFunction" class="no.helsebiblioteket.evs.plugin.LoggedInFunction">
+    	<property name="userService" ref="userServiceSso" />
+    </bean>
+    
+    <bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+        <property name="name" value="getContentByCategoryAccess" />
+        <property name="target" ref="getContentByCategoryAccessFunction" />
+    </bean>
+    
+    <bean name="getContentByCategoryAccessFunction" class="no.helsebiblioteket.evs.plugin.GetContentByCategoryAccessFunction">
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="noAccessTextName" value="noaccess" />
+	</bean>
+	
+	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+        <property name="name" value="getContentBySectionAccess" />
+        <property name="target" ref="getContentBySectionAccessFunction" />
+    </bean>
+    
+	<bean name="getContentBySectionAccessFunction" class="no.helsebiblioteket.evs.plugin.GetContentBySectionAccessFunction">
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="noAccessTextName" value="noaccess" />
+	</bean>
+	
+	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+        <property name="name" value="getContentAccess" />
+        <property name="target" ref="getContentAccessFunction" />
+    </bean>
+	
+	<bean name="getContentAccessFunction" class="no.helsebiblioteket.evs.plugin.GetContentAccessFunction">
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="noAccessTextName" value="noaccess" />
+	</bean>
+    
+    <bean class="no.helsebiblioteket.evs.plugin.LogInController">
+ 		<property name="urlPattern" value="/site/2/LoggInnServlet" />
+ 		<property name="resultSessionVarName" value="hbloginresult" />
+ 		<property name="loginService" ref="loginServiceSso" />
+ 		<property name="parameterNames"><map>
+ 			<entry key="username" value="uid"/>
+ 			<entry key="password" value="password"/>
+ 			<entry key="from" value="from"/>
+ 			<entry key="goto" value="goto"/>
+ 			<entry key="resultName" value="result"/>
+ 			<entry key="resultValue" value="true"/>
+ 		</map></property>
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
+ 		<property name="urlPattern" value="/site/[0-3]/.*" />
+ 		<property name="urlService" ref="urlServiceSso" />
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="countryCodes" value="${plugin.countrycodes}" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.AccessFilter">
+ 		<property name="urlPattern" value="/site/[0-3]/.*" />
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="hbAccessTagName" value="hbaccess" />
+ 		<property name="attributeNoAccessTextName" value="noaccesstext" />
+ 		<property name="attributeCountryCodesName" value="countrycodes" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
+ 		<property name="urlPattern" value="/site/[0-3]/.*" />
+ 		<property name="priority" value="9999" />
+ 		<property name="loginService" ref="loginServiceSso" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
+ 		<property name="urlPattern" value="/site/2/LoggUtServlet" />
+ 		<property name="gotoUrl" value="${plugin.logoutcontroller.gotourl}" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.ProfileController">
+ 		<property name="urlPattern" value="/site/2/RedigerProfilServlet" />
+ 		<property name="userService" ref="userServiceSso" />
+ 		<property name="organizationService" ref="organizationServiceSso" />
+ 		<property name="resultSessionVarName" value="hbprofileresult" />
+ 		<property name="editPasswordresultVarName" value="hbeditpasswordresult" />
+ 		<property name="editPasswordFromVarName" value="hbeditpasswordfrom" />
+ 		<property name="editPasswordUserVarName" value="hbeditpassworduser" />
+ 		<property name="parameterNames"><map>
+ 			<entry key="studentorhprordateofbirth" value="studentorhprordateofbirth"/>
+ 			<entry key="firstname" value="firstname"/>
+ 			<entry key="lastname" value="surname"/>
+ 			<entry key="employer" value="org"/>
+ 			<entry key="position" value="position"/>
+ 			<entry key="altposition" value="altposition"/>
+ 			<entry key="newsletter" value="newsletter"/>
+ 			<entry key="questionaire" value="survey"/>
+ 			<entry key="emailaddress" value="email"/>
+ 			<entry key="password" value="password"/>
+ 			<entry key="passwordrepeat" value="confirmpassword"/>
+ 			<entry key="role" value="role"/>
+ 			<entry key="from" value="from"/>
+ 			<entry key="goto" value="goto"/>
+ 			<entry key="viewPage" value="viewPage"/>
+ 			<entry key="editPage" value="editPage"/>
+ 			<entry key="passwordPage" value="passwordPage"/>
+ 			<entry key="fromform" value="fromform"/>
+ 			<entry key="resultName" value="result"/>
+ 			<entry key="resultValue" value="true"/>
+ 			<entry key="saveName" value="save"/>
+ 			<entry key="saveValue" value="Lagre"/>
+ 			<entry key="deleteName" value="delete"/>
+ 			<entry key="deleteValue" value="Slett"/>
+ 			<entry key="editPasswordName" value="editpassword"/>
+ 			<entry key="editPasswordValue" value="Endre passord"/>
+ 			<entry key="savePasswordName" value="savepassword"/>
+ 			<entry key="savePasswordValue" value="Lagre"/>
+ 			<entry key="cancelName" value="cancel"/>
+ 			<entry key="cancelValue" value="Avbryt"/>
+ 			<entry key="cancelPasswordName" value="cancelpassword"/>
+ 			<entry key="cancelPasswordValue" value="Avbryt"/>
+ 			<entry key="editProfileName" value="editprofile"/>
+ 			<entry key="editProfileValue" value="Rediger profil"/>
+ 		</map></property>
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
+ 		<property name="urlPattern" value="/site/2/ProxyServlet" />
+ 		<property name="priority" value="9998" />
+ 		<property name="resultSessionVarName" value="hbproxyresult" />
+ 		<property name="proxyPassword" value="${proxy.password}" />
+ 		<property name="urlParamName" value="url" />
+ 		<property name="proxyUrl" value="${proxy.url}" />
+ 		<property name="logUpUrl" value="${proxy.logup.url}" />
+ 		<property name="urlService" ref="urlServiceSso" />
+ 		<property name="stripUrlParams" value="${plugin.proxylogincontroller.stripurlparams}" />
+ 		<property name="stripUrlParamsSet">
+ 			<set>
+ 				<value>pwd</value>
+ 				<value>referer</value>
+ 			</set>
+ 		</property>
+ 		<property name="geoIpService" ref="geoIpServiceSso" />
+ 		<property name="countryCodes" value="${plugin.countrycodes}" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
+ 		<property name="urlPattern" value="/site/2/RegistreringBrukerServlet" />
+ 		<property name="userService" ref="userServiceSso" />
+ 		<property name="organizationService" ref="organizationServiceSso" />
+ 		<property name="resultSessionVarName" value="hbregisterresult" />
+ 		<property name="parameterNames"><map>
+ 			<entry key="usertype" value="usertype"/>
+ 			<entry key="hprnumber" value="hprnumber"/>
+ 			<entry key="studentnumber" value="studentnumber"/>
+ 			<entry key="dateofbirth" value="dateofbirth"/>
+ 			<entry key="firstname" value="firstname"/>
+ 			<entry key="lastname" value="surname"/>
+ 			<entry key="employer" value="org"/>
+ 			<entry key="studentansatt" value="studentansatt"/>
+ 			<entry key="newsletter" value="newsletter"/>
+ 			<entry key="survey" value="survey"/>
+ 			<entry key="emailaddress" value="email"/>
+ 			<entry key="repeatemail" value="repeatemail"/>
+ 			<entry key="username" value="username"/>
+ 			<entry key="password" value="password"/>
+ 			<entry key="passwordrepeat" value="confirmpassword"/>
+ 			<entry key="position" value="position"/>
+ 			<!--  adding altposition, jms, 15.12.2010 -->
+ 			<entry key="altposition" value="altposition"/>
+ 			<entry key="positiontext" value="positiontext"/>
+ 			<entry key="from" value="from"/>
+ 			<entry key="goto" value="goto"/>
+ 			<entry key="saveName" value="save"/>
+ 			<entry key="saveValue" value="true"/>
+ 			<entry key="cancelName" value="cancel"/>
+ 			<entry key="cancelValue" value="Avbryt"/>
+ 			<entry key="confirmName" value="confirm"/>
+ 			<entry key="confirmValue" value="true"/>
+ 			<entry key="formId" value="form_id"/>
+ 			<entry key="emailFromAddressText" value="emailFromAddressText" />
+			<entry key="emailFromNameText" value="emailFromNameText" />
+			<entry key="emailMessageText" value="emailMessageText" />
+			<entry key="emailSubjectText" value="emailSubjectText" />
+ 		</map></property>
+ 		<property name="emailService" ref="emailServiceSso" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.SendPasswordController">
+ 		<property name="urlPattern" value="/site/2/PassordServlet" />
+ 		<property name="loginService" ref="loginServiceSso" />
+ 		<property name="parameterNames"><map>
+ 			<entry key="emailaddress" value="to_email"/>
+ 			<entry key="from" value="from"/>
+ 			<entry key="goto" value="goto"/>
+ 			<entry key="resultName" value="result"/>
+ 			<entry key="resultValue" value="true"/>
+ 			<entry key="initName" value="init"/>
+ 			<entry key="initValue" value="true"/>
+ 			<entry key="emailFromAddressText" value="emailFromAddressText" />
+			<entry key="emailFromNameText" value="emailFromNameText" />
+			<entry key="emailMessageText" value="emailMessageText" />
+			<entry key="emailSubjectText" value="emailSubjectText" />
+ 		</map></property>
+ 		<property name="resultSessionVarName" value="hbpasswordresult" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.UnsubscribeNewsletterController">
+ 		<property name="urlPattern" value="/site/2/MeldAvNyhetsbrevServlet" />
+ 		<property name="gotoUrl" value="${plugin.unsubscribenewslettercontroller.gotourl}" />
+ 		<property name="userService" ref="userServiceSso" />
+ 		<property name="parameterNamesUrlParams"><map>
+ 			<entry key="subscriptionKey" value="hbkey"/>
+ 		</map></property>
+ 		<property name="parameterNamesFields"><map>
+ 			<entry key="subscriptionKey" value="subscriptionkey"/>
+ 		</map></property>
+ 		<property name="resultSessionVarName" value="hbunsubscriberesult" />
+	</bean>
+	
+	<bean class="no.helsebiblioteket.evs.plugin.UnsubscribeSurveyController">
+ 		<property name="urlPattern" value="/site/2/MeldAvSporreskjemaServlet" />
+ 		<property name="gotoUrl" value="${plugin.unsubscribesurveycontroller.gotourl}" />
+ 		<property name="userService" ref="userServiceSso" />
+ 		<property name="parameterNamesUrlParams"><map>
+ 			<entry key="subscriptionKey" value="hbkey"/>
+ 		</map></property>
+ 		<property name="parameterNamesFields"><map>
+ 			<entry key="subscriptionKey" value="subscriptionkey"/>
+ 		</map></property>
+ 		<property name="resultSessionVarName" value="hbunsubscriberesult" />
+	</bean>
+	
+</beans>

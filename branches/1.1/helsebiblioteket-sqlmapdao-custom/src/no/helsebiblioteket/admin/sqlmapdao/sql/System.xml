@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="System">
+	<typeAlias alias="System" type="no.helsebiblioteket.admin.domain.System"/>
+	<typeAlias alias="SystemKey" type="no.helsebiblioteket.admin.domain.key.SystemKey"/>
+	<resultMap id="SystemMap" class="System">
+		<result property="name" column="name" />
+		<result property="description" column="descr" />
+		<result property="key.value" column="key" />
+		<result property="id" column="system_id" />
+	</resultMap>
+	<select id="getSystemByKey" resultMap="SystemMap" parameterClass="SystemKey">
+		select
+			name,
+			descr,
+			key,
+			system_id
+		from tbl_system_reg
+		where key = #value#;
+	</select>
+</sqlMap>

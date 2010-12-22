@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig
+PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+    <transactionManager type="JDBC">
+        <dataSource type="DBCP">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url" value="jdbc:postgresql://localhost/cmsdb2"/>
+            <property name="username" value="helsebiblioteket"/>
+            <property name="password" value="helsebiblioteket"/>
+            <property name="initialSize" value="20"/>
+            <property name="maxActive" value="50"/>
+            <property name="maxIdle" value="30"/>
+            <property name="maxWait" value="60000"/>
+            <property name="poolPreparedStatements" value="true"/>
+            <property name="validationQuery" value="select version();"/>
+            <property name="testOnBorrow" value="true"/>
+        </dataSource>
+    </transactionManager>
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Access.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/AccessType.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Action.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/ContactInformation.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/IpRange.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Organization.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/OrganizationList.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/OrganizationName.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/OrganizationType.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Person.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Position.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Profile.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Resource.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/ResourceType.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/Role.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/SupplierSource.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/System.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/User.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/UserList.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/UserRole.xml" />
+    <sqlMap url="file:///home/appserver/cmshome/plugins/ibatis-config/UserExport.xml" />
+
+</sqlMapConfig>
