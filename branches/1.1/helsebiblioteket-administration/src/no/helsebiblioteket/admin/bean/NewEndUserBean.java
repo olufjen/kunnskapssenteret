@@ -15,6 +15,7 @@ import no.helsebiblioteket.admin.domain.key.PositionTypeKey;
 import no.helsebiblioteket.admin.domain.key.SystemKey;
 import no.helsebiblioteket.admin.domain.key.UserRoleKey;
 import no.helsebiblioteket.admin.domain.requestresult.ValueResultSystem;
+import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,21 +33,38 @@ public class NewEndUserBean extends NewUserBean {
 	private Map<String, Role> allRolesMap;
 	List<SelectItem> availableIsStudent;
 
-	private boolean showStudentNo;
-	private boolean showHpr;
-	private boolean dateOfBirth;
 	private boolean showEmployer;
 	private boolean showPositionText;
 	private boolean showPositionSelect;
 	private boolean showIsStudent;
 	
+	private static final String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+    private static final Map<String, String> studentPosMap = new HashMap<String, String>();
+    private static final List<String> studentPosList = new ArrayList<String>();
+    static {
+    	studentPosMap.put("pos_student", posBundle("pos_student")); 
+    	studentPosMap.put("pos_teacher", posBundle("pos_teacher"));
+    	studentPosMap.put("pos_administration", posBundle("pos_administration"));
+    	studentPosMap.put("pos_researcher", posBundle("pos_researcher"));
+    	studentPosMap.put("pos_other", posBundle("pos_other"));
+    	
+    	studentPosList.add("pos_student");
+    	studentPosList.add("pos_teacher");
+    	studentPosList.add("pos_administration");
+    	studentPosList.add("pos_researcher");
+    	studentPosList.add("pos_other");
+    }
+    private static String posBundle(String key){
+    	return MessageResourceReader.getMessageResourceString(bundleMain, key, key);	
+    }
+
     public String actionNewEndUser() {
     	String tmp = super.actionNewEndUser();
     	this.enableDisableFields();
     	return tmp;
     }
     public String actionSaveNewUser() {
-		logger.info("method 'saveNewUser' invoked in new end user Bean");
+		logger.debug("method 'saveNewUser' invoked in new end user Bean");
 		return null;
 	}
     public String actionSaveNewEndUser() {
@@ -54,8 +72,11 @@ public class NewEndUserBean extends NewUserBean {
     		//
     	}
     	if(this.role.getKey().getValue().equals(roleKeyAdministrator)){
+    		this.user.getPerson().setPosition(null);
     	} else if(this.role.getKey().getValue().equals(roleKeyEmployee)){
+    		this.user.getPerson().setPosition(null);
     	} else if(this.role.getKey().getValue().equals(roleKeyStudent)){
+    		this.user.getPerson().setPosition(null);
     	} else if(this.role.getKey().getValue().equals(roleKeyHealthWorker)){
     	} else {
     		logger.error("Unknown (and invalid) role selected");
@@ -73,9 +94,6 @@ public class NewEndUserBean extends NewUserBean {
     }
     public void enableDisableFields(){
     	if(this.role.getKey().getValue().equals(roleKeyAdministrator)){
-        	this.showStudentNo = false;
-        	this.showHpr = false;
-        	this.dateOfBirth = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = false;
@@ -88,46 +106,38 @@ public class NewEndUserBean extends NewUserBean {
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     		this.user.getPerson().setProfile(new Profile());
     	} else if(this.role.getKey().getValue().equals(roleKeyEmployee)){
-        	this.showStudentNo = false;
-        	this.showHpr = false;
-        	this.dateOfBirth = true;
         	this.showEmployer = true;
         	this.showPositionText = true;
         	this.showPositionSelect = false;
     		this.showIsStudent = false;
     		this.user.getPerson().setHprNumber(null);
+    		this.user.getPerson().setDateOfBirth(null);
     		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(null);
     		this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	} else if(this.role.getKey().getValue().equals(roleKeyHealthWorker)){
-        	this.showStudentNo = false;
-        	this.showHpr = true;
-        	this.dateOfBirth = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = true;
     		this.showIsStudent = false;
-    		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setDateOfBirth(null);
+    		this.user.getPerson().setStudentNumber(null);
     		this.user.getPerson().setIsStudent(null);
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	} else if(this.role.getKey().getValue().equals(roleKeyStudent)){
-        	this.showStudentNo = true;
-        	this.showHpr = false;
-        	this.dateOfBirth = false;
         	this.showEmployer = true;
-        	this.showPositionText = true;
+        	this.showPositionText = false;
         	this.showPositionSelect = false;
     		this.showIsStudent = true;
     		this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setDateOfBirth(null);
+    		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setIsStudent(null);
         	this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	} else {
-        	this.showStudentNo = false;
-        	this.showHpr = false;
-        	this.dateOfBirth = false;
         	this.showEmployer = false;
         	this.showPositionText = false;
         	this.showPositionSelect = false;
@@ -135,6 +145,7 @@ public class NewEndUserBean extends NewUserBean {
     		this.user.getPerson().setHprNumber(null);
     		this.user.getPerson().setDateOfBirth(null);
     		this.user.getPerson().setStudentNumber(null);
+    		this.user.getPerson().setIsStudent(null);
         	this.user.getPerson().setPosition(new Position());
     		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
     	}
@@ -167,12 +178,18 @@ public class NewEndUserBean extends NewUserBean {
 		return this.allRoles;
 	}
 	public List<SelectItem> getAvailableIsStudent() {
+		initSelectedIsStudent();
+		return this.availableIsStudent;
+    }
+    public void initSelectedIsStudent(){
 		if(this.availableIsStudent == null){
 			this.availableIsStudent = new ArrayList<SelectItem>();
-			this.availableIsStudent.add(new SelectItem(Boolean.TRUE, "Student"));
-			this.availableIsStudent.add(new SelectItem(Boolean.FALSE, "Employee"));
-		}
-		return this.availableIsStudent;
+			
+			for (String key : studentPosList) {
+				this.availableIsStudent.add(new SelectItem(key, studentPosMap.get(key)));
+			}
+			
+    	}
     }
 	public String getEmailaddress() {
 		return emailaddress;
@@ -180,29 +197,11 @@ public class NewEndUserBean extends NewUserBean {
 	public void setEmailaddress(String emailaddress) {
 		this.emailaddress = emailaddress;
 	}
-	public boolean isShowStudentNo() {
-		return showStudentNo;
-	}
-	public void setShowStudentNo(boolean showStudentNo) {
-		this.showStudentNo = showStudentNo;
-	}
-	public boolean isShowHpr() {
-		return showHpr;
-	}
-	public void setShowHpr(boolean showHpr) {
-		this.showHpr = showHpr;
-	}
 	public boolean isShowEmployer() {
 		return showEmployer;
 	}
 	public void setShowEmployer(boolean showEmployer) {
 		this.showEmployer = showEmployer;
-	}
-	public boolean isShowDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setShowDateOfBirth(boolean dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
 	}
 	public boolean isShowPositionText() {
 		return showPositionText;
@@ -217,6 +216,7 @@ public class NewEndUserBean extends NewUserBean {
 		this.showPositionSelect = showPositionSelect;
 	}
 	public boolean isShowIsStudent() {
+		initSelectedIsStudent();
 		return showIsStudent;
 	}
 	public void setShowIsStudent(boolean showIsStudent) {

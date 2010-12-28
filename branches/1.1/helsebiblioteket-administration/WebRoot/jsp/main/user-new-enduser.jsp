@@ -32,54 +32,6 @@
     	</tr>
 
     	<tr>
-      		<td>
-        		<h:outputText value="#{msg_main.student_emp_no}" />
-		    </td>
-      		<td colspan="3">
-      			<h:inputText value="#{newEndUserBean.user.person.studentNumber}"
-      	  			id="studentNo" size="50"
-      	  			required="#{newEndUserBean.showStudentNo}"
-      	  			disabled="#{ ! newEndUserBean.showStudentNo}"
-      	  			readonly="#{ ! newEndUserBean.showStudentNo}"/>
-      		</td>
-      		<td>
-				<h:message for="studentNo" styleClass="RED"/>
-      		</td>
-    	</tr>
-
-    	<tr>
-      		<td>
-        		<h:outputText value="#{msg_main.hpr_no}" />
-		    </td>
-      		<td colspan="3">
-        		<h:inputText value="#{newEndUserBean.user.person.hprNumber}"
-      	  			id="studentHprNo" size="50"
-      	  			required="#{newEndUserBean.showHpr}"
-      	  			disabled="#{ ! newEndUserBean.showHpr}"
-      	  			readonly="#{ ! newEndUserBean.showHpr}"/>
-      		</td>
-      		<td>
-				<h:message for="studentHprNo" styleClass="RED"/>
-      		</td>
-	   	</tr>
-	   	
-	   	<tr>
-      		<td>
-        		<h:outputText value="#{msg_main.date_of_birth}" />
-		    </td>
-      		<td colspan="3">
-        		<h:inputText value="#{newEndUserBean.user.person.dateOfBirth}"
-      	  			id="dateOfBirth" size="50"
-      	  			required="#{newEndUserBean.showDateOfBirth}"
-      	  			disabled="#{ ! newEndUserBean.showDateOfBirth}"
-      	  			readonly="#{ ! newEndUserBean.showDateOfBirth}"/>
-      		</td>
-      		<td>
-				<h:message for="dateOfBirth" styleClass="RED"/>
-      		</td>
-	   	</tr>
-
-    	<tr>
 			<td>
 				<h:outputText value="#{msg_main.employer}" />
       		</td>
@@ -128,14 +80,13 @@
 
 		<tr>
 			<td><h:outputText value="#{msg_main.is_student}"  /></td>
-			<td><h:selectOneRadio value="#{newEndUserBean.user.person.isStudent}"
-					id="isStudent" 
-					layout="pageDirection"
+			<td><h:selectOneMenu value="#{newEndUserBean.user.person.positionText}"
+					id="isStudent"
 					required="#{ ! newEndUserBean.showIsStudent}"
 					readonly="#{ ! newEndUserBean.showIsStudent}"
 					disabled="#{ ! newEndUserBean.showIsStudent}">
 					<f:selectItems value="#{newEndUserBean.availableIsStudent}"/>
-        	</h:selectOneRadio>
+        	</h:selectOneMenu>
         	</td>
 			<td><h:message for="isStudent" styleClass="RED"/></td>
 		</tr>

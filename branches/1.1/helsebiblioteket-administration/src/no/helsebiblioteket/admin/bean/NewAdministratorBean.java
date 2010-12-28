@@ -15,7 +15,7 @@ public class NewAdministratorBean extends NewUserBean{
     protected final Log logger = LogFactory.getLog(getClass());
 
     public String actionSaveNewUser() {
-		logger.info("method 'saveNewUser' invoked in new admin Bean");
+		logger.debug("method 'saveNewUser' invoked in new admin Bean");
 		User user = new User();
 		Role[] list = new Role[1];
 		System system = ((ValueResultSystem)this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue();
