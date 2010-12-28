@@ -166,7 +166,7 @@ public class UserBean {
 				if( this.user.getPerson().getPositionText() != null){
 					this.selectedIsStudent = this.user.getPerson().getPositionText();
 				}
-				this.user.getPerson().setPositionText("");
+//				this.user.getPerson().setPositionText("");
 			}
 		}
 		if(this.isStudentSelectOne != null) { this.isStudentSelectOne.setValue(this.selectedIsStudent); }
@@ -429,7 +429,7 @@ public class UserBean {
     public String getErrorMsg() { return ""; }
     public boolean getFailed() { return true; }
     public String details(){
-		logger.info("USER: " + user.getPerson().getName());
+		logger.debug("USER: " + user.getPerson().getName());
 		this.adminOrgName = "Ingen";
 		if(this.user.getOrgAdminFor() != null && this.user.getOrgAdminFor().getId() != null){
 			SingleResultOrganization orgRes = this.organizationService.getOrganizationByAdminUser(this.user);
@@ -439,17 +439,17 @@ public class UserBean {
 		}
 		if(this.user.getPerson().getPosition() == null){
 			this.user.getPerson().setPosition(new Position());
-			if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
-				this.user.getPerson().getPosition().setName("");
-				if (this.user.getPerson().getPositionText() != null){
-					String posText = studentPosMap.get(this.user.getPerson().getPositionText());
-					if(posText != null){
-						this.user.getPerson().getPosition().setName(posText);
-					}
+		}
+		if(this.mainRole().getKey().getValue().equals(roleKeyStudent)){
+			this.user.getPerson().getPosition().setName("");
+			if (this.user.getPerson().getPositionText() != null){
+				String posText = studentPosMap.get(this.user.getPerson().getPositionText());
+				if(posText != null){
+					this.user.getPerson().getPosition().setName(posText);
 				}
-			} else {
-				this.user.getPerson().getPosition().setName(this.user.getPerson().getPositionText());
 			}
+		} else if( ! this.mainRole().getKey().getValue().equals(roleKeyHealthWorker)){
+			this.user.getPerson().getPosition().setName(this.user.getPerson().getPositionText());
 		}
 		return "user_details";
     }

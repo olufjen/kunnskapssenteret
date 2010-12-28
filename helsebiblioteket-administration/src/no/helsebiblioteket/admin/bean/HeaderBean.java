@@ -12,7 +12,7 @@ public class HeaderBean {
     protected final Log logger = LogFactory.getLog(getClass());
 	
 	public String actionLogOut() {
-		logger.info("method 'actionLogOut' invoked");
+		logger.debug("method 'actionLogOut' invoked");
 		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		if (session != null) {

@@ -484,72 +484,68 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 		
-		if(true){
-			old.getAccessDomain();
-			ContactInformation contactInformation = old.getContactInformation();
-			Person person = old.getContactPerson();
-			ContactInformation personContactInformation = person.getContactInformation();
-			Profile profile = person.getProfile();
-			ContactInformation supportInformation = old.getSupportInformation();
+		old.getAccessDomain();
+		ContactInformation contactInformation = old.getContactInformation();
+		Person person = old.getContactPerson();
+		ContactInformation personContactInformation = person.getContactInformation();
+		Profile profile = person.getProfile();
+		ContactInformation supportInformation = old.getSupportInformation();
 
-			// Do not delete organization users
-			// Do not delete organization administrator
-			// Set administration users org_id to NULL
+		// Do not delete organization users
+		// Do not delete organization administrator
+		// Set administration users org_id to NULL
 
-			if(mem != null){
-				IpAddressRange[] rangeList = mem.getIpAddressRangeList();
-				IpAddressSingle[] singleList = mem.getIpAddressSingleList();
-				IpAddressSet[] rangeSetsList = new IpAddressSet[rangeList.length];
-				IpAddressSet[] singleSetsList = new IpAddressSet[singleList.length];
-				int i=0;
-				for (IpAddressRange range : rangeList) {
-					rangeSetsList[i++] = range.getIpAddressSet();
-				}
-				i=0;
-				for (IpAddressSingle single : singleList) {
-					singleSetsList[i++] = single.getIpAddressSet();
-				}
-				this.deleteIpAddresses(rangeSetsList);
-				this.deleteIpAddresses(singleSetsList);
-				
+		if(mem != null){
+			IpAddressRange[] rangeList = mem.getIpAddressRangeList();
+			IpAddressSingle[] singleList = mem.getIpAddressSingleList();
+			IpAddressSet[] rangeSetsList = new IpAddressSet[rangeList.length];
+			IpAddressSet[] singleSetsList = new IpAddressSet[singleList.length];
+			int i=0;
+			for (IpAddressRange range : rangeList) {
+				rangeSetsList[i++] = range.getIpAddressSet();
 			}
-			if(sup != null){
-				SupplierSourceResource[] resourceList = sup.getResourceList();
-				for (SupplierSourceResource resource : resourceList) {
-					List<ResourceAccessForeignKeys> accessList =
-						this.accessDao.getAccessListByResource(resource.getResource());
-					for (ResourceAccessForeignKeys access : accessList) {
-						this.accessDao.deleteResourceAccessForeignKeys(access);
-					}
-					this.resourceDao.deleteSupplierSourceResource(resource);
-					this.supplierSourceDao.deleteSupplierSource(resource.getSupplierSource());
-				}
+			i=0;
+			for (IpAddressSingle single : singleList) {
+				singleSetsList[i++] = single.getIpAddressSet();
 			}
+			this.deleteIpAddresses(rangeSetsList);
+			this.deleteIpAddresses(singleSetsList);
 			
-			List<OrganizationName> orgNameList = this.organizationNameDao.
-				getOrganizationNameListByOrganization(organization);
-			for (OrganizationName organizationName : orgNameList) {
-				this.organizationNameDao.deleteOrganizationName(organizationName);
-			}
-			
-			List<OrganizationUser> adminUsers = this.userDao.getAdminUserByOrganizationId(organization.getId());
-			for (OrganizationUser user : adminUsers) {
-				user.getUser().getOrgAdminFor().setId(null);
-				
-				this.userDao.updateUser(user);
-			}
-			
-			this.organizationDao.deleteOrganization(organization);
-			this.contactInformationDao.deleteContactInformation(contactInformation);
-			this.contactInformationDao.deleteContactInformation(supportInformation);
-			this.personDao.deletePerson(person);
-			this.profileDao.deleteProfile(profile);
-			this.contactInformationDao.deleteContactInformation(personContactInformation);
-
-			return Boolean.TRUE;
-		} else {
-			return Boolean.FALSE;
 		}
+		if(sup != null){
+			SupplierSourceResource[] resourceList = sup.getResourceList();
+			for (SupplierSourceResource resource : resourceList) {
+				List<ResourceAccessForeignKeys> accessList =
+					this.accessDao.getAccessListByResource(resource.getResource());
+				for (ResourceAccessForeignKeys access : accessList) {
+					this.accessDao.deleteResourceAccessForeignKeys(access);
+				}
+				this.resourceDao.deleteSupplierSourceResource(resource);
+				this.supplierSourceDao.deleteSupplierSource(resource.getSupplierSource());
+			}
+		}
+		
+		List<OrganizationName> orgNameList = this.organizationNameDao.
+			getOrganizationNameListByOrganization(organization);
+		for (OrganizationName organizationName : orgNameList) {
+			this.organizationNameDao.deleteOrganizationName(organizationName);
+		}
+		
+		List<OrganizationUser> adminUsers = this.userDao.getAdminUserByOrganizationId(organization.getId());
+		for (OrganizationUser user : adminUsers) {
+			user.getUser().getOrgAdminFor().setId(null);
+			
+			this.userDao.updateUser(user);
+		}
+		
+		this.organizationDao.deleteOrganization(organization);
+		this.contactInformationDao.deleteContactInformation(contactInformation);
+		this.contactInformationDao.deleteContactInformation(supportInformation);
+		this.personDao.deletePerson(person);
+		this.profileDao.deleteProfile(profile);
+		this.contactInformationDao.deleteContactInformation(personContactInformation);
+
+		return Boolean.TRUE;
 	}
 	
 	

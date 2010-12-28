@@ -53,7 +53,7 @@ public class NewUserBean {
 	private UIInput passwordInput;
 
     public String actionNewEndUser() {
-		logger.info("method 'newEndUser' invoked");
+		logger.debug("method 'newEndUser' invoked");
 		this.user = new User();
 		this.user.setPerson(new Person());
 		this.user.getPerson().getPosition().setKey(PositionTypeKey.none);
@@ -67,7 +67,7 @@ public class NewUserBean {
 		return "create-enduser";
 	}
     public String actionNewAdministrator() {
-		logger.info("method 'newEndUser' invoked");
+		logger.debug("method 'newEndUser' invoked");
 		this.emailaddress = "";
 		this.firstname = "";
 		this.lastname = "";
@@ -82,11 +82,13 @@ public class NewUserBean {
     	return "users_overview";
     }
     public String actionSaveNewEndUser() {
-    	OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
-    			OrganizationTypeKey._health_enterprise)).getValue();
-    	Position position = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none,
-    			organizationType)).getValue();
-    	this.user.getPerson().setPosition(position);
+    	if(this.user.getPerson().getPosition() != null){
+        	OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
+        			OrganizationTypeKey._health_enterprise)).getValue();
+        	Position position = ((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none,
+        			organizationType)).getValue();
+        	this.user.getPerson().setPosition(position);
+    	}
     	this.user.setPassword(this.password);
     	this.user.getPerson().getContactInformation().setEmail(this.emailaddress);
     	this.userService.insertUser(user);
@@ -100,7 +102,7 @@ public class NewUserBean {
     	return this.userBean.details();
     }
     public String actionSaveNewUser(User user) {
-    	logger.info("method 'saveNewUser' invoked in new User Bean");
+    	logger.debug("method 'saveNewUser' invoked in new User Bean");
 
     	Person person = new Person();
     	person.setFirstName(this.firstname);
