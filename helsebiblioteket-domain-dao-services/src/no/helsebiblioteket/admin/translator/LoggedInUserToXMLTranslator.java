@@ -24,6 +24,7 @@ public class LoggedInUserToXMLTranslator {
 		personElement.appendChild(UserToXMLTranslator.element(document, "studentnumber", user.getStudentNumber()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "dateofbirth", user.getDateOfBirth()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "positiontext", user.getPositionText()));
+		personElement.appendChild(UserToXMLTranslator.element(document, "positiontextkey", user.getPositionTextKey()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "isstudent", user.getIsStudent()));
 		personElement.appendChild(UserToXMLTranslator.element(document, "positionkey", user.getPositionKey()));
 
