@@ -86,10 +86,10 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		return domainString;
 	}
 	
-    @SuppressWarnings("unchecked")
 	public static String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
         String ret = null;
-        Enumeration en = request.getHeaderNames();
+        @SuppressWarnings("rawtypes")
+		Enumeration en = request.getHeaderNames();
         while (en != null && en.hasMoreElements()){
             Object o = en.nextElement();
             if (o instanceof String) {

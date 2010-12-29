@@ -1,8 +1,10 @@
 package no.helsebiblioteket.evs.plugin;
 
+
 import java.net.URLDecoder;
-import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +70,15 @@ public final class RegisterUserController extends HttpControllerPlugin {
 	private UserService userService;
 	private OrganizationService organizationService;
 	
+    private static final Set<String> studentPosSet = new HashSet<String>();
+    static {
+    	studentPosSet.add("pos_student"); 
+    	studentPosSet.add("pos_teacher");
+    	studentPosSet.add("pos_administration");
+    	studentPosSet.add("pos_researcher");
+    	studentPosSet.add("pos_other");
+    }
+
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String save = request.getParameter(this.parameterNames.get("saveName"));
 		String cancel = request.getParameter(this.parameterNames.get("cancelName"));
@@ -358,8 +369,16 @@ public final class RegisterUserController extends HttpControllerPlugin {
 			}
 		} else if(usertype.equals(UserRoleKey.student.getValue())){
 			if(altposition.length() == 0 || altposition.equals("choose")){
-				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_SELECTED"));
-				//logger.error("altposition NOT_SELECTED");
+				if (altposition.length() == 0) {
+					messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID"));	
+				} else if(altposition.equals("choose")){
+					messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_SELECTED"));	
+				} else if(validStudPos(altposition)){
+					messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID"));	
+				} else {
+					user.getPerson().setPositionText(altposition);
+				}
+
 			} else {
 				user.getPerson().setPositionText(altposition);
 			}
@@ -388,6 +407,9 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		user.getPerson().getProfile().setParticipateSurvey(Boolean.valueOf(survey));
 
 		return user;
+	}
+	private boolean validStudPos(String key){
+		return studentPosSet.contains(key);
 	}
 	private boolean userExists(String username) {
 		return this.userService.usernameTaken(username, null);
