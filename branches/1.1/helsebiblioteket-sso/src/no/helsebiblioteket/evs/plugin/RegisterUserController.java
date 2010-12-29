@@ -368,17 +368,12 @@ public final class RegisterUserController extends HttpControllerPlugin {
 				}
 			}
 		} else if(usertype.equals(UserRoleKey.student.getValue())){
-			if(altposition.length() == 0 || altposition.equals("choose")){
-				if (altposition.length() == 0) {
-					messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID"));	
-				} else if(altposition.equals("choose")){
-					messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_SELECTED"));	
-				} else if(validStudPos(altposition)){
-					messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID"));	
-				} else {
-					user.getPerson().setPositionText(altposition);
-				}
-
+			if (altposition.length() == 0) {
+				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID"));	
+			} else if(altposition.equals("choose")){
+				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_SELECTED"));	
+			} else if( ! validStudPos(altposition)){
+				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID_VALUE"));	
 			} else {
 				user.getPerson().setPositionText(altposition);
 			}

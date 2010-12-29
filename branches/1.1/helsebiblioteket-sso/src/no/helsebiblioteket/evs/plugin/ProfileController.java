@@ -292,14 +292,6 @@ public class ProfileController extends HttpControllerPlugin {
 		String otherPosition = request.getParameter(this.parameterNames.get("other_position"));
 		if(otherPosition == null) { otherPosition = ""; }
 		
-//		String studentOrHprOrDateOfBirth = request.getParameter(this.parameterNames.get("studentorhprordateofbirth"));
-//		if(studentOrHprOrDateOfBirth == null) { studentOrHprOrDateOfBirth = ""; }
-//		String hprno = request.getParameter(this.parameterNames.get("hprno"));
-//		if(hprno == null) { hprno = ""; }
-//		String dateOfBirth = request.getParameter(this.parameterNames.get("dateofbirth"));
-//		if(dateOfBirth == null) { dateOfBirth = ""; }
-//		String studentnumber = request.getParameter(this.parameterNames.get("studentnumber")); 
-//		if(studentnumber == null) { studentnumber = ""; }
 		String employer = request.getParameter(this.parameterNames.get("employer"));
 		if(employer == null) { employer = "";}
 		
@@ -326,38 +318,29 @@ public class ProfileController extends HttpControllerPlugin {
 		}
 		
 		if (role.equals(UserRoleKey.health_personnel.getValue())) {
-//			if (studentOrHprOrDateOfBirth.length() == 0) {
-//				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
-//			}
-//			user.getPerson().setHprNumber(studentOrHprOrDateOfBirth);
-			
 			if (hpPosition.length() == 0 || hpPosition.equals("choose")) {
-				messages.appendChild(UserToXMLTranslator.element(document, "hp_position", "NOT_SELECTED"));	
+				messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_SELECTED"));	
 			} else {
 				Position selectedPosition = positionFromKey(hpPosition);
 				if(selectedPosition == null) {
-					messages.appendChild(UserToXMLTranslator.element(document, "hp_position", "NOT_VALID"));	
+					messages.appendChild(UserToXMLTranslator.element(document, "position", "NOT_VALID"));	
 				} else {
 					user.getPerson().setPosition(selectedPosition);
 				}
 			}
 		} else if (role.equals(UserRoleKey.student.getValue())) {
 			if (studPosition.length() == 0) {
-				messages.appendChild(UserToXMLTranslator.element(document, "stud_position", "NOT_VALID"));	
+				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID"));	
 			} else if(studPosition.equals("choose")){
-				messages.appendChild(UserToXMLTranslator.element(document, "stud_position", "NOT_SELECTED"));	
-			} else if(validStudPos(studPosition)){
-				messages.appendChild(UserToXMLTranslator.element(document, "stud_position", "NOT_VALID"));	
+				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_SELECTED"));	
+			} else if( ! validStudPos(studPosition)){
+				messages.appendChild(UserToXMLTranslator.element(document, "altposition", "NOT_VALID_VALUE"));	
 			} else {
 				user.getPerson().setPositionText(studPosition);
 			}
-//			if (studentOrHprOrDateOfBirth.length() == 0) {
-//				messages.appendChild(UserToXMLTranslator.element(document, "studentorhprordateofbirth", "NO_VALUE"));
-//			}
-//			user.getPerson().setStudentNumber(studentOrHprOrDateOfBirth);
 		} else if (role.equals(UserRoleKey.health_personnel_other.getValue())) {
 			if(otherPosition.length() == 0){
-				messages.appendChild(UserToXMLTranslator.element(document, "other_position", "NO_VALUE"));
+				messages.appendChild(UserToXMLTranslator.element(document, "positiontext", "NO_VALUE"));
 			} else {
 				user.getPerson().setPositionText(otherPosition);
 			}
