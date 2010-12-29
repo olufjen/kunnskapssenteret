@@ -19,7 +19,18 @@ public class UserToLoggedInUserTranslator {
 			loggedInUser.setPositionKey(user.getPerson().getPosition().getKey().getValue());
 			loggedInUser.setPositionName(user.getPerson().getPosition().getName());
 		}
-		loggedInUser.setPositionText(user.getPerson().getPositionText());
+		if(user.getPerson().getPositionText() != null){
+			if(user.getPerson().getPositionText().startsWith("pos_")){
+				loggedInUser.setPositionTextKey(user.getPerson().getPositionText());
+				loggedInUser.setPositionText("");
+			} else {
+				loggedInUser.setPositionTextKey("");
+				loggedInUser.setPositionText(user.getPerson().getPositionText());
+			}
+		} else {
+			loggedInUser.setPositionTextKey("");
+			loggedInUser.setPositionText("");
+		}
 		loggedInUser.setReceiveNewsletter(user.getPerson().getProfile().getReceiveNewsletter());
 		if(user.getRoleList().length > 0){
 			loggedInUser.setRoleKey(user.getRoleList()[0].getKey().getValue());

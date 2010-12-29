@@ -13,6 +13,7 @@ public class LoggedInUser {
 	private String dateOfBirth;
 	private Boolean isStudent;
 	private String positionText;
+	private String positionTextKey;
 	private Boolean receiveNewsletter;
 	private Boolean participateSurvey;
 	private String email;
@@ -137,5 +138,11 @@ public class LoggedInUser {
 	}
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+	public String getPositionTextKey() {
+		return positionTextKey;
+	}
+	public void setPositionTextKey(String positionTextKey) {
+		this.positionTextKey = positionTextKey;
 	}
 }
