@@ -86,6 +86,7 @@
     	<property name="positionDao" ref="positionDao"></property>
     	<property name="resourceDao" ref="resourceDao"></property>
     	<property name="accessDao" ref="accessDao"></property>
+    	<property name="userDao" ref="userDao"></property>
   	</bean>
   	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
     	<property name="accessService" ref="accessService"></property>

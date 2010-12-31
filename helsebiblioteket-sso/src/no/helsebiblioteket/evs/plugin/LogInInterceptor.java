@@ -48,9 +48,6 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
 	    	if(IpAddressValidator.getInstance().isValidIPAddress(ipAddress.getAddress())){
-	    		
-	    		System.out.println("Logging in with IP: " + ipAddress.getAddress());
-	    		
 		    	res = this.loginService.loginOrganizationByIpAddress(ipAddress);
 	    		if (null == res) {
 	    			logger.error("loginService.loginOrganizationByIpAddress returned null for IP '" + ipAddress + "'. This was not expected.");
