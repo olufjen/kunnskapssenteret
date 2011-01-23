@@ -6,6 +6,7 @@
 	<property name="project.build.dir" value="${project.home}/build"/>
 	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
 	<property name="project.lib.dir" value="${project.home}/lib"/>
+	<property name="project.lib-provided.dir" value="${project.home}/lib-provided"/>
 	<property name="project.target.dir" value="${project.home}/target"/>
 	<property name="project.target.filename" value="${project.name}-${project.version}.jar"/>
 	<property name="project.plugin.config.dir" value="${project.home}/ecms/pluginconfig" />
@@ -13,6 +14,9 @@
     	<fileset dir="${project.lib.dir}">
             <include name="**/*.jar"/>
         </fileset>
+    	<fileset dir="${project.lib-provided.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
     </path>
 	<path id="master-sourcedir">
     	<fileset dir="${project.src.dir}">
