@@ -1,10 +1,20 @@
 package no.helsebiblioteket.evs.plugin;
 
 import java.util.Enumeration;
-
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Util class to just get all request headers in a string of name:value pairs 
+ *
+ */
+
 public class RequestPrinter {
+	
+	/**
+	 * get all request headers in a string of name:value pairs 
+	 * @param request
+	 * @return all request headers in a string of name:value pairs
+	 */
 	
 	public static String getRequestHeaders(HttpServletRequest request) {
 		
