@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import no.helsebiblioteket.admin.domain.LoggedInUser;
 import no.helsebiblioteket.admin.domain.requestresult.LoggedInUserResult;
 import no.helsebiblioteket.admin.service.LoginService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
@@ -48,6 +49,18 @@ public final class LogInController extends HttpControllerPlugin {
        		} else {
 	       		// Found user!
        			HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+       			// jms, 13.01.2011: sanity check to handle login/session mixup problem.
+       			// if a user already exist in session we probably are messing with someone 
+       			// elses session ...
+       			{
+       				logger.info("Start login authenticated user with username " + username + " into session id " + session.getId() + " created at " + session.getCreationTime());
+       				LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
+       				if (alreadyLoggedInUser != null) {
+       					logger.error("Logging " + username + " into existing session! Session currently occupied by " + alreadyLoggedInUser.getUsername());
+       				} else {
+       					logger.info("Logging " + username + " into empty session");
+       				}
+       			}
        			session.setAttribute(this.sessionLoggedInUserVarName, resultUser.getUser());
 	       		element.appendChild(result.createElement("success"));
 	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));

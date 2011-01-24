@@ -1,6 +1,9 @@
 package no.helsebiblioteket.evs.plugin;
 
 import java.io.IOException;
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -17,6 +20,8 @@ import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 import no.helsebiblioteket.evs.plugin.result.XMLTranslator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.w3c.dom.Element;
@@ -27,7 +32,8 @@ public class LoggedInFunction{
 	private String sessionLoggedInUserVarName = "hbloggedinuser";
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	private UserService userService;
-
+	private final Log logger = LogFactory.getLog(getClass());
+	
 	public Document getUserAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		return XMLTranslator.translate(printLoggedIn());
 	}
@@ -78,14 +84,28 @@ public class LoggedInFunction{
 		result.appendChild(loggedinElement);
 		return result;
 	}
+	
 	private LoggedInUser loggedInUser() {
+		
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
-		return (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
+		LoggedInUser loggedInUser = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
+		// jan 2011: extra logging to nail enonic session trouble:
+		{
+			HttpServletRequest request = PluginEnvironment.getInstance().getCurrentRequest();
+			LoggedInOrganization loggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+			logger.info("Logged in user: " + loggedInUser.getUsername() + "org: " + loggedInOrganization.getNameNorwegianNormal() 
+				+ " session id: " + session.getId() + " created at: " +  session.getCreationTime()
+				+ " remote addr: " + request.getRemoteAddr() + " header: " + RequestPrinter.getRequestHeaders(request));
+		}
+		return loggedInUser;
 	}
+	
 	private LoggedInOrganization loggedInOrganization(){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
+		
 	}
+	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}

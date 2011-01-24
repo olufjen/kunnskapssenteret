@@ -25,7 +25,7 @@ public class RequestPrinter {
 			while (enumerationHeaderNames.hasMoreElements()) {
 				String headerName = (String) enumerationHeaderNames.nextElement();
 				strBufHeadersNameValues.append("(" + headerName);strBufHeadersNameValues.append(":");
-				strBufHeadersNameValues.append(request.getHeader(headerName)+")");
+				strBufHeadersNameValues.append(request.getHeader(headerName) + ")");
 			}
 		}
 		

@@ -113,6 +113,16 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
     }
 	public void logInOrganization(LoggedInOrganization organization){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
+		// jan 2011: extra logging to nail enonic session trouble
+		{
+			LoggedInOrganization alreadyLoggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+			logger.info("Start login authenticated organization with  " + organization.getNameNorwegianNormal() + " into session id " + session.getId() + " created at " + session.getCreationTime());
+			if (alreadyLoggedInOrganization != null) {
+				logger.error("Logging " + organization.getNameNorwegianNormal() + " into existing session! Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal());
+			} else {
+				logger.info("Logging " + organization.getNameNorwegianNormal() + " into empty session");
+			}
+		}
 		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
 	}
 	private LoggedInOrganization loggedInOrganization(){
