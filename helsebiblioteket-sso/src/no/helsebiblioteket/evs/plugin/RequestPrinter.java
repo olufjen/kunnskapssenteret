@@ -18,7 +18,7 @@ public class RequestPrinter {
 	
 	public static String getRequestHeaders(HttpServletRequest request) {
 		
-		StringBuffer strBufHeadersNameValues = new StringBuffer();
+    		StringBuffer strBufHeadersNameValues = new StringBuffer();
 		
 		if (request != null) {
 			Enumeration enumerationHeaderNames = request.getHeaderNames();
