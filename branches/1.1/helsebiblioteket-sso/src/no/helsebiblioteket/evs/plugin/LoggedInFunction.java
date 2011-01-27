@@ -93,10 +93,18 @@ public class LoggedInFunction{
 		{
 			HttpServletRequest request = PluginEnvironment.getInstance().getCurrentRequest();
 			LoggedInOrganization loggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
-			logger.info("Logged in user: " + loggedInUser != null ? loggedInUser.getUsername() : " null logged in user "+ "org: " + loggedInOrganization != null ? loggedInOrganization.getNameNorwegianNormal() : " null logged in organization "
-				+ " session id: " + session.getId() + " created at: " +  session.getCreationTime()
-				+ " remote addr: " + request.getRemoteAddr() + " header: " + RequestPrinter.getRequestHeaders(request));
-		}
+
+                        String user, organization, sessionid, createdat, remoteaddr;
+                        user = (loggedInUser != null ? loggedInUser.getUsername() : "null");
+                        organization = (loggedInOrganization != null ? loggedInOrganization.getNameNorwegianNormal() : "null");
+                        sessionid = (session != null ? session.getId() : "null");
+                        createdat = (session != null ? Long.toString(session.getCreationTime()) : "null");
+                        remoteaddr = (request != null ? request.getRemoteAddr() : "null");
+
+			logger.info("Logged in user: " + user + " org: " + organization
+				+ " session id: " + sessionid + " created at: " +  createdat
+				+ " remote addr: " + remoteaddr + " header: " + RequestPrinter.getRequestHeaders(request));
+		} 
 		return loggedInUser;
 	}
 	
