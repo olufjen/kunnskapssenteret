@@ -60,7 +60,7 @@ public final class LogInController extends HttpControllerPlugin {
    				Long lastTime = (Long) session.getAttribute("hb_trace_loggedinusertime");
    				if (alreadyLoggedInUser != null) {
        				if(lastTime != null){
-           				if(lastTime.longValue() < time - 1000){
+       					if(lastTime.longValue() >= time - 1000){
            					logger.error("Logging user into very recent session. Name: " + username +
            							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
            							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
