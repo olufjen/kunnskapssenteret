@@ -121,7 +121,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		Long lastTime = (Long) session.getAttribute("hb_trace_loggedinorgtime");
 		if (alreadyLoggedInOrganization != null) {
 			if(lastTime != null){
-				if(lastTime.longValue() < time - 1000){
+				if(lastTime.longValue() >= time - 1000){
 					logger.error("Logging organization into very recent session. Name: " + organization.getNameNorwegianNormal() +
 							". Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal() +
 							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
