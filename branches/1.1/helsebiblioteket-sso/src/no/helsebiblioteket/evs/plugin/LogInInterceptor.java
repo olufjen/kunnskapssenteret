@@ -6,6 +6,8 @@ package no.helsebiblioteket.evs.plugin;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
 import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
@@ -43,7 +45,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 			res = this.loginService.loginOrganizationByReferringDomain(referringDomain, domainKey);
 		}
 		if (null != res && res.isSuccess()) {
-			this.logInOrganization(res.getOrganization());
+			this.logInOrganization(res.getOrganization(), organization);
 		} else if (organization == null) {
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
@@ -53,7 +55,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	    			logger.error("loginService.loginOrganizationByIpAddress returned null for IP '" + ipAddress + "'. This was not expected.");
 	    		}
 	    		else if(res.isSuccess()){
-		    		this.logInOrganization(res.getOrganization());
+		    		this.logInOrganization(res.getOrganization(), organization);
 		    	}
 	    	}
 		}
@@ -111,19 +113,37 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
         }
         return (ret != null ? ret : request.getRemoteAddr());
     }
-	public void logInOrganization(LoggedInOrganization organization){
+	public void logInOrganization(LoggedInOrganization organization, LoggedInOrganization alreadyLoggedInOrganization){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		// jan 2011: extra logging to nail enonic session trouble
-		{
-			LoggedInOrganization alreadyLoggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
-			logger.info("Start login authenticated organization with  " + organization.getNameNorwegianNormal() + " into session id " + session.getId() + " created at " + session.getCreationTime());
-			if (alreadyLoggedInOrganization != null) {
-				logger.error("Logging " + organization.getNameNorwegianNormal() + " into existing session! Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal());
+		logger.info("Start login authenticated organization with  " + organization.getNameNorwegianNormal() + " into session id " + session.getId() + " created at " + session.getCreationTime());
+		long time = System.currentTimeMillis();
+		Long lastTime = (Long) session.getAttribute("hb_trace_loggedinorgtime");
+		if (alreadyLoggedInOrganization != null) {
+			if(lastTime != null){
+				if(lastTime.longValue() < time - 1000){
+					logger.error("Logging organization into very recent session. Name: " + organization.getNameNorwegianNormal() +
+							". Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal() +
+							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
+							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
+				} else {
+					logger.error("Logging organization into older session. Name: " + organization.getNameNorwegianNormal() +
+							". Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal() +
+							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
+							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
+				}
 			} else {
-				logger.info("Logging " + organization.getNameNorwegianNormal() + " into empty session");
+				// Never happens?
+				logger.error("Logging organization into session with NULL time. Name: " + organization.getNameNorwegianNormal() +
+						". Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal() +
+						". Last time is NULL " +
+						" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
 			}
+		} else {
+			logger.info("Logging organization into empty session. Name: " + organization.getNameNorwegianNormal() + " ");
 		}
 		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
+		session.setAttribute("hb_trace_loggedinorgtime", new Long(time));
 	}
 	private LoggedInOrganization loggedInOrganization(){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 

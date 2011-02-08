@@ -1,5 +1,7 @@
 package no.helsebiblioteket.evs.plugin;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,17 +54,37 @@ public final class LogInController extends HttpControllerPlugin {
        			// jms, 13.01.2011: sanity check to handle login/session mixup problem.
        			// if a user already exist in session we probably are messing with someone 
        			// elses session ...
-       			{
-       				logger.info("Start login authenticated user with username " + username + " into session id " + session.getId() + " created at " + session.getCreationTime());
-       				LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
-       				if (alreadyLoggedInUser != null) {
-       					logger.error("Logging " + username + " into existing session! Session currently occupied by " + alreadyLoggedInUser.getUsername());
+   				logger.info("Start login authenticated user with username " + username + " into session id " + session.getId() + " created at " + session.getCreationTime());
+   				long time = System.currentTimeMillis();
+   				LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
+   				Long lastTime = (Long) session.getAttribute("hb_trace_loggedinusertime");
+   				if (alreadyLoggedInUser != null) {
+       				if(lastTime != null){
+           				if(lastTime.longValue() < time - 1000){
+           					logger.error("Logging user into very recent session. Name: " + username +
+           							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
+           							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
+           							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
+           				} else {
+           					logger.error("Logging user into older session. Name: " + username +
+           							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
+           							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
+           							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
+           				}
        				} else {
-       					logger.info("Logging " + username + " into empty session");
+        				// Never happens?
+       					logger.error("Logging user into session with NULL time. Name: " + username +
+       							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
+       							". Last time is NULL " +
+       							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
        				}
-       			}
+   				} else {
+   					logger.info("Logging user into empty session. Name: " + username + ".");
+   				}
        			session.setAttribute(this.sessionLoggedInUserVarName, resultUser.getUser());
-	       		element.appendChild(result.createElement("success"));
+       			session.setAttribute("hb_trace_loggedinusertime", new Long(time));
+
+       			element.appendChild(result.createElement("success"));
 	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 	       		redirectTo = gotoUrl;
         	}
