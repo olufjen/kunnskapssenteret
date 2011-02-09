@@ -45,7 +45,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 			res = this.loginService.loginOrganizationByReferringDomain(referringDomain, domainKey);
 		}
 		if (null != res && res.isSuccess()) {
-			this.logInOrganization(res.getOrganization(), organization);
+			this.logInOrganization(res.getOrganization(), organization, request);
 		} else if (organization == null) {
 			IpAddress ipAddress = new IpAddress();
 	    	ipAddress.setAddress(getXforwardedForOrRemoteAddress(request));
@@ -55,7 +55,7 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 	    			logger.error("loginService.loginOrganizationByIpAddress returned null for IP '" + ipAddress + "'. This was not expected.");
 	    		}
 	    		else if(res.isSuccess()){
-		    		this.logInOrganization(res.getOrganization(), organization);
+		    		this.logInOrganization(res.getOrganization(), organization, request);
 		    	}
 	    	}
 		}
@@ -113,10 +113,30 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
         }
         return (ret != null ? ret : request.getRemoteAddr());
     }
-	public void logInOrganization(LoggedInOrganization organization, LoggedInOrganization alreadyLoggedInOrganization){
+	public void logInOrganization(LoggedInOrganization organization, LoggedInOrganization alreadyLoggedInOrganization, HttpServletRequest request){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		// jan 2011: extra logging to nail enonic session trouble
 		logger.info("Start login authenticated organization with  " + organization.getNameNorwegianNormal() + " into session id " + session.getId() + " created at " + session.getCreationTime());
+		
+		
+		HttpSession requestSession = request.getSession();
+		if(requestSession == null){
+				logger.info("requestSession is NULL for organization " + organization.getNameNorwegianNormal() + 
+						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+		} else if(requestSession.getId() == null ){
+				logger.info("requestSession has ID NULL for organization " + organization.getNameNorwegianNormal() + 
+						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+			
+		} else if( ! requestSession.getId().equals(session.getId())){
+				logger.info("requestSession is HAS DIFFERENT ID for organization " + organization.getNameNorwegianNormal() + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
+						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+		} else if(requestSession != session){
+				logger.info("requestSession HAS SAME ID AS requestSession for organization " + organization.getNameNorwegianNormal() + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
+						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+		} else {
+				logger.info("requestSession IS IDENTICAL WITH requestSession for organization " + organization.getNameNorwegianNormal() + " where session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime());
+		}
+
 		long time = System.currentTimeMillis();
 		Long lastTime = (Long) session.getAttribute("hb_trace_loggedinorgtime");
 		if (alreadyLoggedInOrganization != null) {
