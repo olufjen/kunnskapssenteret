@@ -55,6 +55,25 @@ public final class LogInController extends HttpControllerPlugin {
        			// if a user already exist in session we probably are messing with someone 
        			// elses session ...
    				logger.info("Start login authenticated user with username " + username + " into session id " + session.getId() + " created at " + session.getCreationTime());
+   				
+   				HttpSession requestSession = request.getSession();
+   				if(requestSession == null){
+   	   				logger.info("requestSession is NULL for user " + username + 
+   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+   				} else if(requestSession.getId() == null ){
+   	   				logger.info("requestSession has ID NULL for user " + username + 
+   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+   					
+   				} else if( ! requestSession.getId().equals(session.getId())){
+   	   				logger.info("requestSession is HAS DIFFERENT ID for user " + username + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
+   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+   				} else if(requestSession != session){
+   	   				logger.info("requestSession HAS SAME ID AS requestSession for user " + username + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
+   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+   				} else {
+   	   				logger.info("requestSession IS IDENTICAL WITH requestSession for user " + username + " where session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime());
+   				}
+   				
    				long time = System.currentTimeMillis();
    				LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
    				Long lastTime = (Long) session.getAttribute("hb_trace_loggedinusertime");
