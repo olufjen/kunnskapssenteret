@@ -1,7 +1,6 @@
 package no.helsebiblioteket.evs.plugin;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
