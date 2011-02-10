@@ -142,19 +142,19 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		if (alreadyLoggedInOrganization != null) {
 			if(lastTime != null){
 				if(lastTime.longValue() >= time - 1000){
-					logger.error("Logging organization into very recent session. Name: " + organization.getNameNorwegianNormal() +
+					logger.info("Logging organization into very recent session. Name: " + organization.getNameNorwegianNormal() +
 							". Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal() +
 							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
 							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
 				} else {
-					logger.error("Logging organization into older session. Name: " + organization.getNameNorwegianNormal() +
+					logger.info("Logging organization into older session. Name: " + organization.getNameNorwegianNormal() +
 							". Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal() +
 							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
 							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
 				}
 			} else {
 				// Never happens?
-				logger.error("Logging organization into session with NULL time. Name: " + organization.getNameNorwegianNormal() +
+				logger.info("Logging organization into session with NULL time. Name: " + organization.getNameNorwegianNormal() +
 						". Session currently occupied by " + alreadyLoggedInOrganization.getNameNorwegianNormal() +
 						". Last time is NULL " +
 						" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));

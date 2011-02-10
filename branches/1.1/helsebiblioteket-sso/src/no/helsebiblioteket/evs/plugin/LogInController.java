@@ -80,19 +80,19 @@ public final class LogInController extends HttpControllerPlugin {
    				if (alreadyLoggedInUser != null) {
        				if(lastTime != null){
        					if(lastTime.longValue() >= time - 1000){
-           					logger.error("Logging user into very recent session. Name: " + username +
+           					logger.info("Logging user into very recent session. Name: " + username +
            							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
            							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
            							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
            				} else {
-           					logger.error("Logging user into older session. Name: " + username +
+           					logger.info("Logging user into older session. Name: " + username +
            							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
            							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
            							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
            				}
        				} else {
         				// Never happens?
-       					logger.error("Logging user into session with NULL time. Name: " + username +
+       					logger.info("Logging user into session with NULL time. Name: " + username +
        							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
        							". Last time is NULL " +
        							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
