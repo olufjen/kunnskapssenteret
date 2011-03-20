@@ -18,7 +18,7 @@
 		<tr>
 			<td valign="top"><h:outputText value="#{msg_main.user_details_username}"  /></td>
 			<td><h:inputText value="#{userBean.user.username}" id="username"
-					binding="#{userBean.usernameInput}"/>
+					validator="#{userBean.validateUsername}"/>
 					<h:message for="username" styleClass="error"/></td>
 		</tr>
 		<tr>
