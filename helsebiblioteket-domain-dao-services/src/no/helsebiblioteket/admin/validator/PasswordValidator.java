@@ -1,6 +1,10 @@
 package no.helsebiblioteket.admin.validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
+
+import no.helsebiblioteket.admin.validator.UsernameValidator.ErrorCodes;
 
 public class PasswordValidator {
 	private static PasswordValidator instance = null;
@@ -25,6 +29,18 @@ public class PasswordValidator {
 		numbersPattern = Pattern.compile(numbersRegExpString);
 	}
 	
+	public enum ErrorCodes {
+		NO_VALUE,
+		NOT_LENGTH,
+		LEADING_BLANK_SPACE,
+		TRAILING_BLANK_SPACE,
+		NO_LETTERS,
+		NO_NUMBERS,
+		TOO_LONG,
+		PASSWORD_NOT_VALID,
+		NOT_EQUAL
+	}
+	
 	protected PasswordValidator() {
 		// Exists only to defeat instantiation.
 	}
@@ -40,6 +56,7 @@ public class PasswordValidator {
 		boolean validPassword = false;
 		String notNullPassword = null == password ? "" : password;
 		validPassword = (
+				noLeadingOrTrailingWhiteSpaces(notNullPassword) &&
 				// Must be at least 6 characters long
 				lettersNumbersSpeecialAndLengthPattern.matcher(notNullPassword).find() &&
 				// Must have letters
@@ -88,7 +105,51 @@ public class PasswordValidator {
 		validPassword = ( ! lettersNumbersSpeecialAndTooLongPattern.matcher(notNullPassword).find() );
 		return validPassword;
 	}
+	public boolean noLeadingOrTrailingWhiteSpaces(String password) {
+		boolean validPassword = false;
+		String notNullPassword = (null == password) ? "" : password;
+		validPassword = (!(notNullPassword.endsWith(" ") || notNullPassword.startsWith(" ")));
+		return validPassword;
+	}
 
+	public List<ErrorCodes> validateAndGetErrorCodes(String password, List<ErrorCodes> knownErrors) {
+		password = (password == null) ? "" : password;
+		List<ErrorCodes> result = (null != knownErrors) ? knownErrors : new ArrayList<ErrorCodes>();
+		if (password.startsWith(" ")) {
+			result.add(ErrorCodes.LEADING_BLANK_SPACE);
+		}
+		if (password.endsWith(" ")) {
+			result.add(ErrorCodes.TRAILING_BLANK_SPACE);
+		}
+		if (password.length() == 0) {
+			result.add(ErrorCodes.NO_VALUE);
+		}
+		// Must be at least 6 characters long
+		if (lettersNumbersSpeecialAndLengthPattern.matcher(password).find()) {
+			result.add(ErrorCodes.NOT_LENGTH);
+		}
+		// Must have letters
+		if (lettersPattern.matcher(password).find()) {
+			result.add(ErrorCodes.NO_LETTERS);
+		}
+		// Must have numbers
+		if (numbersPattern.matcher(password).find()) {
+			result.add(ErrorCodes.NO_NUMBERS);
+		}
+		// No longer than 12 characters
+		if ( ! lettersNumbersSpeecialAndTooLongPattern.matcher(password).find()) {
+			result.add(ErrorCodes.TOO_LONG);
+		}
+		if (result.size() > 0) {
+			result.add(ErrorCodes.PASSWORD_NOT_VALID);
+		}
+		return result;
+	}
+	
+	public List<ErrorCodes> validateAndGetErrorCodes(String password) {
+		return validateAndGetErrorCodes(password, null);
+	}
+	
 	public static void main(String[] args) {
 		PasswordValidator pv = new PasswordValidator();
 		
