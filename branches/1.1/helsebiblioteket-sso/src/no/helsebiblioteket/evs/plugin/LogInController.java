@@ -41,6 +41,8 @@ public final class LogInController extends HttpControllerPlugin {
     	String password = request.getParameter(this.parameterNames.get("password"));
     	if(username == null) { username = ""; }
     	if(password == null) { password = ""; }
+    	username = username.trim();
+    	password = password.trim();
     	String redirectTo = null;
        	if(username.length() != 0 && password.length() != 0){
        		LoggedInUserResult resultUser = this.loginService.loginUserByUsernamePassword(username, password);
