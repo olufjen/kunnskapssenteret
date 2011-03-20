@@ -2,7 +2,9 @@ package no.helsebiblioteket.evs.plugin;
 
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,6 +56,7 @@ import no.helsebiblioteket.admin.translator.UserToLoggedInUserTranslator;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.validator.PasswordValidator;
+import no.helsebiblioteket.admin.validator.UsernameValidator;
 import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 
 public final class RegisterUserController extends HttpControllerPlugin {
@@ -304,13 +307,13 @@ public final class RegisterUserController extends HttpControllerPlugin {
 //			}
 //			user.getPerson().setDateOfBirth(dateOfBirth);
 //		}
-		
-		if(username.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "username", "NO_VALUE"));
-			//logger.error("username NO_VALUE");
-		} else if(userExists(username)){
-			messages.appendChild(UserToXMLTranslator.element(document, "username", "USER_EXISTS"));
-			//logger.error("username USER_EXISTS");
+		List<UsernameValidator.ErrorCodes> usernameErrors = new ArrayList<UsernameValidator.ErrorCodes>();
+		if(userExists(username)){
+			usernameErrors.add(UsernameValidator.ErrorCodes.USER_EXISTS);
+		}
+		usernameErrors = UsernameValidator.getInstance().validateAndGetErrorCodes(username, usernameErrors);
+		for (UsernameValidator.ErrorCodes errorCode : usernameErrors) {
+			messages.appendChild(UserToXMLTranslator.element(document, "username", errorCode.name()));
 		}
 		user.setUsername(username);
 		if(password.length() == 0){
