@@ -23,7 +23,7 @@
 			<td><h:commandButton value="#{msg_main.organization_details_save}" action="#{organizationBean.actionSave}" /></td>
 			<td><h:commandButton value="#{msg_main.organization_details_cancel}" action="#{organizationBean.actionCancel}" immediate="true" /></td>
 			<td><h:outputText value="#{organizationBean.errorMsg}"
-					rendered="#{organizationBean.failed}" styleClass="RED"/></td>
+					rendered="#{organizationBean.failed}" styleClass="error"/></td>
 		</tr>
 	</table>
 </h:form>

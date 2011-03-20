@@ -11,28 +11,26 @@
 <h:form>
   	<table>
     	<tr>
-    		<td>
+    		<td valign="top">
 	        	<h:outputText value="#{msg_main.firstname}" />
     		</td>
- 			<td >
+ 			<td valign="top">
     		    <h:inputText value="#{newEndUserBean.user.person.firstName}"
       	  			id="firstname" required="true" size="12" />
+      	  		<h:message for="firstname" styleClass="error"/>
 		    </td>
-      		<td align="right"  >
+      		<td valign="top">
       			<h:outputText value="#{msg_main.lastname}" />
       		</td>
-      		<td align="right" >
+      		<td valign="top">
         		<h:inputText value="#{newEndUserBean.user.person.lastName}"
       				id="lastname" required="true" size="12" />
-      		</td>
-      		<td >
-				<h:message for="firstname" styleClass="RED"/>
-				<h:message for="lastname" styleClass="RED"/>
+      			<h:message for="lastname" styleClass="error"/>
       		</td>
     	</tr>
 
     	<tr>
-			<td>
+			<td valign="top">
 				<h:outputText value="#{msg_main.employer}" />
       		</td>
       		<td colspan="3">
@@ -42,14 +40,12 @@
       	  			required="#{newEndUserBean.showEmployer}"
       	  			disabled="#{ ! newEndUserBean.showEmployer}"
       	  			readonly="#{ ! newEndUserBean.showEmployer}"/>
-      		</td>
-      		<td>
-				<h:message for="employer" styleClass="RED"/>
+      			<h:message for="employer" styleClass="error"/>
       		</td>
     	</tr>
 
 		<tr>
-      		<td>
+      		<td valign="top">
         		<h:outputText value="#{msg_main.position}" />
       		</td>
       		<td colspan="3">
@@ -58,14 +54,12 @@
       	  			required="#{newEndUserBean.showPositionText}"
       	  			disabled="#{ ! newEndUserBean.showPositionText}"
       	  			readonly="#{ ! newEndUserBean.showPositionText}"/>
-      		</td>
-      		<td>
-				<h:message for="positionText" styleClass="RED"/>
+      			<h:message for="positionText" styleClass="error"/>
       		</td>
     	</tr>
 
 		<tr>
-			<td><h:outputText value="#{msg_main.position_select}"  /></td>
+			<td valign="top"><h:outputText value="#{msg_main.position_select}"  /></td>
 			<td>
 				<h:selectOneMenu value="#{newEndUserBean.user.person.position.key.value}"
 					id="positionSelect"
@@ -74,115 +68,103 @@
 					disabled="#{ ! newEndUserBean.showPositionSelect}">
 					<f:selectItems value="#{userBean.availablePositions}"/>
 				</h:selectOneMenu>
+				<h:message for="positionSelect" styleClass="error"/>
 			</td>
-			<td><h:message for="positionSelect" styleClass="RED"/></td>
 		</tr>
 
 		<tr>
-			<td><h:outputText value="#{msg_main.is_student}"  /></td>
+			<td valign="top"><h:outputText value="#{msg_main.is_student}"  /></td>
 			<td><h:selectOneMenu value="#{newEndUserBean.user.person.positionText}"
 					id="isStudent"
 					required="#{ ! newEndUserBean.showIsStudent}"
 					readonly="#{ ! newEndUserBean.showIsStudent}"
 					disabled="#{ ! newEndUserBean.showIsStudent}">
 					<f:selectItems value="#{newEndUserBean.availableIsStudent}"/>
-        	</h:selectOneMenu>
+        		</h:selectOneMenu>
+        	<h:message for="isStudent" styleClass="error"/>
         	</td>
-			<td><h:message for="isStudent" styleClass="RED"/></td>
 		</tr>
 
     	<tr>
-      		<td>
+      		<td valign="top">
         		<h:outputText value="#{msg_main.attributes}" />
       		</td>
       		<td>
         		<h:selectBooleanCheckbox id="newsletter"
         			value="#{newEndUserBean.user.person.profile.receiveNewsletter}" />
         		<h:outputText value="#{msg_main.newsletter}" />
+        		<h:message for="newsletter" styleClass="error"/>
       		</td>
       		<td colspan="2">
         		<h:selectBooleanCheckbox id="questionnaire"
         			value="#{newEndUserBean.user.person.profile.participateSurvey}" />
         			<h:outputText value="#{msg_main.questionnaire}" />
-      		</td>
-      		<td>
-				<h:message for="newsletter" styleClass="RED"/>
-				<h:message for="questionnaire" styleClass="RED"/>
+      			<h:message for="questionnaire" styleClass="error"/>
       		</td>
     	</tr>
 
     	<tr>
-      		<td>
+      		<td valign="top">
         		<h:outputText value="#{msg_main.emailaddress}" />
       		</td>
       		<td colspan="3">
         		<h:inputText value="#{newEndUserBean.emailaddress}"
       	  			id="emailaddress" required="true" size="50"
       	  			validator="#{newEndUserBean.validateEmail}" />
-      		</td>
-      		<td>
-				<h:message for="emailaddress" styleClass="RED"/>
+      			<h:message for="emailaddress" styleClass="error"/>
       		</td>
     	</tr>
 
 		<tr>
-      		<td>
+      		<td valign="top">
         		<h:outputText value="#{msg_main.retypeemailaddress}" />
       		</td>
       		<td colspan="3">
         		<h:inputText value="#{newEndUserBean.retypeemailaddress}"
       	  			id="retypeemailaddress" required="true" size="50"
       	  			validator="#{newEndUserBean.retypeValidate}" />
-      		</td>
-      		<td width="150px">
-				<h:message  for="retypeemailaddress" styleClass="RED"/>
+      			<h:message  for="retypeemailaddress" styleClass="error"/>
       		</td>
     	</tr>
     	
     	<tr>
-      		<td>
+      		<td valign="top">
         		<h:outputText value="#{msg_main.username}" />
       		</td>
       		<td colspan="3">
         		<h:inputText value="#{newEndUserBean.user.username}"
       	  			id="username" required="true" size="50"
-      	  			validator="#{newEndUserBean.validateUserExists}"/>
-      		</td>
-      		<td>
-				<h:message for="username" styleClass="RED"/>
+      	  			validator="#{newEndUserBean.validateUsername}"/>
+      			<h:message for="username" styleClass="error"/>
       		</td>
     	</tr>
 
 	    <tr>
-      		<td>
+      		<td valign="top">
         		<h:outputText value="#{msg_main.password}" />
       		</td>
       		<td colspan="3">
         		<h:inputText value="#{newEndUserBean.password}"
       	  			id="password" required="true" size="50"
       	  			validator="#{newEndUserBean.validatePassword}" />
-      		</td>
-      		<td>
-				<h:message for="password" styleClass="RED"/>
+      			<h:message for="password" styleClass="error"/>
       		</td>
     	</tr>
 
     	<tr>
-      		<td>
+      		<td valign="top">
         		<h:outputText value="#{msg_main.password_repeat}" />
       		</td>
       		<td colspan="3">
         		<h:inputText value="#{newEndUserBean.retypePassword}"
       	  			id="retypepassword" required="true" size="50"
       	  			validator="#{newEndUserBean.validatePasswordRepeat}" />
-      		</td>
-      		<td>
-				<h:message for="retypepassword" styleClass="RED"/>
+      			<h:message for="retypepassword" styleClass="error"/>
       		</td>
     	</tr>
 
     	<tr>
-      		<td><h:outputText value="#{msg_main.user_details_roles}"  /></td>
+      		<td valign="top"><h:outputText value="#{msg_main.user_details_roles}"  /></td>
       		<td colspan="3"><h:selectOneRadio
       				value="#{newEndUserBean.role.key.value}"
       				id="roles"
@@ -192,8 +174,8 @@
               		onchange="submit()">
             		<f:selectItems value="#{newEndUserBean.availableRoles}"/>
           		</h:selectOneRadio>
+      			<h:message for="roles" styleClass="error"/>
       		</td>
-      		<td><h:message for="roles" styleClass="RED"/></td>
     	</tr>
 
 		<tr>
@@ -204,7 +186,6 @@
       		<td align="right">
       			<h:commandButton value="#{msg_main.cancel}" action="#{newEndUserBean.actionCancelNewUser}" immediate="true" />
       		</td>
-      		<td>&nbsp;</td>
     	</tr>
 	</table>
 </h:form>
