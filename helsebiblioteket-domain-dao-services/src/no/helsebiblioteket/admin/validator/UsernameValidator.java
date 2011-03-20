@@ -1,13 +1,17 @@
 package no.helsebiblioteket.admin.validator;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsernameValidator {
 	private static UsernameValidator instance = null;
-	private static String validUsernameRegExpString = "[0-9A-Åa-å_]{1,}";
-	private static Pattern validUsernameRegExpPattern = null;
-	static {
-		validUsernameRegExpPattern = Pattern.compile(validUsernameRegExpString);
+	
+	public enum ErrorCodes {
+		NO_VALUE,
+		TOO_LONG,
+		LEADING_BLANK_SPACE,
+		TRAILING_BLANK_SPACE,
+		USER_EXISTS
 	}
 	
 	protected UsernameValidator() {
@@ -21,7 +25,25 @@ public class UsernameValidator {
 	    return instance;
 	}
 	
-	public boolean isValidUsername(String username){
-		return validUsernameRegExpPattern.matcher(null == username ? "" : username).find();
+	public List<ErrorCodes> validateAndGetErrorCodes(String username, List<ErrorCodes> knownErrors) {
+		username = (username == null) ? "" : username;
+		List<ErrorCodes> result = (null != knownErrors) ? knownErrors : new ArrayList<ErrorCodes>();
+		if (username.startsWith(" ")) {
+			result.add(ErrorCodes.LEADING_BLANK_SPACE);
+		}
+		if (username.endsWith(" ")) {
+			result.add(ErrorCodes.TRAILING_BLANK_SPACE);
+		}
+		if (username.length() == 0) {
+			result.add(ErrorCodes.NO_VALUE);
+		}
+		if (username.length() > 256) {
+			result.add(ErrorCodes.TOO_LONG);
+		}
+		return result;
+	}
+	
+	public List<ErrorCodes> validateAndGetErrorCodes(String username) {
+		return validateAndGetErrorCodes(username, null);
 	}
 }
