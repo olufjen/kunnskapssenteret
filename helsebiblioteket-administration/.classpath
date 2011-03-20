@@ -22,7 +22,6 @@
 	<classpathentry kind="lib" path="lib/oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.1-FINAL-20080629.jar"/>
 	<classpathentry kind="lib" path="lib/quartz-1.6.0.jar"/>
-	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/spring-webmvc-portlet.jar"/>
 	<classpathentry kind="lib" path="lib/spring-webmvc.jar"/>
 	<classpathentry kind="lib" path="lib/spring-ws-1.5.5-all.jar"/>
@@ -47,5 +46,6 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.13.jar" sourcepath="download-sources/jfreechart-1.0.13.zip"/>
 	<classpathentry kind="lib" path="lib/tomahawk-sandbox-1.1.7.jar" sourcepath="download-sources/tomahawk-sandbox-1.1.7.zip"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib-provided/servlet-api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
