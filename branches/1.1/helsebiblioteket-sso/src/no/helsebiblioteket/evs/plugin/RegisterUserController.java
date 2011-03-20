@@ -315,31 +315,37 @@ public final class RegisterUserController extends HttpControllerPlugin {
 		for (UsernameValidator.ErrorCodes errorCode : usernameErrors) {
 			messages.appendChild(UserToXMLTranslator.element(document, "username", errorCode.name()));
 		}
-		user.setUsername(username);
-		if(password.length() == 0){
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_VALUE"));
-			////logger.error("password NO_VALUE");
-		} else if( ! PasswordValidator.getInstance().hasLength(password)){
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_LENGTH"));
-			//logger.error("password NOT_LENGTH");
-		} else if( ! PasswordValidator.getInstance().hasLetters(password)){
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_LETTERS"));
-			//logger.error("password NO_LETTERS");
-		} else if( ! PasswordValidator.getInstance().hasNumbers(password)){
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_NUMBERS"));
-			//logger.error("password NO_NUMBERS");
-		} else if( ! PasswordValidator.getInstance().notTooLong(password)){
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "TOO_LONG"));
-			//logger.error("password TOO_LONG");
-		} else if( ! PasswordValidator.getInstance().isValidPassword(password)){
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "PASSWORD_NOT_VALID"));
-			//logger.error("password NOT_VALID");
-		} else if( ! password.equals(passwordrepeat)){
-			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
-			//logger.error("passwordrepeat NOT_EQUAL");
-		} else {
-			user.setPassword(password);
+		if (usernameErrors.size() == 0) user.setUsername(username);
+		
+		List<PasswordValidator.ErrorCodes> passwordErrors = PasswordValidator.getInstance().validateAndGetErrorCodes(password);
+		for (PasswordValidator.ErrorCodes errorCode : passwordErrors) {
+			messages.appendChild(UserToXMLTranslator.element(document, "password", errorCode.name()));
 		}
+		if ((passwordErrors.size() == 0) && !(password.equals(passwordrepeat))){
+			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", PasswordValidator.ErrorCodes.NOT_EQUAL.name()));
+		}
+		if ((passwordErrors.size() == 0) && (password.equals(passwordrepeat))) user.setPassword(password);
+		
+//		if(password.length() == 0){
+//			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_VALUE"));
+//		} else if( ! PasswordValidator.getInstance().hasLength(password)){
+//			messages.appendChild(UserToXMLTranslator.element(document, "password", "NOT_LENGTH"));
+//		} else if( ! PasswordValidator.getInstance().hasLetters(password)){
+//			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_LETTERS"));
+//		} else if( ! PasswordValidator.getInstance().hasNumbers(password)){
+//			messages.appendChild(UserToXMLTranslator.element(document, "password", "NO_NUMBERS"));
+//		} else if( ! PasswordValidator.getInstance().notTooLong(password)){
+//			messages.appendChild(UserToXMLTranslator.element(document, "password", "TOO_LONG"));
+//		} else if ( ! PasswordValidator.getInstance().noLeadingOrTrailingWhiteSpaces(password)) {
+//			messages.appendChild(UserToXMLTranslator.element(document, "password", "LEADING_TRAILING_WHITE_SPACE"));
+//		} else if( ! PasswordValidator.getInstance().isValidPassword(password)){
+//			messages.appendChild(UserToXMLTranslator.element(document, "password", "PASSWORD_NOT_VALID"));
+//		} else if( ! password.equals(passwordrepeat)){
+//			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
+//		} else {
+//			user.setPassword(password);
+//		}
+		
 		if(firstname.length() == 0){
 			messages.appendChild(UserToXMLTranslator.element(document, "firstname", "NO_VALUE"));
 			//logger.error("firstname NO_VALUE");
