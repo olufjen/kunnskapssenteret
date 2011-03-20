@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectBoolean;
@@ -308,9 +309,9 @@ public class UserBean {
     	
     	this.password = "";
     	this.repeatPassword = "";
-    	if (this.usernameInput != null) {
-    		this.usernameInput.setValue(this.user.getUsername());
-    	}
+    	//if (this.usernameInput != null) {
+    		//this.usernameInput.setValue(this.user.getUsername());
+    	//}
     	if(this.user.getOrgAdminFor() != null){
         	this.memberOrgId = this.user.getOrgAdminFor().getId();
     	} else {
@@ -370,24 +371,7 @@ public class UserBean {
 	    		logger.debug("No errors detected for username '" + this.user.getUsername() + "'");
 	    	}
     	}
-		if (usernameErrors.size() > 0) {
-			String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
-			String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "username_not_valid", "Invalid username");
-			FacesContext.getCurrentInstance().addMessage(
-					this.usernameInput.getClientId(FacesContext.getCurrentInstance()),
-					new FacesMessage(FacesMessage.SEVERITY_INFO, messageValue, messageValue));
-			return null;
-		}
-    	
-		if(userExists(this.user.getUsername() == null ? "" : this.user.getUsername())){
-			String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
-			String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "user_exists", "The username is taken");
-			FacesContext.getCurrentInstance().addMessage(
-					this.usernameInput.getClientId(FacesContext.getCurrentInstance()),
-					new FacesMessage(FacesMessage.SEVERITY_INFO, messageValue, messageValue));
-			return null;
-		}
-    	
+		
     	this.mainRole(this.allRolesMap.get(this.selectedUserRole));
     	if(this.mainRole().getKey().getValue().equals(roleKeyAdministrator)){
         	this.user.getPerson().setHprNumber("");
@@ -441,6 +425,26 @@ public class UserBean {
     	
     	return details();
     }
+    
+    public void validateUsername(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
+    	String username = (String) newValue;
+		UIInput input = (UIInput) component;
+		List<UsernameValidator.ErrorCodes> usernameErrors = UsernameValidator.getInstance().validateAndGetErrorCodes(username, null);
+		if (usernameErrors.size() > 0){
+			input.setValid(false);
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
+			FacesMessage message = new FacesMessage(bundle.getString("username_not_valid"));
+			facesContext.addMessage(component.getClientId(facesContext), message);
+			throw new ValidatorException(message);
+		} else if(this.userService.usernameTaken(username, null)){
+			input.setValid(false);
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
+			FacesMessage message = new FacesMessage(bundle.getString("user_exists"));
+			facesContext.addMessage(component.getClientId(facesContext), message);
+			throw new ValidatorException(message);
+		}
+    }
+    
 	private boolean userExists(String username) {
 		if(isNew()){
 			return this.userService.usernameTaken(username, null);
