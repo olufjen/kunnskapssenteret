@@ -38,7 +38,6 @@
 	<classpathentry kind="lib" path="lib/spring-security-core-tiger-2.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/spring-security-taglibs-2.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/standard-1.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/postgresql-8.2-508.jdbc3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-importexport"/>
 	<classpathentry kind="lib" path="lib/mail-1.4.jar"/>
