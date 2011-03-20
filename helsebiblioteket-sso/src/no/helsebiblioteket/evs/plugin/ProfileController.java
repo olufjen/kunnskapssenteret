@@ -2,6 +2,7 @@ package no.helsebiblioteket.evs.plugin;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -106,11 +107,12 @@ public class ProfileController extends HttpControllerPlugin {
 		Element element = document.createElement(this.editPasswordresultVarName);
 		Element messages = document.createElement("messages");
 
-		if(password.length() == 0 || ! PasswordValidator.getInstance().isValidPassword(password)) {
-			messages.appendChild(UserToXMLTranslator.element(document, "password", "PASSWORD_NOT_VALID"));
+		List<PasswordValidator.ErrorCodes> passwordErrors = PasswordValidator.getInstance().validateAndGetErrorCodes(password);
+		for (PasswordValidator.ErrorCodes errorCode : passwordErrors) {
+			messages.appendChild(UserToXMLTranslator.element(document, "password", errorCode.name()));
 		}
-		if( ! password.equals(passwordRepeat)){
-			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", "NOT_EQUAL"));
+		if ((passwordErrors.size() == 0) && !(password.equals(passwordRepeat))){
+			messages.appendChild(UserToXMLTranslator.element(document, "passwordrepeat", PasswordValidator.ErrorCodes.NOT_EQUAL.name()));
 		}
 
 		boolean success;
