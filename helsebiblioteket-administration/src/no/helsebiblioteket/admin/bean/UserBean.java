@@ -436,7 +436,7 @@ public class UserBean {
 			FacesMessage message = new FacesMessage(bundle.getString("username_not_valid"));
 			facesContext.addMessage(component.getClientId(facesContext), message);
 			throw new ValidatorException(message);
-		} else if(this.userService.usernameTaken(username, null)){
+		} else if(userExists(username)){
 			input.setValid(false);
 			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
 			FacesMessage message = new FacesMessage(bundle.getString("user_exists"));
