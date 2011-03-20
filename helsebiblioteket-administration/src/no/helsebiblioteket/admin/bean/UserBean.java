@@ -17,6 +17,7 @@ import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,6 +44,8 @@ import no.helsebiblioteket.admin.requestresult.PageRequest;
 import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.validator.PasswordValidator;
+import no.helsebiblioteket.admin.validator.UsernameValidator;
+import no.helsebiblioteket.admin.validator.UsernameValidator.ErrorCodes;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
 public class UserBean {
@@ -296,8 +299,18 @@ public class UserBean {
     	return "user_edit";
     }
     public void prepareEdit(){
+    	if (null == usernameInput) {
+    		logger.debug("usernameInput is null");
+    	} else {
+    		logger.debug("usernameInput.getValue(): " + usernameInput.getValue());
+    	}
+    	logger.debug("user.getUsername(): " + this.user.getUsername());
+    	
     	this.password = "";
     	this.repeatPassword = "";
+    	if (this.usernameInput != null) {
+    		this.usernameInput.setValue(this.user.getUsername());
+    	}
     	if(this.user.getOrgAdminFor() != null){
         	this.memberOrgId = this.user.getOrgAdminFor().getId();
     	} else {
@@ -322,6 +335,9 @@ public class UserBean {
     	}
     }
     public String actionSave(){
+    	logger.debug("username: " + this.user.getUsername());
+    	logger.debug("username length: " + this.user.getUsername().length());
+    	
     	if(this.password==null) this.password = "";
     	if(this.repeatPassword==null) this.repeatPassword="";
     	if( ( ! this.password.equals("") ) ||
@@ -344,8 +360,27 @@ public class UserBean {
     			this.user.setPassword(this.password);
     		}
     	}
+    	
+    	List<UsernameValidator.ErrorCodes> usernameErrors = UsernameValidator.getInstance().validateAndGetErrorCodes(this.user.getUsername(), null);
+    	if (logger.isDebugEnabled()) {
+	    	for (UsernameValidator.ErrorCodes errorCode : usernameErrors) {
+	    		logger.debug("error detected for username '" + this.user.getUsername() + "': " + errorCode.name());
+	    	}
+	    	if (usernameErrors.size() == 0) {
+	    		logger.debug("No errors detected for username '" + this.user.getUsername() + "'");
+	    	}
+    	}
+		if (usernameErrors.size() > 0) {
+			String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+			String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "username_not_valid", "Invalid username");
+			FacesContext.getCurrentInstance().addMessage(
+					this.usernameInput.getClientId(FacesContext.getCurrentInstance()),
+					new FacesMessage(FacesMessage.SEVERITY_INFO, messageValue, messageValue));
+			return null;
+		}
+    	
 		if(userExists(this.user.getUsername() == null ? "" : this.user.getUsername())){
-			String  bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
+			String bundleMain = "no.helsebiblioteket.admin.web.jsf.messageresources.main";
 			String messageValue = MessageResourceReader.getMessageResourceString(bundleMain, "user_exists", "The username is taken");
 			FacesContext.getCurrentInstance().addMessage(
 					this.usernameInput.getClientId(FacesContext.getCurrentInstance()),
@@ -423,6 +458,7 @@ public class UserBean {
     	
     	// TODO: Reset role?
     	this.userRolesSelectOne = null;
+    	//this.usernameInput = null;
     	
     	return details();
     }

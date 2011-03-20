@@ -1,5 +1,6 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -27,6 +28,7 @@ import no.helsebiblioteket.admin.service.OrganizationService;
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.validator.EmailValidator;
 import no.helsebiblioteket.admin.validator.PasswordValidator;
+import no.helsebiblioteket.admin.validator.UsernameValidator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -142,7 +144,7 @@ public class NewUserBean {
 		String msg = "email_not_match";
 		if (!retypeemail.equals(this.emailaddress) ) {
 			emailComponent.setValid(false);
-			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
 			FacesMessage message = new FacesMessage(bundle.getString(msg));
 			facesContext.addMessage(component.getClientId(facesContext), message);
 			throw new ValidatorException(message);
@@ -150,7 +152,6 @@ public class NewUserBean {
 	}
 	
     public void validateEmail(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
-		
 		String email = (String)newValue;
 		this.setEmailaddress(email) ;
 		UIInput emailComponent = (UIInput)component;
@@ -161,7 +162,7 @@ public class NewUserBean {
 		if ( ! valid) {
 			emailComponent.setValid(false);
 			// TODO Fase2: Set with Spring
-			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
 			FacesMessage message = new FacesMessage(bundle.getString(msg));
 			facesContext.addMessage(component.getClientId(facesContext), message);
 			throw new ValidatorException(message);
@@ -173,7 +174,7 @@ public class NewUserBean {
 		this.setPassword(password);
 		UIInput passwordComponent = (UIInput)component;
 		if( ! PasswordValidator.getInstance().isValidPassword(password)) {
-			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
 			passwordComponent.setValid(false);
 			FacesMessage message = new FacesMessage(bundle.getString("password_not_valid"));
 			facesContext.addMessage(component.getClientId(facesContext), message);
@@ -185,19 +186,26 @@ public class NewUserBean {
 		UIInput passwordComponent = (UIInput)component;
 		if ( ! retypePassword.equals(this.password) ) {
 			passwordComponent.setValid(false);
-			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
 			FacesMessage message = new FacesMessage(bundle.getString("password_repeat_not_equal"));
 			facesContext.addMessage(component.getClientId(facesContext), message);
 			throw new ValidatorException(message);
 		}
 	}
-
-    public void validateUserExists(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
-		String username = (String)newValue;
-		UIInput input = (UIInput)component;
-		if(this.userService.usernameTaken(username, null)){
+    
+    public void validateUsername(FacesContext facesContext, UIComponent component, Object newValue) throws ValidatorException {
+    	String username = (String) newValue;
+		UIInput input = (UIInput) component;
+		List<UsernameValidator.ErrorCodes> usernameErrors = UsernameValidator.getInstance().validateAndGetErrorCodes(username, null);
+		if (usernameErrors.size() > 0){
 			input.setValid(false);
-			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault() );
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
+			FacesMessage message = new FacesMessage(bundle.getString("username_not_valid"));
+			facesContext.addMessage(component.getClientId(facesContext), message);
+			throw new ValidatorException(message);
+		} else if(this.userService.usernameTaken(username, null)){
+			input.setValid(false);
+			ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", facesContext.getViewRoot().getLocale());
 			FacesMessage message = new FacesMessage(bundle.getString("user_exists"));
 			facesContext.addMessage(component.getClientId(facesContext), message);
 			throw new ValidatorException(message);

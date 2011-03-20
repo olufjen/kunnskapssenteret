@@ -9,57 +9,59 @@
 <h:form>
   <table>
     <tr>
-      <td><h:outputText value="#{msg_main.firstname}" /></td>
-      <td><h:inputText value="#{newAdministratorBean.firstname}" id="firstname" required="true" size="12" /></td>
-      <td align="right" ><h:outputText value="#{msg_main.lastname}" /></td>
-      <td align="right" ><h:inputText value="#{newAdministratorBean.lastname}" id="lastname" required="true" size="12" /></td>
-      <td><h:message for="firstname" styleClass="RED"/><h:message for="lastname" styleClass="RED"/></td>
+      <td valign="top"><h:outputText value="#{msg_main.firstname}" /></td>
+      <td valign="top"><h:inputText value="#{newAdministratorBean.firstname}" id="firstname" required="true" size="12" /><h:message for="firstname" styleClass="error"/></td>
+      <td valign="top"><h:outputText value="#{msg_main.lastname}" /></td>
+      <td valign="top"><h:inputText value="#{newAdministratorBean.lastname}" id="lastname" required="true" size="12" /><h:message for="lastname" styleClass="error"/></td>
     </tr>
 
     <tr>
-      <td><h:outputText value="#{msg_main.emailaddress}" /></td>
+      <td valign="top"><h:outputText value="#{msg_main.emailaddress}" /></td>
       <td colspan="3">
 		  <h:inputText value="#{newAdministratorBean.emailaddress}"
 		  	id="emailaddress" required="true" size="50"
 		  	validator="#{newAdministratorBean.validateEmail}"/>
+	  	<h:message for="emailaddress" styleClass="error"/>
 	  </td>
-      <td><h:message for="emailaddress" styleClass="RED"/></td>
     </tr>
 
     <tr>
-      <td><h:outputText value="#{msg_main.retypeemailaddress}" /></td>
+      <td valign="top"><h:outputText value="#{msg_main.retypeemailaddress}" /></td>
       <td colspan="3">
 		  <h:inputText value="#{newAdministratorBean.retypeemailaddress}"
 		  	id="retypeemailaddress" required="true" size="50"
 		  	validator="#{newAdministratorBean.retypeValidate}"/>
+	  	<h:message for="retypeemailaddress" styleClass="error"/>
 	  </td>
-      <td><h:message for="retypeemailaddress" styleClass="RED"/></td>
     </tr>
 
     <tr>
-      <td><h:outputText value="#{msg_main.username}" /></td>
+      <td valign="top"><h:outputText value="#{msg_main.username}" /></td>
       <td colspan="3">
       	  <h:inputText value="#{newAdministratorBean.username}"
       	  id="username" required="true" size="50"
-      	  validator="#{newAdministratorBean.validateUserExists}" />
+      	  validator="#{newAdministratorBean.validateUsername}" />
+      	<h:message for="username" styleClass="error"/>
       </td>
-      <td><h:message for="username" styleClass="RED"/></td>
     </tr>
 
     <tr>
-      <td><h:outputText value="#{msg_main.password}" /></td>
+      <td valign="top"><h:outputText value="#{msg_main.password}" /></td>
       <td colspan="3"><h:inputText value="#{newAdministratorBean.password}"
       	  id="password" required="true" size="50"
-      	  validator="#{newEndUserBean.validatePassword}"/></td>
-      <td><h:message for="password" styleClass="RED"/></td>
+      	  validator="#{newEndUserBean.validatePassword}"/>
+      	  <h:message for="password" styleClass="error"/>
+      	</td>	
     </tr>
 
     <tr>
-      <td><h:outputText value="#{msg_main.password_repeat}" /></td>
+      <td valign="top"><h:outputText value="#{msg_main.password_repeat}" /></td>
       <td colspan="3"><h:inputText value="#{newAdministratorBean.retypePassword}"
       	  id="retypePassword" required="true" size="50"
-      	  validator="#{newEndUserBean.validatePasswordRepeat}"/></td>
-      <td><h:message for="retypePassword" styleClass="RED"/></td>
+      	  validator="#{newEndUserBean.validatePasswordRepeat}"/>
+      	<h:message for="retypePassword" styleClass="error"/>
+      </td>
+     	
     </tr>
 
 	<tr>
@@ -70,7 +72,6 @@
       <td align="right">
       		<h:commandButton value="#{msg_main.cancel}" action="#{newAdministratorBean.actionCancelNewUser}" immediate="true" />
       </td>
-      <td> &nbsp; </td>
     </tr>
   </table>
 </h:form>
