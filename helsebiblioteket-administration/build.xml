@@ -5,6 +5,7 @@
 
     <property name="project.src.dir" value="${project.home.dir}/src"/>
 	<property name="project.lib.dir" value="${project.home.dir}/lib"/>
+	<property name="project.lib-provided.dir" value="${project.home.dir}/lib-provided"/>
 	<property name="project.build.dir" value="${project.home.dir}/build"/>
 	<property name="project.classes.dir" value="${project.build.dir}/classes"/>
 	<property name="project.web.dir" value="${project.home.dir}/WebRoot"/>
@@ -25,6 +26,9 @@
         <fileset dir="${project.lib.dir}">
             <include name="*.jar"/>
         </fileset>
+    	<fileset dir="${project.lib-provided.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
     	<fileset dir="${helsebiblioteket-domain-dao-services-target.dir}" includes="*.jar"/>
     	<fileset dir="${helsebiblioteket-importexport-target.dir}" includes="*.jar"/>
         <pathelement path="${test.dir}"/>
