@@ -28,6 +28,7 @@ import com.enonic.cms.api.client.model.content.HtmlAreaInput;
 import com.enonic.cms.api.client.model.content.TextInput;
 import com.enonic.cms.api.plugin.TaskPlugin;
 
+import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.filter.ElementFilter;
 import org.jdom.Element;
@@ -319,73 +320,79 @@ public class LinkCheckerPlugin extends TaskPlugin {
 		gcp.includeUserRights = false;
 		gcp.index = 0;
 		gcp.levels = 1;
-		gcp.count = 10000;
+		gcp.count = 10;
 
 
 		// content from category as jdom
 		Document cont = this.client.getContentByCategory(gcp);
-
 		// get root
-		Element temp1 = cont.getRootElement();
-		List<Element> contents = temp1.getChildren("content");
+		Element root = cont.getRootElement();
 
-		ListIterator<Element> contentiterator = contents.listIterator();
-		while (contentiterator.hasNext()) {
-			// get the contentdata for each content
-			Element temp = contentiterator.next();
-			String contentKey = temp.getAttributeValue("key");
+		// getting 10 contents at the time to avoid OutOfMemoryError on large categories
+		do {
+			List<Element> contents = root.getChildren("content");
 
-			log.info("chekcing content key " + contentKey);
+			ListIterator<Element> contentiterator = contents.listIterator();
+			while (contentiterator.hasNext()) {
+				// get the contentdata for each content
+				Element temp = contentiterator.next();
+				String contentKey = temp.getAttributeValue("key");
 
-			Element contentdata = temp.getChild("contentdata");
+				log.info("chekcing content key " + contentKey);
 
-			String contentTitle;
+				Element contentdata = temp.getChild("contentdata");
 
-			// test to ensure that a title is selected, to avoid null pointer
-			if (contentdata.getChild("heading") != null) {
-				contentTitle = StringEscapeUtils.escapeXml(contentdata.getChild("heading").getText());
-			} else if (contentdata.getChild("title") != null) {
-				contentTitle = StringEscapeUtils.escapeXml(contentdata.getChild("title").getText());
-			} else {
-				contentTitle = "fant ingen innholdstittel";
-			}
+				String contentTitle;
 
-			int counter = 0;
-			// go through the fields from the config file
-			ListIterator<String> iter = fields.listIterator();
-			while (iter.hasNext()) {
-				String field = iter.next();
+				// test to ensure that a title is selected, to avoid null pointer
+				if (contentdata.getChild("heading") != null) {
+					contentTitle = StringEscapeUtils.escapeXml(contentdata.getChild("heading").getText());
+				} else if (contentdata.getChild("title") != null) {
+					contentTitle = StringEscapeUtils.escapeXml(contentdata.getChild("title").getText());
+				} else {
+					contentTitle = "fant ingen innholdstittel";
+				}
 
-				// get any descendants of contentdata that has the same name as field
-				Iterator fieldIter = contentdata.getDescendants(new ElementFilter(field));
-				while (fieldIter.hasNext()) {
+				int counter = 0;
+				// go through the fields from the config file
+				ListIterator<String> iter = fields.listIterator();
+				while (iter.hasNext()) {
+					String field = iter.next();
 
-					Element ele = (Element) fieldIter.next();
-					String urlText = ele.getText();
+					// get any descendants of contentdata that has the same name as field
+					Iterator fieldIter = contentdata.getDescendants(new ElementFilter(field));
+					while (fieldIter.hasNext()) {
 
-					if (isHtmlArea.get(counter).equals("true")) {
-						Iterator aIterator = ele.getDescendants(new ElementFilter("a"));
-						while (aIterator.hasNext()) {
-							Element aTag = (Element) aIterator.next();
-							String href = aTag.getAttributeValue("href");
-							String message = href != null && !isMailUrl(href) ? this.checkURL(href) : "";
+						Element ele = (Element) fieldIter.next();
+						String urlText = ele.getText();
+
+						if (isHtmlArea.get(counter).equals("true")) {
+							Iterator aIterator = ele.getDescendants(new ElementFilter("a"));
+							while (aIterator.hasNext()) {
+								Element aTag = (Element) aIterator.next();
+								String href = aTag.getAttributeValue("href");
+								String message = href != null && !isMailUrl(href) ? this.checkURL(href) : "";
+								if (!message.equals("")) {
+									// make html markup
+									this.generatedMail.add("<tr><td>" + contentKey + "</td>" + "<td>" + contentTitle + "</td>" + message + "</tr>");
+								}
+							}
+						} else if (!urlText.equals("") && !isMailUrl(urlText)) {
+							String message = this.checkURL(urlText);
+
 							if (!message.equals("")) {
 								// make html markup
-								this.generatedMail.add("<tr><td>" + contentKey + "</td>" + "<td>" + contentTitle + "</td>" + message + "</tr>");
+								this.generatedMail.add("<tr>" + "<td>" + contentKey + "</td>" + "<td>" + contentTitle + "</td>" + message + "</tr>");
 							}
 						}
-					} else if (!urlText.equals("") && !isMailUrl(urlText)) {
-						String message = this.checkURL(urlText);
-
-						if (!message.equals("")) {
-							// make html markup
-							this.generatedMail.add("<tr>" + "<td>" + contentKey + "</td>" + "<td>" + contentTitle + "</td>" + message + "</tr>");
-						}
 					}
+					counter++;
 				}
-				counter++;
 			}
-		}
+			gcp.index += 10;
+			cont = this.client.getContentByCategory(gcp);
+			root = cont.getRootElement();
+		} while ((root.getAttributeValue("resultcount") != null) && (!root.getAttributeValue("resultcount").equals("0")));
 	}
 
 	private boolean isMailUrl(String url) {
@@ -403,7 +410,7 @@ public class LinkCheckerPlugin extends TaskPlugin {
 	public String checkURL(String url) {
 		log.info("Checking url: " + url);
 		String validUrl = StringEscapeUtils.escapeXml(url);
-		
+
 		try {
 			// setup connection to url
 			HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
