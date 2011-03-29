@@ -2,10 +2,15 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="getContentByCategoryCached" class="no.kunnskapssenteret.evs.plugins.cache.GetContentByCategoryCached">
-    </bean>
+	<bean id="getContentByCategoryCached" class="no.kunnskapssenteret.evs.plugins.cache.GetContentByCategoryCached"/>
     <bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
 		<property name="name" value="getContentByCategoryCached" />
 		<property name="target" ref="getContentByCategoryCached" />
+    </bean>
+    
+    <bean id="getContentBySectionCached" class="no.kunnskapssenteret.evs.plugins.cache.GetContentBySectionCached"/>
+    <bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+		<property name="name" value="getContentBySectionCached" />
+		<property name="target" ref="getContentBySectionCached" />
     </bean>
 </beans>
