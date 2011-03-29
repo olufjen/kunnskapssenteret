@@ -28,7 +28,6 @@ import com.enonic.cms.api.client.model.content.HtmlAreaInput;
 import com.enonic.cms.api.client.model.content.TextInput;
 import com.enonic.cms.api.plugin.TaskPlugin;
 
-import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.filter.ElementFilter;
 import org.jdom.Element;
