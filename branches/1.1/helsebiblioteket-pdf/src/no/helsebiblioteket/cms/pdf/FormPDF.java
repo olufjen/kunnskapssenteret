@@ -124,8 +124,6 @@ public class FormPDF extends HttpControllerPlugin {
 	 * 
 	 * @param url URL som skal sjekkes
 	 * @return true om vi godtar hosten, false ellers
-	 * 
-	 * TODO: Skrive en mer intelligent test av hosts
 	 */
 	private boolean acceptHost(String url) {
 		if (url == null) return false;
