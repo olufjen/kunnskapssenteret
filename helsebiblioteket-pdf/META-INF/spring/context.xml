@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean class="no.helsebiblioteket.cms.pdf.FormPDF">
+		<!-- The displayName property is new in 4.4.2.  Do not set this in 4.4.0 or 4.4.1.  -->
+		<property name="displayName" value="Form PDF Renderer plugin"/>
+		<property name="urlPattern" value="/site/[0-6]/formpdf"/>
+		<property name="priority" value="0"/>
+	</bean>
+</beans>
