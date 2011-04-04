@@ -151,9 +151,9 @@ public class FormPDF extends HttpControllerPlugin {
 			String value = request.getParameter(name);
 			
 			if (value.equals("on")) {
-				html = html.replaceAll("<input.*name=\"" + name + "\".*type=\"checkbox\".*>", "x");
+				html = html.replaceAll("<input.*?name=\"" + name + "\".*?type=\"checkbox\".*?>", "x");
 			}
-			html = html.replaceAll("<input.*name=\"" + name + "\".*>", value);
+			html = html.replaceAll("<input.*?name=\"" + name + "\".*?>", value);
 		}
 		return html;
 	}
