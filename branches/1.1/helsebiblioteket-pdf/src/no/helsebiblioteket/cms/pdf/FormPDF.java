@@ -33,7 +33,7 @@ import com.enonic.cms.api.plugin.HttpControllerPlugin;
 /**
  * PDF Renderer-plugin
  * 
- * Pluginen har 2 operasjonsmoduser, enten som en ren GET-tjeneste som rendrer en PDF fra en gitt side, eller
+ * Pluginen har 2 operasjonsmoduser, enter som en ren GET-tjeneste som rendrer en PDF fra en gitt side, eller
  * i POST-modus hvor den rendrer en PDF av siden som angis, samtidig som den fyller ut alle input-feltene
  * med verdiene fra POST.
  * 
@@ -207,7 +207,7 @@ public class FormPDF extends HttpControllerPlugin {
 	}
 
 	/**
-	 * Fjerner tegn som er ugyldige i filnavn.
+	 * Fjerner tegn som er ugyldige i filnavn, og lager generelt mer filnavn-vennlig tittel.
 	 * 
 	 * @param filename Filnavn som skal prosesseres
 	 * @return String med strippet filnavn
@@ -218,7 +218,7 @@ public class FormPDF extends HttpControllerPlugin {
 		
 		for(int i = 0; i < source.length(); i++) {
 			String character = source.substring(i, i+1);
-			if (character.matches("[a-zA-ZæøåÆØÅ_0-9]")) output.append(character);
+			if (character.matches("[a-zA-ZæøåÆØÅ_0-9\\-]")) output.append(character);
 		}
 		
 		return output.toString();
@@ -251,6 +251,8 @@ public class FormPDF extends HttpControllerPlugin {
 	
 	/**
 	 * HttpControllerPlugin entry point
+	 * 
+	 * Delegerer videre til doPost eller doGet avhengig av mode.
 	 */
 	@Override
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response)
