@@ -98,11 +98,11 @@ public class PasswordValidator {
 		validPassword = ( numbersPattern.matcher(notNullPassword).find() );
 		return validPassword;
 	}
-	public boolean notTooLong(String password){
+	public boolean tooLong(String password){
 		boolean validPassword = false;
 		String notNullPassword = null == password ? "" : password;
 		// No longer than 12 characters
-		validPassword = ( ! lettersNumbersSpeecialAndTooLongPattern.matcher(notNullPassword).find() );
+		validPassword = ( lettersNumbersSpeecialAndTooLongPattern.matcher(notNullPassword).find() );
 		return validPassword;
 	}
 	public boolean noLeadingOrTrailingWhiteSpaces(String password) {
@@ -125,19 +125,19 @@ public class PasswordValidator {
 			result.add(ErrorCodes.NO_VALUE);
 		}
 		// Must be at least 6 characters long
-		if (lettersNumbersSpeecialAndLengthPattern.matcher(password).find()) {
+		if (!hasLength(password)) {
 			result.add(ErrorCodes.NOT_LENGTH);
 		}
 		// Must have letters
-		if (lettersPattern.matcher(password).find()) {
+		if (!hasLetters(password)) {
 			result.add(ErrorCodes.NO_LETTERS);
 		}
 		// Must have numbers
-		if (numbersPattern.matcher(password).find()) {
+		if (!hasNumbers(password)) {
 			result.add(ErrorCodes.NO_NUMBERS);
 		}
 		// No longer than 12 characters
-		if ( ! lettersNumbersSpeecialAndTooLongPattern.matcher(password).find()) {
+		if (tooLong(password)) {
 			result.add(ErrorCodes.TOO_LONG);
 		}
 		if (result.size() > 0) {
@@ -169,7 +169,7 @@ public class PasswordValidator {
 		System.out.println(pv.hasLength("1;xEÅ"));
 		// FALSE - Too long
 		System.out.println(pv.isValidPassword("1;xEÅa_.9TøÅv"));
-		System.out.println(pv.notTooLong("1;xEÅa_.9TøÅv"));
+		System.out.println(pv.tooLong("1;xEÅa_.9TøÅv"));
 		// FALSE - No letters
 		System.out.println(pv.isValidPassword(";?_\\?6"));
 		System.out.println(pv.hasLetters(";?_\\?6"));
