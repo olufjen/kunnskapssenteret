@@ -4,8 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,12 +61,16 @@ public class FormPDF extends HttpControllerPlugin {
 	private Log log = LogFactory.getLog(FormPDF.class);
 	
 	private static final String UTF8 = "UTF-8";
+	private static final String CONTENTTYPE_PDF = "application/pdf";
 	
 	private static final String DEFAULT_FILENAME = "Utskrift";
 	
 	private static final String PARAM_MODE = "mode";
 	private static final String PARAM_TITLE = "pdftitle";
 	private static final String PARAM_URL = "url";
+	
+	private static final String CHECKBOX_CHECKED_URL = "<img src=\"http://www.helsebiblioteket.no/_public/Helsebiblioteket.no/images/checkbox_large_checked.png\" style=\"height: 10px; width: 10px\"/>";
+	private static final String CHECKBOX_UNCHECKED_URL = "<img src=\"http://www.helsebiblioteket.no/_public/Helsebiblioteket.no/images/checkbox_large_unchecked.png\" style=\"height: 10px; width: 10px\"/>";
 	
 	private List<String> allowedHosts = Arrays.asList(
 			"www.helsebiblioteket.no",
@@ -75,6 +80,10 @@ public class FormPDF extends HttpControllerPlugin {
 		PAGE, FORM
 	}
 	
+	private enum InputType {
+		TEXT, RADIO, BUTTON, SUBMIT, CHECKBOX, HIDDEN
+	}
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -82,12 +91,27 @@ public class FormPDF extends HttpControllerPlugin {
         super();
     }
     
+    /**
+     * Henter ut URL-parameter fra request.
+     * 
+     * Grunnen til at dette ikke gjøres med request.getParameter() er at vi vil ha med resten av querystringen
+     * etter "&url=", slik at eventuelle parametre i URL'en ikke blir filtrert bort.
+     * 
+     * @param request
+     * @return
+     */
+    protected String getPageUrl(HttpServletRequest request) {
+    	String qs = request.getQueryString();
+		return qs.substring(qs.indexOf("&url=")+5);
+    }
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url = request.getParameter(PARAM_URL);
+		String url = getPageUrl(request);
+		
 		// Escaper mellomrom i URL
 		url = url.replaceAll(" ", "+");
 		if (acceptHost(url)) {
@@ -143,19 +167,79 @@ public class FormPDF extends HttpControllerPlugin {
 	 * @return Utfylt HTML
 	 */
 	private String formFill(HttpServletRequest request, String html) {
+		StringBuffer result = new StringBuffer();
 		
-		@SuppressWarnings("unchecked")
-		Enumeration<String> names = request.getParameterNames();
-		while (names.hasMoreElements()) {
-			String name = names.nextElement();
+		// Match alle input-elementer
+		Pattern pattern = Pattern.compile("<input.*?>");
+		Matcher matcher = pattern.matcher(html);
+		
+		// Loop gjennom
+		while (matcher.find()) {
+			String matchedString = html.substring(matcher.start(), matcher.end()).toLowerCase();
+
+			// sjekk type input-felt
+			InputType type = getInputType(matchedString);
+			String name = getAttributeValue(matchedString, "name");
+			
+			// Sjekk om name fins som verdi fra POST
 			String value = request.getParameter(name);
 			
-			if (value.equals("on")) {
-				html = html.replaceAll("<input.*?name=\"" + name + "\".*?type=\"checkbox\".*?>", "x");
+			switch (type) {
+				case RADIO:
+					if (value != null && value.equals(getAttributeValue(matchedString, "value"))) matcher.appendReplacement(result, CHECKBOX_CHECKED_URL);
+					else matcher.appendReplacement(result, CHECKBOX_UNCHECKED_URL);
+					break;
+				case CHECKBOX:
+					if (value != null) {
+						matcher.appendReplacement(result, CHECKBOX_CHECKED_URL);
+					} else {
+						matcher.appendReplacement(result, CHECKBOX_UNCHECKED_URL);
+					}
+					break;
+				default:
+					if (value != null) {
+						matcher.appendReplacement(result, value);
+					}
 			}
-			html = html.replaceAll("<input.*?name=\"" + name + "\".*?>", value);
+		
+			// erstatt verdier fra request om de er satt
+			//matcher.appendReplacement(result, replacement);
 		}
-		return html;
+		matcher.appendTail(result);
+		String resultString = result.toString();
+		return resultString;
+	}
+	
+	/**
+	 * Finner ut hva slags type input-felt det gitte elementet er.
+	 * 
+	 * @param inputElement
+	 * @return
+	 */
+	private InputType getInputType(String inputElement) {
+		String typeValue = getAttributeValue(inputElement, "type");
+		if (typeValue.equals("radio")) return InputType.RADIO;
+		else if (typeValue.equals("button")) return InputType.BUTTON;
+		else if (typeValue.equals("checkbox")) return InputType.CHECKBOX;
+		else if (typeValue.equals("hidden")) return InputType.HIDDEN;
+		return InputType.TEXT;
+	}
+	
+	/**
+	 * Henter ut verdien for angitt attributt.
+	 * 
+	 * @param element
+	 * @param attributeName
+	 * @return
+	 */
+	private String getAttributeValue(String element, String attributeName) {
+		Pattern pattern = Pattern.compile("<[^>]+" + attributeName + "\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
+		Matcher matcher = pattern.matcher(element);
+		
+		if (matcher.find()) {
+			return matcher.group(matcher.groupCount());
+		}
+		return null;
 	}
 	
 	/**
@@ -192,7 +276,6 @@ public class FormPDF extends HttpControllerPlugin {
 	 * @throws Exception
 	 */
 	private void renderPDF(HttpServletResponse response, String source, boolean isUrl) throws Exception {
-		response.setContentType("application/pdf");
 		ITextRenderer renderer = new ITextRenderer();
 		
 		if (!isUrl) {
@@ -202,7 +285,8 @@ public class FormPDF extends HttpControllerPlugin {
 			renderer.setDocument(source);
 		}
 		OutputStream os = response.getOutputStream();
-	    renderer.layout();
+		response.setContentType(CONTENTTYPE_PDF);
+		renderer.layout();
 	    renderer.createPDF(os);
 	}
 
@@ -257,13 +341,17 @@ public class FormPDF extends HttpControllerPlugin {
 	@Override
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		
-		String mode = request.getParameter(PARAM_MODE);
-		
-		if (mode != null && mode.equalsIgnoreCase(RenderMode.PAGE.name())) {
-			doGet(request, response);
-		} else {
-			doPost(request, response);
+		try {
+			String mode = request.getParameter(PARAM_MODE);
+			
+			if (mode != null && mode.equalsIgnoreCase(RenderMode.PAGE.name())) {
+				doGet(request, response);
+			} else {
+				doPost(request, response);
+			}
+		} catch (Exception e) {
+			log.error("Feil ved rendering: ", e);
 		}
 	}
+	
 }
