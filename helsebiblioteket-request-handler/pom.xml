@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>no.helsebiblioteket</groupId>
+	<artifactId>request-handler</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+
+	<name>Request handler</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<targetPath>META-INF/spring</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/main/META-INF/spring</directory>
+				<includes>
+					<include>context.xml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.enonic.cms</groupId>
+			<artifactId>cms-api</artifactId>
+			<version>4.4.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>
