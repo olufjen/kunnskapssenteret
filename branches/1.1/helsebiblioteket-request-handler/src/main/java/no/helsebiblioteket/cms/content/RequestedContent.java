@@ -14,7 +14,7 @@ import com.enonic.cms.api.client.model.GetContentParams;
 public class RequestedContent {
 	private GetContentParams contentParams;
 	private Document content;
-
+	
 	public RequestedContent(int contentKey) {
 		contentParams = new GetContentParams();
 		contentParams.contentKeys = new int[] {contentKey};
@@ -23,10 +23,10 @@ public class RequestedContent {
 	}
 
 	public boolean isPdf() {
-		return getTitle().toLowerCase().endsWith(".pdf");
+		return getBinaryTitle().toLowerCase().endsWith(".pdf");
 	}
 	
-	public String getTitle() {
-		return content.getRootElement().getChild("content").getChild("title").getValue();
+	public String getBinaryTitle() {
+		return content.getRootElement().getChild("content").getChild("binaries").getChild("binary").getAttributeValue("filename");
 	}
 }

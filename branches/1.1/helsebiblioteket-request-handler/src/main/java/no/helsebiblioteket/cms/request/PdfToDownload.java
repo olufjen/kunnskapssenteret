@@ -37,8 +37,8 @@ public class PdfToDownload extends HttpInterceptorPlugin {
 				RequestedContent rc = new RequestedContent(Integer.parseInt(contentKey));
 
 				if (rc.isPdf()) {
-					req.getParameterMap().put("_download", "true");
-					log.info("Added _download=true to uri " + req.getRequestURI());
+					req.getParameterMap().put("_download", new String[]{"true"});
+					log.info("Added _download=true to request " + req.getRequestURI());
 				}
 			} catch (Exception e) {
 				log.error("Request failed for content key " + contentKey);
