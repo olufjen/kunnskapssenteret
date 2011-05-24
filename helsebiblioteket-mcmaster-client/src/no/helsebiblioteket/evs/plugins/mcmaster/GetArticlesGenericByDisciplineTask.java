@@ -3,7 +3,10 @@ package no.helsebiblioteket.evs.plugins.mcmaster;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
@@ -11,6 +14,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import no.helsebiblioteket.evs.util.Import;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,6 +32,7 @@ import com.enonic.cms.api.client.model.ImportContentsParams;
 
 public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 	private Log logger = LogFactory.getLog(GetArticlesGenericByDisciplineTask.class);
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	protected Client cmsClient;
 	private String cmsUsername;
 	private String cmsPassword;
@@ -40,11 +46,10 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 	private String cmsRemoteClientUrl;
 	private List<Integer> serviceDisciplineIdList;
 	private List<Integer> cmsArticleArchiveKeyList;
-	private Integer cmsArticleArchiveKey;
+	private Calendar importDate;
 	private Map<Integer, Integer> disciplineIdArvhiveKeyMap = new HashMap<Integer, Integer>();
 	private static List<String> genericCompositeKeyList = null;
-	
-	
+
 	static {
 		GetArticlesGenericByDisciplineTask.genericCompositeKeyList = new ArrayList<String>();
 		GetArticlesGenericByDisciplineTask.genericCompositeKeyList.add("ArticleId");
@@ -56,9 +61,9 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 		GetArticlesGenericByDisciplineTask.genericCompositeKeyList.add("CategoryId");
 		GetArticlesGenericByDisciplineTask.genericCompositeKeyList.add("SettingId");
 	}
-	
-	
-	
+
+
+
 	protected enum TaskPropertyKeys {
 		cmsUsername, 
 		cmsPassword,
@@ -74,14 +79,15 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 		serviceDisciplineIdList, 
 		serviceKey, 
 		serviceIV,
-		cmsRemoteClientUrl
+		cmsRemoteClientUrl,
+		cmsFromDate
 	}
-	
+
 	public GetArticlesGenericByDisciplineTask() {
 	}
-	
-	protected abstract String getServiceResponseAsString(int disciplineId);
-	
+
+	protected abstract String getServiceResponseAsString(int disciplineId, Calendar date);
+
 	protected void initLocalProperties(Properties taskProperties) {
 		if (taskProperties != null && taskProperties.size() > 0) {
 			this.cmsUsername = taskProperties.getProperty(TaskPropertyKeys.cmsUsername.name());
@@ -112,7 +118,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 			}
 			super.serviceKey = taskProperties.getProperty(TaskPropertyKeys.serviceKey.name());
 			super.serviceIV = taskProperties.getProperty(TaskPropertyKeys.serviceIV.name());
-			
+
 			String serviceDisciplineIdListAsString = taskProperties.getProperty(TaskPropertyKeys.serviceDisciplineIdList.name());
 			if (null != serviceDisciplineIdListAsString) {
 				serviceDisciplineIdListAsString = serviceDisciplineIdListAsString.replaceAll("\\s+", "");
@@ -126,7 +132,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 					}
 				}
 			}
-			
+
 			String cmsArchiveKeyListAsString = taskProperties.getProperty(TaskPropertyKeys.cmsArticleArchiveKeyList.name());
 			if (null != cmsArchiveKeyListAsString) {
 				cmsArchiveKeyListAsString = cmsArchiveKeyListAsString.replaceAll("\\s+", "");
@@ -140,7 +146,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 					}
 				}
 			}
-			
+
 			this.disciplineIdArvhiveKeyMap = new HashMap<Integer, Integer>();
 			int i = 0;
 			try {
@@ -150,9 +156,19 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 			} catch (ArrayIndexOutOfBoundsException aioobe) {
 				logger.error("Mismatch between arvhive key list and discipline id list in task configuration. Lists must be of same length. Please correct this via the cms web admin console." + aioobe);
 			}
+			this.importDate = Calendar.getInstance();
+			String fromDate = taskProperties.getProperty(TaskPropertyKeys.cmsFromDate.name());
+			if (fromDate != null) {
+				try {
+					Date date = dateFormat.parse(fromDate);
+					this.importDate.setTime(date);
+				} catch (ParseException e) {
+					logger.error("Invalid date format: " + fromDate + ". Valid format is dd/mm/yyyy.", e);
+				}
+			}
 		}
 	}
-	
+
 	protected void initEvsClient() {
 		if (this.cmsClient == null) {
 			logger.info("Logging in using remote client.");
@@ -160,7 +176,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 			this.cmsClient.login(this.cmsUsername, this.cmsPassword);
 		}
 	}
-	
+
 	protected String destroyEvsClient() {
 		String result = null;
 		if (this.cmsClient != null) {
@@ -176,68 +192,103 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 		logger.info("importAllContent starting ..:");
 		if ((this.cmsArticleArchiveKeyList != null && this.cmsArticleArchiveKeyList.size() > 0) && (serviceDisciplineIdList != null && serviceDisciplineIdList.size() > 0)) {
 			logger.info("content found (non-empty)");
-			String xmlString = null;
-			Map<Integer, String> xmlResponseAsStringMap = new HashMap<Integer, String>();
-			for (Integer disciplineId : this.disciplineIdArvhiveKeyMap.keySet()) {
-				xmlString = fixResponseString(getServiceResponseAsString(disciplineId), compositeKeyXpathNodeList, potentialInvalidXmlNodeNameList);
-				xmlResponseAsStringMap.put(disciplineId, xmlString);
-				logger.info("Importing discipline id " + disciplineId);
-			}
-			
-			Set<Integer> failedDisciplineIds = new HashSet<Integer>();
-			
-			for (Integer discId : xmlResponseAsStringMap.keySet()) {
-				try {
-					importArticles(xmlResponseAsStringMap.get(discId), this.disciplineIdArvhiveKeyMap.get(discId));
-				} catch (Exception e) {
-					logger.error("Failed importing article with discipline id " + discId, e);
-					failedDisciplineIds.add(discId);
+
+			Calendar today = Calendar.getInstance();
+
+			while (this.importDate.before(today)) {
+				String xmlString = null;
+				Map<Integer, String> xmlResponseAsStringMap = new HashMap<Integer, String>();
+				String date = dateFormat.format(this.importDate.getTime());
+
+				for (Integer disciplineId : this.disciplineIdArvhiveKeyMap.keySet()) {
+					xmlString = fixResponseString(getServiceResponseAsString(disciplineId, this.importDate), compositeKeyXpathNodeList, potentialInvalidXmlNodeNameList);
+					xmlResponseAsStringMap.put(disciplineId, xmlString);
+					logger.info("Importing discipline id " + disciplineId + " for " + date);
 				}
-			}
-			
-			for (Integer archiveKey : xmlResponseAsStringMap.keySet()) {
-				if (failedDisciplineIds.contains(archiveKey)) {
-					logger.warn("Skipping importRest for failed article with archive key/discipline id " + archiveKey);
-				} else {
+
+				Set<Integer> failedDisciplineIds = new HashSet<Integer>();
+				Set<Integer> articleIds = new HashSet<Integer>();
+
+				for (Integer discId : xmlResponseAsStringMap.keySet()) {
 					try {
-						importRest(xmlResponseAsStringMap.get(archiveKey));
+						boolean articlesImported = importArticles(xmlResponseAsStringMap.get(discId), this.disciplineIdArvhiveKeyMap.get(discId));
+
+						if (articlesImported) {
+							articleIds.add(discId);
+						} else {
+							logger.info("No articles found with discipline id " + discId + " at " + date);
+						}
 					} catch (Exception e) {
-						logger.error("Failed importing rest of article with archive key/discipline id " + archiveKey, e);
+						logger.error("Failed importing article with discipline id " + discId, e);
+						failedDisciplineIds.add(discId);
 					}
 				}
-			}
+
+				for (Integer archiveKey : xmlResponseAsStringMap.keySet()) {
+					if (failedDisciplineIds.contains(archiveKey)) {
+						logger.warn("Skipping importRest for failed article with archive key/discipline id " + archiveKey);
+					} else if (articleIds.contains(archiveKey)) {
+						try {
+							boolean restImported = importRest(xmlResponseAsStringMap.get(archiveKey));
+
+							if(!restImported) {
+								logger.info("No other content found with archive key/discipline id " + archiveKey);
+							}
+						} catch (Exception e) {
+							logger.error("Failed importing rest of article with archive key/discipline id " + archiveKey, e);
+						}
+					}
+				}
+				this.importDate.add(Calendar.DATE, 1);
+			} 
 		} else {
 			logger.error("Plugins want to import content from McMaster, but archive key list or discipline id list is not set in pluginconfig. Plugin cannot perform any action. Please correct plugin configuration in admin gui");
 		}
 	}
-	
-	private void importArticles(String xmlContent, Integer articleArchiveKey) {
-		ImportContentsParams params = new ImportContentsParams();
-		params.categoryKey = articleArchiveKey;
-		params.importName = this.cmsImportArticlesName;
-		params.data = xmlContent;
-		params.publishFrom = new Date();
-		this.cmsClient.importContents(params);
+
+	private boolean importArticles(String xmlContent, Integer articleArchiveKey) {
+
+		if (Import.hasArticles(xmlContent)) {
+			ImportContentsParams params = new ImportContentsParams();
+			params.categoryKey = articleArchiveKey;
+			params.importName = this.cmsImportArticlesName;
+			params.data = xmlContent;
+			params.publishFrom = this.importDate.getTime();
+			this.cmsClient.importContents(params);
+			return true;
+		} else {
+			return false;
+		}
 	}
-	
-	private void importRest(String xmlContent) {
-		ImportContentsParams params = new ImportContentsParams();
-		
-		params.categoryKey = this.cmsArticleCommentsArchiveKey;
-		params.importName = this.cmsImportArticleCommentsName;
-		params.data = xmlContent;
-		params.publishFrom = new Date();
-		this.cmsClient.importContents(params);
-		
-		params.categoryKey = this.cmsArticleDisciplineAndRatingsKey;
-		params.importName = this.cmsImportArticleDisciplineAndRatingsName;
-		this.cmsClient.importContents(params);
-		
-		params.categoryKey = this.cmsArticlePatientPopulationsArchiveKey;
-		params.importName = this.cmsImportArticlePatientPopulationsName;
-		this.cmsClient.importContents(params);
+
+	private boolean importRest(String xmlContent) {
+		boolean hasContent = Import.hasContent(xmlContent);
+
+		if (hasContent) {
+			ImportContentsParams params = new ImportContentsParams();
+			params.data = xmlContent;
+			params.publishFrom = this.importDate.getTime();
+
+			if (Import.hasComments(xmlContent)) {
+				params.categoryKey = this.cmsArticleCommentsArchiveKey;
+				params.importName = this.cmsImportArticleCommentsName;
+				this.cmsClient.importContents(params);
+			}
+			if (Import.hasDiscAndRatings(xmlContent)) {
+				params.categoryKey = this.cmsArticleDisciplineAndRatingsKey;
+				params.importName = this.cmsImportArticleDisciplineAndRatingsName;
+				this.cmsClient.importContents(params);
+			}
+			if (Import.hasPatientPopulations(xmlContent)) {
+				params.categoryKey = this.cmsArticlePatientPopulationsArchiveKey;
+				params.importName = this.cmsImportArticlePatientPopulationsName;
+				this.cmsClient.importContents(params);
+			}
+		}
+		return hasContent;
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	private String fixResponseString(String responseString, List<String> compositeKeyXpathNodeList, List<String> potentialInvalidXmlNodeNameList) {
 		String fixedResponseString = responseString;
 		if (! fixedResponseString.contains("<?xml")) {
@@ -247,7 +298,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 		fixedResponseString = fixedResponseString.replaceAll("</diffgr:diffgram>", "");
 		fixedResponseString = fixedResponseString.replaceAll("diffgr:", "");
 		fixedResponseString = fixedResponseString.replaceAll("msdata:", "");
-		
+
 		String xmlNodeStringStart = null;
 		String xmlNodeStringEnd = null;
 		for (String xmlNodeName : potentialInvalidXmlNodeNameList) {
@@ -256,7 +307,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 			fixedResponseString = fixedResponseString.replaceAll(xmlNodeStringStart, (xmlNodeStringStart + "<![CDATA["));
 			fixedResponseString = fixedResponseString.replaceAll(xmlNodeStringEnd, ("]]>" + xmlNodeStringEnd));
 		}
-		
+
 		Document doc = null;
 		try {
 			doc = new SAXBuilder().build(new ByteArrayInputStream(fixedResponseString.getBytes()));
@@ -266,7 +317,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 			logger.error("Unable to build document from xmlstring", jde);
 		}
 		XPath xpath = null;
-		
+
 		List<List<Element>> elementLists = null;
 		try {
 			elementLists = new ArrayList<List<Element>>();
@@ -290,25 +341,26 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 		for (List<Element> elementList : elementLists) {
 			generateUniqueCompositeKeyElementForRelatedContent(elementList);
 		}
-		
+
 		StringWriter writer = new StringWriter();
-        XMLOutputter prettyOut = new XMLOutputter();
-        try {
+		XMLOutputter prettyOut = new XMLOutputter();
+		try {
 			prettyOut.output(doc, writer);
 		} catch (IOException ioe) {
 			logger.error("Unable to get string representation from JDom document: " + ioe.getMessage());
 		}
 		return writer.toString();
 	}
-	
-	
-	
+
+
 	/**
 	 * Unique identifier is required for each imported content element by cms solution in order to perform import.
 	 * This method generates composite keys and adds them to the xml structure prior to import.
 	 * @param elementList
 	 */
 	private Element generateUniqueCompositeKeyElementForRelatedContent(List<Element> elementList) {
+		long time = System.currentTimeMillis();
+		int i = 1;
 		Element uidElement = null;
 		XPath xpath = null;
 		Element singleElement = null;
@@ -323,6 +375,8 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 						uidAsString = ((uidAsString != null) ? uidAsString + "-" : "") + singleElement.getText();
 					}
 				}
+				uidAsString = uidAsString + "-" + time + "-" + i;
+				i++;
 				/*
 				xpath = XPath.newInstance("ArticleId");
 				if (null != (singleElement  = (Element) xpath.selectSingleNode(element))) {
@@ -352,7 +406,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 				if (null != (singleElement  = (Element) xpath.selectSingleNode(element))) {
 					uidAsString = ((uidAsString != null) ? uidAsString + "-" : "") + singleElement.getText();
 				}*/
-				
+
 			} catch (JDOMException jde) {
 				logger.error("Unable to perform XPath query while selecting XML Elements for composity key", jde);
 			}

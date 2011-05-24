@@ -2,6 +2,7 @@ package no.helsebiblioteket.evs.plugins.mcmaster;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.enonic.cms.api.client.ClientFactory;
-import com.enonic.cms.api.plugin.TaskPlugin;
 
 public class GetNurseArticlesByDisciplineTask extends GetArticlesGenericByDisciplineTask {
 	private Log logger = LogFactory.getLog(GetNurseArticlesByDisciplineTask.class);
@@ -54,19 +54,21 @@ public class GetNurseArticlesByDisciplineTask extends GetArticlesGenericByDiscip
 
 	}
 
-	protected String getServiceResponseAsString(int disciplineId) {
+	protected String getServiceResponseAsString(int disciplineId, Calendar date) {
 		McMasterWSClient mcMasterWsClient = initMcMasterClient();
 		String result = null;
-		GetNurseArticlesByDisciplineResponse response = getNurseArticlesByDisciplineResponse(mcMasterWsClient, disciplineId);
+		GetNurseArticlesByDisciplineResponse response = getNurseArticlesByDisciplineResponse(mcMasterWsClient, disciplineId, date);
 		result = response.getGetNurseArticlesByDisciplineResult().getExtraElement().toString();
 		return result;
 	}
 	
-	private GetNurseArticlesByDisciplineResponse getNurseArticlesByDisciplineResponse(McMasterWSClient mcMasterWsClient, int disciplineId) {
+	private GetNurseArticlesByDisciplineResponse getNurseArticlesByDisciplineResponse(McMasterWSClient mcMasterWsClient, int disciplineId, Calendar date) {
 		String encodedKey = super.generateDynamicServiceKey();
 		GetNurseArticlesByDiscipline nurseArticlesByDiscipline = new GetNurseArticlesByDiscipline();
 		nurseArticlesByDiscipline.setSKey(encodedKey);
 		nurseArticlesByDiscipline.setIDiscipline(disciplineId);
+		nurseArticlesByDiscipline.setDtDate(date);
+		
 		GetNurseArticlesByDisciplineResponse nurseArticlesByDisciplineResponse = null;
 		try {
 			nurseArticlesByDisciplineResponse = mcMasterWsClient.getNurseArticlesByDiscipline(nurseArticlesByDiscipline);
