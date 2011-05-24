@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.enonic.cms.api.client.ClientFactory;
-import com.enonic.cms.api.plugin.TaskPlugin;
 
 public class GetRehabDisciplinesTask extends GetDisciplinesGenericTask {
 	private Log logger = LogFactory.getLog(GetRehabDisciplinesTask.class);

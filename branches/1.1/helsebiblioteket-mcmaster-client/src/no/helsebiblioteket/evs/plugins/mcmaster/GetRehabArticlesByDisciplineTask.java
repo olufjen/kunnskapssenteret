@@ -2,6 +2,7 @@ package no.helsebiblioteket.evs.plugins.mcmaster;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.enonic.cms.api.client.ClientFactory;
-import com.enonic.cms.api.plugin.TaskPlugin;
 
 public class GetRehabArticlesByDisciplineTask extends GetArticlesGenericByDisciplineTask {
 	private Log logger = LogFactory.getLog(GetRehabArticlesByDisciplineTask.class);
@@ -54,19 +54,21 @@ public class GetRehabArticlesByDisciplineTask extends GetArticlesGenericByDiscip
 
 	}
 
-	protected String getServiceResponseAsString(int disciplineId) {
+	protected String getServiceResponseAsString(int disciplineId, Calendar date) {
 		McMasterWSClient mcMasterWsClient = initMcMasterClient();
 		String result = null;
-		GetRehabArticlesByDisciplineResponse response = getRehabArticlesByDisciplineResponse(mcMasterWsClient, disciplineId);
+		GetRehabArticlesByDisciplineResponse response = getRehabArticlesByDisciplineResponse(mcMasterWsClient, disciplineId, date);
 		result = response.getGetRehabArticlesByDisciplineResult().getExtraElement().toString();
 		return result;
 	}
 	
-	private GetRehabArticlesByDisciplineResponse getRehabArticlesByDisciplineResponse(McMasterWSClient mcMasterWsClient, int disciplineId) {
+	private GetRehabArticlesByDisciplineResponse getRehabArticlesByDisciplineResponse(McMasterWSClient mcMasterWsClient, int disciplineId, Calendar date) {
 		String encodedKey = super.generateDynamicServiceKey();
 		GetRehabArticlesByDiscipline rehabArticlesByDiscipline = new GetRehabArticlesByDiscipline();
 		rehabArticlesByDiscipline.setSKey(encodedKey);
 		rehabArticlesByDiscipline.setIDiscipline(disciplineId);
+		rehabArticlesByDiscipline.setDtDate(date);
+		
 		GetRehabArticlesByDisciplineResponse rehabArticlesByDisciplineResponse = null;
 		try {
 			rehabArticlesByDisciplineResponse = mcMasterWsClient.getRehabArticlesByDiscipline(rehabArticlesByDiscipline);

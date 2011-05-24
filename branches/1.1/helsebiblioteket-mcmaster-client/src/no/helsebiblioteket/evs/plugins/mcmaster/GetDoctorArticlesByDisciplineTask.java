@@ -2,6 +2,7 @@ package no.helsebiblioteket.evs.plugins.mcmaster;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.enonic.cms.api.client.ClientFactory;
-import com.enonic.cms.api.plugin.TaskPlugin;
 
 public class GetDoctorArticlesByDisciplineTask extends GetArticlesGenericByDisciplineTask {
 	private Log logger = LogFactory.getLog(GetDoctorArticlesByDisciplineTask.class);
@@ -52,19 +52,21 @@ public class GetDoctorArticlesByDisciplineTask extends GetArticlesGenericByDisci
 		logger.info(this.getClass().getName() + " done at " +  end + ", millisec spent " + (end.getTime() - start.getTime()));
 	}
 
-	protected String getServiceResponseAsString(int disciplineId) {
+	protected String getServiceResponseAsString(int disciplineId, Calendar date) {
 		McMasterWSClient mcMasterWsClient = initMcMasterClient();
 		String result = null;
-		GetArticlesByDisciplineResponse response = getArticlesByDisciplineResponse(mcMasterWsClient, disciplineId);
+		GetArticlesByDisciplineResponse response = getArticlesByDisciplineResponse(mcMasterWsClient, disciplineId, date);
 		result = response.getGetArticlesByDisciplineResult().getExtraElement().toString();
 		return result;
 	}
 	
-	private GetArticlesByDisciplineResponse getArticlesByDisciplineResponse(McMasterWSClient mcMasterWsClient, int disciplineId) {
+	private GetArticlesByDisciplineResponse getArticlesByDisciplineResponse(McMasterWSClient mcMasterWsClient, int disciplineId, Calendar date) {
 		String encodedKey = super.generateDynamicServiceKey();
 		GetArticlesByDiscipline articlesByDiscipline = new GetArticlesByDiscipline();
 		articlesByDiscipline.setSKey(encodedKey);
 		articlesByDiscipline.setIDiscipline(disciplineId);
+		articlesByDiscipline.setDtDate(date);
+		
 		GetArticlesByDisciplineResponse articlesByDisciplineResponse = null;
 		try {
 			articlesByDisciplineResponse = mcMasterWsClient.getArticlesByDiscipline(articlesByDiscipline);

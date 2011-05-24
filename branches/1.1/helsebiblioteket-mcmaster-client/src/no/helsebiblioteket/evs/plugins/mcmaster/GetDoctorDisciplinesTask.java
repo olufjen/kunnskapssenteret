@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.enonic.cms.api.client.ClientFactory;
-import com.enonic.cms.api.plugin.TaskPlugin;
 
 public class GetDoctorDisciplinesTask extends GetDisciplinesGenericTask {
 	private Log logger = LogFactory.getLog(GetDoctorDisciplinesTask.class);
@@ -44,6 +43,7 @@ public class GetDoctorDisciplinesTask extends GetDisciplinesGenericTask {
 	public void execute(Properties taskProperties) {
 		java.util.Date start = new java.util.Date();
 		logger.info(this.getClass().getName() + " starting at " + start);
+		
 		synchronized (GetDoctorDisciplinesTask.class) {
 			super.initLocalProperties(taskProperties);
 			super.initEvsClient();
