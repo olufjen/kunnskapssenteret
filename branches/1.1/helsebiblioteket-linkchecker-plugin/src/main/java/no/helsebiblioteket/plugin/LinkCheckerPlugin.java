@@ -672,9 +672,8 @@ public class LinkCheckerPlugin extends TaskPlugin {
 		props.setProperty("mail.host", hostname);
 
 		Session mailSession = Session.getDefaultInstance(props, null);
-		mailSession.setDebug(false);
 		try {
-			Transport transport = mailSession.getTransport();
+			Transport transport = mailSession.getTransport("smtp");
 			MimeMessage message = new MimeMessage(mailSession);
 			message.setSubject(mailsubject);
 			message.setFrom(new InternetAddress(mailfrom));
