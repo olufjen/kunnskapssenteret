@@ -1,1 +1,0 @@
-This folder contains changes for the datbase after the first release of the application
