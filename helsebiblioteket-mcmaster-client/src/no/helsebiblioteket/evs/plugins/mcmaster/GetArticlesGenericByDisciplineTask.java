@@ -80,7 +80,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 		serviceKey, 
 		serviceIV,
 		cmsRemoteClientUrl,
-		cmsFromDate
+		fromDate
 	}
 
 	public GetArticlesGenericByDisciplineTask() {
@@ -157,7 +157,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 				logger.error("Mismatch between arvhive key list and discipline id list in task configuration. Lists must be of same length. Please correct this via the cms web admin console." + aioobe);
 			}
 			this.importDate = Calendar.getInstance();
-			String fromDate = taskProperties.getProperty(TaskPropertyKeys.cmsFromDate.name());
+			String fromDate = taskProperties.getProperty(TaskPropertyKeys.fromDate.name());
 			if (fromDate != null) {
 				try {
 					Date date = dateFormat.parse(fromDate);
@@ -165,6 +165,11 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 				} catch (ParseException e) {
 					logger.error("Invalid date format: " + fromDate + ". Valid format is dd/mm/yyyy.", e);
 				}
+			} else {
+				this.importDate.set(Calendar.HOUR_OF_DAY, 0);
+				this.importDate.set(Calendar.MINUTE, 0);
+				this.importDate.set(Calendar.SECOND, 0);
+				this.importDate.set(Calendar.MILLISECOND, 0);
 			}
 		}
 	}
@@ -203,7 +208,7 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 				for (Integer disciplineId : this.disciplineIdArvhiveKeyMap.keySet()) {
 					xmlString = fixResponseString(getServiceResponseAsString(disciplineId, this.importDate), compositeKeyXpathNodeList, potentialInvalidXmlNodeNameList);
 					xmlResponseAsStringMap.put(disciplineId, xmlString);
-					logger.info("Importing discipline id " + disciplineId + " for " + date);
+					logger.info(date + ": Importing discipline id " + disciplineId);
 				}
 
 				Set<Integer> failedDisciplineIds = new HashSet<Integer>();
@@ -215,11 +220,12 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 
 						if (articlesImported) {
 							articleIds.add(discId);
+							logger.info(date + ": Articles with discipline id " + discId + " is imported to cms");
 						} else {
-							logger.info("No articles found with discipline id " + discId + " at " + date);
+							logger.info(date + ": No articles found with discipline id " + discId);
 						}
 					} catch (Exception e) {
-						logger.error("Failed importing article with discipline id " + discId, e);
+						logger.error(date + ": Failed importing article with discipline id " + discId, e);
 						failedDisciplineIds.add(discId);
 					}
 				}
@@ -230,12 +236,14 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 					} else if (articleIds.contains(archiveKey)) {
 						try {
 							boolean restImported = importRest(xmlResponseAsStringMap.get(archiveKey));
-
-							if(!restImported) {
-								logger.info("No other content found with archive key/discipline id " + archiveKey);
+							
+							if(restImported) {
+								logger.info(date + ": Related content to archive key/discipline id " + archiveKey + " is imported to cms");
+							} else {
+								logger.info(date + ": No other content found with archive key/discipline id " + archiveKey );
 							}
 						} catch (Exception e) {
-							logger.error("Failed importing rest of article with archive key/discipline id " + archiveKey, e);
+							logger.error(date + ": Failed importing rest of article with archive key/discipline id " + archiveKey, e);
 						}
 					}
 				}
@@ -262,28 +270,29 @@ public abstract class GetArticlesGenericByDisciplineTask extends McMasterFeed {
 	}
 
 	private boolean importRest(String xmlContent) {
-		boolean hasContent = Import.hasContent(xmlContent);
+		boolean hasContent = false;
 
-		if (hasContent) {
-			ImportContentsParams params = new ImportContentsParams();
-			params.data = xmlContent;
-			params.publishFrom = this.importDate.getTime();
+		ImportContentsParams params = new ImportContentsParams();
+		params.data = xmlContent;
+		params.publishFrom = this.importDate.getTime();
 
-			if (Import.hasComments(xmlContent)) {
-				params.categoryKey = this.cmsArticleCommentsArchiveKey;
-				params.importName = this.cmsImportArticleCommentsName;
-				this.cmsClient.importContents(params);
-			}
-			if (Import.hasDiscAndRatings(xmlContent)) {
-				params.categoryKey = this.cmsArticleDisciplineAndRatingsKey;
-				params.importName = this.cmsImportArticleDisciplineAndRatingsName;
-				this.cmsClient.importContents(params);
-			}
-			if (Import.hasPatientPopulations(xmlContent)) {
-				params.categoryKey = this.cmsArticlePatientPopulationsArchiveKey;
-				params.importName = this.cmsImportArticlePatientPopulationsName;
-				this.cmsClient.importContents(params);
-			}
+		if (Import.hasComments(xmlContent)) {
+			params.categoryKey = this.cmsArticleCommentsArchiveKey;
+			params.importName = this.cmsImportArticleCommentsName;
+			this.cmsClient.importContents(params);
+			hasContent = true;
+		}
+		if (Import.hasDiscAndRatings(xmlContent)) {
+			params.categoryKey = this.cmsArticleDisciplineAndRatingsKey;
+			params.importName = this.cmsImportArticleDisciplineAndRatingsName;
+			this.cmsClient.importContents(params);
+			hasContent = true;
+		}
+		if (Import.hasPatientPopulations(xmlContent)) {
+			params.categoryKey = this.cmsArticlePatientPopulationsArchiveKey;
+			params.importName = this.cmsImportArticlePatientPopulationsName;
+			this.cmsClient.importContents(params);
+			hasContent = true;
 		}
 		return hasContent;
 	}
