@@ -12,7 +12,7 @@ import org.jdom.output.XMLOutputter;
  *
  */
 public abstract class RssContent {
-	protected static final XMLOutputter XML_OUT = new XMLOutputter();
+	private static final XMLOutputter XML_OUT = new XMLOutputter();
 	protected Element feed;
 	
 	public static enum ImportType {
@@ -36,7 +36,9 @@ public abstract class RssContent {
 	 * 
 	 * @return the rss content as a xml string 
 	 */
-	public abstract String getXml();
+	public String getXml() {
+		return XML_OUT.outputString(feed);
+	}
 	
 	/**
 	 * 

@@ -55,8 +55,10 @@ public class PsykNyttRssContent extends RssContent {
 		Element disclaimer = getDisclaimer(encoded);
 		
 		if (disclaimer == null) {
-			disclaimer = new Element("p");
-			encoded.addContent(disclaimer);
+			disclaimer = new Element("em");
+			Element p = new Element("p");
+			p.addContent(disclaimer);
+			encoded.addContent(p);
 		} else {
 			disclaimer.addContent(0, new Element("br"));
 		}
@@ -100,7 +102,7 @@ public class PsykNyttRssContent extends RssContent {
 		String text = last.getChildText("em");
 		
 		if (text != null && text.startsWith("Disclaimer:")) {
-			return last;
+			return last.getChild("em");
 		}
 		return null;
 	}
@@ -137,10 +139,6 @@ public class PsykNyttRssContent extends RssContent {
 		return this.feed.getChildText("title");
 	}
 	
-	@Override
-	public String getXml() {
-		return XML_OUT.outputString(feed);
-	}
 
 	/**
 	 * 

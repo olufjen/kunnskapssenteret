@@ -83,18 +83,22 @@ public class ImportRssFeed extends TaskPlugin {
 			while (feedIt.hasNext()) {
 				Element feed = feedIt.next();
 				RssContent rssContent = RssContent.getInstance(this.importType, feed);
+				//log.info("BEFORE\n" + rssContent.getXml());
 
 				try {
 					rssContent.customize();
+					//log.info("AFTER\n" + rssContent.getXml());
 					Integer contentKey = importContent(rssContent.getXml());
 					updateContent(contentKey);
 					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td><td>OK</td></tr>");
 				} catch (Exception e) {
 					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td><td>FEILET</td></tr>");
-					log.error("Failed to import content: " + rssContent.getTitle());
+					log.error("Failed to import content: " + rssContent.getTitle(), e);
 				}
 			}
-			sendMail(mailContent.toString());
+			if (this.mailReceivers != null) {
+				sendMail(mailContent.toString());
+			}
 		}
 	}
 
@@ -150,26 +154,26 @@ public class ImportRssFeed extends TaskPlugin {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Send report of the import to receivers set up in the task configuration
 	 * 
-	 * @param mailcontent rss feed report
+	 * @param mailContent rss feed report
 	 */
-	private void sendMail(String mailcontent) {
+	private void sendMail(String mailContent) {
 		Properties props = new Properties();
 		props.setProperty("mail.transport.protocol", "smtp");
 		props.setProperty("mail.host", mailHost);
 
 		Session mailSession = Session.getDefaultInstance(props, null);
-		MimeMessage message = new MimeMessage(mailSession);
 
 		try {
+			MimeMessage message = new MimeMessage(mailSession);
 			message.setSubject("Rss feed: " + this.importType.name());
 
 			message.setFrom(new InternetAddress(mailSender));
-			message.setContent(mailcontent, "text/html; charset=utf-8");
-			
+			message.setContent(mailContent, "text/html; charset=utf-8");
+
 			for (String receiver : mailReceivers) {
 				message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
 			}
@@ -193,29 +197,32 @@ public class ImportRssFeed extends TaskPlugin {
 	private void initProperties(Properties props) {
 
 		if (props != null && props.size() > 0) {
-			//TODO username blir ikke med fra task config
-			//this.username = props.getProperty(TaskPropertyKeys.username.name())
-			this.username = "batchuser";
+			this.username = props.getProperty(TaskPropertyKeys.username.name());
 			this.password = props.getProperty(TaskPropertyKeys.password.name());
 			this.remoteClientUrl = props.getProperty(TaskPropertyKeys.remoteClientUrl.name());
 			this.importType = ImportType.valueOf(props.getProperty(TaskPropertyKeys.importType.name()));
 			this.contentRoot = props.getProperty(TaskPropertyKeys.contentRoot.name());
+
 			try {
 				this.categoryKey = Integer.parseInt(props.getProperty(TaskPropertyKeys.categoryKey.name()));
 			} catch (NumberFormatException e) {
 				log.error("Invalid category key in plugin configuration", e);
 			}
 			String url = props.getProperty(TaskPropertyKeys.feedUrl.name());
+
 			try {
 				this.feedUrl = new URL(url);
 			} catch (MalformedURLException e) {
 				log.error("Invalid feed url in plugin configuration", e);
 			}
 			String receivers = props.getProperty(TaskPropertyKeys.mailReceivers.name());
-			this.mailReceivers = receivers.split(",");
+
+			if (receivers != null) {
+				this.mailReceivers = receivers.split(",");
+			}
 		}
 	}
-	
+
 	public void setMailSender(String mailSender) {
 		this.mailSender = mailSender;
 	}
