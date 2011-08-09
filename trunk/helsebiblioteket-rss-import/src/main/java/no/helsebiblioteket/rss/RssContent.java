@@ -30,7 +30,9 @@ public abstract class RssContent {
 	 * 
 	 * @return the title of the content
 	 */
-	public abstract String getTitle();
+	public String getTitle() {
+		return this.feed.getChildText("title");
+	}
 	
 	/**
 	 * 
