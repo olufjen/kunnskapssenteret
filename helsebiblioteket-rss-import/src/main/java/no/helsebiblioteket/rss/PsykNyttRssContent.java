@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
-import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -21,6 +20,7 @@ import com.enonic.cms.api.client.model.content.RelatedContentsInput;
  */
 public class PsykNyttRssContent extends RssContent {
 	private static final Namespace CONTENT_NAMESPACE = Namespace.getNamespace("content", "http://purl.org/rss/1.0/modules/content/");
+	private static final int AUTHOR = 94482; //Content key for PsykNytt author
 	private List<Element> categories = null;
 
 	public PsykNyttRssContent(Element feed) {
@@ -63,11 +63,12 @@ public class PsykNyttRssContent extends RssContent {
 			disclaimer.addContent(0, new Element("br"));
 		}
 		disclaimer.addContent(0, new Text("."));
-		disclaimer.addContent(0, getPsykNyttAnchor());
+		disclaimer.addContent(0, getAnchor("http://www.psyknytt.no", "PsykNytt"));
 		disclaimer.addContent(0, new Text("Artikkelen har tidligere v\u00e6rt publisert i nyhetsbloggen "));
 		
 		//Add a read more paragraph with links to the relevant categories
 		this.categories = this.feed.getChildren("category");
+		removeFromCategories("Nytt nummer");
 		
 		if (categories != null && !categories.isEmpty()) {
 			Element readMore = getReadMore();
@@ -79,14 +80,28 @@ public class PsykNyttRssContent extends RssContent {
 		this.feed.addContent(encoded);
 	}
 	
+	private void removeFromCategories(String category) {
+		
+		for (Element element : categories) {
+			String text = element.getText();
+			
+			if(text.equals(category)) {
+				categories.remove(element);
+				break;
+			}
+		}
+	}
+
 	/**
 	 * 
-	 * @return an anchor to PsykNytt
+	 * @param url
+	 * @param text
+	 * @return an anchor Element
 	 */
-	private static Element getPsykNyttAnchor() {
+	private static Element getAnchor(String url, String text) {
 		Element a = new Element("a");
-		a.setAttribute("href", "http://www.psyknytt.no");
-		a.addContent(new Text("PsykNytt"));
+		a.setAttribute("href", url);
+		a.addContent(new Text(text));
 		return a;
 	}
 
@@ -102,7 +117,9 @@ public class PsykNyttRssContent extends RssContent {
 		String text = last.getChildText("em");
 		
 		if (text != null && text.startsWith("Disclaimer:")) {
-			return last.getChild("em");
+			Element disclaimer = last.getChild("em");
+			disclaimer.removeChild("strong");
+			return disclaimer;
 		}
 		return null;
 	}
@@ -118,9 +135,7 @@ public class PsykNyttRssContent extends RssContent {
 		for (Element element : categories) {
 			String category = element.getText().toLowerCase();
 			String url = "http://psyknyheter.wordpress.com/category/" + category.replace(" ", "-");
-			Element a = new Element("a");
-			a.setAttribute(new Attribute("href", url));
-			a.setText(category);
+			Element a = getAnchor(url, category);
 			readMore.addContent(a);
 
 			if (categories.indexOf(element) < categories.size()-2) {
@@ -128,25 +143,24 @@ public class PsykNyttRssContent extends RssContent {
 			} else if (categories.indexOf(element) == categories.size()-2) {
 				readMore.addContent(new Text(" og "));
 			} else {
-				readMore.addContent(new Text("."));
+				readMore.addContent(new Text(", eller gå til "));
+				Element news = getAnchor("http://psyknyheter.wordpress.com/category/nytt-nummer/", "siste nummer");
+				readMore.addContent(news);
+				readMore.addContent(new Text(" av PsykNytt."));
 			}
 		}
 		return readMore;
 	}
-
-	@Override
-	public String getTitle() {
-		return this.feed.getChildText("title");
-	}
 	
-
 	/**
 	 * 
 	 * @return the related content - author, which is the same for all PsykNytt articles
 	 */
-	public static RelatedContentsInput getAuthor() {
+	public static RelatedContentsInput getRelatedAuthor() {
 		RelatedContentsInput relatedcontent = new RelatedContentsInput("authors");
-		relatedcontent.addRelatedContent(78044);
+		relatedcontent.addRelatedContent(AUTHOR);
 		return relatedcontent;
 	}
+	
+	
 }

@@ -43,7 +43,6 @@ public class ImportRssFeed extends TaskPlugin {
 	private String password;
 	private String remoteClientUrl;
 	private ImportType importType;
-	private String contentRoot;
 	private int categoryKey;
 	private URL feedUrl;
 	private String[] mailReceivers;
@@ -55,10 +54,22 @@ public class ImportRssFeed extends TaskPlugin {
 		password,
 		remoteClientUrl,
 		importType,
-		contentRoot,
 		categoryKey,
 		feedUrl,
 		mailReceivers
+	}
+
+	private enum Status {
+		OK, FAILED, NONE;
+
+		String write() {
+			switch (this) {
+			case OK: return "<td>OK</td>"; 
+			case FAILED: return "<td>FEILET</td>";
+			case NONE: return "<td>N/A</td>";
+			}
+			return "";
+		}
 	}
 
 	@Override
@@ -76,9 +87,9 @@ public class ImportRssFeed extends TaskPlugin {
 		Document rssFeed = getRssFeed();
 
 		if (rssFeed != null) {
-			StringBuffer mailContent = new StringBuffer("<table border=\"1\"><tr><th>Tittel</th><th>Status</th></tr>");
+			StringBuffer mailContent = new StringBuffer("<table border=\"1\"><tr><th>Tittel</th><th>Status import</th><th>Oppdatering</th></tr>");
 			Element root = rssFeed.getRootElement();
-			Iterator<Element> feedIt = root.getDescendants(new ElementFilter(this.contentRoot));
+			Iterator<Element> feedIt = root.getDescendants(new ElementFilter("item"));
 
 			while (feedIt.hasNext()) {
 				Element feed = feedIt.next();
@@ -89,10 +100,10 @@ public class ImportRssFeed extends TaskPlugin {
 					rssContent.customize();
 					//log.info("AFTER\n" + rssContent.getXml());
 					Integer contentKey = importContent(rssContent.getXml());
-					updateContent(contentKey);
-					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td><td>OK</td></tr>");
+					Status updateStatus = updateContent(contentKey);
+					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td>" + Status.OK.write() + updateStatus.write() + "</tr>");
 				} catch (Exception e) {
-					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td><td>FEILET</td></tr>");
+					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td>" + Status.FAILED.write() + Status.NONE.write() + "</tr>");
 					log.error("Failed to import content: " + rssContent.getTitle(), e);
 				}
 			}
@@ -106,23 +117,31 @@ public class ImportRssFeed extends TaskPlugin {
 	 * Applying changes to the content, that was not part of the import job
 	 * 
 	 * @param key of the content to update
+	 * @return the status of the update
 	 */
-	private void updateContent(Integer key) {
+	private Status updateContent(Integer key) {
 		ContentDataInput contentdata = new ContentDataInput("artikkel"); 
 
 		switch(this.importType) {
 		case PsykNytt: 
-			contentdata.add(PsykNyttRssContent.getAuthor());
+			contentdata.add(PsykNyttRssContent.getRelatedAuthor());
 		}
 
 		if (contentdata.getInputs().size() > 0) {
-			UpdateContentParams params = new UpdateContentParams();
-			params.contentKey = key;
-			params.contentData = contentdata;
-			params.createNewVersion = false;
-			params.updateStrategy = ContentDataInputUpdateStrategy.REPLACE_NEW;
-			this.client.updateContent(params);
+			try {
+				UpdateContentParams params = new UpdateContentParams();
+				params.contentKey = key;
+				params.contentData = contentdata;
+				params.createNewVersion = false;
+				params.updateStrategy = ContentDataInputUpdateStrategy.REPLACE_NEW;
+				this.client.updateContent(params);
+			} catch (ClientException e) {
+				log.error("Failed to update content with key " + key);
+				return Status.FAILED;
+			}
+			return Status.OK;
 		}
+		return Status.NONE;
 	}
 
 	/**
@@ -131,7 +150,8 @@ public class ImportRssFeed extends TaskPlugin {
 	 * @return the key of the Enonic CMS content
 	 * @throws ClientException
 	 */
-	private Integer importContent(String xml) throws ClientException {
+	private Integer importContent(String xml) {
+		log.info("User is: " + this.client.getUserName() + "/" + this.client.getRunAsUserName());
 		ImportContentsParams params = new ImportContentsParams();
 		params.importName = this.importType.name();
 		params.categoryKey = this.categoryKey;
@@ -191,6 +211,11 @@ public class ImportRssFeed extends TaskPlugin {
 			log.info("Logging in using remote client.");
 			this.client = ClientFactory.getRemoteClient(this.remoteClientUrl, false);
 			this.client.login(this.username, this.password);
+			log.info("Logging in with " + this.username + "/" + this.password);
+			log.info("User is: " + this.client.getUserName() + "/" + this.client.getRunAsUserName());
+		}
+		else {
+			log.info("User is logged in as " + this.client.getUserName() + "/" + this.client.getRunAsUserName());
 		}
 	}
 
@@ -201,7 +226,6 @@ public class ImportRssFeed extends TaskPlugin {
 			this.password = props.getProperty(TaskPropertyKeys.password.name());
 			this.remoteClientUrl = props.getProperty(TaskPropertyKeys.remoteClientUrl.name());
 			this.importType = ImportType.valueOf(props.getProperty(TaskPropertyKeys.importType.name()));
-			this.contentRoot = props.getProperty(TaskPropertyKeys.contentRoot.name());
 
 			try {
 				this.categoryKey = Integer.parseInt(props.getProperty(TaskPropertyKeys.categoryKey.name()));
