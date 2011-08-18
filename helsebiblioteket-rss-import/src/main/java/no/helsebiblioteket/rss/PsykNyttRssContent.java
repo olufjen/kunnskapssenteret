@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
+import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.Text;
 import org.jdom.input.SAXBuilder;
+import org.jdom.xpath.XPath;
 
 import com.enonic.cms.api.client.model.content.RelatedContentsInput;
 
@@ -74,8 +76,16 @@ public class PsykNyttRssContent extends RssContent {
 			Element readMore = getReadMore();
 			encoded.addContent(readMore);
 		}
-		//Remove all anchors that are not inside paragraphs (nofollow)
+		//Remove all anchors (nofollow), breaks and images that are not inside paragraphs
 		encoded.removeChildren("a");
+		encoded.removeChildren("br");
+		encoded.removeChildren("img");
+		
+		//Remove sharedaddy div
+		XPath xpath = XPath.newInstance("//div[@class = 'sharedaddy']");
+		Element sharedaddy = (Element) xpath.selectSingleNode(encoded);
+		encoded.removeContent(sharedaddy);
+		
 		encoded.detach();
 		this.feed.addContent(encoded);
 	}
