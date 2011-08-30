@@ -41,7 +41,6 @@ public class ImportRssFeed extends TaskPlugin {
 	private Client client;
 	private String username;
 	private String password;
-	private String remoteClientUrl;
 	private ImportType importType;
 	private int categoryKey;
 	private URL feedUrl;
@@ -52,7 +51,6 @@ public class ImportRssFeed extends TaskPlugin {
 	private enum TaskPropertyKeys {
 		username,
 		password,
-		remoteClientUrl,
 		importType,
 		categoryKey,
 		feedUrl,
@@ -207,16 +205,10 @@ public class ImportRssFeed extends TaskPlugin {
 	}
 
 	private void initClient() {
-		if (this.client == null) {
-			log.info("Logging in using remote client.");
-			this.client = ClientFactory.getRemoteClient(this.remoteClientUrl, false);
-			this.client.login(this.username, this.password);
-			log.info("Logging in with " + this.username + "/" + this.password);
-			log.info("User is: " + this.client.getUserName() + "/" + this.client.getRunAsUserName());
-		}
-		else {
-			log.info("User is logged in as " + this.client.getUserName() + "/" + this.client.getRunAsUserName());
-		}
+		log.info("Logging in using local client.");
+		this.client = ClientFactory.getLocalClient();
+		this.client.login(this.username, this.password);
+		log.info("User is logged in as " + this.client.getUserName() + "/" + this.client.getRunAsUserName());
 	}
 
 	private void initProperties(Properties props) {
@@ -224,7 +216,6 @@ public class ImportRssFeed extends TaskPlugin {
 		if (props != null && props.size() > 0) {
 			this.username = props.getProperty(TaskPropertyKeys.username.name());
 			this.password = props.getProperty(TaskPropertyKeys.password.name());
-			this.remoteClientUrl = props.getProperty(TaskPropertyKeys.remoteClientUrl.name());
 			this.importType = ImportType.valueOf(props.getProperty(TaskPropertyKeys.importType.name()));
 
 			try {
