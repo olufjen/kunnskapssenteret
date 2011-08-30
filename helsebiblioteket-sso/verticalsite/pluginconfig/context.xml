@@ -208,6 +208,16 @@
  		<property name="geoIpService" ref="geoIpServiceSso" />
  		<property name="noAccessTextName" value="noaccess" />
 	</bean>
+	
+	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+		<property name="name" value="mcMasterArticles" />
+		<property name="target" ref="getMcMasterArticles" />
+	</bean>
+
+	<bean name="getMcMasterArticles" class="no.helsebiblioteket.evs.plugin.GetMcMasterArticles">
+		<property name="geoIpService" ref="geoIpServiceSso" />
+		<property name="noAccessTextName" value="noaccess" />
+	</bean>
     
     <bean class="no.helsebiblioteket.evs.plugin.LogInController">
  		<property name="urlPattern" value="/site/2/LoggInnServlet" />
