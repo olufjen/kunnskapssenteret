@@ -32,7 +32,7 @@ public class LoggedInFunction{
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	private UserService userService;
 	private final Log logger = LogFactory.getLog(getClass());
-	
+
 	public Document getUserAsXML() throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		return XMLTranslator.translate(printLoggedIn());
 	}
@@ -65,54 +65,56 @@ public class LoggedInFunction{
 		UserToXMLTranslator userTranslator = new UserToXMLTranslator();
 		org.w3c.dom.Document result = userTranslator.newDocument();
 		Element loggedinElement = result.createElement("loggedin");
-    	if(organization != null){
-    		LoggedInOrganizationToXMLTranslator translator = new LoggedInOrganizationToXMLTranslator();
-    		translator.translate(organization, result, loggedinElement);
+		if(organization != null){
+			LoggedInOrganizationToXMLTranslator translator = new LoggedInOrganizationToXMLTranslator();
+			translator.translate(organization, result, loggedinElement);
 		} else {
-    		loggedinElement.appendChild(result.createElement("noorganization"));
+			loggedinElement.appendChild(result.createElement("noorganization"));
 		}
-    	if(user != null){
+		if(user != null){
 			LoggedInUserToXMLTranslator organizationUserTranslator = new LoggedInUserToXMLTranslator();
 			organizationUserTranslator.translate(user, result, loggedinElement);
 		} else {
-    		loggedinElement.appendChild(result.createElement("nouser"));
+			loggedinElement.appendChild(result.createElement("nouser"));
 		}
-    	if(organization == null && user == null){
-    		loggedinElement.appendChild(result.createElement("none"));
-    	}
+		if(organization == null && user == null){
+			loggedinElement.appendChild(result.createElement("none"));
+		}
 		result.appendChild(loggedinElement);
 		return result;
 	}
-	
+
 	private LoggedInUser loggedInUser() {
-		
+
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
 		LoggedInUser loggedInUser = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
-		// jan 2011: extra logging to nail enonic session trouble:
-		{
-			HttpServletRequest request = PluginEnvironment.getInstance().getCurrentRequest();
-			LoggedInOrganization loggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
-
-                        String user, organization, sessionid, createdat, remoteaddr;
-                        user = (loggedInUser != null ? loggedInUser.getUsername() : "null");
-                        organization = (loggedInOrganization != null ? loggedInOrganization.getNameNorwegianNormal() : "null");
-                        sessionid = (session != null ? session.getId() : "null");
-                        createdat = (session != null ? Long.toString(session.getCreationTime()) : "null");
-                        remoteaddr = (request != null ? request.getRemoteAddr() : "null");
-
-			logger.info("Logged in user: " + user + " org: " + organization
-				+ " session id: " + sessionid + " created at: " +  createdat
-				+ " remote addr: " + remoteaddr + " header: " + RequestPrinter.getRequestHeaders(request));
-		} 
+		//sessionLogging(session, loggedInUser); 
 		return loggedInUser;
 	}
-	
+
 	private LoggedInOrganization loggedInOrganization(){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
 		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
-		
+
 	}
 	
+	private void sessionLogging(HttpSession session, LoggedInUser loggedInUser) {
+		// jan 2011: extra logging to nail enonic session trouble:
+		HttpServletRequest request = PluginEnvironment.getInstance().getCurrentRequest();
+		LoggedInOrganization loggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+
+		String user, organization, sessionid, createdat, remoteaddr;
+		user = (loggedInUser != null ? loggedInUser.getUsername() : "null");
+		organization = (loggedInOrganization != null ? loggedInOrganization.getNameNorwegianNormal() : "null");
+		sessionid = (session != null ? session.getId() : "null");
+		createdat = (session != null ? Long.toString(session.getCreationTime()) : "null");
+		remoteaddr = (request != null ? request.getRemoteAddr() : "null");
+
+		logger.info("Logged in user: " + user + " org: " + organization
+				+ " session id: " + sessionid + " created at: " +  createdat
+				+ " remote addr: " + remoteaddr + " header: " + RequestPrinter.getRequestHeaders(request));
+	}
+
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}

@@ -53,57 +53,8 @@ public final class LogInController extends HttpControllerPlugin {
        		} else {
 	       		// Found user!
        			HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-       			// jms, 13.01.2011: sanity check to handle login/session mixup problem.
-       			// if a user already exist in session we probably are messing with someone 
-       			// elses session ...
-   				logger.info("Start login authenticated user with username " + username + " into session id " + session.getId() + " created at " + session.getCreationTime());
-   				
-   				HttpSession requestSession = request.getSession();
-   				if(requestSession == null){
-   	   				logger.info("requestSession is NULL for user " + username + 
-   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
-   				} else if(requestSession.getId() == null ){
-   	   				logger.info("requestSession has ID NULL for user " + username + 
-   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
-   					
-   				} else if( ! requestSession.getId().equals(session.getId())){
-   	   				logger.info("requestSession is HAS DIFFERENT ID for user " + username + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
-   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
-   				} else if(requestSession != session){
-   	   				logger.info("requestSession HAS SAME ID AS requestSession for user " + username + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
-   	   						" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
-   				} else {
-   	   				logger.info("requestSession IS IDENTICAL WITH requestSession for user " + username + " where session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime());
-   				}
-   				
-   				long time = System.currentTimeMillis();
-   				LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
-   				Long lastTime = (Long) session.getAttribute("hb_trace_loggedinusertime");
-   				if (alreadyLoggedInUser != null) {
-       				if(lastTime != null){
-       					if(lastTime.longValue() >= time - 1000){
-           					logger.info("Logging user into very recent session. Name: " + username +
-           							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
-           							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
-           							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
-           				} else {
-           					logger.info("Logging user into older session. Name: " + username +
-           							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
-           							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
-           							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
-           				}
-       				} else {
-        				// Never happens?
-       					logger.info("Logging user into session with NULL time. Name: " + username +
-       							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
-       							". Last time is NULL " +
-       							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
-       				}
-   				} else {
-   					logger.info("Logging user into empty session. Name: " + username + ".");
-   				}
+       			//sessionLogging(request, username, session);
        			session.setAttribute(this.sessionLoggedInUserVarName, resultUser.getUser());
-       			session.setAttribute("hb_trace_loggedinusertime", new Long(time));
 
        			element.appendChild(result.createElement("success"));
 	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
@@ -123,6 +74,7 @@ public final class LogInController extends HttpControllerPlugin {
 			logger.warn("tried to log in user, but do not know where to redirect");
 		}
 	}
+	
 	private void makeXML(String username, String password, Document document, Element element) {
 		boolean lookup = true;
 		
@@ -148,6 +100,61 @@ public final class LogInController extends HttpControllerPlugin {
 		}
 		element.appendChild(summary);
 	}
+	
+	private void sessionLogging(HttpServletRequest request, String username,
+			HttpSession session) {
+		// jms, 13.01.2011: sanity check to handle login/session mixup problem.
+		// if a user already exist in session we probably are messing with someone 
+		// elses session ...
+		logger.info("Start login authenticated user with username " + username + " into session id " + session.getId() + " created at " + session.getCreationTime());
+		
+		HttpSession requestSession = request.getSession();
+		if(requestSession == null){
+			logger.info("requestSession is NULL for user " + username + 
+					" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+		} else if(requestSession.getId() == null ){
+			logger.info("requestSession has ID NULL for user " + username + 
+					" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+			
+		} else if( ! requestSession.getId().equals(session.getId())){
+			logger.info("requestSession is HAS DIFFERENT ID for user " + username + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
+					" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+		} else if(requestSession != session){
+			logger.info("requestSession HAS SAME ID AS requestSession for user " + username + " and has session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime() +
+					" while pluginSession has id " + session.getId() + " and is created at " + session.getCreationTime());
+		} else {
+			logger.info("requestSession IS IDENTICAL WITH requestSession for user " + username + " where session id " + requestSession.getId() + " and is created at " + requestSession.getCreationTime());
+		}
+		
+		long time = System.currentTimeMillis();
+		LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
+		Long lastTime = (Long) session.getAttribute("hb_trace_loggedinusertime");
+		if (alreadyLoggedInUser != null) {
+			if(lastTime != null){
+				if(lastTime.longValue() >= time - 1000){
+					logger.info("Logging user into very recent session. Name: " + username +
+							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
+							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
+							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
+				} else {
+					logger.info("Logging user into older session. Name: " + username +
+							". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
+							". Last time: " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(lastTime)) +
+							" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
+				}
+			} else {
+				// Never happens?
+				logger.info("Logging user into session with NULL time. Name: " + username +
+						". Session currently occupied by " + alreadyLoggedInUser.getUsername() +
+						". Last time is NULL " +
+						" and now " + new SimpleDateFormat("HH:mm:ss:SSS").format(new Date(time)));
+			}
+		} else {
+			logger.info("Logging user into empty session. Name: " + username + ".");
+		}
+		session.setAttribute("hb_trace_loggedinusertime", new Long(time));
+	}
+	
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
