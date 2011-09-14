@@ -113,8 +113,21 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
         }
         return (ret != null ? ret : request.getRemoteAddr());
     }
+	
 	public void logInOrganization(LoggedInOrganization organization, LoggedInOrganization alreadyLoggedInOrganization, HttpServletRequest request){
 		HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
+		//sessionLogging(organization, alreadyLoggedInOrganization, request, session);
+		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
+	}
+	
+	private LoggedInOrganization loggedInOrganization(){
+		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
+		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
+	}
+	
+	private void sessionLogging(LoggedInOrganization organization,
+			LoggedInOrganization alreadyLoggedInOrganization,
+			HttpServletRequest request, HttpSession session) {
 		// jan 2011: extra logging to nail enonic session trouble
 		logger.info("Start login authenticated organization with  " + organization.getNameNorwegianNormal() + " into session id " + session.getId() + " created at " + session.getCreationTime());
 		
@@ -162,13 +175,9 @@ public final class LogInInterceptor extends HttpInterceptorPlugin {
 		} else {
 			logger.info("Logging organization into empty session. Name: " + organization.getNameNorwegianNormal() + " ");
 		}
-		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
 		session.setAttribute("hb_trace_loggedinorgtime", new Long(time));
 	}
-	private LoggedInOrganization loggedInOrganization(){
-		HttpSession session = PluginEnvironment.getInstance().getCurrentSession(); 
-		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
-	}
+	
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
