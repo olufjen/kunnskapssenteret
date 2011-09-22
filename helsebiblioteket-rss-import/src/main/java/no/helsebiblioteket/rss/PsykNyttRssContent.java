@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -23,9 +21,8 @@ import com.enonic.cms.api.client.model.content.RelatedContentsInput;
  */
 public class PsykNyttRssContent extends RssContent {
 	private static final Namespace CONTENT_NAMESPACE = Namespace.getNamespace("content", "http://purl.org/rss/1.0/modules/content/");
-	private static final int AUTHOR = 78044; //Content key for PsykNytt author
+	private static final int AUTHOR = 94482; //78044//Content key for PsykNytt author
 	private List<Element> categories = null;
-	private Log log = LogFactory.getLog(PsykNyttRssContent.class);
 
 	public PsykNyttRssContent(Element feed) {
 		this.feed = (Element) feed.clone();
@@ -45,20 +42,15 @@ public class PsykNyttRssContent extends RssContent {
 		//Setting classes on image for correct placement in article
 		XPath getImageDiv = XPath.newInstance("//div[@class = 'wp-caption alignleft']");
 		Element imageDiv = (Element)getImageDiv.selectSingleNode(encoded);
-//		Element imageDiv = encoded.getChild("div");
 		imageDiv.getAttribute("class").setValue("articleimage");
 		imageDiv.getChild("p").getAttribute("class").setValue("imagetxt");
 
 		//Move the full description from the encoded element to the description element
-		XPath getDescription = XPath.newInstance("//p/strong");
-		Element description = (Element)getDescription.selectSingleNode(encoded);
-//		String description = encoded.getChild("p").getChildText("strong");
+		String description = encoded.getChild("p").getChildText("strong");
 
 		if (description != null) {
-			encoded.removeContent(description);
-			this.feed.getChild("description").setText(description.getValue());
-		} else {
-			log.info("Fant ikke ingress for " + getTitle());
+			encoded.removeChild("p");
+			this.feed.getChild("description").setText(description);
 		}
 		
 		//Add more info to the disclaimer, or add new disclaimer if one does not exist
@@ -161,7 +153,7 @@ public class PsykNyttRssContent extends RssContent {
 			} else if (categories.indexOf(element) == categories.size()-2) {
 				readMore.addContent(new Text(" og "));
 			} else {
-				readMore.addContent(new Text(", eller gå til "));
+				readMore.addContent(new Text(", eller g\u00e5 til "));
 				Element news = getAnchor("http://psyknyheter.wordpress.com/category/nytt-nummer/", "siste nummer");
 				readMore.addContent(news);
 				readMore.addContent(new Text(" av PsykNytt."));
