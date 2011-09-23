@@ -99,7 +99,7 @@ public class ImportRssFeed extends TaskPlugin {
 					//log.info("AFTER\n" + rssContent.getXml());
 					Integer contentKey = importContent(rssContent.getXml());
 					Status updateStatus = updateContent(contentKey);
-					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td>" + Status.OK.write() + updateStatus.write() + "</tr>");
+					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td>" + Status.OK.write() + updateStatus.write() + "</tr><tr><td>Tester om dette kommer med.</td></tr>");
 				} catch (Exception e) {
 					mailContent.append("<tr><td>" + rssContent.getTitle() + "</td>" + Status.FAILED.write() + Status.NONE.write() + "</tr>");
 					log.error("Failed to import content: " + rssContent.getTitle(), e);
