@@ -19,4 +19,9 @@
 		<property name="urlPattern" value="/site/[0-9]/.*_attachment/\d+.*"/>
 	</bean>
 	
+	<bean class="no.helsebiblioteket.cms.request.JournalRelatedTitles">
+		<property name="displayName" value="Setting former and latter titles in current journal"/>
+		<property name="urlPattern" value="/admin/adminpage"/>
+	</bean>
+	
 </beans>
