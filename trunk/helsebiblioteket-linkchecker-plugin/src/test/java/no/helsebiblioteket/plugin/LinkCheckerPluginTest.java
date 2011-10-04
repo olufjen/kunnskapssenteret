@@ -12,12 +12,6 @@ import com.enonic.cms.api.client.ClientFactory;
 public class LinkCheckerPluginTest
 {
 
-    //@Test
-    public void readingConfigFile()
-    {
-        new LinkCheckerPlugin().readConfigFile();
-    }
-
     @Test
     public void dummy() {
         

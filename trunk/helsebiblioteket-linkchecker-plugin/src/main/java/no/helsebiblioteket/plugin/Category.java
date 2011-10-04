@@ -6,49 +6,35 @@ import java.util.ArrayList;
  * Simple class for holding information about the Categories its fields
  */
 public class Category {
-    private int categoryKey;
-    private ArrayList<String> isHtmlArea;
-    private ArrayList<String> fields;
+    private int key;
+    private ArrayList<String> fields = new ArrayList<String>();
+    private ArrayList<Boolean> isHtmlArea = new ArrayList<Boolean>();
 
-    public Category(int categoryKey){
-        this.categoryKey = categoryKey;
-        this.fields = new ArrayList<String>();
-        this.isHtmlArea = new ArrayList<String>();
-     }
+    public Category(){}
 
-    public Category(int categoryKey, ArrayList<String> fieldArray){
-        this.categoryKey = categoryKey;
-        this.fields = new ArrayList<String>();
-        for(String s : fieldArray){
-            this.fields.add(s);
-        }
-        this.isHtmlArea = new ArrayList<String>();
-    }
-    public Category(int categoryKey, ArrayList<String> fieldArray, ArrayList<String> isHTMLArray){
-        this.categoryKey = categoryKey;
-        this.fields = fieldArray;
-        this.isHtmlArea = isHTMLArray;
+    public Category(int key, ArrayList<String> fields, ArrayList<Boolean> isHtmlArea){
+        this.key = key;
+        this.fields = fields;
+        this.isHtmlArea = isHtmlArea;
     }
 
-    public int getCategoryKey(){
-        return this.categoryKey;
+    public int getKey(){
+        return this.key;
     }
-
-    public void setCategoryKey(int categoryKey) {
-        this.categoryKey = categoryKey;
+    public void setKey(int key) {
+        this.key = key;
     }
-
-    public ArrayList<String> getFieldList(){
+    public ArrayList<String> getFields(){
         return this.fields;
     }
-
+    public ArrayList<Boolean> getIsHtmlArea(){
+        return this.isHtmlArea;
+    }
+    
     public void setFieldValue(String fieldName){
         this.fields.add(fieldName);
     }
-    public void setIsHtmlArea(String trueFalse){
-        this.isHtmlArea.add(trueFalse);
-    }
-    public ArrayList<String> getIsHtmlArea(){
-        return this.isHtmlArea;
+    public void setIsHtmlAreaValue(boolean htmlArea){
+        this.isHtmlArea.add(htmlArea);
     }
 }
