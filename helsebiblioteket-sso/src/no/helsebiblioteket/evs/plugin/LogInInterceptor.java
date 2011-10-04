@@ -28,7 +28,7 @@ import org.apache.commons.logging.LogFactory;
 
 public final class LogInInterceptor extends HttpInterceptorPlugin {
 	private static final Log logger = LogFactory.getLog(LogInInterceptor.class);
-	private static final String XForwardedForHeaderName = "X-Forwarded-For";
+	public static final String XForwardedForHeaderName = "X-Forwarded-For";
 	private LoginService loginService;
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
 	public LogInInterceptor(){

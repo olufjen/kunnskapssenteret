@@ -114,7 +114,7 @@ public class URLServiceImpl implements URLService {
 	// TODO: Fase2 is the only actual safe solution to always proxify?
 	private SingleResultUrl translateUrlUserOrganizationInternal(UserListItem userListItem, OrganizationListItem organizationListItem, Url url, boolean national) {
 		Url newUrl = new Url();
-		url.setStringValue(url.getStringValue().replace("&amp;", "&"));
+		//url.setStringValue(url.getStringValue().replace("&amp;", "&"));
 		newUrl.setStringValue(this.proxyPrefix + url.getStringValue());
 		newUrl.setDomain(url.getDomain());
 		return new ValueResultUrl(newUrl);

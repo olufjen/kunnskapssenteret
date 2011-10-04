@@ -5,7 +5,7 @@ public class ConfigGroup implements Comparable<ConfigGroup>{
 	private String title;
 	private String url;
 	private String[] hosts = new String[0];
-	private String domain;
+	private String[] domains;
 	private boolean excludeDomain;
 	private String[] domainJavaScript = new String[0];
 	private String[] hostJavaScript = new String[0];
@@ -42,11 +42,11 @@ public class ConfigGroup implements Comparable<ConfigGroup>{
 	public void setHosts(String[] hosts) {
 		this.hosts = hosts;
 	}
-	public String getDomain() {
-		return domain;
+	public String[] getDomains() {
+		return domains;
 	}
-	public void setDomain(String domain) {
-		this.domain = domain;
+	public void setDomains(String[] domains) {
+		this.domains = domains;
 	}
 	public boolean isExcludeDomain() {
 		return excludeDomain;
