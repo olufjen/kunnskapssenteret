@@ -14,7 +14,9 @@
 	<property name="helsebiblioteket-services-impl-target.dir" value="${helsebiblioteket-services-impl.dir}/target"/>
 	<property name="helsebiblioteket-importexport-target.dir" value="${helsebiblioteket-importexport.dir}/target"/>
 	<property name="helsebiblioteket-sqlmapdao-target.dir" value="${helsebiblioteket-sqlmapdao.dir}/target"/>
-
+	<property name="helsebiblioteket-sso-target.dir" value="${helsebiblioteket-sso.dir}/target"/>
+	<property name="helsebiblioteket-services-geoip-target.dir" value="${helsebiblioteket-services-geoip.dir}/target"/>
+	
     <path id="master-classpath">
         <fileset dir="${project.lib.dir}">
             <include name="*.jar"/>
@@ -38,6 +40,12 @@
 	        <include name="*.jar"/>
     	</fileset>
     	<fileset dir="${helsebiblioteket-administration-web-home.dir}/lib">
+	        <include name="*.jar"/>
+    	</fileset>
+    	<fileset dir="${helsebiblioteket-sso-target.dir}">
+	        <include name="*.jar"/>
+    	</fileset>
+    	<fileset dir="${helsebiblioteket-services-geoip-target.dir}">
 	        <include name="*.jar"/>
     	</fileset>
     	<fileset dir="${project.target.dir}">
@@ -99,7 +107,8 @@
         	<formatter type="brief" usefile="false"/>
             <batchtest>
                 <fileset dir="${project.classes.dir}">
-                    <include name="**/*Tests.*"/>
+                    <include name="**/LinkFilterTest.*"/>
+                	<!-- TODO: add more tests here explicitly -->
                 </fileset>
             </batchtest>
             

@@ -1026,7 +1026,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			
 			// Lookup supplier
 			String domain = parameter.getToDomain();
-			Integer supplierOrgId = supplierOrgsFromDomain.get(domain);
+			Integer supplierOrgId = supplierIdFromDomain(supplierOrgsFromDomain, domain);// supplierOrgsFromDomain.get(domain);
 			if(supplierOrgId == null){
 				this.logger.warn("Missing supplier for domain " + domain);
 			}
@@ -1073,13 +1073,35 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		for (String key : hits.keySet()) {
-			System.out.println(hits.get(key));
+			//System.out.println(hits.get(key));
 			this.proxyExportDao.insertHitsList(hits.get(key));
 		}
 		
 		return Boolean.TRUE;
 	}
-
+	
+	/*
+	 * Find best match for supplier given a domain
+	 */
+	private Integer supplierIdFromDomain(Map<String, Integer> supplierOrgsDomains, String domain) {
+		Integer supplierId = null;
+		if (null != (supplierId = supplierOrgsDomains.get(domain))) {
+			return supplierId;
+		} else {
+			String lookupDomainKey = domain;
+			int failsafe = 0;
+			// try lookup as long as there is one or more periods in domain key and as long as there are not too many periods in the key
+			while ((lookupDomainKey.indexOf('.') != -1) && (lookupDomainKey.indexOf('.') < lookupDomainKey.lastIndexOf('.')) && (failsafe++ <= 10)) {
+				lookupDomainKey = lookupDomainKey.substring(lookupDomainKey.indexOf('.')+1, lookupDomainKey.length());
+				if (null != (supplierId = supplierOrgsDomains.get(lookupDomainKey))) {
+					logger.debug("found supplier id by 'like search'. supplierid/domain: " + supplierId + "/" + lookupDomainKey);
+					return supplierId;
+				}
+			}
+		}
+		// no match, nothing to return but null
+		return null;
+	}
 	
 	public void setOrganizationDao(OrganizationDao organizationDao) {
 		this.organizationDao = organizationDao;

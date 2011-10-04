@@ -15,5 +15,9 @@
 	<classpathentry kind="lib" path="/helsebiblioteket-administration-web/lib/spring-security-core-2.0.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/postgresql-8.2-508.jdbc3.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-sso"/>
+	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/cms-api.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/helsebiblioteket-services-geoip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

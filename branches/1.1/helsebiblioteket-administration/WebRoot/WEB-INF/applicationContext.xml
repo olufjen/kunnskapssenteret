@@ -365,11 +365,20 @@ xmlns="http://www.springframework.org/schema/beans"
           <constructor-arg ref="userService" />
      </bean>
 
-	<bean id="importProxyDataTask" class="no.helsebiblioteket.admin.task.ImportProxyDataTask">
+	<bean id="importProxyDataDailyTask" class="no.helsebiblioteket.admin.task.ImportProxyDataDailyTask">
 		<property name="organizationService" ref="organizationService" />
-		<property name="readLogFileName" value="${proxy.readlogfilename}" />
+		<property name="readLogFileNamePrefix" value="${proxy.readlogfilenameprefix}" />
 		<property name="proxyDomainName" value="${proxy.proxydomainname}" />
 	</bean>
+	
+	<bean id="importProxyDataHistoryTask" class="no.helsebiblioteket.admin.task.ImportProxyDataHistoryTask">
+		<property name="organizationService" ref="organizationService" />
+		<property name="proxyDomainName" value="${proxy.proxydomainname}" />
+		<property name="historyLogFileURIs" value="${proxy.history.logfileuris}" />
+		<property name="startDateAsString" value="${proxy.history.startdate}" />
+		<property name="endDateAsString" value="${proxy.history.enddate}" />
+	</bean>
+	
 	<bean id="exportProxySetupTask" class="no.helsebiblioteket.admin.task.ExportProxySetupTask">
 		<property name="accessService" ref="accessService" />
 		<property name="comment" value="${proxy.comment}"></property>
@@ -390,18 +399,27 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="waitRestart" value="${proxy.waitrestart}"></property>
 		<property name="restartCommand" value="${proxy.restartcommand}"></property>
 	</bean>
-	<bean id="importProxyDataTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="importProxyDataTask" />
+	<bean id="importProxyDataDailyTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="importProxyDataDailyTask" />
+		<property name="targetMethod" value="importProxyData" />
+	</bean>
+	<bean id="importProxyDataHistoryTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="importProxyDataHistoryTask" />
 		<property name="targetMethod" value="importProxyData" />
 	</bean>
 	<bean id="exportProxySetupTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="exportProxySetupTask" />
 		<property name="targetMethod" value="exportSetup" />
 	</bean>
-	<bean id="importProxyDataTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail" ref="importProxyDataTaskJob" />
+	<bean id="importProxyDataDailyTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="importProxyDataDailyTaskJob" />
 		<!-- run every morning at 6 AM -->
-		<property name="cronExpression" value="${proxy.importcronexpression}" />
+		<property name="cronExpression" value="${proxy.importdailycronexpression}" />
+	</bean>
+	<bean id="importProxyDataHistoryTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="importProxyDataHistoryTaskJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="${proxy.importhistorycronexpression}" />
 	</bean>
 	<bean id="exportProxySetupTaskJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="exportProxySetupTaskJob" />
@@ -411,7 +429,8 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="importProxyDataTaskJobCronTrigger" />
+				<ref bean="importProxyDataDailyTaskJobCronTrigger" />
+				<ref bean="importProxyDataHistoryTaskJobCronTrigger" />
 				<ref bean="exportProxySetupTaskJobCronTrigger" />
 			</list>
 		</property>

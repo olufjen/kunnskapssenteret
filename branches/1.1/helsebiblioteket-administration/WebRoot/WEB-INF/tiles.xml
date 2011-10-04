@@ -148,14 +148,14 @@
 		<put name="main" value="/jsp/main/user-edit.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
-   	<definition name="edit-enduser.tiles" extends="standardFrame">
+   	<!-- <definition name="edit-enduser.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/edit-enduser.jsp" type="page" />
 		<put name="user" value="/jsp/main/enduser.jsp" type="page" />
    	</definition>
    	<definition name="edit-administrator.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/edit-administrator.jsp" type="page" />
 		<put name="user" value="/jsp/main/administrator.jsp" type="page" />
-   	</definition>
+   	</definition> -->
    	<definition name="user-new.tiles" extends="standardFrame">
 		<put name="main" value="/jsp/main/user-new.jsp" type="page" />
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />

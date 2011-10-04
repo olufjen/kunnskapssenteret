@@ -43,69 +43,84 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private URLService urlService;
 	private final static String invalidHrefRegExp = "javascript:.*|mailto:.*";
 	private final static String linkRegExp = "<a href=(['\"])(.*?)\\1";
+	private final static String completeLinkRegExp = "<a\\b[^>]*href=\"[^>]*>(.*?)</a>";
 	private final static Pattern linkPattern;
+	private final static Pattern completeLinkPattern;
 	private GeoIpService geoIpService;
 	private String countryCodes;
 
 	static {
 		// precompile patterns
 		linkPattern = Pattern.compile(linkRegExp);
+		completeLinkPattern = Pattern.compile(completeLinkRegExp);
 	}
     
     public String filterResponse(HttpServletRequest request, String response, String contentType) throws Exception {
     	// Do not use springinjected properties like loggedinfunction.
     	// See comments above
-    	
     	if (urlService == null) {
 			logger.error("urlService is null in beginning of method 'filterResponse'!");
 		}
-    	
     	HttpSession session = PluginEnvironment.getInstance().getCurrentSession();
-		
+    	return generateProxyLinks(request, session, response, contentType);
+    }
+    
+    public String generateProxyLinks(HttpServletRequest request, HttpSession session, String response, String contentType) throws Exception {
+    	//long timeStart = System.currentTimeMillis();
     	LoggedInUser user = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
 		LoggedInOrganization memberOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
-		
-		//long timeStart = System.currentTimeMillis();
-		
 		Map<String, String> linkReplaceMap = new HashMap<String, String>();
-		Matcher m = linkPattern.matcher(response);
+		Matcher linkMatcher = null;
+		Matcher completeLinkMatcher = completeLinkPattern.matcher(response);
 		boolean linkFilterOverride = false;
-		
-    	while (m.find()) {
-    		String oldLink = m.group(2);
-    		linkFilterOverride = oldLink.contains(LinkFilter.linkFilterOverrideUrlParam);
-			String oldLinkDeampified = oldLink.replace("&amp;", "&");
-			if (validHref(oldLink)) {
-				oldLinkDeampified = !linkFilterOverride ? deproxify(oldLinkDeampified) : oldLinkDeampified;
-				URL url = generateURL(oldLinkDeampified);
-				if(url != null) {
-		    		if (!linkFilterOverride && this.isAffected(url)) {
-		    			try {
-		    				boolean national = this.geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), this.countryCodes);
-		    				url = this.translate(user, memberOrganization, url, national);
-		    			} catch (MalformedURLException e) {
-		    				url = null;
-						}
-		    		}
-		    		if(url != null){
-			    		String newLink = url.toExternalForm();
-			    		if (!oldLinkDeampified.equals(newLink)) {
-			    			// using map to avoid duplicate replacements
-			    			// also only adding links that are actually changed to the map.
-			    			linkReplaceMap.put(oldLink, newLink);
+		String originalCompleteHref = null;
+		String newCompleteHref = null;
+		String oldLink = null;
+		URL url = null;
+    	while (completeLinkMatcher.find()) {
+    		originalCompleteHref = completeLinkMatcher.group(0);
+    		linkMatcher = linkPattern.matcher(originalCompleteHref);
+    		if (linkMatcher.find()) {
+	    		oldLink = linkMatcher.group(2);
+	    		linkFilterOverride = oldLink.contains(LinkFilter.linkFilterOverrideUrlParam);
+				//String oldLinkDeampified = oldLink.replace("&amp;", "&");
+				if (!linkFilterOverride && validHref(oldLink)) {
+					oldLink = deproxify(oldLink);
+					url = generateURL(oldLink);
+					if(url != null) {
+			    		if (!linkFilterOverride && this.isAffected(url)) {
+			    			try {
+			    				boolean national = this.geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), this.countryCodes);
+			    				url = this.translate(user, memberOrganization, url, national);
+			    			} catch (MalformedURLException e) {
+			    				url = null;
+							}
 			    		}
-		    		}
+			    		if(url != null){
+				    		String newLink = url.toExternalForm();
+				    		if (! oldLink.equals(newLink)) {
+				    			newCompleteHref = originalCompleteHref.replace(oldLink, newLink);
+				    			// using map to avoid duplicate replacements
+				    			// also only adding links that are actually changed to the map.
+				    			linkReplaceMap.put(originalCompleteHref, newCompleteHref);
+				    		}
+			    		}
+					}
 				}
-			}
+    		}
     	}
     	
-    	for (String link : linkReplaceMap.keySet()) {
-    		response = response.replace(link, linkReplaceMap.get(link));
+    	String toLink = null;
+    	for (String fromLink : linkReplaceMap.keySet()) {
+    		//logger.info("replacing " + fromLink + " with " + linkReplaceMap.get(fromLink));
+    		toLink = linkReplaceMap.get(fromLink);
+    		response = response.replace(fromLink, toLink);
+    		//if (content.contains("proxy.helsebiblioteket.no/login?url=http://proxy.helsebiblioteket.no/login?url=")) {
+    		//	logger.info("\n----------------\ndouble proxy prefix detected! see previous line\n----------------");
+    		//}
     	}
-    	
     	//logger.info("linkfilter took " + (System.currentTimeMillis() - timeStart) + " milliseconds");
-    	
-		return response;
+    	return response;
     }
     
     private URL generateURL(String href) {
@@ -144,9 +159,6 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 		Url myurl = new Url();
 		myurl.setStringValue(url.toExternalForm());
 		myurl.setDomain(url.getHost());
-		if (myurl == null) {
-			logger.error("myurl is null in method 'isAffected'!");
-		}
 		result = this.urlService.isAffected(myurl);
 		return result;
 	}
