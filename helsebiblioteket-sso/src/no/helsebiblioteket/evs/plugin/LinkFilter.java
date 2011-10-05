@@ -95,14 +95,15 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 			    			} catch (MalformedURLException e) {
 			    				url = null;
 							}
-			    		}
-			    		if(url != null){
-				    		String newLink = url.toExternalForm();
-				    		if (! oldLink.equals(newLink)) {
-				    			newCompleteHref = originalCompleteHref.replace(oldLink, newLink);
-				    			// using map to avoid duplicate replacements
-				    			// also only adding links that are actually changed to the map.
-				    			linkReplaceMap.put(originalCompleteHref, newCompleteHref);
+				    		if(url != null){
+					    		String newLink = url.toExternalForm();
+					    		if (! oldLink.equals(newLink)) {
+					    			originalCompleteHref = deproxify(originalCompleteHref);
+					    			newCompleteHref = originalCompleteHref.replace(oldLink, newLink);
+					    			// using map to avoid duplicate replacements
+					    			// also only adding links that are actually changed to the map.
+					    			linkReplaceMap.put(originalCompleteHref, newCompleteHref);
+					    		}
 				    		}
 			    		}
 					}
