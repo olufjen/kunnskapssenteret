@@ -55,7 +55,7 @@ xmlns="http://www.springframework.org/schema/beans"
    	
 	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
     	<property name="accessService" ref="accessService"></property>
-    	<property name="proxyPrefix" value="http://proxy.helsebiblioteket.no/login?url="></property>
+    	<property name="proxyPrefix" value="http://proxy-t.helsebiblioteket.no/login?url="></property>
   	</bean>
    	
    	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
