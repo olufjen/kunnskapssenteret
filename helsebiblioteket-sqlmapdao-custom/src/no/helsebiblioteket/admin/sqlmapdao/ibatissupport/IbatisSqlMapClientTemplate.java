@@ -44,8 +44,8 @@ public class IbatisSqlMapClientTemplate implements SqlMapClient {
         	
         	properties.load(new FileInputStream(
         			new File(
-        					new URI(System.getProperty("cms.home") + File.separator
-        							+ "plugins" + File.separator + "environment.properties"))));
+        					new URI(System.getProperty("cms.home")
+        							+ "/plugins/environment.properties"))));
         	
         	String sqlmapConfigUrl = properties.getProperty("helsebiblioteket-sso-sqlmapconfig");
         	
