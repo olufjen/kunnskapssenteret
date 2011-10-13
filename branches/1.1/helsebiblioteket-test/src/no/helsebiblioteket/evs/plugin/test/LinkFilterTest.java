@@ -50,16 +50,29 @@ public class LinkFilterTest {
 		
 	}
 	
+	
 	@Test
-	public void testGenerateProxyLinksFull() throws Exception {
-		initResources("./desc/evs-plugin-test/linkfiltertestresponse.html");
+	public void testGenerateProxyLinksRopReferanser() throws Exception {
+		initResources("./desc/evs-plugin-test/linkfiltertestresponse_ropreferanser.html");
 		Assert.assertFalse("content contains double proxy prefixes!", content.contains("proxy.helsebiblioteket.no/login?url=http://proxy.helsebiblioteket.no/login?url="));
 		Assert.assertTrue("content does not contain a predefined valid link", content.contains("<a href=\"http://www.ncbi.nlm.nih.gov/pubmed/15289279\">PubMed: 15289279"));
 		long timeStart = System.currentTimeMillis();
 		this.content = this.linkFilterPlugin.generateProxyLinks(request, request.getSession(true), this.content, this.request.getContentType());
 		logger.info("linkfilter took " + (System.currentTimeMillis() - timeStart) + " milliseconds");
+		Assert.assertFalse("content contains double proxy prefixes!", content.contains("proxy-t.helsebiblioteket.no/login?url=http://proxy"));
+		Assert.assertTrue("content does not contain a predefined valid proxy link", content.contains("<a href=\"http://proxy-t.helsebiblioteket.no/login?url=http://www.ncbi.nlm.nih.gov/pubmed/15289279\">PubMed: 15289279"));
+		logger.info(content);
+	}
+	
+	@Test
+	public void testGenerateProxyLinksDatabaser() throws Exception {
+		initResources("./desc/evs-plugin-test/linkfiltertestresponse_databaser.html");
+		Assert.assertFalse("content contains double proxy prefixes!", content.contains("proxy.helsebiblioteket.no/login?url=http://proxy.helsebiblioteket.no/login?url="));
+		long timeStart = System.currentTimeMillis();
+		this.content = this.linkFilterPlugin.generateProxyLinks(request, request.getSession(true), this.content, this.request.getContentType());
+		logger.info("linkfilter took " + (System.currentTimeMillis() - timeStart) + " milliseconds");
 		Assert.assertFalse("content contains double proxy prefixes!", content.contains("proxy.helsebiblioteket.no/login?url=http://proxy"));
-		Assert.assertTrue("content does not contain a predefined valid proxy link", content.contains("<a href=\"http://proxy.helsebiblioteket.no/login?url=http://www.ncbi.nlm.nih.gov/pubmed/15289279\">PubMed: 15289279"));
+		Assert.assertFalse("content contains proxy prefix(es) og type 'proxy.helsebibliokteket.no', should only contain prefixes of type 'proxy-.helsebibliokteket.no'", content.contains("proxy.helsebiblioteket.no/login?url="));
 		logger.info(content);
 	}
 	
