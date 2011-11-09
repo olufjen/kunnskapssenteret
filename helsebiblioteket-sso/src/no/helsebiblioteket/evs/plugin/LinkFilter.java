@@ -98,8 +98,8 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 				    		if(url != null){
 					    		String newLink = url.toExternalForm();
 					    		if (! oldLink.equals(newLink)) {
-					    			originalCompleteHref = deproxify(originalCompleteHref);
-					    			newCompleteHref = originalCompleteHref.replace(oldLink, newLink);
+					    			//originalCompleteHref = deproxify(originalCompleteHref);
+					    			newCompleteHref = deproxify(originalCompleteHref).replace(oldLink, newLink);
 					    			// using map to avoid duplicate replacements
 					    			// also only adding links that are actually changed to the map.
 					    			linkReplaceMap.put(originalCompleteHref, newCompleteHref);
