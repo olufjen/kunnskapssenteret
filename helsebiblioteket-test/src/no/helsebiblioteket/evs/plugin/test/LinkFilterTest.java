@@ -90,6 +90,29 @@ public class LinkFilterTest {
 		logger.info(content);
 	}
 	
+	@Test
+	public void testGenerateProxyLinksTidsskrifterSimple() throws Exception {
+		initResources("./desc/evs-plugin-test/linkfiltertestresponse_tidsskrifter_simple.html");
+		long timeStart = System.currentTimeMillis();
+		this.content = this.linkFilterPlugin.generateProxyLinks(request, request.getSession(true), this.content, this.request.getContentType());
+		Assert.assertFalse("content contains non-proxy-link (should have been proxyfied)", content.contains("<a href=\"http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&amp;holding=inohelib_fft_ndi&amp;myncbishare=helsebiblioteket\">"));
+		Assert.assertTrue("content does not contains an expected-proxy-link (should have been proxyfied)", content.contains("href=\"http://proxy-t.helsebiblioteket.no/login?url=http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&amp;holding=inohelib_fft_ndi&amp;myncbishare=helsebiblioteket\""));
+		logger.info("linkfilter took " + (System.currentTimeMillis() - timeStart) + " milliseconds");
+		logger.info(content);
+	}
+	
+	@Test
+	@Ignore
+	public void testGenerateProxyLinksTidsskrifterFull() throws Exception {
+		initResources("./desc/evs-plugin-test/linkfiltertestresponse_tidsskrifter_full.html");
+		long timeStart = System.currentTimeMillis();
+		this.content = this.linkFilterPlugin.generateProxyLinks(request, request.getSession(true), this.content, this.request.getContentType());
+		Assert.assertFalse("content contains non-proxy-link (should have been proxyfied)", content.contains("<a href=\"http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&amp;holding=inohelib_fft_ndi&amp;myncbishare=helsebiblioteket\">"));
+		Assert.assertTrue("content does not contains an expected-proxy-link (should have been proxyfied)", content.contains("href=\"http://proxy-t.helsebiblioteket.no/login?url=http://www.ncbi.nlm.nih.gov/sites/entrez?otool=bibsys&amp;holding=inohelib_fft_ndi&amp;myncbishare=helsebiblioteket\""));
+		logger.info("linkfilter took " + (System.currentTimeMillis() - timeStart) + " milliseconds");
+		logger.info(content);
+	}
+	
 	private String getFileContentAsString(URI fileURI) throws java.io.IOException{
 		File file = new File(fileURI);
 	    byte[] buffer = new byte[(int) file.length()];
