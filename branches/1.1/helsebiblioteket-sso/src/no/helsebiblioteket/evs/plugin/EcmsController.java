@@ -22,7 +22,7 @@ public abstract class EcmsController extends HttpControllerPlugin {
 	protected String resultSessionVarName;
 	protected Map<String, String> parameterNamesUrlParams;
 	protected Map<String, String> parameterNamesFields;
-	Document document;
+	public Document document;
 	Element element;
 	protected Map<String, String> messagesMap = new HashMap<String, String>();
 	protected Map<String, String> fieldValuesMap = new HashMap<String, String>();
