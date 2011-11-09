@@ -42,7 +42,7 @@ public final class LinkFilter extends HttpResponseFilterPlugin {
 	private static final String linkFilterOverrideUrlParam = "linkfilteroverride";
 	private URLService urlService;
 	private final static String invalidHrefRegExp = "javascript:.*|mailto:.*";
-	private final static String linkRegExp = "<a href=(['\"])(.*?)\\1";
+	private final static String linkRegExp = "\\s*(?i)href\\s*=\\s*(\"([^\"]*\")|'[^']*'|([^'\">\\s]+))";// "<a href=(['\"])(.*?)\\1";
 	private final static String completeLinkRegExp = "<a\\b[^>]*href=\"[^>]*>(.*?)</a>";
 	private final static Pattern linkPattern;
 	private final static Pattern completeLinkPattern;
