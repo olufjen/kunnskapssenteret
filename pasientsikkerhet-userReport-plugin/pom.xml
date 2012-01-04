@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.enonic.pom</groupId>
+		<artifactId>base</artifactId>
+		<version>4</version>
+	</parent>
+
+	<groupId>com.kunnskapssentreret</groupId>
+	<artifactId>userreport</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>cms-plugin</packaging>
+
+	<name>pasientsikkerhet-userReport-plugin</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<cms.version>4.4.5</cms.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.enonic.cms.tools</groupId>
+				<artifactId>maven-cms-plugin</artifactId>
+				<version>1.0.0</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.enonic.cms</groupId>
+			<artifactId>cms-api</artifactId>
+			<version>${cms.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>3.0.5.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>enonic</id>
+			<url>http://repo.enonic.com/maven</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>enonic</id>
+			<url>http://repo.enonic.com/maven</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

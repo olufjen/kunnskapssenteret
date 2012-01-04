@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="client" factory-method="getLocalClient"
+          class="com.enonic.cms.api.client.ClientFactory"/>
+
+	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+		<property name="name" value="userreport" />
+		<property name="target">
+			<bean class="com.kunnskapssenteret.userreport.UserReportPlugin">
+					<property name="client" ref="client"/>
+			</bean>
+		</property>
+
+	</bean>
+
+</beans>
