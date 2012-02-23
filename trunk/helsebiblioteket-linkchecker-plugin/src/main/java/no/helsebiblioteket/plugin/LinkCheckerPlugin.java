@@ -77,7 +77,8 @@ public class LinkCheckerPlugin extends TaskPlugin {
 	private String remoteClientUrl;
 	private String user;
 	private String password;
-
+	private String cmsSite;
+	
 	protected enum TaskPropertyKeys {
 		cmsReceivers,
 		cmsSender,
@@ -89,7 +90,8 @@ public class LinkCheckerPlugin extends TaskPlugin {
 		cmsPassword,
 		cmsHostname,
 		cmsCategoriesString,
-		cmsExcludedCategoryKeys
+		cmsExcludedCategoryKeys,
+		cmsSite
 	}
 
 	public LinkCheckerPlugin() {
@@ -137,6 +139,7 @@ public class LinkCheckerPlugin extends TaskPlugin {
 			log.info("Configured linkTimeoutMillis: " + linkTimeoutMillis);
 
 			reportUrl = taskProperties.getProperty(TaskPropertyKeys.cmsReportUrl.name());
+			cmsSite = taskProperties.getProperty(TaskPropertyKeys.cmsSite.name()) ;
 			log.info("Configured report url: " + reportUrl);
 
 			try {
@@ -381,10 +384,12 @@ public class LinkCheckerPlugin extends TaskPlugin {
 
 						if (category.getIsHtmlArea().get(i)) {
 							Iterator<Element> urlIterator = element.getDescendants(new ElementFilter("a"));
-
+							log.info("innen if" );
 							while (urlIterator.hasNext()) {
 								Element a = urlIterator.next();
+								log.info("a value:" + a) ;
 								String href = a.getAttributeValue("href");
+								log.info("href value:" + href) ;
 								String message = href != null && !isMailUrl(href) ? checkURL(href) : "";
 
 								if (!message.equals("")) {
@@ -393,6 +398,7 @@ public class LinkCheckerPlugin extends TaskPlugin {
 								}
 							}
 						} else if (!urlText.equals("") && !isMailUrl(urlText)) {
+							log.info("urlText value: " + urlText) ;
 							String message = checkURL(urlText);
 
 							if (!message.equals("")) {
@@ -426,9 +432,22 @@ public class LinkCheckerPlugin extends TaskPlugin {
 		String validUrl = StringEscapeUtils.escapeXml(url);
 
 		String responseMessage = "";
-
+		
+		log.info("url string: " + url);
+		if(url.contains("content://")){
+			String replaceUrl = url.replaceFirst("content://",cmsSite);
+			url = replaceUrl+".cms";
+			log.info("content site replacment: " + url) ;
+		}
+		if(url.contains("attachment://")){
+			String attachUrl = cmsSite + "_attachment/" ;
+			String replaceUrl = url.replaceFirst("attachment://",attachUrl);
+			url = replaceUrl;
+			log.info("attachment site replacment: " + url) ;
+		}
 		try {
 			// setup connection to url
+			
 			HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 			con.setRequestMethod("HEAD");
 			con.setReadTimeout(linkTimeoutMillis);
