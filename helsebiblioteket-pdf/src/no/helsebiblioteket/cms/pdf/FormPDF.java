@@ -74,7 +74,18 @@ public class FormPDF extends HttpControllerPlugin {
 	
 	private List<String> allowedHosts = Arrays.asList(
 			"www.helsebiblioteket.no",
-			"www-t.helsebiblioteket.no");
+			"www-t.helsebiblioteket.no",
+			"www.pasientsikkerhetskampanjen.no", 
+			"http://192.168.2.102:8080/", 
+			"www.kvalitetogprioritering.no", 
+			"http://192.168.2.131:8080/", 
+			"www.kunnskapssenteret.no", 
+			"http://192.168.2.111:8080/", 
+			"www.mednytt.no", 
+			"http://192.168.2.121:8080/", 
+			"http://localhost:8080", 
+			"http://www.psyktest.no", 
+			"http://www-t.psyktest.no");
 	
 	private enum RenderMode {
 		PAGE, FORM
