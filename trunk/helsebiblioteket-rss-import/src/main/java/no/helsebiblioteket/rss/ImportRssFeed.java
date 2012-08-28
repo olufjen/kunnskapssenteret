@@ -29,14 +29,14 @@ import com.enonic.cms.api.client.model.ContentDataInputUpdateStrategy;
 import com.enonic.cms.api.client.model.ImportContentsParams;
 import com.enonic.cms.api.client.model.UpdateContentParams;
 import com.enonic.cms.api.client.model.content.ContentDataInput;
-import com.enonic.cms.api.plugin.TaskPlugin;
+import com.enonic.cms.api.plugin.ext.TaskHandler;
 
 /**
  * This class is used to get a rss feed, and import it's content to Enonic CMS
  * 
  * @author <a href="mailto:karine.haug@edb.com">Karine Haug</a>
  */
-public class ImportRssFeed extends TaskPlugin {
+public class ImportRssFeed extends TaskHandler {
 	private Log log = LogFactory.getLog(ImportRssFeed.class);
 	private Client client;
 	private String username;
