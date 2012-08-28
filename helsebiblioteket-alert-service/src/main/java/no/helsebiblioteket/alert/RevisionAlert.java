@@ -17,7 +17,7 @@ import org.jdom.xpath.XPath;
 import com.enonic.cms.api.client.Client;
 import com.enonic.cms.api.client.ClientFactory;
 import com.enonic.cms.api.client.model.GetContentByCategoryParams;
-import com.enonic.cms.api.plugin.TaskPlugin;
+import com.enonic.cms.api.plugin.ext.TaskHandler;
 
 /**
  * 
@@ -26,7 +26,7 @@ import com.enonic.cms.api.plugin.TaskPlugin;
  * @author <a href="mailto:karine.haug@edb.com">Karine Haug</a>
  *
  */
-public class RevisionAlert extends TaskPlugin {
+public class RevisionAlert extends TaskHandler {
 	private Log log = LogFactory.getLog(RevisionAlert.class);
 	private static final XMLOutputter XML_OUT = new XMLOutputter();
 	private String cmsusername;
