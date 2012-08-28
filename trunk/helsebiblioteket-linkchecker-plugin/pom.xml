@@ -1,120 +1,117 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:pom="http://maven.apache.org/POM/4.0.0">
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>no.helsebiblioteket</groupId>
-    <artifactId>helsebiblioteket-linkchecker-plugin</artifactId>
-    <name>LinkCheckerPlugin</name>
-    <version>2.0</version>
-    <packaging>jar</packaging>
+	<modelVersion>4.0.0</modelVersion>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>${project.build.directory}/includes</directory>
-                <includes>
-                    <include>**/*.jar</include>
-                </includes>
-            </resource>
-            <resource>
-                <targetPath>META-INF/spring</targetPath>
-                <filtering>false</filtering>
-                <directory>${basedir}/src/main/resources/META-INF/spring</directory>
-                <includes>
-                    <include>context.xml</include>
-                </includes>
-            </resource>
-        </resources>
+	<parent>
+		<groupId>com.enonic.pom</groupId>
+		<artifactId>base</artifactId>
+		<version>4</version>
+	</parent>
 
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                    <compilerVersion>1.5</compilerVersion>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>no.helsebiblioteket.plugins.LinkCheckerPlugin</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <excludeTransitive>true</excludeTransitive>
-                            <includeScope>runtime</includeScope>
-                            <outputDirectory>${project.build.directory}/includes/META-INF/lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+	<groupId>no.helsebiblioteket</groupId>
+	<artifactId>helsebiblioteket-linkchecker-plugin</artifactId>
+	<name>LinkCheckerPlugin</name>
+	<version>2.0</version>
+	<packaging>cms-plugin</packaging>
 
-    <dependencies>
+	<properties>
+		<cms.version>4.5.6</cms.version>
+	</properties>
 
-        <dependency>
-            <groupId>com.enonic.cms</groupId>
-            <artifactId>cms-api</artifactId>
-            <version>4.4.3</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>jdom</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
+	<licenses>
+		<license>
+			<name>Apache License Version 2.0</name>
+			<distribution>repo</distribution>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.enonic.cms.tools</groupId>
+				<artifactId>maven-cms-plugin</artifactId>
+				<version>1.0.1</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.enonic.cms.tools</groupId>
+										<artifactId>maven-cms-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>check-dependencies</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.enonic.cms</groupId>
+			<artifactId>cms-api</artifactId>
+			<version>${cms.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
 		</dependency>
-    </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>enonic</id>
+			<url>http://repo.enonic.com/maven</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>enonic</id>
+			<url>http://repo.enonic.com/maven</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 </project>

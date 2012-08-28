@@ -22,7 +22,7 @@ import com.enonic.cms.api.client.model.GetContentByCategoryParams;
 import com.enonic.cms.api.client.model.content.ContentDataInput;
 import com.enonic.cms.api.client.model.content.HtmlAreaInput;
 import com.enonic.cms.api.client.model.content.TextInput;
-import com.enonic.cms.api.plugin.TaskPlugin;
+import com.enonic.cms.api.plugin.ext.TaskHandler;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
@@ -51,7 +51,7 @@ import org.apache.commons.logging.LogFactory;
  * 
  */
 
-public class LinkCheckerPlugin extends TaskPlugin {
+public class LinkCheckerPlugin extends TaskHandler {
 
 	private Log log = LogFactory.getLog(this.getClass());
 	private Client client;
@@ -286,7 +286,7 @@ public class LinkCheckerPlugin extends TaskPlugin {
 		String url = reportUrl +"?cat=" + saveCategory;
 
 		String mailContent = getResultData()
-				+ "<p>Fullstendig rapport finnes på <a href=\"" + url + "\">" + url + ".</p>";
+				+ "<p>Fullstendig rapport finnes pï¿½ <a href=\"" + url + "\">" + url + ".</p>";
 
 		return convertStringtoUTF8(mailContent);
 	}
