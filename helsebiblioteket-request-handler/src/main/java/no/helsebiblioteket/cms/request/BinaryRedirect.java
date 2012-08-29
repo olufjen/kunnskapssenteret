@@ -11,14 +11,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.enonic.cms.api.client.ClientException;
-import com.enonic.cms.api.plugin.HttpControllerPlugin;
+import com.enonic.cms.api.plugin.ext.http.HttpController;
 
 /**
  * 
  * @author <A HREF="mailto:karine.haug@edb.com">kah</A>
  *
  */
-public class BinaryRedirect extends HttpControllerPlugin {
+public class BinaryRedirect extends HttpController {
 	private final Log log = LogFactory.getLog(getClass());
 
 	/**

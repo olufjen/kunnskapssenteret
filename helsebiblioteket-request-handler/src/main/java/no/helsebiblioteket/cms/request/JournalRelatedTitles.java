@@ -23,15 +23,15 @@ import com.enonic.cms.api.client.model.GetContentParams;
 import com.enonic.cms.api.client.model.UpdateContentParams;
 import com.enonic.cms.api.client.model.content.ContentDataInput;
 import com.enonic.cms.api.client.model.content.RelatedContentsInput;
-import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
+import com.enonic.cms.api.plugin.ext.http.HttpInterceptor;
 import com.enonic.cms.api.client.model.content.ContentStatus;
 
 
 /**
- * @author		Per Christian Røine (per.christian.roine@edb.com)
+ * @author		Per Christian RÃ¸ine (per.christian.roine@edb.com)
  * @since		2011-09-29
  */
-public class JournalRelatedTitles extends HttpInterceptorPlugin{
+public class JournalRelatedTitles extends HttpInterceptor {
 	private final Log log = LogFactory.getLog(getClass());
 	private Document content;
 	private GetContentParams contentParams;

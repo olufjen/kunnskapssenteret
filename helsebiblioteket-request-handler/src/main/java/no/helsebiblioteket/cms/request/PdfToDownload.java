@@ -11,14 +11,14 @@ import no.helsebiblioteket.cms.content.RequestedContent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.enonic.cms.api.plugin.HttpInterceptorPlugin;
+import com.enonic.cms.api.plugin.ext.http.HttpInterceptor;
 
 /**
  * 
  * @author <A HREF="mailto:karine.haug@edb.com">kah</A>
  * 
  */
-public class PdfToDownload extends HttpInterceptorPlugin {
+public class PdfToDownload extends HttpInterceptor {
 	private final Log log = LogFactory.getLog(getClass());
 
 	/**
