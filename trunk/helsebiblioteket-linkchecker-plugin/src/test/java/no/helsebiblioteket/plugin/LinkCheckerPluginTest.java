@@ -1,6 +1,5 @@
 package no.helsebiblioteket.plugin;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.enonic.cms.api.client.Client;
