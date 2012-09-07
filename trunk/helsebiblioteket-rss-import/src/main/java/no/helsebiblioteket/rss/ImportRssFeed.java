@@ -54,7 +54,8 @@ public class ImportRssFeed extends TaskHandler {
 		importType,
 		categoryKey,
 		feedUrl,
-		mailReceivers
+		mailReceivers,
+		authorKey
 	}
 
 	private enum Status {
@@ -234,6 +235,15 @@ public class ImportRssFeed extends TaskHandler {
 
 			if (receivers != null) {
 				this.mailReceivers = receivers.split(",");
+			}
+			switch (this.importType) {
+			case PsykNytt:
+				try {
+					int authorKey = Integer.parseInt(props.getProperty(TaskPropertyKeys.authorKey.name()));
+					PsykNyttRssContent.createRelatedAuthor(authorKey);
+				} catch (NumberFormatException e) {
+					log.error("Invalid author key in plugin configuration", e);
+				}
 			}
 		}
 	}
