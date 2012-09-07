@@ -15,6 +15,8 @@
   <classpathentry kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.2.2/commons-dbcp-1.2.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.4/commons-pool-1.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/postgresql/postgresql/8.2-511.jdbc3/postgresql-8.2-511.jdbc3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/ibatis/ibatis-sqlmap/2.3.4.726/ibatis-sqlmap-2.3.4.726.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/dspace/dependencies/dspace-geoip/1.2.3/dspace-geoip-1.2.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring/2.5.6/spring-2.5.6.jar"/>
   <classpathentry kind="var" path="M2_REPO/no/helsebiblioteket/helsebiblioteket-domain-dao-services/1.1/helsebiblioteket-domain-dao-services-1.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/no/helsebiblioteket/helsebiblioteket-services-geoip/1.1/helsebiblioteket-services-geoip-1.1.jar"/>

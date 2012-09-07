@@ -2,22 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context" 
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>${cms.home}/plugins/environment.properties</value>
+				<value>file:${cms.home}/plugins/environment.properties</value>
 			</list>
 		</property>
 	</bean>
 	
-	<context:annotation-config>
-
-	<bean id="pluginEnvironment" class="com.enonic.cms.api.plugin.PluginEnvironment" />
-	
-	<bean name="resultHandler" class="no.helsebiblioteket.evs.plugin.resulResultHandler.java"/>
+	<context:annotation-config/>
 
 	<!-- <bean id="accessService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
 		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/AccessService"/> 
@@ -189,7 +185,7 @@
 
 	<bean name="loggedInFunction" class="no.helsebiblioteket.evs.plugin.LoggedInFunction">
 		<property name="userService" ref="userServiceSso" />
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
@@ -201,7 +197,7 @@
 		class="no.helsebiblioteket.evs.plugin.GetContentByCategoryAccessFunction">
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="noAccessTextName" value="noaccess" />
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
@@ -213,7 +209,7 @@
 		class="no.helsebiblioteket.evs.plugin.GetContentBySectionAccessFunction">
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="noAccessTextName" value="noaccess" />
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
@@ -253,7 +249,7 @@
 				<entry key="resultValue" value="true" />
 			</map>
 		</property>
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.LinkFilter">
@@ -261,7 +257,7 @@
 		<property name="urlService" ref="urlServiceSso" />
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="countryCodes" value="${plugin.countrycodes}" />
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.AccessFilter">
@@ -281,7 +277,7 @@
 	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
 		<property name="urlPattern" value="/site/2/LoggUtServlet" />
 		<property name="gotoUrl" value="${plugin.logoutcontroller.gotourl}" />
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.ProfileController">
@@ -330,7 +326,7 @@
 				<entry key="editProfileValue" value="Rediger profil" />
 			</map>
 		</property>
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
@@ -352,7 +348,7 @@
 		</property>
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="countryCodes" value="${plugin.countrycodes}" />
-		<property name="pluginEnvironment" ref="pluginEnvironment"></property>
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment"/>
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
@@ -397,7 +393,7 @@
 			</map>
 		</property>
 		<property name="emailService" ref="emailServiceSso" />
-		<property name="pluginEnvironment" ref="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.SendPasswordController">
