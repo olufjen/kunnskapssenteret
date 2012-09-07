@@ -1,6 +1,5 @@
 package no.helsebiblioteket.rss;
 
-
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
@@ -52,7 +51,7 @@ public abstract class RssContent {
 		
 		switch(type) {
 		case PsykNytt: 
-			return new PsykNyttRssContent(feed); 
+			return new PsykNyttRssContent(feed);
 		default: 
 			return null;
 		}

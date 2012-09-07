@@ -21,17 +21,18 @@ import com.enonic.cms.api.client.model.content.RelatedContentsInput;
  */
 public class PsykNyttRssContent extends RssContent {
 	private static final Namespace CONTENT_NAMESPACE = Namespace.getNamespace("content", "http://purl.org/rss/1.0/modules/content/");
-	private static final int AUTHOR = 94482; //78044//Content key for PsykNytt author
+	private static RelatedContentsInput relatedAuthor;
 	private List<Element> categories = null;
 
 	public PsykNyttRssContent(Element feed) {
 		this.feed = (Element) feed.clone();
 	}
 
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void customize() throws JDOMException, IOException {
-		String encodedAsString = "<encoded>" + this.feed.getChildText("encoded", CONTENT_NAMESPACE) + "</encoded>";
+		String encodedAsString = "<encoded>" + this.feed.getChildText("encoded", CONTENT_NAMESPACE).replaceAll("&", "&amp;") + "</encoded>";
 		this.feed.removeChild("encoded", CONTENT_NAMESPACE);
 		
 		//Getting the encoded CDATA html elements into a jdom Document for manipulation
@@ -163,14 +164,20 @@ public class PsykNyttRssContent extends RssContent {
 	}
 	
 	/**
+	 * Creates author that is used by all PsykNytt contents
 	 * 
-	 * @return the related content - author, which is the same for all PsykNytt articles
+	 * @param authorKey
 	 */
-	public static RelatedContentsInput getRelatedAuthor() {
-		RelatedContentsInput relatedcontent = new RelatedContentsInput("authors");
-		relatedcontent.addRelatedContent(AUTHOR);
-		return relatedcontent;
+	public static void createRelatedAuthor(int authorKey) {
+		relatedAuthor = new RelatedContentsInput("authors");
+		relatedAuthor.addRelatedContent(authorKey);
 	}
 	
-	
+	/**
+	 * 
+	 * @return the related content author
+	 */
+	public static RelatedContentsInput getRelatedAuthor() {
+		return relatedAuthor;
+	}
 }
