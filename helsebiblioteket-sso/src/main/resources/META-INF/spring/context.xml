@@ -178,7 +178,7 @@
 		<property name="geoIpService" ref="geoIpService"></property>
 	</bean>
 
-	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+	<bean class="com.enonic.cms.api.plugin.ext.FunctionLibrary">
 		<property name="name" value="loggedinuser" />
 		<property name="target" ref="loggedInFunction" />
 	</bean>
@@ -188,7 +188,7 @@
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
-	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+	<bean class="com.enonic.cms.api.plugin.ext.FunctionLibrary">
 		<property name="name" value="getContentByCategoryAccess" />
 		<property name="target" ref="getContentByCategoryAccessFunction" />
 	</bean>
@@ -200,7 +200,7 @@
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
-	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+	<bean class="com.enonic.cms.api.plugin.ext.FunctionLibrary">
 		<property name="name" value="getContentBySectionAccess" />
 		<property name="target" ref="getContentBySectionAccessFunction" />
 	</bean>
@@ -212,7 +212,7 @@
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
-	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+	<bean class="com.enonic.cms.api.plugin.ext.FunctionLibrary">
 		<property name="name" value="getContentAccess" />
 		<property name="target" ref="getContentAccessFunction" />
 	</bean>
@@ -224,7 +224,7 @@
 		<property name="pluginEnvironment" value="pluginEnvironment" />
 	</bean>
 
-	<bean class="com.enonic.cms.api.plugin.FunctionLibraryPlugin">
+	<bean class="com.enonic.cms.api.plugin.ext.FunctionLibrary">
 		<property name="name" value="mcMasterArticles" />
 		<property name="target" ref="getMcMasterArticles" />
 	</bean>
