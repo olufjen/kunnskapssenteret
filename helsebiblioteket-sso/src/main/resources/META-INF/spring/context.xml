@@ -221,7 +221,7 @@
 		class="no.helsebiblioteket.evs.plugin.GetContentAccessFunction">
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="noAccessTextName" value="noaccess" />
-		<property name="pluginEnvironment" value="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="com.enonic.cms.api.plugin.ext.FunctionLibrary">
@@ -232,7 +232,7 @@
 	<bean name="getMcMasterArticles" class="no.helsebiblioteket.evs.plugin.GetMcMasterArticles">
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="noAccessTextName" value="noaccess" />
-		<property name="pluginEnvironment" value="pluginEnvironment" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.LogInController">
