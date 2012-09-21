@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context" 
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -12,8 +11,6 @@
 			</list>
 		</property>
 	</bean>
-	
-	<context:annotation-config/>
 
 	<!-- <bean id="accessService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
 		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/AccessService"/> 
@@ -272,6 +269,7 @@
 		<property name="urlPattern" value="/site/[0-3]/.*" />
 		<property name="priority" value="9999" />
 		<property name="loginService" ref="loginServiceSso" />
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
@@ -348,7 +346,7 @@
 		</property>
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="countryCodes" value="${plugin.countrycodes}" />
-		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment"/>
+		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">

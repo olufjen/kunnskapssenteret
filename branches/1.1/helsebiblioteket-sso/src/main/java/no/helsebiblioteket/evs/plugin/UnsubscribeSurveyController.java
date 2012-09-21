@@ -72,7 +72,7 @@ public final class UnsubscribeSurveyController extends EcmsController {
 				populateXmlResult(document, element, true, true);
 			}
 		}
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, request.getSession());
 		response.sendRedirect(gotoUrl);
 	}
 	

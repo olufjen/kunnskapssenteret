@@ -72,7 +72,7 @@ public final class SendPasswordController extends HttpController {
     		element.appendChild(document.createElement("success"));
     		failXML(email, document, element, emailError, sent);
     		document.appendChild(element);
-        	ResultHandler.setResult(this.resultSessionVarName, document);
+        	ResultHandler.setResult(this.resultSessionVarName, document, request.getSession());
 
     		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
     		response.sendRedirect(gotoUrl);
@@ -80,7 +80,7 @@ public final class SendPasswordController extends HttpController {
     		failXML(email, document, element, emailError, sent);
     		
     		document.appendChild(element);
-    		ResultHandler.setResult(this.resultSessionVarName, document);
+    		ResultHandler.setResult(this.resultSessionVarName, document, request.getSession());
 
         	String referer = request.getParameter(this.parameterNames.get("from"));
     		response.sendRedirect(referer);

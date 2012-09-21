@@ -12,42 +12,28 @@ import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Element;
-
-
-import com.enonic.cms.api.plugin.PluginEnvironment;
 
 public class ResultHandler {
 	// TODO Fase2: Set in bean, but global?
 	private static String sessionResultsVarName = "hbresults";
-	private static PluginEnvironment pluginEnvironment;
-	
-	
-	@Autowired(required = true)
-	private ResultHandler(PluginEnvironment pluginEnvironment) {
-		this.pluginEnvironment = pluginEnvironment;
-	}
 
 	@SuppressWarnings("unchecked")
-	public static void setResult(String key, org.w3c.dom.Document result) {
-		HttpSession session = pluginEnvironment.getCurrentSession(); 
-
+	public static void setResult(String key, org.w3c.dom.Document result, HttpSession session) {
 		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>)
-			session.getAttribute(sessionResultsVarName);
-		
+				session.getAttribute(sessionResultsVarName);
+
 		if(userMap == null){
 			userMap = new HashMap<String, org.w3c.dom.Document>();
-			pluginEnvironment.getCurrentSession().setAttribute(sessionResultsVarName, userMap);
+			session.setAttribute(sessionResultsVarName, userMap);
 		}
 		userMap.put(key, result);
 	}
 	@SuppressWarnings("unchecked")
-	public static Document getResult(String key) throws JDOMException, IOException, ParserConfigurationException, TransformerException {
-		HttpSession session = pluginEnvironment.getCurrentSession(); 
+	public static Document getResult(String key, HttpSession session) throws JDOMException, IOException, ParserConfigurationException, TransformerException {
 		Map<String, org.w3c.dom.Document> userMap = (Map<String, org.w3c.dom.Document>)
-			session.getAttribute(sessionResultsVarName);
-		
+				session.getAttribute(sessionResultsVarName);
+
 		org.w3c.dom.Document result = null;
 		if(userMap != null){
 			result = userMap.get(key);
