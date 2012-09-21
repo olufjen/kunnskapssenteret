@@ -10,6 +10,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.enonic.cms.api.plugin.PluginEnvironment;
+
 import no.helsebiblioteket.admin.service.UserService;
 import no.helsebiblioteket.admin.translator.UserToXMLTranslator;
 import no.helsebiblioteket.evs.plugin.result.ResultHandler;
@@ -72,7 +74,7 @@ public final class UnsubscribeNewsletterController extends EcmsController {
 				populateXmlResult(document, element, true, true);
 			}
 		}
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, request.getSession());
 		response.sendRedirect(gotoUrl);
 	}
 	

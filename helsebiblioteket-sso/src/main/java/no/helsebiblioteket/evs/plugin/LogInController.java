@@ -67,7 +67,7 @@ public final class LogInController extends HttpController {
     		redirectTo = from;
        	}
 		result.appendChild(element);
-		ResultHandler.setResult(this.resultSessionVarName, result);
+		ResultHandler.setResult(this.resultSessionVarName, result, pluginEnvironment.getCurrentSession());
 		// redirect must be done after "setResult". Or else: java.lang.IllegalStateException
 		if (redirectTo != null) {
 			response.sendRedirect(redirectTo);

@@ -136,7 +136,7 @@ public class ProfileController extends HttpController {
 
 		element.appendChild(messages);
 		document.appendChild(element);
-		ResultHandler.setResult(this.editPasswordresultVarName, document);
+		ResultHandler.setResult(this.editPasswordresultVarName, document, pluginEnvironment.getCurrentSession());
 		if(success){
 			this.goBack(request, response);
 		} else {
@@ -170,14 +170,14 @@ public class ProfileController extends HttpController {
 		UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
 		userXML(userTranslator.translate(user), document, values);
 		element.appendChild(values);
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
 		
 		document = translator.newDocument();
 		messages = document.createElement("messages");
 		element = document.createElement(this.editPasswordresultVarName);
 		element.appendChild(messages);
 		document.appendChild(element);
-		ResultHandler.setResult(this.editPasswordresultVarName, document);
+		ResultHandler.setResult(this.editPasswordresultVarName, document, pluginEnvironment.getCurrentSession());
 		
 		String passwordPage = request.getParameter(this.parameterNames.get("passwordPage"));
 		response.sendRedirect(passwordPage);
@@ -267,7 +267,7 @@ public class ProfileController extends HttpController {
 	    	}
 		}
 		document.appendChild(element);
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
 	}
 	private Role getRole(UserRoleKey key) {
 		System system = ((ValueResultSystem)this.userService.getSystemByKey(SystemKey.helsebiblioteket_admin)).getValue();
@@ -407,7 +407,7 @@ public class ProfileController extends HttpController {
 			element.appendChild(values);
 		}
 		document.appendChild(element);
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
 		String editPage = request.getParameter(this.parameterNames.get("editPage"));
 		response.sendRedirect(editPage);
 	}

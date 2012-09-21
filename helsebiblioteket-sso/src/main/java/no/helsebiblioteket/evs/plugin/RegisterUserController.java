@@ -126,7 +126,7 @@ public final class RegisterUserController extends HttpController {
 		}
 		element.appendChild(values);
 		document.appendChild(element);
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
 		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -140,7 +140,7 @@ public final class RegisterUserController extends HttpController {
 		values.appendChild(UserToXMLTranslator.element(document, "usertype", usertype));
 		element.appendChild(values);
 		document.appendChild(element);
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
 		String gotoUrl = null;
 		String url = request.getParameter(this.parameterNames.get("url"));
 		if ( ! (null == url || "".equals(url))) {
@@ -158,7 +158,7 @@ public final class RegisterUserController extends HttpController {
 		Element cancel = document.createElement("cancel");
 		element.appendChild(cancel);
 		document.appendChild(element);
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
 		String gotoUrl = request.getParameter(this.parameterNames.get("from"));
 		response.sendRedirect(gotoUrl);
 	}
@@ -212,7 +212,7 @@ public final class RegisterUserController extends HttpController {
 		}
 		element.appendChild(values);
 		document.appendChild(element);
-		ResultHandler.setResult(this.resultSessionVarName, document);
+		ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
     	response.sendRedirect(gotoUrl);
 	}
 	

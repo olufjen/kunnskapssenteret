@@ -160,7 +160,7 @@ public class ProxyLoginController extends HttpController {
     		}
     	//}
     	document.appendChild(element);
-    	ResultHandler.setResult(this.resultSessionVarName, document);
+    	ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
     	if( ! redirectUrl.equals("")){
             redirect(response, redirectUrl);
     	}
@@ -347,5 +347,8 @@ public class ProxyLoginController extends HttpController {
 	}
 	public void setCountryCodes(String countryCodes) {
 		this.countryCodes = countryCodes;
+	}
+	public void setPluginEnvironment(PluginEnvironment pluginEnvironment) {
+		this.pluginEnvironment = pluginEnvironment;
 	}
 }

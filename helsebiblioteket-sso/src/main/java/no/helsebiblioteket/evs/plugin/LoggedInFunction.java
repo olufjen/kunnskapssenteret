@@ -41,7 +41,7 @@ public class LoggedInFunction{
 		return XMLTranslator.translate(printPositions());
 	}
 	public Document getResult(String key) throws JDOMException, IOException, ParserConfigurationException, TransformerException {
-		return ResultHandler.getResult(key);
+		return ResultHandler.getResult(key, pluginEnvironment.getCurrentSession());
 	}
 
 	private org.w3c.dom.Document printPositions() throws ParserConfigurationException {
