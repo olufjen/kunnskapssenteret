@@ -233,7 +233,7 @@
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.LogInController">
-		<property name="urlPattern" value="/site/2/LoggInnServlet" />
+		<property name="urlPattern" value="/site/2/logginnservlet" />
 		<property name="resultSessionVarName" value="hbloginresult" />
 		<property name="loginService" ref="loginServiceSso" />
 		<property name="parameterNames">
@@ -273,13 +273,13 @@
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
-		<property name="urlPattern" value="/site/2/LoggUtServlet" />
+		<property name="urlPattern" value="/site/2/loggutservlet" />
 		<property name="gotoUrl" value="${plugin.logoutcontroller.gotourl}" />
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.ProfileController">
-		<property name="urlPattern" value="/site/2/RedigerProfilServlet" />
+		<property name="urlPattern" value="/site/2/redigerprofilservlet" />
 		<property name="userService" ref="userServiceSso" />
 		<property name="organizationService" ref="organizationServiceSso" />
 		<property name="resultSessionVarName" value="hbprofileresult" />
@@ -328,7 +328,7 @@
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.ProxyLoginController">
-		<property name="urlPattern" value="/site/2/ProxyServlet" />
+		<property name="urlPattern" value="/site/2/proxyservlet" />
 		<property name="priority" value="9998" />
 		<property name="resultSessionVarName" value="hbproxyresult" />
 		<property name="proxyPassword" value="${proxy.password}" />
@@ -350,7 +350,7 @@
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
-		<property name="urlPattern" value="/site/2/RegistreringBrukerServlet" />
+		<property name="urlPattern" value="/site/2/registreringbrukerservlet" />
 		<property name="userService" ref="userServiceSso" />
 		<property name="organizationService" ref="organizationServiceSso" />
 		<property name="resultSessionVarName" value="hbregisterresult" />
@@ -395,7 +395,7 @@
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.SendPasswordController">
-		<property name="urlPattern" value="/site/2/PassordServlet" />
+		<property name="urlPattern" value="/site/2/passordservlet" />
 		<property name="loginService" ref="loginServiceSso" />
 		<property name="parameterNames">
 			<map>
@@ -416,7 +416,7 @@
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.UnsubscribeNewsletterController">
-		<property name="urlPattern" value="/site/2/MeldAvNyhetsbrevServlet" />
+		<property name="urlPattern" value="/site/2/meldavnyhetsbrevservlet" />
 		<property name="gotoUrl"
 			value="${plugin.unsubscribenewslettercontroller.gotourl}" />
 		<property name="userService" ref="userServiceSso" />
@@ -434,7 +434,7 @@
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.UnsubscribeSurveyController">
-		<property name="urlPattern" value="/site/2/MeldAvSporreskjemaServlet" />
+		<property name="urlPattern" value="/site/2/meldavsporreskjemaservlet" />
 		<property name="gotoUrl"
 			value="${plugin.unsubscribesurveycontroller.gotourl}" />
 		<property name="userService" ref="userServiceSso" />
