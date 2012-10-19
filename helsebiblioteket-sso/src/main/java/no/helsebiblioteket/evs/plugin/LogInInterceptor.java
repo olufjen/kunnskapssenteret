@@ -32,6 +32,10 @@ public final class LogInInterceptor extends HttpInterceptor {
 	private LoginService loginService;
 	private PluginEnvironment pluginEnvironment;
 	private String sessionLoggedInOrganizationVarName = "hbloggedinorganization";
+	private static boolean useXForwardedForHeader = false;
+	public void setUseXForwardedForHeader(boolean useXForwardedForHeader) {
+		LogInInterceptor.useXForwardedForHeader = useXForwardedForHeader;
+	}
 	public LogInInterceptor(){
 		logger.debug("HttpInterceptorPluginAutoLoginHelsebiblioteket CREATED");
 	}
@@ -90,27 +94,29 @@ public final class LogInInterceptor extends HttpInterceptor {
         String ret = null;
         @SuppressWarnings("rawtypes")
 		Enumeration en = request.getHeaderNames();
-        while (en != null && en.hasMoreElements()){
-            Object o = en.nextElement();
-            if (o instanceof String) {
-                String h = (String)o;
-                if (LogInInterceptor.XForwardedForHeaderName.equalsIgnoreCase(h)) {
-                    String xFf = request.getHeader(h);
-                    logger.debug("Header " + LogInInterceptor.XForwardedForHeaderName + "=" + xFf);
-                    if (null != xFf) {
-	                    // According to spec xff-header should contain address separated by ", ", but is this always the case?
-	                    // removing all whitespaces before split just in case whitespaces are not always set.
-	                    xFf = xFf.replaceAll("\\s+", "");
-	                    String xFfArray[] = xFf.split(",");
-	                    // Reading the LAST element in xff-header based on Basefarms recommendation
-	                    if (xFfArray != null && (xFfArray.length > 0)) {
-	                    	ret = (String) xFfArray[(xFfArray.length - 1)];
-	                    	logger.debug("Remote " + LogInInterceptor.XForwardedForHeaderName + " address=" + ret);
+        if (LogInInterceptor.useXForwardedForHeader) {
+	        while (en != null && en.hasMoreElements()){
+	            Object o = en.nextElement();
+	            if (o instanceof String) {
+	                String h = (String)o;
+	                if (LogInInterceptor.XForwardedForHeaderName.equalsIgnoreCase(h)) {
+	                    String xFf = request.getHeader(h);
+	                    logger.debug("Header " + LogInInterceptor.XForwardedForHeaderName + "=" + xFf);
+	                    if (null != xFf) {
+		                    // According to spec xff-header should contain address separated by ", ", but is this always the case?
+		                    // removing all whitespaces before split just in case whitespaces are not always set.
+		                    xFf = xFf.replaceAll("\\s+", "");
+		                    String xFfArray[] = xFf.split(",");
+		                    // Reading the LAST element in xff-header based on Basefarms recommendation
+		                    if (xFfArray != null && (xFfArray.length > 0)) {
+		                    	ret = (String) xFfArray[(xFfArray.length - 1)];
+		                    	logger.debug("Remote " + LogInInterceptor.XForwardedForHeaderName + " address=" + ret);
+		                    }
+		                    break;
 	                    }
-	                    break;
-                    }
-                }
-            }
+	                }
+	            }
+	        }
         }
         return (ret != null ? ret : request.getRemoteAddr());
     }
