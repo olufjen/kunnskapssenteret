@@ -270,6 +270,7 @@
 		<property name="priority" value="9999" />
 		<property name="loginService" ref="loginServiceSso" />
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
+		<property name="useXForwardedForHeader" value="false" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
