@@ -735,7 +735,7 @@ public class UserBean {
 	public void setSelectedRoles(List<String> selectedRoles) { this.selectedRoles = selectedRoles; }
 	public void setSelectedUserRole(String selectedUserRole) { this.selectedUserRole = selectedUserRole; }
 	public String getSearchinput() { return searchinput; }
-	public void setSearchinput(String searchinput) { this.searchinput = searchinput; }
+	public void setSearchinput(String searchinput) { this.searchinput = searchinput.trim(); }
 	public User getUser() { return user; }
 	public boolean isShowPositionText() { return showPositionText; }
 	public boolean isShowPositionMenu() { return showPositionMenu; }
