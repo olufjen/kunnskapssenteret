@@ -150,4 +150,8 @@ public class UserServiceSso extends SsoService implements UserService {
 	public Boolean usernameTaken(String username, Integer userId) {
 		return this.userService.usernameTaken(username, userId);
 	}
+	@Override
+	public boolean isEmailAddressTaken(String emailAddress) {
+		return this.userService.isEmailAddressTaken(emailAddress);
+	}
 }
