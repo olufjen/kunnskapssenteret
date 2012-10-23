@@ -226,4 +226,8 @@ public class UserServiceWeb extends BasicWebService implements UserService {
 	public void setDeleteUserName(QName deleteUserName) {
 		this.deleteUserName = deleteUserName;
 	}
+	@Override
+	public boolean isEmailAddressTaken(String emailAddress) {
+		return false ;
+	}
 }
