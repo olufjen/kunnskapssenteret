@@ -332,7 +332,20 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
-    /**
+	
+	/**
+	 * check user email address already taken or not
+	 * @param emailAddress
+	 * @return
+	 */
+	public boolean isEmailAddressTaken(String emailAddress) {
+		ListResultUser userList = getUserListByEmailAddress(emailAddress);
+		return (null != userList 
+				&& userList.getList() != null
+				&& userList.getList().length > 0);
+	}
+
+   /**
      * Inserts a new User into the database. All properties must
      * be set. No NULL. Use UserFactory and PersonFactory if needed.
      * Inserts the user roles, but roles must exist.
