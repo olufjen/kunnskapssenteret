@@ -105,7 +105,7 @@ public class NewUserBean {
     }
     public String actionSaveNewUser(User user) {
     	logger.debug("method 'saveNewUser' invoked in new User Bean");
-
+  
     	Person person = new Person();
     	person.setFirstName(this.firstname);
     	person.setLastName(this.lastname);
@@ -158,7 +158,8 @@ public class NewUserBean {
 		this.logger.debug("email: " + email);
 		String msg = "";
 		boolean valid = true;
-		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) { msg = "email_not_valid"; valid = false; }
+		if( ! EmailValidator.getInstance().isValidEmailAdress(email)) {msg = "email_not_valid";valid = false; }
+		if( valid && userService.isEmailAddressTaken(email)){msg="email_is_taken";valid=false;}
 		if ( ! valid) {
 			emailComponent.setValid(false);
 			// TODO Fase2: Set with Spring
