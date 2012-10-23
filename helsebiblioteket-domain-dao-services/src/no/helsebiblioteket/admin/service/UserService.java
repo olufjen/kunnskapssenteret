@@ -61,4 +61,5 @@ public interface UserService extends Serializable {
 	public String getUserExportCsv(UserExportParameter parameter);
 	public boolean unsubscribeNewsletter(String subscriptionKey);
 	public boolean unsubscribeSurvey(String subscriptionKey);
+	public boolean isEmailAddressTaken(String emailAddress);
 }
