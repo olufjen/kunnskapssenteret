@@ -18,7 +18,7 @@
 		<result property="employer" column="employer" />
 		<result property="positionText" column="position_text" />
 		<result property="isStudent" column="is_student" />
-		<result property="lastChanged" column="last_changed" />
+		<result property="lastChanged" column="last_changed"  />
 	</resultMap>
 	<insert id="insertPerson" parameterClass="person">
 		<selectKey resultClass="int" keyProperty="id">
