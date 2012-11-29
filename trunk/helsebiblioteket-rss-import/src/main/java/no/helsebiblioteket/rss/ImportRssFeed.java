@@ -49,8 +49,8 @@ public class ImportRssFeed extends TaskHandler {
 	private String mailHost;
 
 	private enum TaskPropertyKeys {
-		username,
-		password,
+		cmsUsername,
+		cmsPassword,
 		importType,
 		categoryKey,
 		feedUrl,
@@ -215,8 +215,8 @@ public class ImportRssFeed extends TaskHandler {
 	private void initProperties(Properties props) {
 
 		if (props != null && props.size() > 0) {
-			this.username = props.getProperty(TaskPropertyKeys.username.name());
-			this.password = props.getProperty(TaskPropertyKeys.password.name());
+			this.username = props.getProperty(TaskPropertyKeys.cmsUsername.name());
+			this.password = props.getProperty(TaskPropertyKeys.cmsPassword.name());
 			this.importType = ImportType.valueOf(props.getProperty(TaskPropertyKeys.importType.name()));
 
 			try {
