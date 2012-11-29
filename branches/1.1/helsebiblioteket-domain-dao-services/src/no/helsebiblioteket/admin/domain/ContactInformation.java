@@ -2,9 +2,11 @@ package no.helsebiblioteket.admin.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import org.apache.myfaces.custom.fileupload.UploadedFile;
 
-@SuppressWarnings("serial")
 public class ContactInformation implements Serializable {
+	private static final long serialVersionUID = 5776043183143665803L;
+
 	// Primary key
 	private Integer id;
 	
@@ -15,6 +17,34 @@ public class ContactInformation implements Serializable {
 	private String postalLocation;
 	private String email;
 	private Date lastChanged;
+	private String info;
+	private byte[] logoImage;
+	private String logoName;
+	private String logoContentType;
+	
+	
+	public String getLogoName() {
+		return logoName;
+	}
+
+
+	public void setLogoName(String logoName) {
+		this.logoName = logoName;
+	}
+
+
+	public String getLogoContentType() {
+		return logoContentType;
+	}
+
+
+	public void setLogoContentType(String logoContentType) {
+		this.logoContentType = logoContentType;
+	}
+
+	private UploadedFile uploadedImage;
+	private String deletIt;
+
 	
 	// Helpers
 	@Override
@@ -66,4 +96,36 @@ public class ContactInformation implements Serializable {
 	public void setLastChanged(Date lastChanged) {
 		this.lastChanged = lastChanged;
 	}
+
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public byte[] getLogoImage() {
+		return logoImage;
+	}
+	
+	public void setLogoImage(byte[] logoImage) {
+		this.logoImage = logoImage;
+	}
+
+	public UploadedFile getUploadedImage() {
+		return uploadedImage;
+	}
+
+	public void setUploadedImage(UploadedFile uploadedImage) {
+		this.uploadedImage = uploadedImage;
+	}
+
+	public String getDeletIt() {
+		return deletIt;
+	}
+
+	public void setDeletIt(String deletIt) {
+		this.deletIt = deletIt;
+	}
+
 }
