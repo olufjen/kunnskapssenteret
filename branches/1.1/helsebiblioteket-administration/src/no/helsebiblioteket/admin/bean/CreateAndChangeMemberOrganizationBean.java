@@ -1,8 +1,13 @@
 package no.helsebiblioteket.admin.bean;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.application.FacesMessage;
@@ -12,6 +17,20 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.myfaces.custom.fileupload.UploadedFile;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.faces.context.FacesContext;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import no.helsebiblioteket.admin.domain.Access;
 import no.helsebiblioteket.admin.domain.AccessType;
@@ -45,6 +64,9 @@ import no.helsebiblioteket.admin.domain.requestresult.ValueResultSupplierOrganiz
 import no.helsebiblioteket.admin.validator.IpAddressValidator;
 import no.helsebiblioteket.admin.web.jsf.MessageResourceReader;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 	private MemberOrganization memberOrganization;
@@ -63,6 +85,12 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	private HtmlDataTable ipRangeListHtmlDataTable = null;
 	private HtmlDataTable orgAccessTable;
 	
+	private Pattern pattern;
+	private Matcher matcher;
+	// private ServletContext servletContext ;
+	private static final String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)";
+
+	
 	public String actionSaveOrganization() {
 		logger.debug("Method 'actionSaveOrganization' invoked");
 		if (!validateOrganizationNames()) {
@@ -71,13 +99,52 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 		ContactInformation contactInformationOrganization;
 		Profile contactPersonProfile;
 		if(this.isNew){
-//			this.memberOrganization = new MemberOrganization();
 			contactInformationOrganization = new ContactInformation();
 			contactInformationOrganization = organization.getContactInformation();
 			this.memberOrganization.getOrganization().setContactInformation(contactInformationOrganization);
 			OrganizationType organizationType = ((ValueResultOrganizationType)this.organizationService.getOrganizationTypeByKey(
 					OrganizationTypeKey._health_enterprise)).getValue();
 			Person contactPerson = this.memberOrganization.getOrganization().getContactPerson();
+			
+	       try {
+	       	
+	        	//Check the file validation
+	        	pattern = Pattern.compile(IMAGE_PATTERN);
+	
+	        	String contentType = contactPerson.getContactInformation().getUploadedImage().getContentType();
+	        	String fileName = contactPerson.getContactInformation().getUploadedImage().getName();
+	        	byte[] bFile = contactPerson.getContactInformation().getUploadedImage().getBytes();
+	        	matcher = pattern.matcher(fileName);
+	        	ResourceBundle bundle = ResourceBundle.getBundle("no.helsebiblioteket.admin.web.jsf.messageresources.main", Locale.getDefault());
+	       	 	FacesContext facesContext = FacesContext.getCurrentInstance();
+	        	if(matcher.matches()){
+	    	        int bytes = bFile.length; // file size in bytes
+	    	        int kiloBytes = (bytes/1024); // file size in kilo bytes
+		        	if(kiloBytes > 3070){  // if file size more then 3 mb give an error message
+		        		 // Show error message.
+		        		FacesMessage message = new FacesMessage(bundle.getString("image_size_not_valid"));	
+		        		 logoPicture.setValid(false);
+			     			facesContext.addMessage(logoPicture.getClientId(facesContext), message);
+		        		 return "create_change_member_organization";
+		        	}else{
+		        		contactPerson.getContactInformation().setLogoImage(bFile);
+			        	contactPerson.getContactInformation().setLogoContentType(contentType);
+			        	contactPerson.getContactInformation().setLogoName(fileName);
+	            	}
+		        }else{
+	        		
+	        		 // Show error message.
+	        		FacesMessage message = new FacesMessage(bundle.getString("must_be_valid_file"));	
+	       
+	        		 logoPicture.setValid(false);
+	     			facesContext.addMessage(logoPicture.getClientId(facesContext), message);
+	        	    return "create_change_member_organization";
+	        	}
+	        	
+	        } catch (Exception e) {
+		     e.printStackTrace();
+	        }
+				
 			contactPerson.setPosition(((ValueResultPosition)this.userService.getPositionByKey(PositionTypeKey.none, organizationType)).getValue());
 			contactPersonProfile = this.memberOrganization.getOrganization().getContactPerson().getProfile();
 		} else {
