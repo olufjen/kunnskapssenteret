@@ -28,6 +28,7 @@ public class NewOrganizationBean {
 	protected UIInput organizationNameNorwegianShortUIInput = null;
 	protected UIInput organizationNameEnglishUIInput = null;
 	protected UIInput organizationNameEnglishShortUIInput = null;
+	protected UIInput logoPicture = null;
 	
 	protected Boolean isNew;
 	protected Organization organization;
@@ -135,6 +136,12 @@ public class NewOrganizationBean {
 		return organizationNameNorwegianUIInput;
 	}
 
+	public UIInput getLogoPicture() {
+		return logoPicture;
+	}
+	public void setLogoPicture(UIInput logoPicture) {
+		this.logoPicture = logoPicture;
+	}
 	public UIInput getOrganizationNameNorwegianShortUIInput() {
 		return organizationNameNorwegianShortUIInput;
 	}
