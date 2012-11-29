@@ -14,8 +14,8 @@
 	<h:outputText value="#{msg_headings.member_organization_change}"
 		rendered="#{createAndChangeMemberOrganizationBean.notNew}" />
 <f:verbatim></h2></f:verbatim>
-<hr />
-<h:form id="create-and-change-member-organization">
+<hr/>
+<h:form id="create-and-change-member-organization"  enctype="multipart/form-data">
 	<table>
 		<tr>
 			<td>
@@ -223,8 +223,7 @@
 				<h:inputText 
 					value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.lastName}"
 					id="contactPersonLastName" 
-					required="false"
-					>
+					required="false">
 				</h:inputText>
 			</td>
 		</tr>
@@ -254,6 +253,28 @@
 				</h:inputText>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.logo}" ></h:outputText>
+			</td>
+			<td>
+				<t:inputFileUpload id="uploadImg" accept="image/*"  value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.contactInformation.uploadedImage}" 
+					binding="#{createAndChangeMemberOrganizationBean.logoPicture}"
+				  ></t:inputFileUpload>
+				<br /><h:message for="uploadImg" styleClass="error"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h:outputText value="#{msg_main.info}" ></h:outputText>
+			</td>
+			<td>
+				<h:inputTextarea rows="5" cols="10"  style="width: 133px; height: 55px;"
+					value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.contactInformation.info}"
+					id="contactPersonInfo">
+				</h:inputTextarea>
+			</td>
+		</tr>
 		
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.ip_address}" /></h5></td>
@@ -263,7 +284,7 @@
 				<h:outputText value="#{msg_main.ip_range}" />
 			</td>
 			<td width="420px" >
-				<table    border="0">
+				<table>
 					<tr>
 						<td >
 							<h:inputText 
@@ -380,7 +401,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"">
+			<td colspan="2" align="left">
 				<h:commandLink value="#{msg_main.add}"
 					action="#{createAndChangeMemberOrganizationBean.actionAddSource}"
 					immediate="true"

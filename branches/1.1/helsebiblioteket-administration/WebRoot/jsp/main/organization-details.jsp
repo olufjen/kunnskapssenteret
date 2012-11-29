@@ -70,7 +70,7 @@
 			<td><h:outputText value="#{msg_main.organization_telephone_number}"  /></td>
 			<td><h:outputText value="#{organizationBean.organization.contactInformation.telephoneNumber}"/></td>
 		</tr>
-
+		
 		<tr>
 			<td><br /><h5><h:outputText value="#{msg_main.organization_contact_person}"/></h5></td>
 		</tr>
@@ -109,8 +109,14 @@
 			<td><h:outputText value="#{msg_main.organization_telephone_number}"  /></td>
 			<td><h:outputText value="#{organizationBean.organization.contactPerson.contactInformation.telephoneNumber}"/></td>
 		</tr>
-
-
+		<tr>
+			<td><h:outputText value="#{msg_main.info}"  /></td>
+			<td><h:outputText value="#{organizationBean.organization.contactPerson.contactInformation.info}"/></td>
+		</tr>
+		<tr>
+			<td ><h:outputText value="Logo" /></td>
+			<td> <h:graphicImage value="/imageservlet?id=#{organizationBean.organization.contactPerson.contactInformation.id}" style="width: 2cm; height: 3cm" /> </td>
+		</tr>
 		<tr>
 			<td colspan="2"><br /><h5><h:outputText value="#{msg_main.organization_other_names}" /></h5></td>
 		</tr>
