@@ -123,6 +123,8 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="sqlMapClient" ref="sqlMapClient"/>
 	</bean>
 	
+	<bean id = "lobHandler" class = "org.springframework.jdbc.support.lob.DefaultLobHandler" /> 
+	
 	<bean id="emailLostPasswordAdminTemplate" class="no.helsebiblioteket.admin.domain.Email">		
 		<property name="fromName" value="redaksjonen@helsebiblioteket.no" />
 		<property name="fromEmail" value="redaksjonen@helsebiblioteket.no" />
@@ -133,21 +135,9 @@ xmlns="http://www.springframework.org/schema/beans"
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
     	<property name="configLocation" value="WEB-INF/sqlmap-config.xml"/>
     	<property name="dataSource" ref="dataSourceHelsebiblioteket"/>
+    	<property name="lobHandler" ref="lobHandler"/>  
+    	
    	</bean>
-   	
-   	<bean id="LDAPLookupUtil" class="no.helsebiblioteket.admin.service.importexport.ldap.LDAPLookupUtil">
-	</bean>
-	
-  	<bean id="importEndUsersService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportEndUsersServiceImpl">
- 		<property name="userService" ref="userService"></property>
- 		<property name="ldapLookupUtil" ref="LDAPLookupUtil"></property>
- 		<!-- <property name="commonPassword" value="password" /> -->
-	</bean>
-	
-	<bean id="importMemberOrganizationsService" class="no.helsebiblioteket.admin.service.importexport.impl.ImportMemberOrganizationsServiceImpl">
-	 	<property name="organizationService" ref="organizationService"></property>
-	 	<property name="userService" ref="userService"></property>
-	</bean>
 
 	<!-- 
 		A service for accessing (relative) static properties like types of entities etc.
