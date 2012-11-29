@@ -145,7 +145,12 @@ public class PsykNyttRssContent extends RssContent {
 
 		for (Element element : categories) {
 			String category = element.getText().toLowerCase();
-			String url = "http://psyknyheter.wordpress.com/category/" + category.replace(" ", "-");
+			String categoryPath = category.replace(" ", "-");
+			
+			if (category.equals("skåringsverktøy")) {
+				categoryPath = "skaringsverktøy";
+			}
+			String url = "http://psyknyheter.wordpress.com/category/" + categoryPath;
 			Element a = getAnchor(url, category);
 			readMore.addContent(a);
 
