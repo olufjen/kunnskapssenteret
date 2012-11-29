@@ -193,7 +193,33 @@
 		<param-value>/WEB-INF/tiles.xml</param-value>
 	</context-param>
 
-	<filter>
+
+ 
+ <!-- Filter Config -->
+ 
+  <filter>
+        <filter-name>ExtensionsFilter</filter-name>
+        <filter-class>
+            org.apache.myfaces.component.html.util.ExtensionsFilter
+        </filter-class>
+        <init-param>
+            <param-name>uploadMaxFileSize</param-name>
+            <param-value>10m</param-value>
+        </init-param>
+        <init-param>
+            <param-name>uploadThresholdSize</param-name>
+            <param-value>100k</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ExtensionsFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+ 
+ 
+ 	
+<!-- 	<filter>
 		<filter-name>extensionsFilter</filter-name>
 		<filter-class>
 			org.apache.myfaces.webapp.filter.ExtensionsFilter
@@ -218,9 +244,11 @@
 			<param-value>100k</param-value>
 		</init-param>
 	</filter>
-
- 
- <!-- Filter Config -->
+ 	<filter-mapping>
+  		<filter-name>extensionsFilter</filter-name>
+  		<servlet-name>Faces Servlet</servlet-name>
+  	</filter-mapping>
+  -->
 	  <filter>
             <filter-name>Acegi Filter Chain Proxy</filter-name>
             <filter-class>
@@ -233,18 +261,13 @@
 	            </param-value>
             </init-param>
      </filter>
-
-	<filter-mapping>
+  	<filter-mapping>
          <filter-name>Acegi Filter Chain Proxy</filter-name>
          <url-pattern>/*</url-pattern>
          <dispatcher>FORWARD</dispatcher>
          <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 	
-
- 
-
-	 
   <listener>
       <listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
     </listener>
@@ -252,19 +275,20 @@
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>    
-  
- 	<filter-mapping>
+  	
+ 	<!-- <filter-mapping>
 		<filter-name>extensionsFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>extensionsFilter</filter-name>
 		<url-pattern>*.jsf</url-pattern>
-	</filter-mapping>
+	</filter-mapping> 
 	<filter-mapping>
 		<filter-name>extensionsFilter</filter-name>
 		<url-pattern>/faces/*</url-pattern>
 	</filter-mapping>
+-->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -273,6 +297,15 @@
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Image Servlet</servlet-name>
+		<servlet-class>no.helsebiblioteket.admin.servlet.ImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Image Servlet</servlet-name>
+		<url-pattern>/imageservlet</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>
