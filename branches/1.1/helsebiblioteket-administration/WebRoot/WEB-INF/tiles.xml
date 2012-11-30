@@ -193,10 +193,6 @@
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
 
-	<!-- Import and export og initial data -->
-	<definition name="importexport.tiles" extends="basicFrame">
-		<put name="main" value="/jsp/main/importexport.jsp" type="page" />
-   	</definition>
    	
 	<!--OLD USER TODO: Remove? -->
    	<definition name="user.tiles" extends="standardFrame">
