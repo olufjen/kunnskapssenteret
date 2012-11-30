@@ -220,30 +220,6 @@
         <managed-bean-name>welcomeBean</managed-bean-name>
         <managed-bean-class>no.helsebiblioteket.admin.bean.WelcomeBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    	<managed-property>
-    		<property-name>importEndUsersService</property-name>
-        	<value>#{importEndUsersService}</value>
-		</managed-property>
-		<managed-property>
-    		<property-name>importMemberOrganizationsService</property-name>
-        	<value>#{importMemberOrganizationsService}</value>
-		</managed-property>
-	</managed-bean>	
-	
-	<managed-bean>
-    	<description>Backingbean import and export</description>
-        <display-name>import and export</display-name>
-        <managed-bean-name>importExportBean</managed-bean-name>
-        <managed-bean-class>no.helsebiblioteket.admin.bean.ImportExportBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    	<managed-property>
-    		<property-name>importEndUsersService</property-name>
-        	<value>#{importEndUsersService}</value>
-		</managed-property>
-		<managed-property>
-    		<property-name>importMemberOrganizationsService</property-name>
-        	<value>#{importMemberOrganizationsService}</value>
-		</managed-property>
 	</managed-bean>	
 	 
     <managed-bean>
