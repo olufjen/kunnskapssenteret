@@ -13,12 +13,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.enonic.cms.api.client.Client;
 import com.enonic.cms.api.client.ClientException;
 import com.enonic.cms.api.client.ClientFactory;
 import com.enonic.cms.api.client.model.CreateContentParams;
 import com.enonic.cms.api.client.model.GetCategoriesParams;
 import com.enonic.cms.api.client.model.GetContentByCategoryParams;
+import com.enonic.cms.api.client.model.GetMenuItemParams;
 import com.enonic.cms.api.client.model.content.ContentDataInput;
 import com.enonic.cms.api.client.model.content.HtmlAreaInput;
 import com.enonic.cms.api.client.model.content.TextInput;
@@ -27,6 +32,7 @@ import com.enonic.cms.api.plugin.ext.TaskHandler;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.filter.ElementFilter;
+import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
 import org.jdom.Element;
 
@@ -57,6 +63,11 @@ public class LinkCheckerPlugin extends TaskHandler {
 	private Client client;
 
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("HH:mm dd-MM-yy");
+	private static final String CONTENT_PREFIX = "content://";
+	private static final String ATTACHMENT_PREFIX = "attachment://";
+	private static final String PAGE_PREFIX = "page://";
+	private static final String ANCHOR_PREFIX = "#";
+	private static final String CONTENT_FAGPROSEDYRE = "fagprosedyre";
 
 	private int linksChecked;
 	private int erroneousLinks;
@@ -78,7 +89,9 @@ public class LinkCheckerPlugin extends TaskHandler {
 	private String user;
 	private String password;
 	private String cmsSite;
-	
+	private boolean checkAnchors = true;
+	private List<Integer> excludedResponseCodes = new ArrayList<Integer>();
+
 	protected enum TaskPropertyKeys {
 		cmsReceivers,
 		cmsSender,
@@ -91,7 +104,9 @@ public class LinkCheckerPlugin extends TaskHandler {
 		cmsHostname,
 		cmsCategoriesString,
 		cmsExcludedCategoryKeys,
-		cmsSite
+		cmsSite,
+		cmsCheckAnchors,
+		cmsExcludedResponseCodes
 	}
 
 	public LinkCheckerPlugin() {
@@ -111,6 +126,8 @@ public class LinkCheckerPlugin extends TaskHandler {
 		configCategories.clear();
 		excludedCategoryKeys.clear();
 		allCategories.clear();
+		checkAnchors = true;
+		excludedResponseCodes.clear();
 	}
 
 	/**
@@ -127,7 +144,7 @@ public class LinkCheckerPlugin extends TaskHandler {
 
 			password = taskProperties.getProperty(TaskPropertyKeys.cmsPassword.name());
 			log.info("Configured password: ********");
-			
+
 			remoteClientUrl = taskProperties.getProperty(TaskPropertyKeys.cmsRemoteClientUrl.name());
 			log.info("Configured remote client url: " + remoteClientUrl);
 
@@ -153,10 +170,13 @@ public class LinkCheckerPlugin extends TaskHandler {
 			log.info("Configured sender: " + sender);
 
 			String receiversString = taskProperties.getProperty(TaskPropertyKeys.cmsReceivers.name());
-			StringTokenizer emailTokenizer = new StringTokenizer(receiversString, ",");
+			if (receiversString != null) {
 
-			while (emailTokenizer.hasMoreElements()) {
-				receivers.add(emailTokenizer.nextToken());
+				StringTokenizer emailTokenizer = new StringTokenizer(receiversString, ",");
+
+				while (emailTokenizer.hasMoreElements()) {
+					receivers.add(emailTokenizer.nextToken());
+				}
 			}
 			log.info("Configured receivers: " + receiversString);
 
@@ -165,6 +185,7 @@ public class LinkCheckerPlugin extends TaskHandler {
 
 			// catKey1,fieldName1,ishtml1, ... fieldNameN,ishtmlN;catKey2,fieldName2,ishtml2 ...
 			String categoriesString = taskProperties.getProperty(TaskPropertyKeys.cmsCategoriesString.name());
+			categoriesString.replaceAll("\\s", "");
 			log.info("Configured categories: " + categoriesString);
 			StringTokenizer categoryTokenizer = new StringTokenizer(categoriesString, ";");
 
@@ -222,12 +243,34 @@ public class LinkCheckerPlugin extends TaskHandler {
 				}
 				log.info("Categories excluded: " + excludedCategoryKeysString);
 			}
+			String anchors = taskProperties.getProperty(TaskPropertyKeys.cmsCheckAnchors.name());
+
+			if (anchors != null) {
+				checkAnchors = Boolean.parseBoolean(anchors);
+			}
+			log.info("Check anchors: " + checkAnchors);
+			String excludedResponseCodesString = taskProperties.getProperty(TaskPropertyKeys.cmsExcludedResponseCodes.name());
+
+			if (excludedResponseCodesString != null) {
+				StringTokenizer responseCodesTokenizer = new StringTokenizer(excludedResponseCodesString, ",");
+
+				while (responseCodesTokenizer.hasMoreElements()) {
+					String responsCode = responseCodesTokenizer.nextToken().trim();
+					try {
+						excludedResponseCodes.add(Integer.parseInt(responsCode));
+					} catch (NumberFormatException nfe) {
+						log.error("Could nor parse excluded response codes");
+					}
+				}
+				log.info("Response codes excluded: " + excludedResponseCodesString);
+			}
 		} else {
 			log.error("Empty task properties. Can't operate without proper configuration.");
 		}
 	}
 
 	public void execute(Properties props) {
+		long startTime = System.currentTimeMillis();
 		init();
 		handleProperties(props);
 		log.info("LinkCheckerPlugin started");
@@ -258,14 +301,20 @@ public class LinkCheckerPlugin extends TaskHandler {
 
 			try {
 				createContent();
-				sendMail("Lenkesjekk for " + saveCategoryName.toLowerCase() + " (" + SDF.format(timeStarted) + " - " + SDF.format(timeEnded) + ")");
+				if (sender != null && !receivers.isEmpty() && hostName != null) {
+					sendMail("Lenkesjekk for " + saveCategoryName.toLowerCase() + " (" + SDF.format(timeStarted) + " - " + SDF.format(timeEnded) + ")");
+				} else {
+					log.warn("Missing sender, receiver or hostname, no mail will be sent.");
+				}
+
 			} catch (Exception e) {
 				log.error("Error creating content or sending mail.", e);
 			}
 		} catch (JDOMException e) {
 			log.error("Failed to get save category " + saveCategory, e);
 		}
-		log.info("LinkCheckerPlugin finished");
+		long endTime = System.currentTimeMillis();
+		log.info("LinkCheckerPlugin finished in " + TimeUnit.MILLISECONDS.toMinutes(endTime - startTime) + " minutes.");
 	}
 
 	private String getCategoryName() throws JDOMException {
@@ -367,8 +416,11 @@ public class LinkCheckerPlugin extends TaskHandler {
 
 			for (Element content : contents) {
 				String contentKey = content.getAttributeValue("key");
+				String contentType = content.getAttributeValue("contenttype");
 				String title = StringEscapeUtils.escapeXml(content.getChildText("title"));
 				Element contentdata = content.getChild("contentdata");
+				List<String> htmlAreas = null;
+				boolean htmlAreasFound = false;
 
 				log.info("chekcing content key " + contentKey);
 
@@ -384,12 +436,21 @@ public class LinkCheckerPlugin extends TaskHandler {
 
 						if (category.getIsHtmlArea().get(i)) {
 							Iterator<Element> urlIterator = element.getDescendants(new ElementFilter("a"));
-							log.info("innen if" );
+
 							while (urlIterator.hasNext()) {
 								Element a = urlIterator.next();
-								log.info("a value:" + a) ;
 								String href = a.getAttributeValue("href");
-								log.info("href value:" + href) ;
+
+								if (isInternalUrl(href)) {
+
+									// If the url is an anchor and the htmlAreas of the content is not found yet, 
+									// get all htmlAreas if checkAnchors is true
+									if (href.startsWith(ANCHOR_PREFIX) && checkAnchors && !htmlAreasFound) {
+										htmlAreas = getHtmlAreas(contentdata, category);
+										htmlAreasFound = true;
+									}
+									href = getValidInternalUrl(href, contentType, htmlAreas);
+								}
 								String message = href != null && !isMailUrl(href) ? checkURL(href) : "";
 
 								if (!message.equals("")) {
@@ -398,7 +459,6 @@ public class LinkCheckerPlugin extends TaskHandler {
 								}
 							}
 						} else if (!urlText.equals("") && !isMailUrl(urlText)) {
-							log.info("urlText value: " + urlText) ;
 							String message = checkURL(urlText);
 
 							if (!message.equals("")) {
@@ -416,8 +476,122 @@ public class LinkCheckerPlugin extends TaskHandler {
 		} while ((root.getAttributeValue("resultcount") != null) && (!root.getAttributeValue("resultcount").equals("0")));
 	}
 
+	/**
+	 * 
+	 * @param contentdata
+	 * @param category
+	 * @return a list containing all the htmlareas of the content
+	 */
+	@SuppressWarnings("unchecked")
+	private List<String> getHtmlAreas(Element contentdata, Category category) {
+		List<String> htmlAreas = new ArrayList<String>();
+		int i = 0;
+
+		for (String field : category.getFields()) {
+
+			if (category.getIsHtmlArea().get(i)) {
+				Iterator<Element> fieldIterator = contentdata.getDescendants(new ElementFilter(field));
+
+				while (fieldIterator.hasNext()) {
+					Element htmlElement = fieldIterator.next();
+					String html = new XMLOutputter().outputString(htmlElement);
+					htmlAreas.add(html);
+				}
+			}
+			i++;
+		}
+		return htmlAreas;
+	}
+
 	private boolean isMailUrl(String url) {
 		return url.toLowerCase().startsWith("mailto:");
+	}
+
+	private boolean isInternalUrl(String url) {
+		return url != null && (url.startsWith(CONTENT_PREFIX) || url.startsWith(ATTACHMENT_PREFIX) ||
+				url.startsWith(PAGE_PREFIX) || url.startsWith(ANCHOR_PREFIX));
+	}
+
+	/**
+	 * 
+	 * @param internalUrl
+	 * @param contentType
+	 * @param htmlAreas
+	 * @return internal urls that is possible to check, or null if the url is a menuitem or an anchor that is found
+	 */
+	private String getValidInternalUrl(final String internalUrl, String contentType, List<String> htmlAreas) {
+		String validUrl = internalUrl;
+
+		// Handeling content urls
+		if (internalUrl.startsWith(CONTENT_PREFIX)){
+			String replaceUrl = internalUrl.replaceFirst(CONTENT_PREFIX, cmsSite);
+			validUrl = replaceUrl + ".cms";
+		} 
+		// Handeling attachment urls
+		else if (internalUrl.startsWith(ATTACHMENT_PREFIX)){
+			String attachUrl = cmsSite + "_attachment/" ;
+			String replaceUrl = internalUrl.replaceFirst(ATTACHMENT_PREFIX, attachUrl);
+			validUrl = replaceUrl;
+		} 
+		// Handeling page urls
+		else if (internalUrl.startsWith(PAGE_PREFIX)) {
+			try {
+				int menuitemKey = Integer.parseInt(internalUrl.replaceFirst(PAGE_PREFIX, ""));
+				GetMenuItemParams menuItemParams = new GetMenuItemParams();
+				menuItemParams.menuItemKey = menuitemKey;
+				Document result = client.getMenuItem(menuItemParams);
+
+				Element menuitem = result.getRootElement().getChild("menuitem");
+
+				//If the menuitem is found, the url need not to be checked 
+				if (menuitem != null) {
+					validUrl = null;
+				}
+			} catch (NumberFormatException e) {
+				log.warn("Tried to convert invalid internal page url: " + internalUrl, e);
+			}
+		} 
+		// Handeling anchors
+		else if (internalUrl.startsWith(ANCHOR_PREFIX) && htmlAreas != null) {
+			String anchor = internalUrl.replaceFirst(ANCHOR_PREFIX, "");
+
+			// Handeling fagprosedyre subtheme anchor
+			if (CONTENT_FAGPROSEDYRE.equals(contentType) && anchor.startsWith("subtheme-")) {
+				try {
+					int themeCount = htmlAreas.size() - 1;
+					int themeNumber = Integer.parseInt(anchor.substring(9));
+
+					// If the subtheme number is within the count of theme htmlareas, the url need not to be checked
+					if (themeNumber <= themeCount) {
+						validUrl = null;
+						log.info("fagprosedyre anchor found: " + anchor + ", theme number " + themeNumber + "/" + themeCount);
+					}
+				} catch (NumberFormatException e) {
+					log.warn("Tried to convert invalid subtheme number for " + contentType + " anchor: " + internalUrl, e);
+				}
+			}
+			//Handeling other anchors
+			else {
+				for (String htmlArea : htmlAreas) {
+					String regex = "<\\w+\\s+.*id=\"" + Pattern.quote(anchor) + "\".*>";
+					Pattern pattern = Pattern.compile(regex);
+					Matcher matcher = pattern.matcher(htmlArea);
+
+					//If the html contains the anchor, the url need not to be checked
+					if (matcher.find()) {
+						validUrl = null;
+						break;
+					}
+				}
+			}
+		} 
+		// Skip anchor test
+		else if (internalUrl.startsWith(ANCHOR_PREFIX) && htmlAreas == null) {
+			validUrl = null;
+		}
+		log.info("The internal url " + internalUrl + " is replaced: " + validUrl);
+
+		return validUrl;
 	}
 
 	/**
@@ -429,106 +603,106 @@ public class LinkCheckerPlugin extends TaskHandler {
 	 */
 	private String checkURL(String url) {
 		log.info("Checking url: " + url);
-		String validUrl = StringEscapeUtils.escapeXml(url);
 
+		String xmlValidUrl = StringEscapeUtils.escapeXml(url);
 		String responseMessage = "";
-		
-		log.info("url string: " + url);
-		if(url.contains("content://")){
-			String replaceUrl = url.replaceFirst("content://",cmsSite);
-			url = replaceUrl+".cms";
-			log.info("content site replacment: " + url) ;
-		}
-		if(url.contains("attachment://")){
-			String attachUrl = cmsSite + "_attachment/" ;
-			String replaceUrl = url.replaceFirst("attachment://",attachUrl);
-			url = replaceUrl;
-			log.info("attachment site replacment: " + url) ;
-		}
+
 		try {
 			// setup connection to url
-			
 			HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
-			con.setRequestMethod("HEAD");
+			con.setRequestMethod("GET");
 			con.setReadTimeout(linkTimeoutMillis);
 			int response = con.getResponseCode();
+			con.disconnect();
 
-			switch (response) {
-			case 400:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Bad request</td>";
-				erroneousLinks++;
-				break;
-			case 401:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Unauthorized</td>";
-				erroneousLinks++;
-				break;
-			case 403:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Forbidden</td>";
-				erroneousLinks++;
-				break;
-			case 404:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Not Found</td>";
-				erroneousLinks++;
-				break;
-			case 405:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Method Not Allowed</td>";
-				erroneousLinks++;
-				break;
-			case 406:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Not Acceptable</td>";
-				erroneousLinks++;
-				break;
-			case 407:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Proxy Authentication Required</td>";
-				erroneousLinks++;
-				break;
-			case 408:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Request Timeout</td>";
-				erroneousLinks++;
-				break;
-			case 415:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Unsupported Media Type</td>";
-				erroneousLinks++;
-				break;
-			case 500:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Internal Server Error</td>";
-				erroneousLinks++;
-				break;
-			case 501:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Not Implemented</td>";
-				erroneousLinks++;
-				break;
-			case 502:
-				//Not handeled
-				break;
-			case 503:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Service Unavailable</td>";
-				erroneousLinks++;
-				break;
-			case 504:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " Gateway Timeout</td>";
-				erroneousLinks++;
-				break;
-			case 505:
-				responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + response + " HTTP Version Not Supported</td>";
-				erroneousLinks++;
-				break;
-			default: 
-				// Other errorcodes
-				if (response >= 400 && response <= 599) {
-					responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>" + " Something unexpected happened</td>";
+			if (!excludedResponseCodes.contains(response)) {
+				switch (response) {
+				case 400:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Bad request</td>";
 					erroneousLinks++;
+					break;
+				case 401:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Unauthorized</td>";
+					erroneousLinks++;
+					break;
+				case 403:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Forbidden</td>";
+					erroneousLinks++;
+					break;
+				case 404:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Not Found</td>";
+					erroneousLinks++;
+					break;
+				case 405:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Method Not Allowed</td>";
+					erroneousLinks++;
+					break;
+				case 406:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Not Acceptable</td>";
+					erroneousLinks++;
+					break;
+				case 407:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Proxy Authentication Required</td>";
+					erroneousLinks++;
+					break;
+				case 408:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Request Timeout</td>";
+					erroneousLinks++;
+					break;
+				case 415:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Unsupported Media Type</td>";
+					erroneousLinks++;
+					break;
+				case 500:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Internal Server Error</td>";
+					erroneousLinks++;
+					break;
+				case 501:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Not Implemented</td>";
+					erroneousLinks++;
+					break;
+				case 502:
+					//Not handeled
+					break;
+				case 503:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Service Unavailable</td>";
+					erroneousLinks++;
+					break;
+				case 504:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " Gateway Timeout</td>";
+					erroneousLinks++;
+					break;
+				case 505:
+					responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + response + " HTTP Version Not Supported</td>";
+					erroneousLinks++;
+					break;
+				default: 
+					// Other errorcodes
+					if (response >= 400 && response <= 599) {
+						responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>" + " Something unexpected happened</td>";
+						erroneousLinks++;
+					}
 				}
 			}
 		} catch(UnknownHostException e) {
-			responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>Unknown host</td>";
+			responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>Unknown host</td>";
 			erroneousLinks++;
 		} catch (SocketTimeoutException e) {
 			// Not handeled
 		} catch (Exception e) {
-			log.error("Error checking link.", e);
-			String message = StringEscapeUtils.escapeXml(e.getMessage());
-			responseMessage = "<td><a href='" + validUrl + "'>" + validUrl + "</a></td>" + "<td>Exception was thrown (and logged): " + message + "</td>";
+			String message = "";
+
+			if (url.startsWith(PAGE_PREFIX)) {
+				message = "This internal page does not exist";
+				log.error(message + ": " + url, e);
+			} else if (url.startsWith(ANCHOR_PREFIX)) {
+				message = "This anchor does not exist in the content";
+				log.error(message + ": " + url, e);
+			} else {
+				message = StringEscapeUtils.escapeXml(e.getMessage());
+				log.error("Error checking link.", e);
+			}
+			responseMessage = "<td><a href='" + xmlValidUrl + "'>" + xmlValidUrl + "</a></td>" + "<td>Exception was thrown (and logged): " + message + "</td>";
 			notWellFormedLinks++;
 		} 
 		linksChecked++;
