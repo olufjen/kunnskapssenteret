@@ -13,7 +13,7 @@
 	<groupId>no.helsebiblioteket</groupId>
 	<artifactId>helsebiblioteket-linkchecker-plugin</artifactId>
 	<name>LinkCheckerPlugin</name>
-	<version>2.0</version>
+	<version>3.0</version>
 	<packaging>cms-plugin</packaging>
 
 	<properties>
