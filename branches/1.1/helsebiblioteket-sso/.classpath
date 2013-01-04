@@ -14,6 +14,7 @@
   <classpathentry kind="var" path="M2_REPO/avalon-framework/avalon-framework/4.1.3/avalon-framework-4.1.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.2.2/commons-dbcp-1.2.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.4/commons-pool-1.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar"/>
   <classpathentry kind="var" path="M2_REPO/postgresql/postgresql/8.2-511.jdbc3/postgresql-8.2-511.jdbc3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/ibatis/ibatis-sqlmap/2.3.4.726/ibatis-sqlmap-2.3.4.726.jar" sourcepath="M2_REPO/org/apache/ibatis/ibatis-sqlmap/2.3.4.726/ibatis-sqlmap-2.3.4.726-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/dspace/dependencies/dspace-geoip/1.2.3/dspace-geoip-1.2.3.jar"/>

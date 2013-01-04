@@ -271,7 +271,7 @@
 		<property name="loginService" ref="loginServiceSso" />
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 		<property name="useXForwardedForHeader">
-			<value>${plugin.logininterceptor.usexforwardedfor:false}</value>
+			<value>${plugin.logininterceptor.usexforwardedfor}</value>
 		</property>
 	</bean>
 
