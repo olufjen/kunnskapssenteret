@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -82,7 +83,7 @@ public final class LinkFilter extends HttpResponseFilter {
     		originalCompleteHref = completeLinkMatcher.group(0);
     		linkMatcher = linkPattern.matcher(originalCompleteHref);
     		if (linkMatcher.find()) {
-	    		oldLink = linkMatcher.group(2);
+	    		oldLink = replaceInvalidChar(linkMatcher.group(2));
 	    		linkFilterOverride = oldLink.contains(LinkFilter.linkFilterOverrideUrlParam);
 				//String oldLinkDeampified = oldLink.replace("&amp;", "&");
 				if (!linkFilterOverride && validHref(oldLink)) {
@@ -100,7 +101,8 @@ public final class LinkFilter extends HttpResponseFilter {
 					    		String newLink = url.toExternalForm();
 					    		if (! oldLink.equals(newLink)) {
 					    			//originalCompleteHref = deproxify(originalCompleteHref);
-					    			newCompleteHref = deproxify(originalCompleteHref).replace(oldLink, newLink);
+					    			String escapedNewLink = StringEscapeUtils.escapeXml(newLink);
+					    			newCompleteHref = deproxify(originalCompleteHref).replace(oldLink, escapedNewLink);
 					    			// using map to avoid duplicate replacements
 					    			// also only adding links that are actually changed to the map.
 					    			linkReplaceMap.put(originalCompleteHref, newCompleteHref);
@@ -125,7 +127,13 @@ public final class LinkFilter extends HttpResponseFilter {
     	return response;
     }
     
-    private URL generateURL(String href) {
+    private String replaceInvalidChar(String link) {
+    	link = link.replaceAll("'", "");
+		link = link.replaceAll("\"", "");
+		return link;
+	}
+
+	private URL generateURL(String href) {
     	URL url = null;
 		try {
 			url = new URL(href);

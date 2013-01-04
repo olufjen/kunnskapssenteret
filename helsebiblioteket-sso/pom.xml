@@ -92,8 +92,13 @@
 			<artifactId>commons-pool</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
 		<!-- Karine 21.09.12: Installing postgresql from project local repository, 
-			 as the one on maven repository seems to be corrupted -->
+			as the one on maven repository seems to be corrupted -->
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
