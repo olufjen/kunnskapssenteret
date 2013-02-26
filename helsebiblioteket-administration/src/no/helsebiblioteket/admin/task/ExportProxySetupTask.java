@@ -1,7 +1,9 @@
 package no.helsebiblioteket.admin.task;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +27,6 @@ public class ExportProxySetupTask {
 	private String comment;
 	private String name;
 	private int loginPort;
-	private int loginPortSSL;
 	private String adminPassword;
 	private String proxyPassword;
 	private String proxyServletURL;
@@ -38,10 +39,13 @@ public class ExportProxySetupTask {
 	private String maxSessions;
 	private String maxLifetime;
 	private String logFile;
+	private String interfaceIp;
+	private String staticConfigFileName;
 	
 	public void exportSetup(){
 		File configFile = new File(this.configFileName);
 		File userFile = new File(this.userFileName);
+		File staticConfigFile = new File(this.staticConfigFileName);
 
 		SupplierSourceResource[] resources = this.accessService.getSupplierSourceResourceListAll("").getList();
 		ProxyConfig[] config = this.accessService.getProxyConfigListAll("").getList();
@@ -57,15 +61,24 @@ public class ExportProxySetupTask {
 			
 			out.write("Option ProxyByHostname"); out.newLine();
 			out.write("Name " + this.name); out.newLine();
+			out.write("Interface " + this.interfaceIp); out.newLine();
 			out.write("LoginPort " + this.loginPort); out.newLine();
-			out.write("LoginPortSSL " + this.loginPortSSL); out.newLine();
-
 			out.write("MaxConcurrentTransfers " + this.maxConcurrentTransfers); out.newLine();
 			out.write("MaxVirtualHosts " + this.maxVirtualHosts); out.newLine();
 			out.write("MaxSessions " + this.maxSessions); out.newLine();
 			out.write("MaxLifetime " + this.maxLifetime); out.newLine(); out.newLine();
 			
 			out.write("LogFile " + this.logFile); out.newLine(); out.newLine();
+			
+			out.write("# Static config start"); out.newLine();
+			BufferedReader configReader = new BufferedReader(new FileReader(staticConfigFile));
+			String line = null;
+			
+			while ((line = configReader.readLine()) != null) {
+				out.write(line); out.newLine();
+			}
+			configReader.close();
+			out.write("# Static config end"); out.newLine(); out.newLine();
 
 	    	int i=0;
 			for (ConfigGroup group : configList) {
@@ -231,12 +244,6 @@ public class ExportProxySetupTask {
 	public void setLoginPort(int loginPort) {
 		this.loginPort = loginPort;
 	}
-	public int getLoginPortSSL() {
-		return loginPortSSL;
-	}
-	public void setLoginPortSSL(int loginPortSSL) {
-		this.loginPortSSL = loginPortSSL;
-	}
 	public String getAdminPassword() {
 		return adminPassword;
 	}
@@ -302,5 +309,11 @@ public class ExportProxySetupTask {
 	}
 	public void setLogFile(String logFile) {
 		this.logFile = logFile;
+	}
+	public void setInterfaceIp(String interfaceIp) {
+		this.interfaceIp = interfaceIp;
+	}
+	public void setStaticConfigFileName(String staticConfigFileName) {
+		this.staticConfigFileName = staticConfigFileName;
 	}
 }
