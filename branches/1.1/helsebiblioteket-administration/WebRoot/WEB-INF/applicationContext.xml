@@ -374,7 +374,6 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="comment" value="${proxy.comment}"></property>
 		<property name="name" value="${proxy.name}"></property>
 		<property name="loginPort" value="${proxy.loginport}"></property>
-		<property name="loginPortSSL" value="${proxy.loginportssl}"></property>
 		<property name="adminPassword" value="${proxy.adminpassword}"></property>
 		<property name="proxyPassword" value="${proxy.proxypassword}"></property>
 		<property name="proxyServletURL" value="${proxy.proxyservleturl}"></property>
@@ -383,12 +382,13 @@ xmlns="http://www.springframework.org/schema/beans"
 		<property name="maxSessions" value="${proxy.maxsessions}"></property>
 		<property name="maxLifetime" value="${proxy.maxlifetime}"></property>
 		<property name="logFile" value="${proxy.logfile}"></property>
-
 		<property name="configFileName" value="${proxy.configfilename}"></property>
 		<property name="userFileName" value="${proxy.userfilename}"></property>
 		<property name="waitRestart" value="${proxy.waitrestart}"></property>
 		<property name="restartCommand" value="${proxy.restartcommand}"></property>
-	</bean>
+		<property name="interfaceIp" value="${proxy.interfaceip}"></property>
+		<property name="staticConfigFileName" value="${proxy.staticconfigfilename}"></property>
+	</bean> 
 	<bean id="importProxyDataDailyTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="importProxyDataDailyTask" />
 		<property name="targetMethod" value="importProxyData" />
