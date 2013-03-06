@@ -120,7 +120,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	        	if(matcher.matches()){
 	    	        int bytes = bFile.length; // file size in bytes
 	    	        int kiloBytes = (bytes/1024); // file size in kilo bytes
-		        	if(kiloBytes > 3070){  // if file size more then 3 mb give an error message
+		        	if(kiloBytes > 1024){  // if file size more then 3 mb give an error message
 		        		 // Show error message.
 		        		FacesMessage message = new FacesMessage(bundle.getString("image_size_not_valid"));	
 		        		 logoPicture.setValid(false);
@@ -135,8 +135,7 @@ public class CreateAndChangeMemberOrganizationBean extends NewOrganizationBean {
 	        		
 	        		 // Show error message.
 	        		FacesMessage message = new FacesMessage(bundle.getString("must_be_valid_file"));	
-	       
-	        		 logoPicture.setValid(false);
+	        		logoPicture.setValid(false);
 	     			facesContext.addMessage(logoPicture.getClientId(facesContext), message);
 	        	    return "create_change_member_organization";
 	        	}
