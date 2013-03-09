@@ -350,6 +350,12 @@
 		<property name="geoIpService" ref="geoIpServiceSso" />
 		<property name="countryCodes" value="${plugin.countrycodes}" />
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
+		<!-- key: domain, value: ticket URL prefix -->
+		<property name="trustedProxies">
+			<map>
+				<entry key="informahealthcare.com" value="http://informahealthcare.com/tps/requestticket?domain=helsebiblioteket.no&amp;debug=true&amp;ru=" />
+			</map>
+		</property>
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">

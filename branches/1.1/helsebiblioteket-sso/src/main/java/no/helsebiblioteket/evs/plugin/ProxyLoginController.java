@@ -7,6 +7,15 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -30,11 +39,18 @@ import no.helsebiblioteket.evs.plugin.result.ResultHandler;
 import com.enonic.cms.api.plugin.PluginEnvironment;
 import com.enonic.cms.api.plugin.ext.http.HttpController;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -57,8 +73,8 @@ public class ProxyLoginController extends HttpController {
 	private GeoIpService geoIpService;
 	private String countryCodes;
 	private PluginEnvironment pluginEnvironment;
-
-
+	private Map<String, String> trustedProxies;
+	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String requestedUrlText = (stripUrlParams) ? stripUrlParams(request.getQueryString()) : request.getQueryString();
 		if(requestedUrlText != null){
@@ -84,81 +100,72 @@ public class ProxyLoginController extends HttpController {
 		LoggedInUser loggedInUser = loggedInUser();
 		LoggedInOrganization loggedInOrganization = this.loggedInOrganization();
 		boolean national = this.geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), this.countryCodes);
-    	//if(objectUser == null && memberOrganization == null){
-		//	if(this.urlService.isAffected(requestedUrl)){
-		//		createXML(false, objectUser, memberOrganization, requestedUrl, document, element);
-		//		redirectUrl = logUpUrl;
-		//	} else {
-    			// Special case: 
-    			// See error messages below.
-    			// No other choice than to redirect user to default "logup page"
-		//		logger.error("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database" +
-		//			"or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
-		//		createXML(true, objectUser, memberOrganization, requestedUrl, document, element);
-		//		redirectUrl = logUpUrl;
-		//	}
-    	//} else {
-    		if(this.urlService.isAffected(requestedUrl)) {
-    			AccessResult accessResult;
-    			if(loggedInOrganization != null && loggedInUser != null){
-    				OrganizationListItem organizationListItem = new OrganizationListItem();
-    				organizationListItem.setId(loggedInOrganization.getId());
-    				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
-    				UserListItem userListItem = new UserListItem();
-    				userListItem.setId(loggedInUser.getId());
-    				if (loggedInUser.getRoleKey() != null && !"".equals(loggedInUser.getRoleKey())) {
-    					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
-    				}
-    				accessResult = urlService.hasAccessUserOrganization(userListItem, organizationListItem, requestedUrl);
-    			} else if(loggedInUser != null) {
-    				UserListItem userListItem = new UserListItem();
-    				userListItem.setId(loggedInUser.getId());
-    				if (loggedInUser.getRoleKey() != null && !"".equals(loggedInUser.getRoleKey())) {
-    					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
-    				}
-    				accessResult = urlService.hasAccessUser(userListItem, requestedUrl);
-    			} else if(loggedInOrganization != null) {
-    				OrganizationListItem organizationListItem = new OrganizationListItem();
-    				organizationListItem.setId(loggedInOrganization.getId());
-    				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
-    				accessResult = urlService.hasAccessOrganization(organizationListItem, requestedUrl);
-    			} else if(national) {
-    				accessResult = urlService.hasAccessNational(requestedUrl);
-    			} else {
-    				accessResult = urlService.hasAccessNone(requestedUrl);
-    			}
-    			
-    			if (accessResult.equals(AccessResult.logup)) {
-   	        		createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
-    				redirectUrl = logUpUrl;
-    			} else if (accessResult.equals(AccessResult.exclude)) {
-    				redirectUrl = requestedUrl.getStringValue();
-    			} else if (accessResult.equals(AccessResult.include)) {
-    				SingleResultString result = this.urlService.group(requestedUrl);
-    				String group;
-    				if(result instanceof EmptyResultString){
-    					group = null;
-    					logger.error("Group name was expected but was not found for URL: " + requestedUrl);
-    				} else {
-    					group = ((ValueResultString)result).getValue();
-    				}
-    				if(this.createProxySession(response, requestedUrlText, group)){
-        				// Great, done!
-    	        		createXML(true, loggedInUser, loggedInOrganization, requestedUrl, document, element);
-    	        		redirectUrl = "";
-    				} else {
-    	        		createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
-    	        		element.appendChild(document.createElement("proxysessionerror"));
-    		    		redirectUrl = logUpUrl;
-    				}
-    			}
-    		} else {
-    			logger.warn("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database.\n" +
-	    			" or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
-    			createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
-	    		redirectUrl = logUpUrl;
-    		}
-    	//}
+		if(this.urlService.isAffected(requestedUrl)) {
+			AccessResult accessResult;
+			if(loggedInOrganization != null && loggedInUser != null){
+				OrganizationListItem organizationListItem = new OrganizationListItem();
+				organizationListItem.setId(loggedInOrganization.getId());
+				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
+				UserListItem userListItem = new UserListItem();
+				userListItem.setId(loggedInUser.getId());
+				if (loggedInUser.getRoleKey() != null && !"".equals(loggedInUser.getRoleKey())) {
+					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
+				}
+				accessResult = urlService.hasAccessUserOrganization(userListItem, organizationListItem, requestedUrl);
+			} else if(loggedInUser != null) {
+				UserListItem userListItem = new UserListItem();
+				userListItem.setId(loggedInUser.getId());
+				if (loggedInUser.getRoleKey() != null && !"".equals(loggedInUser.getRoleKey())) {
+					userListItem.setRoleKeyValuesAsStrings(new String[] { loggedInUser.getRoleKey() });
+				}
+				accessResult = urlService.hasAccessUser(userListItem, requestedUrl);
+			} else if(loggedInOrganization != null) {
+				OrganizationListItem organizationListItem = new OrganizationListItem();
+				organizationListItem.setId(loggedInOrganization.getId());
+				organizationListItem.setTypeKey(new OrganizationTypeKey(loggedInOrganization.getTypeKey()));
+				accessResult = urlService.hasAccessOrganization(organizationListItem, requestedUrl);
+			} else if(national) {
+				accessResult = urlService.hasAccessNational(requestedUrl);
+			} else {
+				accessResult = urlService.hasAccessNone(requestedUrl);
+			}
+			
+			if (accessResult.equals(AccessResult.logup)) {
+        		createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
+				redirectUrl = logUpUrl;
+			} else if (accessResult.equals(AccessResult.exclude)) {
+				redirectUrl = requestedUrl.getStringValue();
+			} else if (accessResult.equals(AccessResult.include)) {
+				SingleResultString result = this.urlService.group(requestedUrl);
+				String group;
+				if(result instanceof EmptyResultString){
+					group = null;
+					logger.error("Group name was expected but was not found for URL: " + requestedUrl);
+				} else {
+					group = ((ValueResultString)result).getValue();
+				}
+				if (isTrustedProxy(requestedUrl)) {
+					if (! handleTrustedProxy(response, requestedUrl, group)) {
+						createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
+		        		element.appendChild(document.createElement("proxysessionerror"));
+			    		redirectUrl = logUpUrl;
+					}
+				} else if(this.createProxySession(response, requestedUrlText, group)){
+    				// Great, done!
+	        		createXML(true, loggedInUser, loggedInOrganization, requestedUrl, document, element);
+	        		redirectUrl = "";
+				} else {
+	        		createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
+	        		element.appendChild(document.createElement("proxysessionerror"));
+		    		redirectUrl = logUpUrl;
+				}
+			}
+		} else {
+			logger.warn("Either: 1) URL '" + requestedUrl + "' exists in proxy configuration, but not in the administrative database.\n" +
+    			" or: 2) The above URL does not exist in either locations, but the enduser has tampered with the URL and sent a false URL to the proxy controller.");
+			createXML(false, loggedInUser, loggedInOrganization, requestedUrl, document, element);
+    		redirectUrl = logUpUrl;
+		}
     	document.appendChild(element);
     	ResultHandler.setResult(this.resultSessionVarName, document, pluginEnvironment.getCurrentSession());
     	if( ! redirectUrl.equals("")){
@@ -200,16 +207,74 @@ public class ProxyLoginController extends HttpController {
 		}
 	}
     
-//    private String encodeURL(String requestedUrl){
-//    	try {
-//			return URLEncoder.encode(requestedUrl, "UTF-8");
-//		} catch (UnsupportedEncodingException e) {
-//			if(logger.isErrorEnabled()){
-//				logger.error("UnsupportedEncodingException in Proxy Login Controller: " + e.getMessage());
-//			}
-//			return "";
-//		}
-//    }
+    private boolean isTrustedProxy(Url url) {
+    	return trustedProxies.containsKey(url.getDomain());
+    }
+    
+    /*
+     * 1) fetch ticket from vendor site via proxy.
+     * 2) redirect user to requested resource (not via proxy)
+     * 
+     * Using commons Apache's http client to handle ticket requests through ezproxy
+     */
+    private boolean handleTrustedProxy(HttpServletResponse clientResponse, Url destinationUrl, String group) {
+    	String requestTicketUrl = null;
+    	if (null != (requestTicketUrl = trustedProxies.get(destinationUrl.getDomain()))) {
+    		String encodedTarget = null;
+    		try {
+				encodedTarget = URLEncoder.encode(destinationUrl.getStringValue(), "UTF-8");
+			} catch (UnsupportedEncodingException use) {
+				logger.error("Unable to url encode " + encodedTarget, use);
+				return false;
+			}
+    		String redirectTo = null;
+    		requestTicketUrl += encodedTarget;
+    		URL proxyServerUrl = createProxyServerUrl(requestTicketUrl, group);
+    		DefaultHttpClient httpclient = new DefaultHttpClient();
+            try {
+                HttpHost target = new HttpHost(proxyServerUrl.getHost(), 80, "http");
+                HttpGet req = new HttpGet(proxyServerUrl.getFile());
+                logger.info("executing request to " + target);
+                HttpResponse rsp = httpclient.execute(target, req);
+                HttpEntity entity = rsp.getEntity();
+                if (entity != null) {
+                	redirectTo = EntityUtils.toString(entity);
+                }
+                logger.debug("----------------------------------------");
+                logger.debug(rsp.getStatusLine());
+                if (logger.isDebugEnabled()) {
+                	Header[] headers = rsp.getAllHeaders();
+	                for (int i = 0; i<headers.length; i++) {
+	                    logger.debug(headers[i]);
+	                }
+                }
+                logger.debug("----------------------------------------");
+                logger.debug("Redirecting to " + redirectTo);
+	    		logger.debug("requestTicketUrl was " + requestTicketUrl);
+	    		logger.debug("group was " + group);
+	    		logger.debug("proxyServerUrl was " + proxyServerUrl);
+	    		logger.debug("Requested destination was " + destinationUrl.getStringValue()); 
+	    		logger.debug("Encoded destination was " + encodedTarget);
+                logger.info("Redirecting to " + redirectTo);
+	    		clientResponse.sendRedirect(redirectTo);
+            } catch(IOException ioe) {
+            	logger.error("Unable to redirect user to " + redirectTo
+    					+ ".\nrequestTicketUrl was " + requestTicketUrl
+    					+ ".\ngroup was " + group
+    					+ ".\nproxyServerUrl was " + proxyServerUrl
+    					+ ".\nRequested destination was " + destinationUrl.getStringValue() 
+    					+ ".\nEncoded destination was " + encodedTarget, ioe);
+    			return false;
+            }
+            finally {
+                // When HttpClient instance is no longer needed,
+                // shut down the connection manager to ensure
+                // immediate deallocation of all system resources
+                httpclient.getConnectionManager().shutdown();
+            }
+    	}
+    	return true;
+    }
     
     private String stripUrlParams(String queryString) {
     	String result = queryString;
@@ -246,14 +311,12 @@ public class ProxyLoginController extends HttpController {
 	private boolean createProxySession(HttpServletResponse clientResponse, String destinationUrl, String group) {
         boolean sessionCreated = false;
         // Don't follow redirect returned from proxy. This redirect is to be given to user.
-        HttpURLConnection.setFollowRedirects(false);
+        //HttpURLConnection.setFollowRedirects(false);
+        URL proxyServerUrl = createProxyServerUrl(destinationUrl, group);
+        if (null == proxyServerUrl) return false;
         try {
-            // Create a URLConnection to proxy server
-            String url = this.proxyUrl + "?user=" + group + "&pass=" + this.proxyPassword
-                    + (this.proxyUseGroup && (group != null) ? "&group=" + group : null)
-                    + "&url=" + destinationUrl;
-            URL proxyServerUrl = new URL(url);
-            HttpURLConnection proxyServer = (HttpURLConnection)proxyServerUrl.openConnection();
+            HttpURLConnection proxyServer = (HttpURLConnection) proxyServerUrl.openConnection();
+            proxyServer.setInstanceFollowRedirects(false);
             if (this.proxyTimeout > 0) {
                 proxyServer.setConnectTimeout(proxyTimeout);
             }
@@ -280,6 +343,21 @@ public class ProxyLoginController extends HttpController {
         }
         return sessionCreated;
     }
+	
+	private URL createProxyServerUrl(String destinationUrl, String group) {
+		// Create a URLConnection to proxy server
+        String url = this.proxyUrl + "?user=" + group + "&pass=" + this.proxyPassword
+                + (this.proxyUseGroup && (group != null) ? "&group=" + group : null)
+                + "&url=" + destinationUrl;
+        URL proxyServerUrl = null;
+		try {
+			proxyServerUrl = new URL(url);
+		} catch (MalformedURLException mue) {
+			logger.error("Unable to create URL from string '" + url + "'", mue);
+		}
+        return proxyServerUrl;
+	}
+	
     private void redirect(HttpServletResponse response, String url) {
             try {
             	if (!response.isCommitted()) {
@@ -350,5 +428,8 @@ public class ProxyLoginController extends HttpController {
 	}
 	public void setPluginEnvironment(PluginEnvironment pluginEnvironment) {
 		this.pluginEnvironment = pluginEnvironment;
+	}
+	public void setTrustedProxies(Map<String, String> trustedProxies) {
+		this.trustedProxies = trustedProxies;
 	}
 }
