@@ -63,7 +63,19 @@
       </td>
      	
     </tr>
-
+	<tr>
+		<td><h:outputText value="#{msg_main.org_admin}"  /> </td>
+		<td> <h:selectBooleanCheckbox value="#{newAdministratorBean.is_org_admin}" /> </td>
+	</tr>
+	<tr>
+		<td><h:outputText value="#{msg_main.org_type}"  /> </td>
+		<td> 
+			<h:selectOneListbox value="--Select--"  >
+				
+			</h:selectOneListbox>
+		
+		</td>
+	</tr>	
 	<tr>
       <td colspan="2">&nbsp;</td>
       <td align="right">
