@@ -78,7 +78,9 @@ public class OrganizationBean implements IconProvider{
 	
 	public boolean getFailed() { return true; }
     public String getErrorMsg() { return "ERRORS WILL BE PUT HERE!"; }
-	public String actionForward(){
+    
+    
+    public String actionForward(){
 		if(this.getShowMoreRight()){
 			if(this.searchedString == null) this.searchedString = "";
 			PageRequest pageRequest = new PageRequest(this.lastPageResult.getSkipped() + SHOW_MAX,
