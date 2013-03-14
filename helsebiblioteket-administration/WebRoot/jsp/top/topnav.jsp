@@ -11,7 +11,7 @@
 <a class="skip" href="#content" title="skip link">Skip to the content</a><span class="hideme">.</span>
 </f:verbatim>
 <!-- end: skip link navigation -->
-<h:form>
+
 	<t:commandLink action="welcome"><h:outputText value="#{msg_menu.welcome}" /></t:commandLink>
 	<t:outputText value=" | " />
 	<f:verbatim>
@@ -20,4 +20,3 @@
 		</a></f:verbatim>
 	<t:outputText value=" | " />
 	<t:commandLink action="logout"><h:outputText value="#{msg_global.logout}" /></t:commandLink>
-</h:form>
