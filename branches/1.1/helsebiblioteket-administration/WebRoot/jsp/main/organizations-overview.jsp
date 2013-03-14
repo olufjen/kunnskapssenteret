@@ -1,16 +1,18 @@
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
-<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <%@page buffer="none"%>
 <f:loadBundle var="msg_main" basename="no.helsebiblioteket.admin.web.jsf.messageresources.main"/> 
 
 <h2><t:outputText value="#{msg_main.organization_overview_title}" /></h2>
 <br/>
-<h:form>
+
+<h:form enctype="multipart/form-data" id="frmOverview">
+
 	<t:inputText value="#{organizationBean.searchinput}" id="searchinput" size="30" />
 	<t:commandButton value="#{msg_main.organization_overview_filter}" action="#{organizationBean.actionSearch}" />
 	<p><t:outputText value="#{msg_main.organization_overview_limit_text}" /></p>
-
+</h:form>
 	<p><t:outputText value="#{msg_main.organizations_export_title}" />
    		<t:commandLink 
    				value="#{msg_main.organization_export_link}"
@@ -19,9 +21,10 @@
 	</p>
 
 	<u><t:outputText value="#{msg_main.organization_overview_result}" /></u>
+
+	<%-- binding="#{organizationBean.htmlTree}"  --%>
 	<t:tree id="tree"
 		value="#{organizationBean.treeModel}"
-		binding="#{organizationBean.htmlTree}"
 		var="treeItem"
 		expandRoot="true"
 		
@@ -58,15 +61,15 @@
       		<f:facet name="header" />
       		<t:commandLink value="#{msg_main.organization_overview_details}"
 				action="#{organizationBean.actionDetails}" immediate="true"
-				rendered="#{treeItem.showLinks}">
+				>
 				<f:param name="treeOrgId" value="#{treeItem.organization.id}" />
 			</t:commandLink>
     	</t:treeColumn>
 	    <t:treeColumn id="changeColumn">
 	    	<f:facet name="header" />
-   			<t:commandLink 
+	    	<t:commandLink 
    				value="#{msg_main.organization_overview_edit}"
-				action="#{organizationBean.actionEdit}" 
+				action="#{organizationBean.actionEdit}"
 				immediate="true"
 				rendered="#{treeItem.showLinks}">
 				<f:param name="treeOrgId" value="#{treeItem.organization.id}" />
@@ -95,4 +98,4 @@
 				value="#{msg_main.moreRightNot}" />
 		</center>
 	</t:div>
-</h:form>
+
