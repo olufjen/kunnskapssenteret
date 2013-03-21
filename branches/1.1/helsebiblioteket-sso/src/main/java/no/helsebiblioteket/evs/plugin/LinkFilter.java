@@ -92,7 +92,7 @@ public final class LinkFilter extends HttpResponseFilter {
 					if(url != null) {
 			    		if (!linkFilterOverride && this.isAffected(url)) {
 			    			try {
-			    				boolean national = this.geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), this.countryCodes);
+			    				boolean national = this.geoIpService.hasAccess(LogInOrganization.getXforwardedForOrRemoteAddress(request), this.countryCodes);
 			    				url = this.translate(user, memberOrganization, url, national);
 			    			} catch (MalformedURLException e) {
 			    				url = null;
