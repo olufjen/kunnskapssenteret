@@ -67,7 +67,7 @@ public final class AccessFilter extends HttpResponseFilter {
     	    				for (Attribute attribute : attributes) {
     		    				accessElement.removeAttribute(attribute);
     						}
-    	    				if ( ! geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), countryCodes)) {
+    	    				if ( ! geoIpService.hasAccess(LogInOrganization.getXforwardedForOrRemoteAddress(request), countryCodes)) {
         	    				accessElement.removeContent();
         	    				accessElement.setText(noAccessText);    					
     	    				}
@@ -75,7 +75,7 @@ public final class AccessFilter extends HttpResponseFilter {
     						Element pos = accessElement.getChild("hasaccess", accessElement.getNamespace());
     						Element neg = accessElement.getChild("noaccess", accessElement.getNamespace());
     	    				List<Content> children = new ArrayList<Content>();
-    	    				if (geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), countryCodes)) {
+    	    				if (geoIpService.hasAccess(LogInOrganization.getXforwardedForOrRemoteAddress(request), countryCodes)) {
     		    				if(pos != null){
     			    				children.addAll(pos.getContent());
     		    				}

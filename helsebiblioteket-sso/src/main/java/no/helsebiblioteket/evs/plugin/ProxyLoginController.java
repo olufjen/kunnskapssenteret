@@ -74,8 +74,19 @@ public class ProxyLoginController extends HttpController {
 	private String countryCodes;
 	private PluginEnvironment pluginEnvironment;
 	private Map<String, String> trustedProxies;
+	private LogInOrganization logInOrganization;
+	
+	public void setLogInOrganization(LogInOrganization logInOrganization) {
+		this.logInOrganization = logInOrganization;
+	}
 	
 	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// logging in user based on organization first because:
+		// If a user clicks a proxy link without having visited the main site first,
+		// then the LogInFilter has not been invoked, and the user has not been given the proper session 
+		// based on IP/domain.
+		logInOrganization.logIn(request, response);
+		
 		String requestedUrlText = (stripUrlParams) ? stripUrlParams(request.getQueryString()) : request.getQueryString();
 		if(requestedUrlText != null){
 			requestedUrlText = requestedUrlText.substring(requestedUrlText.indexOf(this.urlParamName) + this.urlParamName.length() + 1);
@@ -97,9 +108,10 @@ public class ProxyLoginController extends HttpController {
         UserToXMLTranslator translator = new UserToXMLTranslator();
         Document document = translator.newDocument();
         Element element = document.createElement(this.resultSessionVarName);
-		LoggedInUser loggedInUser = loggedInUser();
+		
+        LoggedInUser loggedInUser = loggedInUser();
 		LoggedInOrganization loggedInOrganization = this.loggedInOrganization();
-		boolean national = this.geoIpService.hasAccess(LogInInterceptor.getXforwardedForOrRemoteAddress(request), this.countryCodes);
+		boolean national = this.geoIpService.hasAccess(LogInOrganization.getXforwardedForOrRemoteAddress(request), this.countryCodes);
 		if(this.urlService.isAffected(requestedUrl)) {
 			AccessResult accessResult;
 			if(loggedInOrganization != null && loggedInUser != null){

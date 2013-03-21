@@ -45,7 +45,7 @@ public class GetMcMasterArticles {
 	 * @throws JDOMException
 	 */
 	public Document getArticlesByDisciplines(int artDiscRatKey, int index, int count, String query) throws JDOMException {
-		String ipAddress = LogInInterceptor.getXforwardedForOrRemoteAddress(pluginEnvironment.getCurrentRequest());
+		String ipAddress = LogInOrganization.getXforwardedForOrRemoteAddress(pluginEnvironment.getCurrentRequest());
 		Document result;
 
 		if (geoIpService.hasAccess(ipAddress, "NO")) {

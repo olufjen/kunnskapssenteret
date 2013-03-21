@@ -87,7 +87,7 @@ public class GetContentByCategoryAccessFunction {
     	initGetContentParams();
     	this.client = ClientFactory.getLocalClient();
     	Document result = null;
-    	String remoteIp = LogInInterceptor.getXforwardedForOrRemoteAddress(pluginEnvironment.getCurrentRequest());
+    	String remoteIp = LogInOrganization.getXforwardedForOrRemoteAddress(pluginEnvironment.getCurrentRequest());
     	if (this.geoIpService.hasAccess(remoteIp, countryCodes)) {
     		result = this.client.getContentByCategory(getContentByCategoryParams);
     	} else {

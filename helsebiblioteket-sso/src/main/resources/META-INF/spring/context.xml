@@ -12,34 +12,6 @@
 		</property>
 	</bean>
 
-	<!-- <bean id="accessService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/AccessService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.AccessService"/> 
-		</bean> <bean id="actionService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/ActionService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.ActionService"/> 
-		</bean> <bean id="emailService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/EmailService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.EmailService"/> 
-		</bean> <bean id="loginService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/LoginService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.LoginService"/> 
-		</bean> <bean id="organizationService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/OrganizationService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.OrganizationService"/> 
-		</bean> <bean id="urlService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/UrlService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.URLService"/> 
-		</bean> <bean id="userService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/UserService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.UserService"/> 
-		</bean> <bean id="geoIpService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"> 
-		<property name="serviceUrl" value="rmi://${rmi.host}:${rmi.port}/GeoIpService"/> 
-		<property name="serviceInterface" value="no.helsebiblioteket.admin.service.geoip.GeoIpService"/> 
-		</bean> -->
-
-
-
 	<bean id="accessService"
 		class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
 		<property name="accessDao" ref="accessDao"></property>
@@ -265,14 +237,18 @@
 		<property name="attributeCountryCodesName" value="countrycodes" />
 	</bean>
 
-	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
-		<property name="urlPattern" value="/site/[0-3]/.*" />
-		<property name="priority" value="9999" />
+	<bean name="logInOrganization" class="no.helsebiblioteket.evs.plugin.LogInOrganization">
 		<property name="loginService" ref="loginServiceSso" />
 		<property name="pluginEnvironment" ref="plugin.service.pluginEnvironment" />
 		<property name="useXForwardedForHeader">
 			<value>${plugin.logininterceptor.usexforwardedfor}</value>
 		</property>
+	</bean>
+
+	<bean class="no.helsebiblioteket.evs.plugin.LogInInterceptor">
+		<property name="urlPattern" value="/site/[0-3]/.*" />
+		<property name="priority" value="9999" />
+		<property name="logInOrganization" ref="logInOrganization" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.LogOutController">
@@ -356,6 +332,7 @@
 				<entry key="informahealthcare.com" value="http://informahealthcare.com/tps/requestticket?domain=helsebiblioteket.no&amp;debug=true&amp;ru=" />
 			</map>
 		</property>
+		<property name="logInOrganization" ref="logInOrganization" />
 	</bean>
 
 	<bean class="no.helsebiblioteket.evs.plugin.RegisterUserController">
