@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!--	<import resource="applicationContext-ejb.xml" /> 		-->
+
+
+
+	 <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<!-- <value>/WEB-INF/application.properties</value>
+	 			<value>/WEB-INF/jdbc.properties</value>
+	 			<value>/WEB-INF/jdbcutside.properties</value>
+	 			<value>/WEB-INF/sqladmin.properties</value>
+	 			<value>/WEB-INF/tables.properties</value>
+	 			<value>/WEB-INF/question.properties</value>
+	 			<value>/WEB-INF/environment.properties</value> -->
+	 			<value>/config/app-config/application.properties</value>
+	 			<value>/config/app-config/jdbc.properties</value>
+	 			<value>/config/app-config/jdbcutside.properties</value>
+	 			<value>/config/app-config/sqladmin.properties</value>
+	 			<value>/config/app-config/tables.properties</value>
+	 			<value>/config/app-config/question.properties</value>
+	 			<value>/config/app-config/environment.properties</value>
+	 		</list>
+	 	</property>
+	 </bean>
+
+	<bean id="tableWebService" class="no.naks.web.control.TableWebServiceImpl">
+	<!--  
+		<property name="masterDictionary" ref="domainDictionary"></property>
+		<property name="foretakKey" value="foretakkey"></property>
+--> 		
+		<property name="nhnFlag" value="false"></property>
+		<property name="meldingService" ref="meldingService"></property>
+	 	<property name="nhnClient" ref="nhnClient"></property>
+
+
+	</bean>
+	
+	<bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
+		<property name="imagePath" value="${image.archive.path}" />
+	</bean>
+
+
+<!-- Exception handling -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="error/exception" />
+        <property name="defaultStatusCode" value="500" />
+        <property name="warnLogCategory" value="WARN" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.webflow.execution.repository.FlowExecutionRestorationFailureException">velkommen</prop>
+                
+            </props>
+        </property>
+    </bean>
+
+</beans>
