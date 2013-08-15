@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich" >
+
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+		<ui:define name="content"><div class="ym-column">
+<div class="standalonepage">
+    	<h1>Brukerveiledning</h1>
+    	<div class="contents" ><div style="float:right;padding-right:10px;width:130px;"><h:commandButton onclick="window.close(); return false;" action="this.window.close()" value=""  id="btnClose1" styleClass="ym-button" class="replacement-lukk" style="width:100px;"/></div>
+    	<p>
+    	<br />
+    	Skjemaet består av 5 sider:
+    	<br/>
+     	<ul>
+    		<li>Innledning</li>
+    		<li>Hvor/når/hvem</li>
+    		<li>Hendelse</li>
+    		<li>Diskusjon</li>
+    		<li>Kontaktinfo</li>
+    	</ul>
+   <br/>
+    	Du kan fritt navigere frem og tilbake mellom sidene. Bruk enten menyen til venstre eller knappene "Forrige" og "Neste" nede til høyre.
+    	<br/>
+    	Bruk enten mus eller TAB-tasten for å gå til det feltet eller valget du vil jobbe med.
+    	</p><br/><br />
+    	<h2>Hjelp</h2>
+    	<p>Noen steder vil du se et ?-symbol ved siden av et felt. Trykk på det for å se en hjelpetekst, vist til høyre. Trykk en gang til for å skjule hjelpeteksten.
+    	</p><br/><br />
+    	<h2>Feilmeldinger</h2>
+    	<p>Hvis du skulle fylle ut feltet på utilsiktet måte, for eksempel skrive en dato på et annet format enn vi ber om, vil det dukke opp en feilmelding nedenfor feltet du jobber med. Så fort du har rettet feilen vil den forsvinne.
+    	<br/><br/>
+    	Legg merke til at du ikke er nødt til å rette feilen med en gang - du står fritt til å jobbe med andre deler av skjemaet først og så komme tilbake og rette feilen før du endelig godkjenner skjemaet.
+    	</p><br/><br />
+    	<h2>Obligatoriske felter</h2>
+    	<p>Noen felter har en rød stjerne ved siden av seg: *. Det betyr at feltet er obligatorisk å fylle ut.
+    	</p><br/><br />
+    	<h2>Kontrollside og innsending</h2>
+    	<p>På siden "Kontaktinfo" vi du se knappen "Kontrollér skjema". Trykk på denne når du føler deg ferdig med alle sidene i skjemaet.
+    	<br/><br/>
+    	Det du har fylt ut vil da bli kontrollert og du vil få beskjed om det er noen feil eller mangler. Hvis alt er i orden vil det dukke opp en knapp med påskriften "Send til Kunnskapssenteret". Etter å ha trykket på knappen og sendt meldingen til Kunnskapssenteret vil du få opp en kvittering på skjermen, og i tillegg anledning til å generere en PDF til utskrift.
+    	</p><br/><br />
+    	<h2>Legge inn flere hendelser</h2>
+    	<p>Du kan nå avslutte ved å lukke nettleservinduet eller fortsette med å legge inn en ny melding. Velger du å fortsette vil skjemasidene tømmes og klargjøres for ny innlegging.
+    	</p><br/><br />
+    	<h2>Trenger du assistanse?</h2>
+    	<p>
+    	<a href="mailto:meldeordningen@kunnskapssenteret.no">Ta gjerne kontakt</a> hvis du har spørsmål til utfylling av meldingen.
+    	<br /><br /><br />
+    	</p>
+    </div>
+  </div>
+</div>
+<!-- 
+	<h:commandButton onclick="window.close(); return false;" action="this.window.close()" value=""  id="btnClose1" styleClass="ym-button" class="replacement-lukk" />
+-->
+</ui:define>
+</ui:composition>
+</html> 

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+    
+     	<application>
+          <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+       <!--	   <variable-resolver>org.springframework.web.jsf.SpringBeanVariableResolver</variable-resolver>
+      -->
+ 		
+    	</application>
+   	<!-- 	
+   	<locale-config>
+     	        <default-locale>no</default-locale>
+     	        <supported-locale>en</supported-locale>
+     	   </locale-config>
+			  	 <resource-bundle>
+						<base-name>no.naks.web.jsf.messages</base-name>
+						<var>msg</var>
+	   			</resource-bundle>
+   		<navigation-rule>
+         <from-view-id>*</from-view-id>
+         <navigation-case>
+            <from-outcome>hjelp</from-outcome>
+            <to-view-id>/innhold/veiledning.xhtml</to-view-id>
+         </navigation-case>
+         <navigation-case>
+         	<from-outcome>hendelse</from-outcome>
+         	<to-view-id>/innhold/hendelse.xhtml</to-view-id>
+         	<redirect />
+         </navigation-case>
+         <navigation-case>
+         	<from-outcome>innledning</from-outcome>
+         	<to-view-id>/innhold/home.xhtml</to-view-id>
+         	<redirect />
+         </navigation-case>
+          <navigation-case>
+         	<from-outcome>hvorHvem</from-outcome>
+         	<to-view-id>/innhold/hvorhvem.xhtml</to-view-id>
+         	<redirect />
+         </navigation-case>
+          <navigation-case>
+         	<from-outcome>diskusjon</from-outcome>
+         	<to-view-id>/innhold/diskusjon.xhtml</to-view-id>
+         	<redirect />
+         </navigation-case>
+         <navigation-case>
+         	<from-outcome>kontaktinfo</from-outcome>
+         	<to-view-id>/innhold/kontaktinfo.xhtml</to-view-id>
+         	<redirect />
+         </navigation-case>
+         <navigation-case>
+         	<from-outcome>kontroll</from-outcome>
+         	<to-view-id>/innhold/kontroll.xhtml</to-view-id>
+         	<redirect />
+         </navigation-case>
+         <navigation-case>
+         	<from-outcome>kvittering</from-outcome>
+         	<to-view-id>/innhold/kvittering.xhtml</to-view-id>
+         	<redirect />
+         </navigation-case>
+  		</navigation-rule>
+     	<managed-bean>
+      	<description>Web page view class</description>
+      	<display-name>webPagesService</display-name>
+      	<managed-bean-name>webPagesService</managed-bean-name>
+      	<managed-bean-class>no.naks.web.nhn.control.WebPagesServiceImpl</managed-bean-class>
+      	<managed-bean-scope>session</managed-bean-scope>
+      	<managed-property>
+      	      	<property-name>tableWebService</property-name>
+	         	<value>#{tableWebService}</value>
+      	</managed-property>
+      </managed-bean>
+      <managed-bean>
+     	<description>A table maintenance bean</description>
+     	<display-name>tables</display-name>
+     	<managed-bean-name>tables</managed-bean-name>
+     	<managed-bean-class>no.naks.web.nhn.bean.TableMaintenanceBean</managed-bean-class>
+     	<managed-bean-scope>request</managed-bean-scope>
+      <managed-property>
+         	<property-name>webPagesService</property-name>
+         	<value>#{webPagesService}</value>
+      </managed-property>
+      </managed-bean>
+      <managed-bean>
+        		<description>A Hendelse Bean class </description>
+        		<display-name>hendelse</display-name>
+        		<managed-bean-name>hendelse</managed-bean-name>
+        		<managed-bean-class>no.naks.web.nhn.bean.HendelseBean</managed-bean-class>
+        		<managed-bean-scope>request</managed-bean-scope>
+        		<managed-property>
+		         	 <property-name>webPagesService</property-name>
+		        	 <value>#{webPagesService}</value>
+       			</managed-property>
+       </managed-bean>
+       
+       <managed-bean>
+        		<description>A Kvittering Bean class </description>
+        		<display-name>kvittering</display-name>
+        		<managed-bean-name>kvittering</managed-bean-name>
+        		<managed-bean-class>no.naks.web.nhn.bean.KvitteringBean</managed-bean-class>
+        		<managed-bean-scope>request</managed-bean-scope>
+       </managed-bean> 
+       
+        
+       <managed-bean>
+        		<description>A Diskusjon Bean class </description>
+        		<display-name>diskusjon</display-name>
+        		<managed-bean-name>diskusjon</managed-bean-name>
+        		<managed-bean-class>no.naks.web.nhn.bean.DiskusjonBean</managed-bean-class>
+        		<managed-bean-scope>request</managed-bean-scope>
+        		<managed-property>
+		         	 <property-name>webPagesService</property-name>
+		        	 <value>#{webPagesService}</value>
+       			</managed-property>
+       </managed-bean>
+       <managed-bean>
+        		<description>A Kontaktinfo Bean class </description>
+        		<display-name>kontaktinfo</display-name>
+        		<managed-bean-name>kontaktinfo</managed-bean-name>
+        		<managed-bean-class>no.naks.web.nhn.bean.KontaktinfoBean</managed-bean-class>
+        		<managed-bean-scope>request</managed-bean-scope>
+        			<managed-property>
+		         	 <property-name>webPagesService</property-name>
+		        	 <value>#{webPagesService}</value>
+       			</managed-property>
+       </managed-bean>
+       <managed-bean>
+       	<description>A kontrollBean class</description>
+       	<display-name>kontrollBean</display-name>
+       	<managed-bean-name>kontrollBean</managed-bean-name>
+       	<managed-bean-class>no.naks.web.nhn.bean.KontrollBean</managed-bean-class>
+       	<managed-bean-scope>request</managed-bean-scope>
+       	<managed-property>
+		         	 <property-name>webPagesService</property-name>
+		        	 <value>#{webPagesService}</value>
+       	</managed-property>
+       </managed-bean>
+        <managed-bean>
+       	<description>A pdf creator class</description>
+       	<display-name>pdfCreator</display-name>
+       	<managed-bean-name>pdfCreator</managed-bean-name>
+       	<managed-bean-class>no.naks.web.nhn.bean.PdfCreator</managed-bean-class>
+       	<managed-bean-scope>request</managed-bean-scope>
+       	<managed-property>
+		         	 <property-name>webPagesService</property-name>
+		        	 <value>#{webPagesService}</value>
+       	</managed-property>
+       
+       </managed-bean> -->
+       
+</faces-config>
