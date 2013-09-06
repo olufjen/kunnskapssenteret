@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+
+
+<ui:composition template="/templates/emok/commonLayout.xhtml">
+	<ui:define name="content">
+		<h:form class="ym-form" id="where-when-who-form" >
+			<div class="ym-column">
+<g:message message="en melding"/>
+				<div class="ym-col1">
+					<div class="ym-cbox elmersteps">
+						<ul class="ym-vlist">
+							<li><h:commandLink id="innledning" action="#{tableWebService.innledningPage}">Innledning</h:commandLink>
+							</li>
+							<li class="active nonTransparent">Hvor/Når/Hvem</li>
+							<li><h:commandLink id="hendelse" action="#{tableWebService.hendelsePage}" >Hendelse</h:commandLink>
+							</li>
+							<li><h:commandLink id="diskusjon" action="#{tableWebService.diskusjonPage}" >Diskusjon</h:commandLink>
+							</li>
+							<li><h:commandLink id="kontakt" action="#{tableWebService. kontaktinfoPage}">Kontaktinformasjon</h:commandLink>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="ym-col2">
+					<div>
+						<f:verbatim>&#160;</f:verbatim>
+					</div>
+					<div class="helparea">
+						<div class="circle">?</div>
+						<div id="info" class="info">
+							<br />
+							<b id="info-heading-1">#{msg.info_heading_1}</b>
+							<p>#{msg.info_1}</p>
+							<p>#{msg.info_1_1}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="ym-col3">
+					<div class="ym-cbox">
+
+						<div class="ym-grid">
+							<div class="ym-g50 ym-gl">
+								<h2 class="Trebuchet">#{msg.hvorhvem__heading1}</h2>
+								
+								<div class="ym-gbox ym-fbox-check">
+									<h:selectBooleanCheckbox    value="#{modelObj.ikkeSykehus}" id="ikke" name="ikke"  >
+										<f:ajax execute="ikke" render="@form"  ></f:ajax>
+									</h:selectBooleanCheckbox>
+									<h:outputLabel for="ikke"
+										value=" Ikke på sykehus" />
+									<br />
+								</div>
+								<h:panelGroup rendered="#{modelObj.ikkeSykehus}" id="hovrSkjedde" >
+										<div class="not-hospital" >
+											<br /> 
+											<div class="ym-gbox  ym-fbox-text" >
+												<label for="spesialist">Hvor skjedde
+													hendelsen?</label>
+												<h:inputText id="spesialist"  value="#{modelObj.spesialSted}"
+													name="spesialist"
+													style="width: 18em;position:static;" />
+													
+											
+												<h:outputText value="Dette feltet er obligatorisk." style="color:red"  rendered="#{modelObj.blSpesialSted}"   ></h:outputText>
+										
+											</div>
+										</div>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{!modelObj.ikkeSykehus}" id="helseForetak" >
+								<div id="borte-tittei">
+									<div class="ym-gbox ym-fbox-text"  >
+										<label class="ontop"><h:outputText
+												value="Helseforetak" /> </label>
+										<style>
+											.rf-au-opt { background-color:white }
+											input.rf-au-inp { background-image:none;width:18em;}
+											.rf-au-lst-dcrtn{border:none;}
+										</style>
+										
+										<h:inputText id="sykehusliste" value="#{modelObj.valgtOrganisasjon}" style="width: 18em;" ></h:inputText>
+ 										
+										<h:outputText value="Dette feltet er obligatorisk." style="color:red" rendered="#{modelObj.blValgtOrganisasjon}"   ></h:outputText>
+										
+										
+									</div>
+									
+									<div class="ym-gbox ym-fbox-text">
+										<h:panelGroup>
+											<label class="ontop"><h:outputText value="Avdeling" />
+											</label>
+												<h:inputText id="avdel" value="#{modelObj.valgtDepartment}" name="avdelinger"  style="width: 18em; position:static" />
+										</h:panelGroup>
+									</div>
+
+
+									<div class="ym-gbox ym-fbox-text">
+										<label class="ontop" for="ward">Seksjon, sengepost
+											o.l.</label>
+										<h:inputText id="ward" value="#{modelObj.seksjon}" name="ward" style="width: 18em; position:static" />
+									</div>
+								</div>
+								</h:panelGroup>
+							</div>
+							<div class="ym-g50 ym-gr">
+								<h2 class="Trebuchet">#{msg.hvorhvem__heading2}</h2>
+								<div class="ym-gbox ym-fbox-text">
+									<label class="ontop" for="date-when">Dato</label>
+									<div class="ym-contain-dt">
+										
+										<rich:calendar enableManualInput="false" 
+											value="#{modelObj.tidForhendelsen}" datePattern="dd.MM.yyyy"
+											popupStyle="width: 40px;" style="float:left; width: 7em; size:7em; display:inline;position:relative;"
+											buttonIcon="../../images/iconDatePicker.gif" id="date-when"  converterMessage=""
+											name="date-when">
+										</rich:calendar>
+									</div>
+									<div class="label-below">(dd.mm.åååå)</div>
+									<!--<h:message for="date-when"  id="msgDato"  ></h:message> -->
+									<h:outputText value="Dato kan ikke være i fremtiden." style="color:red"  rendered="#{modelObj.blDato}"   ></h:outputText>
+								</div>
+								<div class="ym-fbox-check">
+									<label class="ontop" for="day-period">Tid på døgnet, start for hendelsen</label> <br />
+									<t:selectOneRadio id="day-period" forceId="true" layout="spread" value="#{modelObj.dognkode}">
+										<f:selectItem itemValue="Morgen" itemLabel="Morgen" />
+										<f:selectItem itemValue="Ettermiddag" itemLabel="Ettermiddag" />
+										<f:selectItem itemValue="Kveld" itemLabel="Kveld" />
+										<f:selectItem itemValue="Natt" itemLabel="Natt" />
+										<f:selectItem itemValue="Vet Ikke" itemLabel="Vet Ikke" />
+									</t:selectOneRadio>
+
+									<t:radio for="day-period" index="0" />
+									<br />
+									<t:radio for="day-period" index="1" />
+									<br />
+									<t:radio for="day-period" index="2" />
+									<br />
+									<t:radio for="day-period" index="3" />
+									<br />
+									<t:radio for="day-period" index="4" />
+								</div>
+
+								<div class="ym-fbox-text">
+									<label class="ontop" for="time-when">Vet du også klokkeslettet?</label>
+									<h:inputText size="5" value="#{modelObj.klokkeSlett}"
+										style="width: 5em;" id="time-when" name="time-when" />
+									<h:outputText>(tt:mm)</h:outputText>
+									<br/>
+									<h:outputText value='Klokkeslett må være på formen "tt:mm".' style="color:red"  rendered="#{modelObj.blklokke}"   ></h:outputText>
+									<!-- <input type="text" name="your-id" id="event-time" size="5" style="width: 5em;" /> (tt:mm) -->
+								</div>
+							</div>
+						</div>
+						<br /> <br />
+						<div class="ym-grid">
+							<div class="ym-g50 ym-gl">
+								<h2 class="Trebuchet">Om pasienten</h2>
+								<div class="ym-gbox">
+									<div class="ym-grid">
+
+										<div class="ym-fbox-check">
+
+											
+											<t:selectOneRadio  id="kjonn-id" forceId="true" layout="spread" value="#{modelObj.kjonnKode}">
+												<f:selectItem  itemValue="1" itemLabel="Mann" />
+												<f:selectItem itemValue="2" itemLabel="Kvinne" />
+												<f:selectItem itemValue="3"
+													itemLabel="Flere pasienter involvert" />
+												<f:selectItem itemValue="0"
+													itemLabel="Ingen pasienter involvert" />
+												
+												<f:ajax execute="@form" render="@form" listener="#{modelObj.kjonnValue}"  ></f:ajax>
+											</t:selectOneRadio>
+
+											<t:radio for="kjonn-id" index="0" id="mann" />
+											<br />
+											<t:radio for="kjonn-id" index="1" id="kvinne" />
+											<br />
+											<t:radio for="kjonn-id" index="2" id="flere" />
+											<br />
+											<t:radio for="kjonn-id" index="3" id="ingen" />
+											
+										</div>
+										<div   class="ym-gbox ym-fbox-text" id="birthyear">
+										        <h:outputText for="year-of-birth" style="color:red" styleClass="ontop" rendered="#{modelObj.blBirthInput}"> Fødselsår</h:outputText>
+											  <!-- <label  class="ontop"  for="year-of-birth">Fødselsår</label>  -->	
+												
+												<h:inputText rendered="#{modelObj.blBirthInput}"  name="year-of-birth" value="#{modelObj.arfodt}"
+													id="year-of-birth" size="10"
+													style="width: 4em; position:static;">
+												</h:inputText>
+												<h:outputText value="Dette feltet er obligatorisk." style="color:red"  rendered="#{modelObj.blArFodt}"   ></h:outputText>
+												<h:outputText value="Fødselsår må være på formen 'åååå', og være mellom 1900 og dagens dato." style="color:red"  rendered="#{modelObj.blArFormat}"   ></h:outputText>
+												
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="ym-g50 ym-gr">
+								<h2 class="Trebuchet">Ytterligere informasjon</h2>
+								<div class="ym-gbox ym-fbox-text">
+									<label class="ontop" for="case-number">Virksomhetens
+										interne saksnummer hvis aktuelt&#160;<h:graphicImage
+											name="helpicon2.png" library="images" alt="hjelp"
+											title="Hjelp" id="info-icon-1" class="info-icon" /> </label>
+									<h:inputText name="case-number" value="#{modelObj.caseNr}"
+										id="case-number" size="10" class="casenumber" />
+								</div>
+							</div>
+
+						</div>
+
+						<div class="buttons">
+							<div style="clear: both;">
+								<h:commandButton  action="#{tableWebService.innledningPage}" id="btnForrige" class="replacement-forrige" style="width:100px; float:left; height:40px; cursor: pointer;" type="submit" value="" />
+								<h:commandButton   action="#{tableWebService.hendelsePage}" id="btnneste" class="replacement-neste" style="width:100px; float:left; height:40px; cursor: pointer;" type="submit" value="" />
+								<h:commandButton rendered="#{modelObj.blKontrollBtn}" action="#{tableWebService.controllPage}" id="btnKontroll" class="replacement-kontroll" style="cursor:pointer;" value="" />
+							</div>
+						</div>
+							
+					</div>
+				</div>
+				<!-- ym-col3 -->
+
+			</div>
+		</h:form>
+		<!-- / ym-column -->
+
+	</ui:define>
+</ui:composition>
+</html>

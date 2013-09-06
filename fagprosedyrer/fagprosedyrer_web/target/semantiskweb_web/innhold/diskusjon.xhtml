@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich" >
+     	
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+		<ui:define name="content">
+		<h:form class="ym-form" id="discussion-form">
+			<div class="ym-column">  
+		
+				<!-- Col 1 --> 
+	      <div class="ym-col1">
+						<div class="ym-cbox elmersteps">
+						
+								<ul class="ym-vlist">
+									<li><h:commandLink action="#{tableWebService.innledningPage}">Innledning</h:commandLink></li>
+									<!--  hvorHvemPageUten byttes ut med hvorHvemPage for å få tilbake søkefunksjon for sykehus  -->
+									<li><h:commandLink action="#{tableWebService.hvorHvemPage}">Hvor/Når/Hvem</h:commandLink></li>
+									<li><h:commandLink action="#{tableWebService.hendelsePage}">Hendelse</h:commandLink></li>
+									<li class="active nonTransparent">Diskusjon</li>
+									<li><h:commandLink action="#{tableWebService.kontaktinfoPage}">Kontaktinformasjon</h:commandLink></li>
+								</ul>
+			
+						</div>					
+					</div>
+	      <!-- /Col 1 -->			
+			
+       	<div class="ym-col2"><div><f:verbatim>&#160;</f:verbatim></div>
+          <!--<div class="ym-cbox helparea">
+            <div class="circle">i</div>
+            <br/><br/><br></br> 
+            </div>-->
+        </div>
+        <div class="ym-col3">
+					<div class="ym-cbox">
+            <h2>Diskusjon</h2>
+						<div class="ym-fbox-text" style="padding:0">
+							<label for="why">Hvorfor tror du hendelsen skjedde? (ikke oppgi navn eller annet som identifiserer pasienten eller arbeidstaker(e).</label>
+							<h:inputTextarea value="#{modelDiskusjon.melding.arsaksbeskrivelse}" id="why" cols="30" rows="7" />
+						
+							<br/>
+							<label for="suggested-actions">Beskriv tiltak som bør gjøres for at noe lignende ikke skal skje igjen. Ikke oppgi navn eller annet som identifiserer pasienten eller arbeidstaker(e).</label>
+							<h:inputTextarea value="#{modelDiskusjon.melding.forslagtiltak}" id="suggested-actions" cols="30" rows="7" />
+							
+							<br/>
+							<label for="learning">Kan andre i Helse-Norge lære av denne hendelsen? På hvilken måte?</label>
+							<h:inputTextarea value="#{modelDiskusjon.lareavHendelse}" id="learning" cols="30" rows="7" />
+						</div>
+							
+						<div class="buttons">
+							<div style="clear: both;">
+              	<h:commandButton 
+              		action="#{tableWebService.hendelsePage}" id="btnForrige" class="replacement-forrige" 
+              		style="width:100px; float:left; cursor: pointer;" value=""/>								 	
+           		 	<h:commandButton 
+           		 		rendered="#{modelObj.blKontrollBtn}" action="#{tableWebService.controllPage}" id="btnKontroll" class="replacement-kontroll" 
+           		 		style="cursor:pointer; width:65% " value=""/>
+              	<h:commandButton 
+           		 		action="#{tableWebService.kontaktinfoPage}" id="btnbtnNeste" class="replacement-neste" 
+           		 		style="width:90px; height:40px; cursor: pointer;" value=""/>
+              </div>
+           </div>
+	           							
+					</div>
+				</div>
+		  </div></h:form>
+		</ui:define>
+	</ui:composition>
+</html> 			

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich" >
+     	
+<h:head>
+	<title>Meldeordningen - webskjema</title>    
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+	<ui:define name="content">
+	<h:form class="ym-form" id="introduction-form">
+	  <div class="ym-column">
+	    
+      <div class="ym-col1">      
+				<div class="ym-cbox elmersteps">
+					<!-- <ul class="ym-vlist">
+					<li class="active nonTransparent">Innledning</li>
+					<li><a href ="spring/main">Hvor/Når/Hvem</a></li>    
+			 		<li class="active nonTransparent">Hendelse</li>
+			 		<li class="active nonTransparent">Diskusjon</li>
+			 		<li class="active nonTransparent">Kontaktinformasjon</li>
+		
+					
+					</ul> -->
+					<ul class="ym-vlist">
+							<li class="active nonTransparent">Innledning</li>
+							<li><h:commandLink action="#{tableWebService.hvorHvemPage}">Hvor/Når/Hvem</h:commandLink>
+							</li>
+							<li><h:commandLink id="hendelse" action="#{tableWebService.hendelsePage}" >Hendelse</h:commandLink>
+							</li>
+							<li><h:commandLink id="diskusjon" action="#{tableWebService.diskusjonPage}" >Diskusjon</h:commandLink>
+							</li>
+							<li><h:commandLink id="kontakt" action="#{tableWebService. kontaktinfoPage}">Kontaktinformasjon</h:commandLink>
+							</li>
+						</ul>
+					
+					
+				</div>					
+			</div>	    
+	    
+      <div class="ym-col2">
+        <div class="ym-cbox helparea" style="display:block;opacity:1;">
+          <div class="circle">?</div>
+          <p>I denne ruten vil det dukke opp informasjon dersom du trykker på symbolet&#160;<h:graphicImage name="helpicon2.png" library="images" alt="hjelp" title="Hjelp" /> ved siden av et spørsmål.</p>
+        </div>
+      </div> 
+	    
+      <div class="ym-col3">
+        <div class="ym-cbox">
+        	
+        	
+         		<div class="ym-grid">
+	          	<div class="ym-g50 ym-gl">
+	            	<div class="ym-gbox ym-fbox-text">
+	              	<h2>Hvem er skjemaet for?</h2>
+	                <p>Helsepersonell i spesialisthelsetjenesten som skal melde om uønskede hendelser i henhold til spesialisthelsetjenestelovens § 3-3, og som <strong>ikke </strong>registrerer hendelsene i interne systemer som kommuniserer med Kunnskapssenteret.</p>
+	                <p>Les mer om:</p>	                
+	                <ul>
+	                <li><a href="http://www.melde.no/melde/når-skal-jeg-melde" target="_blank">når skal jeg melde</a></li>
+			              <li><a href="http://www.melde.no/melde/hva-skal-meldes" target="_blank">hva skal meldes</a></li>
+            			  <li><a href="http://www.melde.no/melde/hva-skjer-etterpå" target="_blank">hva som skjer etter at en melding er mottatt</a></li>
+			            </ul>      			      
+                </div>
+              </div>
+              
+              <div class="ym-g50 ym-gr">
+	            	<div class="ym-gbox ym-fbox-text">
+	              	<h2>Brukerveiledning</h2>
+	                <p>Vi har skrevet en <a href="veiledning.xhtml" target="_blank">brukerveiledning</a> som i korte trekk forklarer hvordan skjemasidene skal fylles ut.</p>
+	                <p><a href="mailto:meldeordning@kunnskapssenteret.no">Ta gjerne kontakt</a> hvis sidene ikke fungerer som forventet, eller hvis du har andre tilbakemeldinger eller spørsmål.</p>
+	           
+	              </div>
+	            </div>
+	            
+	          </div>  <!-- / ym-grid -->
+	                
+	        	<div class="buttons">
+<!--  hvorHvemPageUten byttes ut med hvorHvemPage for å få tilbake søkefunksjon for sykehus  -->
+	              <h:commandButton 
+	              action="#{tableWebService.hvorHvemPage}" id="btnInnledning" class="replacement-neste" 
+	              style="width:90px; height:40px; cursor: pointer;" value="" />
+       			</div>
+          
+        </div>
+      </div>			
+					
+    </div>	 </h:form>
+	</ui:define> 
+</ui:composition>
+</h:body>
+</html> 

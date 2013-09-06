@@ -1,0 +1,123 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/webtjenester/1.0-SNAPSHOT/maven-metadata.xml
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for no.kunnskapssenteret:semantiskweb_web:war:1.0-SNAPSHOT
+[WARNING] 'parent.relativePath' points at no.kunnskapssenteret:fagprosedyrer instead of no.kunnskapssenteret:webtjenester, please verify your project structure @ line 5, column 11
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building NHN web 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/webtjenester_business/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/rammeverk_kilde/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/rammeverk/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://maven.ontotext.com/content/repositories/aduna/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://people.apache.org/repo/m2-snapshot-repository/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://download.java.net/maven/1/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://download.java.net/maven/2/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: https://repository.jboss.org/nexus/content/groups/public/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://repository.jboss.org/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://repo1.maven.org/maven2/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/webtjenestetest/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/rammeverk_web/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/hive-core/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-dc-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-foaf-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-rdfs-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/elmo-skos-1.5/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/1/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://repository.jboss.org/nexus/content/groups/public/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://download.java.net/maven/2/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+Downloading: http://repository.jboss.org/no/kunnskapssenteret/openrdf-sesame-2.4.0-onejar/1.0-SNAPSHOT/maven-metadata.xml
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ semantiskweb_web ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ semantiskweb_web ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ semantiskweb_web ---
+[INFO] Compiling 25 source files to C:\svnroot2\nokc\fagprosedyrer\trunk\fagprosedyrer_web\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ semantiskweb_web ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ semantiskweb_web ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.7.2:test (default-test) @ semantiskweb_web ---
+[INFO] No tests to run.
+[INFO] Surefire report directory: C:\svnroot2\nokc\fagprosedyrer\trunk\fagprosedyrer_web\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+There are no tests to run.
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-war-plugin:2.1.1:war (default-war) @ semantiskweb_web ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [semantiskweb_web] in [C:\svnroot2\nokc\fagprosedyrer\trunk\fagprosedyrer_web\target\semantiskweb_web]
+[INFO] Processing war project
+[INFO] Copying webapp resources [C:\svnroot2\nokc\fagprosedyrer\trunk\fagprosedyrer_web\src\main\webapp]
+[INFO] Webapp assembled in [5236 msecs]
+[INFO] Building war: C:\svnroot2\nokc\fagprosedyrer\trunk\fagprosedyrer_web\target\semantiskweb_web.war
+[WARNING] Warning: selected war files include a WEB-INF/web.xml which will be ignored 
+(webxml attribute is missing from war task, or ignoreWebxml attribute is specified as 'true')
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ semantiskweb_web ---
+[INFO] Installing C:\svnroot2\nokc\fagprosedyrer\trunk\fagprosedyrer_web\target\semantiskweb_web.war to C:\Users\olj\.m2\repository\no\kunnskapssenteret\semantiskweb_web\1.0-SNAPSHOT\semantiskweb_web-1.0-SNAPSHOT.war
+[INFO] Installing C:\svnroot2\nokc\fagprosedyrer\trunk\fagprosedyrer_web\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\semantiskweb_web\1.0-SNAPSHOT\semantiskweb_web-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 37.073s
+[INFO] Finished at: Fri Sep 06 09:49:59 CEST 2013
+[INFO] Final Memory: 36M/222M
+[INFO] ------------------------------------------------------------------------
