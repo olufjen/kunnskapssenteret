@@ -1,0 +1,14 @@
+#summary Kildekode for Forfatterverktøy for fagprosedyrer.
+#labels Phase-Design
+
+= Innledning =
+
+Add your content here.
+
+
+= Detaljer =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
