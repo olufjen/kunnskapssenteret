@@ -22,7 +22,6 @@ public interface TableWebService extends NHNMasterWebService  {
 
 	public NHNServiceClient getNhnClient();
 	@RequestMapping(method = RequestMethod.GET) 
-	public HvorHvem initializeHvorHvem();
 	public void setNhnClient(NHNServiceClient nhnClient);
 
 	public void collectMasterTables();
