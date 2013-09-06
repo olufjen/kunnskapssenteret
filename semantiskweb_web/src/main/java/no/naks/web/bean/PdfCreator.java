@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import no.naks.emok.model.Basismelding;
 import no.naks.nhn.model.Person;
-import no.naks.web.model.Diskusjon;
+import no.naks.web.model.Meshtree;
 import no.naks.web.model.Hendelse;
 import no.naks.web.model.HvorHvem;
 import no.naks.web.model.Kontaktinfo;
@@ -72,7 +72,7 @@ public class PdfCreator  implements Serializable {
 		Person leder = (Person)flow.get("modelLeder");
 		Hendelse hendelse = (Hendelse)flow.get("modelHendelse");
 		HvorHvem hvorHvem = (HvorHvem)flow.get("modelObj"); 
-		Diskusjon diskusjon = (Diskusjon)flow.get("modelDiskusjon");
+		Meshtree diskusjon = (Meshtree)flow.get("modelDiskusjon");
 		Kontaktinfo kontaktInfo = (Kontaktinfo)flow.get("modelKontaktinfo");
 	    
 	    try {
@@ -332,27 +332,21 @@ public class PdfCreator  implements Serializable {
 	        cellT6=getCell("Hvorfor tror du hendelsen skjedde?");
 	        table6.addCell(cellT6);
 	        String tror = "";
-	        if(diskusjon.getMelding()!=null){
-	        	tror = diskusjon.getMelding().getArsaksbeskrivelse();
-	        }
+
 	        cellT6=getCell(tror);
 	        table6.addCell(cellT6);
 	        
 	        cellT6=getCell("Beskriv tiltak som bør gjøres for at noe lignende ikke skal skje igjen");
 	        table6.addCell(cellT6);
 	        String tiltak="";
-	        if(diskusjon.getMelding()!=null){
-	        	tiltak =  diskusjon.getMelding().getForslagtiltak() ;
-	        }
+
 	        cellT6=getCell(tiltak);
 	        table6.addCell(cellT6);
 	        
 	        cellT6=getCell("Kan andre i Helse-Norge lære av denne hendelsen? På hvilken måte?");
 	        table6.addCell(cellT6);
 	        String andre="";
-	        if(diskusjon.getLareavHendelse()!=null){
-	        	andre =  diskusjon.getLareavHendelse() ;
-	        }
+
 	        cellT6=getCell(andre);
 	        table6.addCell(cellT6);
 	        
