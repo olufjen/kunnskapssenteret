@@ -242,7 +242,7 @@
 	    <version>2.3.2.RELEASE</version>
 	</dependency>
 	          		<!-- Added 02.09.13 end  -->
-			<!-- Ricfaces 4.1.0 -->
+			<!-- Ricfaces 4.1.0    -->
 			
 			<dependency>
 				<groupId>org.richfaces.core</groupId>
