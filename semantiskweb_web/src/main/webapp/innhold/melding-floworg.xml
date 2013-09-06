@@ -4,37 +4,48 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
-		<!--
-		<var name="meshSchema" class="edu.unc.ils.mrc.hive.api.impl.elmo.SKOSSchemeImpl"/>
-		 edu.unc.ils.mrc.hive.api.impl.elmo.SKOSSchemeImpl
+
+		<var name="melding" class="no.naks.emok.model.Basismelding"/>
+		<!-- 
 		<var name="person" class="no.naks.nhn.model.PersonImpl"/>
 		<var name="leder" class="no.naks.nhn.model.PersonImpl"/>
+		
+		delete it
 		 -->
 	<on-start>
-	<evaluate expression="tableWebService.initializeVocabulary()">
-			</evaluate>		
-	<evaluate expression="tableWebService.initializeScheme()" result="conversationScope.meshConcepts">
+			
+			<evaluate expression="tableWebService.initializeHvorHvem()" result="flowScope.modelObj">
 			</evaluate>
-	  
-			<evaluate expression="tableWebService.collectScope()" result="conversationScope.hiveConcepts"></evaluate>	
-			<evaluate expression="tableWebService.initializeMeshtree()" result="conversationScope.meshTree"></evaluate>
-			<evaluate expression="tableWebService.produceTree()" result="conversationScope.modelTree"></evaluate>
+			 
+			<evaluate expression="tableWebService.initializeHendelse()"  result="flowScope.modelHendelse">
+			</evaluate>
+			<evaluate expression="tableWebService.initializeDiskusjon()" result="flowScope.modelDiskusjon"></evaluate>
+			<evaluate expression="tableWebService.initializeKontaktinfo()" result="flowScope.modelKontaktinfo"></evaluate>
+			<evaluate expression="tableWebService.initializePerson()" result="flowScope.modelPerson"></evaluate>
+			<evaluate expression="tableWebService.initializeLeder()" result="flowScope.modelLeder"></evaluate>
+			<evaluate expression="tableWebService.initializeScheme()" result="conversationScope.meshVocabulary"></evaluate>
+			<evaluate expression="tableWebService.collectScope()"></evaluate>	
 	</on-start>
+
 		<view-state id="innledning" view="home.xhtml">
 			<transition on="hendelse" to="hendelse"/>
 			<transition on="diskusjon" to="diskusjon"/>
 			<transition on="kontaktinfo" to="kontaktinfo"/>
 			<transition on="innledning" to="innledning"/>
+			<transition on="hvorhvem" to="hvorhvem"/>
 		</view-state>
+		
+
 		<view-state id="hvorhvem"  view="hvorhvem.xhtml" model="modelObj">
 		
 			<transition on="hendelse" to="hendelse"/>
 			<transition on="diskusjon" to="diskusjon"/>
 			<transition on="kontaktinfo" to="kontaktinfo"/>
 			<transition on="innledning" to="innledning"/>
+			<transition on="kontroll" to="kontroll"/> 
+			<on-exit><evaluate expression="tableWebService.initializeOrganization()" result="flowScope.modelOrganization"></evaluate></on-exit>
 			
 		</view-state>
-
 		
 		<view-state id="hendelse"  view="hendelse.xhtml" model="modelHendelse">
 	
@@ -42,37 +53,44 @@
 			<transition on="diskusjon" to="diskusjon"/>
 			<transition on="kontaktinfo" to="kontaktinfo"/>
 			<transition on="innledning" to="innledning"/>
+			<transition on="kontroll" to="kontroll"/> 
 	
 		</view-state>
 		<view-state id="diskusjon" view="diskusjon.xhtml" model="modelDiskusjon">
 			<transition on="hvorhvem" to="hvorhvem"/>
 			<transition on="hendelse" to="hendelse"/>
 			<transition on="kontaktinfo" to="kontaktinfo"/>
-			
+			<transition on="innledning" to="innledning"/>
+			<transition on="kontroll" to="kontroll"/> 
 		</view-state>
 		<view-state id="kontaktinfo" view="kontaktinfo.xhtml" model="modelKontaktinfo">
-	
+			<transition on="hvorhvem" to="hvorhvem"/>
 			<transition on="hendelse" to="hendelse"/>
 			<transition on="diskusjon" to="diskusjon"/>
 		 	<transition on="kontroll" to="kontroll"/> 
-	
+			<transition on="innledning" to="innledning"/>
 		</view-state>
 	 	
 		<view-state id="kontroll" view="kontroll.xhtml" >
-		<on-entry><evaluate expression="tableWebService.checkKontroll()" result="flowScope.modelKontroll"></evaluate></on-entry>
+		<on-entry>
+			<evaluate expression="tableWebService.checkKontroll()" result="flowScope.modelKontroll"></evaluate>
+		</on-entry>
 			<transition  on="hendelse" to="hendelse"/>
 			<transition on="diskusjon" to="diskusjon"/>
 			<transition on="hvorhvem" to="hvorhvem"/>
+			<transition on="innledning" to="innledning"/>
 			<transition on="kontaktinfo" to="kontaktinfo"/>
-			<transition on="kvittering" to="kvittering"/>
+			<transition on="kvittering" to="kvittering" history="invalidate" />
+			
+		</view-state> 
+		<view-state id="kvittering"  view="kvittering.xhtml">
+			<on-entry> 
+				<evaluate expression="tableWebService.initializePdfCreator()" result="flowScope.pdfCreator" ></evaluate> 
+			</on-entry>	 
 		</view-state>
-		<view-state id="kvittering" view="kvittering.xhtml">
 		
-				<transition on="cancel" to="finish" ></transition>
-		</view-state>
 
-
-	<end-state id="finish"  >
+	<end-state id="finish" view="velkommen.xhtml"  >
 		
 	</end-state>
 	<global-transitions >
