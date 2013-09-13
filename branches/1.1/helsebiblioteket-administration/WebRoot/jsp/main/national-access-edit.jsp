@@ -31,7 +31,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"">
+			<td colspan="2" align="left">
 				<h:commandLink value="#{msg_main.add}"
 					action="#{nationalAccessBean.actionAddSource}"
 					immediate="true"/>
@@ -89,5 +89,5 @@
 			</td>
 		</tr>
 	</table>
-
 </h:form>
+ 

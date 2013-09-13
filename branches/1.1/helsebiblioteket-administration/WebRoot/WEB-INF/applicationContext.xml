@@ -319,6 +319,8 @@ xmlns="http://www.springframework.org/schema/beans"
 				/export-user.faces=ROLE_administrator
 				/export-proxy.faces=ROLE_administrator,ROLE_org_admin
 				/export-proxy-result.faces=ROLE_administrator,ROLE_org_admin
+				/member-organization-details.faces=ROLE_org_admin
+				/member-organization-edit.faces=ROLE_org_admin
 			</value>
 		</property>
 	</bean>

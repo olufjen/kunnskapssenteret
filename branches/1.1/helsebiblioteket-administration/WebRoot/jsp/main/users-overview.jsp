@@ -35,7 +35,7 @@
   </p>
   
   <u><h:outputText value="#{msg_main.user_overview_result}" /></u>
-  
+</h:form>  
   <h:dataTable id="users" value="#{userBean.users}" var="user" binding="#{userBean.usersTable}">
     <h:column id="nameColumn">
       <f:facet name="header">
@@ -92,4 +92,4 @@
       </center>
   </t:div>
   
-</h:form>
+
