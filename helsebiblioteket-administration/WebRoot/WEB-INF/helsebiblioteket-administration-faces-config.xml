@@ -205,7 +205,18 @@
 		    <to-view-id>/login.faces</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>edit_member_organization</from-outcome>
+			<to-view-id>/member-organization-edit.faces</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>member_organization</from-outcome>
+			<to-view-id>/member-organization-details.faces</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<managed-bean>
     	<description>Organization domain object</description>
         <display-name>Orgnization domain object</display-name>
@@ -478,21 +489,30 @@
         </managed-property>
 	</managed-bean>
 	
-	<!-- <managed-bean>
-    	<description>Backingbean related to "xxxx"</description>
-        <display-name>xxxx</display-name>
-        <managed-bean-name>xxxxBean</managed-bean-name>
-        <managed-bean-class>no.helsebiblioteket.administration.bean.XxxxBean</managed-bean-class>
+	<managed-bean>
+    	<description>Backingbean related to "member organizations"</description>
+        <display-name>member organization</display-name>
+        <managed-bean-name>memberOrganizationBean</managed-bean-name>
+        <managed-bean-class>no.helsebiblioteket.admin.bean.MemberOrganizationBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     	<managed-property>
-    		<property-name>adminService</property-name>
-        	<value>#{adminService}</value>
+    		<property-name>userService</property-name>
+        	<value>#{userService}</value>
 		</managed-property>
-	</managed-bean>  -->
+		<managed-property>
+            <property-name>organizationService</property-name>
+            <value>#{organizationService}</value>
+        </managed-property>
+	</managed-bean>
 
 	<validator>
 		<validator-id>IntegerOrNullValidator</validator-id>	
 		<validator-class>no.helsebiblioteket.jsf.validators.IntegerOrNullValidatorJSF</validator-class>
+	</validator>
+	
+	<validator>
+		<validator-id>ImageLogoValidator</validator-id>	
+		<validator-class>no.helsebiblioteket.jsf.validators.ImageLogoValidatorJSF</validator-class>
 	</validator>
 
 </faces-config>

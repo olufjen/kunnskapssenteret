@@ -258,9 +258,10 @@
 				<h:outputText value="#{msg_main.logo}" ></h:outputText>
 			</td>
 			<td>
-				<t:inputFileUpload id="uploadImg" accept="image/*"  value="#{createAndChangeMemberOrganizationBean.organization.contactPerson.contactInformation.uploadedImage}" 
-					binding="#{createAndChangeMemberOrganizationBean.logoPicture}"
-				  ></t:inputFileUpload>
+				<t:inputFileUpload id="uploadImg" accept="image/*"  value="#{createAndChangeMemberOrganizationBean.organization.contactInformation.uploadedImage}"
+					binding="#{createAndChangeMemberOrganizationBean.logoPicture}">
+					<f:validator validatorId="ImageLogoValidator" />
+				</t:inputFileUpload>
 				<br /><h:message for="uploadImg" styleClass="error"/>
 			</td>
 		</tr>

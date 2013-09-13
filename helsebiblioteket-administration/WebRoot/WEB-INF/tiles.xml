@@ -134,6 +134,15 @@
 		<put name="user" value="/jsp/main/empty.jsp" type="page" />
    	</definition>
    	
+   	<definition name="member-organization-details.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/member-organization-details.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	<definition name="member-organization-edit.tiles" extends="standardFrame">
+		<put name="main" value="/jsp/main/member-organization-edit.jsp" type="page" />
+		<put name="user" value="/jsp/main/empty.jsp" type="page" />
+   	</definition>
+   	
    	
    	<!-- USERS -->
    	<definition name="users-overview.tiles" extends="standardFrame">
