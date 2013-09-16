@@ -105,6 +105,8 @@ public class ContactInformation implements Serializable {
 	}
 
 	public byte[] getLogoImage() {
+		java.lang.System.out.println("getLogoImage: " + logoImage);
+		java.lang.System.out.println("getLogoImage.length: " + logoImage != null ? logoImage.length : "logoimage er null, har ingen lengde");
 		return logoImage;
 	}
 	
@@ -127,5 +129,8 @@ public class ContactInformation implements Serializable {
 	public void setDeletIt(String deletIt) {
 		this.deletIt = deletIt;
 	}
-
+	
+	public boolean isLogoImage() {
+		return this.logoImage != null;
+	}
 }
