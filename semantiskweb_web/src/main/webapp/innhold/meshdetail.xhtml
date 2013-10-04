@@ -42,7 +42,8 @@
 						
 					</h:panelGrid>
 						</ul>		
-		<t:dataTable  id="meshliste"
+		<t:dataTable  id="treliste"
+		
 		 rows="#{meshTree.noofNodes}"
 			var="node" value="#{meshTree.trees}">
 
@@ -55,70 +56,13 @@
 					<f:param value="#{node.baseName}" name="treeName"></f:param>
   	  			</h:commandLink>
 			</h:column>
-<!-- 			
-   			<h:column id="idkolonne">
-      	<f:facet name="header">
-			<h:outputText id="idheader" value="KursId"></h:outputText>
-		</f:facet> 
-	 	 <h:commandLink id="prosjektlink" action="#{kursoversikt.getCourseDetail}" >
-			<h:outputText id="kursident" value="#{kurs.kursIdentifikasjon}" ></h:outputText>
-			<f:param value="#{kurs.kursId}" name="kursid"></f:param>
-  	  	</h:commandLink>
- 		</h:column>
-			<h:column id="title">
-				<f:facet name="header">
-					<h:outputText id="titleheader" value="#{msg.kurs_name}"></h:outputText>
-				</f:facet>
-				<h:commandLink id="kursvalg" action="#{kursoversikt.getCourseDetail}">
-					<h:outputText id="questionaretitle" value="#{kurs.kursNavn}"></h:outputText>
-					<f:param value="#{kurs.kursId}" name="kursid"></f:param>
-				</h:commandLink>
-			</h:column>
-     	<h:column id="typekolonne" >
-      		<f:facet name="header">
-				<h:outputText id="typeheader" value="#{msg.course_oversiktkurstype}"></h:outputText>
-			</f:facet> 
-			<h:outputText id="typenavn" value="#{kurs.kursType}" ></h:outputText>
-    	</h:column> 
- 		<h:column id="arrkolonne" >
-      		<f:facet name="header">
-				<h:outputText id="arrheader" value="#{msg.course_oversiktarrangor}"></h:outputText>
-			</f:facet> 
-			<h:outputText id="arrnavn" value="#{kurs.kursArrangor}" ></h:outputText>
-    	</h:column> 
-  		<h:column id="stedkolonne" >
-      		<f:facet name="header">
-				<h:outputText id="stedheader" value="#{msg.course_oversiktsted}"></h:outputText>
-			</f:facet> 
-			<h:outputText id="stednavn" value="#{kurs.kursSted}" ></h:outputText>
-    	</h:column>      
 	
-			<h:column>
-				<h:commandLink action="#{kursoversikt.getCourseDetail}">
-					<h:graphicImage value="/images/edit.jpg" alt="rediger" />
-					<f:param value="#{kurs.kursId}" name="kursid"></f:param>
-				</h:commandLink>
-			</h:column>
-			<h:column>
-				<h:commandLink id="kursdelete" onclick="if (!confirm('Are you sure you want to Delete?')) return false;"
-					action="#{questionare.deleteQuestionare}">
-				<h:graphicImage value="/images/delete.jpg" alt="slett"/>
-				
-					<f:param value="#{kurs.kursId}" name="kursid"></f:param>
-				</h:commandLink>
-			</h:column>	
-			<h:column>
-				<h:commandLink actionListener="#{kursoversikt.rtfActionListener}">
-					<h:graphicImage value="/images/word.jpg" alt="se kurset som word dokument" />
-					<f:param value="#{kurs.kursId}" name="questionareid"></f:param>
-				</h:commandLink>
-			</h:column>	
- -->								
+			
 		</t:dataTable>
 					
 	<h:panelGrid columns="2" width="100%" columnClasses="ym-vlist">
 	
-	<t:dataScroller id="scroll_1" for="meshliste" fastStep="10"
+	<t:dataScroller id="scroll_1" for="treliste" fastStep="10"
 		pageCountVar="pageCount" pageIndexVar="pageIndex"
 		styleClass="scroller" paginator="true" paginatorMaxPages="9"
 		paginatorTableClass="paginator"
@@ -177,20 +121,58 @@
          		<div class="ym-grid">
 	          	<div class="ym-g50 ym-gl">
 	            	<div class="ym-gbox ym-fbox-text">
-	              	<h2>Hva er MeSH</h2>
-	                <p>Helseinstitusjoner i Norge kan benytte MeSH til å indeksere medisinske artikler. Kunnskapssenteret administrerer og utvikler Norske MeSH basert på MeSH fra National Library of medicine.</p>
-	                <p>Les mer om:</p>	                
-	                <ul>
-	                <li><a href="http://www.melde.no/melde/når-skal-jeg-melde" target="_blank">Hvordan jeg kan bruke Norske MeSH</a></li>
-			              <li><a href="http://www.melde.no/melde/hva-skal-meldes" target="_blank">...</a></li>
-            			  <li><a href="http://www.melde.no/melde/hva-skjer-etterpå" target="_blank">....</a></li>
-			            </ul>      			      
-                </div>
-              </div>
+	              	<h2>	<h:outputText id="treechosen" value="#{meshTree.chosenTree.baseName}"></h:outputText></h2>
+  		<t:dataTable  id="meshliste"
+		
+		 rows="#{meshTree.noofNodes}"
+			var="treenode" value="#{meshTree.chosenTree.hiveConcepts}">
+
+			<h:column id="hivedetail">
+				<f:facet name="hiveheader">
+					<h:outputText id="prefhiveheader" value="Hovedtermer"></h:outputText>
+				</f:facet>
+				 <h:commandLink id="prosjektlink" action="#{tableWebService.getmeshDetail}" >
+					<h:outputText id="pref" value="#{treenode.prefLabel}"></h:outputText>
+					<f:param value="#{treenode.qname}" name="qnameid"></f:param>
+  	  			</h:commandLink>
+			</h:column>
+	
+			
+		</t:dataTable>
+					
+	<h:panelGrid columns="2" width="100%" columnClasses="ym-vlist">
+	
+	<t:dataScroller id="scroll_1" for="meshliste" fastStep="10"
+		pageCountVar="pageCount" pageIndexVar="pageIndex"
+		styleClass="scroller" paginator="true" paginatorMaxPages="9"
+		paginatorTableClass="paginator"
+		paginatorActiveColumnStyle="font-weight:bold;" immediate="true">
+		<f:facet name="first">
+			<h:graphicImage  name="arrow-first.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="last">
+			<h:graphicImage name="arrow-last.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="previous">
+			<h:graphicImage name="arrow-previous.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="next">
+			<h:graphicImage  name="arrow-next.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="fastforward">
+			<h:graphicImage name="arrow-ff.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="fastrewind">
+			<h:graphicImage name="arrow-fr.gif" library="images" border="1" />
+		</f:facet>
+	</t:dataScroller>	    
+	</h:panelGrid>	  
+           </div>
+          </div>
               
               <div class="ym-g50 ym-gr">
 	            	<div class="ym-gbox ym-fbox-text">
-	              	<h2>Brukerveiledning</h2>
+	              	<h2>Smalere begreper</h2>
 	          
 	                <p>Her kommer begreper fra MeSH  som i korte trekk forklarer hva Norske MeSH er.</p>
 	                <p><a href="mailto:meldeordning@kunnskapssenteret.no">Ta gjerne kontakt</a> hvis sidene ikke fungerer som forventet, eller hvis du har andre tilbakemeldinger eller spørsmål.</p>

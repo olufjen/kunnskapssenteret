@@ -11,22 +11,22 @@
 		<var name="leder" class="no.naks.nhn.model.PersonImpl"/>
 		 -->
 	<on-start>
-	<evaluate expression="tableWebService.initializeVocabulary()">
-			</evaluate>		
+	
+<!--	<evaluate expression="tableWebService.initializeVocabulary()"></evaluate> 	
 	<evaluate expression="tableWebService.initializeScheme()" result="conversationScope.meshConcepts">
-			</evaluate>
+			</evaluate>  -->	
 	  
 			<evaluate expression="tableWebService.collectScope()" result="conversationScope.hiveConcepts"></evaluate>	
 			<evaluate expression="tableWebService.initializeMeshtree()" result="conversationScope.meshTree"></evaluate>
 			<evaluate expression="tableWebService.produceTree()" result="conversationScope.modelTree"></evaluate>
 	</on-start>
 		<view-state id="innledning" view="home.xhtml">
-			<transition on="hendelse" to="hendelse"/>
+			<transition on="meshdetail" to="meshdetail"/>
 			<transition on="diskusjon" to="diskusjon"/>
 			<transition on="kontaktinfo" to="kontaktinfo"/>
 			<transition on="innledning" to="innledning"/>
 		</view-state>
-		<view-state id="hvorhvem"  view="hvorhvem.xhtml" model="modelObj">
+		<view-state id="meshdetail"  view="meshdetail.xhtml" model="modelTree">
 		
 			<transition on="hendelse" to="hendelse"/>
 			<transition on="diskusjon" to="diskusjon"/>
