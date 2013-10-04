@@ -3,6 +3,7 @@ package no.naks.web.control;
 import java.security.Principal;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
@@ -42,6 +43,7 @@ import no.naks.nhn.service.NHNServiceClient;
 import no.naks.services.nhn.client.Organization;
 import no.naks.web.bean.PdfCreator;
 import no.naks.web.model.Meshtree;
+import no.naks.web.model.SemantiskTree;
 
 
 /**
@@ -59,6 +61,7 @@ import no.naks.web.model.Meshtree;
 public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		TableWebService,NHNMasterWebService,MasterWebService {
 	protected MelderService meldingService; // Denne tjenesten sørger for lagring av meldinger til xml.
+	protected HiveService hiveService;
 	
 
 	
@@ -66,6 +69,17 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		super();
 		
 		// TODO Auto-generated constructor stub
+/*		
+		Map<String, Object> appMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
+		Set<String> pathSet = FacesContext.getCurrentInstance().getExternalContext().getResourcePaths("/");
+		String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("");
+	
+	
+//		C:\svnroot2\nokc\semantiskweb\trunk\semantiskweb_web\src\main\webapp\WEB-INF\conf
+//		String confPath = "c:/svnroot2/nokc/semantiskweb/trunk/semantiskweb_web/src/main/webapp/WEB-INF/conf/";
+		String confPath = path + "/config/app-config";
+*/
+
 		 System.out.println("Tablewebservice created");
 	}
 	protected String getFacesParamValue(String name) {
@@ -76,9 +90,15 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	                                    .get(name);
 	
 	}
+	/**
+	 * THis method moved to HiveService
+	 * 
+	 * @deprecated
+	 */
 	public void initializeVocabulary(){
 		boolean firstTime = false;
 		String vocabularyName = "mesh";
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		HiveVocabularyImpl vocabulary = null;
 		ArrayList<HiveConcept> hiveConcepts = new ArrayList();
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -100,14 +120,21 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		System.out.println("Tablewebservice: initialisering scheme");
 		//modelObj.setMelding(melding);
 		vocabulary = (HiveVocabularyImpl) scheme.getHiveVocabulary();
-		sessionMap.put("meshvocabulary",vocabulary);
+		session.setAttribute("meshvocabulary",vocabulary);
+//		sessionMap.put("meshvocabulary",vocabulary);
 //		return vocabulary;
 	}
+	/**
+	 * @deprecated
+	 * @return
+	 */
 	public Map<String,QName> initializeScheme(){
+/*
 		boolean firstTime = false;
 		String vocabularyName = "mesh";
 		HiveVocabularyImpl vocabulary = null;
 		ArrayList<HiveConcept> hiveConcepts = new ArrayList();
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -116,18 +143,20 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		RequestContext reqContext = RequestContextHolder.getRequestContext();
 		MutableAttributeMap  flow = reqContext.getFlowScope();
 		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		vocabulary = (HiveVocabularyImpl)sessionMap.get("meshvocabulary");
+		vocabulary = (HiveVocabularyImpl)session.getAttribute("meshvocabulary"); 
+*/		
+//		vocabulary = (HiveVocabularyImpl)sessionMap.get("meshvocabulary");
 //		vocabulary = (HiveVocabularyImpl)conversation.get("meshVocabulary");
 		System.out.println("Tablewebservice: initialisering concepts");
 		//modelObj.setMelding(melding);
 	
-		Map<String,QName> concepts = (TreeMap) vocabulary.findAllConcepts(true);
+		Map<String,QName> concepts = (TreeMap) hiveService.getVocabulary().findAllConcepts(false);
 //		QName qname = new QName("http://www.nlm.nih.gov/mesh/D000715#concept", "");
 		QName qname = new QName("http://www.nlm.nih.gov/mesh/D001690#concept", "");	
 		HiveConcept concept = null; 
 	
 		try {
-			concept = vocabulary.findConcept(qname);
+			concept = hiveService.getVocabulary().findConcept(qname);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -176,13 +205,14 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		RequestContext reqContext = RequestContextHolder.getRequestContext();
 		MutableAttributeMap  flow = reqContext.getFlowScope();
 		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		HiveVocabularyImpl vocabulary = null;
+	//	HiveVocabularyImpl vocabulary = null;
 		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		
-		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	//	Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 	//	vocabulary = (HiveVocabularyImpl)conversation.get("meshVocabulary");
-		vocabulary = (HiveVocabularyImpl)sessionMap.get("meshvocabulary");
-		Map<String,QName> concepts = (Map)conversation.get("meshConcepts");
+	//	vocabulary = (HiveVocabularyImpl)session.getAttribute("meshvocabulary"); 
+	//	vocabulary = (HiveVocabularyImpl)sessionMap.get("meshvocabulary");
+		Map<String,QName> concepts = hiveService.getConcepts();
 		ArrayList<HiveConcept> hiveConcepts = new ArrayList();
 		QName nameSpace = null;
 		
@@ -197,7 +227,7 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 */		
 			 nameSpace = (QName)entry.getValue();
 			 try {
-					concept = vocabulary.findConcept(nameSpace);
+					concept = hiveService.getVocabulary().findConcept(nameSpace);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -217,10 +247,13 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		RequestContext reqContext = RequestContextHolder.getRequestContext();
 		MutableAttributeMap  flow = reqContext.getFlowScope();
 		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Map<String,QName> concepts = (Map)conversation.get("meshConcepts");
+		Map<String,QName> concepts = hiveService.getConcepts();
+		//Map<String,QName> concepts = (Map)conversation.get("meshConcepts");
 		ArrayList<HiveConcept> hiveConcepts = (ArrayList)conversation.get("hiveConcepts");
 		
 		Meshtree meshTree = new Meshtree(hiveConcepts, concepts);
+		meshTree.setTreeElements(hiveService.getTreeElements());
+		meshTree.setAnatomi(hiveService.getAnatomi());
 		return meshTree;
 		
 	}
@@ -234,7 +267,44 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 
 	public String getmeshDetail(){
 		String kurSId = getFacesParamValue("qnameid");
-		return "";
+		RequestContext reqContext = RequestContextHolder.getRequestContext();
+		MutableAttributeMap  flow = reqContext.getFlowScope();
+		MutableAttributeMap  conversation = reqContext.getConversationScope();
+		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+		HiveConcept concept = null; 
+		if (!kurSId.contains("concept"))
+			kurSId = kurSId + "concept";
+		QName qname = new QName(kurSId, "");
+		try {
+			concept =  hiveService.getVocabulary().findConcept(qname);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (concept != null)
+			meshTree.setChosenConcept(concept);
+		return "meshdetail";
+	}
+	
+	public String getToptreeDetail(){
+		String treeTop = getFacesParamValue("treeName");
+		RequestContext reqContext = RequestContextHolder.getRequestContext();
+		MutableAttributeMap  flow = reqContext.getFlowScope();
+		MutableAttributeMap  conversation = reqContext.getConversationScope();
+		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+		ArrayList<SemantiskTree> trees = meshTree.getTrees();
+		int i = 0;
+		SemantiskTree tree = null;
+		String baseName = "";
+		do
+		{
+			tree = trees.get(i);
+			baseName = tree.getBaseName();
+			i++;
+		}while(i<trees.size() && !baseName.equals(treeTop));
+		if (tree != null)
+			meshTree.setChosenTree(tree);
+		return "meshdetail";
 	}
 	public void processSelection(TreeSelectionChangeEvent event) { 
 /*	     
@@ -281,9 +351,15 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		nhnClient.initializeTables();
 		organisationName = nhnClient.getOrganisationName();
 	}
+
 	
-
-
+	public HiveService getHiveService() {
+		return hiveService;
+	}
+	public void setHiveService(HiveService hiveService) {
+		this.hiveService = hiveService;
+		this.hiveService.initializeVocabulary();
+	}
 	public MelderService getMeldingService() {
 		return meldingService;
 	}
@@ -307,34 +383,19 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	public void setNhnFlag(boolean nhnFlag) {
 		this.nhnFlag = nhnFlag;
 	}
-	/**
-	 * getKvittering
-	 * Denne rutinen utføres når bruker ønsker å sende melding til Kunnskapssenteret
-	 * @return
-	 */
-	public String getKvittering(){
+
+	public String getSearch(){
 		RequestContext reqContext = RequestContextHolder.getRequestContext();
 		MutableAttributeMap  flow = reqContext.getFlowScope();
-		Basismelding ml = (Basismelding)flow.get("melding");
-		Person person = (Person)flow.get("modelPerson");
-		Person leder = (Person)flow.get("modelLeder");
-		Organization organisasjon = (Organization)flow.get("modelOrganization");
-		Organization foretakOrganisasjon = ml.getNhnadresse();
-		if (foretakOrganisasjon == null)
-			ml.setNhnadresse(organisasjon);
-		getMeldingService().sendMelding(ml,person,leder);
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		String sessionId = session.getId();
-		Principal prinsipal = reqContext.getExternalContext().getCurrentUser();
-		String pName = "noname";
-		
-		if (prinsipal != null && prinsipal.getName() != null && !prinsipal.getName().equals(""))
-			pName = prinsipal.getName();
-		System.out.println("getKvittering Session "+sessionId + " user " + pName + " har sent en melding");
-		
-		return "kvittering";
+		MutableAttributeMap  conversation = reqContext.getConversationScope();
+		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+	
+		return "";
 	}
-
+	public void hendelseHiddenValue(ValueChangeEvent val){
+		String strHendelse =(String) val.getNewValue();
+		int x = 0;
+	}
 	public String sessionKiller(){
 	/*	
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
