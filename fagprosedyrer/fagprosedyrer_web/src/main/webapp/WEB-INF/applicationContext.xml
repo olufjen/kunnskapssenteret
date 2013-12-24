@@ -32,7 +32,7 @@
 	
  	<bean name="/melding/" id="innmeldingServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.web.server.resource.InnmeldingServerResourceHtml">
-     
+     	<property name="sessionAdmin" ref="sessionAdmin"></property>
  	</bean>
  
  	<bean name="/" autowire="byName" scope="prototype"
@@ -77,7 +77,8 @@
 	 </bean>
 
 
-
+	<bean id="sessionAdmin" class="no.naks.web.control.SessionAdminImpl">
+	</bean>
 
 	<bean id="tableWebService" class="no.naks.web.control.TableWebServiceImpl">
 	<!--  
