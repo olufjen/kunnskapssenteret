@@ -35,6 +35,10 @@ public class Innmelding  implements Serializable {
 	private ArrayList<String>helsepersonell;
 	private ArrayList<String>helsepersonellValgt;
 	
+	private String buttonPasientvalgt = null;
+	private String buttonPersonellvalgt = null;
+	private String buttonPasientfjern = null;
+	private String buttonPersonellfjern = null;
 	
 	public Innmelding() {
 		super();
@@ -82,6 +86,10 @@ public class Innmelding  implements Serializable {
 		case "helsepersonell":
 			helsepersonellValgt.add(value);
 			break;
+		case "leggtilhelsepersonell":
+			buttonPersonellvalgt = value;
+			break;
+			
 		default:
 			undef = value;
 		}
