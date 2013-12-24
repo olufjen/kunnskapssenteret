@@ -1,0 +1,277 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building NHN web 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.1:tree (default-cli) @ fagprosedyrer_web ---
+[WARNING] Missing POM for opensymphony:quartz:jar:1.6.0
+[INFO] no.kunnskapssenteret:fagprosedyrer_web:war:1.0-SNAPSHOT
+[INFO] +- javax.servlet:javax.servlet-api:jar:3.0.1:provided (scope not updated to compile)
+[INFO] +- org.springframework:spring-oxm:jar:3.1.1.RELEASE:compile
+[INFO] |  +- commons-lang:commons-lang:jar:2.5:compile
+[INFO] |  +- org.springframework:spring-context:jar:3.1.1.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-aop:jar:3.1.1.RELEASE:compile
+[INFO] |  \- org.springframework:spring-core:jar:3.1.1.RELEASE:compile
+[INFO] +- org.codehaus.castor:castor:jar:1.2:compile
+[INFO] |  \- commons-logging:commons-logging:jar:1.1.1:compile
+[INFO] +- xerces:xercesImpl:jar:2.10.0:compile
+[INFO] |  \- xml-apis:xml-apis:jar:1.4.01:compile
+[INFO] +- no.kunnskapssenteret:webtjenester_business:jar:1.0-SNAPSHOT:compile
+[INFO] |  +- javax.xml.ws:jaxws-api:jar:2.2:compile
+[INFO] |  |  +- javax.xml.bind:jaxb-api:jar:2.2:compile
+[INFO] |  |  |  \- javax.activation:activation:jar:1.1:compile
+[INFO] |  |  +- javax.xml.soap:saaj-api:jar:1.3.1:compile
+[INFO] |  |  +- javax.annotation:jsr250-api:jar:1.0:compile
+[INFO] |  |  \- javax.jws:jsr181-api:jar:1.0-MR1:compile
+[INFO] |  +- jaxen:jaxen:jar:full:compile
+[INFO] |  +- org.jdom:jdom:jar:1.1.2:compile
+[INFO] |  +- no.kunnskapssenteret:webtjenestetest:jar:1.0-SNAPSHOT:compile
+[INFO] |  |  +- com.sun.xml.security:apache-xmlsec:jar:1.0.1:compile
+[INFO] |  |  +- org.apache.axis2:axis2-kernel:jar:1.6.2:compile
+[INFO] |  |  |  +- org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec:jar:1.1.2:compile
+[INFO] |  |  |  +- org.apache.geronimo.specs:geronimo-jta_1.1_spec:jar:1.1:compile
+[INFO] |  |  |  +- javax.servlet:servlet-api:jar:2.3:compile
+[INFO] |  |  |  +- wsdl4j:wsdl4j:jar:1.6.2:compile
+[INFO] |  |  |  +- org.apache.ws.commons.schema:XmlSchema:jar:1.4.7:compile
+[INFO] |  |  |  +- org.apache.neethi:neethi:jar:3.0.2:compile
+[INFO] |  |  |  +- org.apache.woden:woden-api:jar:1.0M9:compile
+[INFO] |  |  |  +- org.apache.woden:woden-impl-dom:jar:1.0M9:compile
+[INFO] |  |  |  |  \- org.apache.woden:woden-impl-commons:jar:1.0M9:compile
+[INFO] |  |  |  \- javax.ws.rs:jsr311-api:jar:1.0:compile
+[INFO] |  |  +- org.apache.axis2:axis2-adb:jar:1.6.2:compile
+[INFO] |  |  |  \- org.apache.geronimo.specs:geronimo-activation_1.1_spec:jar:1.0.2:compile
+[INFO] |  |  +- org.apache.ws.commons.axiom:axiom-api:jar:1.2.14:compile
+[INFO] |  |  |  +- org.apache.geronimo.specs:geronimo-javamail_1.4_spec:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:jar:1.0.1:compile
+[INFO] |  |  |  \- org.apache.james:apache-mime4j-core:jar:0.7.2:compile
+[INFO] |  |  +- org.apache.ws.commons.axiom:axiom-impl:jar:1.2.14:compile
+[INFO] |  |  +- org.apache.axis2:axis2-transport-local:jar:1.6.2:compile
+[INFO] |  |  \- org.apache.axis2:axis2-transport-http:jar:1.6.2:compile
+[INFO] |  +- net.sf.dozer:dozer:jar:5.2.2:compile
+[INFO] |  |  \- commons-beanutils:commons-beanutils:jar:1.8.3:compile
+[INFO] |  +- opensymphony:quartz:jar:1.6.0:compile
+[INFO] |  +- org.springframework:spring-web:jar:3.1.1.RELEASE:compile
+[INFO] |  |  \- aopalliance:aopalliance:jar:1.0:compile
+[INFO] |  +- org.springframework:spring-context-support:jar:3.1.1.RELEASE:compile
+[INFO] |  +- com.lowagie:itext:jar:2.1.3:compile
+[INFO] |  |  +- bouncycastle:bcmail-jdk14:jar:138:compile
+[INFO] |  |  \- bouncycastle:bcprov-jdk14:jar:138:compile
+[INFO] |  +- com.lowagie:itext-rtf:jar:2.1.3:compile
+[INFO] |  +- postgresql:postgresql:jar:8.2-507.jdbc4:compile
+[INFO] |  +- commons-dbcp:commons-dbcp:jar:1.2.2:compile
+[INFO] |  +- net.sourceforge.jexcelapi:jxl:jar:2.6.10:compile
+[INFO] |  +- jstl:jstl:jar:1.2:runtime
+[INFO] |  \- log4j:log4j:jar:1.2.15:compile
+[INFO] |     \- javax.mail:mail:jar:1.4:compile
+[INFO] +- no.kunnskapssenteret:rammeverk_web:jar:1.0-SNAPSHOT:compile
+[INFO] |  \- org.springframework:spring-jdbc:jar:3.1.1.RELEASE:compile
+[INFO] +- no.kunnskapssenteret:rammeverk_kilde:jar:1.0-SNAPSHOT:compile
+[INFO] +- no.kunnskapssenteret:hive-core:jar:1.0-SNAPSHOT:compile
+[INFO] +- no.kunnskapssenteret:elmo-1.5:jar:1.0-SNAPSHOT:compile
+[INFO] +- no.kunnskapssenteret:elmo-dc-1.5:jar:1.0-SNAPSHOT:compile
+[INFO] +- no.kunnskapssenteret:elmo-foaf-1.5:jar:1.0-SNAPSHOT:compile
+[INFO] +- no.kunnskapssenteret:elmo-rdfs-1.5:jar:1.0-SNAPSHOT:compile
+[INFO] +- no.kunnskapssenteret:elmo-skos-1.5:jar:1.0-SNAPSHOT:compile
+[INFO] +- no.kunnskapssenteret:openrdf-sesame-2.4.0-onejar:jar:1.0-SNAPSHOT:compile
+[INFO] +- org.springframework:spring-webmvc:jar:3.1.1.RELEASE:compile
+[INFO] +- org.springframework.webflow:spring-faces:jar:2.3.2.RELEASE:compile
+[INFO] +- org.springframework.webflow:spring-webflow:jar:2.3.2.RELEASE:compile
+[INFO] +- org.springframework.webflow:spring-binding:jar:2.3.2.RELEASE:compile
+[INFO] +- org.springframework.webflow:spring-js:jar:2.3.2.RELEASE:compile
+[INFO] |  \- org.springframework.webflow:spring-js-resources:jar:2.3.2.RELEASE:compile
+[INFO] +- org.springframework:spring-asm:jar:3.1.1.RELEASE:compile
+[INFO] +- org.springframework:spring-expression:jar:3.1.1.RELEASE:compile
+[INFO] +- org.springframework:spring-beans:jar:3.1.1.RELEASE:compile
+[INFO] +- org.richfaces.core:richfaces-core-impl:jar:4.3.1.Final:compile
+[INFO] |  +- net.sourceforge.cssparser:cssparser:jar:0.9.5:compile
+[INFO] |  |  \- org.w3c.css:sac:jar:1.3:compile
+[INFO] |  \- com.google.guava:guava:jar:11.0.2:compile
+[INFO] |     \- com.google.code.findbugs:jsr305:jar:1.3.9:compile
+[INFO] +- org.richfaces.core:richfaces-core-api:jar:4.3.1.Final:compile
+[INFO] +- org.richfaces.ui:richfaces-components-ui:jar:4.3.1.Final:compile
+[INFO] +- org.richfaces.ui:richfaces-components-api:jar:4.3.1.Final:compile
+[INFO] +- org.apache.myfaces.tomahawk:tomahawk20:jar:1.1.12:compile
+[INFO] |  +- commons-validator:commons-validator:jar:1.3.1:compile
+[INFO] |  +- commons-fileupload:commons-fileupload:jar:1.2.1:compile
+[INFO] |  +- commons-collections:commons-collections:jar:3.2.1:compile
+[INFO] |  +- commons-codec:commons-codec:jar:1.3:compile
+[INFO] |  +- oro:oro:jar:2.0.8:compile
+[INFO] |  +- javax.servlet:jstl:jar:1.2:compile
+[INFO] |  \- batik:batik-awt-util:jar:1.6-1:compile
+[INFO] |     \- batik:batik-util:jar:1.6-1:compile
+[INFO] |        \- batik:batik-gui-util:jar:1.6-1:compile
+[INFO] |           \- batik:batik-ext:jar:1.6-1:compile
+[INFO] |              \- xml-apis:xmlParserAPIs:jar:2.0.2:compile
+[INFO] +- com.itextpdf:itextpdf:jar:5.2.0:compile
+[INFO] +- joda-time:joda-time:jar:2.1:compile
+[INFO] +- org.slf4j:slf4j-api:jar:1.6.4:compile
+[INFO] +- org.grails:grails-webflow:jar:2.2.4:compile
+[INFO] |  +- ognl:ognl:jar:2.7.3:runtime
+[INFO] |  |  \- jboss:javassist:jar:3.7.ga:runtime
+[INFO] |  +- org.codehaus.groovy:groovy-all:jar:2.0.8:compile
+[INFO] |  +- org.springframework:spring-orm:jar:3.1.4.RELEASE:compile
+[INFO] |  +- org.slf4j:jcl-over-slf4j:jar:1.6.2:compile
+[INFO] |  +- org.springframework:spring-tx:jar:3.1.4.RELEASE:compile
+[INFO] |  +- org.grails:grails-hibernate:jar:2.2.4:compile
+[INFO] |  |  +- antlr:antlr:jar:2.7.7:runtime
+[INFO] |  |  +- org.grails:grails-datastore-gorm:jar:1.1.8.RELEASE:compile
+[INFO] |  |  +- javax.validation:validation-api:jar:1.0.0.GA:runtime
+[INFO] |  |  +- org.grails:grails:jar:2.2.4:compile
+[INFO] |  |  +- org.hibernate:hibernate-core:jar:3.6.10.Final:compile
+[INFO] |  |  |  +- dom4j:dom4j:jar:1.6.1:compile
+[INFO] |  |  |  \- org.hibernate:hibernate-commons-annotations:jar:3.2.0.Final:compile
+[INFO] |  |  +- org.grails:grails-datastore-simple:jar:1.1.8.RELEASE:compile
+[INFO] |  |  +- net.sf.ehcache:ehcache-core:jar:2.4.6:runtime
+[INFO] |  |  +- javax.transaction:jta:jar:1.1:compile
+[INFO] |  |  +- org.grails:grails-core:jar:2.2.4:compile
+[INFO] |  |  |  +- xalan:serializer:jar:2.7.1:runtime
+[INFO] |  |  |  +- org.springframework:spring-jms:jar:3.1.4.RELEASE:runtime
+[INFO] |  |  |  +- org.aspectj:aspectjrt:jar:1.6.10:runtime
+[INFO] |  |  |  +- org.springframework:spring-aspects:jar:3.1.4.RELEASE:compile
+[INFO] |  |  |  +- org.aspectj:aspectjweaver:jar:1.6.10:runtime
+[INFO] |  |  |  +- org.springframework:spring-test:jar:3.1.4.RELEASE:compile
+[INFO] |  |  |  +- asm:asm:jar:3.1:runtime
+[INFO] |  |  |  \- cglib:cglib:jar:2.2:runtime
+[INFO] |  |  +- org.hibernate:hibernate-validator:jar:4.1.0.Final:runtime
+[INFO] |  |  +- org.grails:grails-bootstrap:jar:2.2.4:compile
+[INFO] |  |  |  +- jline:jline:jar:1.0:compile
+[INFO] |  |  |  +- org.fusesource.jansi:jansi:jar:1.2.1:compile
+[INFO] |  |  |  +- org.apache.ant:ant:jar:1.8.2:compile
+[INFO] |  |  |  +- org.apache.ant:ant-launcher:jar:1.8.2:compile
+[INFO] |  |  |  +- org.apache.ivy:ivy:jar:2.2.0:compile
+[INFO] |  |  |  +- org.apache.ant:ant-trax:jar:1.7.1:compile
+[INFO] |  |  |  +- org.apache.ant:ant-junit:jar:1.8.2:compile
+[INFO] |  |  |  +- net.java.dev.jna:jna:jar:3.2.3:compile
+[INFO] |  |  |  \- org.codehaus.gant:gant_groovy1.8:jar:1.9.6:compile
+[INFO] |  |  |     \- commons-cli:commons-cli:jar:1.2:compile
+[INFO] |  |  +- org.javassist:javassist:jar:3.16.1-GA:compile
+[INFO] |  |  +- org.liquibase:liquibase-core:jar:2.0.5:runtime
+[INFO] |  |  +- org.hibernate:hibernate-ehcache:jar:3.6.10.Final:runtime
+[INFO] |  |  \- org.grails:grails-datastore-core:jar:1.1.8.RELEASE:compile
+[INFO] |  +- org.hibernate.javax.persistence:hibernate-jpa-2.0-api:jar:1.0.1.Final:compile
+[INFO] |  +- org.grails:grails-plugin-controllers:jar:2.2.4:compile
+[INFO] |  \- org.grails:grails-web:jar:2.2.4:compile
+[INFO] |     +- taglibs:standard:jar:1.1.2:runtime
+[INFO] |     +- xpp3:xpp3_min:jar:1.1.4c:compile
+[INFO] |     +- com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:jar:1.3.1:compile
+[INFO] |     +- commons-el:commons-el:jar:1.0:compile
+[INFO] |     +- opensymphony:sitemesh:jar:2.4:compile
+[INFO] |     +- org.grails:grails-spring:jar:2.2.4:compile
+[INFO] |     \- javax.servlet:jsp-api:jar:2.0:compile
+[INFO] +- org.apache.jena:jena-core:jar:2.7.3:compile
+[INFO] |  +- org.apache.jena:jena-iri:jar:0.9.3:compile
+[INFO] |  \- org.slf4j:slf4j-log4j12:jar:1.6.4:compile
+[INFO] +- com.hp.hpl.jena:jena:jar:2.6.4:compile
+[INFO] |  +- com.hp.hpl.jena:iri:jar:0.8:compile
+[INFO] |  \- com.ibm.icu:icu4j:jar:3.4.4:compile
+[INFO] +- com.hp.hpl.jena:arq:jar:2.8.8:compile
+[INFO] |  \- org.codehaus.woodstox:wstx-asl:jar:3.2.9:compile
+[INFO] |     \- stax:stax-api:jar:1.0.1:compile
+[INFO] +- com.github.ansell.pellet:pellet-jena:jar:2.3.3:compile
+[INFO] |  \- com.github.ansell.pellet:pellet-core:jar:2.3.3:compile
+[INFO] |     \- com.github.ansell.pellet:pellet-common:jar:2.3.3:compile
+[INFO] |        +- com.github.ansell.aterms:aterm-java:jar:1.8.2-p1:compile
+[INFO] |        |  +- com.github.ansell.jjtraveler:jjtraveler:jar:0.6:compile
+[INFO] |        |  \- com.github.ansell.aterms:shared-objects:jar:1.4.9-p1:compile
+[INFO] |        +- org.jgrapht:jgrapht-jdk1.5:jar:0.7.3:compile
+[INFO] |        +- msv:xsdlib:jar:20030225:compile
+[INFO] |        \- msv:relaxngDatatype:jar:20030225:compile
+[INFO] +- javax.persistence:persistence-api:jar:1.0:compile
+[INFO] +- javassist:javassist:jar:3.7.1.GA:compile
+[INFO] +- com.h2database:h2:jar:1.3.150:compile
+[INFO] +- org.apache.lucene:lucene-core:jar:2.4.1:compile
+[INFO] +- org.apache.lucene:lucene-spellchecker:jar:2.4.1:compile
+[INFO] +- org.apache.lucene:lucene-analyzers:jar:2.4.1:compile
+[INFO] +- com.google.code.gson:gson:jar:2.2.4:compile
+[INFO] +- com.googlecode.json-simple:json-simple:jar:1.1.1:compile
+[INFO] |  \- junit:junit:jar:4.10:compile
+[INFO] |     \- org.hamcrest:hamcrest-core:jar:1.1:compile
+[INFO] +- org.apache.directory.studio:org.apache.commons.io:jar:2.4:compile
+[INFO] |  \- commons-io:commons-io:jar:2.4:compile
+[INFO] +- org.openrdf.sesame:sesame-repository-api:jar:2.7.1:compile
+[INFO] |  +- org.openrdf.sesame:sesame-query:jar:2.7.1:compile
+[INFO] |  +- org.openrdf.sesame:sesame-model:jar:2.7.1:compile
+[INFO] |  \- org.openrdf.sesame:sesame-util:jar:2.7.1:compile
+[INFO] +- org.openrdf.sesame:sesame-repository-sail:jar:2.7.1:compile
+[INFO] |  +- org.openrdf.sesame:sesame-sail-api:jar:2.7.1:compile
+[INFO] |  +- org.openrdf.sesame:sesame-queryparser-api:jar:2.7.1:compile
+[INFO] |  \- org.openrdf.sesame:sesame-queryalgebra-model:jar:2.7.1:compile
+[INFO] +- org.openrdf.sesame:sesame-sail-nativerdf:jar:2.7.1:compile
+[INFO] |  +- org.openrdf.sesame:sesame-sail-inferencer:jar:2.7.1:compile
+[INFO] |  |  \- org.openrdf.sesame:sesame-queryparser-serql:jar:2.7.1:runtime
+[INFO] |  \- org.openrdf.sesame:sesame-queryalgebra-evaluation:jar:2.7.1:compile
+[INFO] |     \- org.openrdf.sesame:sesame-repository-sparql:jar:2.7.1:compile
+[INFO] |        +- org.openrdf.sesame:sesame-queryparser-sparql:jar:2.7.1:compile
+[INFO] |        \- org.openrdf.sesame:sesame-queryresultio-sparqlxml:jar:2.7.1:compile
+[INFO] +- org.openrdf.sesame:sesame-rio-rdfxml:jar:2.7.1:compile
+[INFO] |  +- org.openrdf.sesame:sesame-rio-datatypes:jar:2.7.1:runtime
+[INFO] |  \- org.openrdf.sesame:sesame-rio-languages:jar:2.7.1:runtime
+[INFO] +- org.openrdf.sesame:sesame-rio-turtle:jar:2.7.1:compile
+[INFO] +- org.openrdf.sesame:sesame-sail-memory:jar:2.7.1:compile
+[INFO] +- org.openrdf.sesame:sesame-rio-api:jar:2.7.1:compile
+[INFO] +- net.sourceforge.owlapi:owlapi-api:jar:3.4.3:compile
+[INFO] +- org.restlet.jee:org.restlet:jar:2.2-M5:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.spring:jar:2.2-M5:compile
+[INFO] |  \- cglib:cglib-nodep:jar:2.2:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.json:jar:2.2-M5:compile
+[INFO] |  \- org.restlet.jee:org.restlet.lib.org.json:jar:2.0:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.html:jar:2.2-M5:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.httpclient:jar:2.2-M5:compile
+[INFO] |  +- org.apache.httpcomponents:httpclient:jar:4.1.1:compile
+[INFO] |  +- org.apache.httpcomponents:httpcore:jar:4.1:compile
+[INFO] |  +- org.apache.httpcomponents:httpmime:jar:4.1.1:compile
+[INFO] |  +- net.jcip:jcip-annotations:jar:1.0:compile
+[INFO] |  \- org.apache.james:apache-mime4j:jar:0.6:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.net:jar:2.2-M5:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.jdbc:jar:2.2-M5:compile
+[INFO] |  \- commons-pool:commons-pool:jar:1.5.6:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.rdf:jar:2.2-M5:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.servlet:jar:2.2-M5:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.xml:jar:2.2-M5:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.slf4j:jar:2.2-M5:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.jibx:jar:2.2-M5:compile
+[INFO] |  \- org.jibx:jibx-run:jar:1.2.2:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.xstream:jar:2.2-M5:compile
+[INFO] |  +- org.codehaus.jettison:jettison:jar:1.3:compile
+[INFO] |  \- com.thoughtworks.xstream:xstream:jar:1.4.1:compile
+[INFO] |     \- xmlpull:xmlpull:jar:1.1.3.1:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.jackson:jar:2.2-M5:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-core:jar:2.1.0:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.1.0:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.1.0:compile
+[INFO] |  +- com.fasterxml.jackson.dataformat:jackson-dataformat-csv:jar:2.1.0:compile
+[INFO] |  +- com.fasterxml.jackson.dataformat:jackson-dataformat-smile:jar:2.1.0:compile
+[INFO] |  +- com.fasterxml.jackson.dataformat:jackson-dataformat-xml:jar:2.1.0:compile
+[INFO] |  +- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.1.0:compile
+[INFO] |  +- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:jar:2.1.0:compile
+[INFO] |  +- org.codehaus.woodstox:woodstox-core-asl:jar:4.1.4:compile
+[INFO] |  |  \- javax.xml.stream:stax-api:jar:1.0-2:compile
+[INFO] |  +- org.codehaus.woodstox:stax2-api:jar:3.1.1:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:1.10:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.freemarker:jar:2.2-M5:compile
+[INFO] |  \- org.freemarker:freemarker:jar:2.3.19:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.velocity:jar:2.2-M5:compile
+[INFO] |  \- org.apache.velocity:velocity:jar:1.6.3:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.rome:jar:2.2-M5:compile
+[INFO] |  \- rome:rome:jar:1.0:compile
+[INFO] |     \- jdom:jdom:jar:1.0:compile
+[INFO] +- org.restlet.jee:org.restlet.ext.ssl:jar:2.2-M5:compile
+[INFO] |  \- org.jsslutils:jsslutils:jar:1.0.5:compile
+[INFO] +- org.openrdf.sesame:sesame-http-protocol:jar:2.7.1:compile
+[INFO] |  \- org.openrdf.sesame:sesame-rio-ntriples:jar:2.7.1:compile
+[INFO] +- org.openrdf.sesame:sesame-repository-http:jar:2.7.1:compile
+[INFO] |  +- org.openrdf.sesame:sesame-http-client:jar:2.7.1:compile
+[INFO] |  |  \- commons-httpclient:commons-httpclient:jar:3.1:compile
+[INFO] |  \- org.openrdf.sesame:sesame-queryresultio-api:jar:2.7.1:compile
+[INFO] +- org.apache.myfaces.core:myfaces-api:jar:2.1.3:compile
+[INFO] \- org.apache.myfaces.core:myfaces-impl:jar:2.1.3:runtime (scope not updated to compile)
+[INFO]    \- commons-digester:commons-digester:jar:1.8:runtime
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 8.395s
+[INFO] Finished at: Mon Nov 18 11:00:13 CET 2013
+[INFO] Final Memory: 24M/354M
+[INFO] ------------------------------------------------------------------------

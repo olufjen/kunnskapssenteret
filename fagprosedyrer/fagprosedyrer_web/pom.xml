@@ -2,21 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--  
   <parent>
     <groupId>no.kunnskapssenteret</groupId>
     <artifactId>webtjenester</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
+-->
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.kunnskapssenteret</groupId>
-    <artifactId>semantiskweb_web</artifactId>
+    <artifactId>fagprosedyrer_web</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>NHN web</name>
     <url>http://www.kunnskapssenteret.no</url>
     <build>
-        <finalName>semantiskweb_web</finalName>
+        <finalName>fagprosedyrer_web</finalName>
     </build>
     
   
@@ -27,9 +28,12 @@
         <richfaces.version>4.3.1.Final</richfaces.version>
         <primefaces-version>3.2</primefaces-version>
         <org.springframework.version>3.1.1.RELEASE</org.springframework.version>
-        <springwebflow.version>2.3.1.RELEASE</springwebflow.version>
+        <springwebflow.version>2.3.2.RELEASE</springwebflow.version>
+         <springweboxm.version>3.1.1.RELEASE</springweboxm.version>
+        <restlet.version>2.2-M5</restlet.version>
     </properties>
       <repositories>
+      <!-- 21.11.13  Server returned HTTP response code: 503 for URL 
        <repository>
           <releases>
               <enabled>true</enabled>
@@ -41,6 +45,13 @@
           <name>Ontotext mirror of Aduna releases</name>
           <url>http://maven.ontotext.com/content/repositories/aduna/</url>
      </repository>
+     -->
+     <!-- Repository for Restlet -->
+     <repository>
+     	<id>maven-restlet</id>
+     	<name>Public online Restlet repository</name>
+     	<url>http://maven.restlet.org/</url>
+      </repository>
     <repository>
             <releases>
                 <enabled>true</enabled>
@@ -106,11 +117,16 @@
     <!-- test -->
     <!-- Project dependencies -->
     <dependencies>
-    
+    	<dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>javax.servlet-api</artifactId>
+    	<version>3.0.1</version>
+    	<scope>provided</scope>
+	</dependency>
   	<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>${springweboxm.version}</version>
 			
 		</dependency>
  
@@ -149,18 +165,19 @@
 			<version>1.5.4</version>
 		</dependency>
  end for axix 2 -->
-		  
+
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
 			<version>2.10.0</version>
 		</dependency>
-      
+ <!--    
 			<dependency>
 				<groupId>javax.xml.ws</groupId>
 				<artifactId>jaxws-api</artifactId>
 				<version>2.2</version>
 			</dependency>
+ -->  			
 	      <dependency>
 	          <groupId>no.kunnskapssenteret</groupId>
 	          <artifactId>webtjenester_business</artifactId>
@@ -214,6 +231,7 @@
 	          <version>1.0-SNAPSHOT</version>
 	      </dependency> 	      	           	      	      		
    		<!-- Spring web flow -->
+   
    			<dependency>
 						<groupId>org.springframework</groupId>
 						<artifactId>spring-webmvc</artifactId>
@@ -224,24 +242,44 @@
 						<artifactId>spring-faces</artifactId>
 						<version>${springwebflow.version}</version>
 					</dependency>
-					
+				
 					<!-- Added 02.09.13 -->
+				
 	<dependency>  
 	  <groupId>org.springframework.webflow</groupId>
 	  <artifactId>spring-webflow</artifactId>
-	   <version>2.3.2.RELEASE</version>
+	   <version>${springwebflow.version}</version>
 	</dependency>
 	<dependency>
     	<groupId>org.springframework.webflow</groupId>
     	<artifactId>spring-binding</artifactId>
-    	<version>2.3.2.RELEASE</version>
+    	<version>${springwebflow.version}</version>
 	</dependency>
 	<dependency>
 	    <groupId>org.springframework.webflow</groupId>
 	    <artifactId>spring-js</artifactId>
-	    <version>2.3.2.RELEASE</version>
+	    <version>${springwebflow.version}</version>
 	</dependency>
+
 	          		<!-- Added 02.09.13 end  -->
+         		
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-asm</artifactId>
+		<version>${org.springframework.version}</version>
+	</dependency>
+ 	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-expression</artifactId>
+		<version>${org.springframework.version}</version>
+	</dependency>
+                                 		
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-beans</artifactId>
+		<version>${org.springframework.version}</version>
+	</dependency>
+                       		
 			<!-- Ricfaces 4.1.0    -->
 			
 			<dependency>
@@ -288,6 +326,9 @@
 	<artifactId>slf4j-api</artifactId>
 	<version>1.6.4</version>
      </dependency>
+     
+ 
+      
   <dependency>
       <groupId>org.grails</groupId>
       <artifactId>grails-webflow</artifactId>
@@ -345,12 +386,9 @@
 	<artifactId>lucene-analyzers</artifactId>
 	<version>2.4.1</version>
 </dependency>
-                                              
-            
-            
 
 <!-- Elmo libs  -->
-<!-- 
+<!-- Er hentet manuelt og lagret lokalt - se over !!
 <dependency>
       <groupId>org.openrdf.elmo</groupId>
       <artifactId>elmo</artifactId>
@@ -388,6 +426,13 @@
     </dependency>
 -->    
 <!-- Elmo libs end -->
+
+<!-- Google Gson og json -->
+<dependency>
+	<groupId>com.google.code.gson</groupId>
+	<artifactId>gson</artifactId>
+	<version>2.2.4</version>
+</dependency>
 <dependency>
     <groupId>com.googlecode.json-simple</groupId>
     <artifactId>json-simple</artifactId>
@@ -438,6 +483,135 @@
 	<artifactId>owlapi-api</artifactId>
 	<version>3.4.3</version>
 </dependency>
+<!-- Restlet depenencies -->
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.spring</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.json</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.html</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.httpclient</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.net</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.jdbc</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<!-- Feiler:
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.gson</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+
+ 
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.lucene</artifactId>
+        <version>2.1-SNAPSHOT</version>
+</dependency>
+ -->
+
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.rdf</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<!--  
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.jaxrs</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+-->
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.servlet</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.xml</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.slf4j</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+
+<!-- 
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.jaxb</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+ -->
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.jibx</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.xstream</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.jackson</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.freemarker</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.velocity</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.rome</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+ 
+<dependency>
+        <groupId>org.restlet.jee</groupId>
+        <artifactId>org.restlet.ext.ssl</artifactId>
+        <version>${restlet.version}</version>
+</dependency>
+ <!-- -->
+  
 <!--  
 <dependency>
 	<groupId>org.openrdf.sesame</groupId>
