@@ -3,7 +3,13 @@
 
 = Innledning =
 
-Add your content here.
+Det er etablert et prosjekt Nasjonalt Nettverk for fagprosedyrer. Bakgrunnen er blant annet for å etablere et system for utvikling, kvalitetssikring og deling av flerfaglige prosedyrer.
+Prosjektbeskrivelsen fra august 2011 sier blant annet dette om bakgrunnen for prosjektet:
+
+Flerfaglige prosedyrer og retningslinjer er viktige verktøy for kunnskapsbasert praksis og pasientsikkerhet i helsetjenesten. Prosedyrer beskriver en angitt fremgangsmåte for å utføre en aktivitet eller en prosess (ISO 9000:2000)…
+Tradisjonelt har prosedyrene blitt utviklet lokalt i den enkelte avdeling eller sykehjemspost med liten grad av samarbeid eller deling av informasjon på tvers av nivåer eller etater.
+
+Hensikten med Nasjonalt nettverk for fagprosedyrer er derfor også å forsøke å etablere likeverdig og trygg behandling til store pasientgrupper i spesialisthelsetjenesten i Norge. Prosedyrene som lages i nettverket deles på en åpen nettside: www.fagprosedyrer.no
 
 
 = Detaljer =
