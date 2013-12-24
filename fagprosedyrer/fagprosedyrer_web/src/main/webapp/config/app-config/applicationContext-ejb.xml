@@ -39,7 +39,52 @@
 		<property name="maxAdr" value="3"></property>
 		<property name="prodUrl" value="https://ws.nhn.no/Basic/v1/AR"></property>
 	</bean>
-	
+	<bean id="hiveService" class="no.naks.web.control.HiveServiceImpl">
+		<property name="hivePath" value="C:\\svnroot2\\nokc\\semantiskweb\\trunk\\semantiskweb_web\\src\\main\\webapp\\config\\app-config\"></property>
+		<property name="treeElements">
+			<list><value>Anatomi</value>
+			<value>Organisme</value>
+			<value>Sykdommer</value>
+			<value>Kjemikalier og medisiner</value>
+			<value>Analyse, diagnoser og terapeutiske teknikker og utstyr</value>
+			<value>Psykiatri og Psykologi</value>
+			<value>Antropologi Utdanning og sosiologi</value>
+			<value>Teknologi, Industri, Jordbruk</value>
+			<value>Humanoria</value>
+			<value>Informasjonsvitenskap</value>
+			<value>Navngitte grupper</value>
+			<value>Helsevesenet</value>
+			<value>Publikasjonkarakteristiska</value>
+			<value>Geografi</value>
+			</list>
+		</property>
+		<property name="anatomi">
+			<list>
+				<value>Body Regions</value>
+				<value>Musculoskeletal System</value>
+				<value>Digestive System</value>
+				<value>Respiratory System</value>
+				<value>Urogenital System</value>
+				<value>Endocrine System</value>
+				<value>Cardiovascular System</value>
+				<value>Nervous System</value>
+				<value>Sense Organs</value>
+				<value>Tissues</value>
+				<value>Cells</value>
+				<value>Fluids and Secretions</value>
+				<value>Animal Structure</value>
+				<value>Stomatognathic System</value>
+				<value>Hemic and Immune Systems</value>
+				<value>Embryonic Structures</value>
+				<value>Integumentary System</value>
+				<value>Plant Structure</value>
+				<value>Fungal Structure</value>
+				<value>Bacterial Structure</value>
+				<value>Viral Structure</value>
+			
+			</list>
+		</property>
+	</bean>
 	
 
 </beans>
