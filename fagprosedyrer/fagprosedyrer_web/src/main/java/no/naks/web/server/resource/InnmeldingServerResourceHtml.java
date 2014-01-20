@@ -53,7 +53,7 @@ public class InnmeldingServerResourceHtml extends ServerResource {
 
 	/**
 	 * getInnmelding
-	 * Denne rutinen håndterer forespørsel om ny prosedyre og setter opp nettsiden for å ta i mot
+	 * Denne rutinen henter inn innmeldingsresurser til å håndtere forespørsel om ny prosedyre og setter opp nettsiden for å ta i mot
 	 * opplysninger om ny prosedyre.
 	 * @return
 	 */
@@ -88,6 +88,7 @@ public class InnmeldingServerResourceHtml extends ServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	     dataModel.put("innmelding", result);
 	     
+
 	     LocalReference pakke = LocalReference.createClapReference(getClass().getPackage());
 	     LocalReference localUri = new LocalReference(reference);
 	     LocalReference localFileref = new LocalReference("/no/naks/server/resource");
