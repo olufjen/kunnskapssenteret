@@ -63,6 +63,12 @@ public class Innmelding  implements Serializable {
 		helsepersonell.add(sykepleier);
 		
 	}
+	/**
+	 * setValues
+	 * Denne rutinen setter ale verdier mottatt fra bruker.
+	 * Verdier må lagres avhengig av hvilke knapper bruker har valgt
+	 * @param entry
+	 */
 	public void setValues(Parameter entry){
 		String name = entry.getName();
 		String value = entry.getValue();
