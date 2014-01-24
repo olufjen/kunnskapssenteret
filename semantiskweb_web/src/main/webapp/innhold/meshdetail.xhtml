@@ -32,16 +32,17 @@
 				
 					<ul class="ym-vlist">
 					<h:panelGrid columns="2">
-						<h:inputTextarea id="incident" cols="30" rows="1"
+						<h:panelGroup>
+						<h:inputTextarea id="incident" cols="20" rows="1"
 								value="#{meshTree.searchNode}" />
+						</h:panelGroup>
+						<h:panelGroup>		
 								<h:inputHidden id="hendelseHidden"
 								valueChangeListener="#{tableWebService.hendelseHiddenValue}" />
-						
-			
 							<h:commandButton value="Søk" action="#{tableWebService.getSearch()}"></h:commandButton>
-						
+						</h:panelGroup>
 					</h:panelGrid>
-						</ul>		
+				</ul>		
 		<t:dataTable  id="treliste"
 		
 		 rows="#{meshTree.noofNodes}"
@@ -51,8 +52,8 @@
 				<f:facet name="header">
 					<h:outputText id="prefheader" value="Hovedtermer"></h:outputText>
 				</f:facet>
-				 <h:commandLink id="prosjektlink" action="#{tableWebService.getToptreeDetail}" >
-					<h:outputText id="pref" value="#{node.baseName}"></h:outputText>
+				 <h:commandLink id="treelink" action="#{tableWebService.getToptreeDetail}" >
+					<h:outputText id="base" value="#{node.baseName}"></h:outputText>
 					<f:param value="#{node.baseName}" name="treeName"></f:param>
   	  			</h:commandLink>
 			</h:column>
@@ -62,7 +63,7 @@
 					
 	<h:panelGrid columns="2" width="100%" columnClasses="ym-vlist">
 	
-	<t:dataScroller id="scroll_1" for="treliste" fastStep="10"
+	<t:dataScroller id="scroll_2" for="treliste" fastStep="10"
 		pageCountVar="pageCount" pageIndexVar="pageIndex"
 		styleClass="scroller" paginator="true" paginatorMaxPages="9"
 		paginatorTableClass="paginator"
@@ -121,19 +122,19 @@
          		<div class="ym-grid">
 	          	<div class="ym-g50 ym-gl">
 	            	<div class="ym-gbox ym-fbox-text">
-	              	<h2>	<h:outputText id="treechosen" value="#{meshTree.chosenTree.baseName}"></h:outputText></h2>
+	    <h2>	<h:outputText id="treechosen" value="Valgt hovedterm"></h:outputText></h2>
   		<t:dataTable  id="meshliste"
 		
 		 rows="#{meshTree.noofNodes}"
 			var="treenode" value="#{meshTree.chosenTree.hiveConcepts}">
 
 			<h:column id="hivedetail">
-				<f:facet name="hiveheader">
-					<h:outputText id="prefhiveheader" value="Hovedtermer"></h:outputText>
+				<f:facet name="header">
+					<h:outputText id="prefhiveheader" value="#{meshTree.chosenTree.baseName}"></h:outputText>
 				</f:facet>
-				 <h:commandLink id="prosjektlink" action="#{tableWebService.getmeshDetail}" >
+				 <h:commandLink id="hivelink" action="#{tableWebService.getmeshDetail}" >
 					<h:outputText id="pref" value="#{treenode.prefLabel}"></h:outputText>
-					<f:param value="#{treenode.qname}" name="qnameid"></f:param>
+					<f:param value="#{treenode.qname.namespaceURI}" name="qnameid"></f:param>
   	  			</h:commandLink>
 			</h:column>
 	
@@ -169,18 +170,76 @@
 	</h:panelGrid>	  
            </div>
           </div>
-              
+     <h:panelGroup rendered="#{meshTree.conceptDetail}" >	
               <div class="ym-g50 ym-gr">
 	            	<div class="ym-gbox ym-fbox-text">
-	              	<h2>Smalere begreper</h2>
-	          
-	                <p>Her kommer begreper fra MeSH  som i korte trekk forklarer hva Norske MeSH er.</p>
-	                <p><a href="mailto:meldeordning@kunnskapssenteret.no">Ta gjerne kontakt</a> hvis sidene ikke fungerer som forventet, eller hvis du har andre tilbakemeldinger eller spørsmål.</p>
+	              	<h2><h:outputText id="chosen" value="#{meshTree.chosenConcept.prefLabel}"></h:outputText></h2>
+		            <p><h:outputText id="notes" value="#{meshTree.chosenConcept.scopeNotes}"></h:outputText></p> 
+	                <p><h2>Alternativ benevning</h2> <h:outputText id="altlabels" value="#{meshTree.chosenConcept.altLabels}"></h:outputText></p>
 	           
-	              </div>
-	            </div>
-	            
-	          </div>  <!-- / ym-grid -->
+	         		</div>
+	    <h:panelGrid columns="2" width="100%">  
+	     <h:panelGroup>  		
+	    <h:commandButton value="Underordnede termer" action="#{tableWebService.presentNarrow()}"></h:commandButton>
+	    </h:panelGroup>
+	     <h:panelGroup>  		
+	    <h:commandButton value="Overordnede termer" action="#{tableWebService.presentBroader()}"></h:commandButton>
+	     </h:panelGroup>
+	     </h:panelGrid>
+	   <h:panelGroup rendered="#{meshTree.narrow}" >
+	  	<t:dataTable  id="narrowliste"
+		 rows="#{meshTree.noofNodes-5}"
+			var="narrownode" value="#{meshTree.narrowConcepts}">
+
+			<h:column id="hivedetail">
+				<f:facet name="header">
+					<h:outputText id="narrowhiveheader" value="Underordnede begreper"></h:outputText>
+				</f:facet>
+				 <h:commandLink id="hivelink" action="#{tableWebService.getmeshDetail}" >
+					<h:outputText id="narrowpref" value="#{narrownode.prefLabel}"></h:outputText>
+					<f:param value="#{narrownode}" name="narrowid"></f:param>
+  	  			</h:commandLink>
+			</h:column>
+	
+			
+		</t:dataTable>  
+	<h:panelGrid columns="2" width="100%" columnClasses="ym-vlist">
+	
+	<t:dataScroller id="scroll_3" for="narrowliste" fastStep="10"
+		pageCountVar="pageCount" pageIndexVar="pageIndex"
+		styleClass="scroller" paginator="true" paginatorMaxPages="9"
+		paginatorTableClass="paginator"
+		paginatorActiveColumnStyle="font-weight:bold;" immediate="true">
+		<f:facet name="first">
+			<h:graphicImage  name="arrow-first.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="last">
+			<h:graphicImage name="arrow-last.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="previous">
+			<h:graphicImage name="arrow-previous.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="next">
+			<h:graphicImage  name="arrow-next.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="fastforward">
+			<h:graphicImage name="arrow-ff.gif" library="images" border="1" />
+		</f:facet>
+		<f:facet name="fastrewind">
+			<h:graphicImage name="arrow-fr.gif" library="images" border="1" />
+		</f:facet>
+	</t:dataScroller>	    
+	</h:panelGrid>	 		
+	</h:panelGroup> 
+	
+	<h:panelGroup rendered="#{meshTree.broaderText}">
+		<h:outputText id="termtext" value="#{meshTree.broaderMessage}"></h:outputText>
+	
+	</h:panelGroup>
+	           
+	          </div>
+	 </h:panelGroup>   
+	      </div>  <!-- / ym-grid -->
 	                
 	        	<div class="buttons">
 <!--  hvorHvemPageUten byttes ut med hvorHvemPage for å få tilbake søkefunksjon for sykehus  -->

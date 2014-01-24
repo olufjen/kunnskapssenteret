@@ -28,7 +28,7 @@
 		</view-state>
 		<view-state id="meshdetail"  view="meshdetail.xhtml" model="modelTree">
 		
-			<transition on="hendelse" to="hendelse"/>
+			<transition on="detail" to="meshdetail"/>
 			<transition on="diskusjon" to="diskusjon"/>
 			<transition on="kontaktinfo" to="kontaktinfo"/>
 			<transition on="innledning" to="innledning"/>

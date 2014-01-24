@@ -30,6 +30,9 @@
 	 	</property>
 	 </bean>
 
+
+
+
 	<bean id="tableWebService" class="no.naks.web.control.TableWebServiceImpl">
 	<!--  
 		<property name="masterDictionary" ref="domainDictionary"></property>

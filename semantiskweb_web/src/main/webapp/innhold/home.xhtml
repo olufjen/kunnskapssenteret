@@ -32,14 +32,17 @@
 				
 					<ul class="ym-vlist">
 					<h:panelGrid columns="2">
+						<h:panelGroup>
 						<h:inputTextarea id="incident" cols="30" rows="1"
 								value="#{meshTree.searchNode}" />
+						</h:panelGroup>
+						<h:panelGroup>		
 								<h:inputHidden id="hendelseHidden"
 								valueChangeListener="#{tableWebService.hendelseHiddenValue}" />
 						
 			
 							<h:commandButton value="Søk" action="#{tableWebService.getSearch()}"></h:commandButton>
-						
+						</h:panelGroup>
 					</h:panelGrid>
 						</ul>		
 		<t:dataTable  id="meshliste"
