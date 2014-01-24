@@ -5,10 +5,30 @@ import java.util.ArrayList;
 
 import edu.unc.ils.mrc.hive2.api.HiveConcept;
 
+/**
+ * SemantiskTree
+ * Denne klassen inneholder MeSH termer knyttet til et ferdig definert begrepsapparat. Dette begrepsapparatet er definert med følgende termer:
+ * 			Anatomi
+			Organisme
+			Sykdommer
+			Kjemikalier og medisiner
+			Analyse, diagnoser og terapeutiske teknikker og utstyr
+			Psykiatri og Psykologi
+			Antropologi Utdanning og sosiologi
+			Teknologi, Industri, Jordbruk
+			Humanoria
+			Informasjonsvitenskap
+			Navngitte grupper
+			Helsevesenet
+			Publikasjonkarakteristiska
+			Geografi
+ * @author olj
+ *
+ */
 public class SemantiskTree implements Serializable{
 
-	private String baseName;
-	private ArrayList<HiveConcept> hiveConcepts;
+	private String baseName; //Definert begrep (f. eks. Anatomi)
+	private ArrayList<HiveConcept> hiveConcepts; // MeSH termer som tilhører Anatomi
 	
 	
 	public SemantiskTree() {

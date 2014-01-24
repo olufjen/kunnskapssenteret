@@ -28,7 +28,8 @@ public class Meshtree  implements Serializable  {
 	private	ArrayList<HiveConcept> hiveConcepts; // MeSH begreper i topp node
 	private ArrayList<HiveConcept> antropologi;
 	private ArrayList<HiveConcept> choseConcepts;
-	
+	private ArrayList<HiveConcept> narrowConcepts = null;
+	private ArrayList<HiveConcept> broaderConcepts = null;
 
 	private TreeNode rootNode = new TreeNodeBase("MESH","MESH",false);
 	private String  nodeTitle = "Node";
@@ -40,10 +41,16 @@ public class Meshtree  implements Serializable  {
 	private SemantiskTree chosenTree;
 	private  Map<String,QName> allConcepts; // Alle MeSH begreper
 	private String[] treeElements;
-	private ArrayList<SemantiskTree> trees;
+	private ArrayList<SemantiskTree> trees; //  Inneholder MeSH termer knyttet til et ferdig definert begrepsapparat f. eks. Anatomi
 	private String[] anatomi; // Inneholder øverste nivå definerte MeSH termer for anatomi
-	
-	
+	private boolean conceptDetail = false;
+	private boolean narrow = false; // Flagg som vuser underordnede termer eller skuler dem.
+	private boolean broader = false;
+	private boolean narrowText = false;
+	private boolean broaderText = false; //Flagg som er satt dersom valgt term har overordnede termer
+	private String broaderMessage = "Ingen overordnede termer";
+	private String narrowMessage = "Ingen underordnede termer";
+		
 	public Meshtree() {
 	
 		
@@ -62,6 +69,78 @@ public class Meshtree  implements Serializable  {
 		this.totalNodes = this.hiveConcepts.size();
 		addNodes(null,rootNode);
 
+	}
+
+	public String getNarrowMessage() {
+		return narrowMessage;
+	}
+
+	public void setNarrowMessage(String narrowMessage) {
+		this.narrowMessage = narrowMessage;
+	}
+
+	public boolean isNarrowText() {
+		return narrowText;
+	}
+
+	public void setNarrowText(boolean narrowText) {
+		this.narrowText = narrowText;
+	}
+
+	public boolean isBroaderText() {
+		return broaderText;
+	}
+
+	public void setBroaderText(boolean broaderText) {
+		this.broaderText = broaderText;
+	}
+
+	public boolean isBroader() {
+		return broader;
+	}
+
+	public void setBroader(boolean broader) {
+		this.broader = broader;
+	}
+
+	public String getBroaderMessage() {
+		return broaderMessage;
+	}
+
+	public void setBroaderMessage(String broaderMessage) {
+		this.broaderMessage = broaderMessage;
+	}
+
+	public boolean isNarrow() {
+		return narrow;
+	}
+
+	public void setNarrow(boolean narrow) {
+		this.narrow = narrow;
+	}
+
+	public ArrayList<HiveConcept> getBroaderConcepts() {
+		return broaderConcepts;
+	}
+
+	public void setBroaderConcepts(ArrayList<HiveConcept> broaderConcepts) {
+		this.broaderConcepts = broaderConcepts;
+	}
+
+	public ArrayList<HiveConcept> getNarrowConcepts() {
+		return narrowConcepts;
+	}
+
+	public void setNarrowConcepts(ArrayList<HiveConcept> narrowConcepts) {
+		this.narrowConcepts = narrowConcepts;
+	}
+
+	public boolean isConceptDetail() {
+		return conceptDetail;
+	}
+
+	public void setConceptDetail(boolean conceptDetail) {
+		this.conceptDetail = conceptDetail;
 	}
 
 	public SemantiskTree getChosenTree() {
