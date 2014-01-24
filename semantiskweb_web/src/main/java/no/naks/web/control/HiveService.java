@@ -28,4 +28,6 @@ public interface HiveService {
 	
 	public String[] getAnatomi();
 	public void setAnatomi(String[] anatomi);
+	public ArrayList<HiveConcept> findconcepts(HiveConcept concept);
+	public ArrayList<HiveConcept> findBroader(HiveConcept concept);
 }
