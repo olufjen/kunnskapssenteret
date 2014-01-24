@@ -31,6 +31,10 @@ public class HiveServiceImpl implements HiveService {
 		// TODO Auto-generated constructor stub
 		System.out.println("HiveService created");
 	}
+	/**
+	 * buildConcept 
+	 * Denne rutinen setter opp et Map object som hennolder alle MeSH termer henter fra vokabularet
+	 */
 	private void buildConcepts(){
 		System.out.println("HiveService: initialisering concepts");
 		//modelObj.setMelding(melding);
@@ -71,6 +75,59 @@ public class HiveServiceImpl implements HiveService {
 //		System.out.println("Pref label = "+concept.getPrefLabel());
 	
 	}
+	
+	/* 
+	 * findConcept
+	 * Denne rutinen henter frem alle smalere termer fra en gitt term.
+	 * @see no.naks.web.control.HiveService#findconcepts(edu.unc.ils.mrc.hive2.api.HiveConcept)
+	 */
+	public ArrayList<HiveConcept> findconcepts(HiveConcept concept){
+		ArrayList<String> concepts = (ArrayList)concept.getNarrowerConcepts();
+		ArrayList<HiveConcept> narrowConcepts = new ArrayList<HiveConcept>();
+		HiveConcept localConcept = null;
+		for (String conceptName : concepts){
+			QName qname = new QName(conceptName, "");
+			try {
+				localConcept = vocabulary.findConcept(qname);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (localConcept != null){
+				narrowConcepts.add(localConcept);
+			}
+		}
+		return narrowConcepts;
+	}
+	
+	/**
+	 * findBroader
+	 * Denne rutinen henter frem alle utvidede termer fra et gitt term
+	 * @param concept Den gitte term
+	 * @return
+	 */
+	public ArrayList<HiveConcept> findBroader(HiveConcept concept){
+		ArrayList<String> concepts = (ArrayList)concept.getBroaderConcepts();
+		ArrayList<HiveConcept> broaderConcepts = new ArrayList<HiveConcept>();
+		HiveConcept localConcept = null;
+		for (String conceptName : concepts){
+			QName qname = new QName(conceptName, "");
+			try {
+				localConcept = vocabulary.findConcept(qname);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (localConcept != null){
+				broaderConcepts.add(localConcept);
+			}
+		}
+		return broaderConcepts;
+	}
+	/* initializeVocabulary
+	 * Denne rutinen henter frem valgt vokubalar
+	 * 	 * @see no.naks.web.control.HiveService#initializeVocabulary()
+	 */
 	public void initializeVocabulary(){
 		boolean firstTime = false;
 		String vocabularyName = "mesh";

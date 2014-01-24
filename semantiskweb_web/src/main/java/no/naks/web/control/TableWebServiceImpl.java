@@ -265,6 +265,12 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		return meshTree.getRootNode();
 	}
 
+	/**
+	 * getmeshDetail
+	 * Denne rutinen henter detaljer om et valgt MeSH begrep
+	 * Den utføres når bruker velger en MeSH term
+	 * @return
+	 */
 	public String getmeshDetail(){
 		String kurSId = getFacesParamValue("qnameid");
 		RequestContext reqContext = RequestContextHolder.getRequestContext();
@@ -281,11 +287,24 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (concept != null)
+		if (concept != null){
 			meshTree.setChosenConcept(concept);
-		return "meshdetail";
+			meshTree.setConceptDetail(true);
+			meshTree.setNarrowConcepts(hiveService.findconcepts(concept));
+			if(concept.getBroaderConcepts() != null && !concept.getBroaderConcepts().isEmpty()){
+				meshTree.setBroaderConcepts(hiveService.findBroader(concept));
+				
+			}
+		}
+		return "detail";
 	}
 	
+	/**
+	 * getToptreeDetail
+	 * Denne rutinene henter MeSH termer samlet under en hovedterm
+	 * Den utføres når bruker har valgt en hoverterm (f. eks. anatomi)
+	 * @return
+	 */
 	public String getToptreeDetail(){
 		String treeTop = getFacesParamValue("treeName");
 		RequestContext reqContext = RequestContextHolder.getRequestContext();
@@ -339,8 +358,74 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		} 
 */	
 		} 
+	
+	/**
+	 * presentNarrow
+	 * Denne rutinen viser underordnede begreper eller skjuler dem.
+	 * @return
+	 */
+	public String presentNarrow(){
+		RequestContext reqContext = RequestContextHolder.getRequestContext();
+		MutableAttributeMap  flow = reqContext.getFlowScope();
+		MutableAttributeMap  conversation = reqContext.getConversationScope();
+		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+		meshTree.setBroader(false);
+		meshTree.setBroaderText(false);
+		if (meshTree.getNarrowConcepts() != null){
+			if(meshTree.isNarrow())
+				meshTree.setNarrow(false);
+			else
+				meshTree.setNarrow(true);
+		}
+		if (meshTree.getNarrowConcepts() == null){
+			if(meshTree.isNarrowText())
+				meshTree.setNarrowText(false);
+			else
+				meshTree.setNarrowText(true);
+		}
+		
+		return "";
+	}
 
-	public NHNServiceClient getNhnClient() {
+	/**
+	 * presentBroader
+	 * Denne rutinen viser overordnede begreper eller skjuler dem.
+	 * @return
+	 */
+	public String presentBroader(){
+		RequestContext reqContext = RequestContextHolder.getRequestContext();
+		MutableAttributeMap  flow = reqContext.getFlowScope();
+		MutableAttributeMap  conversation = reqContext.getConversationScope();
+		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+		meshTree.setNarrow(false);
+		meshTree.setNarrowText(false);
+		if (meshTree.getBroaderConcepts() != null){
+			if(meshTree.isBroader())
+				meshTree.setBroader(false);
+			else
+				meshTree.setBroader(true);
+		}
+		if (meshTree.getBroaderConcepts() == null){
+			if(meshTree.isBroaderText())
+				meshTree.setBroaderText(false);
+			else
+				meshTree.setBroaderText(true);
+		}
+		return "";
+	}
+	/**
+	 * getSearch
+	 * Denne rutinen søker etter en gitt term utfra tekst
+	 * @return
+	 */
+	public String getSearch(){
+		RequestContext reqContext = RequestContextHolder.getRequestContext();
+		MutableAttributeMap  flow = reqContext.getFlowScope();
+		MutableAttributeMap  conversation = reqContext.getConversationScope();
+		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+	
+		return "";
+	}	public NHNServiceClient getNhnClient() {
 		return nhnClient;
 	}
 
@@ -384,14 +469,7 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		this.nhnFlag = nhnFlag;
 	}
 
-	public String getSearch(){
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
-	
-		return "";
-	}
+
 	public void hendelseHiddenValue(ValueChangeEvent val){
 		String strHendelse =(String) val.getNewValue();
 		int x = 0;
