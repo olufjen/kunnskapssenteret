@@ -1,0 +1,177 @@
+Apache Maven 3.0.3 (r1075438; 2011-02-28 18:31:09+0100)
+Maven home: C:\Program Files (x86)\apache-maven-3.0.3-bin\apache-maven-3.0.3\bin\..
+Java version: 1.7.0_03, vendor: Oracle Corporation
+Java home: C:\Program Files\Java\jdk1.7.0_03\jre
+Default locale: en_US, platform encoding: Cp1252
+OS name: "windows 7", version: "6.1", arch: "amd64", family: "windows"
+[INFO] Error stacktraces are turned on.
+[DEBUG] Reading global settings from C:\Program Files (x86)\apache-maven-3.0.3-bin\apache-maven-3.0.3\bin\..\conf\settings.xml
+[DEBUG] Reading user settings from C:\Users\olj\.m2\settings.xml
+[DEBUG] Using local repository at C:\Users\olj\.m2\repository
+[DEBUG] Using manager EnhancedLocalRepositoryManager with priority 10 for C:\Users\olj\.m2\repository
+[INFO] Scanning for projects...
+[DEBUG] Extension realms for project org.apache.maven:standalone-pom:pom:1: (none)
+[DEBUG] Looking up lifecyle mappings for packaging pom from ClassRealm[plexus.core, parent: null]
+[DEBUG] Resolving plugin prefix install from [org.apache.maven.plugins, org.codehaus.mojo]
+[DEBUG] Resolved plugin prefix install to org.apache.maven.plugins:maven-install-plugin from POM org.apache.maven:standalone-pom:pom:1
+[DEBUG] === REACTOR BUILD PLAN ================================================
+[DEBUG] Project: org.apache.maven:standalone-pom:pom:1
+[DEBUG] Tasks:   [install:install-file]
+[DEBUG] Style:   Aggregating
+[DEBUG] =======================================================================
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] ------------------------------------------------------------------------
+[DEBUG] Resolving plugin prefix install from [org.apache.maven.plugins, org.codehaus.mojo]
+[DEBUG] Resolved plugin prefix install to org.apache.maven.plugins:maven-install-plugin from POM org.apache.maven:standalone-pom:pom:1
+[DEBUG] Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] === PROJECT BUILD PLAN ================================================
+[DEBUG] Project:       org.apache.maven:standalone-pom:1
+[DEBUG] Dependencies (collect): []
+[DEBUG] Dependencies (resolve): []
+[DEBUG] Repositories (dependencies): [central (http://repo1.maven.org/maven2, releases)]
+[DEBUG] Repositories (plugins)     : [central (http://repo1.maven.org/maven2, releases)]
+[DEBUG] -----------------------------------------------------------------------
+[DEBUG] Goal:          org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file (default-cli)
+[DEBUG] Style:         Aggregating
+[DEBUG] Configuration: <?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <artifactId>${artifactId}</artifactId>
+  <classifier>${classifier}</classifier>
+  <createChecksum default-value="false">${createChecksum}</createChecksum>
+  <file>${file}</file>
+  <generatePom>${generatePom}</generatePom>
+  <groupId>${groupId}</groupId>
+  <javadoc>${javadoc}</javadoc>
+  <localRepository>${localRepository}</localRepository>
+  <localRepositoryPath>${localRepositoryPath}</localRepositoryPath>
+  <packaging>${packaging}</packaging>
+  <pomFile>${pomFile}</pomFile>
+  <repositoryLayout default-value="default">${repositoryLayout}</repositoryLayout>
+  <sources>${sources}</sources>
+  <updateReleaseInfo default-value="false">${updateReleaseInfo}</updateReleaseInfo>
+  <version>${version}</version>
+</configuration>
+[DEBUG] =======================================================================
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install-file (default-cli) @ standalone-pom ---
+[DEBUG] Created new class realm maven.api
+[DEBUG] Importing foreign packages into class realm maven.api
+[DEBUG]   Imported: org.apache.maven.wagon.events < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.transfer < plexus.core
+[DEBUG]   Imported: org.apache.maven.exception < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.metadata < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.Xpp3Dom < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.collection < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.version < plexus.core
+[DEBUG]   Imported: org.apache.maven.monitor < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.resource < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.logging < plexus.core
+[DEBUG]   Imported: org.apache.maven.profiles < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.classrealm < plexus.core
+[DEBUG]   Imported: org.apache.maven.execution < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.artifact < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.spi < plexus.core
+[DEBUG]   Imported: org.apache.maven.reporting < plexus.core
+[DEBUG]   Imported: org.apache.maven.usability < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.container < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.component < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlSerializer < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authentication < plexus.core
+[DEBUG]   Imported: org.apache.maven.lifecycle < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.classworlds < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.graph < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.settings < plexus.core
+[DEBUG]   Imported: org.codehaus.classworlds < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.impl < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.toolchain < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.deployment < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.observers < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParserException < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParser < plexus.core
+[DEBUG]   Imported: org.apache.maven.configuration < plexus.core
+[DEBUG]   Imported: org.apache.maven.cli < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.installation < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.context < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authorization < plexus.core
+[DEBUG]   Imported: org.apache.maven.project < plexus.core
+[DEBUG]   Imported: org.apache.maven.rtinfo < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.lifecycle < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.configuration < plexus.core
+[DEBUG]   Imported: org.apache.maven.artifact < plexus.core
+[DEBUG]   Imported: org.apache.maven.model < plexus.core
+[DEBUG]   Imported: org.apache.maven.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.proxy < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.resolution < plexus.core
+[DEBUG]   Imported: org.apache.maven.plugin < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.* < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.personality < plexus.core
+[DEBUG] Populating class realm maven.api
+[DEBUG] org.apache.maven.plugins:maven-install-plugin:jar:2.3.1:
+[DEBUG]    org.apache.maven:maven-plugin-api:jar:2.0.6:compile
+[DEBUG]    org.apache.maven:maven-project:jar:2.0.6:compile
+[DEBUG]       org.apache.maven:maven-settings:jar:2.0.6:compile
+[DEBUG]       org.apache.maven:maven-profile:jar:2.0.6:compile
+[DEBUG]       org.apache.maven:maven-plugin-registry:jar:2.0.6:compile
+[DEBUG]       org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile
+[DEBUG]          junit:junit:jar:3.8.1:compile
+[DEBUG]          classworlds:classworlds:jar:1.1-alpha-2:compile
+[DEBUG]    org.apache.maven:maven-model:jar:2.0.6:compile
+[DEBUG]    org.apache.maven:maven-artifact-manager:jar:2.0.6:compile
+[DEBUG]       org.apache.maven:maven-repository-metadata:jar:2.0.6:compile
+[DEBUG]    org.apache.maven:maven-artifact:jar:2.0.6:compile
+[DEBUG]    org.codehaus.plexus:plexus-utils:jar:2.0.5:compile
+[DEBUG]    org.codehaus.plexus:plexus-digest:jar:1.0:compile
+[DEBUG] Created new class realm plugin>org.apache.maven.plugins:maven-install-plugin:2.3.1
+[DEBUG] Importing foreign packages into class realm plugin>org.apache.maven.plugins:maven-install-plugin:2.3.1
+[DEBUG]   Imported:  < maven.api
+[DEBUG] Populating class realm plugin>org.apache.maven.plugins:maven-install-plugin:2.3.1
+[DEBUG]   Included: org.apache.maven.plugins:maven-install-plugin:jar:2.3.1
+[DEBUG]   Included: junit:junit:jar:3.8.1
+[DEBUG]   Included: org.codehaus.plexus:plexus-utils:jar:2.0.5
+[DEBUG]   Included: org.codehaus.plexus:plexus-digest:jar:1.0
+[DEBUG]   Excluded: org.apache.maven:maven-plugin-api:jar:2.0.6
+[DEBUG]   Excluded: org.apache.maven:maven-project:jar:2.0.6
+[DEBUG]   Excluded: org.apache.maven:maven-settings:jar:2.0.6
+[DEBUG]   Excluded: org.apache.maven:maven-profile:jar:2.0.6
+[DEBUG]   Excluded: org.apache.maven:maven-plugin-registry:jar:2.0.6
+[DEBUG]   Excluded: org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1
+[DEBUG]   Excluded: classworlds:classworlds:jar:1.1-alpha-2
+[DEBUG]   Excluded: org.apache.maven:maven-model:jar:2.0.6
+[DEBUG]   Excluded: org.apache.maven:maven-artifact-manager:jar:2.0.6
+[DEBUG]   Excluded: org.apache.maven:maven-repository-metadata:jar:2.0.6
+[DEBUG]   Excluded: org.apache.maven:maven-artifact:jar:2.0.6
+[DEBUG] Configuring mojo org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file from plugin realm ClassRealm[plugin>org.apache.maven.plugins:maven-install-plugin:2.3.1, parent: sun.misc.Launcher$AppClassLoader@4d17140b]
+[DEBUG] Configuring mojo 'org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file' with basic configurator -->
+[DEBUG]   (f) artifactId = hive-core
+[DEBUG]   (f) createChecksum = false
+[DEBUG]   (f) file = C:\dev\semantiskweb\hive-core\dist\hive-core.jar
+[DEBUG]   (f) groupId = no.kunnskapssenteret
+[DEBUG]   (f) localRepository =        id: local
+      url: file:///C:/Users/olj/.m2/repository/
+   layout: none
+
+[DEBUG]   (f) packaging = jar
+[DEBUG]   (f) repositoryLayout = default
+[DEBUG]   (f) updateReleaseInfo = false
+[DEBUG]   (f) version = 1.0-SNAPSHOT
+[DEBUG] -- end configuration --
+[DEBUG] Skipping installation of generated POM, already present in local repository
+[INFO] Installing C:\dev\semantiskweb\hive-core\dist\hive-core.jar to C:\Users\olj\.m2\repository\no\kunnskapssenteret\hive-core\1.0-SNAPSHOT\hive-core-1.0-SNAPSHOT.jar
+[DEBUG] Installing no.kunnskapssenteret:hive-core:1.0-SNAPSHOT/maven-metadata.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\hive-core\1.0-SNAPSHOT\maven-metadata-local.xml
+[DEBUG] Installing no.kunnskapssenteret:hive-core/maven-metadata.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\hive-core\maven-metadata-local.xml
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.075s
+[INFO] Finished at: Thu Jan 09 12:57:56 CET 2014
+[INFO] Final Memory: 4M/73M
+[INFO] ------------------------------------------------------------------------
