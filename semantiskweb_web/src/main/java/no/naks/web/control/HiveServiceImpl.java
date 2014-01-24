@@ -16,7 +16,7 @@ import edu.unc.ils.mrc.hive2.api.impl.HiveVocabularyImpl;
 
 /**
  * @author olj
- * Denne klassen lager et vokabular
+ * Denne klassen lager et vokabular 
  */
 public class HiveServiceImpl implements HiveService {
 	private SKOSSchemeImpl scheme = null;
