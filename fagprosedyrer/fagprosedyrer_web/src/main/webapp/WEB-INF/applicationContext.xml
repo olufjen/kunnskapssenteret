@@ -25,16 +25,19 @@
 	<bean id="componentChildContext" class="org.restlet.Context">
 		<lookup-method name="createChildContext" bean="component.context" />
 	</bean>
+<!-- 	
 	<bean id="docsDir" class="org.restlet.resource.Directory"> 
         <constructor-arg name="context" ref="componentChildContext" /> 
         <constructor-arg name="rootUri" value="clap:///no/naks/web/server/resource/css/" /> 
         <property name="indexName" value="index" /> 
     </bean>
+    
     	<bean id="localdocsDir" class="no.naks.web.server.resource.ProsedyreDirectory"> 
         <constructor-arg name="context" ref="componentChildContext" /> 
-        <constructor-arg name="rootUri" value="clap:///no/naks/web/server/resource/css/" /> 
-        <property name="indexName" value="index" /> 
+        <constructor-arg name="rootUri" value="file://fagprosedyrer_web/restapi/melding/css" /> 
+        <property name="indexName" value="style.css" /> 
     </bean>
+-->
 <!-- 
 	<bean id="directoryService" class="no.naks.web.server.resource.ProsedyreDirectory">
 		<property name="context" ref="componentChildContext"></property>
@@ -42,32 +45,7 @@
  -->	
 	<!-- This router automagically routes requests to beans that extend org.restlet.resource.ServerResource or org.restlet.Restlet who's name starts with
 	 a "/" slash which matches the request-->
-	<bean name="path2BeanRouter" class="org.restlet.ext.spring.SpringBeanRouter">
-<!-- 
-	    <property name="attachments"> 
-            <map> 
-               <entry key="/css/" value-ref="docsDir" /> 
-            </map> 
-        </property> 
-  -->       
-	</bean>
-	
- 	<bean name="/melding/" id="innmeldingServerResourceHTML" autowire="byName" scope="prototype"
-            class="no.naks.web.server.resource.InnmeldingServerResourceHtml">
-     	<property name="sessionAdmin" ref="sessionAdmin"></property>
- 	</bean>
- 
- 	<bean name="/trace" autowire="byName" scope="prototype"
-            class="no.naks.web.server.resource.Tracer">
-     </bean>
-  	
- 	<bean name="/css" id="cssDir" autowire="byName" scope="prototype"
-            class="no.naks.web.server.resource.ProsedyreDirectory">
-             <constructor-arg name="context" ref="componentChildContext" /> 
-        <constructor-arg name="rootUri" value="clap:///no/naks/web/server/resource/css/" /> 
-        <property name="indexName" value="index" /> 
-    </bean>
-     
+
 <!-- 
 	<bean id="FagprosedyreApiApplication" class="no.naks.web.server.FagprosedyreApiApplication">
 	
@@ -104,11 +82,6 @@
 	 		</list>
 	 	</property>
 	 </bean>
-
-
-	<bean id="sessionAdmin" class="no.naks.web.control.SessionAdminImpl">
-	</bean>
-
 	<bean id="tableWebService" class="no.naks.web.control.TableWebServiceImpl">
 	<!--  
 		<property name="masterDictionary" ref="domainDictionary"></property>
@@ -116,11 +89,100 @@
 --> 		
 		<property name="nhnFlag" value="false"></property>
 <!-- 		<property name="meldingService" ref="meldingService"></property>
-	 	<property name="nhnClient" ref="nhnClient"></property>
-		<property name="hiveService" ref="hiveService"></property> -->
+	 	<property name="nhnClient" ref="nhnClient"></property>  -->
+		<property name="hiveService" ref="hiveService"></property>
+
 
 	</bean>
 	
+
+	<bean id="hiveService" class="no.naks.semweb.control.HiveServiceImpl">
+		<property name="hivePath" value="C:\\svnroot2\\nokc\\semantiskweb\\trunk\\semantiskweb_web\\src\\main\\webapp\\config\\app-config\"></property>
+		<property name="treeElements">
+			<list><value>Anatomi</value>
+			<value>Organisme</value>
+			<value>Sykdommer</value>
+			<value>Kjemikalier og medisiner</value>
+			<value>Analyse, diagnoser og terapeutiske teknikker og utstyr</value>
+			<value>Psykiatri og Psykologi</value>
+			<value>Antropologi Utdanning og sosiologi</value>
+			<value>Teknologi, Industri, Jordbruk</value>
+			<value>Humanoria</value>
+			<value>Informasjonsvitenskap</value>
+			<value>Navngitte grupper</value>
+			<value>Helsevesenet</value>
+			<value>Publikasjonkarakteristiska</value>
+			<value>Geografi</value>
+			</list>
+		</property>
+		<property name="anatomi">
+			<list>
+				<value>Body Regions</value>
+				<value>Musculoskeletal System</value>
+				<value>Digestive System</value>
+				<value>Respiratory System</value>
+				<value>Urogenital System</value>
+				<value>Endocrine System</value>
+				<value>Cardiovascular System</value>
+				<value>Nervous System</value>
+				<value>Sense Organs</value>
+				<value>Tissues</value>
+				<value>Cells</value>
+				<value>Fluids and Secretions</value>
+				<value>Animal Structure</value>
+				<value>Stomatognathic System</value>
+				<value>Hemic and Immune Systems</value>
+				<value>Embryonic Structures</value>
+				<value>Integumentary System</value>
+				<value>Plant Structure</value>
+				<value>Fungal Structure</value>
+				<value>Bacterial Structure</value>
+				<value>Viral Structure</value>
+			
+			</list>
+		</property>
+	</bean>	
+		
+	<bean name="path2BeanRouter" class="org.restlet.ext.spring.SpringBeanRouter">
+<!-- 
+	    <property name="attachments"> 
+            <map> 
+               <entry key="/css/" value-ref="docsDir" /> 
+            </map> 
+        </property> 
+  -->       
+	</bean>
+<!-- Denne server resource eksekveres når stylesheet hentes av html  -->
+ 	<bean name="/innmelding/css/style.css" id="cssServerResource" autowire="byName" scope="prototype"
+            class="no.naks.web.server.resource.CssServerResource">
+ 	</bean>
+ 	
+ 	<bean name="/innmelding/" id="innmeldingServerResourceHTML" autowire="byName" scope="prototype"
+            class="no.naks.web.server.resource.InnmeldingServerResourceHtml">
+     	<property name="sessionAdmin" ref="sessionAdmin"></property>
+     	<property name="tablewebservice" ref="tableWebService"></property>
+     	<property name="sessionParams" value="${innmelding.tittel},${innmelding.begrunnelse},
+     	${innmelding.pasienterValgt},${innmelding.helsepersonell},${innmelding.oppstart},${innmelding.ferdig},
+     	${innmelding.internleder},${innmelding.internledertittel},${innmelding.internlederepost}">
+		</property>
+ 	</bean>
+ 
+ 	<bean name="/trace" autowire="byName" scope="prototype"
+            class="no.naks.web.server.resource.Tracer">
+     </bean>
+<!-- Med samme addresse som CssServerResource  (se over)så finner ikke server denne stylesheet  -->  	
+ 	<bean name="/innmelding/css/" id="cssDir" autowire="byName" scope="prototype"
+            class="no.naks.web.server.resource.ProsedyreDirectory">
+             <constructor-arg name="context" ref="componentChildContext" /> 
+        <constructor-arg name="rootUri" value="clap://class//innmelding/css/style.css" /> <!-- file: or clap: ? -->
+        <property name="indexName" value="style.css" /> 
+    </bean>
+     
+	<bean id="sessionAdmin" class="no.naks.web.control.SessionAdminImpl">
+	
+	</bean>
+
+
 	<bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
 		<property name="imagePath" value="${image.archive.path}" />
 	</bean>
