@@ -18,13 +18,22 @@ public class ProsedyreDirectory extends Directory {
 
 	public ProsedyreDirectory(Context context, String rootUri) {
 		super(context, rootUri);
+		String uri = rootUri;
 		// TODO Auto-generated constructor stub
 		//   Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     LocalReference pakke = LocalReference.createClapReference(getClass().getPackage());
 	//     LocalReference localUri = new LocalReference(reference);
-	     LocalReference localFileref = new LocalReference("/no/naks/server/resource/css/");
-	     File file = localFileref.getFile();
+	     LocalReference localFilerefx = new LocalReference("no/naks/web/server/resource");
+	     String ps = "/innmelding/css/style.css";
+	 //    LocalReference localFileref = LocalReference.createFileReference(ps);
+	    LocalReference localFileref = LocalReference.createClapReference(LocalReference.CLAP_CLASS, ps);
+	  //   File file = localFileref.getFile();
 	//     System.out.println("Directory created");
+	
+	    
+	//     setRootRef(pakke);
+	     setRootRef(localFileref);
+	     setIndexName("style.css");
 	     setListingAllowed(true);
 	}
 
