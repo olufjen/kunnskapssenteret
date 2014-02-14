@@ -12,7 +12,8 @@ import org.restlet.ext.servlet.ServletUtils;
  *
  */
 public class SessionAdminImpl implements SessionAdmin {
-
+	private String[]sessionParams;
+	
 	public SessionAdminImpl() {
 		super();
 		  System.out.println("SessionAdmin started");
@@ -33,5 +34,21 @@ public class SessionAdminImpl implements SessionAdmin {
 		  session.setAttribute(idKey, o);
 
 	}
+
+	@Override
+	public HttpSession getSession(Request request, String idKey) {
+		HttpServletRequest req = ServletUtils.getRequest(request);
+		HttpSession session = req.getSession();
+		return session;
+	}
+
+	public String[] getSessionParams() {
+		return sessionParams;
+	}
+
+	public void setSessionParams(String[] sessionParams) {
+		this.sessionParams = sessionParams;
+	}
+	
 
 }

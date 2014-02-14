@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import no.naks.nhn.service.MelderService;
 import no.naks.nhn.service.NHNServiceClient;
+import no.naks.semweb.control.HiveService;
 import no.naks.services.nhn.client.Organization;
-import no.naks.web.model.HvorHvem;
+
 
 /**
  * Dette grensesnitt implementeres av TableWebServiceImpl som
@@ -31,7 +32,8 @@ public interface TableWebService extends NHNMasterWebService  {
 	public JAXBElement<String> getOrganisationName();
 
 	public void setOrganisationName(JAXBElement<String> organisationName);
-	
+	public HiveService getHiveService();
+	public void setHiveService(HiveService hiveService);
 
 	/**
 	 * @param foretakKey the foretakKey to set

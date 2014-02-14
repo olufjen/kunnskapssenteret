@@ -15,24 +15,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.apache.myfaces.custom.tree2.TreeModel;
-import org.apache.myfaces.custom.tree2.TreeNode;
-import org.apache.myfaces.webapp.filter.ExtensionsResponseWrapper;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.webflow.core.collection.MutableAttributeMap;
-import org.springframework.webflow.execution.RequestContext;
-import org.springframework.webflow.execution.RequestContextHolder;
 
-import org.richfaces.component.html.HtmlMessage;
-import org.richfaces.event.TreeSelectionChangeEvent; 
+
+
 import edu.unc.ils.mrc.hive.HiveException;
 import edu.unc.ils.mrc.hive.api.impl.elmo.SKOSSchemeImpl;
 import edu.unc.ils.mrc.hive2.api.HiveConcept;
 import edu.unc.ils.mrc.hive2.api.HiveVocabulary;
 import edu.unc.ils.mrc.hive2.api.impl.HiveVocabularyImpl;
-
 import no.naks.emok.model.Basismelding;
 import no.naks.emok.model.IBasismelding;
 import no.naks.framework.web.control.MasterWebService;
@@ -41,9 +31,10 @@ import no.naks.nhn.model.PersonImpl;
 import no.naks.nhn.service.MelderService;
 import no.naks.nhn.service.NHNServiceClient;
 import no.naks.services.nhn.client.Organization;
-import no.naks.web.bean.PdfCreator;
-import no.naks.web.model.Meshtree;
-import no.naks.web.model.SemantiskTree;
+
+import no.naks.semweb.control.HiveService;
+import no.naks.semweb.model.Meshtree;
+import no.naks.semweb.model.SemantiskTree;
 
 
 /**
@@ -57,13 +48,12 @@ import no.naks.web.model.SemantiskTree;
  *
  */
 
-@RequestMapping("/") 
+
 public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		TableWebService,NHNMasterWebService,MasterWebService {
 	protected MelderService meldingService; // Denne tjenesten sørger for lagring av meldinger til xml.
 	protected HiveService hiveService;
-	
-
+	private ArrayList<HiveConcept> hiveConcepts;
 	
 	public TableWebServiceImpl() {
 		super();
@@ -188,30 +178,16 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 		return concepts;
 	}
 
-	
-	public PdfCreator initializePdfCreator(){
-		// Set kontroll button invisible 
-	
-		PdfCreator pdfCreator = new PdfCreator();
-		return pdfCreator;
-	}
-	
+
 	/**
 	 * collectScope
 	 * Denne rutinen setter sammen alle objektene som er aktive i flow
 	 * Den kalles når flow starter
 	 */
 	public ArrayList collectScope(){
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-	//	HiveVocabularyImpl vocabulary = null;
-		FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-	//	Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-	//	vocabulary = (HiveVocabularyImpl)conversation.get("meshVocabulary");
-	//	vocabulary = (HiveVocabularyImpl)session.getAttribute("meshvocabulary"); 
-	//	vocabulary = (HiveVocabularyImpl)sessionMap.get("meshvocabulary");
+
 		Map<String,QName> concepts = hiveService.getConcepts();
 		ArrayList<HiveConcept> hiveConcepts = new ArrayList();
 		QName nameSpace = null;
@@ -239,31 +215,21 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 			}
 		}
 
-		
+		this.hiveConcepts = hiveConcepts;
 		return hiveConcepts;
 	}
 
 	public Meshtree initializeMeshtree(){
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
+
 		Map<String,QName> concepts = hiveService.getConcepts();
-		//Map<String,QName> concepts = (Map)conversation.get("meshConcepts");
-		ArrayList<HiveConcept> hiveConcepts = (ArrayList)conversation.get("hiveConcepts");
-		
+	
 		Meshtree meshTree = new Meshtree(hiveConcepts, concepts);
 		meshTree.setTreeElements(hiveService.getTreeElements());
 		meshTree.setAnatomi(hiveService.getAnatomi());
 		return meshTree;
 		
 	}
-	public TreeNode produceTree(){
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
-		return meshTree.getRootNode();
-	}
+
 
 	/**
 	 * getmeshDetail
@@ -273,10 +239,9 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	 */
 	public String getmeshDetail(){
 		String kurSId = getFacesParamValue("qnameid");
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+	
+		Meshtree meshTree = initializeMeshtree();
+	
 		HiveConcept concept = null; 
 		if (!kurSId.contains("concept"))
 			kurSId = kurSId + "concept";
@@ -307,10 +272,8 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	 */
 	public String getToptreeDetail(){
 		String treeTop = getFacesParamValue("treeName");
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+
+		Meshtree meshTree = initializeMeshtree();
 		ArrayList<SemantiskTree> trees = meshTree.getTrees();
 		int i = 0;
 		SemantiskTree tree = null;
@@ -325,39 +288,7 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 			meshTree.setChosenTree(tree);
 		return "meshdetail";
 	}
-	public void processSelection(TreeSelectionChangeEvent event) { 
-/*	     
-		HtmlTree tree = (HtmlTree) event.getComponent(); 
-	       
-		nodeTitle = (String) tree.getRowData(); 
-	     
-		selectedNodeChildren.clear(); 
-	      
-		TreeNode currentNode = tree.getModelTreeNode(tree.getRowKey()); 
-	       
-		if (currentNode.isLeaf()){ 
-	            
-		 
-	           
-		selectedNodeChildren.add((String)currentNode.getData()); 
-	      
-		}else
-	       
-		{ 
-	            
-		Iterator<Map.Entry<Object, TreeNode>> it = currentNode.getChildren(); 
-	            
-		while (it!=null &&it.hasNext()) { 
-	                
-		Map.Entry<Object, TreeNode> entry = it.next(); 
-	            
-		selectedNodeChildren.add(entry.getValue().getData().toString());  
-	           
-		} 
-		       
-		} 
-*/	
-		} 
+
 	
 	/**
 	 * presentNarrow
@@ -365,10 +296,8 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	 * @return
 	 */
 	public String presentNarrow(){
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+
+		Meshtree meshTree = initializeMeshtree();
 		meshTree.setBroader(false);
 		meshTree.setBroaderText(false);
 		if (meshTree.getNarrowConcepts() != null){
@@ -393,10 +322,8 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	 * @return
 	 */
 	public String presentBroader(){
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+
+		Meshtree meshTree = initializeMeshtree();
 		meshTree.setNarrow(false);
 		meshTree.setNarrowText(false);
 		if (meshTree.getBroaderConcepts() != null){
@@ -419,10 +346,8 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	 * @return
 	 */
 	public String getSearch(){
-		RequestContext reqContext = RequestContextHolder.getRequestContext();
-		MutableAttributeMap  flow = reqContext.getFlowScope();
-		MutableAttributeMap  conversation = reqContext.getConversationScope();
-		Meshtree meshTree = (Meshtree)conversation.get("meshTree");
+
+		Meshtree meshTree = initializeMeshtree();
 	
 		return "";
 	}	public NHNServiceClient getNhnClient() {
@@ -438,6 +363,7 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	}
 
 	
+
 	public HiveService getHiveService() {
 		return hiveService;
 	}
@@ -470,6 +396,12 @@ public class TableWebServiceImpl extends NHNMasterWebServiceImpl implements
 	}
 
 
+	public ArrayList<HiveConcept> getHiveConcepts() {
+		return hiveConcepts;
+	}
+	public void setHiveConcepts(ArrayList<HiveConcept> hiveConcepts) {
+		this.hiveConcepts = hiveConcepts;
+	}
 	public void hendelseHiddenValue(ValueChangeEvent val){
 		String strHendelse =(String) val.getNewValue();
 		int x = 0;
