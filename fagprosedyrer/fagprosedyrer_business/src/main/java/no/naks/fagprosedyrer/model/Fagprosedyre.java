@@ -1,31 +1,5 @@
 package no.naks.fagprosedyrer.model;
 
+public interface Fagprosedyre {
 
-/**
- * Fagprosedyrer er prosedyrer som omhandler medisinske og helsefaglige aktiviteter eller prosesser i helsetjenesten. Her er flere definisjoner:
- * Prosedyre: en angitt fremgangsmåte for å utføre en aktivitet eller en prosess.
- * Flerfaglig prosedyrer:  prosedyrer som ivaretar krav 4 i AGREE: «Arbeidsgruppen som har utarbeidet retningslinjen (les: prosedyren) har med personer fra alle relevante faggrupper».
- * Kunnskapsbaserte fagprosedyrer: prosedyrer som er utarbeidet etter minstekrav for fagprosedyrer.
- * 
- */
-
-public class Fagprosedyre extends Prosedyre{
-
-	/**
-	 * Hensikt med prosedyren
-	 */
-	private java.lang.String hensikt;
-	/**
-	 * Spørsmålsformulering fra pico. Problemstillingen bør formuleres som et presist spørsmål. På den måten kan man søke frem relevant forskning og finne svar på problemstillingen.
-	 * Det bør inneholde informasjon om hvem vi er interessert i, hvilke tiltak vi er interessert i, og hvilke utfall som er av interesse.
-	 */
-	private java.lang.String sporsmalformulering;
-	/**
-	 * Hvilke kliniske og andre spørsmål fagprosedyren skal svare på
-	 */
-	private java.lang.String kliniskesporsmal;
-	/**
-	 * Om det er aktuelt med søk i lovdata etter relevante lover og forskrifter
-	 */
-	private java.lang.String lovdata;
 }
