@@ -1,6 +1,6 @@
 package no.naks.fagprosedyrer.web.client;
 
-import no.naks.web.model.Innmelding;
+import no.naks.fagprosedyrer.web.model.Innmelding;
 
 import org.restlet.data.MediaType;
 import org.restlet.representation.ObjectRepresentation;

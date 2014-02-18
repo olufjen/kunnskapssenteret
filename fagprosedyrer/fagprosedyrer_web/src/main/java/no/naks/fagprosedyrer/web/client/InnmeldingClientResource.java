@@ -2,8 +2,9 @@ package no.naks.fagprosedyrer.web.client;
 
 import org.restlet.resource.ClientResource;
 import org.restlet.data.MediaType;
-import no.naks.web.client.resource.InnmeldingResource;
-import no.naks.web.model.Innmelding;
+
+import no.naks.fagprosedyrer.web.client.resource.InnmeldingResource;
+import no.naks.fagprosedyrer.web.model.Innmelding;
 
 public class InnmeldingClientResource implements InnmeldingResource {
 	private InnmeldingResource delegate;
