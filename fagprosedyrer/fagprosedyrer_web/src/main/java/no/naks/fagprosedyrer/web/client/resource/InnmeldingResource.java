@@ -1,6 +1,6 @@
 package no.naks.fagprosedyrer.web.client.resource;
 
-import no.naks.web.model.Innmelding;
+import no.naks.fagprosedyrer.web.model.Innmelding;
 
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
