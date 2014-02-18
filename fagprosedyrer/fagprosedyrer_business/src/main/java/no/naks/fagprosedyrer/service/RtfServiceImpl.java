@@ -1,4 +1,4 @@
-package no.naks.skjemabank.service;
+package no.naks.fagprosedyrer.service;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -6,11 +6,9 @@ import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 
-import no.naks.skjemabank.model.AnswerLine;
-import no.naks.skjemabank.model.Question;
-import no.naks.skjemabank.model.QuestionImpl;
-import no.naks.skjemabank.model.Questionare;
-import no.naks.skjemabank.service.QuestionareService;
+
+
+import no.naks.fagprosedyrer.model.Fagprosedyre;
 
 import com.lowagie.text.Cell;
 import com.lowagie.text.Chunk;
@@ -26,18 +24,18 @@ import com.lowagie.text.rtf.RtfWriter2;
 
 public class RtfServiceImpl implements RtfService {
 	private String imagePath;
-	private QuestionareService questionareService;
+	
 	
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
 	
-	public void setQuestionareWebService(QuestionareService questionareService) {
-		this.questionareService = questionareService;
-	}
-	
-	public Document createRtfDocument(ServletOutputStream outputStream, Questionare actualQuestionare) {
-	// todo: concider using services for this, not backingbeans
-		return new Document();
+
+
+	@Override
+	public Document createRtfDocument(ServletOutputStream outputStream,
+			Fagprosedyre fagprosedyre) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
