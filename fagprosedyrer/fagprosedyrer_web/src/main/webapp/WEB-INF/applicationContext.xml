@@ -161,6 +161,7 @@
             class="no.naks.web.server.resource.InnmeldingServerResourceHtml">
      	<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
+     	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
      	<property name="sessionParams" value="${innmelding.tittel},${innmelding.begrunnelse},
      	${innmelding.pasienterValgt},${innmelding.helsepersonell},${innmelding.oppstart},${innmelding.ferdig},
      	${innmelding.internleder},${innmelding.internledertittel},${innmelding.internlederepost}">
@@ -186,7 +187,9 @@
 	<bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
 		<property name="imagePath" value="${image.archive.path}" />
 	</bean>
-
+	<bean id="innmeldingWebService" class="no.naks.web.control.InnmeldingWebServiceImpl">
+	
+	</bean>
 
 <!-- Exception handling -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
