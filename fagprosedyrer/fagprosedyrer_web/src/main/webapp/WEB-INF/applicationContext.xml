@@ -82,7 +82,7 @@
 	 		</list>
 	 	</property>
 	 </bean>
-	<bean id="tableWebService" class="no.naks.web.control.TableWebServiceImpl">
+	<bean id="tableWebService" class="no.naks.fagprosedyrer.web.control.TableWebServiceImpl">
 	<!--  
 		<property name="masterDictionary" ref="domainDictionary"></property>
 		<property name="foretakKey" value="foretakkey"></property>
@@ -154,11 +154,11 @@
 	</bean>
 <!-- Denne server resource eksekveres når stylesheet hentes av html  -->
  	<bean name="/innmelding/css/style.css" id="cssServerResource" autowire="byName" scope="prototype"
-            class="no.naks.web.server.resource.CssServerResource">
+            class="no.naks.fagprosedyrer.web.server.resource.CssServerResource">
  	</bean>
  	
  	<bean name="/innmelding/" id="innmeldingServerResourceHTML" autowire="byName" scope="prototype"
-            class="no.naks.web.server.resource.InnmeldingServerResourceHtml">
+            class="no.naks.fagprosedyrer.web.server.resource.InnmeldingServerResourceHtml">
      	<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
@@ -169,17 +169,17 @@
  	</bean>
  
  	<bean name="/trace" autowire="byName" scope="prototype"
-            class="no.naks.web.server.resource.Tracer">
+            class="no.naks.fagprosedyrer.web.server.resource.Tracer">
      </bean>
 <!-- Med samme addresse som CssServerResource  (se over)så finner ikke server denne stylesheet  -->  	
  	<bean name="/innmelding/css/" id="cssDir" autowire="byName" scope="prototype"
-            class="no.naks.web.server.resource.ProsedyreDirectory">
+            class="no.naks.fagprosedyrer.web.server.resource.ProsedyreDirectory">
              <constructor-arg name="context" ref="componentChildContext" /> 
         <constructor-arg name="rootUri" value="clap://class//innmelding/css/style.css" /> <!-- file: or clap: ? -->
         <property name="indexName" value="style.css" /> 
     </bean>
      
-	<bean id="sessionAdmin" class="no.naks.web.control.SessionAdminImpl">
+	<bean id="sessionAdmin" class="no.naks.fagprosedyrer.web.control.SessionAdminImpl">
 	
 	</bean>
 
@@ -187,7 +187,7 @@
 	<bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
 		<property name="imagePath" value="${image.archive.path}" />
 	</bean>
-	<bean id="innmeldingWebService" class="no.naks.web.control.InnmeldingWebServiceImpl">
+	<bean id="innmeldingWebService" class="no.naks.fagprosedyrer.web.control.InnmeldingWebServiceImpl">
 	
 	</bean>
 
