@@ -237,7 +237,10 @@ public class InnmeldingServerResourceHtml extends ProsedyreServerResource {
 
 	    		}
 	    		sessionAdmin.setSessionObject(getRequest(), result,"innmelding");
-
+	    		Parameter lagre = form.getFirst("lagrekjema");
+	    		if (lagre != null){
+	    			innmeldingWebService.saveInnmelding(result);
+	    		}
 	    		System.out.println("Status = "+result.getStatus());
 	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/innmelding/nymeldingfagprosedyre.html"));
