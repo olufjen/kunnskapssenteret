@@ -2,11 +2,13 @@ package no.naks.fagprosedyrer.web.model;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -297,6 +299,14 @@ public class Innmelding  implements Serializable {
 		if (sDato == null)
 			sDato = "";
 		oppstartSDato = sDato;
+		
+		try {
+			oppstartDato = new SimpleDateFormat("YYYY-MM-DD", Locale.getDefault()).parse(sDato);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return oppstartSDato;
 	}
 
@@ -310,6 +320,12 @@ public class Innmelding  implements Serializable {
 		if (sDato == null)
 			sDato = "";
 		ferdigSDato = sDato;
+		try {
+			ferdigDato = new SimpleDateFormat("YYYY-MM-DD", Locale.getDefault()).parse(sDato);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return ferdigSDato;
 	}
 
@@ -347,12 +363,29 @@ public class Innmelding  implements Serializable {
 		this.begrunnelse = begrunnelse;
 	}
 	public Date getOppstartDato() {
+		if (oppstartDato == null && oppstartSDato != null && !oppstartSDato.equals("")){
+			try {
+				ferdigDato = new SimpleDateFormat("YYYY-MM-DD", Locale.getDefault()).parse(oppstartSDato);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			
 		return oppstartDato;
 	}
 	public void setOppstartDato(Date oppstartDato) {
 		this.oppstartDato = oppstartDato;
 	}
 	public Date getFerdigDato() {
+		if (ferdigDato == null && ferdigSDato != null && !ferdigSDato.equals("")){
+			try {
+				ferdigDato = new SimpleDateFormat("YYYY-MM-DD", Locale.getDefault()).parse(ferdigSDato);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return ferdigDato;
 	}
 	public void setFerdigDato(Date ferdigDato) {
