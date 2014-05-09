@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!--	<import resource="applicationContext-ejb.xml" /> 		-->
+
+<!-- Restlet components -->
+
+	<bean id="component" class="org.restlet.ext.spring.SpringComponent">
+		<property name="name" value="RESTful Fagprosedyre Server component" />
+		<property name="description" value="Example for Fagprosedyrer" />
+		<property name="owner" value="Kunnskapssenteret" />
+		<property name="author" value="Oluf Jensen" />
+		<property name="client" value="clap" />
+		<property name="server" ref="server" />
+		<property name="defaultHost" ref="defaultHost" />
+	</bean>
+
+	<bean id="component.context"
+		class="org.springframework.beans.factory.config.PropertyPathFactoryBean" />
+ 
+	<bean id="server" class="org.restlet.ext.spring.SpringServer">
+		<constructor-arg value="http" />
+		<constructor-arg value="8111" />
+
+		<property name="parameters">
+			<props>
+				<prop key="tracing">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="defaultHost" class="org.restlet.ext.spring.SpringHost">
+		<constructor-arg ref="component" />
+
+		<!--
+			<property name="hostDomain" value="www\\.rmep\\.com|www\\.rmep\\.net|www\\.rmep\\.org" />
+			<property name="serverAddress" value="1\\.2\\.3\\.10|1\\.2\\.3\\.20" />
+			<property name="serverPort" value="80" />
+		-->
+
+		<property name="defaultAttachment" ref="FagprosedyreSiteApplication" />
+	</bean>
+
+	<bean id="componentChildContext" class="org.restlet.Context">
+		<lookup-method name="createChildContext" bean="component.context" />
+	</bean>
+
+	<bean id="FagprosedyreSiteApplication" class="org.restlet.Application">
+		<constructor-arg ref="componentChildContext" />
+
+		<property name="name" value="RESTful Fagprosedyre SITE application" />
+		<property name="description"
+			value="Fagprosedyre SITE application for Kunnskapssenteret" />
+		<property name="owner" value="Kunnskapssenteret" />
+		<property name="author" value="Oluf Jensen" />
+		<property name="inboundRoot">
+			<bean class="org.restlet.ext.spring.SpringRouter">
+				<constructor-arg ref="FagprosedyreSiteApplication" />
+		 
+				<property name="attachments">
+					<map>
+						<entry key="/"
+							value="no.naks.web.server.resource.RootServerResource" />
+
+					</map>
+				</property>
+				
+			</bean>
+		</property>
+	</bean>
+
+
+
+
+
+<!-- Restlet components end -->
+
+	 <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	 	<property name="locations">
+	 		<list>
+	 			<!-- <value>/WEB-INF/application.properties</value>
+	 			<value>/WEB-INF/jdbc.properties</value>
+	 			<value>/WEB-INF/jdbcutside.properties</value>
+	 			<value>/WEB-INF/sqladmin.properties</value>
+	 			<value>/WEB-INF/tables.properties</value>
+	 			<value>/WEB-INF/question.properties</value>
+	 			<value>/WEB-INF/environment.properties</value> -->
+	 			<value>/config/app-config/application.properties</value>
+	 			<value>/config/app-config/jdbc.properties</value>
+	 			<value>/config/app-config/jdbcutside.properties</value>
+	 			<value>/config/app-config/sqladmin.properties</value>
+	 			<value>/config/app-config/tables.properties</value>
+	 			<value>/config/app-config/question.properties</value>
+	 			<value>/config/app-config/environment.properties</value>
+	 		</list>
+	 	</property>
+	 </bean>
+
+
+
+
+	<bean id="tableWebService" class="no.naks.web.control.TableWebServiceImpl">
+	<!--  
+		<property name="masterDictionary" ref="domainDictionary"></property>
+		<property name="foretakKey" value="foretakkey"></property>
+--> 		
+		<property name="nhnFlag" value="false"></property>
+		<property name="meldingService" ref="meldingService"></property>
+	 	<property name="nhnClient" ref="nhnClient"></property>
+		<property name="hiveService" ref="hiveService"></property>
+
+	</bean>
+	
+	<bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
+		<property name="imagePath" value="${image.archive.path}" />
+	</bean>
+
+
+<!-- Exception handling -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="error/exception" />
+        <property name="defaultStatusCode" value="500" />
+        <property name="warnLogCategory" value="WARN" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.webflow.execution.repository.FlowExecutionRestorationFailureException">velkommen</prop>
+                
+            </props>
+        </property>
+    </bean>
+
+</beans>
