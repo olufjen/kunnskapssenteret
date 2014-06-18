@@ -156,9 +156,10 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	 result.setFormNames(sessionParams);
 	    	 result.setAldergruppe(aldergruppe);
 	    	 result.setKjonnValg(kjonnValg);
+	    
 	     }
 	     result.setTerms(terms);
-
+		 result.distributeTerms();
 	     String ref = reference.toString();
 	     result.setAccountRef(ref);
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -185,22 +186,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	                MediaType.TEXT_HTML);
 		 return templatemapRep;
 	 }
-	    @Put
-	    public Representation store(Form form) {
-	    	
-	        for (Parameter entry : form) {
-	            System.out.println(entry.getName() + "=" + entry.getValue());
-	            result.setValues(entry);
-	            
-	        }
-//	        System.out.println("Status = "+result.getStatus());
-	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
-	    	//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
-	    	        TemplateRepresentation  templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, result,
-	    	                MediaType.TEXT_HTML);
-	    	return templateRep;
-	      
-	    }
+
 	    /**
 	     * storeHemovigilans
 	     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
@@ -241,6 +227,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	     dataModel.put("pasientkomplikasjon", result);
 	    		Parameter lagre = form.getFirst("lagre4");
 	    		if (lagre != null){
+	    			result.saveValues();
 	    			hendelseWebService.saveHendelse(result);
 	    		}
 //	    		System.out.println("Status = "+result.getStatus());
