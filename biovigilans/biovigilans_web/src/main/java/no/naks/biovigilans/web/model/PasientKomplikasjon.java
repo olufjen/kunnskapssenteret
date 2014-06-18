@@ -11,8 +11,14 @@ import java.util.Map;
 
 
 
+
+
+
+
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.PasientImpl;
+import no.naks.biovigilans.model.Sykdom;
+import no.naks.biovigilans.model.SykdomImpl;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 import no.naks.biovigilans.web.xml.Term;
@@ -31,6 +37,9 @@ import org.restlet.data.Parameter;
 public class PasientKomplikasjon extends VigilansModel{
 
 	private Pasient pasient;
+	private Sykdom sykdom;
+	private Sykdom transfusjonKomplikasjon;
+	private Sykdom annenSykdom;
 	private String[] aldergruppe;
 	private String[] kjonnValg; 
 	private String mann;
@@ -38,9 +47,9 @@ public class PasientKomplikasjon extends VigilansModel{
 	private String antiStoffjanei;
 	private String [] antiStofflabel;
 	private String [] antiStoffid;
-	private String sykdom;
+	private String sykdomSymptom;
 	private String transfusjon;
-	private String transfusjonKomplikasjon;
+	
 	private List<MainTerm> terms;
 	private List<MainTerm> icd10Elements;
 	private List<Title> titles;
@@ -54,7 +63,15 @@ public class PasientKomplikasjon extends VigilansModel{
 	
 	public PasientKomplikasjon() {
 		super();
+		sykdomSymptom = "symptom";
+		transfusjon = "transfusjon";
 		pasient = new PasientImpl();
+		sykdom = new SykdomImpl();
+		annenSykdom = new SykdomImpl();
+		//sykdom.setSymptomer(sykdomSymptom);
+		transfusjonKomplikasjon = new SykdomImpl();
+		//transfusjonKomplikasjon.setSymptomer(transfusjon);
+		
 		icd10Elements = new ArrayList<MainTerm>();
 		icd10Codes = new ArrayList<String>();
 		mainTerms = new ArrayList<String>();
@@ -119,6 +136,36 @@ public class PasientKomplikasjon extends VigilansModel{
 	}
 
 
+	public Sykdom getSykdom() {
+		return sykdom;
+	}
+
+
+	public void setSykdom(Sykdom sykdom) {
+		this.sykdom = sykdom;
+	}
+
+
+	public Sykdom getTransfusjonKomplikasjon() {
+		return transfusjonKomplikasjon;
+	}
+
+
+	public void setTransfusjonKomplikasjon(Sykdom transfusjonKomplikasjon) {
+		this.transfusjonKomplikasjon = transfusjonKomplikasjon;
+	}
+
+
+	public String getSykdomSymptom() {
+		return sykdomSymptom;
+	}
+
+
+	public void setSykdomSymptom(String sykdomSymptom) {
+		this.sykdomSymptom = sykdomSymptom;
+	}
+
+
 	public String getAntiStoffjanei() {
 		return antiStoffjanei;
 	}
@@ -137,24 +184,14 @@ public class PasientKomplikasjon extends VigilansModel{
 	public void setAntiStoffid(String[] antiStoffid) {
 		this.antiStoffid = antiStoffid;
 	}
-	public String getSykdom() {
-		return sykdom;
-	}
-	public void setSykdom(String sykdom) {
-		this.sykdom = sykdom;
-	}
+
 	public String getTransfusjon() {
 		return transfusjon;
 	}
 	public void setTransfusjon(String transfusjon) {
 		this.transfusjon = transfusjon;
 	}
-	public String getTransfusjonKomplikasjon() {
-		return transfusjonKomplikasjon;
-	}
-	public void setTransfusjonKomplikasjon(String transfusjonKomplikasjon) {
-		this.transfusjonKomplikasjon = transfusjonKomplikasjon;
-	}
+
 	public List<MainTerm> getTerms() {
 		return terms;
 	}
@@ -226,18 +263,41 @@ public class PasientKomplikasjon extends VigilansModel{
 
 	}
 	/**
+	 * distributeTerms
+	 * Denne rutinen setter opp hvilke skjermbildefelt som hører til hvilke modelobjekter (Pasient, Sykdom etc)
+	 * Disse feltene har en gitt rekkefølge i tables.properties !!
+	 * 
+	 */
+	public void distributeTerms(){
+		String[] formFields = getFormNames();
+		String patientFields[] = {formFields[0],formFields[1],formFields[2],formFields[5],formFields[6],formFields[7],formFields[8],formFields[18],formFields[19],formFields[20]};
+		String sykdomFields[] = {formFields[9]};
+		String transFields[] = {formFields[13]};
+		String annenSykdomFields[] = {formFields[17]};
+		pasient.setPatientfieldMaps(patientFields);
+		sykdom.setsykdomfieldMaps(sykdomFields);
+		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);
+		annenSykdom.setsykdomfieldMaps(annenSykdomFields);
+	}
+	/**
 	 * saveValues
-	 * Denne rutinen lagrer feltverdier for pasientkomplikasjoner som er angitt av bruker 
+	 * Denne rutinen lagrer feltverdier for transfusjons(pasient)komplikasjoner som er angitt av bruker 
 	 */
 	public void saveValues() {
-		String[] formFields = getFormNames();
-		Map<String,String> userEntries = getFormMap();
-		int index = 0;
+		String[] formFields = getFormNames(); // nneholder navn på input felt i skjermbildet
+		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
 		for (String field : formFields){
-			if (userEntries.containsKey(field)){
-				pasient.setKjonn(userEntries.get(field));
-			}
+			String userEntry = userEntries.get(field);
+			pasient.saveField(field, userEntries.get(field));
+			sykdom.saveField(field, userEntries.get(field));
+			transfusjonKomplikasjon.saveField(field, userEntries.get(field));
+			annenSykdom.saveField(field,userEntries.get(field));
 		}
+		pasient.savetoPatient();
+		sykdom.saveSykdom();
+		transfusjonKomplikasjon.saveSykdom();
+		annenSykdom.saveSykdom();
+		
 	}
 	
 	
