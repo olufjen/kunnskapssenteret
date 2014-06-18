@@ -17,7 +17,7 @@ public class BootstrapjsServerResource extends ServerResource {
 	@Get
 	public Representation getSimple() {
 		
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/scripts/bootstrap.min.js"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/scripts/hendelser.js"));
 	       Representation innmeldingFtl = clres2.get();
 	        TemplateRepresentation  templateRep = new TemplateRepresentation(innmeldingFtl, 
 	                MediaType.TEXT_ALL);
