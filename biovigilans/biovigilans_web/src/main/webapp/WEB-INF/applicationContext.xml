@@ -161,7 +161,7 @@
  	<bean name="/hemovigilans/css/bootstrap.css" id="cssServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.CssServerResource">
  	</bean>
- 	<bean name="/hemovigilans/scripts/bootstrap.min.js" id="bootstrapServerResource" autowire="byName" scope="prototype"
+ 	<bean name="/hemovigilans/scripts/hendelser.js" id="bootstrapServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.BootstrapjsServerResource">
  	</bean> 	
 	<bean name="/hemovigilans/css/default.css" id="defaultServerResource" autowire="byName" scope="prototype"
@@ -185,10 +185,13 @@
      		<property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
      	   	<property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
      	${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
-     	${pasientkomplikasjon.sykdom},${pasientkomplikasjon.transfusjon},${pasientkomplikasjon.transfusjonskomplikasjon},${pasientkomplikasjon.transfusjon-hg-1},
-     	${pasientkomplikasjon.transfusjon-hg-2},${pasientkomplikasjon.transfusjon-hg-3},${pasientkomplikasjon.transfusjon-ip-1},${pasientkomplikasjon.transfusjon-ip-2},
-     	${pasientkomplikasjon.transfusjon-ip-3},${pasientkomplikasjon.blod-erytrocytt},${pasientkomplikasjon.blod-trombocytt},${pasientkomplikasjon.blod-octaplas},
-     	${pasientkomplikasjon.blod-andre},${pasientkomplikasjon.blod-kriseblod},${pasientkomplikasjon.blod-vasket},${pasientkomplikasjon.blod-bestralt},
+     	${pasientkomplikasjon.sykdombehandling},${pasientkomplikasjon.p-annensykdom-ja},${pasientkomplikasjon.p-annensykdom-nei},${pasientkomplikasjon.p-annensykdom-vetikke},
+     	${pasientkomplikasjon.p-annen-sykdom},${pasientkomplikasjon.p-tidligeretransfusjon-ja},${pasientkomplikasjon.p-tidligeretransfusjon-nei},
+     	${pasientkomplikasjon.p-tidligeretransfusjon-vetikke},${pasientkomplikasjon.p-sykdom-tidligeretransfusjon},${pasientkomplikasjon.p-transfusjon-inneliggende},
+     	${pasientkomplikasjon.p-transfusjon-poliklinisk},{pasientkomplikasjon.p-transfusjon-vetikke},${pasientkomplikasjon.transfusjon-hg-1},
+     	${pasientkomplikasjon.transfusjon-hg-2},${pasientkomplikasjon.transfusjon-hg-3},${pasientkomplikasjon.blod-erytrocytt},${pasientkomplikasjon.blod-trombocytt},
+     	${pasientkomplikasjon.blod-octaplas},${pasientkomplikasjon.blod-trauma},${pasientkomplikasjon.blod-plasma},
+     	${pasientkomplikasjon.blod-andre},${pasientkomplikasjon.transfusjon},${pasientkomplikasjon.blod-kriseblod},${pasientkomplikasjon.blod-vasket},${pasientkomplikasjon.blod-bestralt},
      	${pasientkomplikasjon.blod-hla},${pasientkomplikasjon.blod-patogening},${pasientkomplikasjon.blod-blodvarmer},${pasientkomplikasjon.blod-annet},
      	${pasientkomplikasjon.blod-aferese},${pasientkomplikasjon.blod-fullblod},${pasientkomplikasjon.blod-vetikke},${pasientkomplikasjon.blod-giverplasma},
      	${pasientkomplikasjon.blod-kunstig},${pasientkomplikasjon.blod-sus-vetikke},${pasientkomplikasjon.blod-allogen},${pasientkomplikasjon.blod-autolog},
@@ -205,8 +208,8 @@
      	${pasientkomplikasjon.komp-bakterie},${pasientkomplikasjon.komp-virus},${pasientkomplikasjon.komp-smitte},${pasientkomplikasjon.komp-aiha},
      	${pasientkomplikasjon.komp-manglendeeffekt},${pasientkomplikasjon.komp-uct},${pasientkomplikasjon.komp-kanikke},${pasientkomplikasjon.komp-ingenklinisk},
      	${pasientkomplikasjon.utredning-1},${pasientkomplikasjon.utredning-2},${pasientkomplikasjon.utredning},${pasientkomplikasjon.hemolyse-1},
-     	${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.dyrkning-1},
-     	${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2}" >
+     	${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.lga-3},
+     	${pasientkomplikasjon.dyrkning-1},${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.dyrkning-3}${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2}" >
 		</property>
  	</bean>	
  <!-- end ekstra server resource -->	 	
@@ -216,31 +219,7 @@
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>
-     	<property name="sessionParams" value="${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
-     	${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
-     	${pasientkomplikasjon.sykdom},${pasientkomplikasjon.transfusjon},${pasientkomplikasjon.transfusjonskomplikasjon},${pasientkomplikasjon.transfusjon-hg-1},
-     	${pasientkomplikasjon.transfusjon-hg-2},${pasientkomplikasjon.transfusjon-hg-3},${pasientkomplikasjon.transfusjon-ip-1},${pasientkomplikasjon.transfusjon-ip-2},
-     	${pasientkomplikasjon.transfusjon-ip-3},${pasientkomplikasjon.blod-erytrocytt},${pasientkomplikasjon.blod-trombocytt},${pasientkomplikasjon.blod-octaplas},
-     	${pasientkomplikasjon.blod-andre},${pasientkomplikasjon.blod-kriseblod},${pasientkomplikasjon.blod-vasket},${pasientkomplikasjon.blod-bestralt},
-     	${pasientkomplikasjon.blod-hla},${pasientkomplikasjon.blod-patogening},${pasientkomplikasjon.blod-blodvarmer},${pasientkomplikasjon.blod-annet},
-     	${pasientkomplikasjon.blod-aferese},${pasientkomplikasjon.blod-fullblod},${pasientkomplikasjon.blod-vetikke},${pasientkomplikasjon.blod-giverplasma},
-     	${pasientkomplikasjon.blod-kunstig},${pasientkomplikasjon.blod-sus-vetikke},${pasientkomplikasjon.blod-allogen},${pasientkomplikasjon.blod-autolog},
-     	${pasientkomplikasjon.komp-temp},${pasientkomplikasjon.komp-blodfall},${pasientkomplikasjon.komp-blodstig},${pasientkomplikasjon.komp-kvalme},
-     	${pasientkomplikasjon.komp-frysninger},${pasientkomplikasjon.komp-pustebesvar},${pasientkomplikasjon.komp-hypoksemi},${pasientkomplikasjon.komp-cyanose},
-     	${pasientkomplikasjon.komp-luneodem},${pasientkomplikasjon.komp-diare},${pasientkomplikasjon.komp-kloe},${pasientkomplikasjon.komp-utslett},
-     	${pasientkomplikasjon.komp-hevelser},${pasientkomplikasjon.komp-rodflammet},${pasientkomplikasjon.komp-gulsott},${pasientkomplikasjon.komp-nyre},
-     	${pasientkomplikasjon.komp-bryst},${pasientkomplikasjon.komp-tachykardi},${pasientkomplikasjon.komp-mage},${pasientkomplikasjon.komp-akuttnyre},
-     	${pasientkomplikasjon.komp-bevisstlos},${pasientkomplikasjon.komp-sjokk},${pasientkomplikasjon.komp-blodninger},${pasientkomplikasjon.komp-urin},
-     	${pasientkomplikasjon.komp-hudblod},${pasientkomplikasjon.komp-annet},${pasientkomplikasjon.komp-ahtr-1},${pasientkomplikasjon.komp-ahtr-2},
-     	${pasientkomplikasjon.komp-dhtr},${pasientkomplikasjon.komp-fnhtr},${pasientkomplikasjon.komp-hemolyse},${pasientkomplikasjon.komp-anafylaktisk},
-     	${pasientkomplikasjon.komp-allergisk},${pasientkomplikasjon.komp-ta-gvhd},${pasientkomplikasjon.komp-ptp},${pasientkomplikasjon.komp-trali},
-     	${pasientkomplikasjon.komp-tad},${pasientkomplikasjon.komp-taco},${pasientkomplikasjon.komp-hypo},${pasientkomplikasjon.komp-hemo},${pasientkomplikasjon.komp-hyper},
-     	${pasientkomplikasjon.komp-bakterie},${pasientkomplikasjon.komp-virus},${pasientkomplikasjon.komp-smitte},${pasientkomplikasjon.komp-aiha},
-     	${pasientkomplikasjon.komp-manglendeeffekt},${pasientkomplikasjon.komp-uct},${pasientkomplikasjon.komp-kanikke},${pasientkomplikasjon.komp-ingenklinisk},
-     	${pasientkomplikasjon.utredning-1},${pasientkomplikasjon.utredning-2},${pasientkomplikasjon.utredning},${pasientkomplikasjon.hemolyse-1},
-     	${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.dyrkning-1},
-     	${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2}">
-		</property>
+    
  
  	</bean>
  
