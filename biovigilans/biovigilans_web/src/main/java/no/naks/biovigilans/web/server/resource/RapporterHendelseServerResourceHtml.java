@@ -36,7 +36,7 @@ import org.restlet.data.Parameter;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
-import edu.unc.ils.mrc.hive2.api.HiveConcept;
+//import edu.unc.ils.mrc.hive2.api.HiveConcept;
 
 /**
  * Resurser blir instansiert for hver kall fra klient
@@ -54,7 +54,8 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 			super();
 			// TODO Auto-generated constructor stub
 		}
-	
+
+/*	 
 	private void checkConcepts(ArrayList<HiveConcept> concepts,ArrayList<HiveConcept> narrower){
 		for (HiveConcept concept : concepts){
 			ArrayList<String> narrow = (ArrayList) concept.getNarrowerConcepts();
@@ -80,7 +81,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		}
 	}
 	
-	
+*/	
 	public String[] getAldergruppe() {
 		return aldergruppe;
 	}
