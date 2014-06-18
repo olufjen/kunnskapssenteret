@@ -90,7 +90,7 @@
 		<property name="nhnFlag" value="false"></property>
 <!-- 		<property name="meldingService" ref="meldingService"></property>
 	 	<property name="nhnClient" ref="nhnClient"></property>  -->
-		<property name="hiveService" ref="hiveService"></property>
+<!--  		<property name="hiveService" ref="hiveService"></property> -->
 
 
 	</bean>
