@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 /**
@@ -23,6 +25,10 @@ public abstract class AbstractSykdom extends AbstractModel implements Sykdom{
 	 */
 	private String diagnosekode;
 	
+	protected Map<String,String> sykdomFields;
+	
+	protected String[]keys;
+	
 	public long getSykdomId() {
 		return sykdomId;
 	}
@@ -32,8 +38,11 @@ public abstract class AbstractSykdom extends AbstractModel implements Sykdom{
 	public String getSykdomnsnavn() {
 		return sykdomnsnavn;
 	}
-	public void setSykdomnsnavn(String sykdomnsnavn) {
-		this.sykdomnsnavn = sykdomnsnavn;
+	public void setSykdomnsnavn(String sykdmnsnavn) {
+		if (sykdmnsnavn == null){
+			sykdmnsnavn = sykdomFields.get(keys[0]);
+		}
+		this.sykdomnsnavn = sykdmnsnavn;
 	}
 	public String getSymptomer() {
 		return symptomer;
@@ -46,6 +55,18 @@ public abstract class AbstractSykdom extends AbstractModel implements Sykdom{
 	}
 	public void setDiagnosekode(String diagnosekode) {
 		this.diagnosekode = diagnosekode;
+	}
+	public Map<String, String> getSykdomFields() {
+		return sykdomFields;
+	}
+	public void setSykdomFields(Map<String, String> sykdomFields) {
+		this.sykdomFields = sykdomFields;
+	}
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 /**
@@ -10,13 +12,16 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 public abstract class AbstractPasient extends AbstractModel implements Pasient{
 
 	protected Long pasient_Id;
-	protected String kjonn;
-	protected String aldersGruppe;
-	protected String antiStoff;
-	protected String inneliggendePoli;
-	protected String avdeling;
-	
+	protected String kjonn = null;
+	protected String aldersGruppe = null;
+	protected String[] antiStoff = null;
+	protected String inneliggendePoli = null;
+	protected String avdeling = null;
 
+	protected Map<String,String> patientFields;
+	
+	protected String[]keys;
+	
 	public Long getPasient_Id() {
 		return pasient_Id;
 	}
@@ -24,22 +29,49 @@ public abstract class AbstractPasient extends AbstractModel implements Pasient{
 		this.pasient_Id = pasient_Id;
 	}
 	public String getKjonn() {
+
 		return kjonn;
 	}
-	public void setKjonn(String kjonn) {
-		this.kjonn = kjonn;
+	public void setKjonn(String kjnn) {
+		if (kjnn == null){
+			for (int i=0;i<2;i++){
+				kjnn = patientFields.get(keys[i]);
+				if (kjnn != null)
+					break;
+			}
+		}
+		this.kjonn = kjnn;
 	}
 	public String getAldersGruppe() {
 		return aldersGruppe;
 	}
-	public void setAldersGruppe(String aldersGruppe) {
-		this.aldersGruppe = aldersGruppe;
+	public void setAldersGruppe(String aldrsGruppe) {
+		if (aldrsGruppe == null)
+			aldrsGruppe = patientFields.get(keys[2]);
+	
+		this.aldersGruppe = aldrsGruppe;
 	}
-	public String getAntiStoff() {
+	public String[] getAntiStoff() {
 		return antiStoff;
 	}
-	public void setAntiStoff(String antiStoff) {
-		this.antiStoff = antiStoff;
+	public void setAntiStoff(String antStoff[]) {
+		int index = 0;
+		if (antStoff == null){
+		String aStoff = null;
+			for (int i=3;i<7;i++){
+				aStoff = patientFields.get(keys[i]);
+				if (aStoff != null){
+					this.antiStoff[index] = aStoff;
+					index++;
+					aStoff = null;
+				}
+			}
+		
+		}
+		else{
+			this.antiStoff = antStoff;
+		}
+
 	}
 	public String getInneliggendePoli() {
 		return inneliggendePoli;
@@ -53,5 +85,18 @@ public abstract class AbstractPasient extends AbstractModel implements Pasient{
 	public void setAvdeling(String avdeling) {
 		this.avdeling = avdeling;
 	}
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
+	}
+	public Map<String, String> getPatientFields() {
+		return patientFields;
+	}
+	public void setPatientFields(Map<String, String> patientFields) {
+		this.patientFields = patientFields;
+	}
+	
 	
 }
