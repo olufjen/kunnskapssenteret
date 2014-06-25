@@ -1,6 +1,8 @@
 package no.helsebiblioteket.admin.domain;
 
-public class LoggedInOrganization {
+import java.io.Serializable;
+
+public class LoggedInOrganization implements Serializable {
 	private Integer id;
 	private String nameEnglishNormal;
 	private String nameEnglishShort;
