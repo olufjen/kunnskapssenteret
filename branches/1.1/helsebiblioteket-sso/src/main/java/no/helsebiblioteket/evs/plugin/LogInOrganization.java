@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import no.helsebiblioteket.evs.plugin.result.LoggedInOrganizationWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -32,12 +33,12 @@ public class LogInOrganization {
 	public void setUseXForwardedForHeader(boolean useXForwardedForHeader) {
 		LogInOrganization.useXForwardedForHeader = useXForwardedForHeader;
 	}
-	
+
 	public LogInOrganization() {
 	}
-	
+
 	public void logIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		LoggedInOrganization organization = this.loggedInOrganization();	
+		LoggedInOrganization organization = this.loggedInOrganization();
 		LoggedInOrganizationResult res = null;
 		String referringDomain = getRefererringDomainStringFromRequest(request);
 		String domainKey = getKeyFromRequest(request);
@@ -63,8 +64,8 @@ public class LogInOrganization {
 	private String getKeyFromRequest(HttpServletRequest request) {
 		return request.getParameter("pwd");
 	}
-	
-	
+
+
 	private String getRefererringDomainStringFromRequest(HttpServletRequest request) {
 		String referer = null;
 		String domainString = null;
@@ -82,7 +83,7 @@ public class LogInOrganization {
 		}
 		return domainString;
 	}
-	
+
 	public static String getXforwardedForOrRemoteAddress(HttpServletRequest request) {
         String ret = null;
         @SuppressWarnings("rawtypes")
@@ -115,24 +116,25 @@ public class LogInOrganization {
         logger.info("User/Org IP (useXForwardedForHeader=" + useXForwardedForHeader + "): " + ret);
         return ret;
 	}
-	
+
 	public void logInOrganization(LoggedInOrganization organization, LoggedInOrganization alreadyLoggedInOrganization, HttpServletRequest request){
 		HttpSession session = pluginEnvironment.getCurrentSession();
-		session.setAttribute(sessionLoggedInOrganizationVarName, organization);
+		session.setAttribute(sessionLoggedInOrganizationVarName, new LoggedInOrganizationWrapper(organization));
 	}
-	
+
 	private LoggedInOrganization loggedInOrganization(){
-		HttpSession session = pluginEnvironment.getCurrentSession(); 
-		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
+		HttpSession session = pluginEnvironment.getCurrentSession();
+        LoggedInOrganizationWrapper wrapped = (LoggedInOrganizationWrapper)session.getAttribute(sessionLoggedInOrganizationVarName);
+        return wrapped != null ? wrapped.getWrapped() : null;
 	}
-	
+
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
 	public void setPluginEnvironment(PluginEnvironment pluginEnvironment) {
 		this.pluginEnvironment = pluginEnvironment;
 	}
-	
+
 	// local test
 	public static void main(String args[]) {
         String ret = null;
