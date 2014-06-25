@@ -94,9 +94,10 @@ public class LoggedInFunction{
 	}
 
 	private LoggedInOrganization loggedInOrganization(){
-		HttpSession session = pluginEnvironment.getCurrentSession(); 
-		return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
-
+		HttpSession session = pluginEnvironment.getCurrentSession();
+        LoggedInOrganizationWrapper wrapped = (LoggedInOrganizationWrapper)session.getAttribute(sessionLoggedInOrganizationVarName);
+        //return (LoggedInOrganization)session.getAttribute(sessionLoggedInOrganizationVarName);
+        return wrapped != null ? wrapped.getWrapped() : null;
 	}
 	
 	private void sessionLogging(HttpSession session, LoggedInUser loggedInUser) {

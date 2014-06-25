@@ -70,7 +70,13 @@ public final class LinkFilter extends HttpResponseFilter {
     public String generateProxyLinks(HttpServletRequest request, HttpSession session, String response, String contentType) throws Exception {
     	//long timeStart = System.currentTimeMillis();
     	LoggedInUser user = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
-		LoggedInOrganization memberOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+
+        LoggedInOrganizationWrapper wrapped = (LoggedInOrganizationWrapper) session.getAttribute(sessionLoggedInOrganizationVarName);
+		LoggedInOrganization memberOrganization = wrapped != null ? wrapped.getWrapped() : null;
+		//LoggedInOrganization memberOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+
+
+
 		Map<String, String> linkReplaceMap = new HashMap<String, String>();
 		Matcher linkMatcher = null;
 		Matcher completeLinkMatcher = completeLinkPattern.matcher(response);
