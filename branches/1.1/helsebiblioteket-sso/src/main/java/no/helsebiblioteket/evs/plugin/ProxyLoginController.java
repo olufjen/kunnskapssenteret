@@ -393,8 +393,10 @@ public class ProxyLoginController extends HttpController {
 		return loggedInUser;
 	}
 	private LoggedInOrganization loggedInOrganization(){
-		HttpSession session = pluginEnvironment.getCurrentSession(); 
-		return (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+		HttpSession session = pluginEnvironment.getCurrentSession();
+        LoggedInOrganizationWrapper wrapped = (LoggedInOrganizationWrapper)session.getAttribute(sessionLoggedInOrganizationVarName);
+        //return (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+        return wrapped != null ? wrapped.getWrapped() : null;
 	}
 	public void setUrlService(URLService urlService) {
 		this.urlService = urlService;
