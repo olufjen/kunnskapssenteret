@@ -12,67 +12,65 @@
 		</property>
 	</bean>
 
-	<bean id="accessService"
-		class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
-		<property name="accessDao" ref="accessDao"></property>
-		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
-		<property name="resourceTypeDao" ref="resourceTypeDao"></property>
-		<property name="accessTypeDao" ref="accessTypeDao"></property>
-		<property name="resourceDao" ref="resourceDao"></property>
+	<bean id="accessService" class="no.helsebiblioteket.admin.service.impl.AccessServiceImpl">
+		<property name="accessDao" ref="accessDao"/>
+		<property name="supplierSourceDao" ref="supplierSourceDao"/>
+		<property name="resourceTypeDao" ref="resourceTypeDao"/>
+		<property name="accessTypeDao" ref="accessTypeDao"/>
+		<property name="resourceDao" ref="resourceDao"/>
 	</bean>
 	<bean id="actionService"
 		class="no.helsebiblioteket.admin.service.impl.ActionServiceImpl">
-		<property name="actionDao" ref="actionDao"></property>
-		<property name="userService" ref="userService"></property>
-		<property name="organizationService" ref="organizationService"></property>
+		<property name="actionDao" ref="actionDao"/>
+		<property name="userService" ref="userService"/>
+		<property name="organizationService" ref="organizationService"/>
 	</bean>
 	<bean id="emailService"
 		class="no.helsebiblioteket.admin.service.impl.EmailServiceSMTPImpl">
-		<property name="host" value="${mail.smtp.host}"></property>
-		<property name="debug" value="${mail.debug}"></property>
-		<property name="noSend" value="${mail.nosend}"></property>
-		<property name="contentType" value="${mail.content-type}"></property>
-		<property name="charset" value="${mail.charset}"></property>
+		<property name="host" value="${mail.smtp.host}"/>
+		<property name="debug" value="${mail.debug}"/>
+		<property name="noSend" value="${mail.nosend}"/>
+		<property name="contentType" value="${mail.content-type}"/>
+		<property name="charset" value="${mail.charset}"/>
 	</bean>
 	<bean id="loginService" class="no.helsebiblioteket.admin.service.impl.LoginServiceImpl">
-		<property name="userService" ref="userService"></property>
-		<property name="organizationService" ref="organizationService"></property>
-		<property name="emailService" ref="emailService"></property>
+		<property name="userService" ref="userService"/>
+		<property name="organizationService" ref="organizationService"/>
+		<property name="emailService" ref="emailService"/>
 	</bean>
-	<bean id="organizationService"
-		class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
-		<property name="organizationDao" ref="organizationDao"></property>
-		<property name="organizationListDao" ref="organizationListDao"></property>
-		<property name="organizationTypeDao" ref="organizationTypeDao"></property>
-		<property name="organizationNameDao" ref="organizationNameDao"></property>
-		<property name="personDao" ref="personDao"></property>
-		<property name="contactInformationDao" ref="contactInformationDao"></property>
-		<property name="ipRangeDao" ref="ipRangeDao"></property>
-		<property name="supplierSourceDao" ref="supplierSourceDao"></property>
-		<property name="profileDao" ref="profileDao"></property>
-		<property name="positionDao" ref="positionDao"></property>
-		<property name="resourceDao" ref="resourceDao"></property>
-		<property name="accessDao" ref="accessDao"></property>
-		<property name="userDao" ref="userDao"></property>
+	<bean id="organizationService" class="no.helsebiblioteket.admin.service.impl.OrganizationServiceImpl">
+		<property name="organizationDao" ref="organizationDao"/>
+		<property name="organizationListDao" ref="organizationListDao"/>
+		<property name="organizationTypeDao" ref="organizationTypeDao"/>
+		<property name="organizationNameDao" ref="organizationNameDao"/>
+		<property name="personDao" ref="personDao"/>
+		<property name="contactInformationDao" ref="contactInformationDao"/>
+		<property name="ipRangeDao" ref="ipRangeDao"/>
+		<property name="supplierSourceDao" ref="supplierSourceDao"/>
+		<property name="profileDao" ref="profileDao"/>
+		<property name="positionDao" ref="positionDao"/>
+		<property name="resourceDao" ref="resourceDao"/>
+		<property name="accessDao" ref="accessDao"/>
+		<property name="userDao" ref="userDao"/>
 	</bean>
 	<bean id="urlService" class="no.helsebiblioteket.admin.service.impl.URLServiceImpl">
-		<property name="accessService" ref="accessService"></property>
-		<property name="proxyPrefix" value="${proxy.prefix}"></property>
+		<property name="accessService" ref="accessService"/>
+		<property name="proxyPrefix" value="${proxy.prefix}"/>
 	</bean>
 	<!-- <bean id="userDetailsService" class="no.helsebiblioteket.admin.service.impl.UserDetailsServiceImpl"> 
 		<property name="userService" ref="userService"></property> </bean> -->
 	<bean id="userService" class="no.helsebiblioteket.admin.service.impl.UserServiceImpl">
-		<property name="userDao" ref="userDao"></property>
-		<property name="userExportDao" ref="userExportDao"></property>
-		<property name="userListDao" ref="userListDao"></property>
-		<property name="roleDao" ref="roleDao"></property>
-		<property name="userRoleDao" ref="userRoleDao"></property>
-		<property name="personDao" ref="personDao"></property>
-		<property name="positionDao" ref="positionDao"></property>
-		<property name="organizationDao" ref="organizationDao"></property>
-		<property name="systemDao" ref="systemDao"></property>
-		<property name="profileDao" ref="profileDao"></property>
-		<property name="contactInformationDao" ref="contactInformationDao"></property>
+		<property name="userDao" ref="userDao"/>
+		<property name="userExportDao" ref="userExportDao"/>
+		<property name="userListDao" ref="userListDao"/>
+		<property name="roleDao" ref="roleDao"/>
+		<property name="userRoleDao" ref="userRoleDao"/>
+		<property name="personDao" ref="personDao"/>
+		<property name="positionDao" ref="positionDao"/>
+		<property name="organizationDao" ref="organizationDao"/>
+		<property name="systemDao" ref="systemDao"/>
+		<property name="profileDao" ref="profileDao"/>
+		<property name="contactInformationDao" ref="contactInformationDao"/>
 	</bean>
 	<bean id="geoIpService"
 		class="no.helsebiblioteket.admin.service.geoip.impl.GeoIpServiceImpl">
@@ -89,25 +87,18 @@
 	<bean id="personDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPersonDao" />
 	<bean id="positionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapPositionDao" />
 	<bean id="accessDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessDao" />
-	<bean id="organizationDao"
-		class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao" />
-	<bean id="organizationListDao"
-		class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationListDao" />
-	<bean id="organizationTypeDao"
-		class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationTypeDao" />
-	<bean id="organizationNameDao"
-		class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao" />
-	<bean id="contactInformationDao"
-		class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao" />
+	<bean id="organizationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationDao" />
+	<bean id="organizationListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationListDao" />
+	<bean id="organizationTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationTypeDao" />
+	<bean id="organizationNameDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapOrganizationNameDao" />
+	<bean id="contactInformationDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapContactInformationDao" />
 	<bean id="ipRangeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapIpRangeDao" />
 	<bean id="resourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceDao" />
-	<bean id="supplierSourceDao"
-		class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao" />
+	<bean id="supplierSourceDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSupplierSourceDao" />
 	<bean id="userListDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserListDao" />
 	<bean id="userRoleDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapUserRoleDao" />
 	<bean id="systemDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapSystemDao" />
-	<bean id="resourceTypeDao"
-		class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceTypeDao" />
+	<bean id="resourceTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapResourceTypeDao" />
 	<bean id="accessTypeDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapAccessTypeDao" />
 	<bean id="actionDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapActionDao" />
 	<bean id="profileDao" class="no.helsebiblioteket.admin.sqlmapdao.SqlMapProfileDao" />
@@ -116,7 +107,7 @@
 	<!-- Plugin related from here -->
 
 	<bean id="userServiceSso" class="no.helsebiblioteket.admin.ssoservice.UserServiceSso">
-		<property name="userService" ref="userService"></property>
+		<property name="userService" ref="userService"/>
 
 	</bean>
 	<!-- Disabled because of dependency on spring security. Not used in sso-project. 
@@ -124,27 +115,27 @@
 		<property name="userDetailsService" ref="userDetailsService"></property> 
 		</bean> -->
 	<bean id="urlServiceSso" class="no.helsebiblioteket.admin.ssoservice.URLServiceSso">
-		<property name="urlService" ref="urlService"></property>
+		<property name="urlService" ref="urlService"/>
 	</bean>
 	<bean id="organizationServiceSso"
 		class="no.helsebiblioteket.admin.ssoservice.OrganizationServiceSso">
-		<property name="organizationService" ref="organizationService"></property>
+		<property name="organizationService" ref="organizationService"/>
 	</bean>
 	<bean id="loginServiceSso" class="no.helsebiblioteket.admin.ssoservice.LoginServiceSso">
-		<property name="loginService" ref="loginService"></property>
+		<property name="loginService" ref="loginService"/>
 	</bean>
 	<bean id="emailServiceSso" class="no.helsebiblioteket.admin.ssoservice.EmailServiceSso">
-		<property name="emailService" ref="emailService"></property>
+		<property name="emailService" ref="emailService"/>
 	</bean>
 	<bean id="actionServiceSso" class="no.helsebiblioteket.admin.ssoservice.ActionServiceSso">
-		<property name="actionService" ref="actionService"></property>
+		<property name="actionService" ref="actionService"/>
 	</bean>
 	<bean id="accessServiceSso" class="no.helsebiblioteket.admin.ssoservice.AccessServiceSso">
-		<property name="accessService" ref="accessService"></property>
+		<property name="accessService" ref="accessService"/>
 	</bean>
 	<bean id="geoIpServiceSso"
 		class="no.helsebiblioteket.admin.ssoservice.geoip.GeoIpServiceSso">
-		<property name="geoIpService" ref="geoIpService"></property>
+		<property name="geoIpService" ref="geoIpService"/>
 	</bean>
 
 	<bean class="com.enonic.cms.api.plugin.ext.FunctionLibrary">

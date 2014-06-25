@@ -13,11 +13,11 @@
 	<groupId>no.helsebiblioteket</groupId>
 	<artifactId>helsebiblioteket-sso</artifactId>
 	<name>SSO</name>
-	<version>1.1</version>
+	<version>1.1.1</version>
 	<packaging>cms-plugin</packaging>
 
 	<properties>
-		<cms.version>4.5.6</cms.version>
+		<cms.version>4.7.6</cms.version>
 	</properties>
 
 	<licenses>
@@ -124,6 +124,11 @@
 			<artifactId>helsebiblioteket-services-geoip</artifactId>
 			<version>1.1</version>
 		</dependency>
+        <!--<dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.1.11</version>
+        </dependency>-->
 		<dependency>
 			<groupId>no.helsebiblioteket</groupId>
 			<artifactId>helsebiblioteket-services-impl</artifactId>
