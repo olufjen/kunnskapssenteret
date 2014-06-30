@@ -219,7 +219,7 @@ public final class RegisterUserController extends HttpController {
 	private void loginNewUser(User user) {
 		UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
 		HttpSession session = pluginEnvironment.getCurrentSession(); 
-		session.setAttribute(sessionLoggedInUserVarName, userTranslator.translate(user));
+		session.setAttribute(sessionLoggedInUserVarName, new LoggedInUserWrapper( userTranslator.translate(user) ));
 	}
 	
 	private void sendNewUserEmail(User user) {

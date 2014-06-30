@@ -88,9 +88,11 @@ public class LoggedInFunction{
 	private LoggedInUser loggedInUser() {
 
 		HttpSession session = pluginEnvironment.getCurrentSession();
-		LoggedInUser loggedInUser = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
+        LoggedInUserWrapper wrapped = (LoggedInUserWrapper) session.getAttribute(sessionLoggedInUserVarName);
+		//LoggedInUser loggedInUser = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
 		//sessionLogging(session, loggedInUser); 
-		return loggedInUser;
+		//return loggedInUser;
+        return wrapped != null ? wrapped.getWrapped() : null;
 	}
 
 	private LoggedInOrganization loggedInOrganization(){
@@ -103,7 +105,9 @@ public class LoggedInFunction{
 	private void sessionLogging(HttpSession session, LoggedInUser loggedInUser) {
 		// jan 2011: extra logging to nail enonic session trouble:
 		HttpServletRequest request = pluginEnvironment.getCurrentRequest();
-		LoggedInOrganization loggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+        LoggedInOrganizationWrapper orgWrapper = (LoggedInOrganizationWrapper) session.getAttribute(sessionLoggedInOrganizationVarName);
+		//LoggedInOrganization loggedInOrganization = (LoggedInOrganization) session.getAttribute(sessionLoggedInOrganizationVarName);
+        LoggedInOrganization loggedInOrganization = orgWrapper != null ? orgWrapper.getWrapped(): null;
 
 		String user, organization, sessionid, createdat, remoteaddr;
 		user = (loggedInUser != null ? loggedInUser.getUsername() : "null");

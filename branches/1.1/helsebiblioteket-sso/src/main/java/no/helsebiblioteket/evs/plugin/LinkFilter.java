@@ -69,7 +69,9 @@ public final class LinkFilter extends HttpResponseFilter {
     
     public String generateProxyLinks(HttpServletRequest request, HttpSession session, String response, String contentType) throws Exception {
     	//long timeStart = System.currentTimeMillis();
-    	LoggedInUser user = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
+        LoggedInUserWrapper userWrapper = (LoggedInUserWrapper) session.getAttribute(sessionLoggedInUserVarName);
+        LoggedInUser user = userWrapper != null ? userWrapper.getWrapped(): null;
+    	//LoggedInUser user = (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
 
         LoggedInOrganizationWrapper wrapped = (LoggedInOrganizationWrapper) session.getAttribute(sessionLoggedInOrganizationVarName);
 		LoggedInOrganization memberOrganization = wrapped != null ? wrapped.getWrapped() : null;
