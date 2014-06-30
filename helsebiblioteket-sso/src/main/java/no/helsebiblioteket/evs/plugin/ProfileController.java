@@ -250,7 +250,7 @@ public class ProfileController extends HttpController {
 		    	} else {
 	       			HttpSession session = pluginEnvironment.getCurrentSession();
 	       			UserToLoggedInUserTranslator userTranslator = new UserToLoggedInUserTranslator();
-	       			session.setAttribute(this.sessionLoggedInUserVarName, userTranslator.translate(user));
+	       			session.setAttribute(this.sessionLoggedInUserVarName, new LoggedInUserWrapper( userTranslator.translate(user) ));
 					element.appendChild(document.createElement("success"));
 		    	}
 	    		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
@@ -413,7 +413,9 @@ public class ProfileController extends HttpController {
 	}
 	public LoggedInUser loggedInUser() {
 		HttpSession session = pluginEnvironment.getCurrentSession();
-		return (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
+        LoggedInUserWrapper wrapper = (LoggedInUserWrapper)session.getAttribute(sessionLoggedInUserVarName);
+		//return (LoggedInUser) session.getAttribute(sessionLoggedInUserVarName);
+        return wrapper != null ? wrapper.getWrapped(): null;
 	}
 	public void setParameterNames(Map<String, String> parameterNames) {
 		this.parameterNames = parameterNames;

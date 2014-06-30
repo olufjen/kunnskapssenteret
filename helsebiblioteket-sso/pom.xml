@@ -124,11 +124,11 @@
 			<artifactId>helsebiblioteket-services-geoip</artifactId>
 			<version>1.1</version>
 		</dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
             <version>2.1.11</version>
-        </dependency>-->
+        </dependency>
 		<dependency>
 			<groupId>no.helsebiblioteket</groupId>
 			<artifactId>helsebiblioteket-services-impl</artifactId>

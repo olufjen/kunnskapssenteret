@@ -55,7 +55,7 @@ public final class LogInController extends HttpController {
 	       		// Found user!
        			HttpSession session = pluginEnvironment.getCurrentSession(); 
        			//sessionLogging(request, username, session);
-       			session.setAttribute(this.sessionLoggedInUserVarName, resultUser.getUser());
+       			session.setAttribute(this.sessionLoggedInUserVarName, new LoggedInUserWrapper( resultUser.getUser() ));
 
        			element.appendChild(result.createElement("success"));
 	       		String gotoUrl = request.getParameter(this.parameterNames.get("goto"));
@@ -75,6 +75,12 @@ public final class LogInController extends HttpController {
 			logger.warn("tried to log in user, but do not know where to redirect");
 		}
 	}
+
+    private LoggedInUser loggedInUser() {
+        HttpSession session = pluginEnvironment.getCurrentSession();
+        LoggedInUserWrapper wrapped = (LoggedInUserWrapper)session.getAttribute(sessionLoggedInUserVarName);
+        return wrapped != null? wrapped.getWrapped() : null;
+    }
 	
 	private void makeXML(String username, String password, Document document, Element element) {
 		boolean lookup = true;
@@ -128,7 +134,9 @@ public final class LogInController extends HttpController {
 		}
 		
 		long time = System.currentTimeMillis();
-		LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
+        LoggedInUserWrapper userWrapper = (LoggedInUserWrapper) session.getAttribute(this.sessionLoggedInUserVarName);
+		//LoggedInUser alreadyLoggedInUser = (LoggedInUser) session.getAttribute(this.sessionLoggedInUserVarName);
+        LoggedInUser alreadyLoggedInUser = userWrapper != null ? userWrapper.getWrapped() : null;
 		Long lastTime = (Long) session.getAttribute("hb_trace_loggedinusertime");
 		if (alreadyLoggedInUser != null) {
 			if(lastTime != null){

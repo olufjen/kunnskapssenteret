@@ -383,7 +383,7 @@ public class ProxyLoginController extends HttpController {
             	logger.error("Failed redirect to url '" + url + "'", e);
             }
     }
-	public LoggedInUser loggedInUser() {
+/*	public LoggedInUser loggedInUser() {
 		HttpSession session = pluginEnvironment.getCurrentSession();
 		Object userObject = session.getAttribute(sessionLoggedInUserVarName);
 		LoggedInUser loggedInUser = null;
@@ -391,7 +391,14 @@ public class ProxyLoginController extends HttpController {
 			loggedInUser = (LoggedInUser) userObject;
 		}
 		return loggedInUser;
-	}
+	}*/
+
+    private LoggedInUser loggedInUser() {
+        HttpSession session = pluginEnvironment.getCurrentSession();
+        LoggedInUserWrapper wrapped = (LoggedInUserWrapper)session.getAttribute(sessionLoggedInUserVarName);
+        return wrapped != null? wrapped.getWrapped() : null;
+    }
+
 	private LoggedInOrganization loggedInOrganization(){
 		HttpSession session = pluginEnvironment.getCurrentSession();
         LoggedInOrganizationWrapper wrapped = (LoggedInOrganizationWrapper)session.getAttribute(sessionLoggedInOrganizationVarName);
