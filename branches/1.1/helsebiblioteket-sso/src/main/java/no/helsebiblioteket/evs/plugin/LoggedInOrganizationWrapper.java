@@ -8,10 +8,12 @@ import java.io.Serializable;
  * Created by mla on 25/06/14.
  */
 public class LoggedInOrganizationWrapper implements Serializable {
+
+    public static final long serialVersionUID = 1L;
+
     private transient LoggedInOrganization wrapped;
 
-    public LoggedInOrganizationWrapper(final LoggedInOrganization wrapped)
-    {
+    public LoggedInOrganizationWrapper(final LoggedInOrganization wrapped) {
         this.wrapped = wrapped;
     }
 

@@ -191,7 +191,7 @@ public class ProfileController extends HttpController {
 	}
 	private void goBack(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = pluginEnvironment.getCurrentSession();
-		session.setAttribute(this.editPasswordUserVarName, new Object());
+		session.setAttribute(this.editPasswordUserVarName, "");
 		String from = (String)session.getAttribute(this.editPasswordFromVarName);
 		String viewPage = request.getParameter(this.parameterNames.get("viewPage"));
 //		String editPage = request.getParameter(this.parameterNames.get("editPage"));
