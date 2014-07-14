@@ -514,19 +514,21 @@ function initialize()
     </div>
       <div class="radio">
           <label>
-            <input type="radio" name="p-antistoff-ja" id="p-antistoff-ja" value="antistoff-ja"/>Ja
+            <input type="radio" name="p-antistoff" id="p-antistoff-ja" value="antistoff-ja" onclick="toggleDisplay('antistofftype', this.checked)"/>Ja
           </label>
       </div>
       <div class="radio">
           <label>
-            <input type="radio" name="p-antistoff-nei" id="p-antistoff-nei" value="antistoff-nei"/>Nei
+            <input type="radio" name="p-antistoff" id="p-antistoff-nei" value="antistoff-nei" onclick="toggleDisplay('antistofftype', 0)"/>Nei
           </label>
       </div>
 	
+    <div id="antistofftype" style="display: none" class="form-group">
     <b>Hvis ja: Type antistoff:</b>
-    <div class="checkbox">
+    <div  class="checkbox">
+     
     <label>
-      <input name="p-antistoff-erytrocytt" type="checkbox" id="p-antistoff-erytrocytt" value="antistoff-erytrocytt"/> Erytrocyttantistoff.
+      <input name="p-antistoff-erytrocytt" type="checkbox" id="p-antistoff-erytrocytt"  value="antistoff-erytrocytt"/> Erytrocyttantistoff.
     </label>
     </div>
     <div class="checkbox">
@@ -544,10 +546,15 @@ function initialize()
     	<input name="p-antistoff-leukocytt" type="checkbox" id="p-antistoff-leukocytt" value="antistoff-leukocytt"/> Leukocyttspesifikt antistoff.
     </label>
     </div>
-       <div class="checkbox">
+    <div class="checkbox">
     <label>
-    	<input name="p-antistoff-iga" type="checkbox" id="p-antistoff-iga" value="antistoff-iga"/> Antiiga.
+    	<input name="p-antistoff-iga" type="checkbox" id="p-antistoff-iga" value="antistoff-iga"/> Anti-lga.
     </label>
+    </div>
+    <div id="antistoffannet" class="form-group">
+     <label>Annet antistoff</label> 
+      <input type="text"  name="p-antistoffannet" size="80"  value="" class="form-control"/>
+    </div>
     </div>
     <br/><br/>
    	<div class="form-group">
@@ -590,21 +597,21 @@ function initialize()
       <b>Tidligere transfusjonskomplikasjoner</b>
     <div class="radio">
       <label>
-        <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-1" value="tidligeretransfusjon-ja"/>Ja
+        <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-1" value="tidligeretransfusjon-ja" onclick="toggleDisplay('tidligeretransfusjon', this.checked)"/>Ja
       </label>
   </div>
   <div class="radio">
       <label>
-        <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-2" value="tidligeretransfusjon-nei"  checked/>Nei
+        <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-2" value="tidligeretransfusjon-nei" onclick="toggleDisplay('tidligeretransfusjon', 0)"  checked/>Nei
       </label>
   </div>
   <div class="radio">
       <label>
-        <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-3" value="tidligeretransfusjon-vetikke"/>Vet ikke
+        <input type="radio" name="p-tidligeretransfusjon" id="p-transfusjon-ip-3" value="tidligeretransfusjon-vetikke" onclick="toggleDisplay('tidligeretransfusjon', 0)"/>Vet ikke
       </label>
   </div>
 
-    <div class="form-group">
+    <div id="tidligeretransfusjon" style="display: none" class="form-group">
     
             <label>Tidligere transfusjonskomplikasjon (Type komplikasjon)</label>
             	<input name ="p-sykdom-tidligeretransfusjon" list="icd10gruppekomp" class="form-control">
@@ -632,12 +639,12 @@ function initialize()
   </div>
   <div class="radio">
       <label>
-        <input type="radio" name="p-transfusjon-poliklinisk" id="p-transfusjon-ip-2" value="poliklinisk"/>Poliklinisk
+        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-2" value="poliklinisk"/>Poliklinisk
       </label>
   </div>
   <div class="radio">
       <label>
-        <input type="radio" name="p-transfusjon-inneliggendevetikke" id="p-transfusjon-ip-3" value="polikliniskvetikke"/>Vet ikke
+        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-3" value="polikliniskvetikke"/>Vet ikke
       </label>
   </div>
     <b>Avdeling inn her????</b>
@@ -693,16 +700,7 @@ function initialize()
      <label>Antall</label> 
       <input type="text"  name="p-blod-antalltrombocytt" size="80"  value="" class="form-control"/>
     </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="p-blod-octaplas" id="p-blod-octaplas" value="p-blod-octaplas" onclick="toggleDisplay('octaplasantall', this.checked)"/>Octaplas
-      </label>
-    </div>
-    <div id="octaplasantall" style="display: none" class="form-group">
-     <label>Antall</label> 
-      <input type="text"  name="p-blod-antalloctaplas" size="80"  value="" class="form-control"/>
-    </div>    
-      <div class="checkbox">
+     <div class="checkbox">
       <label>
         <input type="checkbox" name="p-blod-trauma" id="p-blod-traume" value="p-blod-trauma" onclick="toggleDisplay('blod-traumeantall', this.checked)"/>Akkutt transfusjonspakke
       </label>
@@ -711,10 +709,18 @@ function initialize()
      <label>Antall</label> 
       <input type="text"  name="p-blod-antalltrauma" size="80"  value="" class="form-control"/>
     </div>    
-      <div class="checkbox">
+    <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked)"/>Plasma (fra en giver) Valg : Oktaplasma etc...
-      </label>
+        <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked);toggleDisplay('blod-plasmagruppe', this.checked)"/>Plasma 
+    </div>
+    <div id="blod-plasmagruppe" style="display: none" class="form-group">
+         <label>Valg av plasma</label>
+            	<input name ="p-blodprodukt-transfusjon" list="blodproduktvalg" class="form-control">
+        		<datalist id="blodproduktvalg">
+      	       <#list pasientkomplikasjon.blodProdukt as blodprodukt>
+        			<option >${blodprodukt}</option>
+			    </#list>  
+        		</datalist> 
     </div>
    <div id="blod-plasmaantall" style="display: none" class="form-group">
      <label>Antall</label> 
@@ -1023,14 +1029,14 @@ function initialize()
     </div>
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-komp-annet" id="p-komp-annet" value="option2"/>Annet
+        <input type="checkbox" name="p-komp-annet" id="p-komp-annet" value="option2" onclick="toggleDisplay('komp-annet-text', this.checked)"/>Annet
       </label>
     </div>
-      <div class="form-group">
+    <div id="komp-annet-text" class="form-group" style="display: none">
     <label>Hvis annet, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-utredning" rows="3"></textarea>
-    <b>Klassifikasjon (ICD-10 kan ikke benyttes)</b>
     </div>
+      <b>Klassifikasjon (ICD-10 kan ikke benyttes)</b>
     <div class="checkbox">
       <label>
         <input type="checkbox" name="p-komp-ahtr-1" id="p-komp-ahtr-1" value="option2"/>Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
@@ -1152,84 +1158,88 @@ function initialize()
     <b>Blodtypeserologisk utredning tyder på HTR</b>
      <div class="radio">
       <label>
-        <input type="radio" name="p-utredning-1" id="p-utredning-1" value="option1" checked/>Nei
+        <input type="radio" name="p-utredning" id="p-utredning-1" value="option1" onclick="toggleDisplay('utredningannet-text', 0)" checked/>Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-utredning-2" id="p-utredning-2" value="option2"/>Ja 
+        <input type="radio" name="p-utredning" id="p-utredning-2" value="option2" onclick="toggleDisplay('utredningannet-text', this.checked)"/>Ja 
       </label>
     </div>
        <div class="radio">
       <label>
-        <input type="radio" name="p-utredning-3" id="p-utredning-3" value="option2"/>Vet ikke
+        <input type="radio" name="p-utredning" id="p-utredning-3" value="option2" onclick="toggleDisplay('utredningannet-text', 0)"/>Vet ikke
       </label>
     </div>
-    <div class="form-group" style="display: none">
+    <div id="utredningannet-text" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-utredning" rows="3"></textarea>
 	 </div>
      <b>Hemolyseparametere er positive.</b>
      <div class="radio">
       <label>
-        <input type="radio" name="p-hemolyse-1" id="p-hemolyse-1" value="option1" checked/>Nei
+        <input type="radio" name="p-hemolyse" id="p-hemolyse-1" value="option1" onclick="toggleDisplay('hemolyse-text', 0)" checked/>Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-hemolyse-2" id="p-hemolyse-2" value="option2"/>Ja 
+        <input type="radio" name="p-hemolyse" id="p-hemolyse-2" value="option2" onclick="toggleDisplay('hemolyse-text', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-hemolyse-3" id="p-hemolyse-3" value="option2"/>Vet ikke 
+        <input type="radio" name="p-hemolyse" id="p-hemolyse-3" value="option2" onclick="toggleDisplay('hemolyse-text', 0)"/>Vet ikke 
       </label>
     </div>
+    <div id="hemolyse-text" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
-	 <textarea class="form-control" name="p-hemolyse" rows="3"></textarea>
+	 <textarea class="form-control" name="p-hemolysetext" rows="3"></textarea>
+	</div> 
      <b>lgA-mangel/anti-lgA</b>
      <div class="radio">
       <label>
-        <input type="radio" name="p-lga-1" id="p-lga-1" value="option1" checked/>Nei
+        <input type="radio" name="p-lga" id="p-lga-1" value="option1" onclick="toggleDisplay('lga-text', 0)" checked/>Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-lga-2" id="p-lga-2" value="option2"/>Ja 
+        <input type="radio" name="p-lga" id="p-lga-2" value="option2" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
       </label>
     </div>
         <div class="radio">
       <label>
-        <input type="radio" name="p-lga-3" id="p-lga-3" value="option3"/>Vet ikke
+        <input type="radio" name="p-lga" id="p-lga-3" value="option3" onclick="toggleDisplay('lga-text', 0)"/>Vet ikke
       </label>
     </div>
+    <div id="lga-text" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-lga" rows="3"></textarea>
+	</div>
      <b>Dyrkning fra pose utført</b>
      <div class="radio">
       <label>
-        <input type="radio" name="p-dyrkning-1" id="p-dyrkning-1" value="option1" checked/>Nei
+        <input type="radio" name="p-dyrkning" id="p-dyrkning-1" value="dyrkingnei" onclick="toggleDisplay('dyrkingpositiv', 0)" checked/>Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-dyrkning-2" id="p-dyrkning-2" value="option2"/>Ja 
+        <input type="radio" name="p-dyrkning" id="p-dyrkning-2" value="dyrkingja" onclick="toggleDisplay('dyrkingpositiv', this.checked)"/>Ja 
       </label>
     </div>
   
-    
+     <div id="dyrkingpositiv" class="form-group" style="display: none">
 	<p>Hvis ja</p>    
     <div class="radio">
       <label>
-        <input type="radio" name="p-positiv-1" id="p-positiv-1" value="option1" checked/>Positiv
+        <input type="radio" name="p-positiv-1" id="p-positiv-1" value="positiv" checked/>Positiv
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-positiv-2" id="p-positiv-2" value="option2"/>Negativ
+        <input type="radio" name="p-positiv-2" id="p-positiv-2" value="negativ"/>Negativ
       </label>
     </div>
-
+	</div>
       <br/>
        <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
       <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
