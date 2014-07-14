@@ -41,9 +41,9 @@ public class PasientKomplikasjon extends VigilansModel{
 	private Sykdom transfusjonKomplikasjon;
 	private Sykdom annenSykdom;
 	private String[] aldergruppe;
-	private String[] kjonnValg; 
-	private String mann;
-	private String kvinne;
+	private String[] kjonnValg; 	// Inneholder definisjon av kjønn for mann/kvinne
+	private String mann; 			//definisjon kjønn mann
+	private String kvinne;			//definisjonj kjønn kvinne 
 	private String antiStoffjanei;
 	private String [] antiStofflabel;
 	private String [] antiStoffid;
@@ -55,11 +55,12 @@ public class PasientKomplikasjon extends VigilansModel{
 	private List<Title> titles;
 
 	private List<String> icd10Codes;
-	private List<String> mainTerms; 
+	private List<String> mainTerms;  // ICD10 hovedtermer
 	
 	private List<ICD10Component> components;
 	private Map<String,Object > mapComponent;
 	
+	private List<String>blodProdukt;
 	
 	public PasientKomplikasjon() {
 		super();
@@ -79,6 +80,7 @@ public class PasientKomplikasjon extends VigilansModel{
 	
 		components = new ArrayList<ICD10Component>();
 		mapComponent = new HashMap<String, Object>();
+		blodProdukt = new ArrayList<String>();
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -230,6 +232,16 @@ public class PasientKomplikasjon extends VigilansModel{
 	}
 	
 
+	public List<String> getBlodProdukt() {
+		return blodProdukt;
+	}
+
+
+	public void setBlodProdukt(List<String> blodProdukt) {
+		this.blodProdukt = blodProdukt;
+	}
+
+
 	public Map<String, Object> getMapComponent() {
 		return mapComponent;
 	}
@@ -261,6 +273,18 @@ public class PasientKomplikasjon extends VigilansModel{
 	     }
 	     
 
+	}
+	/**
+	 * setblodProducts
+	 * Denne rutnen setter opp nedtrekk for blodprodukter
+	 * @param blodProdukt - En rekke strengvariable som inneholder blodprodukt
+	 * 
+	 */
+	public void setblodProducts(String[] blodProdukt){
+		
+		for (String produkt : blodProdukt){
+			this.blodProdukt.add(produkt);
+		}
 	}
 	/**
 	 * distributeTerms
