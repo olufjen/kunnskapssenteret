@@ -1,7 +1,7 @@
 package no.naks.biovigilans.web.control;
 
 import no.naks.biovigilans.model.PasientGruppeImpl;
-import no.naks.biovigilans.web.client.resource.InnmeldingResource;
+
 import no.naks.biovigilans.web.model.PasientKomplikasjon;
 import no.naks.framework.web.control.MasterWebServiceImpl;
 
