@@ -79,6 +79,7 @@
 	 			<value>/config/app-config/tables.properties</value>
 	 			<value>/config/app-config/question.properties</value>
 	 			<value>/config/app-config/environment.properties</value>
+	 			<value>/config/app-config/parameter.properties</value>
 	 		</list>
 	 	</property>
 	 </bean>
@@ -182,6 +183,8 @@
      	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
      		<property name="icd10WebService" ref="ICD10WebService"></property>
      		<property name="aldergruppe" value="${aldergruppe1},${aldergruppe2},${aldergruppe3},${aldergruppe4},"></property>
+     		<property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
+     		${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
      		<property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
      	   	<property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
      	${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
