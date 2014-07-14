@@ -49,6 +49,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		private PasientKomplikasjon result = null;
 		private String[] aldergruppe;
 		private String[] kjonnValg; 
+		private String[] blodProdukt;
 		
 	 public RapporterHendelseServerResourceHtml() {
 			super();
@@ -82,8 +83,17 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	}
 	
 */	
+	 
 	public String[] getAldergruppe() {
 		return aldergruppe;
+	}
+
+	public String[] getBlodProdukt() {
+		return blodProdukt;
+	}
+
+	public void setBlodProdukt(String[] blodProdukt) {
+		this.blodProdukt = blodProdukt;
 	}
 
 	public void setAldergruppe(String[] aldergruppe) {
@@ -139,10 +149,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 
 	     FileInputStream adrFile = null;
   
-/*
- * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
- *      
- */
+
 	     icd10WebService.readXml();
 	     List<Letter> letters = icd10WebService.getLetters();
 	     List<MainTerm> terms = new ArrayList();
@@ -157,12 +164,19 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	 result.setFormNames(sessionParams);
 	    	 result.setAldergruppe(aldergruppe);
 	    	 result.setKjonnValg(kjonnValg);
+	    	 result.setblodProducts(blodProdukt);
+	
 	    
 	     }
 	     result.setTerms(terms);
 		 result.distributeTerms();
 	     String ref = reference.toString();
 	     result.setAccountRef(ref);
+/*
+ * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
+ * Hver javaklasse får en id (ex "pasientkomplikasjon") som er tilgjengelig for html
+ *      
+*/	     
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	     dataModel.put("pasientkomplikasjon", result);
 	     
