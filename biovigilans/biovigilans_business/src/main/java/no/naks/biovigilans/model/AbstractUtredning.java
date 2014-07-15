@@ -21,6 +21,27 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	 */
 	private String utredningbeskrivelse;
 	
+	/**
+	 * Blodtypeserologisk tyder på HTR (tekstlig beskrivelse)
+	 */
+	private java.lang.String blodtypeserologisk;
+	/**
+	 * Hemolyseparametrene er positive  (tekstlig beskrivelse)
+	 */
+	private java.lang.String hemolyseparameter;
+	/**
+	 * lga-mange/anti-lga  (tekstlig beskrivelse)
+	 */
+	private java.lang.String lga;
+	/**
+	 * Dyrking av pose utført
+	 */
+	private java.lang.String posedyrking;
+	/**
+	 * Dersom dyrking av pose er positiv  (tekstlig beskrivelse)
+	 */
+	private java.lang.String posedyrkingpositiv;
+	
 	public Long getUtredningId() {
 		return utredningId;
 	}
