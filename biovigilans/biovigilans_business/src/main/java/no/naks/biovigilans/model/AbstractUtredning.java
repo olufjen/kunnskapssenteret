@@ -22,25 +22,25 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	private String utredningbeskrivelse;
 	
 	/**
-	 * Blodtypeserologisk tyder på HTR (tekstlig beskrivelse)
+	 * Blodtypeserologisk tyder pï¿½ HTR (tekstlig beskrivelse)
 	 */
-	private java.lang.String blodtypeserologisk;
+	private String blodtypeserologisk;
 	/**
 	 * Hemolyseparametrene er positive  (tekstlig beskrivelse)
 	 */
-	private java.lang.String hemolyseparameter;
+	private String hemolyseparameter;
 	/**
 	 * lga-mange/anti-lga  (tekstlig beskrivelse)
 	 */
-	private java.lang.String lga;
+	private String lga;
 	/**
-	 * Dyrking av pose utført
+	 * Dyrking av pose utfï¿½rt
 	 */
-	private java.lang.String posedyrking;
+	private String posedyrking;
 	/**
 	 * Dersom dyrking av pose er positiv  (tekstlig beskrivelse)
 	 */
-	private java.lang.String posedyrkingpositiv;
+	private String posedyrkingpositiv;
 	
 	public Long getUtredningId() {
 		return utredningId;
@@ -59,6 +59,37 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	}
 	public void setUtredningbeskrivelse(String utredningbeskrivelse) {
 		this.utredningbeskrivelse = utredningbeskrivelse;
+	}
+	
+	public String getBlodtypeserologisk() {
+		return blodtypeserologisk;
+	}
+	public void setBlodtypeserologisk(String blodtypeserologisk) {
+		this.blodtypeserologisk = blodtypeserologisk;
+	}
+	public String getHemolyseparameter() {
+		return hemolyseparameter;
+	}
+	public void setHemolyseparameter(String hemolyseparameter) {
+		this.hemolyseparameter = hemolyseparameter;
+	}
+	public String getLga() {
+		return lga;
+	}
+	public void setLga(String lga) {
+		this.lga = lga;
+	}
+	public String getPosedyrking() {
+		return posedyrking;
+	}
+	public void setPosedyrking(String posedyrking) {
+		this.posedyrking = posedyrking;
+	}
+	public String getPosedyrkingpositiv() {
+		return posedyrkingpositiv;
+	}
+	public void setPosedyrkingpositiv(String posedyrkingpositiv) {
+		this.posedyrkingpositiv = posedyrkingpositiv;
 	}
 	
 	

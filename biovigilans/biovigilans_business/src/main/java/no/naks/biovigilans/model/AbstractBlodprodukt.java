@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
@@ -32,7 +34,10 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	 * Må beskrives
 	 */
 	private String produktetsegenskap;
+
+	protected Map<String,String> blodproduktFields;
 	
+	protected String[]keys;	
 	
 	public long getBlodProduktId() {
 		return blodProduktId;
@@ -69,6 +74,18 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	}
 	public void setProduktetsegenskap(String produktetsegenskap) {
 		this.produktetsegenskap = produktetsegenskap;
+	}
+	public Map<String, String> getBlodproduktFields() {
+		return blodproduktFields;
+	}
+	public void setBlodproduktFields(Map<String, String> blodproduktFields) {
+		this.blodproduktFields = blodproduktFields;
+	}
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
 	}
 	
 }
