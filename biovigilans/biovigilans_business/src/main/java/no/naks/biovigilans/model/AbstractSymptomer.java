@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
@@ -21,6 +23,10 @@ public abstract class AbstractSymptomer extends AbstractModel implements Symptom
 	 */
 	private String symptombeskrivelse;
 	
+	protected Map<String,String> symptomerFields;
+	
+	protected String[]keys;
+	
 	public long getSymptomId() {
 		return symptomId;
 	}
@@ -38,6 +44,18 @@ public abstract class AbstractSymptomer extends AbstractModel implements Symptom
 	}
 	public void setSymptombeskrivelse(String symptombeskrivelse) {
 		this.symptombeskrivelse = symptombeskrivelse;
+	}
+	public Map<String, String> getSymptomerFields() {
+		return symptomerFields;
+	}
+	public void setSymptomerFields(Map<String, String> symptomerFields) {
+		this.symptomerFields = symptomerFields;
+	}
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
 	}
 	
 	

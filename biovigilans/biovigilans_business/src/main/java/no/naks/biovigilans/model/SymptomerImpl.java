@@ -18,4 +18,19 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 		
 	}
 	
+	/**
+	 * setsymptomerfieldMaps
+	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
+	 * @param userFields En liste over skjermbildefelter
+	 */
+	public void setsymptomerfieldMaps(String[]userFields){
+
+		keys = userFields;
+		
+		
+		symptomerFields.put(userFields[0],getSymptombeskrivelse());
+
+
+	}
+	
 }

@@ -13,7 +13,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 
 	private long blodProduktId;
 	/**
-	 * Hvilken bodtype som er benyttet
+	 * Hvilken blodtype som er benyttet
 	 */
 	private String blodtype;
 	/**
