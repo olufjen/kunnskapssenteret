@@ -676,7 +676,18 @@ function initialize()
 			    </#list>  
         		</datalist> 
     </div>    		
-	<br/><br/>    
+	<!-- Transfusjon  -->
+	<h3>Transfusjon</h3>
+	<b>Klokkeslett velges fra meny.</b>
+	<div class="form-group">
+		<input type="time" name="transfusjon-time">
+	</div>
+	<b>Transfusjondato velges fra kalender</b>
+	<div class="form-group">
+		<input type="date" name="transfusjon-date">
+	</div>
+	
+	  
 <!--  <button id="btnShow">Show</button> -->
 <!--  <button id="btnHide">Hide</button>   -->
 
@@ -1244,7 +1255,86 @@ function initialize()
     <label>Hvis ja, beskriv funn i fritekst:</label>
 	 <textarea class="form-control" name="p-dyrkingpostext" rows="3"></textarea>
 	</div> 
-      <br/>
+    <div class="form-group" >
+		<h3>Alvorlighetsgrad mangler (samordnes med komplikasjoner ved tapping av givere)</h3>
+		<div class="radio">
+			<label>
+				<input type="radio" name="alvor-mang" id="ingen-klinisk" />Ingen klinisk effekt: skal den være med?
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="alvor-mang" id="grad1" />Grade 1 Mindre alvorlig
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="alvor-mang" id="grad2" />Grade 2 Alvorlig
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="alvor-mang" id="grad3" />Grade 3 Livstruende
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="alvor-mang" id="grad4" />Grade 4 Dødsfall
+			</label>
+		</div>
+	</div>
+	<div class="form-group" >
+		<h3>Klinisk Resultat mangler (samordnes med komplikasjoner ved tapping av givere)</h3>
+		<div class="radio">
+			<label>
+				<input type="radio" name="klinisk-res" id="full-helb" />Full helbredelse
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="klinisk-res" id="lett-sek" />Lett sekvele
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="klinisk-res" id="alv-sek" />Alvorlig sekvele
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="klinisk-res" id="dodsfall" />Dødsfall
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="klinisk-res" id="vet-ikke" />Vet ikke
+			</label>
+		</div>
+	</div>
+	<div class="form-group" >
+		<h3>Årskassammenheng mangler</h3>
+		<div class="radio">
+			<label>
+				<input type="radio" name="aarsaks" id="utelukket" />Utelukket (vurder om denne reaksjonen skal meldes)
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="aarsaks" id="usannsynlig" />Usannsynlig
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="aarsaks" id="Mulig" />Mulig
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" name="aarsaks" id="Sannsynlig" />Sannsynlig
+			</label>
+		</div>
+	</div>
+    <br/>
        <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
       <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
       <button name="lagre4" type="submit" class="btn btn-primary">Lagre</button>
