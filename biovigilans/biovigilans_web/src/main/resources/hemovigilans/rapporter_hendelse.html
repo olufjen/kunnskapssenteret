@@ -1168,7 +1168,7 @@ function initialize()
     </div>
        <div class="radio">
       <label>
-        <input type="radio" name="p-utredning" id="p-utredning-3" value="option2" onclick="toggleDisplay('utredningannet-text', 0)"/>Vet ikke
+        <input type="radio" name="p-utredning" id="p-utredning-3" value="option2" onclick="toggleDisplay('utredningannet-text', 0)"/>Ikke utført
       </label>
     </div>
     <div id="utredningannet-text" class="form-group" style="display: none">
@@ -1188,7 +1188,7 @@ function initialize()
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-hemolyse" id="p-hemolyse-3" value="option2" onclick="toggleDisplay('hemolyse-text', 0)"/>Vet ikke 
+        <input type="radio" name="p-hemolyse" id="p-hemolyse-3" value="option2" onclick="toggleDisplay('hemolyse-text', 0)"/>Ikke utført 
       </label>
     </div>
     <div id="hemolyse-text" class="form-group" style="display: none">
@@ -1208,7 +1208,7 @@ function initialize()
     </div>
         <div class="radio">
       <label>
-        <input type="radio" name="p-lga" id="p-lga-3" value="option3" onclick="toggleDisplay('lga-text', 0)"/>Vet ikke
+        <input type="radio" name="p-lga" id="p-lga-3" value="option3" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
       </label>
     </div>
     <div id="lga-text" class="form-group" style="display: none">
@@ -1231,15 +1231,19 @@ function initialize()
 	<p>Hvis ja</p>    
     <div class="radio">
       <label>
-        <input type="radio" name="p-positiv-1" id="p-positiv-1" value="positiv" checked/>Positiv
+        <input type="radio" name="p-positiv" id="p-positiv-1" value="positiv" onclick="toggleDisplay('dyrkingpositiv-text', this.checked)"/>Positiv
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-positiv-2" id="p-positiv-2" value="negativ"/>Negativ
+        <input type="radio" name="p-positiv" id="p-positiv-2" value="negativ" onclick="toggleDisplay('dyrkingpositiv-text', 0)"/>Negativ
       </label>
     </div>
 	</div>
+	<div id="dyrkingpositiv-text" class="form-group" style="display: none">
+    <label>Hvis ja, beskriv funn i fritekst:</label>
+	 <textarea class="form-control" name="p-dyrkingpostext" rows="3"></textarea>
+	</div> 
       <br/>
        <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
       <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
