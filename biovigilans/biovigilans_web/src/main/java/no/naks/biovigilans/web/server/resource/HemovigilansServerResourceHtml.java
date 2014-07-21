@@ -24,7 +24,7 @@ import javax.xml.namespace.QName;
 
 import no.naks.biovigilans.web.control.SessionAdmin;
 import no.naks.biovigilans.web.control.TableWebService;
-import no.naks.biovigilans.web.model.PasientKomplikasjon;
+import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 
@@ -55,7 +55,7 @@ import edu.unc.ils.mrc.hive2.api.HiveConcept;
  * 
  */
 public class HemovigilansServerResourceHtml extends ProsedyreServerResource {
-		private PasientKomplikasjon result = null;
+		private PasientKomplikasjonWebModel result = null;
 
 		
 	 public HemovigilansServerResourceHtml() {
@@ -159,7 +159,7 @@ public class HemovigilansServerResourceHtml extends ProsedyreServerResource {
 	    		sessionAdmin.getSession(getRequest(),"pasientkomplikasjon").invalidate();
 	    	}
 	    	if (form != null){
-	    		result = (PasientKomplikasjon) sessionAdmin.getSessionObject(getRequest(),"pasientkomplikasjon");
+	    		result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(getRequest(),"pasientkomplikasjon");
 	    		Parameter logout = form.getFirst("logout");
 	    		if (logout != null){
 	    			sessionAdmin.getSession(getRequest(),"pasientkomplikasjon").invalidate();
@@ -171,7 +171,7 @@ public class HemovigilansServerResourceHtml extends ProsedyreServerResource {
 	    		}
 	    			
 	    		if (result == null){
-	    			result = new PasientKomplikasjon();
+	    			result = new PasientKomplikasjonWebModel();
 	    			 result.setFormNames(sessionParams);
 	    		}
 	    		for (Parameter entry : form) {
