@@ -649,7 +649,17 @@ function initialize()
   </div>
     <b>Avdeling inn her????</b>
 	<br/><br/>        
-    <h3>Transfusjon -- Mangler: transfusjonsklokkeslett, transfusjonsdato, antall enheter (til blodprodukt), indikasjon og feiltranfudert</h3>
+ 		
+	<!-- Transfusjon  -->
+	<h3>Transfusjon Feiltransfusjon på eget skjema?</h3>
+	<b>Klokkeslett velges fra meny.</b>
+	<div class="form-group">
+		<input type="time" name="transfusjon-time">
+	</div>
+	<b>Transfusjondato velges fra kalender</b>
+	<div class="form-group">
+		<input type="date" name="transfusjon-date">
+	</div>
     <b>Hastegrad</b>
     <div class="radio">
       <label>
@@ -675,18 +685,7 @@ function initialize()
         			<option >${mainTerms}</option>
 			    </#list>  
         		</datalist> 
-    </div>    		
-	<!-- Transfusjon  -->
-	<h3>Transfusjon</h3>
-	<b>Klokkeslett velges fra meny.</b>
-	<div class="form-group">
-		<input type="time" name="transfusjon-time">
-	</div>
-	<b>Transfusjondato velges fra kalender</b>
-	<div class="form-group">
-		<input type="date" name="transfusjon-date">
-	</div>
-	
+    </div>   	
 	  
 <!--  <button id="btnShow">Show</button> -->
 <!--  <button id="btnHide">Hide</button>   -->
@@ -695,7 +694,7 @@ function initialize()
     <b>Blodprodukt mistenkt som årsak til komplikasjonen</b>
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-erytrocytt" id="p-blod-erytrocytt"  value="p-blod-erytrocytt" onclick="toggleDisplay('erytrocyttantall', this.checked)"/>Erytrocyttkonsentrat
+        <input type="checkbox" name="p-blod-erytrocytt" id="p-blod-erytrocytt"  value="p-blod-erytrocytt" onclick="toggleDisplay('erytrocyttantall', this.checked);toggleDisplay('blod-allogent', this.checked)"/>Erytrocyttkonsentrat
       </label>
   	</div>
     <div id="erytrocyttantall" style="display: none"  class="form-group">
@@ -704,7 +703,7 @@ function initialize()
     </div>
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-trombocytt" id="p-blod-trombocytt" value="p-blod-trombocytt" onclick="toggleDisplay('trombocyttantall', this.checked)"/>Trombocyttkonsentrat
+        <input type="checkbox" name="p-blod-trombocytt" id="p-blod-trombocytt" value="p-blod-trombocytt" onclick="toggleDisplay('trombocyttantall', this.checked);toggleDisplay('blod-suspensjon', this.checked)"/>Trombocyttkonsentrat
       </label>
     </div>
    <div id="trombocyttantall" style="display: none" class="form-group">
@@ -722,7 +721,7 @@ function initialize()
     </div>    
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked);toggleDisplay('blod-plasmagruppe', this.checked)"/>Plasma 
+        <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked);toggleDisplay('blod-plasmagruppe', this.checked);toggleDisplay('blod-allogent', this.checked)"/>Plasma 
     </div>
     <div id="blod-plasmagruppe" style="display: none" class="form-group">
          <label>Valg av plasma</label>
@@ -746,6 +745,94 @@ function initialize()
      <label>Antall</label> 
       <input type="text"  name="p-blod-antallandre" size="80"  value="" class="form-control"/>
     </div> 
+      
+    <b>Spesielle egenskaper</b>
+    <div class="checkbox">
+    <label>
+      <input name="p-blod-kriseblod" type="checkbox" id="p-blod-kriseblod" value="p-blod-kriseblod"/>Kriseblod
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-vasket" type="checkbox" id="p-blod-vasket" value="p-blod-vasket"/>Vasket
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-bestralt" type="checkbox" id="p-blod-bestralt" value="p-blod-bestralt"/>Bestrålt 
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-hla" type="checkbox" id="p-blod-hla" value="p-blod-hla"/>HLA-forlikelig
+    </label>
+    </div>
+    <div class="checkbox">
+	<label>
+    	<input name="p-blod-patogening" type="checkbox" id="p-blod-patogening" value="p-blod-patogening"/>Patogeningaktivert
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-blodvarmer" type="checkbox" id="p-blod-blodvarmer" value="p-blod-blodvarmer"/>Blodvarmer brukt
+    </label>
+    </div>
+        <div class="form-group">
+    
+     <label>Annet</label> 
+      <input type="text"  name="p-blod-annet" size="80"  value="" class="form-control" />
+     </div>
+    
+ 
+	<b>Type tapping</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-aferese" id="p-blod-aferese" value="p-blod-aferese"/>Aferese
+      </label>
+  	</div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-fullblod" id="p-blod-fullblod" value="p-blod-fullblod"/>Fullblod
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-vetikke" id="p-blod-vetikke" value="p-blod-vetikke"/>Vet ikke
+      </label>
+    </div>
+    
+     <div id="blod-suspensjon" style="display: none" class="form-group">
+    <b>Suspensjonsmedium (gjelder kun ved valg blodprodukt: Trombocyttkonsentrat)</b>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-blod-giverplasma" id="p-blod-giverplasma" value="p-blod-giverplasma"/>Giverplasma
+      </label>
+  	</div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-blod-kunstig" id="p-blod-kunstig" value="p-blod-kunstig"/>Kunstig medium
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-blod-sus-vetikke" id="p-blod-sus-vetikke" value="p-blod-sus-vetikke"/>Vet ikke
+      </label>
+    </div>
+    </div>
+    <div id="blod-allogent" style="display: none" class="form-group">
+    <b>Allogent/autologt produkt Egenskap på erytrocytter og plasma fra en giver</b>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-allogen" id="p-blod-allogen" value="p-blod-allogen"/>Allogen
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-autolog" id="p-blod-autolog" value="p-blod-autolog"/>Autolog
+      </label>
+    </div>
+    </div>
+    
     <b>Andre blodprodukt gitt siste 24 timer</b><br/>
      <div class="radio">
           <label>
@@ -780,23 +867,15 @@ function initialize()
     </div>    
     <div id="annenblod-243" class="checkbox" style="display: none">
       <label>
-        <input type="checkbox" name="p-annenblod-octaplas" id="p-blod-octaplas" value="p-annenblod-octaplas" onclick="toggleDisplay('annenblod-octaplasantall', this.checked)"/>Octaplas
+        <input type="checkbox" name="p-annenblod-transfusjon" id="p-blod-transfusjon" value="p-annenblod-transfusjon" onclick="toggleDisplay('annenblod-octaplasantall', this.checked)"/>Akkutt transfusjonspakke 
       </label>
     </div>
-   <div id="annenblod-octaplasantall" class="form-group" style="display: none">
+   <div id="annenblod-transufusjonantall" class="form-group" style="display: none">
      <label>Antall</label> 
-      <input type="text"  name="p-annenblod-antalloctaplas" size="80"  value="" class="form-control"/>
+      <input type="text"  name="p-annenblod-antalltransfusjon" size="80"  value="" class="form-control"/>
     </div>
-      <div id="annenblod-244" class="checkbox" style="display: none">
-      <label>
-        <input type="checkbox" name="p-annenblod-trauma" id="p-blod-traume" value="p-annenblod-trauma" onclick="toggleDisplay('annenblod-traumaantall', this.checked)"/>Traumepakke
-      </label>
-    </div>
-   <div id="annenblod-traumaantall" class="form-group" style="display: none">
-     <label>Antall</label> 
-      <input type="text"  name="p-annenblod-antalltrauma" size="80"  value="" class="form-control"/>
-    </div>    
-      <div id="annenblod-245" class="checkbox" style="display: none">
+   
+      <div id="annenblod-245" class="checkbox" >
       <label>
         <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="p-annenblod-plasma" onclick="toggleDisplay('annenblod-plasmaantall', this.checked)"/>Plasma (fra en giver)
       </label>
@@ -827,89 +906,7 @@ function initialize()
       </select>
 -->      
       
-   
-    <b>Spesielle egenskaper</b>
-    <div class="checkbox">
-    <label>
-      <input name="p-blod-kriseblod" type="checkbox" id="p-blod-kriseblod" value="option1"/>Kriseblod
-    </label>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-blod-vasket" type="checkbox" id="p-blod-vasket" value="option2"/>Vasket
-    </label>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-blod-bestralt" type="checkbox" id="p-blod-bestralt" value="option3"/>Bestrålt 
-    </label>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-blod-hla" type="checkbox" id="p-blod-hla" value="option4"/>HLA-forlikelig
-    </label>
-    </div>
-    <div class="checkbox">
-	<label>
-    	<input name="p-blod-patogening" type="checkbox" id="p-blod-patogening" value="option2"/>Patogeningaktivert
-    </label>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-blod-blodvarmer" type="checkbox" id="p-blod-blodvarmer" value="option3"/>Blodvarmer brukt
-    </label>
-    </div>
-        <div class="form-group">
-    
-     <label>Annet</label> 
-      <input type="text"  name="p-blod-annet" size="80"  value="" class="form-control" />
-     </div>
-    
  
-	<b>Type tapping</b>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-blod-aferese" id="p-blod-aferese" value="option2"/>Aferese
-      </label>
-  	</div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-blod-fullblod" id="p-blod-fullblod" value="option2"/>Fullblod
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-blod-vetikke" id="p-blod-vetikke" value="option2"/>Vet ikke
-      </label>
-    </div>
-    <b>Suspensjonsmedium (gjelder kun ved valg blodprodukt: Trombocyttkonsentrat)</b>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="p-blod-giverplasma" id="p-blod-giverplasma" value="option2"/>Giverplasma
-      </label>
-  	</div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="p-blod-kunstig" id="p-blod-kunstig" value="option2"/>Kunstig medium
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="p-blod-sus-vetikke" id="p-blod-sus-vetikke" value="option2"/>Vet ikke
-      </label>
-    </div>
-    <b>Allogent/autologt produkt Egenskap på erytrocytter og plasma fra en giver</b>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-blod-allogen" id="p-blod-allogen" value="option2"/>Allogen
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-blod-autolog" id="p-blod-autolog" value="option2"/>Autolog
-      </label>
-    </div>
-
     
     <h3>Komplikasjon</h3>
     <b>Symptomer</b>
