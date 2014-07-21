@@ -17,7 +17,9 @@ public abstract class AbstractPasient extends AbstractModel implements Pasient{
 	protected String[] antiStoff = null;
 	protected String inneliggendePoli = null;
 	protected String avdeling = null;
-
+	/**
+	 * Inneholder navn på input felt i skjermbildet	
+	 */
 	protected Map<String,String> patientFields;
 	
 	protected String[]keys;

@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
@@ -20,6 +22,9 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 	private String klassifikasjonsbeskrivelse;
 	private Long klassifikasjonsid;
 
+	protected Map komplikasjonklassifikasjonFields;
+	protected String[] keys;
+	
 	public String getKlassifikasjon() {
 		return klassifikasjon;
 	}
@@ -37,6 +42,21 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 	}
 	public void setKlassifikasjonsid(Long klassifikasjonsid) {
 		this.klassifikasjonsid = klassifikasjonsid;
+	}
+	
+	public Map getKomplikasjonklassifikasjonFields() {
+		return komplikasjonklassifikasjonFields;
+	}
+
+	public void setKomplikasjonklassifikasjonFields(
+			Map komplikasjonklassifikasjonFields) {
+		this.komplikasjonklassifikasjonFields = komplikasjonklassifikasjonFields;
+	}
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
 	}
 
 	

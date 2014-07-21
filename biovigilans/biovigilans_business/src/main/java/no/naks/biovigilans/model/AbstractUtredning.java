@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
@@ -41,6 +43,9 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	 * Dersom dyrking av pose er positiv  (tekstlig beskrivelse)
 	 */
 	private String posedyrkingpositiv;
+	
+	protected String[]keys;
+	protected Map<String,String> utredningsFields;
 	
 	public Long getUtredningId() {
 		return utredningId;
@@ -91,6 +96,18 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	public void setPosedyrkingpositiv(String posedyrkingpositiv) {
 		this.posedyrkingpositiv = posedyrkingpositiv;
 	}
-	
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
+	}
+	public Map<String, String> getUtredningsFields() {
+		return utredningsFields;
+	}
+	public void setUtredningsFields(Map<String, String> utredningsFields) {
+		this.utredningsFields = utredningsFields;
+	}
+
 	
 }

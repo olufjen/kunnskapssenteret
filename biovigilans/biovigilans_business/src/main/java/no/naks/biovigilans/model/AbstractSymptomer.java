@@ -22,7 +22,9 @@ public abstract class AbstractSymptomer extends AbstractModel implements Symptom
 	 * Her beskrives symptomene i klartekst
 	 */
 	private String symptombeskrivelse;
-	
+/**
+ * Inneholder navn på input felt i skjermbildet	
+ */
 	protected Map<String,String> symptomerFields;
 	
 	protected String[]keys;

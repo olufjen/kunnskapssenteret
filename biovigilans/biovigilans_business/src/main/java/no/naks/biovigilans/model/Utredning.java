@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 public interface Utredning {
 	public Long getUtredningId();
 	public void setUtredningId(Long utredningId);
@@ -17,5 +19,11 @@ public interface Utredning {
 	public void setPosedyrking(String posedyrking);
 	public String getPosedyrkingpositiv();
 	public void setPosedyrkingpositiv(String posedyrkingpositiv);	
+	
+	public String[] getKeys();
+	public void setKeys(String[] keys);
+	public Map<String, String> getUtredningsFields();
+	public void setUtredningsFields(Map<String, String> utredningsFields);
+	public void setutredningfieldMaps(String[]userFields);
 
 }

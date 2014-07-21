@@ -24,7 +24,9 @@ public abstract class AbstractSykdom extends AbstractModel implements Sykdom{
 	 * ICD10 diagnosekode
 	 */
 	private String diagnosekode;
-	
+	/**
+	 * Inneholder navn på input felt i skjermbildet	
+	 */	
 	protected Map<String,String> sykdomFields;
 	
 	protected String[]keys;

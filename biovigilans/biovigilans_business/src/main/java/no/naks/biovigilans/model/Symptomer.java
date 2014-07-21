@@ -14,4 +14,5 @@ public interface Symptomer {
 	public void setSymptomerFields(Map<String, String> symptomerFields);
 	public String[] getKeys();
 	public void setKeys(String[] keys);
+	public void setsymptomerfieldMaps(String[]userFields);
 }

@@ -20,6 +20,15 @@ public class KomplikasjonsklassifikasjonImpl extends
 		
 	}
 
-
+	/**
+	 * setkomplikasjonklassifikasjonFieldsMaps
+	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
+	 * @param userFields En liste over skjermbildefelter 
+	 */
+	public void setkomplikasjonklassifikasjonFieldsMaps(String[]userFields){
+		keys = userFields;
+		
+		komplikasjonklassifikasjonFields.put(userFields[0],getKlassifikasjon());
+	}
 
 }
