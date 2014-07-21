@@ -34,7 +34,7 @@ import org.restlet.data.Parameter;
  * Klassen kan også være kilde til nedtrekksvalg for htmlsidene.
  * Disse valgene kan hentes fra andre kilder
  */
-public class PasientKomplikasjon extends VigilansModel{
+public class PasientKomplikasjonWebModel extends VigilansModel{
 
 	private Pasient pasient;
 	private Sykdom sykdom;
@@ -62,7 +62,7 @@ public class PasientKomplikasjon extends VigilansModel{
 	
 	private List<String>blodProdukt;
 	
-	public PasientKomplikasjon() {
+	public PasientKomplikasjonWebModel() {
 		super();
 		sykdomSymptom = "symptom";
 		transfusjon = "transfusjon";
@@ -298,6 +298,7 @@ public class PasientKomplikasjon extends VigilansModel{
 		String sykdomFields[] = {formFields[9]};
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[17]};
+
 		pasient.setPatientfieldMaps(patientFields);
 		sykdom.setsykdomfieldMaps(sykdomFields);
 		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);
@@ -308,7 +309,7 @@ public class PasientKomplikasjon extends VigilansModel{
 	 * Denne rutinen lagrer feltverdier for transfusjons(pasient)komplikasjoner som er angitt av bruker 
 	 */
 	public void saveValues() {
-		String[] formFields = getFormNames(); // nneholder navn på input felt i skjermbildet
+		String[] formFields = getFormNames(); // Inneholder navn på input felt i skjermbildet
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
 		for (String field : formFields){
 			String userEntry = userEntries.get(field);
