@@ -2,7 +2,7 @@ package no.naks.biovigilans.web.control;
 
 import no.naks.biovigilans.model.PasientGruppeImpl;
 
-import no.naks.biovigilans.web.model.PasientKomplikasjon;
+import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.framework.web.control.MasterWebServiceImpl;
 
 public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
@@ -14,7 +14,7 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 	}
 
 	@Override
-	public void saveHendelse(PasientKomplikasjon innMelding) {
+	public void saveHendelse(PasientKomplikasjonWebModel innMelding) {
 
 		
 	}
