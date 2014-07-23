@@ -44,7 +44,7 @@ import org.springframework.web.context.WebApplicationContext;
  * Resurser blir instansiert for hver kall fra klient
  * 
  * @author olj
- * Denne resursen håndterer all dialog for rapporter hendelse hemovigilans
+ * Denne resursen håndterer all dialog for rapporter transfusjonskomplikasjoner hemovigilans
  * 
  */
 public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource {
@@ -201,7 +201,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	     sessionAdmin.setSessionObject(getRequest(), result,pasientkomplikasjonId);
 	     sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_hendelse.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
