@@ -3,12 +3,18 @@ package no.naks.biovigilans.model;
 import java.util.Date;
 import java.util.Map;
 
+import org.joda.time.DateTime;
+
 public interface Transfusjon {
 
-	public Date getTransfusjondato();
+		
+	public DateTime getTransfusjondato();
 
-	public void setTransfusjondato(Date transfusjondato);
+	public void setTransfusjondato(DateTime transfusjondato);
 
+	public Date getTransfusionDate();
+
+	public void setTransfusionDate(Date transfusionDate);
 	public String getTransfusjonsklokkeslett();
 
 	public void setTransfusjonsklokkeslett(String transfusjonsklokkeslett);
@@ -47,6 +53,9 @@ public interface Transfusjon {
 	public Map<String, Blodprodukt> getBlodProdukter();
 
 	public void setBlodProdukter(Map<String, Blodprodukt> blodProdukter);
-	
+	public void saveField(String userField,String userValue);
+	public String getTransDato();
+
+	public void setTransDato(String transDato);
 	
 }

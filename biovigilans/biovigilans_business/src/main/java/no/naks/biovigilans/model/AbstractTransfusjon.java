@@ -1,6 +1,15 @@
 package no.naks.biovigilans.model;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
@@ -17,7 +26,10 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	/**
 	 * Dato for transfusjonen
 	 */
-	private Date transfusjondato;
+	private DateTime transfusjondato; 	// Vi benytter Joda time i transformasjon
+	private Date transfusionDate;   	// Vi benytte utilDate mot databasen !!!
+	
+	private String transDato;
 	/**
 	 * Klokkeslett for transfusjonen
 	 */
@@ -64,11 +76,19 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 		this.transfusjonsId = transfusjonsId;
 	}
 
-	public Date getTransfusjondato() {
+	public Date getTransfusionDate() {
+		return transfusionDate;
+	}
+
+	public void setTransfusionDate(Date transfusionDate) {
+		this.transfusionDate = transfusionDate;
+	}
+
+	public DateTime getTransfusjondato() {
 		return transfusjondato;
 	}
 
-	public void setTransfusjondato(Date transfusjondato) {
+	public void setTransfusjondato(DateTime transfusjondato) {
 		this.transfusjondato = transfusjondato;
 	}
 
@@ -77,6 +97,16 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	}
 
 	public void setTransfusjonsklokkeslett(String transfusjonsklokkeslett) {
+		if (transfusjonsklokkeslett == null){
+			String aProd = null;
+	
+				aProd = transfusjonsFields.get(keys[3]);
+				if (aProd != null){
+					transfusjonsklokkeslett = aProd;
+				
+				}
+
+		}
 		this.transfusjonsklokkeslett = transfusjonsklokkeslett;
 	}
 
@@ -85,6 +115,16 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	}
 
 	public void setHastegrad(String hastegrad) {
+		if (hastegrad == null){
+			String aProd = null;
+			for (int i=5;i<8;i++){
+				aProd = transfusjonsFields.get(keys[i]);
+				if (aProd != null){
+					hastegrad = aProd;
+					break;
+				}
+			}
+		}
 		this.hastegrad = hastegrad;
 	}
 
@@ -101,6 +141,16 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	}
 
 	public void setIndikasjon(String indikasjon) {
+		if (indikasjon == null){
+			String aProd = null;
+	
+				aProd = transfusjonsFields.get(keys[8]);
+				if (aProd != null){
+					indikasjon = aProd;
+				
+				}
+
+		}
 		this.indikasjon = indikasjon;
 	}
 
@@ -110,6 +160,32 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 
 	public void setAntalenheter(int antalenheter) {
 		this.antalenheter = antalenheter;
+	}
+
+	public String getTransDato() {
+		return transDato;
+	}
+
+	public void setTransDato(String transDato) {
+		if (transDato == null){
+			String aProd = null;
+	
+				aProd = transfusjonsFields.get(keys[4]);
+				if (aProd != null){
+					transDato = aProd;
+				
+				}
+
+		}
+		
+			//DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Locale locale = java.util.Locale.UK;
+		DateTimeZone timeZone = DateTimeZone.forID( "Europe/Oslo" );
+		DateTimeFormatter formatter = DateTimeFormat.forPattern( "yyyy-MM-dd" ); // DD er forskjellig fra dd !! .withZone( timeZone ).withLocale( locale )
+		transfusjondato = formatter.parseDateTime(transDato);
+//		System.out.println("Dato formattert: "+ transfusjondato.toString(formatter));
+		transfusionDate = transfusjondato.toDate();
+		this.transDato = transDato;
 	}
 
 	public Map<String, Pasientkomplikasjon> getPasientKomplikasjoner() {
@@ -129,6 +205,8 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	public void setBlodProdukter(Map<String, Blodprodukt> blodProdukter) {
 		this.blodProdukter = blodProdukter;
 	}
+	
+
 
 	public Map<String, String> getTransfusjonsFields() {
 		return transfusjonsFields;
