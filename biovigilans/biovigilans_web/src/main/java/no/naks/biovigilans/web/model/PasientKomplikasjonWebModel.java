@@ -30,8 +30,8 @@ import org.restlet.data.Parameter;
 
 /**
  * @author olj
- * Denne klassen representerer en pasientkomplikasjon ved blodoverføring 
- * Klassen kan også være kilde til nedtrekksvalg for htmlsidene.
+ * Denne klassen representerer en pasientkomplikasjon ved en transfusjon 
+ * Klassen er også kilde til nedtrekksvalg for htmlsidene.
  * Disse valgene kan hentes fra andre kilder
  */
 public class PasientKomplikasjonWebModel extends VigilansModel{
