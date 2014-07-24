@@ -228,7 +228,7 @@
      	${pasientkomplikasjon.komp-manglendeeffekt},${pasientkomplikasjon.komp-uct},${pasientkomplikasjon.komp-kanikke},${pasientkomplikasjon.komp-ingenklinisk},
      	${pasientkomplikasjon.utredning-1},${pasientkomplikasjon.utredning-2},${pasientkomplikasjon.utredning},${pasientkomplikasjon.hemolyse-1},
      	${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.lga-3},
-     	${pasientkomplikasjon.dyrkning-1},${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.dyrkning-3}${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2}" >
+     	${pasientkomplikasjon.dyrkning-1},${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2}" >
 		</property>
  	</bean>	
 	 	
