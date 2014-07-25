@@ -25,5 +25,5 @@ public interface Utredning {
 	public Map<String, String> getUtredningsFields();
 	public void setUtredningsFields(Map<String, String> utredningsFields);
 	public void setutredningfieldMaps(String[]userFields);
-
+	public void saveField(String userField,String userValue);
 }

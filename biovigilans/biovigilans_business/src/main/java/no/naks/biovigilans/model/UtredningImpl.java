@@ -28,6 +28,23 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 	public void setutredningfieldMaps(String[]userFields){
 		keys = userFields;
 		
-		utredningsFields.put(userFields[0],getHemolyseparameter());
+		utredningsFields.put(userFields[0],null);
+		
 	}
+	/**
+	 * saveField
+	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
+	 * @param userField
+	 * @param userValue
+	 */
+	@Override
+	public void saveField(String userField, String userValue) {
+		if (utredningsFields.containsKey(userField) && userValue != null){
+			utredningsFields.put(userField,userValue);	
+	
+		}
+		
+		
+	}
+	
 }

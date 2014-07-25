@@ -1,6 +1,7 @@
 package no.naks.biovigilans.model;
 
 import java.sql.Types;
+import java.util.HashMap;
 
 public class KomplikasjonsklassifikasjonImpl extends
 		AbstractKomplikasjonsklassifikasjon implements Komplikasjonsklassifikasjon {
@@ -9,6 +10,7 @@ public class KomplikasjonsklassifikasjonImpl extends
 		super();
 		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		komplikasjonklassifikasjonFields = new HashMap();
 	}
 
 	public void setParams(){
@@ -27,8 +29,25 @@ public class KomplikasjonsklassifikasjonImpl extends
 	 */
 	public void setkomplikasjonklassifikasjonFieldsMaps(String[]userFields){
 		keys = userFields;
+		for (int i = 0; i<22;i++){
+			komplikasjonklassifikasjonFields.put(userFields[i],null);
+		}
+	
 		
-		komplikasjonklassifikasjonFields.put(userFields[0],getKlassifikasjon());
+	}
+	/**
+	 * saveField
+	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
+	 * @param userField
+	 * @param userValue
+	 */
+	public void saveField(String userField, String userValue) {
+		if (komplikasjonklassifikasjonFields.containsKey(userField) && userValue != null && !userValue.equals("")){
+			komplikasjonklassifikasjonFields.put(userField,userValue);	
+
+		}	
+		
+		
 	}
 
 }

@@ -27,8 +27,12 @@ public interface Pasientkomplikasjon {
 	public Map<String, String> getKomplikasjonsFields();
 
 	public void setKomplikasjonsFields(Map<String, String> komplikasjonsFields);
+	public void setPatientkomplicationfieldMaps(String[]userFields);
+	public void saveField(String userField,String userValue);
 
 	public String[] getKeys();
 
 	public void setKeys(String[] keys);
+	public void produceSymptoms(Symptomer symptomer);
+	
 }

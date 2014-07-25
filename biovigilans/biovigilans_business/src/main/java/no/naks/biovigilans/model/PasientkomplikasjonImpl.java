@@ -70,7 +70,21 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	public void setPatientkomplicationfieldMaps(String[]userFields){
 		keys = userFields;
 		
-		komplikasjonsFields.put(userFields[0],getAlvorlighetsgrad());
+		komplikasjonsFields.put(userFields[0],null);
+		komplikasjonsFields.put(userFields[1],null);
+		komplikasjonsFields.put(userFields[2],null);
+		komplikasjonsFields.put(userFields[3],null);
+		komplikasjonsFields.put(userFields[4],null);
+		komplikasjonsFields.put(userFields[5],null);
+		komplikasjonsFields.put(userFields[6],null);
+		komplikasjonsFields.put(userFields[7],null);
+		komplikasjonsFields.put(userFields[8],null);
+		komplikasjonsFields.put(userFields[9],null);
+		komplikasjonsFields.put(userFields[10],null);
+		komplikasjonsFields.put(userFields[11],null);
+		komplikasjonsFields.put(userFields[12],null);
+		komplikasjonsFields.put(userFields[13],null);
+		
 	}
 
 	public String getKlassifikasjon() {
@@ -90,18 +104,48 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 		return alvorlighetsgrad;
 	}
 	public void setAlvorlighetsgrad(String alvorlighetsgrad) {
+		if (alvorlighetsgrad == null){
+			String aProd = null;
+			for (int i=0;i<=4;i++){
+				aProd = komplikasjonsFields.get(keys[i]);
+				if (aProd != null){
+					alvorlighetsgrad = aProd;
+					break;
+				}
+			}
+		}
 		this.alvorlighetsgrad = alvorlighetsgrad;
 	}
 	public String getKliniskresultat() {
 		return kliniskresultat;
 	}
 	public void setKliniskresultat(String kliniskresultat) {
+		if (kliniskresultat == null){
+			String aProd = null;
+			for (int i=5;i<=9;i++){
+				aProd = komplikasjonsFields.get(keys[i]);
+				if (aProd != null){
+					kliniskresultat = aProd;
+					break;
+				}
+			}
+		}
 		this.kliniskresultat = kliniskresultat;
 	}
 	public String getArsakssammenheng() {
 		return arsakssammenheng;
 	}
 	public void setArsakssammenheng(String arsakssammenheng) {
+		if (arsakssammenheng == null){
+			String aProd = null;
+			for (int i=10;i<=13;i++){
+				aProd = komplikasjonsFields.get(keys[i]);
+				if (aProd != null){
+					arsakssammenheng = aProd;
+					break;
+				}
+			}
+		}
 		this.arsakssammenheng = arsakssammenheng;
 	}
 
@@ -136,6 +180,37 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 
 	public void setKeys(String[] keys) {
 		this.keys = keys;
+	}
+	/**
+	 * saveField
+	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
+	 * @param userField
+	 * @param userValue
+	 */
+	public void saveField(String userField, String userValue) {
+		if (komplikasjonsFields.containsKey(userField) && userValue != null && !userValue.equals("")){
+			komplikasjonsFields.put(userField,userValue);	
+	
+		}
+		
+	}
+
+	
+	/* produceSymptoms
+	 * Denne rutinen lager korrekt antall symptomobjekt etter antall symptomer bruker har angitt
+	 * 
+	 */
+	public void produceSymptoms(Symptomer symptomer) {
+		
+		for (String symptom : symptomer.getSymptomerFields().values()){
+			if (symptom != null && !symptom.equals("")){
+				Symptomer lokalsymptomer = new SymptomerImpl();
+				lokalsymptomer.setSymptombeskrivelse(symptom);
+				lokalsymptomer.setSymptomklassifikasjon(symptom);
+				this.symptomer.put(symptom, lokalsymptomer);
+				
+			}
+		}
 	}
 	
 }

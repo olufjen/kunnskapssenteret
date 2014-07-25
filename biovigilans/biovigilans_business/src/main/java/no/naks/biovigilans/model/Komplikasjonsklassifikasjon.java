@@ -18,4 +18,5 @@ public interface Komplikasjonsklassifikasjon {
 	public String[] getKeys();
 	public void setKeys(String[] keys);
 	public void setkomplikasjonklassifikasjonFieldsMaps(String[]userFields);
+	public void saveField(String userField, String userValue);
 }
