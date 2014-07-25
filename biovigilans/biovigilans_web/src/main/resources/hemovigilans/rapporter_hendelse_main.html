@@ -64,33 +64,60 @@ function initialize()
     </div>
       <div class="radio">
           <label>
-            <input type="radio" name="p-pasient" id="p-pasient-ja" value="pasient-ja" onclick="toggleDisplay('pasienttype', this.checked)"/>Ja
+            <input type="radio" name="p-pasient" id="p-pasient-ja" value="pasient-ja" onclick="toggleDisplay('pasient-ja', this.checked);toggleDisplay('pasient-nei', 0)"/>Ja
           </label>
       </div>
       <div class="radio">
           <label>
-            <input type="radio" name="p-pasient" id="p-pasient-nei" value="pasient-nei" onclick="toggleDisplay('pasienttype', 0)"/>Nei
+            <input type="radio" name="p-pasient" id="p-pasient-nei" value="pasient-nei" onclick="toggleDisplay('pasient-ja', 0); toggleDisplay('pasient-nei', this.checked)"/>Nei
           </label>
       </div>
 
-
-    <div id="pasienttype" style="display: none" class="form-group">
-    <b>Symptomer hos pasient?</b>
- 
-    <div class="radio">
-          <label>
-            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-ja" value="pasient-ja" onclick="toggleDisplay('antistofftype', this.checked)"/>Ja
-          </label>
-      </div>
-      <div class="radio">
-          <label>
-            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-nei" value="pasient-nei" onclick="toggleDisplay('antistofftype', 0)"/>Nei
-          </label>
-      </div>     
-  
-   
-	</div>
- 
+	<div id="pasient-ja" style="display: none " class="form-group" >
+	    <div id="pasienttype" class="form-group">
+		    <b>Symptomer hos pasient?</b>
+		 
+		    <div class="radio">
+		          <label>
+		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-ja" value="pasient-ja" onclick="toggleDisplay('feilblod', 0); document.location='rapporter_transfusjon.html';"/>Ja
+		          </label>
+		      </div>
+		      <div class="radio">
+		          <label>
+		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-nei" value="pasient-nei" onclick="toggleDisplay('feilblod', this.checked)"/>Nei
+		          </label>
+		      </div>     
+		</div>
+		
+		<div id="feilblod" style="display: none" class="form-group">
+		  <b>Er dette Feil Blod transfudert?</b>
+		  <div class="radio">
+	          <label>
+	            <input type="radio" name="p-feilblod" id="p-feilblod-ja" value="feilblod-ja" />Ja
+	          </label>
+	      </div>
+	      <div class="radio">
+	          <label>
+	            <input type="radio" name="p-feilblod" id="p-feilblod-nei" value="feilblod-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
+	          </label>
+	      </div>     
+		</div>
+ 	</div>
+ 	<div id="pasient-nei" style="display: none">
+	 	<div id="giverrelatert"  class="form-group">
+		  <b>Er dette en giverrelatert hendelse?</b>
+		  <div class="radio">
+	          <label>
+	            <input type="radio" name="p-giverrelatert" id="p-giverrelatert-ja" value="giverrelatert-ja" onclick="document.location='rapporter_giver.html';" />Ja
+	          </label>
+	      </div>
+	      <div class="radio">
+	          <label>
+	            <input type="radio" name="p-giverrelatert" id="p-giverrelatert-nei" value="giverrelatert-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
+	          </label>
+	      </div>
+	  	</div>	  	
+ 	</div>
 <!-- 
       <div class="radio">
           <label>
@@ -110,11 +137,13 @@ function initialize()
             Andre uønskede hendelser
           </label>
       </div>
- -->       
-      <br/>
+      
+        <br/>
       <button name="avbryt1" type="submit" class="btn btn-default">Avbryt</button>
       <button name="lukk1" type="submit" class="btn btn-default">Lukk</button>
       <button name="lagre1" type="submit" class="btn btn-primary">Lagre</button>
+ -->       
+    
 </div><!--slutt Meld fra om-->
 </div>
 </form>

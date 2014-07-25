@@ -97,7 +97,7 @@
 	</bean>
 	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
 
-		<property name="xmlFillocation" value="Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml"></property>
+		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
 
 
 	</bean>	
@@ -178,6 +178,13 @@
   <!-- end ekstra server resource -->
   <bean name="/hemovigilans/rapporter_hendelse_main.html" id="rapportermainServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterMainServerResourceHtml">
+ 		<property name="sessionAdmin" ref="sessionAdmin"></property>
+     	<property name="tablewebservice" ref="tableWebService"></property>
+     	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
+     	<property name="icd10WebService" ref="ICD10WebService"></property>  
+  </bean >	
+  <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
+            class="no.naks.biovigilans.web.server.resource.RapporterkontaktServerResourceHtml">
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
