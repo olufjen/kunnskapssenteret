@@ -239,7 +239,7 @@
      	${pasientkomplikasjon.alvor-mang1},${pasientkomplikasjon.alvor-mang2},${pasientkomplikasjon.alvor-mang3},${pasientkomplikasjon.alvor-mang4},
      	${pasientkomplikasjon.alvor-mang5},${pasientkomplikasjon.klinisk-res1},${pasientkomplikasjon.klinisk-res2},${pasientkomplikasjon.klinisk-res3},
      	${pasientkomplikasjon.klinisk-res4},${pasientkomplikasjon.klinisk-res5},${pasientkomplikasjon.aarsaks1},${pasientkomplikasjon.aarsaks2},
-     	${pasientkomplikasjon.aarsaks3},${pasientkomplikasjon.aarsaks4}">
+     	${pasientkomplikasjon.aarsaks3},${pasientkomplikasjon.aarsaks4},${pasientkomplikasjon.antistofftext},${pasientkomplikasjon.antistoffiga},${pasientkomplikasjon.p-antistoffannet}">
 		</property>
  	</bean>	
 	 	
