@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.xml.Letter;
@@ -23,9 +24,13 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
-public class RapporterkontaktServerResourceHtml extends ProsedyreServerResource {
-
-	public RapporterkontaktServerResourceHtml() {
+public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
+	private GiverKomplikasjonwebModel result=null;
+	private String[] aldergruppe;
+	private String[] kjonnValg; 
+	private String giverkomplikasjonId="giverkomplikasjon";
+	
+	public RapporterGiverServerResourceHtml() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -60,9 +65,22 @@ public class RapporterkontaktServerResourceHtml extends ProsedyreServerResource 
 	     LocalReference localUri = new LocalReference(reference);
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
 	     
-	        // Load the FreeMarker template
+	     result = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
+		    
+	     if(result==null){
+	    	 result = new GiverKomplikasjonwebModel();
+	    	 result.setAldergruppe(aldergruppe);
+	     }
+	   
+	     dataModel.put(giverkomplikasjonId, result);
+	     
+	     sessionAdmin.setSessionObject(getRequest(), result,giverkomplikasjonId);
+	     
+	     sessionAdmin.setSessionObject(getRequest(), result,giverkomplikasjonId);
+	     
+	     // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/pasientkomplikasjon/nymeldingfagprosedyre.html").get();
 	        Representation pasientkomplikasjonFtl = clres2.get();
@@ -74,7 +92,25 @@ public class RapporterkontaktServerResourceHtml extends ProsedyreServerResource 
 	                MediaType.TEXT_HTML);
 		 return templatemapRep;
 	 }
-    /**
+	
+	
+    public String[] getAldergruppe() {
+		return aldergruppe;
+	}
+
+	public void setAldergruppe(String[] aldergruppe) {
+		this.aldergruppe = aldergruppe;
+	}
+
+	public String[] getKjonnValg() {
+		return kjonnValg;
+	}
+
+	public void setKjonnValg(String[] kjonnValg) {
+		this.kjonnValg = kjonnValg;
+	}
+
+	/**
      * storeHemovigilans
      * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
      * @param form
@@ -84,31 +120,46 @@ public class RapporterkontaktServerResourceHtml extends ProsedyreServerResource 
     public Representation storeHemovigilans(Form form) {
     	TemplateRepresentation  templateRep = null;
     	
+    	if (form == null){
+    		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
+    	}
  
     	if (form != null){
+    		result = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),giverkomplikasjonId);
     		Parameter logout = form.getFirst("avbryt4");
     		Parameter lukk = form.getFirst("lukk4");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
     		if (logout != null || lukk != null){
- 
+    			sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
-	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+	    	/*	templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+	    				MediaType.TEXT_HTML);
+	    	*/	
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, result,
 	    				MediaType.TEXT_HTML);
     			return templateRep; // return a new page!!!
     		}
-    			
+    		
+    		if (result == null){
+    			result = new GiverKomplikasjonwebModel();
+    			 result.setFormNames(sessionParams);
+    		}
  
     		for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
     					System.out.println(entry.getName() + "=" + entry.getValue());
-    	
+    			result.setValues(entry);
     		}
-
-    	
+    		
+    		sessionAdmin.setSessionObject(getRequest(), result,giverkomplikasjonId);
+    		 dataModel.put(giverkomplikasjonId, result);
     		Parameter lagre = form.getFirst("lagre4");
- 
+    		if(lagre!=null){
+    			//result.saveValues();
+    		}
+    		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
 //    		System.out.println("Status = "+result.getStatus());
     		// Denne client resource forholder seg til src/main/resource katalogen !!!	
     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
