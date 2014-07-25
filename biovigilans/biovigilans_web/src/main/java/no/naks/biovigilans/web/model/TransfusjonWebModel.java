@@ -5,13 +5,21 @@ import java.util.Map;
 
 import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.BlodproduktImpl;
+import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
+import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
+import no.naks.biovigilans.model.PasientkomplikasjonImpl;
+import no.naks.biovigilans.model.Symptomer;
+import no.naks.biovigilans.model.SymptomerImpl;
 import no.naks.biovigilans.model.Transfusjon;
 import no.naks.biovigilans.model.TransfusjonImpl;
+import no.naks.biovigilans.model.Utredning;
+import no.naks.biovigilans.model.UtredningImpl;
 
 /**
  * @author olj
- * Denne klassen representerer Transfusjonopplysninger gitt av bruker
+ * Denne klassen representerer Transfusjonopplysninger gitt av bruker.
+ * Det omfatter Transfusjon, Blodprodukt, og Pasientkomplikasjon som definert i modellen
  * 
  */
 public class TransfusjonWebModel extends VigilansModel {
@@ -20,6 +28,10 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Blodprodukt blodProdukt;
 	private Blodprodukt annenBlodprodukt;
 	private Transfusjon transfusjon;
+	private Pasientkomplikasjon pasientKomplikasjon;
+	private Symptomer symptomer;
+	private Komplikasjonsklassifikasjon komplikasjonsklassifikasjon;
+	private Utredning utredning;
 	
 	public TransfusjonWebModel() {
 		super();
@@ -27,8 +39,14 @@ public class TransfusjonWebModel extends VigilansModel {
 		blodProdukt = new BlodproduktImpl();
 		annenBlodprodukt = new BlodproduktImpl();
 		transfusjon = new TransfusjonImpl();
-
+		pasientKomplikasjon = new PasientkomplikasjonImpl();
+		symptomer = new SymptomerImpl();
+		komplikasjonsklassifikasjon = new KomplikasjonsklassifikasjonImpl();
+		utredning = new UtredningImpl();
+		
+		
 	}
+
 
 	/**
 	 * distributeTerms
@@ -49,6 +67,23 @@ public class TransfusjonWebModel extends VigilansModel {
 		
 		String[] annenblodProduktfields = {formFields[38],formFields[39],formFields[40],formFields[41],formFields[42],formFields[43],
 				formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49]};
+		annenBlodprodukt.setBlodProduktfieldMaps(annenblodProduktfields);
+		String[] pasientKomplikasjonsfields = {formFields[129],formFields[130],formFields[131],formFields[132],formFields[133],formFields[134],
+				formFields[135],formFields[136],formFields[137],formFields[138],formFields[139],formFields[140],formFields[141],formFields[142]};
+		pasientKomplikasjon.setPatientkomplicationfieldMaps(pasientKomplikasjonsfields);
+		String[] symptomerFields = {formFields[65],formFields[66],formFields[67],formFields[68],formFields[69],formFields[70],formFields[71],
+				formFields[72],formFields[73],formFields[74],formFields[75],formFields[75],formFields[76],formFields[77],formFields[78],formFields[79],
+				formFields[80],formFields[81],formFields[82],formFields[83],formFields[84],formFields[85],formFields[86],formFields[87],
+				formFields[88],formFields[89],formFields[90]};
+		symptomer.setsymptomerfieldMaps(symptomerFields);
+		String[] klassifikasjonsFields = {formFields[91],formFields[92],formFields[93],formFields[94],formFields[95],formFields[96],
+				formFields[97],formFields[98],formFields[99],formFields[100],formFields[101],formFields[102],formFields[103],formFields[104],
+				formFields[105],formFields[106],formFields[107],formFields[108],formFields[109],formFields[110],formFields[111],formFields[112],formFields[113]};
+		komplikasjonsklassifikasjon.setkomplikasjonklassifikasjonFieldsMaps(formFields);
+		String[] utredningFields = {formFields[114],formFields[115],formFields[116],formFields[117],formFields[118],formFields[119],formFields[120],
+				formFields[121],formFields[122],formFields[123],formFields[124],formFields[125],formFields[126],formFields[127],formFields[128]};
+		utredning.setutredningfieldMaps(utredningFields);
+		
 	}
 
 	/**
@@ -64,6 +99,10 @@ public class TransfusjonWebModel extends VigilansModel {
 				System.out.println("Key: "+ field + " Innhold =" + userEntry);
 			blodProdukt.saveField(field, userEntry);
 			transfusjon.saveField(field, userEntry);
+			pasientKomplikasjon.saveField(field, userEntry);
+			symptomer.saveField(field, userEntry);
+			komplikasjonsklassifikasjon.saveField(field, userEntry);
+			utredning.saveField(field, userEntry);
 		}
 		blodProdukt.setAntallEnheter(-1);
 		blodProdukt.setBlodprodukt(null);
@@ -73,6 +112,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.setTransDato(null);
 		transfusjon.setTransfusjonsklokkeslett(null);
 		transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
+		pasientKomplikasjon.produceSymptoms(symptomer);
 		
 	}
 		
