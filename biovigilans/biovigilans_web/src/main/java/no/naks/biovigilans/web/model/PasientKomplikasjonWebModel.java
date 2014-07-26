@@ -15,6 +15,10 @@ import java.util.Map;
 
 
 
+
+
+import no.naks.biovigilans.model.Antistoff;
+import no.naks.biovigilans.model.AntistoffImpl;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.PasientImpl;
 import no.naks.biovigilans.model.Sykdom;
@@ -40,6 +44,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private Sykdom sykdom;
 	private Sykdom transfusjonKomplikasjon;
 	private Sykdom annenSykdom;
+	private Antistoff antistoff;
 	private String[] aldergruppe;
 	private String[] kjonnValg; 	// Inneholder definisjon av kjønn for mann/kvinne
 	private String mann; 			//definisjon kjønn mann
@@ -69,6 +74,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		pasient = new PasientImpl();
 		sykdom = new SykdomImpl();
 		annenSykdom = new SykdomImpl();
+		antistoff = new AntistoffImpl();
+		
 		//sykdom.setSymptomer(sykdomSymptom);
 		transfusjonKomplikasjon = new SykdomImpl();
 		//transfusjonKomplikasjon.setSymptomer(transfusjon);
@@ -298,11 +305,12 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		String sykdomFields[] = {formFields[9]};
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[17]};
-
+		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[9],formFields[143],formFields[144],formFields[145]};
 		pasient.setPatientfieldMaps(patientFields);
 		sykdom.setsykdomfieldMaps(sykdomFields);
 		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);
 		annenSykdom.setsykdomfieldMaps(annenSykdomFields);
+		antistoff.setantistofffieldMaps(antistoffFields);
 	}
 	/**
 	 * saveValues
@@ -317,11 +325,16 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 			sykdom.saveField(field, userEntries.get(field));
 			transfusjonKomplikasjon.saveField(field, userEntries.get(field));
 			annenSykdom.saveField(field,userEntries.get(field));
+			antistoff.saveField(field,userEntries.get(field));
 		}
 		pasient.savetoPatient();
 		sykdom.saveSykdom();
 		transfusjonKomplikasjon.saveSykdom();
 		annenSykdom.saveSykdom();
+		pasient.produceAntistoffer(antistoff);
+		pasient.getSykdommer().put(sykdom.getDiagnosekode(),sykdom);
+		pasient.getSykdommer().put(annenSykdom.getDiagnosekode(),annenSykdom);
+		pasient.getSykdommer().put(transfusjonKomplikasjon.getDiagnosekode(),transfusjonKomplikasjon);
 		
 	}
 	

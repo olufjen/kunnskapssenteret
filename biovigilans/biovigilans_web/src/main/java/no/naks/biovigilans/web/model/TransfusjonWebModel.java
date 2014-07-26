@@ -115,6 +115,16 @@ public class TransfusjonWebModel extends VigilansModel {
 		pasientKomplikasjon.produceSymptoms(symptomer);
 		
 	}
+
+
+	public Transfusjon getTransfusjon() {
+		return transfusjon;
+	}
+
+
+	public void setTransfusjon(Transfusjon transfusjon) {
+		this.transfusjon = transfusjon;
+	}
 		
 	
 }
