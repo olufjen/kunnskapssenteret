@@ -44,7 +44,7 @@ import org.springframework.web.context.WebApplicationContext;
  * Resurser blir instansiert for hver kall fra klient
  * 
  * @author olj
- * Denne resursen håndterer all dialog for rapporter transfusjonskomplikasjoner hemovigilans
+ * Denne resursen håndterer all dialog for rapportering av transfusjonskomplikasjoner hemovigilans
  * 
  */
 public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource {
@@ -268,6 +268,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    		if (lagre != null){
 	    			result.saveValues();
 	    			transfusjon.saveValues();
+	    			result.getPasient().getTransfusjoner().put(transfusjon.getTransfusjon().getTransDato(), transfusjon.getTransfusjon());
 	    			hendelseWebService.saveHendelse(result);
 	    		}
 	    		sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
