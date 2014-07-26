@@ -61,12 +61,12 @@ function initialize()
         <label>Kjønn:</label>
     	<div class="radio">
           <label>
-          	<input type="radio" name="pas-kjonnmann" id="pas-kjonn-1" value="${pasientkomplikasjon.mann}"/>Mann
+          	<input type="radio" name="pas-kjonn" id="pas-kjonn-1" value="${pasientkomplikasjon.mann}"/>Mann
           </label>
 	    </div>
         <div class="radio">
           <label>
-          	<input type="radio" name="pas-kjonnkvinne" id="pas-kjonn-2" value="${pasientkomplikasjon.kvinne}"/>Kvinne
+          	<input type="radio" name="pas-kjonn" id="pas-kjonn-2" value="${pasientkomplikasjon.kvinne}"/>Kvinne
           </label>
 	    </div>
     </div>
@@ -103,10 +103,13 @@ function initialize()
     <div id="antistofftype" style="display: none" class="form-group">
     <b>Hvis ja: Type antistoff:</b>
     <div  class="checkbox">
-     
-    <label>
-      <input name="p-antistoff-erytrocytt" type="checkbox" id="p-antistoff-erytrocytt"  value="antistoff-erytrocytt"/> Erytrocyttantistoff.
+     <label>
+      <input name="p-antistoff-erytrocytt" type="checkbox" id="p-antistoff-erytrocytt"  value="antistoff-erytrocytt" onclick="toggleDisplay('antistofferytrocytttext', this.checked)"/> Erytrocyttantistoff.
     </label>
+    </div>
+       <div id="antistofferytrocytttext" style="display: none" class="form-group">
+     <label>Type antistoff</label> 
+      <input type="text"  name="p-antistofferytrocytttext" size="80"  value="" class="form-control"/>
     </div>
     <div class="checkbox">
     <label>
@@ -125,7 +128,7 @@ function initialize()
     </div>
     <div class="checkbox">
     <label>
-    	<input name="p-antistoff-iga" type="checkbox" id="p-antistoff-iga" value="antistoff-iga"/> Anti-lga.
+    	<input name="p-antistoff-iga" type="checkbox" id="p-antistoff-iga" value="antistoff-iga"/> Anti-lgA.
     </label>
     </div>
     <div id="antistoffannet" class="form-group">
