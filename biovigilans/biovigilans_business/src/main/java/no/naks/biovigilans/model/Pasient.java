@@ -35,5 +35,18 @@ public interface Pasient {
 	public void savetoPatient();
 	public String[] getKeys();
 	public void setKeys(String[] keys);
+	public Map<String, Antistoff> getAntistoffer();
+
+	public void setAntistoffer(Map<String, Antistoff> antistoffer);
+
+	public Map<String, Sykdom> getSykdommer();
+
+	public void setSykdommer(Map<String, Sykdom> sykdommer);
 	
+	public void produceSykdommer(Sykdom sykdom);
+	public void produceAntistoffer(Antistoff antistoff);
+	
+	public Map<String, Transfusjon> getTransfusjoner();
+
+	public void setTransfusjoner(Map<String, Transfusjon> transfusjoner);
 }

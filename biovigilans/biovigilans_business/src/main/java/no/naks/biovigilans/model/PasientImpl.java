@@ -9,16 +9,13 @@ import java.util.Map;
  *
  * Denne klassen representerer en konkret pasient
  */
-/**
- * @author olj
- *
- */
-/**
- * @author olj
- *
- */
+
 public class PasientImpl extends AbstractPasient implements Pasient {
 
+	private Map<String,Antistoff> antistoffer;
+	private Map<String,Sykdom> sykdommer;
+	private Map<String,Transfusjon> transfusjoner;
+	
 	
 	public PasientImpl() {
 		super();
@@ -31,6 +28,11 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		patientFields = new HashMap();
 		antiStoff = new String[4];
+		antistoffer = new HashMap();
+		sykdommer = new HashMap();
+		transfusjoner = new HashMap();
+		
+		
 	}
 
 	public void setParams(){
@@ -85,4 +87,49 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		setAldersGruppe(null);
 		setAntiStoff(null);
 	}
+
+	public Map<String, Antistoff> getAntistoffer() {
+		return antistoffer;
+	}
+
+	public void setAntistoffer(Map<String, Antistoff> antistoffer) {
+		this.antistoffer = antistoffer;
+	}
+
+	public Map<String, Sykdom> getSykdommer() {
+		return sykdommer;
+	}
+
+	public void setSykdommer(Map<String, Sykdom> sykdommer) {
+		this.sykdommer = sykdommer;
+	}
+
+	
+	public void produceSykdommer(Sykdom sykdom) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	public Map<String, Transfusjon> getTransfusjoner() {
+		return transfusjoner;
+	}
+
+	public void setTransfusjoner(Map<String, Transfusjon> transfusjoner) {
+		this.transfusjoner = transfusjoner;
+	}
+
+	public void produceAntistoffer(Antistoff antistoff) {
+		for (String antistoffer : antistoff.getAntistoffFields().values()){
+			if (antistoffer != null && !antistoffer.equals("")){
+				Antistoff lokalantistoff = new AntistoffImpl();
+				lokalantistoff.setAntistoffbeskrivelse(antistoffer);
+				lokalantistoff.setAntistoffKode(antistoffer);
+				this.antistoffer.put(antistoffer, lokalantistoff);
+				
+			}
+		}
+		
+	}
+	
 }

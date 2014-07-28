@@ -2,29 +2,32 @@ package no.naks.biovigilans.model;
 
 import java.util.Map;
 
+import no.naks.rammeverk.kildelag.model.AbstractModel;
+
 
 /**
  * Viser type antistoff for pasienten.
  * 
  */
 
-public abstract class AbstractAntistoff{
+public abstract class AbstractAntistoff extends AbstractModel implements Antistoff{
 
-	private java.lang.String antistoffbeskrivelse;
-	private java.lang.String antistoffKode;
+	private String antistoffbeskrivelse;
+	private String antistoffKode;
 	private long antistoffId;
 	protected Map<String,String> antistoffFields;
 	protected String[] keys;
-	public java.lang.String getAntistoffbeskrivelse() {
+	
+	public String getAntistoffbeskrivelse() {
 		return antistoffbeskrivelse;
 	}
-	public void setAntistoffbeskrivelse(java.lang.String antistoffbeskrivelse) {
+	public void setAntistoffbeskrivelse(String antistoffbeskrivelse) {
 		this.antistoffbeskrivelse = antistoffbeskrivelse;
 	}
-	public java.lang.String getAntistoffKode() {
+	public String getAntistoffKode() {
 		return antistoffKode;
 	}
-	public void setAntistoffKode(java.lang.String antistoffKode) {
+	public void setAntistoffKode(String antistoffKode) {
 		this.antistoffKode = antistoffKode;
 	}
 	public long getAntistoffId() {
