@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
@@ -7,31 +9,96 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
  * 
  */
 
-public abstract class AbstractDonasjon extends AbstractModel{
+public abstract class AbstractDonasjon extends AbstractModel implements Donasjon{
 
+	private Long donasjonsId;
 	/**
-	 * Må beskrives
+	 * Mï¿½ beskrives
 	 */
-	private int donasjonssted;
+	private String donasjonssted;
 	/**
 	 * Ja nei, vet ikke
 	 */
-	private int komplisertvenepunksjon;
+	private String komplisertvenepunksjon;
 	/**
-	 * Tappetype vil være en av følgende:
+	 * Tappetype vil vï¿½re en av fï¿½lgende:
 	 * Fullblods
 	 */
-	private int tappetype;
+	private String tappetype;
 	/**
 	 * Tappevariighet
 	 */
-	private int tappevarighet;
+	private String tappevarighet;
 	/**
-	 * Må beskrives
+	 * Mï¿½ beskrives
 	 */
-	private int lokalisasjonvenepunksjon;
+	private String lokalisasjonvenepunksjon;
 	/**
-	 * Måltid innen 3 timer før tapping (Ja, nei Vet ikke)
+	 * Mï¿½ltid innen 3 timer fï¿½r tapping (Ja, nei Vet ikke)
 	 */
-	private int maltidfortapping;
+	private String maltidfortapping;
+	
+
+	
+	protected Map<String,String> donasjonsFields;
+	protected String[] keys;
+	
+	
+	public Long getDonasjonsId() {
+		return donasjonsId;
+	}
+	public void setDonasjonsId(Long donasjonsId) {
+		this.donasjonsId = donasjonsId;
+	}
+	
+	public String getDonasjonssted() {
+		return donasjonssted;
+	}
+	public void setDonasjonssted(String donasjonssted) {
+		this.donasjonssted = donasjonssted;
+	}
+	public String getKomplisertvenepunksjon() {
+		return komplisertvenepunksjon;
+	}
+	public void setKomplisertvenepunksjon(String komplisertvenepunksjon) {
+		this.komplisertvenepunksjon = komplisertvenepunksjon;
+	}
+	public String getTappetype() {
+		return tappetype;
+	}
+	public void setTappetype(String tappetype) {
+		this.tappetype = tappetype;
+	}
+	public String getTappevarighet() {
+		return tappevarighet;
+	}
+	public void setTappevarighet(String tappevarighet) {
+		this.tappevarighet = tappevarighet;
+	}
+	public String getLokalisasjonvenepunksjon() {
+		return lokalisasjonvenepunksjon;
+	}
+	public void setLokalisasjonvenepunksjon(String lokalisasjonvenepunksjon) {
+		this.lokalisasjonvenepunksjon = lokalisasjonvenepunksjon;
+	}
+	public String getMaltidfortapping() {
+		return maltidfortapping;
+	}
+	public void setMaltidfortapping(String maltidfortapping) {
+		this.maltidfortapping = maltidfortapping;
+	}
+	public Map<String, String> getDonasjonsFields() {
+		return donasjonsFields;
+	}
+	public void setDonasjonsFields(Map<String, String> donasjonsFields) {
+		this.donasjonsFields = donasjonsFields;
+	}
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
+	}
+	
+	
 }

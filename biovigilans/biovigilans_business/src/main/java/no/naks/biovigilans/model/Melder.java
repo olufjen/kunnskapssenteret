@@ -1,16 +1,21 @@
 package no.naks.biovigilans.model;
 
+import java.util.Map;
 
-/**
- * Melder til Biovigilans har tilknytning til og jobber i en helseinstitusjon.
- * Hun melder om uønskede hendelser eller komplikasjoner ved givning eller mottak av blod, celler og vev, eller organer. 
- * Melder har også rollen som Oppfølger.
- * 
- */
+public interface Melder {
 
-public class Melder{
-
-	private int meldernavn;
-	private int melderepost;
-	private int meldertlf;
+	
+	public Long getMelderId();
+	public void setMelderId(Long melderId);
+	public String getMeldernavn();
+	public void setMeldernavn(String meldernavn);
+	public String getMelderepost();
+	public void setMelderepost(String melderepost);
+	public String getMeldertlf();
+	public void setMeldertlf(String meldertlf);
+	public Map<String, String> getMelderFields();
+	public void setMelderFields(Map<String, String> melderFields);
+	public String[] getKeys();
+	public void setKeys(String[] keys);
+	
 }
