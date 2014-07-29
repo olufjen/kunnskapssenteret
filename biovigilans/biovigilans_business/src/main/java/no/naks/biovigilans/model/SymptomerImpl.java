@@ -29,7 +29,7 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 
 		keys = userFields;
 		
-		for (int i = 0; i<20;i++){
+		for (int i = 0; i<25;i++){
 			symptomerFields.put(userFields[i],null);
 		}
 	

@@ -27,8 +27,9 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 	 */
 	public void setutredningfieldMaps(String[]userFields){
 		keys = userFields;
-		
-		utredningsFields.put(userFields[0],null);
+		for (int i = 0;i<15;i++){
+			utredningsFields.put(userFields[0],null);
+		}
 		
 	}
 	/**
