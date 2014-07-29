@@ -80,6 +80,7 @@
 	 			<value>/config/app-config/question.properties</value>
 	 			<value>/config/app-config/environment.properties</value>
 	 			<value>/config/app-config/parameter.properties</value>
+	 			<value>/config/app-config/transfusjoner.properties</value>
 	 		</list>
 	 	</property>
 	 </bean>
