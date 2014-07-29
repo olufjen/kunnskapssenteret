@@ -182,14 +182,14 @@
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
-  </bean >	
+  </bean>	
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
-  </bean >	
+  </bean>	
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterGiverServerResourceHtml">
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
@@ -199,7 +199,7 @@
      	<property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
      		${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
      	
-  </bean >	
+  </bean>	
  	<bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
                 	<property name="sessionAdmin" ref="sessionAdmin"></property>
