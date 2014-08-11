@@ -80,7 +80,9 @@
 	 			<value>/config/app-config/question.properties</value>
 	 			<value>/config/app-config/environment.properties</value>
 	 			<value>/config/app-config/parameter.properties</value>
-	 			<value>/config/app-config/transfusjoner.properties</value>
+	 			<value>/config/app-config/giver.properties</value>
+	 			<!-- <value>/config/app-config/transfusjoner.properties</value> -->
+	 			
 	 		</list>
 	 	</property>
 	 </bean>
@@ -97,8 +99,8 @@
 
 	</bean>
 	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--C:\\biovigilans\\temp\\ICD10CM.xml -->
-		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
+<!-- Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml -->
+		<property name="xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml" ></property>
 
 
 	</bean>	
@@ -199,7 +201,13 @@
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
      	<property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
      		${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
-     	
+        <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},
+        			${giver.reaksjon},${giver.sted},${giver.maltid},${giver.vene},${giver.type},${giver.tid},${giver.hvor},
+        			${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinresultat},${giver.arm},${giver.tabskadearm},
+        			${giver.bivirk},${giver.systemiskbivirkning},${giver.annenreak},${giver.annenreaksjon},${giver.reaksjon},
+        			${giver.kortbeskr},${giver.strakstiltak},${giver.annenreak},${giver.behandlingoppfolging},${giver.hvorbehandling},
+        			${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak}">
+     	</property>
   </bean>	
  	<bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
