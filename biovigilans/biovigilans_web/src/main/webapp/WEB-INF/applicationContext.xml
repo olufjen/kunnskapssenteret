@@ -81,8 +81,6 @@
 	 			<value>/config/app-config/environment.properties</value>
 	 			<value>/config/app-config/parameter.properties</value>
 	 			<value>/config/app-config/giver.properties</value>
-	 			<!-- <value>/config/app-config/transfusjoner.properties</value> -->
-	 			
 	 		</list>
 	 	</property>
 	 </bean>
@@ -99,8 +97,8 @@
 
 	</bean>
 	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!-- Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml -->
-		<property name="xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml" ></property>
+<!--C:\\biovigilans\\temp\\ICD10CM.xml -->
+		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
 
 
 	</bean>	
@@ -183,21 +181,21 @@
             class="no.naks.biovigilans.web.server.resource.RapporterMainServerResourceHtml">
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
+     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
   </bean>	
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
+     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
   </bean>	
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterGiverServerResourceHtml">
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
+     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
      	<property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
      		${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
@@ -213,7 +211,7 @@
             class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
                 	<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
+     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>
      	<property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient4},${aldergruppepasient5},
      		${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
@@ -266,12 +264,11 @@
             class="no.naks.biovigilans.web.server.resource.HemovigilansServerResourceHtml">
      	<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="innmeldingWebService"></property>
+     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>
     
  
  	</bean>
- 
  
      
 	<bean id="sessionAdmin" class="no.naks.biovigilans.web.control.SessionAdminImpl">
@@ -282,8 +279,8 @@
 	<bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
 		<property name="imagePath" value="${image.archive.path}" />
 	</bean>
-	<bean id="innmeldingWebService" class="no.naks.biovigilans.web.control.HendelseWebServiceImpl">
-	
+	<bean id="hendelseWebService" class="no.naks.biovigilans.web.control.HendelseWebServiceImpl">
+		<property name="pasientService" ref="PasientTableService"></property>
 	</bean>
 
 <!-- Exception handling -->

@@ -14,6 +14,10 @@
                <param-value>no.naks.web.server.BiovigilansApiApplication</param-value>
         </context-param>
 	-->
+	<context-param>
+	  <param-name>contextConfigLocation</param-name>
+   		<param-value>/WEB-INF/applicationContext.xml,/WEB-INF/applicationContext-ejb.xml</param-value>
+	</context-param>
 <servlet>
   <servlet-name>appServlet</servlet-name>
   <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -35,6 +39,7 @@
      	<init-param>
     		<param-name>org.restlet.clients</param-name>
     		<param-value>CLAP HTTP HTTPS FILE</param-value>
+
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 </servlet>

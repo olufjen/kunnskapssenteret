@@ -11,10 +11,20 @@
 		<property name="password" value="${database.password}"></property>
 	</bean>
 
-	<bean id="jdbcTemplateskjemabank" class="org.springframework.jdbc.core.JdbcTemplate">
+	<bean id="jdbcTemplatebiovigilans" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSourceskjemabank"></property>
 	</bean>
 	<bean id="domainDictionary" class="no.naks.framework.web.control.DomainDictionaryImpl">
+  </bean>
+  
+  
+  <bean id="pasientDAO" class="no.naks.biovigilans.dao.PasientDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertPatientSQL" value="${pasient.insertpasient}"></property>
+  </bean>
+  
+  <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
+  	<property name="pasientDAO" ref="pasientDAO"></property>
   </bean>
   
   <!-- /usr/local/tomcat6/xml/ -->
