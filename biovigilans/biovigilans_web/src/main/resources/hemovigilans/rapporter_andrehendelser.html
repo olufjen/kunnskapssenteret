@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rapporter hendelse - Hemovigilans</title>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<!--<link rel="stylesheet" href="css/bootstrap.css">-->
+
+</head>
+
+<body>
+	<div class="container">
+		<form id="rapport" action="?method=PUT" method="post"> 
+	
+			<h1>Rapporter Andre Hendelser</h1>
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs">
+			  <li ><a href="rapporter_hendelse_main.html" data-toggle="tab">Meld fra om</a></li>
+			  <li><a href="rapporter_kontakt.html" data-toggle="tab">Kontaktinformasjon</a></li>
+			  <li class="active"><a href="#andrehendelser" data-toggle="tab">Rapporter Andre-hendelser</a></li>
+			</ul>
+			
+			<div class="tab-pane" id="andrehendelser">
+				<h3>
+					Date For hendelsen
+				</h3>
+				<div class="form-group">
+					<input type="date" name="hendelsen-date">
+				</div>
+				<h3>
+					Beskrivelse av hendelsen
+				</h3>
+				<div class="form-group">
+					<textarea class="form-control" name="beskrivelse" rows="2" ></textarea>
+				</div>
+				
+				<div class="form-group">
+					<label>Definisjon av alvorlig hendelse</label>
+					 <input name ="tab-hendelse" list="hendelse" class="form-control">
+					<datalist id="alvorig-list">
+						<%list>
+							<option selected="selected">velg fra listen..</option>
+						</%list>
+					</datalist>
+				</div>
+				
+				<div class="form-group">
+					<label>Klassifikasjon av feilen eller</label>
+					 <input name ="tab-klassifikasjon" list="klassifikasjon" class="form-control">
+					<datalist id="klassifikasjon-list">
+						<%list>
+							<option selected="selected">velg fra listen..</option>
+						</%list>
+					</datalist>
+				</div>
+				
+				<div class="form-group">
+					<label>avviket</label>
+					 <input name ="tab-avviket" list="avviket" class="form-control">
+					<datalist id="avviket-list">
+						<%list>
+							<option selected="selected">velg fra listen..</option>
+						</%list>
+					</datalist>
+				</div>
+				
+				<div class="form-group">
+					<label>Primærårsak til feil eller avvik fra kvalitetskrav</label>
+					 <input name ="tab-kvalitetskrav" list="kvalitetskrav" class="form-control">
+					<datalist id="kvalitetskrav-list">
+						<%list>
+							<option selected="selected">velg fra listen..</option>
+						</%list>
+					</datalist>
+				</div>
+				
+				<div class="form-group">
+					<label>Hvilken prosess gjaldt hendelsen?</label>
+					 <input name ="tab-prosess" list="" class="form-control">
+					<datalist id="prosess-list">
+						<%list>
+							<option selected="selected">velg fra listen..</option>
+						</%list>
+					</datalist>
+				</div>
+				<h3>
+					Hvordan ble hendelsen oppdaget?
+				</h3>
+				<div class="form-group">
+					<textarea class="form-control" name="oppdaget" rows="2" ></textarea>
+				</div>
+				<h3>
+					Gjennomført eller planlagte forebyggende tiltak. Beskriv kort.
+				</h3>
+				<div class="form-group">
+					<textarea class="form-control" name="planlagte" rows="2" ></textarea>
+				</div>
+				<h3>
+					Kommentar
+				</h3>
+				<div class="form-group">
+					<textarea class="form-control" name="kommentar" rows="2" ></textarea>
+				</div>
+				
+				 	<button name="avbryt3" type="submit" class="btn btn-default">Avbryt</button>
+			      	<button name="lukk3" type="submit" class="btn btn-default">Lukk</button>
+			      	<button name="lagre3" type="submit" class="btn btn-primary">Lagre</button>
+			</div>
+		</form>
+	</div>	
+</body>
