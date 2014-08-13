@@ -21,6 +21,9 @@
   <bean id="pasientDAO" class="no.naks.biovigilans.dao.PasientDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   	<property name="insertPatientSQL" value="${pasient.insertpasient}"></property>
+  	<property name="insertsykdomSQL" value="${sykdom.insertsykdom}"></property>
+  	<property name="pasientPrimaryKey" value="${primarykey.pasient}"></property>
+  	<property name="pasientprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   </bean>
   
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
