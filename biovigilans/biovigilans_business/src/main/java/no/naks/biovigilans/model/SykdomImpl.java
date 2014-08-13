@@ -7,17 +7,17 @@ public class SykdomImpl extends AbstractSykdom implements Sykdom {
 
 	public SykdomImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
+		utypes = new int[] {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		sykdomFields = new HashMap();
 	}
 
 	public void setParams(){
 		Long id = getSykdomId();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getPasient_Id(),getSykdomnsnavn(),getSymptomer(),getDiagnosekode()};
 		}else
-			params = new Object[]{getSykdomId()};
+			params = new Object[]{getPasient_Id(),getSykdomnsnavn(),getSymptomer(),getDiagnosekode(),getSykdomId()};
 		
 	}
 	
@@ -53,5 +53,11 @@ public class SykdomImpl extends AbstractSykdom implements Sykdom {
 	 */
 	public void saveSykdom(){
 		setSykdomnsnavn(null);
+		setSymptomer(null);
+		setDiagnosekode(null);
 	}
+
+
+
+	
 }

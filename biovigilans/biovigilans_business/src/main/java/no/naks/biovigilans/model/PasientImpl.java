@@ -24,7 +24,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		aldersGruppe = new String("y");
 		antiStoff = new String("z");
 */		
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		patientFields = new HashMap();
 		antiStoff = new String[4];
@@ -38,9 +38,9 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 	public void setParams(){
 		Long id = getPasient_Id();
 		if (id == null){
-			params = new Object[]{getAldersGruppe(),getKjonn(),getAntiStoff(),getInneliggendePoli(),getAvdeling()};
+			params = new Object[]{getKjonn(),getAldersGruppe(),getInneliggendePoli(),getAvdeling()};
 		}else
-			params = new Object[]{getAldersGruppe(),getKjonn(),getAntiStoff(),getInneliggendePoli(),getAvdeling(),getPasient_Id()};
+			params = new Object[]{getKjonn(),getAldersGruppe(),getInneliggendePoli(),getAvdeling(),getPasient_Id()};
 		
 	}
 	
@@ -86,6 +86,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		setKjonn(null);
 		setAldersGruppe(null);
 		setAntiStoff(null);
+		setInneliggendePoli(null);
 	}
 
 	public Map<String, Antistoff> getAntistoffer() {

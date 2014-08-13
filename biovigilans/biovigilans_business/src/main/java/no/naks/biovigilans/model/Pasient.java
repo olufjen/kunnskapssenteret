@@ -49,4 +49,9 @@ public interface Pasient {
 	public Map<String, Transfusjon> getTransfusjoner();
 
 	public void setTransfusjoner(Map<String, Transfusjon> transfusjoner);
+	
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 }

@@ -4,24 +4,24 @@ import java.sql.Types;
 import java.util.HashMap;
 
 /**
- * Konkret modellklasse for antistoff til pasienten
+ * Konkret modellklasse for antistoff til pasienten 
  * @author olj
- *
+ * 
  */
 public class AntistoffImpl extends AbstractAntistoff implements Antistoff {
 
 	public AntistoffImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		antistoffFields = new HashMap();
 	}
 	public void setParams(){
 		Long id = getAntistoffId();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getAntistoffKode(),getAntistoffbeskrivelse(),getPasient_Id()};
 		}else
-			params = new Object[]{getAntistoffId()};
+			params = new Object[]{getAntistoffKode(),getAntistoffbeskrivelse(),getPasient_Id(),getAntistoffId()};
 		
 	}
 	/**
@@ -54,4 +54,8 @@ public class AntistoffImpl extends AbstractAntistoff implements Antistoff {
 
 		}	
 	}
+
+
+
+	
 }

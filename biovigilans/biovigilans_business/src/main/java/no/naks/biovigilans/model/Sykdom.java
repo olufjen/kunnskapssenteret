@@ -4,8 +4,13 @@ import java.util.Map;
 
 public interface Sykdom {
 
-	public long getSykdomId();
-	public void setSykdomId(long sykdomId);
+
+	
+	public Long getSykdomId();
+
+
+	public void setSykdomId(Long sykdomId);
+
 	public String getSykdomnsnavn();
 	public void setSykdomnsnavn(String sykdomnsnavn);
 	public String getSymptomer();
@@ -18,5 +23,14 @@ public interface Sykdom {
 	public String[] getKeys();
 	public void setKeys(String[] keys);
 	public void saveSykdom();
+	
+	public long getPasient_Id();
+
+
+	public void setPasient_Id(long pasient_Id);
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 		
 }

@@ -78,8 +78,16 @@ public abstract class AbstractPasient extends AbstractModel implements Pasient{
 	public String getInneliggendePoli() {
 		return inneliggendePoli;
 	}
-	public void setInneliggendePoli(String inneliggendePoli) {
-		this.inneliggendePoli = inneliggendePoli;
+	public void setInneliggendePoli(String innliggendePoli) {
+		if (innliggendePoli == null){
+			
+			for (int i=7;i<10;i++){
+				innliggendePoli = patientFields.get(keys[i]);
+				if (innliggendePoli != null)
+					break;
+			}
+		}
+		this.inneliggendePoli = innliggendePoli;
 	}
 	public String getAvdeling() {
 		return avdeling;

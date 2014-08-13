@@ -14,7 +14,9 @@ public abstract class AbstractAntistoff extends AbstractModel implements Antisto
 
 	private String antistoffbeskrivelse;
 	private String antistoffKode;
-	private long antistoffId;
+	private Long antistoffId;
+	private Long pasient_Id;
+	
 	protected Map<String,String> antistoffFields;
 	protected String[] keys;
 	
@@ -30,10 +32,17 @@ public abstract class AbstractAntistoff extends AbstractModel implements Antisto
 	public void setAntistoffKode(String antistoffKode) {
 		this.antistoffKode = antistoffKode;
 	}
-	public long getAntistoffId() {
+
+	public Long getPasient_Id() {
+		return pasient_Id;
+	}
+	public void setPasient_Id(Long pasient_Id) {
+		this.pasient_Id = pasient_Id;
+	}
+	public Long getAntistoffId() {
 		return antistoffId;
 	}
-	public void setAntistoffId(long antistoffId) {
+	public void setAntistoffId(Long antistoffId) {
 		this.antistoffId = antistoffId;
 	}
 	public Map<String, String> getAntistoffFields() {
