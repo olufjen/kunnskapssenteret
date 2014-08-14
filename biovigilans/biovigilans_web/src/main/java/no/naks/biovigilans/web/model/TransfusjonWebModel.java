@@ -7,6 +7,7 @@ import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.BlodproduktImpl;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
+import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.PasientkomplikasjonImpl;
 import no.naks.biovigilans.model.Symptomer;
@@ -32,6 +33,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Symptomer symptomer;
 	private Komplikasjonsklassifikasjon komplikasjonsklassifikasjon;
 	private Utredning utredning;
+	private Pasient pasient;
 	
 	public TransfusjonWebModel() {
 		super();
@@ -124,6 +126,78 @@ public class TransfusjonWebModel extends VigilansModel {
 
 	public void setTransfusjon(Transfusjon transfusjon) {
 		this.transfusjon = transfusjon;
+	}
+
+
+	public Blodprodukt getBlodProdukt() {
+		return blodProdukt;
+	}
+
+
+	public void setBlodProdukt(Blodprodukt blodProdukt) {
+		this.blodProdukt = blodProdukt;
+	}
+
+
+	public Blodprodukt getAnnenBlodprodukt() {
+		return annenBlodprodukt;
+	}
+
+
+	public void setAnnenBlodprodukt(Blodprodukt annenBlodprodukt) {
+		this.annenBlodprodukt = annenBlodprodukt;
+	}
+
+
+	public Pasientkomplikasjon getPasientKomplikasjon() {
+		return pasientKomplikasjon;
+	}
+
+
+	public void setPasientKomplikasjon(Pasientkomplikasjon pasientKomplikasjon) {
+		this.pasientKomplikasjon = pasientKomplikasjon;
+	}
+
+
+	public Symptomer getSymptomer() {
+		return symptomer;
+	}
+
+
+	public void setSymptomer(Symptomer symptomer) {
+		this.symptomer = symptomer;
+	}
+
+
+	public Komplikasjonsklassifikasjon getKomplikasjonsklassifikasjon() {
+		return komplikasjonsklassifikasjon;
+	}
+
+
+	public void setKomplikasjonsklassifikasjon(
+			Komplikasjonsklassifikasjon komplikasjonsklassifikasjon) {
+		this.komplikasjonsklassifikasjon = komplikasjonsklassifikasjon;
+	}
+
+
+	public Utredning getUtredning() {
+		return utredning;
+	}
+
+
+	public void setUtredning(Utredning utredning) {
+		this.utredning = utredning;
+	}
+
+
+	public Pasient getPasient() {
+		return pasient;
+	}
+
+
+	public void setPasient(Pasient pasient) {
+		this.pasient = pasient;
+		this.transfusjon.setPasient_Id(this.pasient.getPasient_Id());
 	}
 		
 	
