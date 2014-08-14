@@ -3,6 +3,7 @@ package no.naks.biovigilans.web.control;
 import no.naks.biovigilans.model.PasientGruppeImpl;
 import no.naks.biovigilans.service.PasientTableService;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
+import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.framework.web.control.MasterWebServiceImpl;
 
 public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
@@ -26,10 +27,19 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 	}
 
 
-	@Override
+
 	public void saveHendelse(PasientKomplikasjonWebModel innMelding) {
 
 		pasientService.savePasient(innMelding.getPasient());
+		
+	}
+
+
+	
+	public void saveTransfusjon(TransfusjonWebModel transfusjon,PasientKomplikasjonWebModel innMelding) {
+		transfusjon.setPasient(innMelding.getPasient());
+		pasientService.saveTransfusjon(transfusjon.getTransfusjon());
+		
 	}
 
 
