@@ -153,6 +153,17 @@ public class PasientDAOImpl extends AbstractAdmintablesDAO implements
 			Antistoff antistoff = (Antistoff)pasient.getAntistoffer().get(key);
 			antistoff.setPasient_Id(pasient.getPasient_Id());
 			antistoff.setParams();
+			int[] aTypes = antistoff.getTypes();
+			Object[] aParams = antistoff.getParams();
+			Long aId = antistoff.getAntistoffId();
+			String aSQL = insertAntistoffSQL;
+			if (aId != null){
+				aSQL = updateAntistoffSQL;
+				aTypes = antistoff.getUtypes();
+			}
+			TablesUpdateImpl antistoffTablesUpdate = new TablesUpdateImpl(getDataSource(), aSQL,aTypes);
+			antistoffTablesUpdate.insert(aParams);
+			antistoffTablesUpdate = null;
 		}
 
 	}
