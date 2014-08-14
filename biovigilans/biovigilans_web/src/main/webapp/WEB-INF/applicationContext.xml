@@ -81,6 +81,7 @@
 	 			<value>/config/app-config/environment.properties</value>
 	 			<value>/config/app-config/parameter.properties</value>
 	 			<value>/config/app-config/giver.properties</value>
+	 			<value>/config/app-config/andreHendelser.properties</value>
 	 			<value>/config/app-config/dbtable.properties</value>
 	 		</list>
 	 	</property>
@@ -208,6 +209,12 @@
         			${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak}">
      	</property>
   </bean>	
+  <bean name="/hemovigilans/rapporter_andrehendelser.html" id="rapporterhendelserServerResource" autowire="byName" scope="prototype"
+            class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
+  	<property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
+		${andreHendelser.avviket},${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
+		${andreHendelser.planlagte},${andreHendelser.kommentar}"></property>
+  </bean>
  	<bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
                 	<property name="sessionAdmin" ref="sessionAdmin"></property>
