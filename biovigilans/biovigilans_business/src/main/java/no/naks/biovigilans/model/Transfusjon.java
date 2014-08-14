@@ -59,7 +59,8 @@ public interface Transfusjon {
 	public void setTransDato(String transDato);
 
 	public Long getPasient_Id();
-
+	public Long getTransfusjonsId();
+	public void setTransfusjonsId(Long transfusjonsId);
 	public void setPasient_Id(Long pasient_Id);
 	public void setParams();
 	public int[] getTypes();
