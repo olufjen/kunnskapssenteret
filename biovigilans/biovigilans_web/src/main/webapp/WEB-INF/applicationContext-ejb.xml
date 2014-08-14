@@ -26,7 +26,10 @@
   	<property name="pasientprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="insertAntistoffSQL" value="${antistoff.insertantistoff}"></property>
   </bean>
-  
+  <bean id="transfusjonDAO"  class="no.naks.biovigilans.dao.TransfusjonDAOImpl">
+  	  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	  	<property name="insertTransfusjonSQL" value="transfusjon.inserttransfusjon"></property>
+  </bean>
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
   </bean>
