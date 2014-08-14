@@ -16,5 +16,9 @@ public interface Giveroppfolging {
 	public void setGiveroppfolgingFields(Map<String, String> giveroppfolgingFields);
 	public String[] getKeys();
 	public void setKeys(String[] keys);
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 	
 }

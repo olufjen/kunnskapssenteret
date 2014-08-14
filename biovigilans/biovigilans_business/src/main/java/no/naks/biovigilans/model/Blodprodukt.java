@@ -24,5 +24,9 @@ public interface Blodprodukt {
 	public void saveField(String userField,String userValue);
 	public void setEgenskaperfieldMaps(String[]userFields);
 	public void setKeyvalues();
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 	
 }

@@ -34,5 +34,9 @@ public interface Pasientkomplikasjon {
 
 	public void setKeys(String[] keys);
 	public void produceSymptoms(Symptomer symptomer);
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 	
 }

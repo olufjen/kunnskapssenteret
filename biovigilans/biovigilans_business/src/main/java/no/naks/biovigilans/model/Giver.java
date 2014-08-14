@@ -28,4 +28,9 @@ public interface Giver {
 	public void setGiverFields(Map<String, String> giverFields);
 	public void setGiverfieldMaps(String[]userFields);
 	public void saveField(String userField, String userValue);
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
+	
 }

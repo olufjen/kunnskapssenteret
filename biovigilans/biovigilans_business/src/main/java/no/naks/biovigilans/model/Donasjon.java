@@ -25,6 +25,9 @@ public interface Donasjon {
 	public void setKeys(String[] keys);
 	public void setDonasjonsfieldMaps(String[]userFields);
 	public void saveField(String userField, String userValue);
-	
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 	
 }

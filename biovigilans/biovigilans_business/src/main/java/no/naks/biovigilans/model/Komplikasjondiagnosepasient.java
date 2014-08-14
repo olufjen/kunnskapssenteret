@@ -8,4 +8,8 @@ public interface Komplikasjondiagnosepasient {
 	public void setDiagnosekommentar(String diagnosekommentar);
 	public Long getKomplikasjonsdiagnoseId();
 	public void setKomplikasjonsdiagnoseId(Long komplikasjonsdiagnoseId);
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 }

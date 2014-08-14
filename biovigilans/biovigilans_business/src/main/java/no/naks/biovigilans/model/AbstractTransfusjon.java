@@ -23,6 +23,8 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 public abstract class AbstractTransfusjon extends AbstractModel implements Transfusjon{
 
 	private Long transfusjonsId;
+	private Long pasient_Id;
+	
 	/**
 	 * Dato for transfusjonen
 	 */
@@ -70,6 +72,14 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 
 	public Long getTransfusjonsId() {
 		return transfusjonsId;
+	}
+
+	public Long getPasient_Id() {
+		return pasient_Id;
+	}
+
+	public void setPasient_Id(Long pasient_Id) {
+		this.pasient_Id = pasient_Id;
 	}
 
 	public void setTransfusjonsId(Long transfusjonsId) {

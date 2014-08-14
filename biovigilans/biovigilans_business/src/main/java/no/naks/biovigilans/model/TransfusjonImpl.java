@@ -8,8 +8,8 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 
 	public TransfusjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.DATE,Types.TIME,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		utypes = new int[] {Types.DATE,Types.TIME,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
 		
 		transfusjonsFields = new HashMap();
 		pasientKomplikasjoner = new HashMap();
@@ -18,9 +18,9 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	public void setParams(){
 		Long id = getTransfusjonsId();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getTransfusionDate(),getTransfusjonsklokkeslett(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id()};
 		}else
-			params = new Object[]{getTransfusjonsId()};
+			params = new Object[]{getTransfusionDate(),getTransfusjonsklokkeslett(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id(),getTransfusjonsId()};
 	
 
 	}	
