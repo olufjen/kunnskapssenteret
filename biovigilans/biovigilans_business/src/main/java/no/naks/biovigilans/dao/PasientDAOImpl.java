@@ -12,7 +12,8 @@ import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
 /**
- * Denne klassen lagrer til og henter pasientopplysninger fra databasen
+ * Denne klassen lagrer pasientopplysninger og relaterte tabeller til databasen
+ *  og henter pasientopplysninger fra databasen
  * 
  * @author olj
  *
