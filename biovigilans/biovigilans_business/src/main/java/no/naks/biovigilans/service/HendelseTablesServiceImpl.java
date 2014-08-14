@@ -19,13 +19,16 @@ public class HendelseTablesServiceImpl implements HendelseTablesService {
 	
 	private HendelsehemovigilansDAO hendelseBiovigilansDAO;
 
-	public HendelsehemovigilansDAO getInnmeldtProesdyreDAO() {
+	public HendelsehemovigilansDAO getHendelseBiovigilansDAO() {
 		return hendelseBiovigilansDAO;
 	}
 
-	public void setInnmeldtProesdyreDAO(HendelsehemovigilansDAO hendelseBiovigilansDAO) {
+	public void setHendelseBiovigilansDAO(
+			HendelsehemovigilansDAO hendelseBiovigilansDAO) {
 		this.hendelseBiovigilansDAO = hendelseBiovigilansDAO;
 	}
+
+
 	
 	
 

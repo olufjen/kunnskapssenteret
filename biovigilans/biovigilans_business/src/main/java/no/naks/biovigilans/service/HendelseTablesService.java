@@ -10,10 +10,7 @@ import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 
 
 /**
- * Denne klassen er et grensesnitt som lister opp alle tjenester/rutiner for
- * følgende tabeller i db:
- * 		- PatientGruoup
- * 		- InputType
+ * Dette grensesnittet håndterer hendelser
  *
  */
 public interface HendelseTablesService {
