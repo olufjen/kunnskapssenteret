@@ -1,6 +1,8 @@
 package no.naks.biovigilans.model;
 
+import java.sql.Types;
 import java.util.Date;
+import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
@@ -12,12 +14,12 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
  * 
  */
 
-public class AbstractVigilansmelding extends AbstractModel{
+public class AbstractVigilansmelding extends AbstractModel implements Vigilansmelding{
 
 	/**
 	 * Id til meldingen
 	 */
-	private long meldeid;
+	private Long meldeid;
 	/**
 	 * Dato for hendelsen
 	 */
@@ -25,7 +27,7 @@ public class AbstractVigilansmelding extends AbstractModel{
 	/**
 	 * Klokkeslett for hendelsen
 	 */
-	private java.lang.String klokkesletthendelse;
+	private String klokkesletthendelse;
 	/**
 	 * Dato når komplikasjonen ble oppdaget
 	 */
@@ -33,7 +35,7 @@ public class AbstractVigilansmelding extends AbstractModel{
 	/**
 	 * Tidspunkt for donasjon eller overføring
 	 */
-	private java.lang.String donasjonoverforing;
+	private String donasjonoverforing;
 	/**
 	 * Denne sjekklisten omfatter følgende definisjoner:
 	 * Skal meldes videre til HDIR
@@ -44,20 +46,25 @@ public class AbstractVigilansmelding extends AbstractModel{
 	 * Trenger å følges opp
 	 * Ferdig behandlet
 	 */
-	private java.lang.String sjekklistesaksbehandling;
+	private String sjekklistesaksbehandling;
 	/**
 	 * Eventuelle supplerende opplysninger ved meldingen.
 	 */
-	private java.lang.String supplerendeopplysninger;
+	private String supplerendeopplysninger;
 	/**
 	 * Dato meldingen er mottatt
 	 */
 	private Date meldingsdato;
+
 	
-	public long getMeldeid() {
+	protected String[]vigilansKeys;	
+	protected Map<String,String>vigilansFields;
+
+
+	public Long getMeldeid() {
 		return meldeid;
 	}
-	public void setMeldeid(long meldeid) {
+	public void setMeldeid(Long meldeid) {
 		this.meldeid = meldeid;
 	}
 	public Date getDatoforhendelse() {
@@ -66,10 +73,10 @@ public class AbstractVigilansmelding extends AbstractModel{
 	public void setDatoforhendelse(Date datoforhendelse) {
 		this.datoforhendelse = datoforhendelse;
 	}
-	public java.lang.String getKlokkesletthendelse() {
+	public String getKlokkesletthendelse() {
 		return klokkesletthendelse;
 	}
-	public void setKlokkesletthendelse(java.lang.String klokkesletthendelse) {
+	public void setKlokkesletthendelse(String klokkesletthendelse) {
 		this.klokkesletthendelse = klokkesletthendelse;
 	}
 	public Date getDatooppdaget() {
@@ -78,23 +85,23 @@ public class AbstractVigilansmelding extends AbstractModel{
 	public void setDatooppdaget(Date datooppdaget) {
 		this.datooppdaget = datooppdaget;
 	}
-	public java.lang.String getDonasjonoverforing() {
+	public String getDonasjonoverforing() {
 		return donasjonoverforing;
 	}
-	public void setDonasjonoverforing(java.lang.String donasjonoverforing) {
+	public void setDonasjonoverforing(String donasjonoverforing) {
 		this.donasjonoverforing = donasjonoverforing;
 	}
-	public java.lang.String getSjekklistesaksbehandling() {
+	public String getSjekklistesaksbehandling() {
 		return sjekklistesaksbehandling;
 	}
 	public void setSjekklistesaksbehandling(
-			java.lang.String sjekklistesaksbehandling) {
+			String sjekklistesaksbehandling) {
 		this.sjekklistesaksbehandling = sjekklistesaksbehandling;
 	}
-	public java.lang.String getSupplerendeopplysninger() {
+	public String getSupplerendeopplysninger() {
 		return supplerendeopplysninger;
 	}
-	public void setSupplerendeopplysninger(java.lang.String supplerendeopplysninger) {
+	public void setSupplerendeopplysninger(String supplerendeopplysninger) {
 		this.supplerendeopplysninger = supplerendeopplysninger;
 	}
 	public Date getMeldingsdato() {
@@ -104,6 +111,16 @@ public class AbstractVigilansmelding extends AbstractModel{
 		this.meldingsdato = meldingsdato;
 	}
 	
-	
+	public void setMeldingTypes(){
+		types = new int[] {Types.DATE,Types.TIME,Types.DATE,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.DATE};
+		utypes = new int[] {Types.DATE,Types.TIME,Types.DATE,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER};
+	}
+	public void setMeldingParams(){
+		Long id = getMeldeid();
+		if (id == null){
+			params = new Object[]{getDatoforhendelse(),getKlokkesletthendelse(),getDatooppdaget(),getDonasjonoverforing(),getSjekklistesaksbehandling(),getSupplerendeopplysninger(),getMeldingsdato()};
+		}else
+			params = new Object[]{getDatoforhendelse(),getKlokkesletthendelse(),getDatooppdaget(),getDonasjonoverforing(),getSjekklistesaksbehandling(),getSupplerendeopplysninger(),getMeldingsdato(),getMeldeid()};
+	}
 	
 }

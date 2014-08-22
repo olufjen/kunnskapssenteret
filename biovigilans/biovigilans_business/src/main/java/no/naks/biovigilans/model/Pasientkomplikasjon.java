@@ -1,9 +1,15 @@
 package no.naks.biovigilans.model;
 
+import java.sql.Types;
 import java.util.Map;
 
 public interface Pasientkomplikasjon {
 
+	
+
+	public Long getTransfusjonsId();
+
+	public void setTransfusjonsId(Long transfusjonsId);
 	public String getKlassifikasjon();
 	public void setKlassifikasjon(String klassifikasjon);
 	public int getTidfrapabegynttrasfusjontilkomplikasjon();
@@ -38,5 +44,6 @@ public interface Pasientkomplikasjon {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
+	public void setKomplikasjonstypes();
 	
 }

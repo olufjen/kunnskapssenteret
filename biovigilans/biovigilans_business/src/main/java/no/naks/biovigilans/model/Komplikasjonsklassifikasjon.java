@@ -11,6 +11,8 @@ public interface Komplikasjonsklassifikasjon {
 	public Long getKlassifikasjonsid();
 	public void setKlassifikasjonsid(Long klassifikasjonsid);
 	
+	public Long getMeldeid();
+	public void setMeldeid(Long meldeid);	
 	
 	public Map getKomplikasjonklassifikasjonFields();
 	public void setKomplikasjonklassifikasjonFields(

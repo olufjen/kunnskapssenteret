@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.Map;
 
@@ -58,6 +59,9 @@ public interface Transfusjon {
 
 	public void setTransDato(String transDato);
 
+	public Time getTransklokke();
+
+	public void setTransklokke(Time transklokke);
 	public Long getPasient_Id();
 	public Long getTransfusjonsId();
 	public void setTransfusjonsId(Long transfusjonsId);

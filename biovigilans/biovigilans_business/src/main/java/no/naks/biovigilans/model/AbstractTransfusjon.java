@@ -1,4 +1,5 @@
 package no.naks.biovigilans.model;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,17 +30,18 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	 * Dato for transfusjonen
 	 */
 	private DateTime transfusjondato; 	// Vi benytter Joda time i transformasjon
-	private Date transfusionDate;   	// Vi benytte utilDate mot databasen !!!
+	private Date transfusionDate;   	// Vi benytter util.Date mot databasen !!!
 	
 	private String transDato;
 	/**
 	 * Klokkeslett for transfusjonen
 	 */
 	private String transfusjonsklokkeslett;
+	private Time transklokke;
 	/**
-	 * En verdi for hastegrad ved transfusjonen. Den er en av f�lgende:
+	 * En verdi for hastegrad ved transfusjonen. Den er en av følgende:
 	 * - Planlagt
-	 * - �yeblikkelig hjelp
+	 * - øyeblikkelig hjelp
 	 * - Vet ikke
 	 */
 	private String hastegrad;
@@ -117,7 +119,18 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 				}
 
 		}
+//		DateTimeFormatter formatter = DateTimeFormat.forPattern( "HH:mm:ss" ); // DD er forskjellig fra dd !! .withZone( timeZone ).withLocale( locale )
+//		transklokke = formatter.parseDateTime(transfusjonsklokkeslett);
+		transklokke = Time.valueOf(transfusjonsklokkeslett+":00");
 		this.transfusjonsklokkeslett = transfusjonsklokkeslett;
+	}
+
+	public Time getTransklokke() {
+		return transklokke;
+	}
+
+	public void setTransklokke(Time transklokke) {
+		this.transklokke = transklokke;
 	}
 
 	public String getHastegrad() {

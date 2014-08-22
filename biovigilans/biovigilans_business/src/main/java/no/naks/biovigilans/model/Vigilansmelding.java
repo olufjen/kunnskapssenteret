@@ -1,11 +1,12 @@
 package no.naks.biovigilans.model;
 
+import java.sql.Types;
 import java.util.Date;
 
 public interface Vigilansmelding {
 
-	public long getMeldeid();
-	public void setMeldeid(long meldeid);
+	public Long getMeldeid();
+	public void setMeldeid(Long meldeid);
 	public Date getDatoforhendelse();
 	public void setDatoforhendelse(Date datoforhendelse);
 	public java.lang.String getKlokkesletthendelse();
@@ -21,4 +22,10 @@ public interface Vigilansmelding {
 	public void setSupplerendeopplysninger(java.lang.String supplerendeopplysninger);
 	public Date getMeldingsdato();
 	public void setMeldingsdato(Date meldingsdato);
+	public void setMeldingTypes();
+	public void setMeldingParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
+	
 }

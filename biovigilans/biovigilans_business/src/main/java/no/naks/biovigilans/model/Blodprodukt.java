@@ -1,19 +1,28 @@
 package no.naks.biovigilans.model;
 
+import java.util.Date;
 import java.util.Map;
 
 public interface Blodprodukt {
 
 	
-	public long getBlodProduktId();
+
+	public Long getBlodProduktId();
+	public void setBlodProduktId(Long blodProduktId);
+	public Long getTransfusjonsId();
+	public void setTransfusjonsId(Long transfusjonsId);
 	
 	public int getAntallEnheter();
 	public void setAntallEnheter(int antallEnheter);
-	public void setBlodProduktId(long blodProduktId);
+	
 	public String getBlodtype();
 	public void setBlodtype(String blodtype);
-	public int getAlderprodukt();
-	public void setAlderprodukt(int alderprodukt);
+	
+	public Date getAlderProdukt();
+	public void setAlderProdukt(Date alderProdukt);
+	public String getAldersProdukt();
+	public void setAldersProdukt(String aldersProdukt);
+	
 	public String getTappetype();
 	public void setTappetype(String tappetype);
 	public String getBlodprodukt();

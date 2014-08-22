@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.sql.Time;
 import java.sql.Types;
 import java.util.HashMap;
 
@@ -18,9 +19,9 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	public void setParams(){
 		Long id = getTransfusjonsId();
 		if (id == null){
-			params = new Object[]{getTransfusionDate(),getTransfusjonsklokkeslett(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id()};
+			params = new Object[]{getTransfusionDate(),getTransklokke(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id()};
 		}else
-			params = new Object[]{getTransfusionDate(),getTransfusjonsklokkeslett(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id(),getTransfusjonsId()};
+			params = new Object[]{getTransfusionDate(),getTransklokke(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id(),getTransfusjonsId()};
 	
 
 	}	
@@ -59,5 +60,7 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	
 		}
 	}
+
+
 	
 }

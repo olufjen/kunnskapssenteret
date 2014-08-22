@@ -1,6 +1,7 @@
 package no.naks.biovigilans.model;
 
 import java.sql.Types;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +12,10 @@ import java.util.Map;
  * 
  */
 
-public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements Pasientkomplikasjon,Vigilansmelding {
+public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements Vigilansmelding,Pasientkomplikasjon {
 
+	private Long transfusjonsId;
+	
 	/**
 	 * Klassifikasjon av komplikasjon, hentes fra AbstractSykdom?
 	 */
@@ -44,22 +47,37 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	
 	public PasientkomplikasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+	
 		symptomer = new HashMap();
 		komplikasjonsKlassifikasjoner = new HashMap();
 		
 		komplikasjonsFields = new HashMap();
+		setMeldingsdato(Calendar.getInstance().getTime());
 		
+		// Midlertidig Disse datoer bør komme fra bruker !!
+		setDatoforhendelse(Calendar.getInstance().getTime());
+		setDatooppdaget(Calendar.getInstance().getTime());
 	}
 	
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getKlassifikasjon(),getTidfrapabegynttrasfusjontilkomplikasjon(),getAlvorlighetsgrad(),getKliniskresultat(),getArsakssammenheng(),getTransfusjonsId()};
 		}else
-			params = new Object[]{getMeldeid()};
+			params = new Object[]{getKlassifikasjon(),getTidfrapabegynttrasfusjontilkomplikasjon(),getAlvorlighetsgrad(),getKliniskresultat(),getArsakssammenheng(),getTransfusjonsId(),getMeldeid()};
 		
+	}
+	public void setKomplikasjonstypes(){
+		types = new int[] {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+	}
+
+	public Long getTransfusjonsId() {
+		return transfusjonsId;
+	}
+
+	public void setTransfusjonsId(Long transfusjonsId) {
+		this.transfusjonsId = transfusjonsId;
 	}
 
 	/**

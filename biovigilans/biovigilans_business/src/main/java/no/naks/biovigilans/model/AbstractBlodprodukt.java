@@ -1,6 +1,13 @@
 package no.naks.biovigilans.model;
 
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
@@ -13,7 +20,8 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 public abstract class AbstractBlodprodukt extends AbstractModel implements Blodprodukt {
 
-	private long blodProduktId;
+	private Long blodProduktId;
+	private Long transfusjonsId;
 	/**
 	 * Hvilken blodtype som er benyttet
 	 */
@@ -21,7 +29,10 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	/**
 	 * Alder angis som en tappedato
 	 */
-	private int alderprodukt = 0;
+	private Date alderProdukt;
+	private DateTime produktdato; 	// Vi benytter Joda time i transformasjon
+	private String aldersProdukt;
+	
 	/**
 	 * Må beskrives
 	 */
@@ -45,6 +56,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	protected Map<String,String> blodproduktFields; // Inneholder blodproduktene
 	protected  Map<String,String> antallFields; // Inneholder antall poser
 	protected  Map<String,String> egenskaperFields; // Inneholder egenskaper
+	protected  Map<String,String> tappetypeFields; // Inneholder tappetype
 	
 	protected String[]keys;	
 
@@ -65,11 +77,18 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 		}
 		this.antallEnheter = antallEnheter;
 	}
-	public long getBlodProduktId() {
+
+	public Long getBlodProduktId() {
 		return blodProduktId;
 	}
-	public void setBlodProduktId(long blodProduktId) {
+	public void setBlodProduktId(Long blodProduktId) {
 		this.blodProduktId = blodProduktId;
+	}
+	public Long getTransfusjonsId() {
+		return transfusjonsId;
+	}
+	public void setTransfusjonsId(Long transfusjonsId) {
+		this.transfusjonsId = transfusjonsId;
 	}
 	public String getBlodtype() {
 		return blodtype;
@@ -77,12 +96,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	public void setBlodtype(String blodtype) {
 		this.blodtype = blodtype;
 	}
-	public int getAlderprodukt() {
-		return alderprodukt;
-	}
-	public void setAlderprodukt(int alderprodukt) {
-		this.alderprodukt = alderprodukt;
-	}
+
 	public String getTappetype() {
 		return tappetype;
 	}
@@ -122,6 +136,41 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 		
 		this.produktetsegenskap = produktetsegenskap;
 	}
+	
+	
+	public Date getAlderProdukt() {
+		return alderProdukt;
+	}
+	public void setAlderProdukt(Date alderProdukt) {
+		this.alderProdukt = alderProdukt;
+	}
+	public String getAldersProdukt() {
+		return aldersProdukt;
+	}
+	public void setAldersProdukt(String alderssProdukt) {
+		if (alderssProdukt == null){
+			String aProd = null;
+	
+				aProd = egenskaperFields.get(keys[4]); // OBS !!
+				if (aProd != null){
+					alderssProdukt = aProd;
+				
+				}
+
+		}
+		
+			//DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Locale locale = java.util.Locale.UK;
+		DateTimeZone timeZone = DateTimeZone.forID( "Europe/Oslo" );
+		DateTimeFormatter formatter = DateTimeFormat.forPattern( "yyyy-MM-dd" ); // DD er forskjellig fra dd !! .withZone( timeZone ).withLocale( locale )
+		produktdato = formatter.parseDateTime(alderssProdukt);
+//		System.out.println("Dato formattert: "+ transfusjondato.toString(formatter));
+		alderProdukt = produktdato.toDate();
+		
+		
+		this.aldersProdukt = alderssProdukt;
+	}
+	
 	public Map<String, String> getBlodproduktFields() {
 		return blodproduktFields;
 	}
