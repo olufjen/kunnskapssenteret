@@ -270,7 +270,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    			transfusjon.saveValues();
 	    			result.getPasient().getTransfusjoner().put(transfusjon.getTransfusjon().getTransDato(), transfusjon.getTransfusjon());
 	    			hendelseWebService.saveHendelse(result);
-	//    			hendelseWebService.saveTransfusjon(transfusjon, result);
+	    			hendelseWebService.saveTransfusjon(transfusjon,result);
 	    		}
 	    		sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
 	    		sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
