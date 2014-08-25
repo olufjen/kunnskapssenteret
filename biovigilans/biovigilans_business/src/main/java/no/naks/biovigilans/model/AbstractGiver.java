@@ -13,10 +13,10 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 public abstract class AbstractGiver extends AbstractModel implements Giver{
 
-	private long giverid;
+	protected Long giverid;
 	
-	private String kjonn;
-	private String alder;
+	protected String kjonn;
+	protected String alder;
 	/**
 	 * Vekt angitt i kilo
 	 */
@@ -42,41 +42,50 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 	protected String[]keys;
 	protected Map<String,String> giverFields;
 	
-	
-	public long getGiverid() {
+	public Long getGiverid(){
 		return giverid;
 	}
-	public void setGiverid(long giverid) {
+	public void setGiverid(Long giverid) {
 		this.giverid = giverid;
 	}
 	public String getKjonn() {
 		return kjonn;
 	}
 	public void setKjonn(String kjonn) {
+		if(kjonn==null)
+			kjonn = giverFields.get(keys[0]);
 		this.kjonn = kjonn;
 	}
 	public String getAlder() {
 		return alder;
 	}
 	public void setAlder(String alder) {
+		if(alder==null)
+				alder= giverFields.get(keys[1]);
 		this.alder = alder;
 	}
 	public String getVekt() {
 		return vekt;
 	}
 	public void setVekt(String vekt) {
+		if(vekt== null)
+			vekt = giverFields.get(keys[2]);
 		this.vekt = vekt;
 	}
 	public String getGivererfaring() {
 		return givererfaring;
 	}
 	public void setGivererfaring(String givererfaring) {
+		if(givererfaring==null)
+			givererfaring  = giverFields.get(keys[3]);
 		this.givererfaring = givererfaring;
 	}
 	public String getTidligerekomlikasjonjanei() {
 		return tidligerekomlikasjonjanei;
 	}
 	public void setTidligerekomlikasjonjanei(String tidligerekomlikasjonjanei) {
+		if(tidligerekomlikasjonjanei==null)
+			tidligerekomlikasjonjanei = giverFields.get(keys[4]);
 		this.tidligerekomlikasjonjanei = tidligerekomlikasjonjanei;
 	}
 	public String getTidligerekomplikasjonforklaring() {
@@ -84,13 +93,22 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 	}
 	public void setTidligerekomplikasjonforklaring(
 			String tidligerekomplikasjonforklaring) {
+		
+		if(tidligerekomplikasjonforklaring==null)
+			tidligerekomplikasjonforklaring = giverFields.get(keys[5]);
+		 if(tidligerekomplikasjonforklaring==null)
+			 tidligerekomplikasjonforklaring="temp"; // give temporary value to avoid null point exception
 		this.tidligerekomplikasjonforklaring = tidligerekomplikasjonforklaring;
 	}
 	public String getGivererfaringaferese() {
 		return givererfaringaferese;
 	}
 	public void setGivererfaringaferese(String givererfaringaferese) {
-		this.givererfaringaferese = givererfaringaferese;
+		if(givererfaringaferese == null)
+			givererfaringaferese = giverFields.get(keys[6]);
+		if(givererfaringaferese==null)
+			 givererfaringaferese="temp";  // give temporary value to avoid null point exception
+ 		this.givererfaringaferese = givererfaringaferese;
 	}
 	public String[] getKeys() {
 		return keys;

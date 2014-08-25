@@ -8,17 +8,17 @@ public class GiverImpl extends AbstractGiver implements Giver {
 
 	public GiverImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		giverFields = new HashMap<String,String>();
 	}
 
 	public void setParams(){
 		Long id = getGiverid();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getKjonn(),getAlder(),getVekt(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese()};
 		}else
-			params = new Object[]{getGiverid()};
+			params = new Object[]{getKjonn(),getAlder(),getVekt(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),getGiverid()};
 		
 	}
 
@@ -46,6 +46,17 @@ public class GiverImpl extends AbstractGiver implements Giver {
 			giverFields.put(userField,userValue);	
 	
 		}
+		
+	}
+	
+	public void saveToGiver(){
+		setKjonn(null);
+		setAlder(null);
+		setVekt(null);
+		setGivererfaring(null);
+		setTidligerekomlikasjonjanei(null);
+		setTidligerekomplikasjonforklaring(null);
+		setGivererfaringaferese(null);
 		
 	}
 }

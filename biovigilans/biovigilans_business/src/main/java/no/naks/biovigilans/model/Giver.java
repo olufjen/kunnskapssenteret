@@ -5,8 +5,8 @@ import java.util.Map;
 public interface Giver {
 
 	
-	public long getGiverid();
-	public void setGiverid(long giverid);
+	public Long getGiverid();
+	public void setGiverid(Long giverid);
 	public String getKjonn();
 	public void setKjonn(String kjonn);
 	public String getAlder();
@@ -32,5 +32,6 @@ public interface Giver {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
+	public void saveToGiver();
 	
 }
