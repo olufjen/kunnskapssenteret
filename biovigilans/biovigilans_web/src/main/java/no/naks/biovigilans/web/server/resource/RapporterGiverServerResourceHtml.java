@@ -71,8 +71,11 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 		    
 	     if(result==null){
 	    	 result = new GiverKomplikasjonwebModel();
+	    	 result.setFormNames(sessionParams);
 	    	 result.setAldergruppe(aldergruppe);
 	     }
+	     
+	     result.distributeTerms();
 	   
 	     dataModel.put(giverkomplikasjonId, result);
 	     
@@ -154,10 +157,11 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     		}
     		
     		sessionAdmin.setSessionObject(getRequest(), result,giverkomplikasjonId);
-    		 dataModel.put(giverkomplikasjonId, result);
+    		dataModel.put(giverkomplikasjonId, result);
     		Parameter lagre = form.getFirst("lagre4");
     		if(lagre!=null){
-    			//result.saveValues();
+    			result.saveValues();
+    			giverWebService.saveGiver(result);
     		}
     		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
 //    		System.out.println("Status = "+result.getStatus());

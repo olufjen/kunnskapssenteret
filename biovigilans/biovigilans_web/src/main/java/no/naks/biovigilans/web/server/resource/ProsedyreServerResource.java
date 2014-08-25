@@ -1,5 +1,6 @@
 package no.naks.biovigilans.web.server.resource;
 
+import no.naks.biovigilans.web.control.GiverWebService;
 import no.naks.biovigilans.web.control.ICD10WebService;
 import no.naks.biovigilans.web.control.HendelseWebService;
 import no.naks.biovigilans.web.control.SessionAdmin;
@@ -13,6 +14,7 @@ public class ProsedyreServerResource extends ServerResource {
 	protected TableWebService tablewebservice;
 	protected HendelseWebService hendelseWebService;
 	protected ICD10WebService icd10WebService;
+	protected GiverWebService giverWebService; 
 	
 	protected String[]sessionParams;
 	
@@ -45,6 +47,12 @@ public class ProsedyreServerResource extends ServerResource {
 	}
 	public void setIcd10WebService(ICD10WebService icd10WebService) {
 		this.icd10WebService = icd10WebService;
+	}
+	public GiverWebService getGiverWebService() {
+		return giverWebService;
+	}
+	public void setGiverWebService(GiverWebService giverWebService) {
+		this.giverWebService = giverWebService;
 	}
 	
 	
