@@ -99,7 +99,7 @@
 
 	</bean>
 	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--C:\\biovigilans\\temp\\ICD10CM.xml -->
+<!-- C:\\biovigilans\\temp\\ICD10CM.xml -->
 		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
 
 
@@ -184,6 +184,7 @@
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
+     	<property name="giverWebService" ref="giverWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
   </bean>	
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
@@ -191,6 +192,7 @@
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
+     
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
   </bean>	
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
@@ -215,64 +217,65 @@
 		${andreHendelser.avviket},${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
 		${andreHendelser.planlagte},${andreHendelser.kommentar}"></property>
   </bean>
- 	<bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
-            class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
-                	<property name="sessionAdmin" ref="sessionAdmin"></property>
-     	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
-     	<property name="icd10WebService" ref="ICD10WebService"></property>
-     	<property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient4},${aldergruppepasient5},
-     		${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
-     	<property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-     		${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
-     	<property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
-     	<property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
-     	${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
-     	${pasientkomplikasjon.sykdombehandling},${pasientkomplikasjon.p-annensykdom-ja},${pasientkomplikasjon.p-annensykdom-nei},${pasientkomplikasjon.p-annensykdom-vetikke},
-     	${pasientkomplikasjon.p-annen-sykdom},${pasientkomplikasjon.p-tidligeretransfusjon-ja},${pasientkomplikasjon.p-tidligeretransfusjon-nei},
-     	${pasientkomplikasjon.p-tidligeretransfusjon-vetikke},${pasientkomplikasjon.p-sykdom-tidligeretransfusjon},${pasientkomplikasjon.p-transfusjon-inneliggende},
-     	${pasientkomplikasjon.p-transfusjon-poliklinisk},{pasientkomplikasjon.p-transfusjon-vetikke},${pasientkomplikasjon.p-transfusjon-klokkeslett},
-     	${pasientkomplikasjon.p-transfusjon-dato},${pasientkomplikasjon.transfusjon-hg-1},
-     	${pasientkomplikasjon.transfusjon-hg-2},${pasientkomplikasjon.transfusjon-hg-3},${pasientkomplikasjon.transfusjon},
-     	${pasientkomplikasjon.blod-erytrocytt},${pasientkomplikasjon.blod-trombocytt},${pasientkomplikasjon.blod-trauma},${pasientkomplikasjon.blod-plasma},
-     	${pasientkomplikasjon.blod-plasmavalg},${pasientkomplikasjon.blod-andre},
-     	${pasientkomplikasjon.blodantallerytrocytt},${pasientkomplikasjon.blodantalltrombocytt},${pasientkomplikasjon.blodantalltrauma},${pasientkomplikasjon.blodantallplasma},
-     	${pasientkomplikasjon.blodantallandre},
-     	${pasientkomplikasjon.annenblod-erytrocytt},${pasientkomplikasjon.annenblod-trombocytt},${pasientkomplikasjon.annenblod-octaplas},
-     	${pasientkomplikasjon.annenblod-trauma},${pasientkomplikasjon.annenblod-plasma},${pasientkomplikasjon.annenblod-andre},
-     	${pasientkomplikasjon.annenblodantall-erytrocytt},${pasientkomplikasjon.annenblodantall-trombocytt},${pasientkomplikasjon.annenblodantall-octaplas},
-     	${pasientkomplikasjon.annenblodantall-trauma},${pasientkomplikasjon.annenblodantall-plasma},
-     	${pasientkomplikasjon.blod-kriseblod},${pasientkomplikasjon.blod-vasket},${pasientkomplikasjon.blod-bestralt},
-     	${pasientkomplikasjon.blod-hla},${pasientkomplikasjon.blod-patogening},${pasientkomplikasjon.blod-blodvarmer},${pasientkomplikasjon.blod-annet},
-     	${pasientkomplikasjon.blod-aferese},${pasientkomplikasjon.blod-fullblod},${pasientkomplikasjon.blod-vetikke},${pasientkomplikasjon.blod-giverplasma},
-     	${pasientkomplikasjon.blod-kunstig},${pasientkomplikasjon.blod-sus-vetikke},${pasientkomplikasjon.blod-allogen},${pasientkomplikasjon.blod-autolog},
-     	${pasientkomplikasjon.komp-temp},${pasientkomplikasjon.komp-blodfall},${pasientkomplikasjon.komp-blodstig},${pasientkomplikasjon.komp-kvalme},
-     	${pasientkomplikasjon.komp-frysninger},${pasientkomplikasjon.komp-pustebesvar},${pasientkomplikasjon.komp-hypoksemi},${pasientkomplikasjon.komp-cyanose},
-     	${pasientkomplikasjon.komp-luneodem},${pasientkomplikasjon.komp-diare},${pasientkomplikasjon.komp-kloe},${pasientkomplikasjon.komp-utslett},
-     	${pasientkomplikasjon.komp-hevelser},${pasientkomplikasjon.komp-rodflammet},${pasientkomplikasjon.komp-gulsott},${pasientkomplikasjon.komp-nyre},
-     	${pasientkomplikasjon.komp-bryst},${pasientkomplikasjon.komp-tachykardi},${pasientkomplikasjon.komp-mage},${pasientkomplikasjon.komp-akuttnyre},
-     	${pasientkomplikasjon.komp-bevisstlos},${pasientkomplikasjon.komp-sjokk},${pasientkomplikasjon.komp-blodninger},${pasientkomplikasjon.komp-urin},
-     	${pasientkomplikasjon.komp-hudblod},${pasientkomplikasjon.komp-annet},${pasientkomplikasjon.komp-ahtr-1},${pasientkomplikasjon.komp-ahtr-2},
-     	${pasientkomplikasjon.komp-dhtr},${pasientkomplikasjon.komp-fnhtr},${pasientkomplikasjon.komp-hemolyse},${pasientkomplikasjon.komp-anafylaktisk},
-     	${pasientkomplikasjon.komp-allergisk},${pasientkomplikasjon.komp-ta-gvhd},${pasientkomplikasjon.komp-ptp},${pasientkomplikasjon.komp-trali},
-     	${pasientkomplikasjon.komp-tad},${pasientkomplikasjon.komp-taco},${pasientkomplikasjon.komp-hypo},${pasientkomplikasjon.komp-hemo},${pasientkomplikasjon.komp-hyper},
-     	${pasientkomplikasjon.komp-bakterie},${pasientkomplikasjon.komp-virus},${pasientkomplikasjon.komp-smitte},${pasientkomplikasjon.komp-aiha},
-     	${pasientkomplikasjon.komp-manglendeeffekt},${pasientkomplikasjon.komp-uct},${pasientkomplikasjon.komp-kanikke},${pasientkomplikasjon.komp-ingenklinisk},
-     	${pasientkomplikasjon.utredning-1},${pasientkomplikasjon.utredning-2},${pasientkomplikasjon.utredning-3},${pasientkomplikasjon.utredning},${pasientkomplikasjon.hemolyse-1},
-     	${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse-3},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.utredning},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.lga-3},
-     	${pasientkomplikasjon.dyrkning-1},${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2},
-     	${pasientkomplikasjon.alvor-mang1},${pasientkomplikasjon.alvor-mang2},${pasientkomplikasjon.alvor-mang3},${pasientkomplikasjon.alvor-mang4},
-     	${pasientkomplikasjon.alvor-mang5},${pasientkomplikasjon.klinisk-res1},${pasientkomplikasjon.klinisk-res2},${pasientkomplikasjon.klinisk-res3},
-     	${pasientkomplikasjon.klinisk-res4},${pasientkomplikasjon.klinisk-res5},${pasientkomplikasjon.aarsaks1},${pasientkomplikasjon.aarsaks2},
-     	${pasientkomplikasjon.aarsaks3},${pasientkomplikasjon.aarsaks4},${pasientkomplikasjon.antistofftext},${pasientkomplikasjon.antistoffiga},${pasientkomplikasjon.p-antistoffannet}">
+	<bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
+	          class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
+	              	<property name="sessionAdmin" ref="sessionAdmin"></property>
+	   	<property name="tablewebservice" ref="tableWebService"></property>
+	   	<property name="innmeldingWebService" ref="hendelseWebService"></property>
+	   	<property name="icd10WebService" ref="ICD10WebService"></property>
+	   	<property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient4},${aldergruppepasient5},
+	   		${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
+	   	<property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
+	   		${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
+	   	<property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
+	   	<property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
+		   	${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
+		   	${pasientkomplikasjon.sykdombehandling},${pasientkomplikasjon.p-annensykdom-ja},${pasientkomplikasjon.p-annensykdom-nei},${pasientkomplikasjon.p-annensykdom-vetikke},
+		   	${pasientkomplikasjon.p-annen-sykdom},${pasientkomplikasjon.p-tidligeretransfusjon-ja},${pasientkomplikasjon.p-tidligeretransfusjon-nei},
+		   	${pasientkomplikasjon.p-tidligeretransfusjon-vetikke},${pasientkomplikasjon.p-sykdom-tidligeretransfusjon},${pasientkomplikasjon.p-transfusjon-inneliggende},
+		   	${pasientkomplikasjon.p-transfusjon-poliklinisk},{pasientkomplikasjon.p-transfusjon-vetikke},${pasientkomplikasjon.p-transfusjon-klokkeslett},
+		   	${pasientkomplikasjon.p-transfusjon-dato},${pasientkomplikasjon.transfusjon-hg-1},
+		   	${pasientkomplikasjon.transfusjon-hg-2},${pasientkomplikasjon.transfusjon-hg-3},${pasientkomplikasjon.transfusjon},
+		   	${pasientkomplikasjon.blod-erytrocytt},${pasientkomplikasjon.blod-trombocytt},${pasientkomplikasjon.blod-trauma},${pasientkomplikasjon.blod-plasma},
+		   	${pasientkomplikasjon.blod-plasmavalg},${pasientkomplikasjon.blod-andre},
+		   	${pasientkomplikasjon.blodantallerytrocytt},${pasientkomplikasjon.blodantalltrombocytt},${pasientkomplikasjon.blodantalltrauma},${pasientkomplikasjon.blodantallplasma},
+		   	${pasientkomplikasjon.blodantallandre},
+		   	${pasientkomplikasjon.annenblod-erytrocytt},${pasientkomplikasjon.annenblod-trombocytt},${pasientkomplikasjon.annenblod-octaplas},
+		   	${pasientkomplikasjon.annenblod-trauma},${pasientkomplikasjon.annenblod-plasma},${pasientkomplikasjon.annenblod-andre},
+		   	${pasientkomplikasjon.annenblodantall-erytrocytt},${pasientkomplikasjon.annenblodantall-trombocytt},${pasientkomplikasjon.annenblodantall-octaplas},
+		   	${pasientkomplikasjon.annenblodantall-trauma},${pasientkomplikasjon.annenblodantall-plasma},
+		   	${pasientkomplikasjon.blod-kriseblod},${pasientkomplikasjon.blod-vasket},${pasientkomplikasjon.blod-bestralt},
+		   	${pasientkomplikasjon.blod-hla},${pasientkomplikasjon.blod-patogening},${pasientkomplikasjon.blod-blodvarmer},${pasientkomplikasjon.blod-annet},
+		   	${pasientkomplikasjon.blod-aferese},${pasientkomplikasjon.blod-fullblod},${pasientkomplikasjon.blod-vetikke},${pasientkomplikasjon.blod-giverplasma},
+		   	${pasientkomplikasjon.blod-kunstig},${pasientkomplikasjon.blod-sus-vetikke},${pasientkomplikasjon.blod-allogen},${pasientkomplikasjon.blod-autolog},
+		   	${pasientkomplikasjon.komp-temp},${pasientkomplikasjon.komp-blodfall},${pasientkomplikasjon.komp-blodstig},${pasientkomplikasjon.komp-kvalme},
+		   	${pasientkomplikasjon.komp-frysninger},${pasientkomplikasjon.komp-pustebesvar},${pasientkomplikasjon.komp-hypoksemi},${pasientkomplikasjon.komp-cyanose},
+		   	${pasientkomplikasjon.komp-luneodem},${pasientkomplikasjon.komp-diare},${pasientkomplikasjon.komp-kloe},${pasientkomplikasjon.komp-utslett},
+		   	${pasientkomplikasjon.komp-hevelser},${pasientkomplikasjon.komp-rodflammet},${pasientkomplikasjon.komp-gulsott},${pasientkomplikasjon.komp-nyre},
+		   	${pasientkomplikasjon.komp-bryst},${pasientkomplikasjon.komp-tachykardi},${pasientkomplikasjon.komp-mage},${pasientkomplikasjon.komp-akuttnyre},
+		   	${pasientkomplikasjon.komp-bevisstlos},${pasientkomplikasjon.komp-sjokk},${pasientkomplikasjon.komp-blodninger},${pasientkomplikasjon.komp-urin},
+		   	${pasientkomplikasjon.komp-hudblod},${pasientkomplikasjon.komp-annet},${pasientkomplikasjon.komp-ahtr-1},${pasientkomplikasjon.komp-ahtr-2},
+		   	${pasientkomplikasjon.komp-dhtr},${pasientkomplikasjon.komp-fnhtr},${pasientkomplikasjon.komp-hemolyse},${pasientkomplikasjon.komp-anafylaktisk},
+		   	${pasientkomplikasjon.komp-allergisk},${pasientkomplikasjon.komp-ta-gvhd},${pasientkomplikasjon.komp-ptp},${pasientkomplikasjon.komp-trali},
+		   	${pasientkomplikasjon.komp-tad},${pasientkomplikasjon.komp-taco},${pasientkomplikasjon.komp-hypo},${pasientkomplikasjon.komp-hemo},${pasientkomplikasjon.komp-hyper},
+		   	${pasientkomplikasjon.komp-bakterie},${pasientkomplikasjon.komp-virus},${pasientkomplikasjon.komp-smitte},${pasientkomplikasjon.komp-aiha},
+		   	${pasientkomplikasjon.komp-manglendeeffekt},${pasientkomplikasjon.komp-uct},${pasientkomplikasjon.komp-kanikke},${pasientkomplikasjon.komp-ingenklinisk},
+		   	${pasientkomplikasjon.utredning-1},${pasientkomplikasjon.utredning-2},${pasientkomplikasjon.utredning-3},${pasientkomplikasjon.utredning},${pasientkomplikasjon.hemolyse-1},
+		   	${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse-3},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.utredning},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.lga-3},
+		   	${pasientkomplikasjon.dyrkning-1},${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2},
+		   	${pasientkomplikasjon.alvor-mang1},${pasientkomplikasjon.alvor-mang2},${pasientkomplikasjon.alvor-mang3},${pasientkomplikasjon.alvor-mang4},
+		   	${pasientkomplikasjon.alvor-mang5},${pasientkomplikasjon.klinisk-res1},${pasientkomplikasjon.klinisk-res2},${pasientkomplikasjon.klinisk-res3},
+		   	${pasientkomplikasjon.klinisk-res4},${pasientkomplikasjon.klinisk-res5},${pasientkomplikasjon.aarsaks1},${pasientkomplikasjon.aarsaks2},
+		   	${pasientkomplikasjon.aarsaks3},${pasientkomplikasjon.aarsaks4},${pasientkomplikasjon.antistofftext},${pasientkomplikasjon.antistoffiga},${pasientkomplikasjon.p-antistoffannet}">
 		</property>
- 	</bean>	
+	</bean>	
 	 	
   	<bean name="/hemovigilans/" id="hemovigilansServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.HemovigilansServerResourceHtml">
      	<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
+     	<property name="giverWebService" ref="giverWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>
     
  
@@ -289,6 +292,9 @@
 	</bean>
 	<bean id="hendelseWebService" class="no.naks.biovigilans.web.control.HendelseWebServiceImpl">
 		<property name="pasientService" ref="PasientTableService"></property>
+	</bean>
+	<bean id="giverWebService" class="no.naks.biovigilans.web.control.GiverWebServiceImpl" >
+		<property name="giverTableService" ref="giverTableService"></property>
 	</bean>
 
 <!-- Exception handling -->

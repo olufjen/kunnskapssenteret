@@ -26,6 +26,12 @@
   	<property name="pasientprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="insertAntistoffSQL" value="${antistoff.insertantistoff}"></property>
   </bean>
+  <bean id="giverDAO" class ="no.naks.biovigilans.dao.GiverDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertGiverSQL" value="${giver.insertGiver}"></property>
+  	<property name="giverPrimaryKey" value="${primaryKey.giver}"></property>
+  	<property name="giverprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  </bean>
   <bean id="transfusjonDAO"  class="no.naks.biovigilans.dao.TransfusjonDAOImpl">
   	  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   	  	<property name="insertTransfusjonSQL" value="transfusjon.inserttransfusjon"></property>
@@ -33,7 +39,9 @@
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
   </bean>
-  
+  <bean id="giverTableService" class="no.naks.biovigilans.service.GiverTableServiceImpl">
+  	<property name="giverDAO" ref="giverDAO"></property>
+  </bean>
   <!-- /usr/local/tomcat6/xml/ -->
   <!-- c:\\temp\\c:\\temp\\ -->
   <bean id="meldingService" class="no.naks.nhn.service.MelderServiceImpl" >
