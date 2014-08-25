@@ -6,7 +6,8 @@ import java.util.Map;
 public interface Pasientkomplikasjon {
 
 	
-
+	public Long getMeldeid();
+	public void setMeldeid(Long meldeid);
 	public Long getTransfusjonsId();
 
 	public void setTransfusjonsId(Long transfusjonsId);

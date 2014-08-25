@@ -62,9 +62,9 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{getKlassifikasjon(),getTidfrapabegynttrasfusjontilkomplikasjon(),getAlvorlighetsgrad(),getKliniskresultat(),getArsakssammenheng(),getTransfusjonsId()};
+			params = new Object[]{getMeldeid(),getKlassifikasjon(),getTidfrapabegynttrasfusjontilkomplikasjon(),getAlvorlighetsgrad(),getKliniskresultat(),getArsakssammenheng(),getTransfusjonsId()};
 		}else
-			params = new Object[]{getKlassifikasjon(),getTidfrapabegynttrasfusjontilkomplikasjon(),getAlvorlighetsgrad(),getKliniskresultat(),getArsakssammenheng(),getTransfusjonsId(),getMeldeid()};
+			params = new Object[]{getMeldeid(),getKlassifikasjon(),getTidfrapabegynttrasfusjontilkomplikasjon(),getAlvorlighetsgrad(),getKliniskresultat(),getArsakssammenheng(),getTransfusjonsId()};
 		
 	}
 	public void setKomplikasjonstypes(){

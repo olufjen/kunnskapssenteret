@@ -57,6 +57,10 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 			antallFields.put(userFields[9],null);
 			antallFields.put(userFields[10],null);
 		}
+		blodproduktFields.put(userFields[11], null);
+		blodproduktFields.put(userFields[12], null);
+		blodproduktFields.put(userFields[13], null);
+		
 		
 	}
 

@@ -100,8 +100,19 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	public String getTappetype() {
 		return tappetype;
 	}
-	public void setTappetype(String tappetype) {
-		this.tappetype = tappetype;
+	public void setTappetype(String tapptype) {
+		if (tapptype == null){
+			String ttype = null;
+			for (int i = 11;i<14;i++){
+				ttype = blodproduktFields.get(keys[i]);
+				if (ttype != null){
+					tapptype = ttype;
+					break;
+				}
+			}
+		}
+			
+		this.tappetype = tapptype;
 	}
 	public String getBlodprodukt() {
 		return blodprodukt;
