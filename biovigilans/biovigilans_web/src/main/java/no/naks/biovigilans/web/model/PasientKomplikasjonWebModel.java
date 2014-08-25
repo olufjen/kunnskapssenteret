@@ -305,7 +305,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		String sykdomFields[] = {formFields[9]};
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[17]};
-		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[9],formFields[143],formFields[144],formFields[145]};
+		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[143],formFields[144],formFields[145]};
 		pasient.setPatientfieldMaps(patientFields);
 		sykdom.setsykdomfieldMaps(sykdomFields);
 		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);

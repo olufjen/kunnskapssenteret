@@ -58,7 +58,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
-				formFields[33],formFields[34],formFields[35],formFields[36],formFields[37]};
+				formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],formFields[57],formFields[58],formFields[59]};
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56]}; 
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
@@ -114,7 +114,12 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.setTransDato(null);
 		transfusjon.setTransfusjonsklokkeslett(null);
 		transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
+		pasientKomplikasjon.setAlvorlighetsgrad(null);
+		pasientKomplikasjon.setKliniskresultat(null);
+		pasientKomplikasjon.setArsakssammenheng(null);
+		
 		pasientKomplikasjon.produceSymptoms(symptomer);
+		transfusjon.getPasientKomplikasjoner().put(pasientKomplikasjon.getAlvorlighetsgrad(), pasientKomplikasjon);
 		
 	}
 
