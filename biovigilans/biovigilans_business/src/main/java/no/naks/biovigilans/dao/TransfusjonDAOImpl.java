@@ -246,4 +246,12 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 		
 	}
 
+	public String getInsertTransfusjonSQL() {
+		return insertTransfusjonSQL;
+	}
+
+	public void setInsertTransfusjonSQL(String insertTransfusjonSQL) {
+		this.insertTransfusjonSQL = insertTransfusjonSQL;
+	}
+
 }
