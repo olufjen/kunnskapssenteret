@@ -165,6 +165,7 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	private void savePasientkomplikasjon(Long transId,Pasientkomplikasjon pasientkomplikasjon){
 		Vigilansmelding melding = (Vigilansmelding)pasientkomplikasjon;
 		melding.setMeldingParams();
+		melding.setMeldingTypes();
 		int[]meldingTypes = melding.getTypes();
 		Object[]meldingParams = melding.getParams();
 		Long id = melding.getMeldeid();
@@ -180,13 +181,15 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 		tablesUpdate = new TablesUpdateImpl(getDataSource(),meldeSQL,meldingTypes);
 		tablesUpdate.insert(meldingParams);
 		tablesUpdate = null;
+
+		pasientkomplikasjon.setTransfusjonsId(transId);
+//		pasientkomplikasjon.setMeldeid(id);
 		pasientkomplikasjon.setKomplikasjonstypes();
 		pasientkomplikasjon.setParams();
 		int[] types = pasientkomplikasjon.getTypes();
 		Object[] params = pasientkomplikasjon.getParams();
 		String sql = insertPasientkomplikasjonSQL;
 		
-		pasientkomplikasjon.setTransfusjonsId(transId);
 	
 		tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,types);
 		tablesUpdate.insert(params);
@@ -244,14 +247,6 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 		}
 		
 		
-	}
-
-	public String getInsertTransfusjonSQL() {
-		return insertTransfusjonSQL;
-	}
-
-	public void setInsertTransfusjonSQL(String insertTransfusjonSQL) {
-		this.insertTransfusjonSQL = insertTransfusjonSQL;
 	}
 
 }
