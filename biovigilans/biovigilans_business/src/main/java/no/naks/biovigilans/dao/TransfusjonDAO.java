@@ -29,5 +29,14 @@ public interface TransfusjonDAO {
 	public void setMeldingPrimaryKey(String meldingPrimaryKey);
 	public String[] getMeldingprimarykeyTableDefs();
 	public void setMeldingprimarykeyTableDefs(String[] meldingprimarykeyTableDefs);
+	public String getInsertSymptomerSQL();
+	public void setInsertSymptomerSQL(String insertSymptomerSQL);
+	public String getSymptomerPrimaryKey();
+	public void setSymptomerPrimaryKey(String symptomerPrimaryKey);
+	public String[] getSymptomerprimarykeyTableDefs();
+	public void setSymptomerprimarykeyTableDefs(
+			String[] symptomerprimarykeyTableDefs);
+
+	
 
 }

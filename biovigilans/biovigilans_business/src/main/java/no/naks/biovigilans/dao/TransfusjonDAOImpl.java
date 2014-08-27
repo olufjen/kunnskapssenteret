@@ -6,6 +6,7 @@ import no.naks.biovigilans.model.AbstractVigilansmelding;
 import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Sykdom;
+import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Transfusjon;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
@@ -32,6 +33,9 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	private String updateMeldingSQL;
 	private String meldingPrimaryKey;
 	private String[]meldingprimarykeyTableDefs;  
+	private String insertSymptomerSQL;
+	private String symptomerPrimaryKey;
+	private String[] symptomerprimarykeyTableDefs;
 	
 		
 	
@@ -156,6 +160,37 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	}
 
 
+	public String getInsertSymptomerSQL() {
+		return insertSymptomerSQL;
+	}
+
+
+	public void setInsertSymptomerSQL(String insertSymptomerSQL) {
+		this.insertSymptomerSQL = insertSymptomerSQL;
+	}
+
+
+	public String getSymptomerPrimaryKey() {
+		return symptomerPrimaryKey;
+	}
+
+
+	public void setSymptomerPrimaryKey(String symptomerPrimaryKey) {
+		this.symptomerPrimaryKey = symptomerPrimaryKey;
+	}
+
+
+	public String[] getSymptomerprimarykeyTableDefs() {
+		return symptomerprimarykeyTableDefs;
+	}
+
+
+	public void setSymptomerprimarykeyTableDefs(
+			String[] symptomerprimarykeyTableDefs) {
+		this.symptomerprimarykeyTableDefs = symptomerprimarykeyTableDefs;
+	}
+
+
 	/**
 	 * savePasientkomplikasjon
 	 * Denne rutinen lagrer en Vigilansmelding, en pasientkomplikasjon og relaterte tabeller
@@ -193,7 +228,20 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	
 		tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,types);
 		tablesUpdate.insert(params);
-		
+		Iterator iterator = pasientkomplikasjon.getSymptomer().keySet().iterator();
+		while (iterator.hasNext()){
+			String key = (String)iterator.next();
+			Symptomer symptom = (Symptomer)pasientkomplikasjon.getSymptomer().get(key);
+			symptom.setMeldeId(id);
+			symptom.setParams();
+			int[] sTypes = symptom.getTypes();
+			Object[] sParams = symptom.getParams();
+			Long bId = symptom.getSymptomId();
+			String bSQL =  insertSymptomerSQL;
+			TablesUpdateImpl sykdomtablesUpdate = new TablesUpdateImpl(getDataSource(),bSQL,sTypes);
+			sykdomtablesUpdate.insert(sParams);
+			sykdomtablesUpdate= null;
+		}
 	}
 	
 	/* saveTransfusjon
