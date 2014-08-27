@@ -34,10 +34,21 @@
   </bean>
   <bean id="transfusjonDAO"  class="no.naks.biovigilans.dao.TransfusjonDAOImpl">
   	  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
-  	  	<property name="insertTransfusjonSQL" value="transfusjon.inserttransfusjon"></property>
+  	  	<property name="insertTransfusjonSQL" value="${transfusjon.inserttransfusjon}"></property>
+  	  	<property name="transfusjonPrimaryKey" value="${primarykey.transfusjon}"></property>
+  	  	<property name="transfusjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertblodProduktSQL" value="${blodprodukt.insertblodprodukt}"></property>
+  	  	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+  	  	<property name="insertPasientkomplikasjonSQL" value="${pasientkomplikasjon.insertpasientkomplikasjon}"></property>
+  	  	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
+  	  	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertSymptomerSQL" value="${symptomer.insertsymptomer}"></property>
+  	  	<property name="symptomerPrimaryKey" value="${primarykey.symptomer}"></property>
+  	  	<property name="symptomerprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   </bean>
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
+  	<property name="transfusjonDAO" ref="transfusjonDAO"></property>
   </bean>
   <bean id="giverTableService" class="no.naks.biovigilans.service.GiverTableServiceImpl">
   	<property name="giverDAO" ref="giverDAO"></property>
