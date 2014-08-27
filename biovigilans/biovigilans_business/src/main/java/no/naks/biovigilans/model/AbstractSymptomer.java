@@ -13,7 +13,8 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 public abstract class AbstractSymptomer extends AbstractModel implements Symptomer{
 
-	private long symptomId;
+	private Long symptomId;
+	private Long meldeId; 
 	/**
 	 * Klassifikasjon av komplikasjon, hentes fra AbstractSykdom?
 	 */
@@ -29,10 +30,17 @@ public abstract class AbstractSymptomer extends AbstractModel implements Symptom
 	
 	protected String[]keys;
 	
-	public long getSymptomId() {
+
+	public Long getMeldeId() {
+		return meldeId;
+	}
+	public void setMeldeId(Long meldeId) {
+		this.meldeId = meldeId;
+	}
+	public Long getSymptomId() {
 		return symptomId;
 	}
-	public void setSymptomId(long symptomId) {
+	public void setSymptomId(Long symptomId) {
 		this.symptomId = symptomId;
 	}
 	public String getSymptomklassifikasjon() {

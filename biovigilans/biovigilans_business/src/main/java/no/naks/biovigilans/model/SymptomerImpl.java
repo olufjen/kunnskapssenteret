@@ -7,14 +7,14 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 
 	public SymptomerImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		symptomerFields = new HashMap();
 	}
 	public void setParams(){
 		Long id = getSymptomId();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getSymptomklassifikasjon(),getSymptombeskrivelse(),getMeldeId()};
 		}else
 			params = new Object[]{getSymptomId()};
 		

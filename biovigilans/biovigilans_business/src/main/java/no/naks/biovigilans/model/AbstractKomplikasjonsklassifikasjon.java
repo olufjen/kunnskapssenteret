@@ -24,20 +24,41 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 	private Long klassifikasjonsid;
 	private Long meldeid;
 	
-	protected Map komplikasjonklassifikasjonFields;
+	protected Map<String,String> komplikasjonklassifikasjonFields;
 	protected String[] keys;
 	
 	public String getKlassifikasjon() {
 		return klassifikasjon;
 	}
-	public void setKlassifikasjon(String klassifikasjon) {
-		this.klassifikasjon = klassifikasjon;
+	public void setKlassifikasjon(String klassfikasjon) {
+		if (klassfikasjon == null){
+			String aProd = null;
+			for (int i=0;i<=21;i++){
+				aProd = komplikasjonklassifikasjonFields.get(keys[i]);
+				if (aProd != null){
+					klassfikasjon = aProd;
+					break;
+				}
+			}
+		}
+		
+		this.klassifikasjon = klassfikasjon;
 	}
 	public String getKlassifikasjonsbeskrivelse() {
 		return klassifikasjonsbeskrivelse;
 	}
-	public void setKlassifikasjonsbeskrivelse(String klassifikasjonsbeskrivelse) {
-		this.klassifikasjonsbeskrivelse = klassifikasjonsbeskrivelse;
+	public void setKlassifikasjonsbeskrivelse(String klassfikasjonsbeskrivelse) {
+		if (klassfikasjonsbeskrivelse == null){
+			String aProd = null;
+			for (int i=0;i<=21;i++){
+				aProd = komplikasjonklassifikasjonFields.get(keys[i]);
+				if (aProd != null){
+					klassfikasjonsbeskrivelse = aProd;
+					break;
+				}
+			}
+		}
+		this.klassifikasjonsbeskrivelse = klassfikasjonsbeskrivelse;
 	}
 	public Long getKlassifikasjonsid() {
 		return klassifikasjonsid;
@@ -52,12 +73,12 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 	public void setMeldeid(Long meldeid) {
 		this.meldeid = meldeid;
 	}
-	public Map getKomplikasjonklassifikasjonFields() {
+	public Map<String,String> getKomplikasjonklassifikasjonFields() {
 		return komplikasjonklassifikasjonFields;
 	}
 
 	public void setKomplikasjonklassifikasjonFields(
-			Map komplikasjonklassifikasjonFields) {
+			Map<String,String> komplikasjonklassifikasjonFields) {
 		this.komplikasjonklassifikasjonFields = komplikasjonklassifikasjonFields;
 	}
 	public String[] getKeys() {

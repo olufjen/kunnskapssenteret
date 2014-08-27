@@ -4,8 +4,11 @@ import java.util.Map;
 
 public interface Symptomer {
 
-	public long getSymptomId();
-	public void setSymptomId(long symptomId);
+	public Long getSymptomId();
+	public void setSymptomId(Long symptomId);
+
+	public Long getMeldeId();
+	public void setMeldeId(Long meldeId);
 	public String getSymptomklassifikasjon();
 	public void setSymptomklassifikasjon(String symptomklassifikasjon);
 	public String getSymptombeskrivelse();

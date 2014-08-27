@@ -87,29 +87,28 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	 */
 	public void setPatientkomplicationfieldMaps(String[]userFields){
 		keys = userFields;
-		
-		komplikasjonsFields.put(userFields[0],null);
-		komplikasjonsFields.put(userFields[1],null);
-		komplikasjonsFields.put(userFields[2],null);
-		komplikasjonsFields.put(userFields[3],null);
-		komplikasjonsFields.put(userFields[4],null);
-		komplikasjonsFields.put(userFields[5],null);
-		komplikasjonsFields.put(userFields[6],null);
-		komplikasjonsFields.put(userFields[7],null);
-		komplikasjonsFields.put(userFields[8],null);
-		komplikasjonsFields.put(userFields[9],null);
-		komplikasjonsFields.put(userFields[10],null);
-		komplikasjonsFields.put(userFields[11],null);
-		komplikasjonsFields.put(userFields[12],null);
-		komplikasjonsFields.put(userFields[13],null);
+		for (int i = 0; i<37;i++){
+			komplikasjonsFields.put(userFields[i],null);
+		}
+	
 		
 	}
 
 	public String getKlassifikasjon() {
 		return klassifikasjon;
 	}
-	public void setKlassifikasjon(String klassifikasjon) {
-		this.klassifikasjon = klassifikasjon;
+	public void setKlassifikasjon(String klassfikasjon) {
+		if (klassfikasjon == null){
+			String aProd = null;
+			for (int i=14;i<=36;i++){
+				aProd = komplikasjonsFields.get(keys[i]);
+				if (aProd != null){
+					klassfikasjon = aProd;
+					break;
+				}
+			}
+		}	
+		this.klassifikasjon = klassfikasjon;
 	}
 	public int getTidfrapabegynttrasfusjontilkomplikasjon() {
 		return tidfrapabegynttrasfusjontilkomplikasjon;
@@ -226,6 +225,23 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 				lokalsymptomer.setSymptombeskrivelse(symptom);
 				lokalsymptomer.setSymptomklassifikasjon(symptom);
 				this.symptomer.put(symptom, lokalsymptomer);
+				
+			}
+		}
+	}
+	/**
+	 * produceClassification
+	 * Denne rutinen lager klassifikasjonsobjekter på bakgrunn av hva bruker har oppgitt
+	 * @param klassifikasjon
+	 */
+	public void produceClassification(Komplikasjonsklassifikasjon klassifikasjon){
+		
+		for (String classification : klassifikasjon.getKomplikasjonklassifikasjonFields().values()){
+			if (classification != null && !classification.equals("")){
+//				Komplikasjonsklassifikasjon lokalKlassifikasjon = new KomplikasjonsklassifikasjonImpl();
+//				lokalKlassifikasjon.setKlassifikasjon(classification);
+//				lokalKlassifikasjon.setKlassifikasjonsbeskrivelse(classification);
+//				this.komplikasjonsKlassifikasjoner.put(classification,lokalKlassifikasjon);
 				
 			}
 		}
