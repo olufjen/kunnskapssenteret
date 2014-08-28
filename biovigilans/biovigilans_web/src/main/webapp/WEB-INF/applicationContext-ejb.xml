@@ -45,6 +45,7 @@
   	  	<property name="insertSymptomerSQL" value="${symptomer.insertsymptomer}"></property>
   	  	<property name="symptomerPrimaryKey" value="${primarykey.symptomer}"></property>
   	  	<property name="symptomerprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertUtredningSQL" value="${utredning.insertutredning}"></property>
   </bean>
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
