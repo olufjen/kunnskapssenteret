@@ -129,8 +129,10 @@ public class TransfusjonWebModel extends VigilansModel {
 		pasientKomplikasjon.setKliniskresultat(null);
 		pasientKomplikasjon.setArsakssammenheng(null);
 		pasientKomplikasjon.setKlassifikasjon(null);
-//		pasientKomplikasjon.produceClassification(komplikasjonsklassifikasjon); Denne tabellen er ikke i bruk! Kun en klassifikasjon
+//		pasientKomplikasjon.produceClassification(komplikasjonsklassifikasjon); Denne tabellen er ikke i bruk! Kun en klassifikasjon pr komplikasjon
 		pasientKomplikasjon.produceSymptoms(symptomer);
+		utredning.saveUtredning();
+		pasientKomplikasjon.setUtredning(utredning);
 		transfusjon.getPasientKomplikasjoner().put(pasientKomplikasjon.getAlvorlighetsgrad(), pasientKomplikasjon);
 		
 	}
