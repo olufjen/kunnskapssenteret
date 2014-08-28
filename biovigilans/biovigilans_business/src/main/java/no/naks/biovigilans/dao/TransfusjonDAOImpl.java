@@ -8,6 +8,7 @@ import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Transfusjon;
+import no.naks.biovigilans.model.Utredning;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
@@ -36,6 +37,8 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	private String insertSymptomerSQL;
 	private String symptomerPrimaryKey;
 	private String[] symptomerprimarykeyTableDefs;
+	private String insertUtredningSQL;
+	
 	
 		
 	
@@ -191,6 +194,16 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	}
 
 
+	public String getInsertUtredningSQL() {
+		return insertUtredningSQL;
+	}
+
+
+	public void setInsertUtredningSQL(String insertUtredningSQL) {
+		this.insertUtredningSQL = insertUtredningSQL;
+	}
+
+
 	/**
 	 * savePasientkomplikasjon
 	 * Denne rutinen lagrer en Vigilansmelding, en pasientkomplikasjon og relaterte tabeller
@@ -238,10 +251,18 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 			Object[] sParams = symptom.getParams();
 			Long bId = symptom.getSymptomId();
 			String bSQL =  insertSymptomerSQL;
-			TablesUpdateImpl sykdomtablesUpdate = new TablesUpdateImpl(getDataSource(),bSQL,sTypes);
+			Tablesupdate sykdomtablesUpdate = new TablesUpdateImpl(getDataSource(),bSQL,sTypes);
 			sykdomtablesUpdate.insert(sParams);
 			sykdomtablesUpdate= null;
 		}
+		Utredning utredning = pasientkomplikasjon.getUtredning();
+		utredning.setMeldeId(id);
+		utredning.setParams();
+		int[] utypes = utredning.getTypes();
+		Object[] uparams = utredning.getParams();
+		String usql = insertUtredningSQL;
+		Tablesupdate utredningUpdate = new TablesUpdateImpl(getDataSource(),usql,utypes);
+		utredningUpdate.insert(uparams);
 	}
 	
 	/* saveTransfusjon

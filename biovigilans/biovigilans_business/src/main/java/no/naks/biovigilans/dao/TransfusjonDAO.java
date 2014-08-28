@@ -36,6 +36,8 @@ public interface TransfusjonDAO {
 	public String[] getSymptomerprimarykeyTableDefs();
 	public void setSymptomerprimarykeyTableDefs(
 			String[] symptomerprimarykeyTableDefs);
+	public String getInsertUtredningSQL();
+	public void setInsertUtredningSQL(String insertUtredningSQL);
 
 	
 
