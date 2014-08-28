@@ -14,6 +14,7 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 public abstract class AbstractUtredning extends AbstractModel implements Utredning{
 
 	private Long utredningId;
+	private Long meldeId;
 	/**
 	 * Klassifikasjon av utredning, hentes fra AbstractSykdom?
 	 */
@@ -47,6 +48,12 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	protected String[]keys;
 	protected Map<String,String> utredningsFields;
 	
+	public Long getMeldeId() {
+		return meldeId;
+	}
+	public void setMeldeId(Long meldeId) {
+		this.meldeId = meldeId;
+	}
 	public Long getUtredningId() {
 		return utredningId;
 	}
@@ -56,14 +63,35 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	public String getUtredningsklassifikasjon() {
 		return utredningsklassifikasjon;
 	}
-	public void setUtredningsklassifikasjon(String utredningsklassifikasjon) {
-		this.utredningsklassifikasjon = utredningsklassifikasjon;
+	public void setUtredningsklassifikasjon(String utredningsklassfikasjon) {
+		if (utredningsklassfikasjon == null){
+			String aProd = null;
+	
+				aProd = utredningsFields.get(keys[3]);
+				if (aProd != null){
+					utredningsklassfikasjon = aProd;
+				
+				}
+			
+		}
+		
+		this.utredningsklassifikasjon = utredningsklassfikasjon;
 	}
 	public String getUtredningbeskrivelse() {
 		return utredningbeskrivelse;
 	}
-	public void setUtredningbeskrivelse(String utredningbeskrivelse) {
-		this.utredningbeskrivelse = utredningbeskrivelse;
+	public void setUtredningbeskrivelse(String utredningbeskrvelse) {
+		if (utredningbeskrvelse == null){
+			String aProd = null;
+	
+				aProd = utredningsFields.get(keys[3]);
+				if (aProd != null){
+					utredningbeskrvelse = aProd;
+				
+				}
+			
+		}
+		this.utredningbeskrivelse = utredningbeskrvelse;
 	}
 	
 	public String getBlodtypeserologisk() {
@@ -75,14 +103,34 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	public String getHemolyseparameter() {
 		return hemolyseparameter;
 	}
-	public void setHemolyseparameter(String hemolyseparameter) {
-		this.hemolyseparameter = hemolyseparameter;
+	public void setHemolyseparameter(String hemolysparameter) {
+		if (hemolysparameter == null){
+			String aProd = null;
+	
+				aProd = utredningsFields.get(keys[7]);
+				if (aProd != null){
+					hemolysparameter = aProd;
+				
+				}
+			
+		}
+		this.hemolyseparameter = hemolysparameter;
 	}
 	public String getLga() {
 		return lga;
 	}
-	public void setLga(String lga) {
-		this.lga = lga;
+	public void setLga(String lgaa) {
+		if (lgaa == null){
+			String aProd = null;
+	
+				aProd = utredningsFields.get(keys[10]);
+				if (aProd != null){
+					lgaa = aProd;
+				
+				}
+			
+		}
+		this.lga = lgaa;
 	}
 	public String getPosedyrking() {
 		return posedyrking;
@@ -93,8 +141,18 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	public String getPosedyrkingpositiv() {
 		return posedyrkingpositiv;
 	}
-	public void setPosedyrkingpositiv(String posedyrkingpositiv) {
-		this.posedyrkingpositiv = posedyrkingpositiv;
+	public void setPosedyrkingpositiv(String posedyrkngpositiv) {
+		if (posedyrkngpositiv == null){
+			String aProd = null;
+	
+				aProd = utredningsFields.get(keys[14]);
+				if (aProd != null){
+					posedyrkngpositiv = aProd;
+				
+				}
+			
+		}
+		this.posedyrkingpositiv = posedyrkngpositiv;
 	}
 	public String[] getKeys() {
 		return keys;

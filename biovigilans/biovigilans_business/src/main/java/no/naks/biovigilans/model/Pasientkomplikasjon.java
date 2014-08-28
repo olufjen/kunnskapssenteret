@@ -42,6 +42,9 @@ public interface Pasientkomplikasjon {
 	public void setKeys(String[] keys);
 	public void produceSymptoms(Symptomer symptomer);
 	public void produceClassification(Komplikasjonsklassifikasjon klassifikasjon);
+	public Utredning getUtredning();
+
+	public void setUtredning(Utredning utredning);
 	public void setParams();
 	public int[] getTypes();
 	public Object[] getParams();

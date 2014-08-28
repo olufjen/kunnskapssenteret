@@ -30,4 +30,8 @@ public interface Utredning {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
+	public void saveUtredning();
+	
+	public Long getMeldeId();
+	public void setMeldeId(Long meldeId);
 }

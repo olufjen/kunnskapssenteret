@@ -7,17 +7,17 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 
 	public UtredningImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		utredningsFields = new HashMap();
 	}
 	
 	public void setParams(){
 		Long id = getUtredningId();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getUtredningsklassifikasjon(),getUtredningbeskrivelse(),getBlodtypeserologisk(),getHemolyseparameter(),getLga(),getPosedyrking(),getPosedyrkingpositiv(),getMeldeId()};
 		}else
-			params = new Object[]{getUtredningId()};
+			params = new Object[]{getUtredningsklassifikasjon(),getUtredningbeskrivelse(),getBlodtypeserologisk(),getHemolyseparameter(),getLga(),getPosedyrking(),getPosedyrkingpositiv(),getMeldeId(),getUtredningId()};
 		
 	}	
 	/**
@@ -28,7 +28,7 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 	public void setutredningfieldMaps(String[]userFields){
 		keys = userFields;
 		for (int i = 0;i<15;i++){
-			utredningsFields.put(userFields[0],null);
+			utredningsFields.put(userFields[i],null);
 		}
 		
 	}
@@ -38,7 +38,7 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 	 * @param userField
 	 * @param userValue
 	 */
-	@Override
+
 	public void saveField(String userField, String userValue) {
 		if (utredningsFields.containsKey(userField) && userValue != null){
 			utredningsFields.put(userField,userValue);	
@@ -48,4 +48,19 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 		
 	}
 	
+	/**
+	 * saveUtredning
+	 * Denne rutinen lagrer alle brukerverider til riktig felt
+	 * 
+	 */
+	public void saveUtredning(){
+		setBlodtypeserologisk(null);
+		setHemolyseparameter(null);
+		setLga(null);
+		setPosedyrking(null);
+		setPosedyrkingpositiv(null);
+		setUtredningbeskrivelse(null);
+		setUtredningsklassifikasjon(null);
+		
+	}
 }

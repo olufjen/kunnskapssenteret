@@ -45,6 +45,8 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	private Map<String,String> komplikasjonsFields;
 	private String[] keys;
 	
+	private Utredning utredning;
+	
 	public PasientkomplikasjonImpl() {
 		super();
 	
@@ -246,5 +248,14 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 			}
 		}
 	}
+
+	public Utredning getUtredning() {
+		return utredning;
+	}
+
+	public void setUtredning(Utredning utredning) {
+		this.utredning = utredning;
+	}
+	
 	
 }
