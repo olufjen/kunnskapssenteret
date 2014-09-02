@@ -45,7 +45,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private Sykdom transfusjonKomplikasjon;
 	private Sykdom annenSykdom;
 	private Antistoff antistoff;
-	private String[] aldergruppe;
+	private String[] avdelinger; 	// Inneholder navn på avdelinger tilgjengelig for brukerrvalg
+	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
 	private String[] kjonnValg; 	// Inneholder definisjon av kjønn for mann/kvinne
 	private String mann; 			//definisjon kjønn mann
 	private String kvinne;			//definisjonj kjønn kvinne 
@@ -93,6 +94,16 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	}
 	
 	
+	public String[] getAvdelinger() {
+		return avdelinger;
+	}
+
+
+	public void setAvdelinger(String[] avdelinger) {
+		this.avdelinger = avdelinger;
+	}
+
+
 	public String getMann() {
 		return mann;
 	}
@@ -301,7 +312,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	 */
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
-		String patientFields[] = {formFields[0],formFields[1],formFields[2],formFields[5],formFields[6],formFields[7],formFields[8],formFields[18],formFields[19],formFields[20]};
+		String patientFields[] = {formFields[0],formFields[1],formFields[2],formFields[5],formFields[6],formFields[7],formFields[8],formFields[18],formFields[19],formFields[20],formFields[146]};
 		String sykdomFields[] = {formFields[9]};
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[17]};
