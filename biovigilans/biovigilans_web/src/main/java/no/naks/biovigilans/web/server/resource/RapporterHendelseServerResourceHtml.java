@@ -50,11 +50,12 @@ import org.springframework.web.context.WebApplicationContext;
 public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource {
 		private PasientKomplikasjonWebModel result = null;
 		private TransfusjonWebModel transfusjon = null;
+		private String[] avdelinger;
 		private String[] aldergruppe;
 		private String[] kjonnValg; 
 		private String[] blodProdukt;
-		private String pasientkomplikasjonId = "pasientkomplikasjon";
-		private String transfusjonId = "transfusjon";
+		private String pasientkomplikasjonId = "pasientkomplikasjon"; 	// Benyttes som nøkkel til HTML-sider
+		private String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
 		
 		
 	 public RapporterHendelseServerResourceHtml() {
@@ -92,6 +93,14 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	 
 	public String[] getAldergruppe() {
 		return aldergruppe;
+	}
+
+	public String[] getAvdelinger() {
+		return avdelinger;
+	}
+
+	public void setAvdelinger(String[] avdelinger) {
+		this.avdelinger = avdelinger;
 	}
 
 	public String[] getBlodProdukt() {
@@ -172,6 +181,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	 result.setAldergruppe(aldergruppe);
 	    	 result.setKjonnValg(kjonnValg);
 	    	 result.setblodProducts(blodProdukt);
+	    	 result.setAvdelinger(avdelinger);
 	
 	    
 	     }
