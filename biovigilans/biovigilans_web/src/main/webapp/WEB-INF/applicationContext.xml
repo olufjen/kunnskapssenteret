@@ -223,7 +223,8 @@
 	   	<property name="tablewebservice" ref="tableWebService"></property>
 	   	<property name="innmeldingWebService" ref="hendelseWebService"></property>
 	   	<property name="icd10WebService" ref="ICD10WebService"></property>
-	   	<property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient4},${aldergruppepasient5},
+	   	<property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
+	   	<property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
 	   		${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
 	   	<property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
 	   		${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
@@ -266,7 +267,14 @@
 		   	${pasientkomplikasjon.alvor-mang1},${pasientkomplikasjon.alvor-mang2},${pasientkomplikasjon.alvor-mang3},${pasientkomplikasjon.alvor-mang4},
 		   	${pasientkomplikasjon.alvor-mang5},${pasientkomplikasjon.klinisk-res1},${pasientkomplikasjon.klinisk-res2},${pasientkomplikasjon.klinisk-res3},
 		   	${pasientkomplikasjon.klinisk-res4},${pasientkomplikasjon.klinisk-res5},${pasientkomplikasjon.aarsaks1},${pasientkomplikasjon.aarsaks2},
-		   	${pasientkomplikasjon.aarsaks3},${pasientkomplikasjon.aarsaks4},${pasientkomplikasjon.antistofftext},${pasientkomplikasjon.antistoffiga},${pasientkomplikasjon.p-antistoffannet}">
+		   	${pasientkomplikasjon.aarsaks3},${pasientkomplikasjon.aarsaks4},${pasientkomplikasjon.antistofftext},${pasientkomplikasjon.antistoffiga},${pasientkomplikasjon.p-antistoffannet},
+		   	${pasientkomplikasjon.p-avdelinglist},${transfusjonkomplikasjon.p-trans-temp},${transfusjonkomplikasjon.p-trans-blodfall},${transfusjonkomplikasjon.p-trans-blodstig},
+		   	${transfusjonkomplikasjon.p-trans-kvalme},${transfusjonkomplikasjon.p-trans-frysninger},${transfusjonkomplikasjon.p-trans-pustebesvar},${transfusjonkomplikasjon.p-trans-hypoksemi},
+		   	${transfusjonkomplikasjon.p-trans-cyanose},${transfusjonkomplikasjon.p-trans-luneodem},${transfusjonkomplikasjon.p-trans-diare},${transfusjonkomplikasjon.p-trans-kloe},
+		   	${transfusjonkomplikasjon.p-trans-utslett},${transfusjonkomplikasjon.p-trans-hevelser},${transfusjonkomplikasjon.p-trans-rodflammet},${transfusjonkomplikasjon.p-trans-gulsott},
+		   	${transfusjonkomplikasjon.p-trans-nyre},${transfusjonkomplikasjon.p-trans-bryst},${transfusjonkomplikasjon.p-trans-tachykardi},${transfusjonkomplikasjon.p-trans-mage},
+		   	${transfusjonkomplikasjon.p-trans-akuttnyre},${transfusjonkomplikasjon.p-trans-bevisstlos},${transfusjonkomplikasjon.p-trans-sjokk},${transfusjonkomplikasjon.p-trans-blodninger},
+		   	${transfusjonkomplikasjon.p-trans-urin},${transfusjonkomplikasjon.p-trans-hudblod},${transfusjonkomplikasjon.p-trans-annet},${transfusjonkomplikasjon.p-transfusjontext}">
 		</property>
 	</bean>	
 	 	
