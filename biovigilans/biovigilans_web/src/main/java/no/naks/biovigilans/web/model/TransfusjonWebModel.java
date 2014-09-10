@@ -53,23 +53,31 @@ public class TransfusjonWebModel extends VigilansModel {
 	/**
 	 * distributeTerms
 	 * Denne rutinene fordeler felter fra skjermbildet til modellobjekter
-	 * Feltene fra skjermbildet er definert i filen tables.properties
+	 * Feltene fra skjermbildet er bestemt fra name attributten i .html og definert i filen tables.properties.
+	 * Rekkefølgen i formFields er bestemt fra plasseringen i applicationContext.xml under RapporterHendelseServerResourceHtml
 	 */
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
-				formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],formFields[56],formFields[57],formFields[58]};
-		String[] egenskaperFields = {formFields[49],formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55]}; 
+				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
+		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56]};
+		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],formFields[37],formFields[175]};
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
+		blodProdukt.setAntallfieldMaps(antallFields);
 		blodProdukt.setKeyvalues();
-		String[] transfusjonsFields = {formFields[18],formFields[19],formFields[20],formFields[21],formFields[22],formFields[23],formFields[24],formFields[25],formFields[26]};
+		String[] transfusjonsFields = {formFields[18],formFields[19],formFields[20],formFields[21],formFields[22],formFields[23],formFields[24],formFields[25],formFields[26],
+				formFields[147],formFields[148],formFields[149],formFields[150],formFields[151],formFields[152],formFields[153],formFields[154],formFields[155],formFields[156],
+				formFields[157],formFields[158],formFields[159],formFields[160],formFields[161],formFields[162],formFields[163],formFields[164],formFields[165],
+				formFields[166],formFields[167],formFields[168],formFields[169],formFields[170],formFields[171],formFields[172],formFields[173]};
 		
 		transfusjon.settransfusjonsFieldsMaps(transfusjonsFields);
 		
 		String[] annenblodProduktfields = {formFields[38],formFields[39],formFields[40],formFields[41],formFields[42],formFields[43],
-				formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[56],formFields[57],formFields[58]};
+				formFields[56],formFields[57],formFields[58],formFields[59],formFields[60],formFields[61]};
+		String[] annenblodAntallFields = {formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[175]};
 		annenBlodprodukt.setBlodProduktfieldMaps(annenblodProduktfields);
+		annenBlodprodukt.setAntallfieldMaps(annenblodAntallFields);
 		annenBlodprodukt.setKeyvalues();
 		String[] pasientKomplikasjonsfields = {formFields[129],formFields[130],formFields[131],formFields[132],formFields[133],formFields[134],
 				formFields[135],formFields[136],formFields[137],formFields[138],formFields[139],formFields[140],formFields[141],formFields[142],
@@ -115,8 +123,9 @@ public class TransfusjonWebModel extends VigilansModel {
 		blodProdukt.setBlodprodukt(null);
 		blodProdukt.setProduktetsegenskap(null);
 		blodProdukt.setTappetype(null);
-		
+
 		annenBlodprodukt.setAntallEnheter(-1);
+		annenBlodprodukt.setAntallenheterpakke(-1);
 		annenBlodprodukt.setBlodprodukt(null);
 //		annenBlodprodukt.setTappetype(null);
 //		annenBlodprodukt.setProduktetsegenskap(null);
@@ -124,6 +133,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.setIndikasjon(null);
 		transfusjon.setTransDato(null);
 		transfusjon.setTransfusjonsklokkeslett(null);
+		transfusjon.setTildigerKomplikasjon(null);
 		transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);
