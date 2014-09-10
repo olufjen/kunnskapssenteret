@@ -8,17 +8,20 @@ public class GiverImpl extends AbstractGiver implements Giver {
 
 	public GiverImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		giverFields = new HashMap<String,String>();
 	}
 
 	public void setParams(){
 		Long id = getGiverid();
+		int vekt=0;
+		if(getVekt()!= null)
+			vekt = Integer.parseInt(getVekt());
 		if (id == null){
-			params = new Object[]{getKjonn(),getAlder(),getVekt(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese()};
+			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),vekt};
 		}else
-			params = new Object[]{getKjonn(),getAlder(),getVekt(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),getGiverid()};
+			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),vekt,getGiverid()};
 		
 	}
 
