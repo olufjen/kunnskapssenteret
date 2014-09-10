@@ -46,6 +46,7 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	 */
 	private String hastegrad;
 	private String feiltranfudert;
+	private String tildigerKomplikasjon;
 	/**
 	 * Dette er grunnen til at pasienten f�r en transfusjon, for eksempel jernmangelanemi, 
 	 * bl�dning fra tarm� De samme betraktninger som under 
@@ -106,6 +107,25 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 
 	public String getTransfusjonsklokkeslett() {
 		return transfusjonsklokkeslett;
+	}
+
+	public String getTildigerKomplikasjon() {
+		return tildigerKomplikasjon;
+	}
+
+	public void setTildigerKomplikasjon(String tildigKomplikasjon) {
+	
+		if (tildigKomplikasjon == null){
+			String aProd = null;
+			for (int i = 9;i<36;i++){
+				aProd = transfusjonsFields.get(keys[i]);
+				if (aProd != null){
+					tildigKomplikasjon = aProd;
+					break;
+				}
+			}
+		}	
+		this.tildigerKomplikasjon = tildigKomplikasjon;
 	}
 
 	public void setTransfusjonsklokkeslett(String transfusjonsklokkeslett) {

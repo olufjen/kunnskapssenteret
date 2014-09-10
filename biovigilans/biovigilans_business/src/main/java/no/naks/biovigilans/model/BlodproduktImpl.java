@@ -36,32 +36,10 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		for (String field : userFields){
 			this.userFields.add(field);
 		}
-		blodproduktFields.put(userFields[0],getBlodprodukt());
-		blodproduktFields.put(userFields[1],getBlodprodukt());
-		blodproduktFields.put(userFields[2],getBlodprodukt());
-		blodproduktFields.put(userFields[3],getBlodprodukt());
-		blodproduktFields.put(userFields[4],getBlodprodukt());
-		blodproduktFields.put(userFields[5],getBlodprodukt());
-		if (getAntallEnheter() > 0){
-			
-			antallFields.put(userFields[6],Integer.toString(getAntallEnheter()));
-			antallFields.put(userFields[7],Integer.toString(getAntallEnheter()));
-			antallFields.put(userFields[8],Integer.toString(getAntallEnheter()));
-			antallFields.put(userFields[9],Integer.toString(getAntallEnheter()));
-			antallFields.put(userFields[10],Integer.toString(getAntallEnheter()));
-		} 
-		if (getAntallEnheter() <= 0){
-			antallFields.put(userFields[6],null);
-			antallFields.put(userFields[7],null);
-			antallFields.put(userFields[8],null);
-			antallFields.put(userFields[9],null);
-			antallFields.put(userFields[10],null);
+		for (int i = 0;i<12;i++){
+			blodproduktFields.put(userFields[i],null);
 		}
-		blodproduktFields.put(userFields[11], null);
-		blodproduktFields.put(userFields[12], null);
-		blodproduktFields.put(userFields[13], null);
-		
-		
+
 	}
 
 	/**
@@ -83,6 +61,15 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		egenskaperFields.put(userFields[6], null);
 //		ArrayList egenskaper = (ArrayList) egenskaperFields.values();
 //		String first = (String) egenskaper.get(0);
+	}
+	public void setAntallfieldMaps(String[]userFields){
+		for (String field : userFields){
+			this.userFields.add(field);
+		}
+		for (int i = 0;i<7;i++){
+			antallFields.put(userFields[i],null);
+		}
+	
 	}
 	/* 
 	 * setKeyvalues

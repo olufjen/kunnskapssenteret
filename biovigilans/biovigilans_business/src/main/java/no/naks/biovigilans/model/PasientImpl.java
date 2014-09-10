@@ -64,6 +64,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		patientFields.put(userFields[7],inneliggendePoli );
 		patientFields.put(userFields[8],inneliggendePoli );
 		patientFields.put(userFields[9],inneliggendePoli );
+		patientFields.put(userFields[10], null);
 		
 	}
 	/**
@@ -87,6 +88,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		setAldersGruppe(null);
 		setAntiStoff(null);
 		setInneliggendePoli(null);
+		setAvdeling(null);
 	}
 
 	public Map<String, Antistoff> getAntistoffer() {

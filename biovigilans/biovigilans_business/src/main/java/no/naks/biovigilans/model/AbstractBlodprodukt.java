@@ -50,6 +50,8 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	 * Antall poser som er benyttet ved transfusjonen.
 	 */
 	private int antallEnheter = 0;
+	private int antallenheterpakke = 0;
+	
 /**
 * Inneholder navn på input felt i skjermbildet	
 */
@@ -67,7 +69,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	public void setAntallEnheter(int antallEnheter) {
 		if (antallEnheter == -1){
 			String aProd = null;
-			for (int i=6;i<11;i++){
+			for (int i=12;i<19;i++){
 				aProd = antallFields.get(keys[i]);
 				if (aProd != null){
 					antallEnheter = Integer.parseInt(aProd);
@@ -78,6 +80,21 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 		this.antallEnheter = antallEnheter;
 	}
 
+	public int getAntallenheterpakke() {
+		return antallenheterpakke;
+	}
+	public void setAntallenheterpakke(int antallenhetrpakke) {
+		if (antallEnheter == -1){
+			String aProd = null;
+			aProd = antallFields.get(keys[18]); // OBS !!
+			if (aProd != null){
+				antallenhetrpakke = Integer.parseInt(aProd);
+			
+			}
+		}
+			
+		this.antallenheterpakke = antallenhetrpakke;
+	}
 	public Long getBlodProduktId() {
 		return blodProduktId;
 	}
@@ -103,7 +120,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	public void setTappetype(String tapptype) {
 		if (tapptype == null){
 			String ttype = null;
-			for (int i = 11;i<14;i++){
+			for (int i = 6;i<9;i++){
 				ttype = blodproduktFields.get(keys[i]);
 				if (ttype != null){
 					tapptype = ttype;
@@ -188,6 +205,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	public void setBlodproduktFields(Map<String, String> blodproduktFields) {
 		this.blodproduktFields = blodproduktFields;
 	}
+	
 	public String[] getKeys() {
 		return keys;
 	}

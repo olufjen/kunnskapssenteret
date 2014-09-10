@@ -92,8 +92,11 @@ public abstract class AbstractPasient extends AbstractModel implements Pasient{
 	public String getAvdeling() {
 		return avdeling;
 	}
-	public void setAvdeling(String avdeling) {
-		this.avdeling = avdeling;
+	public void setAvdeling(String avdling) {
+		if (avdling == null){
+			avdling = patientFields.get(keys[10]);
+		}
+		this.avdeling = avdling;
 	}
 	public String[] getKeys() {
 		return keys;

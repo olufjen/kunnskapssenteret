@@ -9,8 +9,8 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 
 	public TransfusjonImpl() {
 		super();
-		types = new int[] {Types.DATE,Types.TIME,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
-		utypes = new int[] {Types.DATE,Types.TIME,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
+		types = new int[] {Types.DATE,Types.TIME,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.DATE,Types.TIME,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		
 		transfusjonsFields = new HashMap();
 		pasientKomplikasjoner = new HashMap();
@@ -19,9 +19,9 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	public void setParams(){
 		Long id = getTransfusjonsId();
 		if (id == null){
-			params = new Object[]{getTransfusionDate(),getTransklokke(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id()};
+			params = new Object[]{getTransfusionDate(),getTransklokke(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getTildigerKomplikasjon(),getPasient_Id()};
 		}else
-			params = new Object[]{getTransfusionDate(),getTransklokke(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getPasient_Id(),getTransfusjonsId()};
+			params = new Object[]{getTransfusionDate(),getTransklokke(),getHastegrad(),getFeiltranfudert(),getIndikasjon(),getAntalenheter(),getTildigerKomplikasjon(),getPasient_Id(),getTransfusjonsId()};
 	
 
 	}	
@@ -34,16 +34,11 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	public void settransfusjonsFieldsMaps(String[]userFields){
 
 		keys = userFields;
+		for (int i = 0;i<36;i++){
+			transfusjonsFields.put(userFields[i],null);
+		}
 		
-		transfusjonsFields.put(userFields[0],null);
-		transfusjonsFields.put(userFields[1],null);
-		transfusjonsFields.put(userFields[2],null);
-		transfusjonsFields.put(userFields[3],null);
-		transfusjonsFields.put(userFields[4],null);
-		transfusjonsFields.put(userFields[5],null);
-		transfusjonsFields.put(userFields[6],null);
-		transfusjonsFields.put(userFields[7],null);
-		transfusjonsFields.put(userFields[8],null);
+	
 
 	}	
 	/**

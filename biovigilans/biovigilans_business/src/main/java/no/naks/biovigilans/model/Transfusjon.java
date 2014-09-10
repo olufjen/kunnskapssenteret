@@ -55,6 +55,10 @@ public interface Transfusjon {
 
 	public void setBlodProdukter(Map<String, Blodprodukt> blodProdukter);
 	public void saveField(String userField,String userValue);
+
+	public String getTildigerKomplikasjon();
+
+	public void setTildigerKomplikasjon(String tildigerKomplikasjon);
 	public String getTransDato();
 
 	public void setTransDato(String transDato);
