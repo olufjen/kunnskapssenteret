@@ -96,8 +96,6 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		
 		if(tidligerekomplikasjonforklaring==null)
 			tidligerekomplikasjonforklaring = giverFields.get(keys[5]);
-		 if(tidligerekomplikasjonforklaring==null)
-			 tidligerekomplikasjonforklaring="temp"; // give temporary value to avoid null point exception
 		this.tidligerekomplikasjonforklaring = tidligerekomplikasjonforklaring;
 	}
 	public String getGivererfaringaferese() {

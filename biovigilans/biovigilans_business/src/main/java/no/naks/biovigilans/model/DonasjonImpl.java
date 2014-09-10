@@ -9,8 +9,8 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 
 	public DonasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		donasjonsFields = new HashMap();
 		
 	}
@@ -18,9 +18,9 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	public void setParams(){
 		Long id = getDonasjonsId();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getDonasjonssted(),getMaltidfortapping(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getGiveId()};
 		}else
-			params = new Object[]{getDonasjonsId()};
+			params = new Object[]{getDonasjonssted(),getMaltidfortapping(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getGiveId(),getDonasjonsId()};
 		
 	}	
 
@@ -31,7 +31,7 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	 */
 	public void setDonasjonsfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<6;i++){
+		for (int i = 0;i<5;i++){
 			donasjonsFields.put(userFields[i],null);
 		}
 	
@@ -51,4 +51,11 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 		
 	}
 
+	public void saveToField(){
+		setDonasjonssted(null);
+		setMaltidfortapping(null);
+		setKomplisertvenepunksjon(null);
+		setTappetype(null);
+		setTappevarighet(null);
+	}
 }

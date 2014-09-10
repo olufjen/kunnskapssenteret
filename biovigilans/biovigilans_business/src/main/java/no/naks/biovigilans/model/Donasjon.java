@@ -29,5 +29,8 @@ public interface Donasjon {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
+	public int getGiveId();
+	public void setGiveId(int giveId);
+	public void saveToField();
 	
 }

@@ -38,7 +38,7 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 	 */
 	private String maltidfortapping;
 	
-
+	private int giveId;
 	
 	protected Map<String,String> donasjonsFields;
 	protected String[] keys;
@@ -55,24 +55,34 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 		return donasjonssted;
 	}
 	public void setDonasjonssted(String donasjonssted) {
+		if(donasjonssted == null)
+			donasjonssted = donasjonsFields.get(keys[0]);
 		this.donasjonssted = donasjonssted;
 	}
 	public String getKomplisertvenepunksjon() {
 		return komplisertvenepunksjon;
 	}
 	public void setKomplisertvenepunksjon(String komplisertvenepunksjon) {
+		if(komplisertvenepunksjon==null)
+			komplisertvenepunksjon  = donasjonsFields.get(keys[2]);
 		this.komplisertvenepunksjon = komplisertvenepunksjon;
 	}
 	public String getTappetype() {
 		return tappetype;
 	}
 	public void setTappetype(String tappetype) {
+		if(tappetype==null){
+			tappetype = donasjonsFields.get(keys[3]);
+		}
 		this.tappetype = tappetype;
 	}
 	public String getTappevarighet() {
 		return tappevarighet;
 	}
 	public void setTappevarighet(String tappevarighet) {
+		if(tappevarighet==null){
+			tappevarighet = donasjonsFields.get(keys[4]) ;
+		}
 		this.tappevarighet = tappevarighet;
 	}
 	public String getLokalisasjonvenepunksjon() {
@@ -85,6 +95,8 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 		return maltidfortapping;
 	}
 	public void setMaltidfortapping(String maltidfortapping) {
+		if(maltidfortapping==null)
+			maltidfortapping = donasjonsFields.get(keys[1]);
 		this.maltidfortapping = maltidfortapping;
 	}
 	public Map<String, String> getDonasjonsFields() {
@@ -98,6 +110,12 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 	}
 	public void setKeys(String[] keys) {
 		this.keys = keys;
+	}
+	public int getGiveId() {
+		return giveId;
+	}
+	public void setGiveId(int giveId) {
+		this.giveId = giveId;
 	}
 	
 	
