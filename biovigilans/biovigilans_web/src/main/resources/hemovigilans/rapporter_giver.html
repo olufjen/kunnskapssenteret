@@ -19,10 +19,10 @@
 		// alert("step 1 "+displayvalue);
 	    if ( displayvalue == 1 ) {
 	         document.getElementById(id).style.display = 'block';
-	    //     alert("step 2");
+	      //  alert("step 2");
 	    } else if (displayvalue == 0) {
 	         document.getElementById(id).style.display = 'none';
-	    //     alert("step 3");
+	       //  alert("step 3");
 	    }
 	 //   alert("step 4");
 	}
@@ -88,52 +88,116 @@
 	    
 	    <div class="form-group">
 	      <label>Givererfaring:</label>
-	      <div class="radio">
+	      	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver"/>Første gang giver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver" onclick="toggleDisplay('type-tapping',0)" />Første gang giver
 	          </label>
 		    </div>
-	        <div class="radio">
+		    <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver"/>Etablert giver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver" onclick="toggleDisplay('type-tapping',this.checked)" />Etablert giver
 	          </label>
 		    </div>
-		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-afer-1" value="option2"/>Førstegangs aferesegiver
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-afer-2" value="option2"/>Etablert aferesegiver
-	          </label>
-		    </div>
-	   	
 	     </div>
-	     
-	    
+	     <div id="type-tapping" style="display: none" class="form-group">
+	      <label>Type tapping:</label> <!-- Dersom aferese : første gang aferese /etablert aferese -->
+	      	<div class="radio">
+		      	<label>
+		      		<input type="radio" name="type-tapping"  id="type-tapping1" value="option1" onclick="toggleDisplay('fullbold-options',this.checked); toggleDisplay('aferese-options',0)" /> Fullbold 
+		      	</label>
+	      	</div>
+	      	<div id="fullbold-options"  style="margin-left: 0.5cm; display: none" >
+		      	<div class="radio" >
+		          <label>
+		          	<input type="radio" name="fullbold" id="fullbold-ja" value="fullbold-ja"/>Ja
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="fullbold" id="fullbold-nei" value="fullbold-nei"/>Nei
+		          </label>
+			    </div>
+			</div>
+	      	<div class="radio">
+		      	<label>
+		      		<input type="radio" name="type-tapping"  id="type-tapping2" value="option2" onclick="toggleDisplay('fullbold-options',0); toggleDisplay('aferese-options',this.checked)" /> Aferese
+		      	</label>
+	      	</div>
+	      	<div id="aferese-options" style="margin-left: 0.5cm; display: none" >
+	      		<label>Første gangs aferesegivining?</label>
+		      	<div class="radio">
+		      		<label>
+		      			<input type="radio" name="aferese-options" id="aferese-ja" value="option1" onclick="toggleDisplay('aferese-options-ja',this.checked)" /> Ja
+		      		</label>
+		      	</div>
+		      	<div class="radio">
+		      		<label>
+		      			<input type="radio" name="aferese-options" id="aferese-nei" value="option2" onclick="toggleDisplay('aferese-options-ja',0)" /> Nei
+		      		</label>
+		      	</div>
+		     
+			     <div id="aferese-options-ja" style="margin-left: 0.5cm; display: none" >
+		      		<label>Type aferese</label>
+			      	<div class="radio">
+			      		<label>
+			      			<input type="radio" name="type-aferese" id="plasmaferese" value="option1" /> Plasmaferese
+			      		</label>
+			      	</div>
+			      	<div class="radio">
+			      		<label>
+			      			<input type="radio" name="type-aferese" id="plateaferese" value="option2" /> Plateaferese
+			      		</label>
+			      	</div>
+			      	<div class="radio">
+			      		<label>
+			      			<input type="radio" name="type-aferese" id="enkel-erytrocyttaferese" value="option3" /> Enkel erytrocyttaferese
+			      		</label>
+			      	</div>
+			      	<div class="radio">
+			      		<label>
+			      			<input type="radio" name="type-aferese" id="dobbel-erytrocyttaferese" value="option4" /> Dobbel erytrocyttaferese
+			      		</label>
+			      	</div>
+			      	<div class="radio">
+			      		<label>
+			      			<input type="radio" name="type-aferese" id="ery-plateferese" value="option5" /> Erytrocytt + plateferese
+			      		</label>
+			      	</div>
+			      	<div class="radio">
+			      		<label>
+			      			<input type="radio" name="type-aferese" id="ery-plasmaferese" value="option6" /> Erytrocytt + plasmaferese
+			      		</label>
+			      	</div>
+			      	<div class="radio">
+			      		<label>
+			      			<input type="radio" name="type-aferese" id="annen-aferese" value="option7" /> Annen aferese
+			      		</label>
+			      	</div>
+			     </div>
+		     </div>
+	    </div>
 	    <div class="form-group">
 	      <label>Tidligere reaksjoner på tapping:</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-tidl-tappja" id="tab-tidl-tapp" value="option2"/>Ja
+	          	<input type="radio" name="tab-tidl-tappja" id="tab-tidl-tapp" value="option1" onclick="toggleDisplay('beskriv-ja',  this.checked);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-tidl-tappja" id="tab-tidl-tapp" value="option2"/>Nei
+	          	<input type="radio" name="tab-tidl-tappja" id="tab-tidl-tapp" value="option2" onclick="toggleDisplay('beskriv-ja',  0);" />Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-tidl-tappja" id="tab-tidl-tapp" value="option2"/>Vet ikke
+	          	<input type="radio" name="tab-tidl-tappja" id="tab-tidl-tapp" value="option3" onclick="toggleDisplay('beskriv-ja',  0);" />Vet ikke
 	          </label>
 		    </div>
 	    </div>
-	    
-	    <label>Beskrivelse av tidligere reaksjon:</label>
-		  <textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
-	    
+	    <div id="beskriv-ja" style="display:none">
+	    	<label>Beskrivelse av tidligere reaksjon:</label>
+		  	<textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
+	    </div>
 	    <h3>Donasjon</h3>
 	    
 	    <div class="form-group">
@@ -147,7 +211,7 @@
 	      <label>Måltid innen tre timer før tapping:</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="option2"/>Ja
+	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="option1"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
@@ -157,7 +221,7 @@
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="option2"/>Vet ikke
+	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="option3"/>Vet ikke
 	          </label>
 		    </div>
 	    </div>
@@ -165,7 +229,7 @@
 	      <label>Komplisert venepunksjon:</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="option2"/>Ja
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="option1"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
@@ -175,26 +239,13 @@
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="option2"/>Vet ikke
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="option3"/>Vet ikke
 	          </label>
 		    </div>
 	    </div>
 	    
-	 <div class="form-group">
-	      <label>Type tapping:</label> <!-- Dersom aferese : første gang aferese /etablert aferese -->
-	      <input name ="tab-type" list="tappetype" class="form-control">
-	      <datalist id="tappetype">
+	 	
 	  
-	     </datalist>
-	    </div>
-	    
-	    <div class="form-group">
-	      <label>Tappevarighet (tappetid):</label>
-	      <input name ="tab-tid" type="text" class="form-control">
-	 		<datalist id="tappetid">
-	
-			</datalist>
-	    </div>
 	    
 	    <h3>Giverkomplikasjon</h3>
 	    <div class="form-group">
@@ -218,21 +269,6 @@
 	          <input name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div>
 	    </div>
-		<div class="form-group">
-	      <label>Alvorlighetsgrad</label>
-	      <input name ="tab-alvorlighetgrad" list="alvorgrad" class="form-control">
-	      <datalist id="alvorgrad">
-	 
-	     </datalist>
-	    </div>
-	    <div class="form-group">
-	      <label>Klinisk resultat</label>
-	      <input name ="tab-klinresultat" list="klinres" class="form-control">
-	      <datalist id="klinres">
-	
-	     </datalist>
-	    </div>
-	    
 	    <h3>Type komplikasjon</h3>
 	    <div class="form-group">
 	      <label>Lokal skade i armen:</label>
@@ -297,7 +333,7 @@
 	    </div>
 	     <div class="form-group">
 		<label>Hvis du har valgt annet, beskriv her:</label>
-		  <textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
+		  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
 		 </div> 
 	  	<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert........</h4>
 		 <div class="form-group">
@@ -307,10 +343,35 @@
 	    <h3>Tiltak rettet mot giver</h3>
 	    <div class="form-group">
 	      <label>Strakstiltak:</label>
-	      <input name ="tab-strakstiltak" list="strakstiltak" class="form-control">
-	      <datalist id="strakstiltak">
-	  
-	     </datalist>
+	      	<div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak1" value="option1"/>Behandlet av BB tappepersonalet
+	          </label>
+		    </div>
+		    <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak2" value="option2"/>Behandlet av BB lege
+	          </label>
+		    </div>
+		    <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="option3"/>Observasjon akutt mottak
+	          </label>
+		    </div>
+		    <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak4" value="option4"/>Sykehusinnleggelse
+	          </label>
+		    </div>
+		    <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak5" value="option5"/>Behandling annet sted (spesifiser)
+	          </label>
+		    </div>
+	       
+	    </div>
+	     
+	     
 	    </div>
 	    
 	     <div class="form-group">
