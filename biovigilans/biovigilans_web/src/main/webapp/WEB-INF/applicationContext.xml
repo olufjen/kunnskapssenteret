@@ -99,7 +99,7 @@
 
 	</bean>
 	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!-- C:\\biovigilans\\temp\\ICD10CM.xml -->
+<!-- C:\\biovigilans\\temp\\ICD10CM.xml  -->
 		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
 
 
@@ -185,6 +185,7 @@
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="giverWebService" ref="giverWebService"></property>
+     	<property name="donasjonWebService" ref="donasjonWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
   </bean>	
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
@@ -203,10 +204,10 @@
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
      	<property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
      		${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
-        <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},
-        			${giver.reaksjon},${giver.sted},${giver.maltid},${giver.vene},${giver.type},${giver.tid},${giver.hvor},
-        			${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinresultat},${giver.arm},${giver.tabskadearm},
-        			${giver.bivirk},${giver.systemiskbivirkning},${giver.annenreak},${giver.annenreaksjon},${giver.reaksjon},
+        <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},${giver.reaksjon},
+        			${giver.sted},${giver.maltid},${giver.vene},${giver.type},${giver.tid},
+        			${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinresultat},${giver.arm},${giver.tabskadearm},
+        			${giver.bivirk},${giver.systemiskbivirkning},${giver.annenreak},${giver.annenreaksjon},${giver.annetreaksjon},
         			${giver.kortbeskr},${giver.strakstiltak},${giver.annenreak},${giver.behandlingoppfolging},${giver.hvorbehandling},
         			${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak}">
      	</property>
@@ -284,6 +285,7 @@
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="giverWebService" ref="giverWebService"></property>
+     	<property name="donasjonWebService" ref="donasjonWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>
     
  
@@ -303,6 +305,10 @@
 	</bean>
 	<bean id="giverWebService" class="no.naks.biovigilans.web.control.GiverWebServiceImpl" >
 		<property name="giverTableService" ref="giverTableService"></property>
+	</bean>
+
+	<bean id="donasjonWebService" class="no.naks.biovigilans.web.control.DonasjonWebServiceImpl">
+		<property name="donasjonTableService" ref="donasjonTableService"></property>
 	</bean>
 
 <!-- Exception handling -->
