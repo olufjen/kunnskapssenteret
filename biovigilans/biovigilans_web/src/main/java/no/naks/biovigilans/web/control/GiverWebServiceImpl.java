@@ -2,7 +2,6 @@ package no.naks.biovigilans.web.control;
 
 import no.naks.biovigilans.service.GiverTableService;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
-import no.naks.framework.web.control.DomainDictionary;
 import no.naks.framework.web.control.MasterWebServiceImpl;
 
 public class GiverWebServiceImpl extends MasterWebServiceImpl implements GiverWebService {
