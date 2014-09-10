@@ -245,7 +245,7 @@
 		   	${pasientkomplikasjon.annenblod-erytrocytt},${pasientkomplikasjon.annenblod-trombocytt},${pasientkomplikasjon.annenblod-octaplas},
 		   	${pasientkomplikasjon.annenblod-trauma},${pasientkomplikasjon.annenblod-plasma},${pasientkomplikasjon.annenblod-andre},
 		   	${pasientkomplikasjon.annenblodantall-erytrocytt},${pasientkomplikasjon.annenblodantall-trombocytt},${pasientkomplikasjon.annenblodantall-octaplas},
-		   	${pasientkomplikasjon.annenblodantall-trauma},${pasientkomplikasjon.annenblodantall-plasma},
+		   	${pasientkomplikasjon.annenblodantall-trauma},${pasientkomplikasjon.annenblodantall-plasma},${pasientkomplikasjon.annenblodantall-andre},
 		   	${pasientkomplikasjon.blod-kriseblod},${pasientkomplikasjon.blod-vasket},${pasientkomplikasjon.blod-bestralt},
 		   	${pasientkomplikasjon.blod-hla},${pasientkomplikasjon.blod-patogening},${pasientkomplikasjon.blod-blodvarmer},${pasientkomplikasjon.blod-annet},
 		   	${pasientkomplikasjon.blod-aferese},${pasientkomplikasjon.blod-fullblod},${pasientkomplikasjon.blod-vetikke},${pasientkomplikasjon.blod-giverplasma},
@@ -275,7 +275,7 @@
 		   	${transfusjonkomplikasjon.p-trans-utslett},${transfusjonkomplikasjon.p-trans-hevelser},${transfusjonkomplikasjon.p-trans-rodflammet},${transfusjonkomplikasjon.p-trans-gulsott},
 		   	${transfusjonkomplikasjon.p-trans-nyre},${transfusjonkomplikasjon.p-trans-bryst},${transfusjonkomplikasjon.p-trans-tachykardi},${transfusjonkomplikasjon.p-trans-mage},
 		   	${transfusjonkomplikasjon.p-trans-akuttnyre},${transfusjonkomplikasjon.p-trans-bevisstlos},${transfusjonkomplikasjon.p-trans-sjokk},${transfusjonkomplikasjon.p-trans-blodninger},
-		   	${transfusjonkomplikasjon.p-trans-urin},${transfusjonkomplikasjon.p-trans-hudblod},${transfusjonkomplikasjon.p-trans-annet},${transfusjonkomplikasjon.p-transfusjontext,${pasientkomplikasjon.annenblodantall-transpakker}">
+		   	${transfusjonkomplikasjon.p-trans-urin},${transfusjonkomplikasjon.p-trans-hudblod},${transfusjonkomplikasjon.p-trans-annet},${transfusjonkomplikasjon.p-transfusjontext},${pasientkomplikasjon.annenblodantall-transpakker}">
 		</property>
 	</bean>	
 	 	
