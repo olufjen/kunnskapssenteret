@@ -99,8 +99,8 @@
 
 	</bean>
 	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!-- C:\\biovigilans\\temp\\ICD10CM.xml  -->
-		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
+<!--  C:\\biovigilans\\temp\\ICD10CM.xml  -->
+		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml " ></property>
 
 
 	</bean>	
@@ -205,7 +205,7 @@
      	<property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
      		${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
         <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},${giver.reaksjon},
-        			${giver.sted},${giver.maltid},${giver.vene},${giver.type},${giver.tid},
+        			${giver.sted},${giver.maltid},${giver.vene},${giver.tapping},${giver.fullblod},${giver.aferese-options},${giver.type-aferese},
         			${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinresultat},${giver.arm},${giver.tabskadearm},
         			${giver.bivirk},${giver.systemiskbivirkning},${giver.annenreak},${giver.annenreaksjon},${giver.annetreaksjon},
         			${giver.kortbeskr},${giver.strakstiltak},${giver.annenreak},${giver.behandlingoppfolging},${giver.hvorbehandling},
