@@ -40,7 +40,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	
 	public void distributeTerms(){
 			String[] formFields = getFormNames();
-			String giverFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[6]};
+			String giverFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5]};
 			giver.setGiverfieldMaps(giverFields);
 	}
 	

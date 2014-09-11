@@ -27,7 +27,7 @@ public class DonasjonwebModel extends VigilansModel {
 	
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
-		String donasjonFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10]};
+		String donasjonFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[11],formFields[12]};
 		donasjon.setDonasjonsfieldMaps(donasjonFields);
 	}
 	
