@@ -63,8 +63,9 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 		return komplisertvenepunksjon;
 	}
 	public void setKomplisertvenepunksjon(String komplisertvenepunksjon) {
-		if(komplisertvenepunksjon==null)
-			komplisertvenepunksjon  = donasjonsFields.get(keys[2]);
+		if(komplisertvenepunksjon==null){
+			komplisertvenepunksjon = donasjonsFields.get(keys[2]);
+		}
 		this.komplisertvenepunksjon = komplisertvenepunksjon;
 	}
 	public String getTappetype() {
@@ -73,6 +74,15 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 	public void setTappetype(String tappetype) {
 		if(tappetype==null){
 			tappetype = donasjonsFields.get(keys[3]);
+			if(tappetype.equalsIgnoreCase("fullblod")){
+				tappetype = donasjonsFields.get(keys[4]);
+			}else{
+				if(donasjonsFields.get(keys[5]).equalsIgnoreCase("aferese-ja")){
+					tappetype = donasjonsFields.get(keys[5]) + " " + donasjonsFields.get(keys[6]);
+				}else{
+					tappetype = donasjonsFields.get(keys[5]);
+				}
+			}
 		}
 		this.tappetype = tappetype;
 	}
@@ -80,9 +90,6 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 		return tappevarighet;
 	}
 	public void setTappevarighet(String tappevarighet) {
-		if(tappevarighet==null){
-			tappevarighet = donasjonsFields.get(keys[4]) ;
-		}
 		this.tappevarighet = tappevarighet;
 	}
 	public String getLokalisasjonvenepunksjon() {

@@ -102,8 +102,6 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		return givererfaringaferese;
 	}
 	public void setGivererfaringaferese(String givererfaringaferese) {
-		if(givererfaringaferese == null)
-			givererfaringaferese = giverFields.get(keys[6]);
 		if(givererfaringaferese==null)
 			 givererfaringaferese="temp";  // give temporary value to avoid null point exception
  		this.givererfaringaferese = givererfaringaferese;

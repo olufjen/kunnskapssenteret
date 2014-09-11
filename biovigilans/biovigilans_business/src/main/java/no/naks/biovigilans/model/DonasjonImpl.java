@@ -18,9 +18,9 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	public void setParams(){
 		Long id = getDonasjonsId();
 		if (id == null){
-			params = new Object[]{getDonasjonssted(),getMaltidfortapping(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getGiveId()};
+			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getGiveId()};
 		}else
-			params = new Object[]{getDonasjonssted(),getMaltidfortapping(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getGiveId(),getDonasjonsId()};
+			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getGiveId(),getDonasjonsId()};
 		
 	}	
 
@@ -31,7 +31,7 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	 */
 	public void setDonasjonsfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<5;i++){
+		for (int i = 0;i<7;i++){
 			donasjonsFields.put(userFields[i],null);
 		}
 	
