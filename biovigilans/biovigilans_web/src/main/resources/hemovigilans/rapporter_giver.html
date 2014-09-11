@@ -103,24 +103,24 @@
 	      <label>Type tapping:</label> <!-- Dersom aferese : første gang aferese /etablert aferese -->
 	      	<div class="radio">
 		      	<label>
-		      		<input type="radio" name="type-tapping"  id="type-tapping1" value="option1" onclick="toggleDisplay('fullbold-options',this.checked); toggleDisplay('aferese-options',0)" /> Fullbold 
+		      		<input type="radio" name="type-tapping"  id="type-tapping1" value="option1" onclick="toggleDisplay('fullblod-options',this.checked); toggleDisplay('aferese-options',0)" /> Fullblod 
 		      	</label>
 	      	</div>
-	      	<div id="fullbold-options"  style="margin-left: 0.5cm; display: none" >
+	      	<div id="fullblod-options"  style="margin-left: 0.5cm; display: none" >
 		      	<div class="radio" >
 		          <label>
-		          	<input type="radio" name="fullbold" id="fullbold-ja" value="fullbold-ja"/>Ja
+		          	<input type="radio" name="fullblod" id="fullblod-ja" value="fullblod-ja"/>Ja
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label>
-		          	<input type="radio" name="fullbold" id="fullbold-nei" value="fullbold-nei"/>Nei
+		          	<input type="radio" name="fullblod" id="fullblod-nei" value="fullblod-nei"/>Nei
 		          </label>
 			    </div>
 			</div>
 	      	<div class="radio">
 		      	<label>
-		      		<input type="radio" name="type-tapping"  id="type-tapping2" value="option2" onclick="toggleDisplay('fullbold-options',0); toggleDisplay('aferese-options',this.checked)" /> Aferese
+		      		<input type="radio" name="type-tapping"  id="type-tapping2" value="option2" onclick="toggleDisplay('fullblod-options',0); toggleDisplay('aferese-options',this.checked)" /> Aferese
 		      	</label>
 	      	</div>
 	      	<div id="aferese-options" style="margin-left: 0.5cm; display: none" >
@@ -244,9 +244,6 @@
 		    </div>
 	    </div>
 	    
-	 	
-	  
-	    
 	    <h3>Giverkomplikasjon</h3>
 	    <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
@@ -269,9 +266,47 @@
 	          <input name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div>
 	    </div>
+	    <div class="form-group">
+	      <label>Komplikasjon</label>
+	      <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-komplikasjon" id="tab-helbredelse" value="option1"/>Full helbredelse
+	          </label>
+		    </div>
+	        <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-komplikasjon" id="tab-sekvele" value="option2"/>Lette sekvele
+	          </label>
+		    </div>
+	        <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-komplikasjon" id="tab-sykemelding" value="option3"/>Sykemelding (med spm om antall dager)
+	          </label>
+		    </div>
+		     <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-komplikasjon" id="tab-uforetrydg" value="option4"/>Uføretrydg
+	          </label>
+		    </div>
+		     <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-komplikasjon" id="tab-sekvele" value="option5"/>Alvorlig sekvele (spesifiser)
+	          </label>
+		    </div>
+		     <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-komplikasjon" id="tab-dodsfall" value="option6"/>Dødsfall
+	          </label>
+		    </div>
+		     <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-komplikasjon" id="tab-vene" value="option7"/>Vet ikke
+	          </label>
+		    </div>
+	    </div>
 	    <h3>Type komplikasjon</h3>
 	    <div class="form-group">
-	      <label>Lokal skade i armen:</label>
+	      <label>Lokal:</label>
 	      <div class="radio">
 	          <label>
 	          	<input type="radio" name="tab-arm" id="tab-arm" value="option2" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
@@ -292,10 +327,10 @@
 	     </datalist>
 	    </div>
 	    <div class="form-group">
-	      <label>Systemisk bivirkning:</label>
+	      <label>Systemisk:</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="option2" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
+	          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="option1" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
@@ -312,15 +347,15 @@
 	     </datalist>
 	    </div>
 		    <div class="form-group">
-	      <label>Annen reaksjon:</label>
+	      <label>Annen reaksjon(spesifiser):</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option2" onclick="toggleDisplay('annenreaksjon-ja', this.checked);" />Ja
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option1" onclick="toggleDisplay('annenreaksjon-ja', this.checked);" />Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak2" value="option2" onclick="toggleDisplay('annenreaksjon-ja', 0);" />Nei
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option2" onclick="toggleDisplay('annenreaksjon-ja', 0);" />Nei
 	          </label>
 		    </div>
 	    </div>
@@ -378,15 +413,24 @@
 	      <label>Videre behandling/oppfølging nødvendig?</label>
 	         <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option2" onclick="toggleDisplay('videreBehandling-ja', this.checked);" />Ja
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option1"  />Ikke behov for videre behandling/oppfølging
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak2" value="option2" onclick="toggleDisplay('videreBehandling-ja', 0);"/>Nei
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option2" />Henvist egen lege
 	          </label>
 		    </div>
-	 
+	 		<div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option3" />Henvist legespesialist(spesifiser)
+	          </label>
+		    </div>
+		    <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option4" />Vet Ikke
+	          </label>
+		    </div>
 	    </div>
 	 <div id="videreBehandling-ja" style="display: none">   
 	     <div class="form-group">
