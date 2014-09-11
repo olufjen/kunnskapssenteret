@@ -71,12 +71,14 @@
 	    
 	    <div class="form-group">
 	      <label>Alder:</label>
-	      <input name ="tab-alder" list="giveralder" class="form-control">
-	      <datalist id="giveralder">
+<!-- 	      <input name ="tab-alder" list="giveralder" class="form-control"> -->
+	      <select name ="tab-alder" id="giveralder" class="form-control">
+	       		<option> --- Select --- </option>
 	       		<#list giverkomplikasjon.aldergruppe as alder>
-	     		<option>${alder} </option>
+	       		<option>${alder} </option>
 	     		   </#list>
-	     </datalist>
+	     </select>
+		
 	     
 	    </div>
 	    
@@ -413,22 +415,22 @@
 	      <label>Videre behandling/oppfølging nødvendig?</label>
 	         <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option1"  />Ikke behov for videre behandling/oppfølging
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="videre behandling"  />Ikke behov for videre behandling/oppfølging
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option2" />Henvist egen lege
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="egen lege" />Henvist egen lege
 	          </label>
 		    </div>
 	 		<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option3" />Henvist legespesialist(spesifiser)
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="legespesialist" />Henvist legespesialist(spesifiser)
 	          </label>
 		    </div>
 		    <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option4" />Vet Ikke
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="vet ikke" />Vet Ikke
 	          </label>
 		    </div>
 	    </div>
