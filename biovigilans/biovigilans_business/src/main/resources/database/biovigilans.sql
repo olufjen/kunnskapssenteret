@@ -92,6 +92,7 @@ CREATE TABLE Transfusjon
     feiltranfudert           text,
     indikasjon               text,
     antallenheter            int2,
+    tidligerkomplikasjon	 text,
     pasient_id               int,
 
     primary key(transfusjonsid),
