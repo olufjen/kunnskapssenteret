@@ -222,12 +222,12 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 			meldeSQL = updateMeldingSQL;
 			meldingTypes = melding.getUtypes();
 		}
+		tablesUpdate = new TablesUpdateImpl(getDataSource(),meldeSQL,meldingTypes);
+		tablesUpdate.insert(meldingParams);
 		if (id == null){
 			melding.setMeldeid(getPrimaryKey(meldingPrimaryKey,meldingprimarykeyTableDefs));
 		}
 		id = melding.getMeldeid();
-		tablesUpdate = new TablesUpdateImpl(getDataSource(),meldeSQL,meldingTypes);
-		tablesUpdate.insert(meldingParams);
 		tablesUpdate = null;
 
 		pasientkomplikasjon.setTransfusjonsId(transId);
