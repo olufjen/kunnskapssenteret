@@ -312,11 +312,11 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	 */
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
-		String patientFields[] = {formFields[0],formFields[1],formFields[2],formFields[5],formFields[6],formFields[7],formFields[8],formFields[18],formFields[19],formFields[20],formFields[146]};
+		String patientFields[] = {formFields[0],formFields[1],formFields[2],formFields[5],formFields[6],formFields[7],formFields[8],formFields[18],formFields[19],formFields[20],formFields[147]};
 		String sykdomFields[] = {formFields[9]};
 		String transFields[] = {formFields[13]};
-		String annenSykdomFields[] = {formFields[17]};
-		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[143],formFields[144],formFields[145]};
+		String annenSykdomFields[] = {formFields[13]};
+		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[144],formFields[145],formFields[146]};
 		pasient.setPatientfieldMaps(patientFields);
 		sykdom.setsykdomfieldMaps(sykdomFields);
 		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);
@@ -345,7 +345,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		pasient.produceAntistoffer(antistoff);
 		pasient.getSykdommer().put(sykdom.getDiagnosekode(),sykdom);
 		pasient.getSykdommer().put(annenSykdom.getDiagnosekode(),annenSykdom);
-		pasient.getSykdommer().put(transfusjonKomplikasjon.getDiagnosekode(),transfusjonKomplikasjon);
+//		pasient.getSykdommer().put(transfusjonKomplikasjon.getDiagnosekode(),transfusjonKomplikasjon);
 		
 	}
 	

@@ -67,9 +67,9 @@ public class TransfusjonWebModel extends VigilansModel {
 		blodProdukt.setAntallfieldMaps(antallFields);
 		blodProdukt.setKeyvalues();
 		String[] transfusjonsFields = {formFields[18],formFields[19],formFields[20],formFields[21],formFields[22],formFields[23],formFields[24],formFields[25],formFields[26],
-				formFields[147],formFields[148],formFields[149],formFields[150],formFields[151],formFields[152],formFields[153],formFields[154],formFields[155],formFields[156],
-				formFields[157],formFields[158],formFields[159],formFields[160],formFields[161],formFields[162],formFields[163],formFields[164],formFields[165],
-				formFields[166],formFields[167],formFields[168],formFields[169],formFields[170],formFields[171],formFields[172],formFields[173]};
+				formFields[148],formFields[149],formFields[150],formFields[151],formFields[152],formFields[153],formFields[154],formFields[155],formFields[156],formFields[157],
+				formFields[158],formFields[159],formFields[160],formFields[161],formFields[162],formFields[163],formFields[164],formFields[165],formFields[166],
+				formFields[167],formFields[168],formFields[169],formFields[170],formFields[171],formFields[172],formFields[173],formFields[174]};
 		
 		transfusjon.settransfusjonsFieldsMaps(transfusjonsFields);
 		
@@ -79,8 +79,8 @@ public class TransfusjonWebModel extends VigilansModel {
 		annenBlodprodukt.setBlodProduktfieldMaps(annenblodProduktfields);
 		annenBlodprodukt.setAntallfieldMaps(annenblodAntallFields);
 		annenBlodprodukt.setKeyvalues();
-		String[] pasientKomplikasjonsfields = {formFields[129],formFields[130],formFields[131],formFields[132],formFields[133],formFields[134],
-				formFields[135],formFields[136],formFields[137],formFields[138],formFields[139],formFields[140],formFields[141],formFields[142],
+		String[] pasientKomplikasjonsfields = {formFields[130],formFields[131],formFields[132],formFields[133],formFields[134],formFields[135],
+				formFields[136],formFields[137],formFields[138],formFields[139],formFields[140],formFields[141],formFields[142],formFields[143],
 				formFields[90],formFields[91],formFields[92],formFields[93],formFields[94],formFields[95],
 				formFields[96],formFields[97],formFields[98],formFields[99],formFields[100],formFields[101],formFields[102],formFields[103],
 				formFields[104],formFields[105],formFields[106],formFields[107],formFields[108],formFields[109],formFields[110],formFields[111],formFields[112]};
