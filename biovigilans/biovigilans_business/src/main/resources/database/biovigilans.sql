@@ -130,7 +130,10 @@ CREATE TABLE Blodprodukt
     produktegenskap  text,
     antalenheter     int2,
     transfusjonsId   int,
-
+  -- antall enheter i en pakke (Akutt transfusjon)
+    antallenheterpakke   INT             NULL,
+    -- Suspensjonsmedium (tappetype aferese)
+    suspensjon           TEXT                NULL,
     primary key(blodProduktId),
 
     foreign key(transfusjonsId) references Transfusjon(transfusjonsid) on delete CASCADE
