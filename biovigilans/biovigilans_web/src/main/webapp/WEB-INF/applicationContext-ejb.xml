@@ -31,6 +31,11 @@
   	<property name="insertGiverSQL" value="${giver.insertGiver}"></property>
   	<property name="giverPrimaryKey" value="${primaryKey.giver}"></property>
   	<property name="giverprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	
+  	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+  	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
+  	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	
   </bean>
   <bean id="donasjonDAO" class="no.naks.biovigilans.dao.DonasjonDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
