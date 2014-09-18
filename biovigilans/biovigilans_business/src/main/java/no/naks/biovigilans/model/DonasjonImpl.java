@@ -9,8 +9,8 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 
 	public DonasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		donasjonsFields = new HashMap();
 		
 	}
@@ -18,9 +18,9 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	public void setParams(){
 		Long id = getDonasjonsId();
 		if (id == null){
-			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getGiveId()};
+			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getLokalisasjonvenepunksjon(),getGiveId()};
 		}else
-			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getGiveId(),getDonasjonsId()};
+			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getLokalisasjonvenepunksjon(),getGiveId(),getDonasjonsId()};
 		
 	}	
 
@@ -31,11 +31,9 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	 */
 	public void setDonasjonsfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<7;i++){
+		for (int i = 0;i<8;i++){
 			donasjonsFields.put(userFields[i],null);
 		}
-	
-		
 	}
 	/**
 	 * saveField
@@ -57,5 +55,6 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 		setKomplisertvenepunksjon(null);
 		setTappetype(null);
 		setTappevarighet(null);
+		setLokalisasjonvenepunksjon(null);
 	}
 }

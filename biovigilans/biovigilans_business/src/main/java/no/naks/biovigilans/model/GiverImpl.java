@@ -32,7 +32,8 @@ public class GiverImpl extends AbstractGiver implements Giver {
 	 */
 	public void setGiverfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<6;i++){
+		//int size =userFields.length;
+		for (int i = 0;i<7;i++){
 			giverFields.put(userFields[i],null);
 		}
 
@@ -62,4 +63,5 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		setGivererfaringaferese(null);
 		
 	}
+	
 }

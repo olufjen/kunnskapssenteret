@@ -74,10 +74,10 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 	public void setTappetype(String tappetype) {
 		if(tappetype==null){
 			tappetype = donasjonsFields.get(keys[3]);
-			if(tappetype.equalsIgnoreCase("fullblod")){
+			if(tappetype != null && tappetype.equalsIgnoreCase("fullblod")){
 				tappetype = donasjonsFields.get(keys[4]);
 			}else{
-				if(donasjonsFields.get(keys[5]).equalsIgnoreCase("aferese-ja")){
+				if(donasjonsFields.get(keys[5])!= null && donasjonsFields.get(keys[5]).equalsIgnoreCase("aferese-ja")){
 					tappetype = donasjonsFields.get(keys[5]) + " " + donasjonsFields.get(keys[6]);
 				}else{
 					tappetype = donasjonsFields.get(keys[5]);
@@ -96,6 +96,9 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 		return lokalisasjonvenepunksjon;
 	}
 	public void setLokalisasjonvenepunksjon(String lokalisasjonvenepunksjon) {
+		if(lokalisasjonvenepunksjon == null){
+			lokalisasjonvenepunksjon = donasjonsFields.get(keys[7]);
+		}
 		this.lokalisasjonvenepunksjon = lokalisasjonvenepunksjon;
 	}
 	public String getMaltidfortapping() {

@@ -1,8 +1,20 @@
 package no.naks.biovigilans.model;
 
+
+import java.security.Timestamp;
+import java.sql.Time;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+
+
+
+import org.apache.taglibs.standard.tag.common.fmt.ParseDateSupport;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
@@ -23,11 +35,13 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	/**
 	 * Dato for hendelsen
 	 */
+	protected String[]keys;
+	
 	private Date datoforhendelse;
 	/**
 	 * Klokkeslett for hendelsen
 	 */
-	private String klokkesletthendelse;
+	private Time klokkesletthendelse;
 	/**
 	 * Dato når komplikasjonen ble oppdaget
 	 */
@@ -35,7 +49,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	/**
 	 * Tidspunkt for donasjon eller overføring
 	 */
-	private String donasjonoverforing;
+	private Date donasjonoverforing;
 	/**
 	 * Denne sjekklisten omfatter følgende definisjoner:
 	 * Skal meldes videre til HDIR
@@ -71,24 +85,71 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		return datoforhendelse;
 	}
 	public void setDatoforhendelse(Date datoforhendelse) {
+		if(datoforhendelse==null){
+			DateFormat dateFormat = 
+			            new SimpleDateFormat("yyyy-MM-dd");
+		//	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = new Date();
+			try {
+				String strDate = dateFormat.format(date);
+				datoforhendelse =   dateFormat.parse(strDate);
+			} catch (ParseException e) {
+				System.out.println("date format problem: " + e.toString());
+			}
+		}
 		this.datoforhendelse = datoforhendelse;
 	}
-	public String getKlokkesletthendelse() {
+	
+	public Time getKlokkesletthendelse() {
 		return klokkesletthendelse;
 	}
-	public void setKlokkesletthendelse(String klokkesletthendelse) {
+	public void setKlokkesletthendelse(Time klokkesletthendelse) {
+		if(klokkesletthendelse==null){
+			DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+			Date date = new Date();
+			try {
+				Time time = Time.valueOf(dateFormat.format(date));
+				System.out.print(time);
+				klokkesletthendelse=time;
+				
+			} catch (Exception e) {
+				System.out.println("date format problem: " + e.toString());
+			}
+		}
 		this.klokkesletthendelse = klokkesletthendelse;
 	}
 	public Date getDatooppdaget() {
 		return datooppdaget;
 	}
 	public void setDatooppdaget(Date datooppdaget) {
+		if(datooppdaget==null){
+			DateFormat dateFormat = 
+			            new SimpleDateFormat("yyyy/MM/dd");
+			Date date = new Date();
+			try {
+				String strDate = dateFormat.format(date);
+				datooppdaget =   dateFormat.parse(strDate);
+			} catch (ParseException e) {
+				System.out.println("date format problem: " + e.toString());
+			}
+		}
 		this.datooppdaget = datooppdaget;
 	}
-	public String getDonasjonoverforing() {
+	public Date getDonasjonoverforing() {
 		return donasjonoverforing;
 	}
-	public void setDonasjonoverforing(String donasjonoverforing) {
+	public void setDonasjonoverforing(Date donasjonoverforing) {
+		if(donasjonoverforing==null){
+			DateFormat dateFormat = 
+			            new SimpleDateFormat("yyyy/MM/dd");
+			Date date = new Date();
+			try {
+				String strDate = dateFormat.format(date);
+				donasjonoverforing =   dateFormat.parse(strDate);
+			} catch (ParseException e) {
+				System.out.println("date format problem: " + e.toString());
+			}
+		}
 		this.donasjonoverforing = donasjonoverforing;
 	}
 	public String getSjekklistesaksbehandling() {
@@ -108,6 +169,18 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		return meldingsdato;
 	}
 	public void setMeldingsdato(Date meldingsdato) {
+		if(meldingsdato==null){
+			 SimpleDateFormat dateFormat = 
+			            new SimpleDateFormat("yyyy/MM/dd");
+		//	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = new Date();
+			try {
+				String strDate = dateFormat.format(date);
+				meldingsdato =   dateFormat.parse(strDate);
+			} catch (ParseException e) {
+				System.out.println("date format problem: " + e.toString());
+			}
+		}
 		this.meldingsdato = meldingsdato;
 	}
 	
@@ -122,5 +195,42 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		}else
 			params = new Object[]{getDatoforhendelse(),getKlokkesletthendelse(),getDatooppdaget(),getDonasjonoverforing(),getSjekklistesaksbehandling(),getSupplerendeopplysninger(),getMeldingsdato(),getMeldeid()};
 	}
+	
+	/**
+	 * setVigilansmeldingfieldMaps
+	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
+	 * @param userFields En liste over skjermbildefelter
+	 */
+	public void setVigilansmeldingfieldMaps(String[]userFields){
+		keys = userFields;
+		int size =userFields.length;
+		for (int i = 0;i<size;i++){
+			vigilansFields.put(userFields[i],null);
+		}
+	}
+	
+	/**
+	 * saveField
+	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
+	 * @param userField
+	 * @param userValue
+	 */
+	public void saveField(String userField, String userValue) {
+		if (vigilansFields.containsKey(userField) && userValue != null && !userValue.equals("")){
+			vigilansFields.put(userField,userValue);	
+	
+		}
+		
+	}
+
+	public void saveToVigilansmelding(){
+		setDatoforhendelse(null);
+		setKlokkesletthendelse(null);
+		setDatooppdaget(null);
+		setDonasjonoverforing(null);
+		setMeldingsdato(null);
+		
+	}
+
 	
 }

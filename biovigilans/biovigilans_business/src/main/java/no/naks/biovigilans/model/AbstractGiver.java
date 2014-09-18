@@ -52,8 +52,9 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		return kjonn;
 	}
 	public void setKjonn(String kjonn) {
-		if(kjonn==null)
-			kjonn = giverFields.get(keys[0]);
+		if(kjonn==null){
+			kjonn =(giverFields.get(keys[0])==null ? "" : giverFields.get(keys[0])) ;
+		}
 		this.kjonn = kjonn;
 	}
 	public String getAlder() {
@@ -61,7 +62,7 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 	}
 	public void setAlder(String alder) {
 		if(alder==null)
-				alder= giverFields.get(keys[1]);
+				alder = (giverFields.get(keys[1])==null ? "" : giverFields.get(keys[1])) ;
 		this.alder = alder;
 	}
 	public String getVekt() {
@@ -103,7 +104,7 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 	}
 	public void setGivererfaringaferese(String givererfaringaferese) {
 		if(givererfaringaferese==null)
-			 givererfaringaferese="temp";  // give temporary value to avoid null point exception
+			 givererfaringaferese=giverFields.get(keys[6]);  
  		this.givererfaringaferese = givererfaringaferese;
 	}
 	public String[] getKeys() {

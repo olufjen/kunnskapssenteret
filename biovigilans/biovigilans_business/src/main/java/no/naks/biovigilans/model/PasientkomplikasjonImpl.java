@@ -227,7 +227,6 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 				lokalsymptomer.setSymptombeskrivelse(symptom);
 				lokalsymptomer.setSymptomklassifikasjon(symptom);
 				this.symptomer.put(symptom, lokalsymptomer);
-				
 			}
 		}
 	}

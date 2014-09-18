@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.security.Timestamp;
+import java.sql.Time;
 import java.sql.Types;
 import java.util.Date;
 
@@ -9,12 +11,13 @@ public interface Vigilansmelding {
 	public void setMeldeid(Long meldeid);
 	public Date getDatoforhendelse();
 	public void setDatoforhendelse(Date datoforhendelse);
-	public java.lang.String getKlokkesletthendelse();
-	public void setKlokkesletthendelse(java.lang.String klokkesletthendelse);
+	public Time getKlokkesletthendelse();
+//	public java.lang.String getKlokkesletthendelse();
+	public void setKlokkesletthendelse(Time klokkesletthendelse);
 	public Date getDatooppdaget();
 	public void setDatooppdaget(Date datooppdaget);
-	public java.lang.String getDonasjonoverforing();
-	public void setDonasjonoverforing(java.lang.String donasjonoverforing);
+	public Date getDonasjonoverforing();
+	public void setDonasjonoverforing(Date donasjonoverforing);
 	public java.lang.String getSjekklistesaksbehandling();
 	public void setSjekklistesaksbehandling(
 			java.lang.String sjekklistesaksbehandling);
@@ -27,5 +30,6 @@ public interface Vigilansmelding {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
-	
+	public void setVigilansmeldingfieldMaps(String[]userFields);
+	public void saveToVigilansmelding();
 }
