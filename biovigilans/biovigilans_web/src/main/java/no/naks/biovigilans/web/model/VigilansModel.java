@@ -3,6 +3,8 @@ package no.naks.biovigilans.web.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Vigilansmelding;
+
 import org.restlet.data.Parameter;
 
 /**
@@ -15,7 +17,7 @@ public class VigilansModel {
 	private Map formMap; // Inneholder brukers input verdier fra skjermbildet
 	private String[] formNames; // Inneholder navn på input felt i skjermbildet
 	private String accountRef;
-	
+	private Vigilansmelding vigilans;
 	
 
 	
@@ -68,6 +70,12 @@ public class VigilansModel {
 
 	public void setAccountRef(String accountRef) {
 		this.accountRef = accountRef;
+	}
+	
+	public void distributeTerms(){
+		String[] formFields = getFormNames();
+		String donasjonFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[11],formFields[12],formFields[25]};
+		//vigilans.set .setDonasjonsfieldMaps(donasjonFields);
 	}
 	
 	

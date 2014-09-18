@@ -32,6 +32,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	private String[] kjonnValg; 
 	private String giverkomplikasjonId="giverkomplikasjon";
 	private String donasjonId ="donasjon";
+	private String vigilansmeldingId="vigilansmelding";
 	
 	public RapporterGiverServerResourceHtml() {
 		super();
@@ -72,10 +73,13 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 
 	     result = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
 		 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request, donasjonId);  
+	
 	     if(result==null){
 	    	 result = new GiverKomplikasjonwebModel();
 	    	 result.setFormNames(sessionParams);
 	    	 result.setAldergruppe(aldergruppe);
+	    	 
+	    	 
 	     }
 	     if(donasjon==null){
 	    	 donasjon = new DonasjonwebModel();
@@ -83,6 +87,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	     }
 	     
 	     result.distributeTerms();
+	     result.meldingDistributeTerms();
 	     donasjon.distributeTerms();
 	     
 	     dataModel.put(giverkomplikasjonId, result);
@@ -181,12 +186,16 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     		if(lagre!=null){
     			result.saveValues();
     			giverWebService.saveGiver(result);
+    			giverWebService.saveVigilansmelding(result);
     			Long giverId=	result.getGiver().getGiverid();
     			if(giverId != null){
     				donasjon.getDonasjon().setGiveId(giverId.intValue());
     			}
     		    donasjon.saveValues();
     		    donasjonWebService.saveDonasjon(donasjon);
+    		    
+    		    //lagre i vigiansmelding
+    		    
     		   
     		}
     		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
