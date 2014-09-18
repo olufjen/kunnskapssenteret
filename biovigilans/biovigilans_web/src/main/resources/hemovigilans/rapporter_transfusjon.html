@@ -371,14 +371,23 @@ function initialize()
       <input type="text"  name="p-blod-antalltrombocytt" size="80"  value="" class="form-control"/>
     </div>
     
-     <div id="tappingtypetromb" class="form-group" style="display: none">
+   <div id="tappingtypetromb" class="form-group" style="display: none">
 	<b>Type tapping</b>
     <div class="radio">
       <label>
         <input type="radio" name="p-blod-tapping" id="p-blod-aferese" onclick="toggleDisplay('blod-suspensjon', this.checked)" value="p-blod-aferese"/>Aferese
       </label>
   	</div>
-  	
+  	  <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-tapping" id="p-blod-fullblod"  value="p-blod-fullblod"/>Fullblod
+      </label>
+  	</div>
+  	  <div class="radio">
+      <label>
+        <input type="radio" name="p-blod-tapping" id="p-blod-vetikke"  value="p-blod-vetikke"/>Vet ikke
+      </label>
+  	</div>
   	<div id="blod-suspensjon" style="display: none" class="form-group">
     <b>Suspensjonsmedium </b>
     <div class="radio">
