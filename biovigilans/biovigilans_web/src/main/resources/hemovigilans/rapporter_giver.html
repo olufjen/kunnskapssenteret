@@ -39,6 +39,11 @@
 	  //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
 	    alert("step 2");
 	}
+	
+	number.oninvalid = function(e) {
+		e.target.setCustomValidity("");
+		if (!e.target.validity.valid) { e.target.setCustomValidity("Please enter only number value"); }
+		};
 	//window.onload=initialize();
 	</script>
 	
@@ -85,7 +90,7 @@
 	   <div class="form-group">
 	    
 	     <label>Vekt i kg</label> 
-	      <input type="text"  name="givervektkg" size="80"  value="" class="form-control"/>
+	      <input type="number"  min="0" name="givervektkg" size="80"  value="" class="form-control"/>
 	   </div>
 	    
 	    <div class="form-group">
@@ -356,65 +361,61 @@
 	      <label>Annen reaksjon(spesifiser):</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option1" onclick="toggleDisplay('annenreaksjon-ja', this.checked);" />Ja
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option1" onclick="toggleDisplay('annenreaksjon-nei',0 );" />Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option2" onclick="toggleDisplay('annenreaksjon-ja', 0);" />Nei
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="option2" onclick="toggleDisplay('annenreaksjon-nei', this.checked);" />Nei
 	          </label>
 		    </div>
 	    </div>
-	    <div id="annenreaksjon-ja" style="display: none" class="form-group">
-	      <label>Hvis Ja:</label>
-	      <input name ="tab-annenreaksjon" list="annenreaksjon" class="form-control">
-	      <datalist id="annenreaksjon">
-	
-	     </datalist>
+	    <div id="annenreaksjon-nei" style="display: none" class="form-group">
+			<label>Hvis du har valgt annet, beskriv her:</label>
+			  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
+			 </div> 
+		  	<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert........</h4>
+			 <div class="form-group">
+			<label>Beskriv komplkasjonen med egne ord:</label>
+			  <textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
+		    </div>
+		    <h3>Tiltak rettet mot giver</h3>
+		    <div class="form-group">
+		      <label>Strakstiltak:</label>
+		      	<div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak1" value="option1"/>Behandlet av BB tappepersonalet
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak2" value="option2"/>Behandlet av BB lege
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="option3"/>Observasjon akutt mottak
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak4" value="option4"/>Sykehusinnleggelse
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak5" value="option5"/>Behandling annet sted (spesifiser)
+		          </label>
+			    </div>
+	    	</div>
 	    </div>
-	     <div class="form-group">
-		<label>Hvis du har valgt annet, beskriv her:</label>
-		  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
-		 </div> 
-	  	<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert........</h4>
-		 <div class="form-group">
-		<label>Beskriv komplkasjonen med egne ord:</label>
-		  <textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
-	    </div>
-	    <h3>Tiltak rettet mot giver</h3>
-	    <div class="form-group">
-	      <label>Strakstiltak:</label>
-	      	<div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak1" value="option1"/>Behandlet av BB tappepersonalet
-	          </label>
-		    </div>
-		    <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak2" value="option2"/>Behandlet av BB lege
-	          </label>
-		    </div>
-		    <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="option3"/>Observasjon akutt mottak
-	          </label>
-		    </div>
-		    <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak4" value="option4"/>Sykehusinnleggelse
-	          </label>
-		    </div>
-		    <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak5" value="option5"/>Behandling annet sted (spesifiser)
-	          </label>
-		    </div>
 	       
-	    </div>
-	     
-	     
-	    </div>
-	    
+	    <div class="form-group">
+		 <label>Planlagte eller gjennomførte forbedringstiltak</label>
+		  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"></textarea>   
+		      
+	  		<br/>
+	  	</div>	
 	     <div class="form-group">
 	      <label>Videre behandling/oppfølging nødvendig?</label>
 	         <div class="radio">
@@ -478,13 +479,7 @@
 	          </label>
 		    </div>
 	    </div>
-	    
-	    <div class="form-group">
-		 <label>Planlagte eller gjennomførte forbedringstiltak</label>
-		  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"></textarea>   
-		      
-	  		<br/>
-	  	</div>	
+	 
 	      <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
 	      <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
 	      <button name="lagre4" type="submit" class="btn btn-primary">Lagre</button>
