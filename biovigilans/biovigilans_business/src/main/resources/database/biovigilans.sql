@@ -134,6 +134,10 @@ CREATE TABLE Blodprodukt
     antallenheterpakke   INT             NULL,
     -- Suspensjonsmedium (tappetype aferese)
     suspensjon           TEXT                NULL,
+        -- Antall trombocyttkonsentrater
+    antalltromb          INT             NULL,
+    -- Antall plasamaenheter
+    antallplasma         INT             NULL,
     primary key(blodProduktId),
 
     foreign key(transfusjonsId) references Transfusjon(transfusjonsid) on delete CASCADE
@@ -233,6 +237,10 @@ CREATE TABLE Symptomer
     symptomId              serial,
     symptomklassifikasjon  text,
     symptombeskrivelse     text,
+        -- Temperatur angitt før temperaturstigning
+    tempfor              INT             NULL,
+    -- Temperatur angitt etter temperaturstigning
+    tempetter            INT             NULL,
     meldeid                int,
      primary key(symptomId),
     foreign key(meldeid) references Pasientkomplikasjon(meldeid) on delete CASCADE
