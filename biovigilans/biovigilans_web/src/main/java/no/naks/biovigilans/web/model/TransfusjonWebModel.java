@@ -61,7 +61,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56]};
-		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],formFields[37],formFields[175]};
+		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a1","a2"};
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
 		blodProdukt.setAntallfieldMaps(antallFields);
@@ -74,9 +74,11 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.settransfusjonsFieldsMaps(transfusjonsFields);
 		
 		String[] annenblodProduktfields = {formFields[38],formFields[39],formFields[40],formFields[41],formFields[42],formFields[43],
-				formFields[56],formFields[57],formFields[58],formFields[59],formFields[60],formFields[61]};
+				"p1","p2","p3","p4","p5","p6"};
+		String[] annenEgenskaper = {"e1","e2","e3","e4","e5","e6","e7"};
 		String[] annenblodAntallFields = {formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[175]};
 		annenBlodprodukt.setBlodProduktfieldMaps(annenblodProduktfields);
+		annenBlodprodukt.setEgenskaperfieldMaps(annenEgenskaper);
 		annenBlodprodukt.setAntallfieldMaps(annenblodAntallFields);
 		annenBlodprodukt.setKeyvalues();
 		String[] pasientKomplikasjonsfields = {formFields[130],formFields[131],formFields[132],formFields[133],formFields[134],formFields[135],
@@ -119,22 +121,17 @@ public class TransfusjonWebModel extends VigilansModel {
 			komplikasjonsklassifikasjon.saveField(field, userEntry);
 			utredning.saveField(field, userEntry);
 		}
-		blodProdukt.setAntallEnheter(-1);
-		blodProdukt.setBlodprodukt(null);
-		blodProdukt.setProduktetsegenskap(null);
-		blodProdukt.setTappetype(null);
-
-		annenBlodprodukt.setAntallEnheter(-1);
-		annenBlodprodukt.setAntallenheterpakke(-1);
-		annenBlodprodukt.setBlodprodukt(null);
-//		annenBlodprodukt.setTappetype(null);
-//		annenBlodprodukt.setProduktetsegenskap(null);
+		blodProdukt.saveToBlodprodukt();
+		annenBlodprodukt.saveToBlodprodukt();
+	
 		transfusjon.setHastegrad(null);
 		transfusjon.setIndikasjon(null);
 		transfusjon.setTransDato(null);
 		transfusjon.setTransfusjonsklokkeslett(null);
 		transfusjon.setTildigerKomplikasjon(null);
 		transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
+		if (annenBlodprodukt.getBlodprodukt() != null && !annenBlodprodukt.getBlodprodukt().equals(""))
+			transfusjon.getBlodProdukter().put(annenBlodprodukt.getBlodprodukt(),annenBlodprodukt );
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);
 		pasientKomplikasjon.setArsakssammenheng(null);
