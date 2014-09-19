@@ -51,6 +51,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	 */
 	private int antallEnheter = 0;
 	private int antallenheterpakke = 0;
+	private String suspensjon; // Suspensjonsmedium (tappetype aferese)
 	
 /**
 * Inneholder navn på input felt i skjermbildet	
@@ -63,13 +64,29 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	protected String[]keys;	
 
 	
+	public String getSuspensjon() {
+		return suspensjon;
+	}
+	public void setSuspensjon(String suspnsjon) {
+		if (suspnsjon == null){
+			String sp = null;
+			for (int i = 9;i<12;i++){
+				sp = blodproduktFields.get(keys[i]);
+				if (sp != null){
+					suspnsjon = sp;
+					break;
+				}
+			}
+		}
+		this.suspensjon = suspnsjon;
+	}
 	public int getAntallEnheter() {
 		return antallEnheter;
 	}
 	public void setAntallEnheter(int antallEnheter) {
 		if (antallEnheter == -1){
 			String aProd = null;
-			for (int i=12;i<19;i++){
+			for (int i=19;i<24;i++){
 				aProd = antallFields.get(keys[i]);
 				if (aProd != null){
 					antallEnheter = Integer.parseInt(aProd);
@@ -84,9 +101,9 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 		return antallenheterpakke;
 	}
 	public void setAntallenheterpakke(int antallenhetrpakke) {
-		if (antallEnheter == -1){
+		if (antallenhetrpakke == -1){
 			String aProd = null;
-			aProd = antallFields.get(keys[18]); // OBS !!
+			aProd = antallFields.get(keys[25]); // OBS !!
 			if (aProd != null){
 				antallenhetrpakke = Integer.parseInt(aProd);
 			
