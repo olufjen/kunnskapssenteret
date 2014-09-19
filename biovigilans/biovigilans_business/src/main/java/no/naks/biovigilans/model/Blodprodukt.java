@@ -29,6 +29,9 @@ public interface Blodprodukt {
 	public String getBlodprodukt();
 	public void setBlodprodukt(String blodprodukt);
 	public String getProduktetsegenskap();
+	public void setSuspensjon(String suspnsjon);
+	public String getSuspensjon();
+	public void saveToBlodprodukt();
 	public void setProduktetsegenskap(String produktetsegenskap);
 	public void setBlodProduktfieldMaps(String[]userFields);
 	public void saveField(String userField,String userValue);
