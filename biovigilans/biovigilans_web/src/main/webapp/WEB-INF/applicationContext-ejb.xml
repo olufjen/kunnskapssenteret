@@ -35,6 +35,7 @@
   	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
   	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
   	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
   	
   </bean>
   <bean id="donasjonDAO" class="no.naks.biovigilans.dao.DonasjonDAOImpl" >
