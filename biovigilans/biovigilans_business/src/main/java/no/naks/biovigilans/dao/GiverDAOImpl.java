@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import java.sql.Types;
+
 import no.naks.biovigilans.model.Giver;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
@@ -112,17 +114,23 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 			meldeSQL = updateMeldingSQL;
 			meldingTypes = melding.getUtypes();
 		}
-		if (id == null){
-			melding.setMeldeid(getPrimaryKey(meldingPrimaryKey,meldingprimarykeyTableDefs));
-		}
 	//	id = melding.getMeldeid();
 		tablesUpdate = new TablesUpdateImpl(getDataSource(),meldeSQL,meldingTypes);
 		tablesUpdate.insert(meldingParams);
 		
 		if(id==null){
 			melding.setMeldeid(getPrimaryKey(meldingPrimaryKey, meldingprimarykeyTableDefs));
+			/** update table vigilansmelding with meldingnokkel   */
+			melding.setMeldingsnokkel(null);
+			melding.setMeldingParams();
+			melding.setMeldingTypes();
+			meldeSQL = updateMeldingSQL;
+			meldingTypes = melding.getUtypes();
+			meldingParams= melding.getParams();
+			tablesUpdate = new TablesUpdateImpl(getDataSource(),meldeSQL,meldingTypes);
+			tablesUpdate.insert(meldingParams);
 		}
-		
+			
 	}
 
 }
