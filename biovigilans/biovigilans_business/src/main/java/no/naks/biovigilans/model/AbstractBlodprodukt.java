@@ -51,6 +51,9 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	 */
 	private int antallEnheter = 0;
 	private int antallenheterpakke = 0;
+	private int antallTromb; // -- Antall trombocyttkonsentrater
+	private int antallPlasma; //-- Antall plasamaenheter
+	
 	private String suspensjon; // Suspensjonsmedium (tappetype aferese)
 	
 /**
@@ -79,6 +82,20 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 			}
 		}
 		this.suspensjon = suspnsjon;
+	}
+	
+	
+	public int getAntallTromb() {
+		return antallTromb;
+	}
+	public void setAntallTromb(int antalTromb) {
+		this.antallTromb = antalTromb;
+	}
+	public int getAntallPlasma() {
+		return antallPlasma;
+	}
+	public void setAntallPlasma(int antalPlasma) {
+		this.antallPlasma = antalPlasma;
 	}
 	public int getAntallEnheter() {
 		return antallEnheter;

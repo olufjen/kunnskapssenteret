@@ -31,6 +31,11 @@ public interface Blodprodukt {
 	public String getProduktetsegenskap();
 	public void setSuspensjon(String suspnsjon);
 	public String getSuspensjon();
+	
+	public int getAntallTromb();
+	public void setAntallTromb(int antalTromb);
+	public int getAntallPlasma();
+	public void setAntallPlasma(int antalPlasma);
 	public void saveToBlodprodukt();
 	public void setProduktetsegenskap(String produktetsegenskap);
 	public void setBlodProduktfieldMaps(String[]userFields);
