@@ -70,6 +70,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	 */
 	private Date meldingsdato;
 
+	private String meldingsnokkel;
 	
 	protected String[]vigilansKeys;	
 	protected Map<String,String>vigilansFields;
@@ -168,6 +169,16 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	public Date getMeldingsdato() {
 		return meldingsdato;
 	}
+	
+	public String getMeldingsnokkel() {
+		return meldingsnokkel;
+	}
+	public void setMeldingsnokkel(String meldingsnokkel) {
+		if(meldingsnokkel == null){
+			meldingsnokkel = "Hem " + getMeldeid() + " " + getMeldingsdato() ;
+		}
+		this.meldingsnokkel = meldingsnokkel;
+	}
 	public void setMeldingsdato(Date meldingsdato) {
 		if(meldingsdato==null){
 			 SimpleDateFormat dateFormat = 
@@ -186,14 +197,14 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	
 	public void setMeldingTypes(){
 		types = new int[] {Types.DATE,Types.TIME,Types.DATE,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.DATE};
-		utypes = new int[] {Types.DATE,Types.TIME,Types.DATE,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER};
+		utypes = new int[] {Types.DATE,Types.TIME,Types.DATE,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.VARCHAR,Types.INTEGER};
 	}
 	public void setMeldingParams(){
 		Long id = getMeldeid();
 		if (id == null){
 			params = new Object[]{getDatoforhendelse(),getKlokkesletthendelse(),getDatooppdaget(),getDonasjonoverforing(),getSjekklistesaksbehandling(),getSupplerendeopplysninger(),getMeldingsdato()};
 		}else
-			params = new Object[]{getDatoforhendelse(),getKlokkesletthendelse(),getDatooppdaget(),getDonasjonoverforing(),getSjekklistesaksbehandling(),getSupplerendeopplysninger(),getMeldingsdato(),getMeldeid()};
+			params = new Object[]{getDatoforhendelse(),getKlokkesletthendelse(),getDatooppdaget(),getDonasjonoverforing(),getSjekklistesaksbehandling(),getSupplerendeopplysninger(),getMeldingsdato(),getMeldingsnokkel(),getMeldeid()};
 	}
 	
 	/**
@@ -229,7 +240,6 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		setDatooppdaget(null);
 		setDonasjonoverforing(null);
 		setMeldingsdato(null);
-		
 	}
 
 	
