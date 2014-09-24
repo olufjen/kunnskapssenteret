@@ -76,7 +76,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] annenblodProduktfields = {formFields[38],formFields[39],formFields[40],formFields[41],formFields[42],formFields[43],
 				"p1","p2","p3","p4","p5","p6"};
 		String[] annenEgenskaper = {"e1","e2","e3","e4","e5","e6","e7"};
-		String[] annenblodAntallFields = {formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[175]};
+		String[] annenblodAntallFields = {formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[176]};
 		annenBlodprodukt.setBlodProduktfieldMaps(annenblodProduktfields);
 		annenBlodprodukt.setEgenskaperfieldMaps(annenEgenskaper);
 		annenBlodprodukt.setAntallfieldMaps(annenblodAntallFields);
