@@ -61,7 +61,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56]};
-		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a1","a2"};
+		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a1","a2","a3","a4"};
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
 		blodProdukt.setAntallfieldMaps(antallFields);
@@ -76,7 +76,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] annenblodProduktfields = {formFields[38],formFields[39],formFields[40],formFields[41],formFields[42],formFields[43],
 				"p1","p2","p3","p4","p5","p6"};
 		String[] annenEgenskaper = {"e1","e2","e3","e4","e5","e6","e7"};
-		String[] annenblodAntallFields = {formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[176]};
+		String[] annenblodAntallFields = {formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[176],formFields[177],formFields[178]};
 		annenBlodprodukt.setBlodProduktfieldMaps(annenblodProduktfields);
 		annenBlodprodukt.setEgenskaperfieldMaps(annenEgenskaper);
 		annenBlodprodukt.setAntallfieldMaps(annenblodAntallFields);
@@ -90,7 +90,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] symptomerFields = {formFields[64],formFields[65],formFields[66],formFields[67],formFields[68],formFields[69],formFields[70],
 				formFields[71],formFields[72],formFields[73],formFields[74],formFields[75],formFields[76],formFields[77],formFields[78],formFields[79],
 				formFields[80],formFields[81],formFields[82],formFields[83],formFields[84],formFields[85],formFields[86],formFields[87],
-				formFields[88],formFields[89]};
+				formFields[88],formFields[89],formFields[179],formFields[180]};
 		symptomer.setsymptomerfieldMaps(symptomerFields);
 		String[] klassifikasjonsFields = {formFields[90],formFields[91],formFields[92],formFields[93],formFields[94],formFields[95],
 				formFields[96],formFields[97],formFields[98],formFields[99],formFields[100],formFields[101],formFields[102],formFields[103],
