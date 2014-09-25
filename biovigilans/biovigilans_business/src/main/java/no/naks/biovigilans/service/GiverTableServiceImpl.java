@@ -2,6 +2,7 @@ package no.naks.biovigilans.service;
 
 import no.naks.biovigilans.dao.GiverDAO;
 import no.naks.biovigilans.model.Giver;
+import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 public class GiverTableServiceImpl implements GiverTableService {
@@ -28,6 +29,10 @@ public class GiverTableServiceImpl implements GiverTableService {
 		
 		giverDAO.saveVigilansmelding(vigilansmelding);
 		
+	}
+	
+	public void saveGiverKomplikasjon(Giverkomplikasjon giverKomplikasjon){
+		giverDAO.saveGiverkomplikasjon(giverKomplikasjon);
 	}
 	
 }

@@ -9,6 +9,7 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.model.Antistoff;
+import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Vigilansmelding;
@@ -27,6 +28,10 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 	private String updateMeldingSQL;
 	private String meldingPrimaryKey;
 	private String[] meldingprimarykeyTableDefs; 
+	
+	private String insertGiverkomplikasjonSQL;
+	private String giverkomplikasjonPrimaryKey;
+	private String[] giverkomplikasjonprimarykeyTableDefs;
 	
 	
 	public String getInsertGiverSQL() {
@@ -82,6 +87,26 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 		this.meldingprimarykeyTableDefs = meldingprimarykeyTableDefs;
 	}
 	
+	public String getInsertGiverkomplikasjonSQL() {
+		return insertGiverkomplikasjonSQL;
+	}
+	public void setInsertGiverkomplikasjonSQL(String insertGiverkomplikasjonSQL) {
+		this.insertGiverkomplikasjonSQL = insertGiverkomplikasjonSQL;
+	}
+	public String getGiverkomplikasjonPrimaryKey() {
+		return giverkomplikasjonPrimaryKey;
+	}
+	public void setGiverkomplikasjonPrimaryKey(String giverkomplikasjonPrimaryKey) {
+		this.giverkomplikasjonPrimaryKey = giverkomplikasjonPrimaryKey;
+	}
+	public String[] getGiverkomplikasjonprimarykeyTableDefs() {
+		return giverkomplikasjonprimarykeyTableDefs;
+	}
+	public void setGiverkomplikasjonprimarykeyTableDefs(
+			String[] giverkomplikasjonprimarykeyTableDefs) {
+		this.giverkomplikasjonprimarykeyTableDefs = giverkomplikasjonprimarykeyTableDefs;
+	}
+	
 	
 	public void saveGiver(Giver giver) {
 	
@@ -131,6 +156,17 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 			tablesUpdate.insert(meldingParams);
 		}
 			
+	}
+	
+	public void saveGiverkomplikasjon(Giverkomplikasjon giverKomplikasjon){
+	
+		giverKomplikasjon.setParams();
+		int[] types = giverKomplikasjon.getTypes();
+		Object[] params = giverKomplikasjon.getParams();
+		String sql = insertGiverkomplikasjonSQL;
+		tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,types);
+		tablesUpdate.insert(params);
+		
 	}
 
 }

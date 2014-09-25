@@ -27,6 +27,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	private String tilleggsopplysninger;
 	private String alvorlighetsgrad;
 	private String kliniskresultat;
+	private Long meldeId;
 	/**
 	 * Varghet kan v�re fra fra minutter til m�neder
 	 */
@@ -37,20 +38,17 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public GiverkomplikasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
-	
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		komplikasjonsFields = new HashMap();
-		
 	}
 	
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),this.meldeId};
 		}else
-			params = new Object[]{getMeldeid()};
-		
+			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),this.meldeId};
 	}
 	/**
 	 * setGiverkomplicationfieldMaps
@@ -59,12 +57,20 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	 */
 	public void setGiverkomplicationfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<5;i++){
+		int size = keys.length;
+		for (int i = 0;i<size;i++){
 		komplikasjonsFields.put(userFields[i],null);
 		}
-
-		
 	}
+	
+	public void saveToGiverkomplikasjon(){
+		setStedforkomplikasjon(null);
+		setTidfratappingtilkompliasjon(null);
+		setVarighetkomplikasjon(null);
+		setAlvorlighetsgrad(null);
+		setTilleggsopplysninger(null);
+	}
+	
 	/**
 	 * saveField
 	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
@@ -85,6 +91,9 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public void setStedforkomplikasjon(String stedforkomplikasjon) {
+		if(stedforkomplikasjon == null){
+			stedforkomplikasjon = komplikasjonsFields.get(keys[0]);
+		}
 		this.stedforkomplikasjon = stedforkomplikasjon;
 	}
 
@@ -93,6 +102,9 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public void setTidfratappingtilkompliasjon(String tidfratappingtilkompliasjon) {
+		if(tidfratappingtilkompliasjon==null){
+			tidfratappingtilkompliasjon = komplikasjonsFields.get(keys[1]);
+		}
 		this.tidfratappingtilkompliasjon = tidfratappingtilkompliasjon;
 	}
 
@@ -109,6 +121,15 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public void setTilleggsopplysninger(String tilleggsopplysninger) {
+		if(tilleggsopplysninger == null){
+			String value="";
+			for(int i=4; i<9; i++){
+				if(komplikasjonsFields.get(keys[i]) != null){
+					value=value + komplikasjonsFields.get(keys[i]) + " ";
+				}
+			}
+			tilleggsopplysninger = value;
+		}
 		this.tilleggsopplysninger = tilleggsopplysninger;
 	}
 
@@ -117,6 +138,9 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public void setAlvorlighetsgrad(String alvorlighetsgrad) {
+		if(alvorlighetsgrad==null){
+			alvorlighetsgrad = komplikasjonsFields.get(keys[3]);
+		}
 		this.alvorlighetsgrad = alvorlighetsgrad;
 	}
 
@@ -133,6 +157,9 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public void setVarighetkomplikasjon(String varighetkomplikasjon) {
+		if(varighetkomplikasjon==null){
+			varighetkomplikasjon = komplikasjonsFields.get(keys[2]);
+		}
 		this.varighetkomplikasjon = varighetkomplikasjon;
 	}
 
@@ -148,5 +175,14 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setKeys(String[] keys) {
 		this.keys = keys;
 	}
+
+	public Long getMeldeId() {
+		return meldeId;
+	}
+
+	public void setMeldeId(Long meldeId) {
+		this.meldeId = meldeId;
+	}
 	
+
 }

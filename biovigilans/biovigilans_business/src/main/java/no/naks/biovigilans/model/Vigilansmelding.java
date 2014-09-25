@@ -4,6 +4,7 @@ import java.security.Timestamp;
 import java.sql.Time;
 import java.sql.Types;
 import java.util.Date;
+import java.util.Map;
 
 public interface Vigilansmelding {
 
@@ -34,4 +35,5 @@ public interface Vigilansmelding {
 	public void saveToVigilansmelding();
 	public String getMeldingsnokkel();
 	public void setMeldingsnokkel(String meldingsnokkel) ;
+
 }

@@ -43,5 +43,7 @@ public interface Giverkomplikasjon {
 	public Object[] getParams();
 	public int[] getUtypes();
 	
-
+	public void saveToGiverkomplikasjon();
+	public Long getMeldeId();
+	public void setMeldeId(Long meldeId);
 }

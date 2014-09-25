@@ -1,21 +1,12 @@
 package no.naks.biovigilans.model;
 
-
-import java.security.Timestamp;
 import java.sql.Time;
 import java.sql.Types;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
-
-
-
-import org.apache.taglibs.standard.tag.common.fmt.ParseDateSupport;
-
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
@@ -179,6 +170,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		}
 		this.meldingsnokkel = meldingsnokkel;
 	}
+
 	public void setMeldingsdato(Date meldingsdato) {
 		if(meldingsdato==null){
 			 SimpleDateFormat dateFormat = 
