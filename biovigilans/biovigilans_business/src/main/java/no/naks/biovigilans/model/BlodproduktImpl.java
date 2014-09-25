@@ -10,7 +10,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	private List<String> userFields;
 	public BlodproduktImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
 		utypes = new int[] {Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		blodproduktFields = new HashMap<String,String>();
 		antallFields = new HashMap<String,String>();
@@ -21,7 +21,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	public void setParams(){
 		Long id = getBlodProduktId();
 		if (id == null){
-			params = new Object[]{getBlodtype(),getAlderProdukt(),getTappetype(),getBlodprodukt(),getProduktetsegenskap(),getAntallEnheter(),getAntallenheterpakke(),getSuspensjon(), getTransfusjonsId()};
+			params = new Object[]{getBlodtype(),getAlderProdukt(),getTappetype(),getBlodprodukt(),getProduktetsegenskap(),getAntallEnheter(),getAntallenheterpakke(),getSuspensjon(), getAntallTromb(),getAntallPlasma(),getTransfusjonsId()};
 		}else
 			params = new Object[]{getBlodtype(),getAlderProdukt(),getTappetype(),getBlodprodukt(),getProduktetsegenskap(),getAntallEnheter(),getTransfusjonsId(),getBlodProduktId()};
 		

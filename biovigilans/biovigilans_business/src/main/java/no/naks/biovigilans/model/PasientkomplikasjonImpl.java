@@ -61,6 +61,37 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 		setDatooppdaget(Calendar.getInstance().getTime());
 	}
 	
+	/**
+	 * IsInt
+	 * Denne rutinen sjekker om en Streng variabel er av typen int
+	 * @param str
+	 * @return
+	 */
+	private boolean IsInt(String str)
+	{
+	    if (str == null) {
+	            return false;
+	    }
+	    int length = str.length();
+	    if (length == 0) {
+	            return false;
+	    }
+	    int i = 0;
+	    if (str.charAt(0) == '-') {
+	            if (length == 1) {
+	                    return false;
+	            }
+	            i = 1;
+	    }
+	    for (; i < length; i++) {
+	            char c = str.charAt(i);
+	            if (c <= '/' || c >= ':') {
+	                    return false;
+	            }
+	    }
+	    return true;
+	}	
+	
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
@@ -220,13 +251,38 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	 * 
 	 */
 	public void produceSymptoms(Symptomer symptomer) {
-		
+		Symptomer lokalsymptomer = null;
+		boolean noTemp = false;
 		for (String symptom : symptomer.getSymptomerFields().values()){
-			if (symptom != null && !symptom.equals("")){
-				Symptomer lokalsymptomer = new SymptomerImpl();
-				lokalsymptomer.setSymptombeskrivelse(symptom);
-				lokalsymptomer.setSymptomklassifikasjon(symptom);
+			if (symptom != null && IsInt(symptom)){
+				lokalsymptomer = this.symptomer.get("komp-tempstigning");
+				if (lokalsymptomer != null)
+					lokalsymptomer.distributeTemperature(symptom);
+				else
+					noTemp = true;
+			}else if (symptom != null && !IsInt(symptom)){
+				lokalsymptomer = new SymptomerImpl();
+				lokalsymptomer.distributeValues(symptom);
+			}
+			
+			if (!IsInt(symptom) && lokalsymptomer != null)
 				this.symptomer.put(symptom, lokalsymptomer);
+			
+			
+		
+		}
+		/*
+		 * Sjekk om temperaturene er distribuert
+		 */
+		if (noTemp){
+			for (String symptom : symptomer.getSymptomerFields().values()){
+				if (symptom != null && IsInt(symptom)){
+					lokalsymptomer = this.symptomer.get("komp-tempstigning");
+					if (lokalsymptomer != null){
+						lokalsymptomer.distributeTemperature(symptom);
+						noTemp = false;
+					}
+				}
 			}
 		}
 	}

@@ -21,6 +21,8 @@ public interface Symptomer {
 	public Map<String, String> getSymptomerFields();
 	public void setSymptomerFields(Map<String, String> symptomerFields);
 	public String[] getKeys();
+	public void distributeValues(String symptom);
+	public void distributeTemperature(String temp);
 	public void setKeys(String[] keys);
 	public void setsymptomerfieldMaps(String[]userFields);
 	public void saveField(String userField,String userValue);

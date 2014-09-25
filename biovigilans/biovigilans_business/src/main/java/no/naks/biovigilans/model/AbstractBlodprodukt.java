@@ -89,12 +89,28 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 		return antallTromb;
 	}
 	public void setAntallTromb(int antalTromb) {
+		if (antalTromb == -1){
+			String aProd = null;
+			aProd = antallFields.get(keys[26]); // OBS !!
+			if (aProd != null){
+				antalTromb = Integer.parseInt(aProd);
+			
+			}
+		}
 		this.antallTromb = antalTromb;
 	}
 	public int getAntallPlasma() {
 		return antallPlasma;
 	}
 	public void setAntallPlasma(int antalPlasma) {
+		if (antalPlasma == -1){
+			String aProd = null;
+			aProd = antallFields.get(keys[27]); // OBS !!
+			if (aProd != null){
+				antalPlasma = Integer.parseInt(aProd);
+			
+			}
+		}
 		this.antallPlasma = antalPlasma;
 	}
 	public int getAntallEnheter() {
