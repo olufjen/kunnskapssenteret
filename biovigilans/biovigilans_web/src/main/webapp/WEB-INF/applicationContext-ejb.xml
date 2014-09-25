@@ -41,6 +41,9 @@
   	<property name="giverkomplikasjonPrimaryKey" value="${primarykey.giverkomplikasjon}"></property>
   	<property name="giverkomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	
+  	<property name="insertGiveroppfolgingSQL" value="${giveroppfolging.insertgiveroppfolging}"></property>
+  	<property name="giveroppfolgingPrimaryKey" value="${primarykey.giveroppfolging}"></property>
+  	<property name="giveroppfolgingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	
   </bean>
   <bean id="donasjonDAO" class="no.naks.biovigilans.dao.DonasjonDAOImpl" >
