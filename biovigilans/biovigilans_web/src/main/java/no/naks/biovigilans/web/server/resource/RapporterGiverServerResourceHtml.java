@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.naks.biovigilans.model.DonasjonImpl;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
@@ -187,9 +188,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     			result.saveValues();
     			giverWebService.saveGiver(result);
     			giverWebService.saveVigilansmelding(result);
-    			Long meldeId = result.getVigilansmelding().getMeldeid();
-    			result.getGiverKomplikasjon().setMeldeId(meldeId);
-    			giverWebService.saveGiverkomplikasjon(result);
+    			
     			Long giverId=	result.getGiver().getGiverid();
     			if(giverId != null){
     				donasjon.getDonasjon().setGiveId(giverId.intValue());
@@ -197,6 +196,12 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     		    donasjon.saveValues();
     		    donasjonWebService.saveDonasjon(donasjon);
     		    
+    		    Long donasjonId = donasjon.getDonasjon().getDonasjonsId();
+    		    result.getGiverKomplikasjon().setDonasjonid(donasjonId);
+    		    Long meldeId = result.getVigilansmelding().getMeldeid();
+    			result.getGiverKomplikasjon().setMeldeId(meldeId);
+    			giverWebService.saveGiverkomplikasjon(result);
+    			
     		    //lagre i vigiansmelding
     		    
     		   
