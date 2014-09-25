@@ -2,6 +2,7 @@ package no.naks.biovigilans.dao;
 
 import no.naks.biovigilans.model.Giver;
 import no.naks.biovigilans.model.Giverkomplikasjon;
+import no.naks.biovigilans.model.Giveroppfolging;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 public interface GiverDAO {
@@ -17,5 +18,7 @@ public interface GiverDAO {
 	public void saveGiver(Giver giver);
 	public void saveVigilansmelding(Vigilansmelding melding);
 	public void saveGiverkomplikasjon(Giverkomplikasjon giverKomplikasjon);
+	public void saveGiveroppfolging(Giveroppfolging giveroppfolging);
+	
 
 }

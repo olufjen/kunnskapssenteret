@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.model.Antistoff;
 import no.naks.biovigilans.model.Giverkomplikasjon;
+import no.naks.biovigilans.model.Giveroppfolging;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Vigilansmelding;
@@ -32,6 +33,10 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 	private String insertGiverkomplikasjonSQL;
 	private String giverkomplikasjonPrimaryKey;
 	private String[] giverkomplikasjonprimarykeyTableDefs;
+	
+	private String insertGiveroppfolgingSQL;
+	private String giveroppfolgingPrimaryKey;
+	private String[] giveroppfolgingprimarykeyTableDefs;
 	
 	
 	public String getInsertGiverSQL() {
@@ -108,6 +113,26 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 	}
 	
 	
+	public String getInsertGiveroppfolgingSQL() {
+		return insertGiveroppfolgingSQL;
+	}
+	public void setInsertGiveroppfolgingSQL(String insertGiveroppfolgingSQL) {
+		this.insertGiveroppfolgingSQL = insertGiveroppfolgingSQL;
+	}
+	public String getGiveroppfolgingPrimaryKey() {
+		return giveroppfolgingPrimaryKey;
+	}
+	public void setGiveroppfolgingPrimaryKey(String giveroppfolgingPrimaryKey) {
+		this.giveroppfolgingPrimaryKey = giveroppfolgingPrimaryKey;
+	}
+	public String[] getGiveroppfolgingprimarykeyTableDefs() {
+		return giveroppfolgingprimarykeyTableDefs;
+	}
+	public void setGiveroppfolgingprimarykeyTableDefs(
+			String[] giveroppfolgingprimarykeyTableDefs) {
+		this.giveroppfolgingprimarykeyTableDefs = giveroppfolgingprimarykeyTableDefs;
+	}
+	
 	public void saveGiver(Giver giver) {
 	
 		giver.setParams();
@@ -169,4 +194,12 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 		
 	}
 
+	public void saveGiveroppfolging(Giveroppfolging giveroppfolging){
+		giveroppfolging.setParams();
+		int[] types = giveroppfolging.getTypes();
+		Object[] params = giveroppfolging.getParams();
+		String sql = insertGiveroppfolgingSQL;
+		tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,types);
+		tablesUpdate.insert(params);
+	}
 }
