@@ -37,6 +37,11 @@
   	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
   	
+  	<property name="insertGiverkomplikasjonSQL" value="${giverkomplikasjon.insertgiverkomplikasjon}"></property>
+  	<property name="giverkomplikasjonPrimaryKey" value="${primarykey.giverkomplikasjon}"></property>
+  	<property name="giverkomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	
+  	
   </bean>
   <bean id="donasjonDAO" class="no.naks.biovigilans.dao.DonasjonDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
