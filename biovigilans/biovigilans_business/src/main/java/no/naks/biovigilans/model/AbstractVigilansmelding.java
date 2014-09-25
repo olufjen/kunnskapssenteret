@@ -23,6 +23,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	 * Id til meldingen
 	 */
 	private Long meldeid;
+
 	/**
 	 * Dato for hendelsen
 	 */

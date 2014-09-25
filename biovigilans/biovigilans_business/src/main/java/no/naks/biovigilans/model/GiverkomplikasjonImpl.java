@@ -28,6 +28,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	private String alvorlighetsgrad;
 	private String kliniskresultat;
 	private Long meldeId;
+	private Long donasjonid;
 	/**
 	 * Varghet kan v�re fra fra minutter til m�neder
 	 */
@@ -38,17 +39,17 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public GiverkomplikasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER, Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER, Types.INTEGER};
 		komplikasjonsFields = new HashMap();
 	}
 	
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),this.meldeId};
+			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),this.meldeId, getDonasjonid()};
 		}else
-			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),this.meldeId};
+			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),this.meldeId, getDonasjonid()};
 	}
 	/**
 	 * setGiverkomplicationfieldMaps
@@ -182,6 +183,14 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 
 	public void setMeldeId(Long meldeId) {
 		this.meldeId = meldeId;
+	}
+
+	public Long getDonasjonid() {
+		return donasjonid;
+	}
+
+	public void setDonasjonid(Long donasjonid) {
+		this.donasjonid = donasjonid;
 	}
 	
 
