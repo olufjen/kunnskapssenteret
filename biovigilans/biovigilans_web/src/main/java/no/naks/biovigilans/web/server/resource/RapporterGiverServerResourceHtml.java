@@ -89,6 +89,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	     
 	     result.distributeTerms();
 	     result.giverKomplikasjonDistribute();
+	     result.giveroppfolgingDistribute();
 	     donasjon.distributeTerms();
 	     
 	     dataModel.put(giverkomplikasjonId, result);
@@ -202,6 +203,8 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     			result.getGiverKomplikasjon().setMeldeId(meldeId);
     			giverWebService.saveGiverkomplikasjon(result);
     			
+    			result.getGiveroppfolging().setMeldeid(meldeId);
+    			giverWebService.saveGiveroppfolging(result);
     		    //lagre i vigiansmelding
     		    
     		   

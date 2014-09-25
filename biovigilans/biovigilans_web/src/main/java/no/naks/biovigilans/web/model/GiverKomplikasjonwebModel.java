@@ -7,6 +7,8 @@ import no.naks.biovigilans.model.Giver;
 import no.naks.biovigilans.model.GiverImpl;
 import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.GiverkomplikasjonImpl;
+import no.naks.biovigilans.model.Giveroppfolging;
+import no.naks.biovigilans.model.GiveroppfolgingImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 
@@ -14,12 +16,14 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	private Giver giver;
 	private Vigilansmelding vigilansmelding;
 	private Giverkomplikasjon giverKomplikasjon;
+	private Giveroppfolging giveroppfolging;
 	
 	public GiverKomplikasjonwebModel() {
 		super();
 		giver = new GiverImpl();
 		vigilansmelding = new AbstractVigilansmelding();
 		giverKomplikasjon = new GiverkomplikasjonImpl();
+		giveroppfolging = new GiveroppfolgingImpl();
 	//	giver.setGiverfieldMaps(userFields);
 		
 	}
@@ -53,6 +57,13 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		this.giverKomplikasjon = giverKomplikasjon;
 	}
 
+	public Giveroppfolging getGiveroppfolging() {
+		return giveroppfolging;
+	}
+	public void setGiveroppfolging(Giveroppfolging giveroppfolging) {
+		this.giveroppfolging = giveroppfolging;
+	}
+
 
 
 	private String[] aldergruppe;
@@ -78,13 +89,14 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		for(String field: formFields ){
 			String userEntry = userEntries.get(field);
 			giver.saveField(field, userEntry);
-			
 			giverKomplikasjon.saveField(field, userEntry);
+			giveroppfolging.saveField(field, userEntry);
 		}
 		
 		giver.saveToGiver();
 		vigilansmelding.saveToVigilansmelding();
 		giverKomplikasjon.saveToGiverkomplikasjon();
+		giveroppfolging.saveToField();
 		
 	}
 	
@@ -101,6 +113,12 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		String[] formFields = getFormNames();
 		String meldingFields[] = {formFields[13],formFields[14],formFields[15],formFields[16],formFields[17],formFields[18],formFields[19],formFields[20],formFields[21]};
 		giverKomplikasjon.setGiverkomplicationfieldMaps(meldingFields);
+	}
+	
+	public void giveroppfolgingDistribute(){
+		String[] formFields = getFormNames();
+		String giveroppfolgingFields[]={formFields[22],formFields[16],formFields[32],formFields[31]};
+		giveroppfolging.setGiveroppfolgingfieldMaps(giveroppfolgingFields);
 	}
 	
 }
