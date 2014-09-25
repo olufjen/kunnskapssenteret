@@ -5,17 +5,21 @@ import java.util.Map;
 import no.naks.biovigilans.model.AbstractVigilansmelding;
 import no.naks.biovigilans.model.Giver;
 import no.naks.biovigilans.model.GiverImpl;
+import no.naks.biovigilans.model.Giverkomplikasjon;
+import no.naks.biovigilans.model.GiverkomplikasjonImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 
 public class GiverKomplikasjonwebModel extends VigilansModel {
 	private Giver giver;
 	private Vigilansmelding vigilansmelding;
+	private Giverkomplikasjon giverKomplikasjon;
 	
 	public GiverKomplikasjonwebModel() {
 		super();
 		giver = new GiverImpl();
 		vigilansmelding = new AbstractVigilansmelding();
+		giverKomplikasjon = new GiverkomplikasjonImpl();
 	//	giver.setGiverfieldMaps(userFields);
 		
 	}
@@ -40,6 +44,13 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 
 	public void setGiver(Giver giver) {
 		this.giver = giver;
+	}
+
+	public Giverkomplikasjon getGiverKomplikasjon() {
+		return giverKomplikasjon;
+	}
+	public void setGiverKomplikasjon(Giverkomplikasjon giverKomplikasjon) {
+		this.giverKomplikasjon = giverKomplikasjon;
 	}
 
 
@@ -67,18 +78,29 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		for(String field: formFields ){
 			String userEntry = userEntries.get(field);
 			giver.saveField(field, userEntry);
+			
+			giverKomplikasjon.saveField(field, userEntry);
 		}
 		
 		giver.saveToGiver();
 		vigilansmelding.saveToVigilansmelding();
+		giverKomplikasjon.saveToGiverkomplikasjon();
 		
 	}
 	
 	
 	public void meldingDistributeTerms(){
+		/*
 		String[] formFields = getFormNames();
-		String meldingFields[] = {};
+		String meldingFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[12],formFields[13]};
 		vigilansmelding.setVigilansmeldingfieldMaps(meldingFields);
+		*/
+	}
+	
+	public void giverKomplikasjonDistribute(){
+		String[] formFields = getFormNames();
+		String meldingFields[] = {formFields[13],formFields[14],formFields[15],formFields[16],formFields[17],formFields[18],formFields[19],formFields[20],formFields[21]};
+		giverKomplikasjon.setGiverkomplicationfieldMaps(meldingFields);
 	}
 	
 }

@@ -28,4 +28,7 @@ public class GiverWebServiceImpl extends MasterWebServiceImpl implements GiverWe
 		giverTableService.saveVigilansmelding(giverModel.getVigilansmelding());
 		
 	}
+	public void saveGiverkomplikasjon(GiverKomplikasjonwebModel giverModel){
+		giverTableService.saveGiverKomplikasjon(giverModel.getGiverKomplikasjon());
+	}
 }

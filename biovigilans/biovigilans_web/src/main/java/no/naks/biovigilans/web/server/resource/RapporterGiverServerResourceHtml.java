@@ -87,7 +87,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	     }
 	     
 	     result.distributeTerms();
-	     result.meldingDistributeTerms();
+	     result.giverKomplikasjonDistribute();
 	     donasjon.distributeTerms();
 	     
 	     dataModel.put(giverkomplikasjonId, result);
@@ -187,6 +187,9 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     			result.saveValues();
     			giverWebService.saveGiver(result);
     			giverWebService.saveVigilansmelding(result);
+    			Long meldeId = result.getVigilansmelding().getMeldeid();
+    			result.getGiverKomplikasjon().setMeldeId(meldeId);
+    			giverWebService.saveGiverkomplikasjon(result);
     			Long giverId=	result.getGiver().getGiverid();
     			if(giverId != null){
     				donasjon.getDonasjon().setGiveId(giverId.intValue());
