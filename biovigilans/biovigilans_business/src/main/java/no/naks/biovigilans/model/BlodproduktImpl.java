@@ -66,7 +66,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		for (String field : userFields){
 			this.userFields.add(field);
 		}
-		for (int i = 0;i<7;i++){
+		for (int i = 0;i<9;i++){
 			antallFields.put(userFields[i],null);
 		}
 	
@@ -107,6 +107,8 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		setTappetype(null);
 		setSuspensjon(null);
 		setAntallenheterpakke(-1);
+		setAntallTromb(-1);
+		setAntallPlasma(-1);
 	}
 
 	

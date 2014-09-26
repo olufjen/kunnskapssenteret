@@ -265,7 +265,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 				lokalsymptomer.distributeValues(symptom);
 			}
 			
-			if (!IsInt(symptom) && lokalsymptomer != null)
+			if (symptom != null && !IsInt(symptom) && lokalsymptomer != null)
 				this.symptomer.put(symptom, lokalsymptomer);
 			
 			

@@ -94,6 +94,12 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 			setTempetter(Integer.parseInt(temp));
 		if (getTempFor() == 0)
 			setTempFor(Integer.parseInt(temp));
+		if (getTempFor() >0 && getTempetter() > 0 && getTempetter() < getTempFor()){
+			int t1 = getTempetter();
+			int t2 = getTempFor();
+			setTempetter(t2);
+			setTempFor(t1);
+		}
 	}
 
 	
