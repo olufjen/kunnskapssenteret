@@ -66,7 +66,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private List<ICD10Component> components;
 	private Map<String,Object > mapComponent;
 	
-	private List<String>blodProdukt;
+	private List<String>blodProdukt; // Nedtrekk Blodprodukt når man velger blodplasma
+	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
 	
 	public PasientKomplikasjonWebModel() {
 		super();
@@ -89,6 +90,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		components = new ArrayList<ICD10Component>();
 		mapComponent = new HashMap<String, Object>();
 		blodProdukt = new ArrayList<String>();
+		hemolyseParametre = new ArrayList<String>();
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -101,6 +103,16 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 
 	public void setAvdelinger(String[] avdelinger) {
 		this.avdelinger = avdelinger;
+	}
+
+
+	public List<String> getHemolyseParametre() {
+		return hemolyseParametre;
+	}
+
+
+	public void setHemolyseParametre(List<String> hemolyseParametre) {
+		this.hemolyseParametre = hemolyseParametre;
 	}
 
 
@@ -304,6 +316,20 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 			this.blodProdukt.add(produkt);
 		}
 	}
+
+	/**
+	 * setHemolyseparams
+	 * Denne rutnen setter opp nedtrekk for hemolyseparametre
+	 * @param hemoparams - En rekke strengvariable som inneholder hemolyseparametre
+	 * 
+	 */
+	public void setHemolyseparams(String[] hemoparams){
+		
+		for (String hemo : hemoparams){
+			this.hemolyseParametre.add(hemo);
+		
+		}
+	}	
 	/**
 	 * distributeTerms
 	 * Denne rutinen setter opp hvilke skjermbildefelt som hører til hvilke modelobjekter (Pasient, Sykdom etc)
