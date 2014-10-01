@@ -54,6 +54,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		private String[] aldergruppe;
 		private String[] kjonnValg; 
 		private String[] blodProdukt;
+		private String[] hemolyseParametre;
 		private String pasientkomplikasjonId = "pasientkomplikasjon"; 	// Benyttes som nøkkel til HTML-sider
 		private String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
 		
@@ -109,6 +110,14 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 
 	public void setBlodProdukt(String[] blodProdukt) {
 		this.blodProdukt = blodProdukt;
+	}
+
+	public String[] getHemolyseParametre() {
+		return hemolyseParametre;
+	}
+
+	public void setHemolyseParametre(String[] hemolyseParametre) {
+		this.hemolyseParametre = hemolyseParametre;
 	}
 
 	public void setAldergruppe(String[] aldergruppe) {
@@ -181,6 +190,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	 result.setAldergruppe(aldergruppe);
 	    	 result.setKjonnValg(kjonnValg);
 	    	 result.setblodProducts(blodProdukt);
+	    	 result.setHemolyseparams(hemolyseParametre);
 	    	 result.setAvdelinger(avdelinger);
 	
 	    
