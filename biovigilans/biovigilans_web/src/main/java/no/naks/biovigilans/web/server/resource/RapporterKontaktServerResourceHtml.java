@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.xml.Letter;
@@ -25,6 +26,9 @@ import org.restlet.resource.Post;
 
 public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource {
 
+	private MelderwebModel melderwebModel;
+	private String melderId = "melder";
+	
 	public RapporterKontaktServerResourceHtml() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -61,7 +65,16 @@ public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource 
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	     
+	     if(melderwebModel == null){
+	    	 melderwebModel = new MelderwebModel();
+	    	 melderwebModel.setFormNames(sessionParams);
+	     }
+	     
+	     melderwebModel.distributeTerms();
+	     dataModel.put(melderId, melderwebModel);
+	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/pasientkomplikasjon/nymeldingfagprosedyre.html").get();
@@ -84,14 +97,19 @@ public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource 
     public Representation storeHemovigilans(Form form) {
     	TemplateRepresentation  templateRep = null;
     	
+    	if(form == null){
+    		sessionAdmin.getSession(getRequest(), melderId).invalidate();
+    	}
  
     	if (form != null){
+    		melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(getRequest(),melderId);
+    		 
     		Parameter logout = form.getFirst("avbryt4");
     		Parameter lukk = form.getFirst("lukk4");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
     		if (logout != null || lukk != null){
- 
+    			sessionAdmin.getSession(getRequest(), melderId).invalidate();
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
@@ -99,16 +117,28 @@ public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource 
     			return templateRep; // return a new page!!!
     		}
     			
+    		 if(melderwebModel == null){
+    	    	 melderwebModel = new MelderwebModel();
+    	    	 melderwebModel.setFormNames(sessionParams);
+    	     }
  
     		for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
     					System.out.println(entry.getName() + "=" + entry.getValue());
-    	
+    			melderwebModel.setValues(entry);
     		}
 
-    	
+    		sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
+    		dataModel.put(melderId, melderwebModel);
+    		
     		Parameter lagre = form.getFirst("lagre4");
- 
+    		if(lagre != null){
+    			melderwebModel.saveValues();
+    			melderWebService.saveMelder(melderwebModel);
+    		}
+    		
+    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
+    		
 //    		System.out.println("Status = "+result.getStatus());
     		// Denne client resource forholder seg til src/main/resource katalogen !!!	
     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
