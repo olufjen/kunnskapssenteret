@@ -81,6 +81,7 @@
 	 			<value>/config/app-config/environment.properties</value>
 	 			<value>/config/app-config/parameter.properties</value>
 	 			<value>/config/app-config/giver.properties</value>
+	 			<value>/config/app-config/kontakt.properties</value>
 	 			<value>/config/app-config/andreHendelser.properties</value>
 	 			<value>/config/app-config/dbtable.properties</value>
 	 		</list>
@@ -99,8 +100,8 @@
 
 	</bean>
 	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--   C:\\biovigilans\\temp\\ICD10CM.xml    -->
-		<property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
+<!-- xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml     -->
+		<property name="Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
 
 
 	</bean>	
@@ -186,15 +187,16 @@
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="giverWebService" ref="giverWebService"></property>
      	<property name="donasjonWebService" ref="donasjonWebService"></property>
+     	<property name="melderWebService" ref="melderWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>  
   </bean>	
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
-            class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
+        class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
  		<property name="sessionAdmin" ref="sessionAdmin"></property>
      	<property name="tablewebservice" ref="tableWebService"></property>
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
-     
-     	<property name="icd10WebService" ref="ICD10WebService"></property>  
+     	<property name="icd10WebService" ref="ICD10WebService"></property>
+     	<property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property>  
   </bean>	
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterGiverServerResourceHtml">
@@ -230,7 +232,6 @@
 	   	<property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
 	   		${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
 	   	<property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
-	   	<property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
 	   	<property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
 		   	${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
 		   	${pasientkomplikasjon.sykdombehandling},${pasientkomplikasjon.p-annensykdom-ja},${pasientkomplikasjon.p-annensykdom-nei},${pasientkomplikasjon.p-annensykdom-vetikke},
@@ -289,6 +290,7 @@
      	<property name="innmeldingWebService" ref="hendelseWebService"></property>
      	<property name="giverWebService" ref="giverWebService"></property>
      	<property name="donasjonWebService" ref="donasjonWebService"></property>
+     	<property name="melderWebService" ref="melderWebService"></property>
      	<property name="icd10WebService" ref="ICD10WebService"></property>
     
  
@@ -313,7 +315,10 @@
 	<bean id="donasjonWebService" class="no.naks.biovigilans.web.control.DonasjonWebServiceImpl">
 		<property name="donasjonTableService" ref="donasjonTableService"></property>
 	</bean>
-
+	<bean id="melderWebService" class="no.naks.biovigilans.web.control.MelderWebServiceImpl">
+		<property name="melderTableService" ref="melderTableService"></property>
+	</bean>
+	
 <!-- Exception handling -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="error/exception" />
