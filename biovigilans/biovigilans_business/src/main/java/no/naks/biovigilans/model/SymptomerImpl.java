@@ -90,7 +90,7 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 
 	}
 	public void distributeTemperature(String temp){
-		if (getTempFor() >0){
+		if (getTempFor() >0)
 			setTempetter(Integer.parseInt(temp));
 		if (getTempFor() == 0)
 			setTempFor(Integer.parseInt(temp));
@@ -100,7 +100,7 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 			setTempetter(t2);
 			setTempFor(t1);
 		}
-		}
+		
 	}
 	
 }
