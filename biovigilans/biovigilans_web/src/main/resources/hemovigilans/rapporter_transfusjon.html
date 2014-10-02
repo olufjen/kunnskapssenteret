@@ -728,7 +728,7 @@ function initialize()
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-2" value="ahtr-2" onclick="toggleDisplay('antistofftype', this.checked);toggleDisplay('lga-valg', this.checked)"/>Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-2" value="ahtr-2" onclick="toggleDisplay('antistofftype', this.checked);toggleDisplay('lga-valg', 0)"/>Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
       </label>
     </div>
     
@@ -751,7 +751,7 @@ function initialize()
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-anafylaktisk" value="anafylaktisk" onclick="toggleDisplay('antistofftype',0);toggleDisplay('lga-valg', 0)"/>Anafylaktisk/alvorlig allergisk reaksjon
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-anafylaktisk" value="anafylaktisk" onclick="toggleDisplay('antistofftype',0);toggleDisplay('lga-valg',this.checked)"/>Anafylaktisk/alvorlig allergisk reaksjon
       </label>
     </div>
     <div class="radio">
