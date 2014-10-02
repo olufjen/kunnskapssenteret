@@ -97,8 +97,16 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	public String getBlodtypeserologisk() {
 		return blodtypeserologisk;
 	}
-	public void setBlodtypeserologisk(String blodtypeserologisk) {
-		this.blodtypeserologisk = blodtypeserologisk;
+	public void setBlodtypeserologisk(String blodtypserologisk) {
+		if (blodtypserologisk == null){
+			
+			for (int i=0;i<3;i++){
+				blodtypserologisk =  utredningsFields.get(keys[i]);
+				if (blodtypserologisk != null)
+					break;
+			}
+		}
+		this.blodtypeserologisk = blodtypserologisk;
 	}
 	public String getHemolyseparameter() {
 		return hemolyseparameter;
@@ -135,8 +143,16 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	public String getPosedyrking() {
 		return posedyrking;
 	}
-	public void setPosedyrking(String posedyrking) {
-		this.posedyrking = posedyrking;
+	public void setPosedyrking(String posdyrking) {
+	if (posdyrking == null){
+			
+			for (int i=11;i<14;i++){
+				posdyrking =  utredningsFields.get(keys[i]);
+				if (posdyrking != null)
+					break;
+			}
+		}
+		this.posedyrking = posdyrking;
 	}
 	public String getPosedyrkingpositiv() {
 		return posedyrkingpositiv;
