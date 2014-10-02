@@ -338,11 +338,11 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	 */
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
-		String patientFields[] = {formFields[0],formFields[1],formFields[2],formFields[5],formFields[6],formFields[7],formFields[8],formFields[18],formFields[19],formFields[20],formFields[147]};
+		String patientFields[] = {formFields[0],formFields[1],formFields[2],formFields[5],formFields[6],formFields[7],formFields[8],formFields[18],formFields[19],formFields[20],formFields[146]};
 		String sykdomFields[] = {formFields[9]};
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[13]};
-		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[144],formFields[145],formFields[146]};
+		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[143],formFields[144],formFields[145]};
 		pasient.setPatientfieldMaps(patientFields);
 		sykdom.setsykdomfieldMaps(sykdomFields);
 		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);
