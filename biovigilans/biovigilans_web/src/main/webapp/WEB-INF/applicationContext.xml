@@ -283,9 +283,8 @@
 		</property>
 	</bean>	
 	 	
-  	<bean name="/hemovigilans/" id="hemovigilansServerResourceHTML" autowire="byName" scope="prototype"
         <bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
-                  class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
+          class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
                         <property name="sessionAdmin" ref="sessionAdmin"></property>
                 <property name="tablewebservice" ref="tableWebService"></property>
                 <property name="innmeldingWebService" ref="hendelseWebService"></property>
