@@ -5,286 +5,224 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-<!--	<import resource="applicationContext-ejb.xml" /> 		-->
+<!--    <import resource="applicationContext-ejb.xml" />                -->
 
 <!-- Restlet components -->
 
-	<bean id="component" class="org.restlet.ext.spring.SpringComponent">
-		<property name="name" value="RESTful Biovigilans Server component" />
-		<property name="description" value="Example for Biovigilans" />
-		<property name="owner" value="Kunnskapssenteret" />
-		<property name="author" value="Oluf Jensen" />
-	    <property name="defaultTarget" ref="path2BeanRouter" />
-	    <property name="client" value="clap" />
-	</bean>
+        <bean id="component" class="org.restlet.ext.spring.SpringComponent">
+                <property name="name" value="RESTful Biovigilans Server component" />
+                <property name="description" value="Example for Biovigilans" />
+                <property name="owner" value="Kunnskapssenteret" />
+                <property name="author" value="Oluf Jensen" />
+            <property name="defaultTarget" ref="path2BeanRouter" />
+            <property name="client" value="clap" />
+        </bean>
 
-	<bean id="component.context"
-		class="org.springframework.beans.factory.config.PropertyPathFactoryBean" />
+        <bean id="component.context"
+                class="org.springframework.beans.factory.config.PropertyPathFactoryBean" />
  
 
-	<bean id="componentChildContext" class="org.restlet.Context">
-		<lookup-method name="createChildContext" bean="component.context" />
-	</bean>
-<!-- 	
-	<bean id="docsDir" class="org.restlet.resource.Directory"> 
+        <bean id="componentChildContext" class="org.restlet.Context">
+                <lookup-method name="createChildContext" bean="component.context" />
+        </bean>
+<!--    
+        <bean id="docsDir" class="org.restlet.resource.Directory"> 
         <constructor-arg name="context" ref="componentChildContext" /> 
         <constructor-arg name="rootUri" value="clap:///no/naks/web/server/resource/css/" /> 
         <property name="indexName" value="index" /> 
     </bean>
     
-    	<bean id="localdocsDir" class="no.naks.web.server.resource.ProsedyreDirectory"> 
+        <bean id="localdocsDir" class="no.naks.web.server.resource.ProsedyreDirectory"> 
         <constructor-arg name="context" ref="componentChildContext" /> 
         <constructor-arg name="rootUri" value="file://Biovigilans_web/restapi/melding/css" /> 
         <property name="indexName" value="style.css" /> 
     </bean>
 -->
 <!-- 
-	<bean id="directoryService" class="no.naks.web.server.resource.ProsedyreDirectory">
-		<property name="context" ref="componentChildContext"></property>
-	</bean>
- -->	
-	<!-- This router automagically routes requests to beans that extend org.restlet.resource.ServerResource or org.restlet.Restlet who's name starts with
-	 a "/" slash which matches the request-->
+        <bean id="directoryService" class="no.naks.web.server.resource.ProsedyreDirectory">
+                <property name="context" ref="componentChildContext"></property>
+        </bean>
+ -->    
+        <!-- This router automagically routes requests to beans that extend org.restlet.resource.ServerResource or org.restlet.Restlet who's name starts with
+         a "/" slash which matches the request-->
 
 <!-- 
-	<bean id="BiovigilansApiApplication" class="no.naks.web.server.BiovigilansApiApplication">
-	
+        <bean id="BiovigilansApiApplication" class="no.naks.web.server.BiovigilansApiApplication">
+        
 
-		<property name="name" value="RESTful Biovigilans API application" />
-		<property name="description"
-			value="Biovigilans API application for Kunnskapssenteret" />
-		<property name="owner" value="Kunnskapssenteret" />
-		<property name="author" value="Oluf Jensen" />
-		<property name="root" ref="path2BeanRouter"/>
-	
-	</bean>
- -->	
+                <property name="name" value="RESTful Biovigilans API application" />
+                <property name="description"
+                        value="Biovigilans API application for Kunnskapssenteret" />
+                <property name="owner" value="Kunnskapssenteret" />
+                <property name="author" value="Oluf Jensen" />
+                <property name="root" ref="path2BeanRouter"/>
+        
+        </bean>
+ -->    
 
 <!-- Restlet components end -->
 
-	 <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	 	<property name="locations">
-	 		<list>
-	 			<!-- <value>/WEB-INF/application.properties</value>
-	 			<value>/WEB-INF/jdbc.properties</value>
-	 			<value>/WEB-INF/jdbcutside.properties</value>
-	 			<value>/WEB-INF/sqladmin.properties</value>
-	 			<value>/WEB-INF/tables.properties</value>
-	 			<value>/WEB-INF/question.properties</value>
-	 			<value>/WEB-INF/environment.properties</value> -->
-	 			<value>/config/app-config/application.properties</value>
-	 			<value>/config/app-config/jdbc.properties</value>
-	 			<value>/config/app-config/jdbcutside.properties</value>
-	 			<value>/config/app-config/sqladmin.properties</value>
-	 			<value>/config/app-config/tables.properties</value>
-	 			<value>/config/app-config/question.properties</value>
-	 			<value>/config/app-config/environment.properties</value>
-	 			<value>/config/app-config/parameter.properties</value>
-	 			<value>/config/app-config/giver.properties</value>
-	 			<value>/config/app-config/kontakt.properties</value>
-	 			<value>/config/app-config/andreHendelser.properties</value>
-	 			<value>/config/app-config/dbtable.properties</value>
-	 		</list>
-	 	</property>
-	 </bean>
-	<bean id="tableWebService" class="no.naks.biovigilans.web.control.TableWebServiceImpl">
-	<!--  
-		<property name="masterDictionary" ref="domainDictionary"></property>
-		<property name="foretakKey" value="foretakkey"></property>
---> 		
-		<property name="nhnFlag" value="false"></property>
-<!-- 		<property name="meldingService" ref="meldingService"></property>
-	 	<property name="nhnClient" ref="nhnClient"></property>  -->
-<!--  		<property name="hiveService" ref="hiveService"></property> -->
+         <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+                <property name="locations">
+                        <list>
+                                <!-- <value>/WEB-INF/application.properties</value>
+                                <value>/WEB-INF/jdbc.properties</value>
+                                <value>/WEB-INF/jdbcutside.properties</value>
+                                <value>/WEB-INF/sqladmin.properties</value>
+                                <value>/WEB-INF/tables.properties</value>
+                                <value>/WEB-INF/question.properties</value>
+                                <value>/WEB-INF/environment.properties</value> -->
+                                <value>/config/app-config/application.properties</value>
+                                <value>/config/app-config/jdbc.properties</value>
+                                <value>/config/app-config/jdbcutside.properties</value>
+                                <value>/config/app-config/sqladmin.properties</value>
+                                <value>/config/app-config/tables.properties</value>
+                                <value>/config/app-config/question.properties</value>
+                                <value>/config/app-config/environment.properties</value>
+                                <value>/config/app-config/parameter.properties</value>
+                                <value>/config/app-config/giver.properties</value>
+                       			<value>/config/app-config/kontakt.properties</value>
+                                <value>/config/app-config/andreHendelser.properties</value>
+                                <value>/config/app-config/dbtable.properties</value>
+                        </list>
+                </property>
+         </bean>
+        <bean id="tableWebService" class="no.naks.biovigilans.web.control.TableWebServiceImpl">
+        <!--  
+                <property name="masterDictionary" ref="domainDictionary"></property>
+                <property name="foretakKey" value="foretakkey"></property>
+-->             
+                <property name="nhnFlag" value="false"></property>
+<!--            <property name="meldingService" ref="meldingService"></property>
+                <property name="nhnClient" ref="nhnClient"></property>  -->
+<!--            <property name="hiveService" ref="hiveService"></property> -->
 
 
-	</bean>
-	<bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!-- xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml     -->
-		<property name="Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
+        </bean>
+        <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
+<!--  C:\\biovigilans\\temp\\ICD10CM.xml      -->
+                <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
 
 
-	</bean>	
+        </bean> 
 
-	<bean id="hiveService" class="no.naks.semweb.control.HiveServiceImpl">
-		<property name="hivePath" value="C:\\svnroot2\\nokc\\semantiskweb\\trunk\\semantiskweb_web\\src\\main\\webapp\\config\\app-config\"></property>
-		<property name="treeElements">
-			<list><value>Anatomi</value>
-			<value>Organisme</value>
-			<value>Sykdommer</value>
-			<value>Kjemikalier og medisiner</value>
-			<value>Analyse, diagnoser og terapeutiske teknikker og utstyr</value>
-			<value>Psykiatri og Psykologi</value>
-			<value>Antropologi Utdanning og sosiologi</value>
-			<value>Teknologi, Industri, Jordbruk</value>
-			<value>Humanoria</value>
-			<value>Informasjonsvitenskap</value>
-			<value>Navngitte grupper</value>
-			<value>Helsevesenet</value>
-			<value>Publikasjonkarakteristiska</value>
-			<value>Geografi</value>
-			</list>
-		</property>
-		<property name="anatomi">
-			<list>
-				<value>Body Regions</value>
-				<value>Musculoskeletal System</value>
-				<value>Digestive System</value>
-				<value>Respiratory System</value>
-				<value>Urogenital System</value>
-				<value>Endocrine System</value>
-				<value>Cardiovascular System</value>
-				<value>Nervous System</value>
-				<value>Sense Organs</value>
-				<value>Tissues</value>
-				<value>Cells</value>
-				<value>Fluids and Secretions</value>
-				<value>Animal Structure</value>
-				<value>Stomatognathic System</value>
-				<value>Hemic and Immune Systems</value>
-				<value>Embryonic Structures</value>
-				<value>Integumentary System</value>
-				<value>Plant Structure</value>
-				<value>Fungal Structure</value>
-				<value>Bacterial Structure</value>
-				<value>Viral Structure</value>
-			
-			</list>
-		</property>
-	</bean>	
-		
-	<bean name="path2BeanRouter" class="org.restlet.ext.spring.SpringBeanRouter">
+        <bean id="hiveService" class="no.naks.semweb.control.HiveServiceImpl">
+                <property name="hivePath" value="C:\\svnroot2\\nokc\\semantiskweb\\trunk\\semantiskweb_web\\src\\main\\webapp\\config\\app-config\"></property>
+                <property name="treeElements">
+                        <list><value>Anatomi</value>
+                        <value>Organisme</value>
+                        <value>Sykdommer</value>
+                        <value>Kjemikalier og medisiner</value>
+                        <value>Analyse, diagnoser og terapeutiske teknikker og utstyr</value>
+                        <value>Psykiatri og Psykologi</value>
+                        <value>Antropologi Utdanning og sosiologi</value>
+                        <value>Teknologi, Industri, Jordbruk</value>
+                        <value>Humanoria</value>
+                        <value>Informasjonsvitenskap</value>
+                        <value>Navngitte grupper</value>
+                        <value>Helsevesenet</value>
+                        <value>Publikasjonkarakteristiska</value>
+                        <value>Geografi</value>
+                        </list>
+                </property>
+                <property name="anatomi">
+                        <list>
+                                <value>Body Regions</value>
+                                <value>Musculoskeletal System</value>
+                                <value>Digestive System</value>
+                                <value>Respiratory System</value>
+                                <value>Urogenital System</value>
+                                <value>Endocrine System</value>
+                                <value>Cardiovascular System</value>
+                                <value>Nervous System</value>
+                                <value>Sense Organs</value>
+                                <value>Tissues</value>
+                                <value>Cells</value>
+                                <value>Fluids and Secretions</value>
+                                <value>Animal Structure</value>
+                                <value>Stomatognathic System</value>
+                                <value>Hemic and Immune Systems</value>
+                                <value>Embryonic Structures</value>
+                                <value>Integumentary System</value>
+                                <value>Plant Structure</value>
+                                <value>Fungal Structure</value>
+                                <value>Bacterial Structure</value>
+                                <value>Viral Structure</value>
+                        
+                        </list>
+                </property>
+        </bean> 
+                
+        <bean name="path2BeanRouter" class="org.restlet.ext.spring.SpringBeanRouter">
 <!-- 
-	    <property name="attachments"> 
+            <property name="attachments"> 
             <map> 
                <entry key="/css/" value-ref="docsDir" /> 
             </map> 
         </property> 
   -->       
-	</bean>
+        </bean>
 <!-- Disse ekstra server resource eksekveres når stylesheet hentes av html  -->
- 	<bean name="/hemovigilans/css/bootstrap.css" id="cssServerResource" autowire="byName" scope="prototype"
+        <bean name="/hemovigilans/css/bootstrap.css" id="cssServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.CssServerResource">
- 	</bean>
- 	<bean name="/hemovigilans/scripts/hendelser.js" id="bootstrapServerResource" autowire="byName" scope="prototype"
+        </bean>
+        <bean name="/hemovigilans/scripts/hendelser.js" id="bootstrapServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.BootstrapjsServerResource">
- 	</bean> 	
-	<bean name="/hemovigilans/css/default.css" id="defaultServerResource" autowire="byName" scope="prototype"
+        </bean>         
+        <bean name="/hemovigilans/css/default.css" id="defaultServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.DefaultCssServerResource">
- 	</bean> 	
- 	
- 	<bean name="/hemovigilans/css/reset.css" id="resetServerResource" autowire="byName" scope="prototype"
+        </bean>         
+        
+        <bean name="/hemovigilans/css/reset.css" id="resetServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.ResetCssServerResource">
- 	</bean>
- 	<bean name="/hemovigilans/css/sitemap.css" id="sitemapServerResource" autowire="byName" scope="prototype"
+        </bean>
+        <bean name="/hemovigilans/css/sitemap.css" id="sitemapServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.SitemapCssServerResource">
- 	</bean>	
+        </bean> 
   <!-- end ekstra server resource -->
   <bean name="/hemovigilans/rapporter_hendelse_main.html" id="rapportermainServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterMainServerResourceHtml">
- 		<property name="sessionAdmin" ref="sessionAdmin"></property>
-     	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
-     	<property name="giverWebService" ref="giverWebService"></property>
-     	<property name="donasjonWebService" ref="donasjonWebService"></property>
-     	<property name="melderWebService" ref="melderWebService"></property>
-     	<property name="icd10WebService" ref="ICD10WebService"></property>  
-  </bean>	
+                <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="tablewebservice" ref="tableWebService"></property>
+        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+        <property name="giverWebService" ref="giverWebService"></property>
+        <property name="donasjonWebService" ref="donasjonWebService"></property>
+        <property name="melderWebService" ref="melderWebService"></property>
+        <property name="icd10WebService" ref="ICD10WebService"></property>  
+  </bean>       
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
-        class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
- 		<property name="sessionAdmin" ref="sessionAdmin"></property>
-     	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
-     	<property name="icd10WebService" ref="ICD10WebService"></property>
-     	<property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property>  
-  </bean>	
+            class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
+                <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="tablewebservice" ref="tableWebService"></property>
+        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+        <property name="icd10WebService" ref="ICD10WebService"></property>
+        <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property>  
+          
+  </bean>       
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterGiverServerResourceHtml">
- 		<property name="sessionAdmin" ref="sessionAdmin"></property>
-     	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
-     	<property name="icd10WebService" ref="ICD10WebService"></property>  
-     	<property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
-     		${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
+                <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="tablewebservice" ref="tableWebService"></property>
+        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+        <property name="icd10WebService" ref="ICD10WebService"></property>  
+        <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
+                ${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
         <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},${giver.reaksjon},
-        			${giver.sted},${giver.maltid},${giver.vene},${giver.tapping},${giver.fullblod},${giver.aferese-options},${giver.type-aferese},
-        			${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.komplikasjon},${giver.arm},${giver.tabskadearm},
-        			${giver.bivirk},${giver.systemiskbivirkning},${giver.annenreak},${giver.annenreaksjon},${giver.annetreaksjon},
-        			${giver.kortbeskr},${giver.strakstiltak},${giver.annenreak},${giver.behandlingoppfolging},${giver.hvorbehandling},
-        			${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak}">
-     	</property>
-  </bean>	
+                                ${giver.sted},${giver.maltid},${giver.vene},${giver.tapping},${giver.fullblod},${giver.aferese-options},${giver.type-aferese},
+                                ${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.komplikasjon},${giver.arm},${giver.tabskadearm},
+                                ${giver.bivirk},${giver.systemiskbivirkning},${giver.annenreak},${giver.annenreaksjon},${giver.annetreaksjon},
+                                ${giver.kortbeskr},${giver.strakstiltak},${giver.annenreak},${giver.behandlingoppfolging},${giver.hvorbehandling},
+                                ${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak}">
+        </property>
+  </bean>       
   <bean name="/hemovigilans/rapporter_andrehendelser.html" id="rapporterhendelserServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
-  	<property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
-		${andreHendelser.avviket},${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
-		${andreHendelser.planlagte},${andreHendelser.kommentar}"></property>
+        <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
+                ${andreHendelser.avviket},${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
+                ${andreHendelser.planlagte},${andreHendelser.kommentar}"></property>
   </bean>
-	<bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
-	          class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
-	              	<property name="sessionAdmin" ref="sessionAdmin"></property>
-	   	<property name="tablewebservice" ref="tableWebService"></property>
-	   	<property name="innmeldingWebService" ref="hendelseWebService"></property>
-	   	<property name="icd10WebService" ref="ICD10WebService"></property>
-	   	<property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
-	   	<property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
-	   		${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
-	   	<property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-	   		${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
-	   	<property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
-	   	<property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
-		   	${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
-		   	${pasientkomplikasjon.sykdombehandling},${pasientkomplikasjon.p-annensykdom-ja},${pasientkomplikasjon.p-annensykdom-nei},${pasientkomplikasjon.p-annensykdom-vetikke},
-		   	${pasientkomplikasjon.p-annen-sykdom},${pasientkomplikasjon.p-tidligeretransfusjon-ja},${pasientkomplikasjon.p-tidligeretransfusjon-nei},
-		   	${pasientkomplikasjon.p-tidligeretransfusjon-vetikke},${pasientkomplikasjon.p-sykdom-tidligeretransfusjon},${pasientkomplikasjon.p-transfusjon-inneliggende},
-		   	${pasientkomplikasjon.p-transfusjon-poliklinisk},{pasientkomplikasjon.p-transfusjon-vetikke},${pasientkomplikasjon.p-transfusjon-klokkeslett},
-		   	${pasientkomplikasjon.p-transfusjon-dato},${pasientkomplikasjon.transfusjon-hg-1},
-		   	${pasientkomplikasjon.transfusjon-hg-2},${pasientkomplikasjon.transfusjon-hg-3},${pasientkomplikasjon.transfusjon},
-		   	${pasientkomplikasjon.blod-erytrocytt},${pasientkomplikasjon.blod-trombocytt},${pasientkomplikasjon.blod-trauma},${pasientkomplikasjon.blod-plasma},
-		   	${pasientkomplikasjon.blod-plasmavalg},${pasientkomplikasjon.blod-andre},
-		   	${pasientkomplikasjon.blodantallerytrocytt},${pasientkomplikasjon.blodantalltrombocytt},${pasientkomplikasjon.blodantalltrauma},${pasientkomplikasjon.blodantallplasma},
-		   	${pasientkomplikasjon.blodantallandre},
-		   	${pasientkomplikasjon.annenblod-erytrocytt},${pasientkomplikasjon.annenblod-trombocytt},${pasientkomplikasjon.annenblod-octaplas},
-		   	${pasientkomplikasjon.annenblod-trauma},${pasientkomplikasjon.annenblod-plasma},${pasientkomplikasjon.annenblod-andre},
-		   	${pasientkomplikasjon.annenblodantall-erytrocytt},${pasientkomplikasjon.annenblodantall-trombocytt},${pasientkomplikasjon.annenblodantall-octaplas},
-		   	${pasientkomplikasjon.annenblodantall-trauma},${pasientkomplikasjon.annenblodantall-plasma},${pasientkomplikasjon.annenblodantall-andre},
-		   	${pasientkomplikasjon.blod-kriseblod},${pasientkomplikasjon.blod-vasket},${pasientkomplikasjon.blod-bestralt},
-		   	${pasientkomplikasjon.blod-hla},${pasientkomplikasjon.blod-patogening},${pasientkomplikasjon.blod-blodvarmer},${pasientkomplikasjon.blod-annet},
-		   	${pasientkomplikasjon.blod-aferese},${pasientkomplikasjon.blod-fullblod},${pasientkomplikasjon.blod-vetikke},${pasientkomplikasjon.blod-giverplasma},
-		   	${pasientkomplikasjon.blod-kunstig},${pasientkomplikasjon.blod-sus-vetikke},${pasientkomplikasjon.blod-allogen},${pasientkomplikasjon.blod-autolog},
-		   	${pasientkomplikasjon.komp-temp},${pasientkomplikasjon.komp-blodfall},${pasientkomplikasjon.komp-blodstig},${pasientkomplikasjon.komp-kvalme},
-		   	${pasientkomplikasjon.komp-frysninger},${pasientkomplikasjon.komp-pustebesvar},${pasientkomplikasjon.komp-hypoksemi},${pasientkomplikasjon.komp-cyanose},
-		   	${pasientkomplikasjon.komp-luneodem},${pasientkomplikasjon.komp-diare},${pasientkomplikasjon.komp-kloe},${pasientkomplikasjon.komp-utslett},
-		   	${pasientkomplikasjon.komp-hevelser},${pasientkomplikasjon.komp-rodflammet},${pasientkomplikasjon.komp-gulsott},${pasientkomplikasjon.komp-nyre},
-		   	${pasientkomplikasjon.komp-bryst},${pasientkomplikasjon.komp-tachykardi},${pasientkomplikasjon.komp-mage},${pasientkomplikasjon.komp-akuttnyre},
-		   	${pasientkomplikasjon.komp-bevisstlos},${pasientkomplikasjon.komp-sjokk},${pasientkomplikasjon.komp-blodninger},${pasientkomplikasjon.komp-urin},
-		   	${pasientkomplikasjon.komp-hudblod},${pasientkomplikasjon.komp-annet},${pasientkomplikasjon.komp-ahtr-1},${pasientkomplikasjon.komp-ahtr-2},
-		   	${pasientkomplikasjon.komp-dhtr},${pasientkomplikasjon.komp-fnhtr},${pasientkomplikasjon.komp-hemolyse},${pasientkomplikasjon.komp-anafylaktisk},
-		   	${pasientkomplikasjon.komp-allergisk},${pasientkomplikasjon.komp-ta-gvhd},${pasientkomplikasjon.komp-ptp},${pasientkomplikasjon.komp-trali},
-		   	${pasientkomplikasjon.komp-tad},${pasientkomplikasjon.komp-taco},${pasientkomplikasjon.komp-hypo},${pasientkomplikasjon.komp-hemo},${pasientkomplikasjon.komp-hyper},
-		   	${pasientkomplikasjon.komp-bakterie},${pasientkomplikasjon.komp-virus},${pasientkomplikasjon.komp-smitte},${pasientkomplikasjon.komp-aiha},
-		   	${pasientkomplikasjon.komp-manglendeeffekt},${pasientkomplikasjon.komp-uct},${pasientkomplikasjon.komp-kanikke},${pasientkomplikasjon.komp-ingenklinisk},
-		   	${pasientkomplikasjon.utredning-1},${pasientkomplikasjon.utredning-2},${pasientkomplikasjon.utredning-3},${pasientkomplikasjon.utredning},${pasientkomplikasjon.hemolyse-1},
-		   	${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse-3},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.utredning},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.lga-3},
-		   	${pasientkomplikasjon.dyrkning-1},${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2},
-		   	${pasientkomplikasjon.alvor-mang1},${pasientkomplikasjon.alvor-mang2},${pasientkomplikasjon.alvor-mang3},${pasientkomplikasjon.alvor-mang4},
-		   	${pasientkomplikasjon.alvor-mang5},${pasientkomplikasjon.klinisk-res1},${pasientkomplikasjon.klinisk-res2},${pasientkomplikasjon.klinisk-res3},
-		   	${pasientkomplikasjon.klinisk-res4},${pasientkomplikasjon.klinisk-res5},${pasientkomplikasjon.aarsaks1},${pasientkomplikasjon.aarsaks2},
-		   	${pasientkomplikasjon.aarsaks3},${pasientkomplikasjon.aarsaks4},${pasientkomplikasjon.antistofftext},${pasientkomplikasjon.antistoffiga},${pasientkomplikasjon.p-antistoffannet},
-		   	${pasientkomplikasjon.p-avdelinglist},${transfusjonkomplikasjon.p-trans-temp},${transfusjonkomplikasjon.p-trans-blodfall},${transfusjonkomplikasjon.p-trans-blodstig},
-		   	${transfusjonkomplikasjon.p-trans-kvalme},${transfusjonkomplikasjon.p-trans-frysninger},${transfusjonkomplikasjon.p-trans-pustebesvar},${transfusjonkomplikasjon.p-trans-hypoksemi},
-		   	${transfusjonkomplikasjon.p-trans-cyanose},${transfusjonkomplikasjon.p-trans-luneodem},${transfusjonkomplikasjon.p-trans-diare},${transfusjonkomplikasjon.p-trans-kloe},
-		   	${transfusjonkomplikasjon.p-trans-utslett},${transfusjonkomplikasjon.p-trans-hevelser},${transfusjonkomplikasjon.p-trans-rodflammet},${transfusjonkomplikasjon.p-trans-gulsott},
-		   	${transfusjonkomplikasjon.p-trans-nyre},${transfusjonkomplikasjon.p-trans-bryst},${transfusjonkomplikasjon.p-trans-tachykardi},${transfusjonkomplikasjon.p-trans-mage},
-		   	${transfusjonkomplikasjon.p-trans-akuttnyre},${transfusjonkomplikasjon.p-trans-bevisstlos},${transfusjonkomplikasjon.p-trans-sjokk},${transfusjonkomplikasjon.p-trans-blodninger},
-		   	${transfusjonkomplikasjon.p-trans-urin},${transfusjonkomplikasjon.p-trans-hudblod},${transfusjonkomplikasjon.p-trans-annet},${transfusjonkomplikasjon.p-transfusjontext},${pasientkomplikasjon.annenblodantall-transpakker},
-		   	${pasientkomplikasjon.p-annenblod-antallerytrocytipakke},${pasientkomplikasjon.p-annenblod-antalltromboipakke},${pasientkomplikasjon.p-annenblod-antallplasmaipakke},
-		   	${pasientkomplikasjon.p-temperaturforstigning},${pasientkomplikasjon.p-temperaturetterstigning}">
-		</property>
-	</bean>	
-	 	
         <bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
-          class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
+                  class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
                         <property name="sessionAdmin" ref="sessionAdmin"></property>
                 <property name="tablewebservice" ref="tableWebService"></property>
                 <property name="innmeldingWebService" ref="hendelseWebService"></property>
@@ -349,39 +287,40 @@
                 
         <bean name="/hemovigilans/" id="hemovigilansServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.HemovigilansServerResourceHtml">
-     	<property name="sessionAdmin" ref="sessionAdmin"></property>
-     	<property name="tablewebservice" ref="tableWebService"></property>
-     	<property name="innmeldingWebService" ref="hendelseWebService"></property>
-     	<property name="giverWebService" ref="giverWebService"></property>
-     	<property name="donasjonWebService" ref="donasjonWebService"></property>
-     	<property name="melderWebService" ref="melderWebService"></property>
-     	<property name="icd10WebService" ref="ICD10WebService"></property>
+        <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="tablewebservice" ref="tableWebService"></property>
+        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+        <property name="giverWebService" ref="giverWebService"></property>
+        <property name="donasjonWebService" ref="donasjonWebService"></property>
+        <property name="melderWebService" ref="melderWebService"></property>
+        <property name="icd10WebService" ref="ICD10WebService"></property>
     
  
- 	</bean>
+        </bean>
  
      
-	<bean id="sessionAdmin" class="no.naks.biovigilans.web.control.SessionAdminImpl">
-	
-	</bean>
+        <bean id="sessionAdmin" class="no.naks.biovigilans.web.control.SessionAdminImpl">
+        
+        </bean>
 
 
-	<bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
-		<property name="imagePath" value="${image.archive.path}" />
-	</bean>
-	<bean id="hendelseWebService" class="no.naks.biovigilans.web.control.HendelseWebServiceImpl">
-		<property name="pasientService" ref="PasientTableService"></property>
-	</bean>
-	<bean id="giverWebService" class="no.naks.biovigilans.web.control.GiverWebServiceImpl" >
-		<property name="giverTableService" ref="giverTableService"></property>
-	</bean>
+        <bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
+                <property name="imagePath" value="${image.archive.path}" />
+        </bean>
+        <bean id="hendelseWebService" class="no.naks.biovigilans.web.control.HendelseWebServiceImpl">
+                <property name="pasientService" ref="PasientTableService"></property>
+        </bean>
+        <bean id="giverWebService" class="no.naks.biovigilans.web.control.GiverWebServiceImpl" >
+                <property name="giverTableService" ref="giverTableService"></property>
+        </bean>
 
-	<bean id="donasjonWebService" class="no.naks.biovigilans.web.control.DonasjonWebServiceImpl">
-		<property name="donasjonTableService" ref="donasjonTableService"></property>
-	</bean>
-	<bean id="melderWebService" class="no.naks.biovigilans.web.control.MelderWebServiceImpl">
-		<property name="melderTableService" ref="melderTableService"></property>
-	</bean>
+        <bean id="donasjonWebService" class="no.naks.biovigilans.web.control.DonasjonWebServiceImpl">
+                <property name="donasjonTableService" ref="donasjonTableService"></property>
+        </bean>
+
+		<bean id="melderWebService" class="no.naks.biovigilans.web.control.MelderWebServiceImpl">
+			<property name="melderTableService" ref="melderTableService"></property>
+		</bean>
 	
 <!-- Exception handling -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
