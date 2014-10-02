@@ -265,7 +265,7 @@
                         ${pasientkomplikasjon.komp-bakterie},${pasientkomplikasjon.komp-virus},${pasientkomplikasjon.komp-smitte},${pasientkomplikasjon.komp-aiha},
                         ${pasientkomplikasjon.komp-manglendeeffekt},${pasientkomplikasjon.komp-uct},${pasientkomplikasjon.komp-kanikke},${pasientkomplikasjon.komp-ingenklinisk},
                         ${pasientkomplikasjon.utredning-1},${pasientkomplikasjon.utredning-2},${pasientkomplikasjon.utredning-3},${pasientkomplikasjon.utredning},${pasientkomplikasjon.hemolyse-1},
-                        ${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse-3},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.utredning},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.lga-3},
+                        ${pasientkomplikasjon.hemolyse-2},${pasientkomplikasjon.hemolyse-3},${pasientkomplikasjon.hemolyse},${pasientkomplikasjon.lga-1},${pasientkomplikasjon.lga-2},${pasientkomplikasjon.lga-3},
                         ${pasientkomplikasjon.dyrkning-1},${pasientkomplikasjon.dyrkning-2},${pasientkomplikasjon.positiv-1},${pasientkomplikasjon.positiv-2},
                         ${pasientkomplikasjon.alvor-mang1},${pasientkomplikasjon.alvor-mang2},${pasientkomplikasjon.alvor-mang3},${pasientkomplikasjon.alvor-mang4},
                         ${pasientkomplikasjon.alvor-mang5},${pasientkomplikasjon.klinisk-res1},${pasientkomplikasjon.klinisk-res2},${pasientkomplikasjon.klinisk-res3},
