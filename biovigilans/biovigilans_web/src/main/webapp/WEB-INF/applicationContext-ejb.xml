@@ -65,6 +65,7 @@
   	  	<property name="transfusjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	  	<property name="insertblodProduktSQL" value="${blodprodukt.insertblodprodukt}"></property>
   	  	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+   		<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
   	  	<property name="insertPasientkomplikasjonSQL" value="${pasientkomplikasjon.insertpasientkomplikasjon}"></property>
   	  	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
   	  	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
