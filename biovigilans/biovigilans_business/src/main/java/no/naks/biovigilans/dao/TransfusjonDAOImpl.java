@@ -226,6 +226,14 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 		tablesUpdate.insert(meldingParams);
 		if (id == null){
 			melding.setMeldeid(getPrimaryKey(meldingPrimaryKey,meldingprimarykeyTableDefs));
+			melding.setMeldingsnokkel(null);
+			melding.setMeldingParams();
+			melding.setMeldingTypes();
+			meldeSQL = updateMeldingSQL;
+			meldingTypes = melding.getUtypes();
+			meldingParams= melding.getParams();
+			tablesUpdate = new TablesUpdateImpl(getDataSource(),meldeSQL,meldingTypes);
+			tablesUpdate.insert(meldingParams);
 		}
 		id = melding.getMeldeid();
 		tablesUpdate = null;
