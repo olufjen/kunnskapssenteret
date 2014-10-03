@@ -970,7 +970,7 @@ function initialize()
       </label>
     </div>
   
-     <div id="dyrkingpositiv" class="form-group" style="display: none">
+   <div id="dyrkingpositiv" class="form-group" style="display: none">
 	<p>Hvis ja</p>    
     <div class="radio">
       <label>
@@ -992,22 +992,46 @@ function initialize()
 
 		<div class="radio">
 			<label>
-				<input type="radio" name="alvor-mang" id="grad1" value="Ikke livstruende"/>Ikke livstruende
+				<input type="radio" name="alvor-mang" id="grad1" value="Ikke livstruende" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Ikke livstruende
 			</label>
 		</div>
 		<div class="radio">
 			<label>
-				<input type="radio" name="alvor-mang" id="grad2" value="Livstruende" />Livstruende
+				<input type="radio" name="alvor-mang" id="grad2" value="Livstruende" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Livstruende
 			</label>
 		</div>
 		<div class="radio">
 			<label>
-				<input type="radio" name="alvor-mang" id="grad3"value="Langtidsmorbiditet" />Langtidsmorbiditet
+				<input type="radio" name="alvor-mang" id="grad3"value="Langtidsmorbiditet" onclick="toggleDisplay('langtidsmorbiditet', this.checked)"/>Langtidsmorbiditet
 			</label>
 		</div>
+		<div id="langtidsmorbiditet" class="form-group" style="display: none">
+			<div class="radio">
+			<label>
+				<input type="radio" name="alvor-langtid" id="langgrad1"value="1 uke 6 mnd" />1 uke til 1 mnd
+			</label>
+			</div>
+			<div class="radio">
+			<label>
+				<input type="radio" name="alvor-langtid" id="langgrad2"value="1 mnd 6 mnd" />1 til 6 mnd
+			</label>
+			</div>
+			<div class="radio">
+			<label>
+				<input type="radio" name="alvor-langtid" id="langgrad3"value="6 mnd 12 mnd" />6 til 12 mnd
+			</label>
+			</div>
+			<div class="radio">
+			<label>
+				<input type="radio" name="alvor-langtid" id="langgrad4"value=">12 mnd" />Mer enn 12 mnd
+			</label>
+			</div>
+		
+		</div>
+		
 		<div class="radio">
 			<label>
-				<input type="radio" name="alvor-mang" id="grad4" value="dod"/>Dødsfall
+				<input type="radio" name="alvor-mang" id="grad4" value="dod" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Dødsfall
 			</label>
 		</div>
 	</div>
