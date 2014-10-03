@@ -149,7 +149,7 @@ CREATE TABLE Giverkomplikasjon
   (
     stedforkomplikasjon                text,
     behandlingssted                    text,
-    tidfrarapporteringtilkomplikasjon  int4,
+    tidfrarapporteringtilkomplikasjon  text,
     tilleggsopplysninger               text,
     alvorlighetsgrad                   text,
     kliniskresultat                    text,
