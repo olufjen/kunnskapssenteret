@@ -120,7 +120,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	 */
 	public void setPatientkomplicationfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0; i<37;i++){
+		for (int i = 0; i<40;i++){
 			komplikasjonsFields.put(userFields[i],null);
 		}
 	
@@ -160,6 +160,14 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 				aProd = komplikasjonsFields.get(keys[i]);
 				if (aProd != null){
 					alvorlighetsgrad = aProd;
+					break;
+				}
+			}
+			String aProdt = null;
+			for (int i=37;i<41;i++){
+				aProdt = komplikasjonsFields.get(keys[i]);
+				if (aProdt != null){
+					alvorlighetsgrad = aProd + aProdt;
 					break;
 				}
 			}
