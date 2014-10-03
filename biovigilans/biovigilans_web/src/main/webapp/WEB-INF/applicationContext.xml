@@ -281,7 +281,8 @@
                         ${transfusjonkomplikasjon.p-trans-akuttnyre},${transfusjonkomplikasjon.p-trans-bevisstlos},${transfusjonkomplikasjon.p-trans-sjokk},${transfusjonkomplikasjon.p-trans-blodninger},
                         ${transfusjonkomplikasjon.p-trans-urin},${transfusjonkomplikasjon.p-trans-hudblod},${transfusjonkomplikasjon.p-trans-annet},${transfusjonkomplikasjon.p-transfusjontext},${pasientkomplikasjon.annenblodantall-transpakker},
                         ${pasientkomplikasjon.p-annenblod-antallerytrocytipakke},${pasientkomplikasjon.p-annenblod-antalltromboipakke},${pasientkomplikasjon.p-annenblod-antallplasmaipakke},
-                        ${pasientkomplikasjon.p-temperaturforstigning},${pasientkomplikasjon.p-temperaturetterstigning}">
+                        ${pasientkomplikasjon.p-temperaturforstigning},${pasientkomplikasjon.p-temperaturetterstigning},${pasientkomplikasjon.p-langtid1},${pasientkomplikasjon.p-langtid2},
+                        ${pasientkomplikasjon.p-langtid3},${pasientkomplikasjon.p-langtid4}">
                 </property>
         </bean> 
                 
