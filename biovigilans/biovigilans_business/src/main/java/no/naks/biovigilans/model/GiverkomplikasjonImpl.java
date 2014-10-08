@@ -70,6 +70,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		setVarighetkomplikasjon(null);
 		setAlvorlighetsgrad(null);
 		setTilleggsopplysninger(null);
+		setKliniskresultat(null);
 	}
 	
 	/**
@@ -123,13 +124,18 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 
 	public void setTilleggsopplysninger(String tilleggsopplysninger) {
 		if(tilleggsopplysninger == null){
-			String value="";
+			tilleggsopplysninger =  komplikasjonsFields.get(keys[9]);
+			
+			
+			
+			/*String value="";
 			for(int i=4; i<9; i++){
 				if(komplikasjonsFields.get(keys[i]) != null){
 					value=value + komplikasjonsFields.get(keys[i]) + " ";
 				}
 			}
 			tilleggsopplysninger = value;
+			*/
 		}
 		this.tilleggsopplysninger = tilleggsopplysninger;
 	}
@@ -150,6 +156,9 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public void setKliniskresultat(String kliniskresultat) {
+		if(kliniskresultat == null){
+			kliniskresultat = komplikasjonsFields.get(keys[4]) ;
+		}
 		this.kliniskresultat = kliniskresultat;
 	}
 
