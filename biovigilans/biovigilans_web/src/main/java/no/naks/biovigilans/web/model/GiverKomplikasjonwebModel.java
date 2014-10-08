@@ -18,6 +18,8 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	private Giverkomplikasjon giverKomplikasjon;
 	private Giveroppfolging giveroppfolging;
 	
+	private String[] reaksjonengruppe; 
+	
 	public GiverKomplikasjonwebModel() {
 		super();
 		giver = new GiverImpl();
@@ -76,6 +78,15 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		this.aldergruppe = aldergruppe;
 	}
 	
+	public String[] getReaksjonengruppe() {
+		return reaksjonengruppe;
+	}
+	public void setReaksjonengruppe(String[] reaksjonengruppe) {
+		this.reaksjonengruppe = reaksjonengruppe;
+	}
+
+
+
 	public void distributeTerms(){
 			String[] formFields = getFormNames();
 			String giverFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[11]};
@@ -111,7 +122,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	
 	public void giverKomplikasjonDistribute(){
 		String[] formFields = getFormNames();
-		String meldingFields[] = {formFields[13],formFields[14],formFields[15],formFields[16],formFields[17],formFields[18],formFields[19],formFields[20],formFields[21]};
+		String meldingFields[] = {formFields[13],formFields[14],formFields[15],formFields[33],formFields[17],formFields[18],formFields[19],formFields[20],formFields[21],formFields[34]};
 		giverKomplikasjon.setGiverkomplicationfieldMaps(meldingFields);
 	}
 	

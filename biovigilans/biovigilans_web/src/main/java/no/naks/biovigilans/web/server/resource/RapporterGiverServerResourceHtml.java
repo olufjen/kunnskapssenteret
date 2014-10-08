@@ -31,6 +31,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	private DonasjonwebModel donasjon = null;
 	private String[] aldergruppe;
 	private String[] kjonnValg; 
+	private String[] reaksjonengruppe;
 	private String giverkomplikasjonId="giverkomplikasjon";
 	private String donasjonId ="donasjon";
 	private String vigilansmeldingId="vigilansmelding";
@@ -79,8 +80,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	    	 result = new GiverKomplikasjonwebModel();
 	    	 result.setFormNames(sessionParams);
 	    	 result.setAldergruppe(aldergruppe);
-	    	 
-	    	 
+	    	 result.setReaksjonengruppe(reaksjonengruppe);
 	     }
 	     if(donasjon==null){
 	    	 donasjon = new DonasjonwebModel();
@@ -127,6 +127,13 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 
 	public void setKjonnValg(String[] kjonnValg) {
 		this.kjonnValg = kjonnValg;
+	}
+	public String[] getReaksjonengruppe() {
+		return reaksjonengruppe;
+	}
+
+	public void setReaksjonengruppe(String[] reaksjonengruppe) {
+		this.reaksjonengruppe = reaksjonengruppe;
 	}
 
 	/**

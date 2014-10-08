@@ -205,12 +205,16 @@
 	          </label>
 		    </div>
 	    </div>
+	    
 	    <div id="beskriv-ja" style="display:none">
 	    	<label>Beskrivelse av tidligere reaksjon:</label>
 		  	<textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
 	    </div>
 	    <h3>Donasjon</h3>
-	    
+	    <div class="form-group">
+	    	<label>Dato Donasjon</label>
+	    	<input type="date" name="dato-donasjon" class="form-control" />
+	    </div>
 	    <div class="form-group">
 	      <label>Donasjonssted:</label>
 	      <input name ="tab-sted" list="tappested" class="form-control">
@@ -254,15 +258,44 @@
 	          </label>
 		    </div>
 	    </div>
-	    
+	    <div class="form-group">
+			<label>Beskriv komplkasjonen med egne ord:</label>
+		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
+		</div>
 	    <h3>Giverkomplikasjon</h3>
 	    <div class="form-group">
+	    	<label>Dato for Hendelse</label>
+	    	<input type="date" name="dato-hendelse" class="form-control" />
+	    </div>
+	    <div class="form-group">
+	    	<label>Klokkeslett Hendelse</label>
+	    	<input type="time" name="kl-hendelse" class="form-control" />
+	    </div>
+	    <div class="form-group">
+	    	<label>Dato Oppdaget</label>
+	    	<input type="date" name="dato-oppdaget" class="form-control" />
+	    </div>
+	    <!-- <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
 	      <input name ="tab-hvor" list="icd10gruppehvor" class="form-control">
 	      <datalist id="icd10gruppehvor">
 	
 	     </datalist>
+	    </div> -->
+		
+		<div class="form-group">
+	      <label>Hvor startet reaksjonen?</label>
+	       <select name ="tab-hvor" list="icd10gruppehvor" class="form-control">
+		      <option> --- Select --- </option>
+		     	<#list giverkomplikasjon.reaksjonengruppe as reaksjonen >
+		     <option>${reaksjonen} </option>
+		     	</#list>
+		  </select>
 	    </div>
+	
+	 
+
+	
 	
 		<div class="form-group">
 	    	<label>Tid fra start tapping til reaksjon:</label>
@@ -277,44 +310,98 @@
 	          <input name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div>
 	    </div>
+	    
+	    <div class="form-group" >
+			<h3>Alvorlighetsgrad (samordnes med komplikasjoner ved tapping av givere)</h3>
+	
+			<div class="radio">
+				<label>
+					<input type="radio" name="alvor-mang" id="grad1" value="Ikke livstruende"/>Ikke livstruende
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="alvor-mang" id="grad2" value="Livstruende" />Livstruende
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="alvor-mang" id="grad3"value="Langtidsmorbiditet" />Langtidsmorbiditet
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="alvor-mang" id="grad4" value="dod"/>Dødsfall
+				</label>
+			</div>
+		</div>
+	    
 	    <div class="form-group">
-	      <label>Komplikasjon</label>
+	      <label>Klinisk Resultat (samordnes med komplikasjoner ved tapping av givere)</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-komplikasjon" id="tab-helbredelse" value="Full-helbredelse"/>Full helbredelse
+	          	<input type="radio" name="tab-klinisk" id="tab-helbredelse" value="Full-helbredelse"/>Full helbredelse
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-komplikasjon" id="tab-sekvele" value="Lette-sekvele"/>Lette sekvele
+	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="Lette-sekvele"/>Lette sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-komplikasjon" id="tab-sykemelding" value="Sykemelding"/>Sykemelding (med spm om antall dager)
+	          	<input type="radio" name="tab-klinisk" id="tab-sykemelding" value="Sykemelding"/>Sykemelding (med spm om antall dager)
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-komplikasjon" id="tab-uforetrydg" value="Uføretrydg"/>Uføretrydg
+	          	<input type="radio" name="tab-klinisk" id="tab-uforetrydg" value="Uføretrydg"/>Uføretrygd
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-komplikasjon" id="tab-sekvele" value="Alvorlig-sekvele"/>Alvorlig sekvele (spesifiser)
+	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="Alvorlig-sekvele"/>Alvorlig sekvele (spesifiser)
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-komplikasjon" id="tab-dodsfall" value="Dødsfall"/>Dødsfall
+	          	<input type="radio" name="tab-klinisk" id="tab-dodsfall" value="Dødsfall"/>Dødsfall
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-komplikasjon" id="tab-vene" value="Vet-ikke"/>Vet ikke
+	          	<input type="radio" name="tab-klinisk" id="tab-vene" value="Vet-ikke"/>Vet ikke
 	          </label>
 		    </div>
 	    </div>
+	    <div class="form-group" >
+		<h3>Årsakssammenheng</h3>
+			<div class="radio">
+				<label>
+					<input type="radio" name="aarsaks" id="utelukket" value="NA kan ikke vurderes" />NA kan ikke vurderes
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="aarsaks" id="usannsynlig" value="0 utelukket"/>0 Utelukket
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="aarsaks" id="1 Mulig" value="mulig"/>1 Mulig
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="aarsaks" id="2 Sannsynlig" value="sannsynlig"/>2 Sannsynlig
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" name="aarsaks" id="3 Sannsynlig" value="3 Sikker"/>3 Sikker
+				</label>
+			</div>
+		</div>
 	    <h3>Type komplikasjon</h3>
 	    <div class="form-group">
 	      <label>Lokal:</label>
@@ -361,12 +448,12 @@
 	      <label>Annen reaksjon(spesifiser):</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-nei',0 );" />Ja
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-nei',this.checked );" />Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-nei', this.checked);" />Nei
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-nei',0 );" />Nei
 	          </label>
 		    </div>
 	    </div>
@@ -375,10 +462,6 @@
 			  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
 			 </div> 
 		  	<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert........</h4>
-			 <div class="form-group">
-			<label>Beskriv komplkasjonen med egne ord:</label>
-			  <textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
-		    </div>
 		    <h3>Tiltak rettet mot giver</h3>
 		    <div class="form-group">
 		      <label>Strakstiltak:</label>
