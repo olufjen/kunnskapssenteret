@@ -3,13 +3,15 @@ package no.naks.biovigilans.model;
 import java.sql.Types;
 import java.util.HashMap;
 
+import org.apache.commons.httpclient.methods.GetMethod;
+
 public class KomplikasjonsdiagnosegiverImpl extends
 		AbstractKomplikasjonsdiagnosegiver implements Komplikasjonsdiagnosegiver {
 
 	public KomplikasjonsdiagnosegiverImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		komplikasjonGiverFields = new HashMap();
 		
 	}
@@ -17,10 +19,9 @@ public class KomplikasjonsdiagnosegiverImpl extends
 	public void setParams(){
 		Long id = getKomlikasjonsdiagnoseId();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getLokalskadearm(),getLokalskadebeskrivelse(),getSystemiskbivirkning(),getBivirkningbeskrivelse(),getAnnenreaksjon(),getAnnenreaksjonbeskrivelse(),getMeldeId()};
 		}else
-			params = new Object[]{getKomlikasjonsdiagnoseId()};
-		
+			params = new Object[]{getLokalskadearm(),getLokalskadebeskrivelse(),getSystemiskbivirkning(),getBivirkningbeskrivelse(),getAnnenreaksjon(),getAnnenreaksjonbeskrivelse(),getMeldeId(),getKomlikasjonsdiagnoseId()};
 	}	
 
 	/**
@@ -30,11 +31,10 @@ public class KomplikasjonsdiagnosegiverImpl extends
 	 */
 	public void setKomplikasjonsdiagnoseMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<5;i++){
+	    int size = userFields.length;
+		for (int i = 0;i<size;i++){
 			komplikasjonGiverFields.put(userFields[i],null);
 		}
-
-		
 	}
 	/**
 	 * saveField
@@ -47,6 +47,14 @@ public class KomplikasjonsdiagnosegiverImpl extends
 			komplikasjonGiverFields.put(userField,userValue);	
 	
 		}
-		
+	}
+	
+	public void saveToField(){
+		setLokalskadearm(null);
+		setLokalskadebeskrivelse(null);
+		setSystemiskbivirkning(null);
+		setBivirkningbeskrivelse(null);
+		setAnnenreaksjon(null);
+		setAnnenreaksjonbeskrivelse(null);
 	}
 }

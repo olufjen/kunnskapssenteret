@@ -21,7 +21,8 @@ public interface Komplikasjonsdiagnosegiver {
 	public void setAnnenreaksjonbeskrivelse(String annenreaksjonbeskrivelse);
 	public String getKommentar();
 	public void setKommentar(String kommentar);
-
+	public Long getMeldeId() ;
+	public void setMeldeId(Long meldeId);
 	public Map<String, String> getKomplikasjonGiverFields();
 	public void setKomplikasjonGiverFields(
 			Map<String, String> komplikasjonGiverFields);
@@ -33,6 +34,6 @@ public interface Komplikasjonsdiagnosegiver {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
-	
+	public void saveToField();
 	
 }
