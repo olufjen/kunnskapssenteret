@@ -4,6 +4,7 @@ import no.naks.biovigilans.web.control.DonasjonWebService;
 import no.naks.biovigilans.web.control.GiverWebService;
 import no.naks.biovigilans.web.control.ICD10WebService;
 import no.naks.biovigilans.web.control.HendelseWebService;
+import no.naks.biovigilans.web.control.KomDiagnosegiverWebService;
 import no.naks.biovigilans.web.control.MelderWebService;
 import no.naks.biovigilans.web.control.SessionAdmin;
 import no.naks.biovigilans.web.control.TableWebService;
@@ -19,6 +20,7 @@ public class ProsedyreServerResource extends ServerResource {
 	protected GiverWebService giverWebService; 
 	protected DonasjonWebService donasjonWebService;
 	protected MelderWebService melderWebService;
+	protected KomDiagnosegiverWebService komDiagnosegiverWebService;
 	
 	protected String[]sessionParams;
 	
@@ -69,6 +71,13 @@ public class ProsedyreServerResource extends ServerResource {
 	}
 	public void setMelderWebService(MelderWebService melderWebService) {
 		this.melderWebService = melderWebService;
+	}
+	public KomDiagnosegiverWebService getKomDiagnosegiverWebService() {
+		return komDiagnosegiverWebService;
+	}
+	public void setKomDiagnosegiverWebService(
+			KomDiagnosegiverWebService komDiagnosegiverWebService) {
+		this.komDiagnosegiverWebService = komDiagnosegiverWebService;
 	}
 	
 	

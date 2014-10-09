@@ -58,6 +58,12 @@
   	<property name="melderPrimaryKey" value="${primarykey.melder}"></property>
   	<property name="melderprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   </bean>
+  <bean id="komplikasjonsdiagnosegiverDAO" class="no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAOImpl" >
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertKomplikasjonsdiagnosegiverSQL" value="${komplikasjonsdiagnosegiver.insert}"></property>
+  	<property name="komplikasjonsdiagnosegiverPrimaryKey" value="${primarykey.komplikasjonsdiagnosegiver}"></property>
+  	<property name="komplikasjonsdiagnosegiverprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  </bean>
   <bean id="transfusjonDAO"  class="no.naks.biovigilans.dao.TransfusjonDAOImpl">
   	  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   	  	<property name="insertTransfusjonSQL" value="${transfusjon.inserttransfusjon}"></property>
@@ -83,6 +89,9 @@
   </bean>
   <bean id="donasjonTableService" class="no.naks.biovigilans.service.DonasjonTableServiceImpl" >
   	<property name="donasjonDAO" ref="donasjonDAO"></property>
+  </bean>
+  <bean id="komDiagnosegiverTableService" class="no.naks.biovigilans.service.KomDiagnosegiverTableServiceImpl" >
+  	<property name="komplikasjonsdiagnosegiverDAO" ref="komplikasjonsdiagnosegiverDAO"></property>
   </bean>
   <bean id="melderTableService" class="no.naks.biovigilans.service.MelderTableServiceImpl">
   	<property name="melderDAO" ref="melderDAO"></property>
