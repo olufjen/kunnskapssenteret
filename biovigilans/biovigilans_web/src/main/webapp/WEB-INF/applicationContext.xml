@@ -100,9 +100,9 @@
 
         </bean>
         <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--C:\\biovigilans\\temp\\ICD10CM.xml        -->
-                <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
-
+<!--  C:\\biovigilans\\temp\\ICD10CM.xml      -->
+<!--  -->                 <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>
+<!-- 				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
         </bean> 
 
@@ -207,8 +207,8 @@
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property>  
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
-                ${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
-        <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken},${påJobb},${hjemme},${gaten},${annestSted}"  ></property>
+                        ${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
+        <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken},${påJobb},${hjemme},${gaten},${annestSted}"></property>
         <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},${giver.reaksjon},
                                 ${giver.sted},${giver.maltid},${giver.vene},${giver.tapping},${giver.fullblod},${giver.aferese-options},${giver.type-aferese},
                                 ${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinisk},${giver.arm},${giver.tabskadearm},
@@ -321,10 +321,10 @@
         <bean id="donasjonWebService" class="no.naks.biovigilans.web.control.DonasjonWebServiceImpl">
                 <property name="donasjonTableService" ref="donasjonTableService"></property>
         </bean>
-		<bean id="komDiagnosegiverWebService" class = "no.naks.biovigilans.web.control.KomDiagnosegiverWebServiceImpl">
+       		<bean id="komDiagnosegiverWebService" class = "no.naks.biovigilans.web.control.KomDiagnosegiverWebServiceImpl">
 			<property name="komDiagnosegiverTableService" ref="komDiagnosegiverTableService"></property>
 		</bean>
-		<bean id="melderWebService" class="no.naks.biovigilans.web.control.MelderWebServiceImpl">
+        <bean id="melderWebService" class="no.naks.biovigilans.web.control.MelderWebServiceImpl">
 			<property name="melderTableService" ref="melderTableService"></property>
 		</bean>
 	
