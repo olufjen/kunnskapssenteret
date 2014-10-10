@@ -4,13 +4,62 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Rapporter hendelse - Hemovigilans</title>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/fonts/font-source-sans-pro.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/vendor/bootstrap.min.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/defaults.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
+<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
 <!--<link rel="stylesheet" href="css/bootstrap.css">-->
 
 </head>
 
 <body>
+  <header class="master-header" role="navation">
+      <div class="container">
+        <!-- synlig header -->
+        <div class="row">
+          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
+            <div class="bottom">
+              <a class="home" href="#" id="home" rel="home" title="">
+                <img class="logo" src="http://newwindow.no/ks/nokc-0.1.7/img/ks-logo.png" alt="" />
+              </a>
+            </div>
+          </div>
+          <div class="hidden-xs col-sm-3 col-sm-push-3 col-vertical-bottom-sm">
+            <div class="bottom">
+              <span class="nkfh">Nasjonalt kunnskapssenter<br />for helsetjenesten</span>
+            </div>
+          </div>
+          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
+            <div class="bottom">
+              <button type="button" class="btn-master-menu" data-toggle="collapse" data-target=".master-menu">
+                <!-- <button type="button" class="btn-master-menu"> -->
+                <span class="sr-only">Åpne eller lukke meny.</span>
+                <span class="text hidden-xs">Meny</span>
+                <div class="bar-box">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </div>
+              </button>
+              <ul class="list-inline english-aa hidden-xs">
+                <li class="english">
+                  <a href="#" id="english" title="">English</a></li><li class="aa">
+                  <a href="#">
+                    <span class="small">A </span>
+                    <span class="medium">A</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
 <div class="container">
-<form id="rapport" action="?method=PUT" method="post"> 
+<form id="rapport" action="?method=PUT" method="post" > 
 <script type="text/javascript">
 var Spinner1;
 var foo;
@@ -39,6 +88,23 @@ function initialize()
     foo.hidden ="false";
   //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
     alert("step 2");
+}
+function updateOutput(id1,id2,id3){
+	 // alert("step 1");
+	 
+	 var num1 =  document.getElementById(id1).value;
+	 var num2 =  document.getElementById(id2).value;
+	 var num3 = num2 - num1;
+	 document.getElementById(id3).value = num3;
+	 if (num3 < 2){
+		// document.getElementById(id3).removeAttr("class");
+		 document.getElementById(id3).className = "text-danger";
+	//	 alert("v1: "+num1+" V2 "+num2);
+	 }
+	 if (num3 >= 2){
+		 document.getElementById(id3).className = "text-info";
+	 }
+	
 }
 //window.onload=initialize();
 </script>
@@ -585,11 +651,11 @@ function initialize()
     </div>
      <div id="temperaturstigning" class="form-group" style="display: none">
      <label>Temperatur før transfusjonsreaksjonen</label> 
-      <input type="number"  name="p-temperaturforstigning" size="10" value="" class="form-control"/>
+      <input type="number"  name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
       <label>Temperatur etter transfusjonsreaksjonen</label> 
-      <input type="number"  name="p-temperaturetterstigning" size="10"  value="" class="form-control" onchange="p-stigning.value = parseInt(p-temperaturforstigning.value) + parseInt(p-temperaturetterstigning.value)" />
+      <input type="number"  name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
       <label>Temperaturstigning</label> 
-      <output name="p-stigning"></output>
+      <output name="p-stigning" id="p-stigning"></output>
     </div>    
     <div class="checkbox">
       <label>
