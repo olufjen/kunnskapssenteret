@@ -211,132 +211,123 @@ function updateOutput(id1,id2,id3){
 
 
     <div id="tidligeretransfusjon" style="display: none" class="form-group">
-      <div class="radio">
+     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-temp" value="komp-temp"/>Temperaturstigning mer enn 1 grader C (angi temperaturer i fritekst)
+        <input type="radio" name="p-trans-valg" id="p-komp-ahtr-1" value="ahtr-1" />Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-blodfall" value="komp-blodfall"/>Blodtrykksfall (syst) mer enn 30 mmHg
+        <input type="radio" name="p-trans-valg" id="p-komp-ahtr-2" value="ahtr-2" />Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-blodstig" value="komp-blodstig"/>Blodtrykksstigning
+        <input type="radio" name="p-trans-valg" id="p-komp-dhtr" value="dhtr" />Forsinket hemolytisk transfusjonsreaksjon (DHTR)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-kvalme" value="komp-kvalme"/>Kvalme/oppkast
+        <input type="radio" name="p-trans-valg" id="p-komp-fnhtr" value="fnhtr" />Febril non-hemolytisk transfusjonsreaksjon (FNHTR)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-frysninger" value="komp-frysninger"/>Frysninger /skjelvinger
+        <input type="radio" name="p-trans-valg" id="p-komp-hemolyse" value="hemolyse" />Ikke immunbetinget hemolyse
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-pustebesvar" value="komp-pustebesvar"/>Pustebesvær
+        <input type="radio" name="p-trans-valg" id="p-komp-anafylaktisk" value="anafylaktisk" />Anafylaktisk/alvorlig allergisk reaksjon
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-hypoksemi" value="komp-hypoksemi"/>Hypoksemi
+        <input type="radio" name="p-trans-valg" id="p-komp-allergisk" value="allergisk" />Annen allergisk reaksjon (mindre alvorlig)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-cyanose" value="komp-cyanose"/>Cyanose
+        <input type="radio" name="p-trans-valg" id="p-komp-ta-gvhd" value="gvhd" />Transfusjonsassosiert transplantat-mot-vert-reaksjon (TA-GVHD)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-luneodem" value="komp-luneodem"/>Akutt lungeødem
+        <input type="radio" name="p-trans-valg" id="p-komp-ptp" value="ptp" />Posttransfusjonspurpura (PTP)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-diare" value="komp-diare"/>Diare
+        <input type="radio" name="p-trans-valg" id="p-komp-trali" value="trali" />Transfusjonsrelatert akutt lungeskade (TRALI)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-kloe" value="komp-kloe"/>Kløe
+        <input type="radio" name="p-trans-valg" id="p-komp-tad" value="tad"  />Transfusjonsassosiert dyspne (TAD)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-utslett" value="komp-utslett"/>Utslett
+        <input type="radio" name="p-trans-valg" id="p-komp-taco" value="taco" />Transfusjonsrelatert overbelastning av kretsløpet (TACO)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-hevelser" value="komp-hevelser"/>Lokaliserte hevelser i ansikt, lepper, tunge og/eller drøvel
+        <input type="radio" name="p-trans-valg" id="p-komp-hypo" value="hypo" />Hypotensiv transfusjonsreaksjon
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-rodflammet" value="komp-rodflammet"/>Rødflammet ansikt (flushing)
+        <input type="radio" name="p-trans-valg" id="p-komp-hemo" value="hemo" />Hemosiderose
+      </label>
+    </div>
+    
+        <div class="radio">
+      <label>
+        <input type="radio" name="p-trans-valg" id="p-komp-hyper" value="hyper" />Hyperkalemi
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-gulsott" value="komp-gulsott"/>Gulsott (ikterus)
+        <input type="radio" name="p-trans-valg" id="p-komp-bakterie" value="bakterie" />Transfusjonsoverført bakterieinfeksjon
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-nyre" value="komp-nyre"/>Smerter i nyreregionen
+        <input type="radio" name="p-trans-valg" id="p-komp-virus" value="virus" />Transfusjonsoverført virusinfeksjon
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-trans-valg" id="p-komp-smitte" value="smitte" />Annen smitteoverføring
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-trans-valg" id="p-komp-aiha" value="aiha" />Transfusjonsutløst autoimmun hemolytisk anemi (AIHA)
       </label>
     </div>
         <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-bryst" value="komp-bryst"/>Brystsmerter
+        <input type="radio" name="p-trans-valg" id="p-komp-manglendeeffekt" value="manglendeeffekt" />Manglende effekt av transfusjon
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-tachykardi" value="komp-tachykardi"/>Tachykardi
+        <input type="radio" name="p-trans-valg" id="p-komp-uct" value="uct" />Uklassifiserbar transfusjonskomplikasjon (UCT)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-mage" value="komp-mage"/>Magesmerter
+        <input type="radio" name="p-trans-valg" id="p-komp-kanikke" value="kanikke" />Kan ikke konkludere (les definisjonene før du velger dette)
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-akuttnyre" value="komp-akuttnyre"/>Akutt nyresvikt (oliguri, anuri)
+        <input type="radio" name="p-trans-valg" id="p-komp-ingenklinisk" value="ingenklinisk" />Ingen klinisk reaksjon (f.eks. ved feil, men forlikelig blod, skal trolig ikke væremed)
       </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-bevisstlos" value="komp-bevisstlos"/>Bevisstløshet
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-sjokk" value="komp-sjokk"/>Sjokk
-      </label>
-    </div>
-        <div class="radio">
-      <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-blodninger" value="komp-blodninger"/>Diffuse blødninger
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-urin" value="komp-urin"/>Mørk urin (pga. fritt hemoglobin i urinen)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-trans-valg" id="p-trans-hudblod" value="komp-hudblod"/>Hudblødninger (petekkier)
-      </label>
-    </div>
-    <div class="radio">
+    </div> 
+     <div class="radio">
       <label>
         <input type="radio" name="p-trans-valg" id="p-trans-annet" value="option2" onclick="toggleDisplay('trans-annet-text', this.checked)"/>Annet
       </label>
@@ -347,6 +338,9 @@ function updateOutput(id1,id2,id3){
     </div>
     
     </div>
+    
+    
+    
     <b>Inneliggende/poliklinisk</b>
     <div class="radio">
       <label>
