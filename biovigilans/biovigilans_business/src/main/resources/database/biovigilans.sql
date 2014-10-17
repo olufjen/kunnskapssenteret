@@ -237,10 +237,11 @@ CREATE TABLE Symptomer
     symptomId              serial,
     symptomklassifikasjon  text,
     symptombeskrivelse     text,
-        -- Temperatur angitt før temperaturstigning
-    tempfor              INT             NULL,
+    
+      -- Temperatur angitt før temperaturstigning
+    tempfor              NUMERIC (4,2)       NULL,
     -- Temperatur angitt etter temperaturstigning
-    tempetter            INT             NULL,
+    tempetter            NUMERIC (4,2)       NULL,
     meldeid                int,
      primary key(symptomId),
     foreign key(meldeid) references Pasientkomplikasjon(meldeid) on delete CASCADE
