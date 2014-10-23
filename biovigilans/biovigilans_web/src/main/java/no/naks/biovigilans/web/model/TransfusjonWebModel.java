@@ -1,10 +1,14 @@
 package no.naks.biovigilans.web.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.BlodproduktImpl;
+import no.naks.biovigilans.model.Hemolyse;
+import no.naks.biovigilans.model.HemolyseImpl;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
 import no.naks.biovigilans.model.Pasient;
@@ -33,7 +37,11 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Symptomer symptomer;
 	private Komplikasjonsklassifikasjon komplikasjonsklassifikasjon;
 	private Utredning utredning;
+	private Hemolyse hemoLyse;
+	
 	private Pasient pasient;
+	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
+	private String[] hemolysparams;
 	
 	public TransfusjonWebModel() {
 		super();
@@ -45,7 +53,8 @@ public class TransfusjonWebModel extends VigilansModel {
 		symptomer = new SymptomerImpl();
 		komplikasjonsklassifikasjon = new KomplikasjonsklassifikasjonImpl();
 		utredning = new UtredningImpl();
-		
+		hemolyseParametre = new ArrayList<String>();
+		hemoLyse = new HemolyseImpl();
 		
 	}
 
@@ -61,7 +70,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56]};
-		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a1","a2","a3","a4"};
+		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a4",formFields[184],formFields[185],formFields[186]};
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
 		blodProdukt.setAntallfieldMaps(antallFields);
@@ -100,7 +109,9 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] utredningFields = {formFields[114],formFields[115],formFields[116],formFields[117],formFields[118],formFields[119],formFields[120],
 				formFields[121],formFields[122],formFields[123],formFields[124],formFields[125],formFields[126],formFields[127],formFields[128]};
 		utredning.setutredningfieldMaps(utredningFields);
-		
+		String[] hemoLysefields = {formFields[187],formFields[188],formFields[189],formFields[190],formFields[191]};
+		utredning.addFields(hemoLysefields);
+		hemoLyse.setHemlysefieldMaps(hemoLysefields);
 	}
 
 	/**
@@ -113,7 +124,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		for (String field : formFields){
 			String userEntry = userEntries.get(field);
 			if (userEntry != null && !userEntry.equals(""))
-				System.out.println("Key: "+ field + " Innhold =" + userEntry);
+				System.out.println("Key: "+ field + " Innhold = " + userEntry);
 			blodProdukt.saveField(field, userEntry);
 			annenBlodprodukt.saveField(field, userEntry);
 			transfusjon.saveField(field, userEntry);
@@ -121,6 +132,7 @@ public class TransfusjonWebModel extends VigilansModel {
 			symptomer.saveField(field, userEntry);
 			komplikasjonsklassifikasjon.saveField(field, userEntry);
 			utredning.saveField(field, userEntry);
+			hemoLyse.saveField(field, userEntry);
 		}
 		blodProdukt.saveToBlodprodukt();
 		annenBlodprodukt.saveToBlodprodukt();
@@ -140,11 +152,45 @@ public class TransfusjonWebModel extends VigilansModel {
 //		pasientKomplikasjon.produceClassification(komplikasjonsklassifikasjon); Denne tabellen er ikke i bruk! Kun en klassifikasjon pr komplikasjon
 		pasientKomplikasjon.produceSymptoms(symptomer);
 		utredning.saveUtredning();
+		utredning.produceHemolyse(hemoLyse);
 		pasientKomplikasjon.setUtredning(utredning);
 		transfusjon.getPasientKomplikasjoner().put(pasientKomplikasjon.getAlvorlighetsgrad(), pasientKomplikasjon);
 		
 	}
 
+
+	public List<String> getHemolyseParametre() {
+		return hemolyseParametre;
+	}
+
+
+	public void setHemolyseParametre(List<String> hemolyseParametre) {
+		this.hemolyseParametre = hemolyseParametre;
+	}
+	
+	public String[] getHemolysparams() {
+		return hemolysparams;
+	}
+
+
+	public void setHemolysparams(String[] hemolysparams) {
+		this.hemolysparams = hemolysparams;
+	}
+
+
+	/**
+	 * setHemolyseparams
+	 * Denne rutnen setter opp nedtrekk for hemolyseparametre
+	 * @param hemoparams - En rekke strengvariable som inneholder hemolyseparametre
+	 * 
+	 */
+	public void setHemolyseparams(String[] hemoparams){
+		this.hemolysparams = hemoparams;
+		for (String hemo : hemoparams){
+			this.hemolyseParametre.add(hemo);
+		
+		}
+	}	
 
 	public Transfusjon getTransfusjon() {
 		return transfusjon;
