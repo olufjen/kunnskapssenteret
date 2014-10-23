@@ -13,11 +13,13 @@ public interface Symptomer {
 	public void setSymptomklassifikasjon(String symptomklassifikasjon);
 	public String getSymptombeskrivelse();
 	public void setSymptombeskrivelse(String symptombeskrivelse);
-	
-	public int getTempFor();
-	public void setTempFor(int tempFor);
-	public int getTempetter();
-	public void setTempetter(int tempetter);
+
+	public double getTempFor();
+	public void setTempFor(double tempFor);
+	public double getTempetter();
+	public void setTempetter(double tempetter);
+		
+
 	public Map<String, String> getSymptomerFields();
 	public void setSymptomerFields(Map<String, String> symptomerFields);
 	public String[] getKeys();

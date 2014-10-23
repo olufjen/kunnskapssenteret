@@ -25,6 +25,7 @@ public interface Utredning {
 	public Map<String, String> getUtredningsFields();
 	public void setUtredningsFields(Map<String, String> utredningsFields);
 	public void setutredningfieldMaps(String[]userFields);
+	public void addFields(String[]fields);
 	public void saveField(String userField,String userValue);
 	public void setParams();
 	public int[] getTypes();
@@ -34,4 +35,8 @@ public interface Utredning {
 	
 	public Long getMeldeId();
 	public void setMeldeId(Long meldeId);
+	public void produceHemolyse(Hemolyse hemolyse);
+	public Map<String, Hemolyse> getHemolyseAnalyser();
+
+	public void setHemolyseAnalyser(Map<String, Hemolyse> hemolyseAnalyser);
 }

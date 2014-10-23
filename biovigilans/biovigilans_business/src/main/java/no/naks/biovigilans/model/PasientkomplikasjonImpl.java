@@ -62,6 +62,20 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	}
 	
 	/**
+	 * IsDouble
+	 *  Denne rutinen sjekker om en Streng variabel er av typen doube
+	 * @param str
+	 * @return
+	 */
+	private  boolean isDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+	/**
 	 * IsInt
 	 * Denne rutinen sjekker om en Streng variabel er av typen int
 	 * @param str
@@ -262,13 +276,13 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 		Symptomer lokalsymptomer = null;
 		boolean noTemp = false;
 		for (String symptom : symptomer.getSymptomerFields().values()){
-			if (symptom != null && IsInt(symptom)){
+			if (symptom != null && isDouble(symptom)){
 				lokalsymptomer = this.symptomer.get("komp-tempstigning");
 				if (lokalsymptomer != null)
 					lokalsymptomer.distributeTemperature(symptom);
 				else
 					noTemp = true;
-			}else if (symptom != null && !IsInt(symptom)){
+			}else if (symptom != null && !isDouble(symptom)){
 				lokalsymptomer = new SymptomerImpl();
 				lokalsymptomer.distributeValues(symptom);
 				this.symptomer.put(symptom, lokalsymptomer);
@@ -281,7 +295,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 		 */
 		if (noTemp){
 			for (String symptom : symptomer.getSymptomerFields().values()){
-				if (symptom != null && IsInt(symptom)){
+				if (symptom != null && isDouble(symptom)){
 					lokalsymptomer = this.symptomer.get("komp-tempstigning");
 					if (lokalsymptomer != null){
 						lokalsymptomer.distributeTemperature(symptom);

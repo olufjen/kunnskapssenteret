@@ -23,8 +23,8 @@ public abstract class AbstractSymptomer extends AbstractModel implements Symptom
 	 * Her beskrives symptomene i klartekst
 	 */
 	private String symptombeskrivelse;
-	private int tempFor;	// -- Temperatur angitt før temperaturstigning
-	private int tempetter;	//  -- Temperatur angitt etter temperaturstigning
+	private double tempFor;	// -- Temperatur angitt før temperaturstigning
+	private double tempetter;	//  -- Temperatur angitt etter temperaturstigning
 /**
  * Inneholder navn på input felt i skjermbildet	
  */
@@ -58,18 +58,20 @@ public abstract class AbstractSymptomer extends AbstractModel implements Symptom
 		this.symptombeskrivelse = symptombeskrivelse;
 	}
 	
-	public int getTempFor() {
+
+	public double getTempFor() {
 		return tempFor;
 	}
-	public void setTempFor(int tempFor) {
+	public void setTempFor(double tempFor) {
 		this.tempFor = tempFor;
 	}
-	public int getTempetter() {
+	public double getTempetter() {
 		return tempetter;
 	}
-	public void setTempetter(int tempetter) {
+	public void setTempetter(double tempetter) {
 		this.tempetter = tempetter;
 	}
+	
 	public Map<String, String> getSymptomerFields() {
 		return symptomerFields;
 	}

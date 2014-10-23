@@ -7,8 +7,8 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 
 	public SymptomerImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.NUMERIC,Types.NUMERIC,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.NUMERIC,Types.NUMERIC};
 		symptomerFields = new HashMap();
 	}
 	/**
@@ -90,13 +90,14 @@ public class SymptomerImpl extends AbstractSymptomer implements Symptomer {
 
 	}
 	public void distributeTemperature(String temp){
+		
 		if (getTempFor() >0)
-			setTempetter(Integer.parseInt(temp));
+			setTempetter(Double.parseDouble(temp));
 		if (getTempFor() == 0)
-			setTempFor(Integer.parseInt(temp));
+			setTempFor(Double.parseDouble(temp));
 		if (getTempFor() >0 && getTempetter() > 0 && getTempetter() < getTempFor()){
-			int t1 = getTempetter();
-			int t2 = getTempFor();
+			double t1 = getTempetter();
+			double t2 = getTempFor();
 			setTempetter(t2);
 			setTempFor(t1);
 		}

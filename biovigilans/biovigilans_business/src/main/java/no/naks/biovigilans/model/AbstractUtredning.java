@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.util.List;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -47,6 +48,7 @@ public abstract class AbstractUtredning extends AbstractModel implements Utredni
 	
 	protected String[]keys;
 	protected Map<String,String> utredningsFields;
+	protected List<String>keyList;
 	
 	public Long getMeldeId() {
 		return meldeId;
