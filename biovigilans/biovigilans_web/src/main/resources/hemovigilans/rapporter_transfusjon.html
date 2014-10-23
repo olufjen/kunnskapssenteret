@@ -106,6 +106,27 @@ function updateOutput(id1,id2,id3){
 	 }
 	
 }
+function addRow() {
+    
+    var myName = document.getElementById("hemolyseparamvalg");
+    var table = document.getElementById("hemolyseTableData");
+ 
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+ 
+    row.insertCell(0).innerHTML= '<input type="button" value = "Fjern" onClick="deleteRow(this)">';
+    myName.name = myName.value;
+    row.insertCell(1).innerHTML= myName.value;
+  
+ 
+}
+function deleteRow(obj) {
+	      
+	    var index = obj.parentNode.parentNode.rowIndex;
+	    var table = document.getElementById("hemolyseTableData");
+	    table.deleteRow(index);
+	    
+	}
 //window.onload=initialize();
 </script>
 
@@ -372,6 +393,7 @@ function updateOutput(id1,id2,id3){
  		
 	<!-- Transfusjon  -->
 	<h3>Transfusjon Feiltransfusjon på eget skjema?</h3>
+	<br/> 
 	<b>Klokkeslett velges fra meny.</b>
 	<div class="form-group">
 		<input type="time" name="transfusjon-time">
@@ -467,20 +489,9 @@ function updateOutput(id1,id2,id3){
       </label>
     </div>
     </div>
-  	
-
     </div>
-    
+ 
      <div class="checkbox">
-      <label>
-        <input type="checkbox" name="p-blod-trauma" id="p-blod-traume" value="p-blod-trauma" onclick="toggleDisplay('blod-traumeantall', this.checked)"/>Akutt transfusjonspakke
-      </label>
-    </div>
-    <div id="blod-traumeantall" style="display: none" class="form-group">
-     <label>Antall</label> 
-      <input type="text"  name="p-blod-antalltrauma" size="80"  value="" class="form-control"/>
-    </div>    
-    <div class="checkbox">
       <label>
         <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked);toggleDisplay('blod-plasmagruppe', this.checked)"/>Plasma 
     </div>
@@ -496,9 +507,30 @@ function updateOutput(id1,id2,id3){
    <div id="blod-plasmaantall" style="display: none" class="form-group">
      <label>Antall</label> 
       <input type="text"  name="p-blod-antallplasma" size="80"  value="" class="form-control"/>
-    </div>   
-      <div class="form-group">
+   </div>
+ 
+ 
     
+     <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-blod-trauma" id="p-blod-traume" value="p-blod-trauma" onclick="toggleDisplay('blod-traumeantall', this.checked)"/>Akutt transfusjonspakke
+      </label>
+    </div>
+    <div id="blod-traumeantall" style="display: none" class="form-group">
+       <label>Antall akutte transfusjonspakker</label> 
+      <input type="text"  name="p-traume-antalltransfusjon" size="80"  value="" class="form-control"/>
+      <label>Antall erytrocyttkonsentrater</label> 
+      <input type="text"  name="p-traume-antallerytrocytipakke" size="80"  value="" class="form-control"/>
+      <label>Antall trombocyttkonsentrater</label> 
+      <input type="text"  name="p-traume-antalltromboipakke" size="80"  value="" class="form-control"/>
+      <label>Antall plasmaenheter</label> 
+      <input type="text"  name="p-traume-antallplasmaipakke" size="80"  value="" class="form-control"/>
+  
+    </div>    
+
+
+       
+    <div class="form-group">
      <label>Annet blodprodukt</label> 
       <input type="text"  name="p-blod-andre" size="80" value=""  onfocus="toggleDisplay('blod-andreantall', 1)" class="form-control"/>
      </div>
@@ -548,13 +580,13 @@ function updateOutput(id1,id2,id3){
      <div class="radio">
           <label>
             <input type="radio" name="p-annenblod" id="p-annensykdom-ja" value="annenblod-ja" 
-            onclick="toggleDisplay('annenblod-241', this.checked); toggleDisplay('annenblod-242', this.checked);toggleDisplay('annenblod-243', this.checked);toggleDisplay('annenblod-244', this.checked);toggleDisplay('annenblod-245', this.checked);toggleDisplay('annenblod-246', this.checked)"/>Ja
+            onclick="toggleDisplay('annenblod-241', this.checked); toggleDisplay('annenblod-242', this.checked);toggleDisplay('annenblod-243', this.checked);toggleDisplay('annenblod-245', this.checked);toggleDisplay('annenblod-246', this.checked)"/>Ja
           </label>
       </div>
       <div class="radio">
           <label>
             <input type="radio" name="p-annenblod" id="p-annensykdom-nei" value="annenblod-nei"
-            onclick="toggleDisplay('annenblod-241', 0); toggleDisplay('annenblod-242', 0);toggleDisplay('annenblod-243', 0);toggleDisplay('annenblod-244', 0);toggleDisplay('annenblod-245', 0);toggleDisplay('annenblod-246', 0)"/>Nei
+            onclick="toggleDisplay('annenblod-241', 0); toggleDisplay('annenblod-242', 0);toggleDisplay('annenblod-243', 0);toggleDisplay('annenblod-245', 0);toggleDisplay('annenblod-246', 0)"/>Nei
           </label>
       </div>
 
@@ -577,7 +609,7 @@ function updateOutput(id1,id2,id3){
       <input type="text"  name="p-annenblod-antalltrombocytt" size="80"  value="" class="form-control"/>
     </div>    
           
-   <div id="annenblod-245" class="checkbox" >
+   <div id="annenblod-245" class="checkbox" style="display: none">
       <label>
         <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="p-annenblod-plasma" onclick="toggleDisplay('annenblod-plasmaantall', this.checked)"/>Plasma
       </label>
@@ -603,25 +635,17 @@ function updateOutput(id1,id2,id3){
       <input type="text"  name="p-annenblod-antallplasmaipakke" size="80"  value="" class="form-control"/>
    </div>
        
-   <div id="annenblod-245" class="checkbox" >
-      <label>
-        <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="p-annenblod-plasma" onclick="toggleDisplay('annenblod-plasmaantall', this.checked)"/>Plasma
-      </label>
-    </div>
-    <div id="annenblod-plasmaantall" class="form-group" style="display: none">
-     <label>Antall</label> 
-      <input type="text"  name="p-annenblod-antallplasma" size="80"  value="" class="form-control"/>
-    </div> 
+ 
        
     <div id="annenblod-246" class="form-group" style="display: none">
-     <label>Andre</label> 
+     <label>Annet blodprodukt</label> 
       <input type="text"  name="p-annenblod-andre" size="80"  value="" class="form-control" onclick="toggleDisplay('annenblod-andreantall', 1)"/>
      </div>
    <div id="annenblod-andreantall" class="form-group" style="display: none">
      <label>Antall </label> 
       <input type="text"  name="p-blodannet-antallandre" size="80"  value="" class="form-control"/>
-     </div> 
-    	<br/><br/>  
+   </div> 
+   	<br/><br/>  
  
     
   
@@ -645,9 +669,9 @@ function updateOutput(id1,id2,id3){
     </div>
      <div id="temperaturstigning" class="form-group" style="display: none">
      <label>Temperatur før transfusjonsreaksjonen</label> 
-      <input type="number"  name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
+      <input type="number" step="any" min="0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
       <label>Temperatur etter transfusjonsreaksjonen</label> 
-      <input type="number"  name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
+      <input type="number" step="any" min="0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
       <label>Temperaturstigning</label> 
       <output name="p-stigning" id="p-stigning"></output>
     </div>    
@@ -895,12 +919,13 @@ function updateOutput(id1,id2,id3){
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-kanikke" value="kanikke" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Kan ikke konkludere (les definisjonene før du velger dette)
       </label>
     </div>
+    <!-- 
     <div class="radio">
       <label>
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ingenklinisk" value="ingenklinisk" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Ingen klinisk reaksjon (f.eks. ved feil, men forlikelig blod, skal trolig ikke væremed)
       </label>
     </div>
-    
+  -->   
     <h3>Utredning</h3>
     <b>Blodtypeserologisk utredning tyder på HTR</b>
      <div class="radio">
@@ -978,16 +1003,32 @@ function updateOutput(id1,id2,id3){
       </label>
     </div>
     
+  	<b>Hemolyseparametre.</b>
     <div id="hemolyse-text" style="display: none" class="form-group">
-         <label>Hemolyseparametre</label>
-            	<input name ="p-hemolysetext" list="hemproduktvalg" class="form-control">
+      <table>
+      	<tr>
+      	<td>
+   <!--      <label>Hemolyseparametre</label>  --> 
+            	<input name ="p-hemolysetext"  id="hemolyseparamvalg" list="hemproduktvalg" >
         		<datalist id="hemproduktvalg">
       	       <#list pasientkomplikasjon.hemolyseParametre as hemolyse>
         			<option >${hemolyse}</option>
 			    </#list>  
         		</datalist> 
+        		<button name="p_hemolyseleggtil" type="submit" onclick="addRow()" class="btn btn-primary">Legg til</button>
+     <!--   		<input type="button" id="hemolyseadd" value="Legg til" onclick="addRow()">  --> 
+        </td>		
+        </tr>		
+      </table>
+      <table id="hemolyseTableData"  border="1" >
+	    <tr>
+    		<td>&nbsp;</td>
+        	<td><b>Hemolyseparametre valgt</b></td>
+	    </tr>
+	</table> 	
+        	
     </div>
-    
+   
     
 <!-- Ikke i bruk olj 28.09.14 -->      
     <div id="hemolyse-textxxxx" class="form-group" style="display: none">
