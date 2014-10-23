@@ -284,7 +284,9 @@
                         ${transfusjonkomplikasjon.p-trans-urin},${transfusjonkomplikasjon.p-trans-hudblod},${transfusjonkomplikasjon.p-trans-annet},${transfusjonkomplikasjon.p-transfusjontext},${pasientkomplikasjon.annenblodantall-transpakker},
                         ${pasientkomplikasjon.p-annenblod-antallerytrocytipakke},${pasientkomplikasjon.p-annenblod-antalltromboipakke},${pasientkomplikasjon.p-annenblod-antallplasmaipakke},
                         ${pasientkomplikasjon.p-temperaturforstigning},${pasientkomplikasjon.p-temperaturetterstigning},${pasientkomplikasjon.p-langtid1},${pasientkomplikasjon.p-langtid2},
-                        ${pasientkomplikasjon.p-langtid3},${pasientkomplikasjon.p-langtid4}">
+                        ${pasientkomplikasjon.p-langtid3},${pasientkomplikasjon.p-langtid4},${pasientkomplikasjon.p-traume-antallerytrocytipakke},
+                        ${pasientkomplikasjon.p-traume-antalltromboipakke},${pasientkomplikasjon.p-traume-antallplasmaipakke},${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},
+                        ${hemolyseparam4},${hemolyseparam5}">
                 </property>
         </bean> 
                 
