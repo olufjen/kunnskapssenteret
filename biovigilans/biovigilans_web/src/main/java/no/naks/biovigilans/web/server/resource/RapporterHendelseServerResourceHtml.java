@@ -198,6 +198,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	     if (transfusjon == null){
 	    	 transfusjon = new TransfusjonWebModel();
 	    	 transfusjon.setFormNames(sessionParams);
+	  //  	 transfusjon.setHemolyseParametre(hemolyseParametre);
 	     }
 	     result.setTerms(terms);
 		 result.distributeTerms();
@@ -251,6 +252,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    		sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
 	    	}
 	    	if (form != null){
+	    		Representation webTransfusjon = form.getWebRepresentation();
 	    		result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(getRequest(),pasientkomplikasjonId);
 	    		transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(getRequest(),transfusjonId);
 	    		Parameter logout = form.getFirst("avbryt4");
@@ -264,10 +266,24 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		    				MediaType.TEXT_HTML);
 	    			return templateRep; // return a new page!!!
 	    		}
-	    			
+	    		List<MainTerm> terms = new ArrayList();	
 	    		if (result == null){
+	    		     icd10WebService.readXml();
+	    		     List<Letter> letters = icd10WebService.getLetters();
+	    		     for (Letter letter : letters){
+	    		    	 terms.addAll(letter.getMainTerm());
+	    		     }
 	    			result = new PasientKomplikasjonWebModel();
 	    			 result.setFormNames(sessionParams);
+	    	    	 result.setAldergruppe(aldergruppe);
+	    	    	 result.setKjonnValg(kjonnValg);
+	    	    	 result.setblodProducts(blodProdukt);
+	    	    	 result.setHemolyseparams(hemolyseParametre);
+	    	    	 result.setAvdelinger(avdelinger);
+	    		     result.setTerms(terms);
+	    			 result.distributeTerms();
+	    		   
+	    	
 	    		}
 	   	     	if (transfusjon == null){
 		    	 transfusjon = new TransfusjonWebModel();
@@ -282,8 +298,19 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    		}
 	    		sessionAdmin.setSessionObject(getRequest(), result,pasientkomplikasjonId);
 	    	    sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
-	    	     Map<String, Object> dataModel = new HashMap<String, Object>();
-	    	     dataModel.put(pasientkomplikasjonId, result);
+	    	    Map<String, Object> dataModel = new HashMap<String, Object>();
+	    	    dataModel.put(pasientkomplikasjonId, result);
+	    	    Parameter hemolyse = form.getFirst("p_hemolyseleggtil");
+	    	    if (hemolyse != null){
+	    	        ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
+	    	        clres2.put(form);
+	    	        Representation pasientkomplikasjonFtl = clres2.get();
+
+	    	        TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
+	    	                MediaType.TEXT_HTML);
+	    	        return  templatemapRep;
+	    	    }
+	    	    
 	    		Parameter lagre = form.getFirst("lagre4");
 	    		if (lagre != null){
 	    			result.saveValues();
