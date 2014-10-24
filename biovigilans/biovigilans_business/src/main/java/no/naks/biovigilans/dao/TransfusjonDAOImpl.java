@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import no.naks.biovigilans.model.AbstractVigilansmelding;
 import no.naks.biovigilans.model.Blodprodukt;
+import no.naks.biovigilans.model.Hemolyse;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Symptomer;
@@ -271,6 +272,12 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 		String usql = insertUtredningSQL;
 		Tablesupdate utredningUpdate = new TablesUpdateImpl(getDataSource(),usql,utypes);
 		utredningUpdate.insert(uparams);
+		Iterator utredIterator = utredning.getHemolyseAnalyser().keySet().iterator();
+		while (utredIterator.hasNext()){
+			String key = (String)utredIterator.next();
+			Hemolyse hemolyseParam = (Hemolyse)utredning.getHemolyseAnalyser().get(key);
+			
+		}
 	}
 	
 	/* saveTransfusjon
