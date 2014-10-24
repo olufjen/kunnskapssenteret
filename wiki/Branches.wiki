@@ -1,4 +1,4 @@
-#Dette er katalogen for Helsebibliotekets admin løsning.
+#summary Dette er katalogen for Helsebibliotekets admin løsning.
 
 = Branches =
 
