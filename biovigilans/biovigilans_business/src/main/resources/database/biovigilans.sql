@@ -280,5 +280,19 @@ CREATE TABLE Komplikasjonsklassifikasjon
     foreign key(meldeid) references Pasientkomplikasjon(meldeid) on delete CASCADE
   );
 
+CREATE TABLE Hemolyse
+(
+    hemolyseparameter    TEXT                NULL,
+    hemolysekode         TEXT                NULL,
+    hemolyseid           SERIAL             NOT NULL,
+    utredningId          int           NOT NULL,
+    PRIMARY KEY ( hemolyseid )
+);
+
+
+
+ALTER TABLE Hemolyse
+    ADD CONSTRAINT utredninghemolyse FOREIGN KEY ( utredningId ) REFERENCES Utredning ( utredningId );
+  
 -- ======================================================================
 
