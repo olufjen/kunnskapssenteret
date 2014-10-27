@@ -20,4 +20,8 @@ public interface Hemolyse {
 	public void setKeys(String[] keys);
 	public void saveField(String userField, String userValue);
 	public void distributeValues(String hemolyse);
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 }
