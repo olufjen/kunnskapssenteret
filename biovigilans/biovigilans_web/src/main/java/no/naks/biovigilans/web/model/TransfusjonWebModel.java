@@ -14,6 +14,8 @@ import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.PasientkomplikasjonImpl;
+import no.naks.biovigilans.model.Produktegenskap;
+import no.naks.biovigilans.model.ProduktegenskapImpl;
 import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.SymptomerImpl;
 import no.naks.biovigilans.model.Transfusjon;
@@ -38,7 +40,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Komplikasjonsklassifikasjon komplikasjonsklassifikasjon;
 	private Utredning utredning;
 	private Hemolyse hemoLyse;
-	
+	private Produktegenskap produktEgenskap;
 	private Pasient pasient;
 	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
 	private String[] hemolysparams;
@@ -55,6 +57,8 @@ public class TransfusjonWebModel extends VigilansModel {
 		utredning = new UtredningImpl();
 		hemolyseParametre = new ArrayList<String>();
 		hemoLyse = new HemolyseImpl();
+		produktEgenskap = new ProduktegenskapImpl();
+		
 		
 	}
 
@@ -73,6 +77,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a4",formFields[184],formFields[185],formFields[186]};
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
+		produktEgenskap.setEgenskaperfieldMaps(egenskaperFields);
 		blodProdukt.setAntallfieldMaps(antallFields);
 		blodProdukt.setKeyvalues();
 		String[] transfusjonsFields = {formFields[18],formFields[19],formFields[20],formFields[21],formFields[22],formFields[23],formFields[24],formFields[25],formFields[26],
@@ -133,8 +138,10 @@ public class TransfusjonWebModel extends VigilansModel {
 			komplikasjonsklassifikasjon.saveField(field, userEntry);
 			utredning.saveField(field, userEntry);
 			hemoLyse.saveField(field, userEntry);
+			produktEgenskap.saveField(field, userEntry);
 		}
 		blodProdukt.saveToBlodprodukt();
+		blodProdukt.produceProduktegenskaper(produktEgenskap);
 		annenBlodprodukt.saveToBlodprodukt();
 	
 		transfusjon.setHastegrad(null);
