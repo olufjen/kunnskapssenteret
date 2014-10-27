@@ -299,8 +299,8 @@ CREATE TABLE Produktegenskap
 (
     egenskapkode         TEXT                NULL,
     egenskapbeskrivelse  TEXT                NULL,
-    produktegenskapId    INT                 NOT NULL,
-    blodProduktId        SERIAL           NOT NULL,
+    produktegenskapId    SERIAL              NOT NULL,
+    blodProduktId        INT            NOT NULL,
     PRIMARY KEY ( produktegenskapId )
 );
 
