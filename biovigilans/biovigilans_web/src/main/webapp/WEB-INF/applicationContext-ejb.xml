@@ -79,6 +79,12 @@
   	  	<property name="symptomerPrimaryKey" value="${primarykey.symptomer}"></property>
   	  	<property name="symptomerprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	  	<property name="insertUtredningSQL" value="${utredning.insertutredning}"></property>
+  	  	<property name="insertHemolyseSQL" value="${hemolyse.inserthemolyse}"></property>
+  	  	<property name="utredningPrimaryKey" value="${primarykey.utredning}"></property>
+  	  	<property name="utredningprimarykeyTabledefs" value="${primarykey.primarykey}"></property>
+  	  	<property name="insertproduktEgenskapSQL" value="${produktegenskap.insertegenskap}"></property>
+  	  	<property name="blodproduktPrimarykey" value="${primarykey.blodprodukt}"></property>
+  	  	<property name="blodproduktPrimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   </bean>
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
