@@ -38,7 +38,13 @@ public interface TransfusjonDAO {
 			String[] symptomerprimarykeyTableDefs);
 	public String getInsertUtredningSQL();
 	public void setInsertUtredningSQL(String insertUtredningSQL);
-
+	public String getInsertHemolyseSQL();
+	public void setInsertHemolyseSQL(String insertHemolyseSQL);
+	public String getUtredningPrimaryKey();
+	public void setUtredningPrimaryKey(String utredningPrimaryKey);
+	public String[] getUtredningprimarykeyTabledefs();
+	public void setUtredningprimarykeyTabledefs(
+			String[] utredningprimarykeyTabledefs);
 	
 
 }

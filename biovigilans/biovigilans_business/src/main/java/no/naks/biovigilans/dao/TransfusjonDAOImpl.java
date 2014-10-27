@@ -39,6 +39,10 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	private String symptomerPrimaryKey;
 	private String[] symptomerprimarykeyTableDefs;
 	private String insertUtredningSQL;
+	private String insertHemolyseSQL;
+	private String utredningPrimaryKey;
+	private String[] utredningprimarykeyTabledefs;
+	
 	
 	
 		
@@ -205,6 +209,37 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	}
 
 
+	public String getInsertHemolyseSQL() {
+		return insertHemolyseSQL;
+	}
+
+
+	public void setInsertHemolyseSQL(String insertHemolyseSQL) {
+		this.insertHemolyseSQL = insertHemolyseSQL;
+	}
+
+
+	public String getUtredningPrimaryKey() {
+		return utredningPrimaryKey;
+	}
+
+
+	public void setUtredningPrimaryKey(String utredningPrimaryKey) {
+		this.utredningPrimaryKey = utredningPrimaryKey;
+	}
+
+
+	public String[] getUtredningprimarykeyTabledefs() {
+		return utredningprimarykeyTabledefs;
+	}
+
+
+	public void setUtredningprimarykeyTabledefs(
+			String[] utredningprimarykeyTabledefs) {
+		this.utredningprimarykeyTabledefs = utredningprimarykeyTabledefs;
+	}
+
+
 	/**
 	 * savePasientkomplikasjon
 	 * Denne rutinen lagrer en Vigilansmelding, en pasientkomplikasjon og relaterte tabeller
@@ -272,11 +307,19 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 		String usql = insertUtredningSQL;
 		Tablesupdate utredningUpdate = new TablesUpdateImpl(getDataSource(),usql,utypes);
 		utredningUpdate.insert(uparams);
+		utredning.setUtredningId(getPrimaryKey(utredningPrimaryKey,utredningprimarykeyTabledefs));
 		Iterator utredIterator = utredning.getHemolyseAnalyser().keySet().iterator();
 		while (utredIterator.hasNext()){
 			String key = (String)utredIterator.next();
 			Hemolyse hemolyseParam = (Hemolyse)utredning.getHemolyseAnalyser().get(key);
-			
+			hemolyseParam.setUtredningid(utredning.getUtredningId());
+			hemolyseParam.setParams();
+			int[]hTypes = hemolyseParam.getTypes();
+			Object[] hParams = hemolyseParam.getParams();
+			String hSQL = insertHemolyseSQL;
+			Tablesupdate hemoTablesupdate = new TablesUpdateImpl(getDataSource(),hSQL,hTypes);
+			hemoTablesupdate.insert(hParams);
+			hemoTablesupdate = null;
 		}
 	}
 	
