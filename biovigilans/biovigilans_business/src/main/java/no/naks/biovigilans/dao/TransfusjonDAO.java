@@ -45,6 +45,14 @@ public interface TransfusjonDAO {
 	public String[] getUtredningprimarykeyTabledefs();
 	public void setUtredningprimarykeyTabledefs(
 			String[] utredningprimarykeyTabledefs);
+	public String getInsertproduktEgenskapSQL();
+	public void setInsertproduktEgenskapSQL(String insertproduktEgenskapSQL);
+	public String getBlodproduktPrimarykey();
+	public void setBlodproduktPrimarykey(String blodproduktPrimarykey);
+	public String[] getBlodproduktPrimarykeyTableDefs();
+	public void setBlodproduktPrimarykeyTableDefs(
+			String[] blodproduktPrimarykeyTableDefs);
+
 	
 
 }

@@ -6,6 +6,7 @@ import no.naks.biovigilans.model.AbstractVigilansmelding;
 import no.naks.biovigilans.model.Blodprodukt;
 import no.naks.biovigilans.model.Hemolyse;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
+import no.naks.biovigilans.model.Produktegenskap;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.Transfusjon;
@@ -42,11 +43,46 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 	private String insertHemolyseSQL;
 	private String utredningPrimaryKey;
 	private String[] utredningprimarykeyTabledefs;
+	private String insertproduktEgenskapSQL;
+	private String blodproduktPrimarykey;
+	private String[] blodproduktPrimarykeyTableDefs;
+	
 	
 	
 	
 		
 	
+	public String getInsertproduktEgenskapSQL() {
+		return insertproduktEgenskapSQL;
+	}
+
+
+	public void setInsertproduktEgenskapSQL(String insertproduktEgenskapSQL) {
+		this.insertproduktEgenskapSQL = insertproduktEgenskapSQL;
+	}
+
+
+	public String getBlodproduktPrimarykey() {
+		return blodproduktPrimarykey;
+	}
+
+
+	public void setBlodproduktPrimarykey(String blodproduktPrimarykey) {
+		this.blodproduktPrimarykey = blodproduktPrimarykey;
+	}
+
+
+	public String[] getBlodproduktPrimarykeyTableDefs() {
+		return blodproduktPrimarykeyTableDefs;
+	}
+
+
+	public void setBlodproduktPrimarykeyTableDefs(
+			String[] blodproduktPrimarykeyTableDefs) {
+		this.blodproduktPrimarykeyTableDefs = blodproduktPrimarykeyTableDefs;
+	}
+
+
 	public String getInsertTransfusjonSQL() {
 		return insertTransfusjonSQL;
 	}
@@ -362,8 +398,22 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 			}
 			TablesUpdateImpl sykdomtablesUpdate = new TablesUpdateImpl(getDataSource(),bSQL,sTypes);
 			sykdomtablesUpdate.insert(sParams);
+			blodprodukt.setBlodProduktId(getPrimaryKey(blodproduktPrimarykey,blodproduktPrimarykeyTableDefs));
 			sykdomtablesUpdate= null;
-			
+			Iterator produktIterator = blodprodukt.getProduktEgenskaper().keySet().iterator();
+			while(produktIterator.hasNext()){
+				String pKey = (String) produktIterator.next();
+				Produktegenskap egenskap = (Produktegenskap)blodprodukt.getProduktEgenskaper().get(pKey);
+				egenskap.setBlodProduktId(blodprodukt.getBlodProduktId());
+				egenskap.setParams();
+				int[]ptypes = egenskap.getTypes();
+				Object[] pParams = egenskap.getParams();
+				String egenskapSQL = insertproduktEgenskapSQL;
+				TablesUpdateImpl egenskapUpdate = new TablesUpdateImpl(getDataSource(),egenskapSQL,ptypes);
+				egenskapUpdate.insert(pParams);
+				egenskapUpdate = null;
+				
+			}
 		}
 		tablesUpdate = null;
 		Iterator komplikasjoner = transfusjon.getPasientKomplikasjoner().keySet().iterator();
