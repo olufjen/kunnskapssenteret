@@ -293,6 +293,21 @@ CREATE TABLE Hemolyse
 
 ALTER TABLE Hemolyse
     ADD CONSTRAINT utredninghemolyse FOREIGN KEY ( utredningId ) REFERENCES Utredning ( utredningId );
-  
+
+
+CREATE TABLE Produktegenskap
+(
+    egenskapkode         TEXT                NULL,
+    egenskapbeskrivelse  TEXT                NULL,
+    produktegenskapId    INT                 NOT NULL,
+    blodProduktId        SERIAL           NOT NULL,
+    PRIMARY KEY ( produktegenskapId )
+);
+
+
+
+ALTER TABLE Produktegenskap
+    ADD CONSTRAINT blodproduktegenskap FOREIGN KEY ( blodProduktId ) REFERENCES Blodprodukt ( blodProduktId );
+    
 -- ======================================================================
 
