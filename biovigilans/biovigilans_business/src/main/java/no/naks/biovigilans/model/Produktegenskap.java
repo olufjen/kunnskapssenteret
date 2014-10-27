@@ -26,5 +26,8 @@ public interface Produktegenskap {
 	public void setEgenskaperfieldMaps(String[]egenskapFields);
 	public void saveField(String userField, String userValue);
 	public void distributeValues(String egenskap);
-	
+	public void setParams();
+	public int[] getTypes();
+	public Object[] getParams();
+	public int[] getUtypes();
 }

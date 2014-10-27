@@ -37,7 +37,12 @@ public interface Blodprodukt {
 	public int getAntallPlasma();
 	public void setAntallPlasma(int antalPlasma);
 	public void saveToBlodprodukt();
+	public void produceProduktegenskaper(Produktegenskap egenskap);
 	public void setProduktetsegenskap(String produktetsegenskap);
+
+	public Map<String, Produktegenskap> getProduktEgenskaper();
+
+	public void setProduktEgenskaper(Map<String, Produktegenskap> produktEgenskaper);
 	public void setBlodProduktfieldMaps(String[]userFields);
 	public void saveField(String userField,String userValue);
 	public void setEgenskaperfieldMaps(String[]userFields);

@@ -4,10 +4,17 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * @author olj
+ *
+ */
 public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt {
 
 	private List<String> userFields;
+	private Map<String,Produktegenskap> produktEgenskaper;
+	
 	public BlodproduktImpl() {
 		super();
 		types = new int[] {Types.VARCHAR,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
@@ -15,7 +22,9 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		blodproduktFields = new HashMap<String,String>();
 		antallFields = new HashMap<String,String>();
 		egenskaperFields = new HashMap<String,String>();
+		produktEgenskaper = new HashMap();
 		userFields = new ArrayList();
+		
 	}
 
 	public void setParams(){
@@ -110,6 +119,30 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		setAntallTromb(-1);
 		setAntallPlasma(-1);
 	}
+	/**
+	 * produceProduktegeskaper
+	 * Denne rutinen lager korrekt antall produktegenskaper etter hvor mange bruker har oppgitt
+	 * @param egenskap
+	 */
+	public void produceProduktegenskaper(Produktegenskap egenskap) {
+		Produktegenskap lokalEgenskap = null;
+		boolean noTemp = false;
+		for (String produkt : egenskap.getProduktegenskapFields().values() ){
+			if (produkt != null && !produkt.equals("")){
+				lokalEgenskap = new ProduktegenskapImpl();
+				lokalEgenskap.distributeValues(produkt);
+				produktEgenskaper.put(produkt, lokalEgenskap);
+			}
+		}
+	}
 
+	public Map<String, Produktegenskap> getProduktEgenskaper() {
+		return produktEgenskaper;
+	}
+
+	public void setProduktEgenskaper(Map<String, Produktegenskap> produktEgenskaper) {
+		this.produktEgenskaper = produktEgenskaper;
+	}
+	
 	
 }
