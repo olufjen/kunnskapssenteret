@@ -4,6 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	
+<!-- <import resource="classpath:rest-component-config.xml"/> -->
 
 <!--    <import resource="applicationContext-ejb.xml" />                -->
 
@@ -100,9 +102,9 @@
 
         </bean>
         <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--  C:\\biovigilans\\temp\\ICD10CM.xml      -->
-<!--    -->               <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property> 
-<!-- 				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>   -->
+<!--   Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml     -->
+<!--  -->                 <property name="xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml" ></property>
+<!-- 				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
         </bean> 
 
@@ -152,8 +154,8 @@
                         </list>
                 </property>
         </bean> 
-                
-        <bean name="path2BeanRouter" class="org.restlet.ext.spring.SpringBeanRouter">
+            	
+	 	<bean name="path2BeanRouter" class="org.restlet.ext.spring.SpringBeanRouter"> 
 <!-- 
             <property name="attachments"> 
             <map> 
@@ -161,7 +163,7 @@
             </map> 
         </property> 
   -->       
-        </bean>
+		</bean>
 <!-- Disse ekstra server resource eksekveres når stylesheet hentes av html  -->
         <bean name="/hemovigilans/css/bootstrap.css" id="cssServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.CssServerResource">
@@ -179,7 +181,7 @@
         <bean name="/hemovigilans/css/sitemap.css" id="sitemapServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.simple.SitemapCssServerResource">
         </bean> 
-  <!-- end ekstra server resource -->
+ <!-- end ekstra server resource -->
   <bean name="/hemovigilans/rapporter_hendelse_main.html" id="rapportermainServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterMainServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
@@ -208,7 +210,9 @@
         <property name="icd10WebService" ref="ICD10WebService"></property>  
         <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},
                         ${aldergruppegiver5},${aldergruppegiver6},${aldergruppegiver7}"></property>
-        <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken},${påJobb},${hjemme},${gaten},${annestSted}"></property>
+        <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken}"></property>
+        <property name="utenforBlodbankengruppe" value="${påJobb},${hjemme},${gaten},${annestSted}"></property>
+        <property name="donasjonsstedgruppe" value="${donasjonsstedgruppeblodbank},${donasjonsstedgruppetappestasjon},${donasjonsstedgruppeblodbuss}"></property>
         <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},${giver.reaksjon},
                                 ${giver.sted},${giver.maltid},${giver.vene},${giver.tapping},${giver.fullblod},${giver.aferese-options},${giver.type-aferese},
                                 ${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinisk},${giver.arm},${giver.tabskadearm},
@@ -284,9 +288,7 @@
                         ${transfusjonkomplikasjon.p-trans-urin},${transfusjonkomplikasjon.p-trans-hudblod},${transfusjonkomplikasjon.p-trans-annet},${transfusjonkomplikasjon.p-transfusjontext},${pasientkomplikasjon.annenblodantall-transpakker},
                         ${pasientkomplikasjon.p-annenblod-antallerytrocytipakke},${pasientkomplikasjon.p-annenblod-antalltromboipakke},${pasientkomplikasjon.p-annenblod-antallplasmaipakke},
                         ${pasientkomplikasjon.p-temperaturforstigning},${pasientkomplikasjon.p-temperaturetterstigning},${pasientkomplikasjon.p-langtid1},${pasientkomplikasjon.p-langtid2},
-                        ${pasientkomplikasjon.p-langtid3},${pasientkomplikasjon.p-langtid4},${pasientkomplikasjon.p-traume-antallerytrocytipakke},
-                        ${pasientkomplikasjon.p-traume-antalltromboipakke},${pasientkomplikasjon.p-traume-antallplasmaipakke},${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},
-                        ${hemolyseparam4},${hemolyseparam5}">
+                        ${pasientkomplikasjon.p-langtid3},${pasientkomplikasjon.p-langtid4}">
                 </property>
         </bean> 
                 
