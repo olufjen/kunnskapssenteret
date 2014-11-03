@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Rapporter hendelse - Hemovigilans</title>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/fonts/font-source-sans-pro.css"/>
-<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/vendor/bootstrap.min.css"/>
-<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/defaults.css"/>
-<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
-<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
-<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
-<!--<link rel="stylesheet" href="css/bootstrap.css">-->
-
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Rapporter hendelse - Hemovigilans</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/fonts/font-source-sans-pro.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/vendor/bootstrap.min.css"/>
+	<!-- <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/defaults.css"/> -->
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
+	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
-
 <body>
   <header class="master-header" role="navation">
       <div class="container">
@@ -76,6 +74,22 @@
 	    }
 	 //   alert("step 4");
 	}
+	
+	function blodbankenOptions(){
+		var selectedValue = document.getElementById("re").value;
+		if(selectedValue=="Utenfor blodbanken"){
+			document.getElementById('utenfor').style.display = 'block';
+			document.getElementById('hendelseDato').style.display = 'none'
+		}
+		else if(selectedValue=="På blodgiverbenk"){
+			document.getElementById('hendelseDato').style.display = 'block'
+			document.getElementById('utenfor').style.display = 'none';
+		}else{
+			document.getElementById('hendelseDato').style.display = 'none'
+			document.getElementById('utenfor').style.display = 'none';
+		}
+	}
+	
 	function initialize()
 	{
 	    var SpinnerValue_Changed = function() {
@@ -84,11 +98,9 @@
 	   
 	    Spinner1 = document.getElementById("p-blod-erytrocytt");
 	    foo = document.getElementById("foo");
-	    alert("step 1");
 	    foo.hidden ="false";
 	  //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
-	    alert("step 2");
-	}
+		}
 	
 	number.oninvalid = function(e) {
 		e.target.setCustomValidity("");
@@ -133,8 +145,6 @@
 	       		<option>${alder} </option>
 	     		   </#list>
 	     </select>
-		
-	     
 	    </div>
 	    
 	   <div class="form-group">
@@ -262,15 +272,17 @@
 	    </div>
 	    <h3>Donasjon</h3>
 	    <div class="form-group">
-	    	<label>Dato Donasjon</label>
-	    	<input type="date" name="dato-donasjon" class="form-control" />
+	    	<label>Dato Donasjon</label><br>
+	    	<input type="date" name="dato-donasjon" />
 	    </div>
 	    <div class="form-group">
 	      <label>Donasjonssted:</label>
-	      <input name ="tab-sted" list="tappested" class="form-control">
-	      <datalist id="icd10gruppested">
-	    
-	     </datalist>
+	      <select name ="tab-sted" id="tappested" class="form-control">
+	       		<option> --- Select --- </option>
+	       		<#list giverkomplikasjon.donasjonsstedgruppe as donasjonssted>
+	       		<option>${donasjonssted} </option>
+	     		   </#list>
+	     </select>
 	    </div>
 	    <div class="form-group">
 	      <label>Måltid innen tre timer før tapping:</label>
@@ -314,8 +326,18 @@
 		</div>
 	    <h3>Giverkomplikasjon</h3>
 	    <div class="form-group">
-	    	<label>Dato for Hendelse</label>
-	    	<input type="date" name="dato-hendelse" class="form-control" />
+	      <label>Hvor startet reaksjonen?</label>
+	       <select id="re" name ="tab-hvor" list="icd10gruppehvor" class="form-control" onchange="blodbankenOptions()"  >
+		      <option  > --- Select --- </option>
+		     	<#list giverkomplikasjon.reaksjonengruppe as reaksjonen >
+			     	<option >${reaksjonen}  </option>
+		     	</#list>
+		  </select>
+	    </div>
+ 		 
+	    <div class="form-group" style="display: none" id="hendelseDato">
+	    	<label>Når oppstod symptomene</label><br>
+	    	<input type="date" name="dato-hendelse"  />
 	    </div>
 	    
 <!-- Klokkeslett tas ut    
@@ -323,10 +345,11 @@
 	    	<label>Klokkeslett Hendelse</label>
 	    	<input type="time" name="kl-hendelse" class="form-control" />
 	    </div>
- -->		    
+ -->		   
+ 	   
 	    <div class="form-group">
-	    	<label>Dato Oppdaget</label>
-	    	<input type="date" name="dato-oppdaget" class="form-control" />
+	    	<label>Når fikke blodbanken vite om hendelsen?</label><br>
+	    	<input type="date" name="dato-oppdaget"  />
 	    </div>
 	    <!-- <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
@@ -335,21 +358,15 @@
 	
 	     </datalist>
 	    </div> -->
-		
-		<div class="form-group">
-	      <label>Hvor startet reaksjonen?</label>
-	       <select name ="tab-hvor" list="icd10gruppehvor" class="form-control">
-		      <option> --- Select --- </option>
-		     	<#list giverkomplikasjon.reaksjonengruppe as reaksjonen >
-		     <option>${reaksjonen} </option>
+		<div id="utenfor" style="display: none"  class="form-group">
+	      <label>Utenfor Blodbanken</label>
+	       <select  name ="tab-hvor" list="icd10gruppehvor" class="form-control"  >
+		      <option  > --- Select --- </option>
+		     	<#list giverkomplikasjon.utenforBlodbankengruppe as utenforBlodbanken >
+			     	<option >${utenforBlodbanken}  </option>
 		     	</#list>
 		  </select>
 	    </div>
-	
-	 
-
-	
-	
 		<div class="form-group">
 	    	<label>Tid fra start tapping til reaksjon:</label>
 	        <div>
@@ -360,7 +377,7 @@
 	   	<div class="form-group">
 		    <label>Varighet av komplikasjon/bivirkning/skade:</label>
 	        <div>
-	          <input name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
+	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div>
 	    </div>
 	    
@@ -493,9 +510,6 @@
 	    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
 	      <label>Hvis Ja:</label>
 	      <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control">
-	      <datalist id="systemiskbivirkning">
-	
-	     </datalist>
 	    </div>
 		    <div class="form-group">
 	      <label>Annen reaksjon(spesifiser):</label>
@@ -513,8 +527,15 @@
 	    <div id="annenreaksjon-nei" style="display: none" class="form-group">
 			<label>Hvis du har valgt annet, beskriv her:</label>
 			  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
-			 </div> 
-		  	<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert........</h4>
+		</div> 
+		  	<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert.......test.</h4>
+		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
+	      <map name="armenmap">
+			  <area shape="rect" coords="0,0,82,126" alt="Sun" href="sun.htm">
+			  <area shape="circle" coords="90,58,3" alt="Mercury" href="mercur.htm" >
+			  <area shape="circle" coords="124,58,8" alt="Venus" href="venus.htm">
+			</map>
+					  	
 		    <h3>Tiltak rettet mot giver</h3>
 		    <div class="form-group">
 		      <label>Strakstiltak:</label>
