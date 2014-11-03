@@ -70,7 +70,7 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 		Iterator ppItarator = pKeys.iterator();
 		while(ppItarator.hasNext()){
 		String bKey = (String) ppItarator.next();
-		System.out.println("Transfusjon Key: "+ bKey );
+//		System.out.println("Transfusjon Key: "+ bKey );
 		Set keys = blodprodukt.getEgenskaperFields().keySet();
 		Iterator produktIterator = keys.iterator();
 		while(produktIterator.hasNext()){
