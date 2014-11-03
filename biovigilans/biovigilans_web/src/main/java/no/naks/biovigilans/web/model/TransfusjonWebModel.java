@@ -128,6 +128,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
 		for (String field : formFields){
 			String userEntry = userEntries.get(field);
+		//	System.out.println("Key: "+ field);
 			if (userEntry != null && !userEntry.equals(""))
 				System.out.println("Key: "+ field + " Innhold = " + userEntry);
 			blodProdukt.saveField(field, userEntry);
@@ -141,9 +142,8 @@ public class TransfusjonWebModel extends VigilansModel {
 			produktEgenskap.saveField(field, userEntry);
 		}
 		blodProdukt.saveToBlodprodukt();
-		blodProdukt.produceProduktegenskaper(produktEgenskap);
 		annenBlodprodukt.saveToBlodprodukt();
-	
+		blodProdukt.produceProduktegenskaper(produktEgenskap);
 		transfusjon.setHastegrad(null);
 		transfusjon.setIndikasjon(null);
 		transfusjon.setTransDato(null);
@@ -152,6 +152,8 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
 		if (annenBlodprodukt.getBlodprodukt() != null && !annenBlodprodukt.getBlodprodukt().equals(""))
 			transfusjon.getBlodProdukter().put(annenBlodprodukt.getBlodprodukt(),annenBlodprodukt );
+		
+		transfusjon.produceBlodprodukt(blodProdukt);
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);
 		pasientKomplikasjon.setArsakssammenheng(null);
