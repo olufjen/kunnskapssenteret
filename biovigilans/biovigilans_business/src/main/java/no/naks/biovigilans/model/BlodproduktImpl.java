@@ -122,7 +122,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	/**
 	 * produceProduktegeskaper
 	 * Denne rutinen lager korrekt antall produktegenskaper etter hvor mange bruker har oppgitt
-	 * @param egenskap
+	 * @param egenskap 
 	 */
 	public void produceProduktegenskaper(Produktegenskap egenskap) {
 		Produktegenskap lokalEgenskap = null;
@@ -143,6 +143,13 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	public void setProduktEgenskaper(Map<String, Produktegenskap> produktEgenskaper) {
 		this.produktEgenskaper = produktEgenskaper;
 	}
-	
+	/* distributeValues
+	 * Denne rutinen plasserer gitt egenskap til riktig felt
+	 * 
+	 */
+	public void distributeValues(String key, String produkt){
+		
+		System.out.println("Blod Key: "+ key + " Innhold = " + produkt);
+	}	
 	
 }

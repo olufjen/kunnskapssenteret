@@ -262,6 +262,30 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	public void setKeys(String[] keys) {
 		this.keys = keys;
 	}
+	public DateTime getProduktdato() {
+		return produktdato;
+	}
+	public void setProduktdato(DateTime produktdato) {
+		this.produktdato = produktdato;
+	}
+	public Map<String, String> getAntallFields() {
+		return antallFields;
+	}
+	public void setAntallFields(Map<String, String> antallFields) {
+		this.antallFields = antallFields;
+	}
+	public Map<String, String> getEgenskaperFields() {
+		return egenskaperFields;
+	}
+	public void setEgenskaperFields(Map<String, String> egenskaperFields) {
+		this.egenskaperFields = egenskaperFields;
+	}
+	public Map<String, String> getTappetypeFields() {
+		return tappetypeFields;
+	}
+	public void setTappetypeFields(Map<String, String> tappetypeFields) {
+		this.tappetypeFields = tappetypeFields;
+	}
 
 	
 }

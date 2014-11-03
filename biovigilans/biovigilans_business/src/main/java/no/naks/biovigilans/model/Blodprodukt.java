@@ -3,6 +3,8 @@ package no.naks.biovigilans.model;
 import java.util.Date;
 import java.util.Map;
 
+import org.joda.time.DateTime;
+
 public interface Blodprodukt {
 
 	
@@ -52,5 +54,16 @@ public interface Blodprodukt {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
-	
+	public DateTime getProduktdato();
+	public void setProduktdato(DateTime produktdato);
+	public Map<String, String> getAntallFields();
+	public void setAntallFields(Map<String, String> antallFields);
+	public Map<String, String> getEgenskaperFields();
+	public void setEgenskaperFields(Map<String, String> egenskaperFields);
+	public Map<String, String> getTappetypeFields();
+	public void setTappetypeFields(Map<String, String> tappetypeFields);
+	public void distributeValues(String key, String produkt);
+	public Map<String, String> getBlodproduktFields();
+
+	public void setBlodproduktFields(Map<String, String> blodproduktFields);
 }

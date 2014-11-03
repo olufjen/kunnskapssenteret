@@ -70,6 +70,7 @@ public interface Transfusjon {
 	public Long getTransfusjonsId();
 	public void setTransfusjonsId(Long transfusjonsId);
 	public void setPasient_Id(Long pasient_Id);
+	public void produceBlodprodukt(Blodprodukt blodprodukt);
 	public void setParams();
 	public int[] getTypes();
 	public Object[] getParams();
