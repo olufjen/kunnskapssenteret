@@ -19,6 +19,8 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	private Giveroppfolging giveroppfolging;
 	
 	private String[] reaksjonengruppe; 
+	private String[] utenforBlodbankengruppe;
+	private String[] donasjonsstedgruppe;
 	
 	public GiverKomplikasjonwebModel() {
 		super();
@@ -83,6 +85,30 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	}
 	public void setReaksjonengruppe(String[] reaksjonengruppe) {
 		this.reaksjonengruppe = reaksjonengruppe;
+	}
+
+
+
+	public String[] getUtenforBlodbankengruppe() {
+		return utenforBlodbankengruppe;
+	}
+
+
+
+	public void setUtenforBlodbankengruppe(String[] utenforBlodbankengruppe) {
+		this.utenforBlodbankengruppe = utenforBlodbankengruppe;
+	}
+
+
+	
+	public String[] getDonasjonsstedgruppe() {
+		return donasjonsstedgruppe;
+	}
+
+
+
+	public void setDonasjonsstedgruppe(String[] donasjonsstedgruppe) {
+		this.donasjonsstedgruppe = donasjonsstedgruppe;
 	}
 
 
