@@ -16,6 +16,7 @@ import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 
 import org.restlet.Request;
+import org.restlet.Restlet;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
 import org.restlet.data.MediaType;
@@ -24,8 +25,10 @@ import org.restlet.data.Reference;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
+import org.restlet.resource.Directory;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
+import org.restlet.routing.Router;
 
 public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	private GiverKomplikasjonwebModel result=null;
@@ -34,10 +37,13 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	private String[] aldergruppe;
 	private String[] kjonnValg; 
 	private String[] reaksjonengruppe;
+	private String[] utenforBlodbankengruppe;
+	private String[] donasjonsstedgruppe;
 	private String giverkomplikasjonId="giverkomplikasjon";
 	private String donasjonId ="donasjon";
 	private String komDiagnosegiverId = "komDiagnosegiver";
 	private String vigilansmeldingId="vigilansmelding";
+
 	
 	public RapporterGiverServerResourceHtml() {
 		super();
@@ -85,6 +91,8 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	    	 result.setFormNames(sessionParams);
 	    	 result.setAldergruppe(aldergruppe);
 	    	 result.setReaksjonengruppe(reaksjonengruppe);
+	    	 result.setUtenforBlodbankengruppe(utenforBlodbankengruppe);  
+	    	 result.setDonasjonsstedgruppe(donasjonsstedgruppe);
 	     }
 	     if(donasjon==null){
 	    	 donasjon = new DonasjonwebModel();
@@ -117,13 +125,21 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	        
 //	        TemplateRepresentation  templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, result,
 //	                MediaType.TEXT_HTML);
+	        
+	     /*
+	        Directory directory = new Directory(getContext(), "file:///hemovigilans/img/");
+	        Router router = new Router(getContext());
+	        router.attach("/", directory);*/
+	        
 	        TemplateRepresentation  templatemapRep = new TemplateRepresentation(givertkomplikasjonFtl,dataModel,
-	                MediaType.TEXT_HTML);
+	                MediaType.TEXT_HTML ); 
 		 return templatemapRep;
 	 }
 	
+
 	
-    public String[] getAldergruppe() {
+	
+	public String[] getAldergruppe() {
 		return aldergruppe;
 	}
 
@@ -144,6 +160,24 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 
 	public void setReaksjonengruppe(String[] reaksjonengruppe) {
 		this.reaksjonengruppe = reaksjonengruppe;
+	}
+	
+	public String[] getUtenforBlodbankengruppe() {
+		return utenforBlodbankengruppe;
+	}
+
+	public void setUtenforBlodbankengruppe(String[] utenforBlodbankengruppe) {
+		this.utenforBlodbankengruppe = utenforBlodbankengruppe;
+	}
+	
+	
+	
+	public String[] getDonasjonsstedgruppe() {
+		return donasjonsstedgruppe;
+	}
+
+	public void setDonasjonsstedgruppe(String[] donasjonsstedgruppe) {
+		this.donasjonsstedgruppe = donasjonsstedgruppe;
 	}
 
 	/**
@@ -247,7 +281,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
 //    		System.out.println("Status = "+result.getStatus());
     		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
+    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
