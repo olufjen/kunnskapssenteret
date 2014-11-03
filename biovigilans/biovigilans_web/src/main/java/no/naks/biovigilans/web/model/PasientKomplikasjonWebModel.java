@@ -56,6 +56,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private String sykdomSymptom;
 	private String transfusjon;
 	
+	private String alder = "10-19";
+	
 	private List<MainTerm> terms;
 	private List<MainTerm> icd10Elements;
 	private List<Title> titles;
@@ -96,6 +98,16 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	}
 	
 	
+	public String getAlder() {
+		return alder;
+	}
+
+
+	public void setAlder(String alder) {
+		this.alder = alder;
+	}
+
+
 	public String[] getAvdelinger() {
 		return avdelinger;
 	}
