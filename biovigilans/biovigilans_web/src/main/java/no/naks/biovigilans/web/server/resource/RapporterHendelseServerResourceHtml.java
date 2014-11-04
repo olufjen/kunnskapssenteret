@@ -300,6 +300,8 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	    sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
 	    	    Map<String, Object> dataModel = new HashMap<String, Object>();
 	    	    dataModel.put(pasientkomplikasjonId, result);
+/*	
+ * IKKE I BRUK    	    
 	    	    Parameter hemolyse = form.getFirst("p_hemolyseleggtil");
 	    	    if (hemolyse != null){
 	    	        ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
@@ -310,7 +312,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	                MediaType.TEXT_HTML);
 	    	        return  templatemapRep;
 	    	    }
-	    	    
+*/	    	    
 	    		Parameter lagre = form.getFirst("lagre4");
 	    		if (lagre != null){
 	    			result.saveValues();
@@ -323,7 +325,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    		sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
 //	    		System.out.println("Status = "+result.getStatus());
 	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
