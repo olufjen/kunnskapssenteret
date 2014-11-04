@@ -272,7 +272,7 @@
 	    </div>
 	    <h3>Donasjon</h3>
 	    <div class="form-group">
-	    	<label>Dato Donasjon</label><br>
+	    	<label>Når Oppstod Symptomene</label><br>
 	    	<input type="date" name="dato-donasjon" />
 	    </div>
 	    <div class="form-group">
@@ -306,23 +306,34 @@
 	      <label>Komplisert venepunksjon:</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="ja"/>Ja
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon', this.checked);toggleDisplay('armenBilde', this.checked);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="nei"/>Nei
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="nei" onclick="toggleDisplay('beskriv-komplikasjon', 0);toggleDisplay('armenBilde', 0);"/>Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="option3"/>Vet ikke
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="option3" onclick="toggleDisplay('beskriv-komplikasjon', 0);toggleDisplay('armenBilde', 0);" />Vet ikke
 	          </label>
 		    </div>
 	    </div>
-	    <div class="form-group">
-			<label>Beskriv komplkasjonen med egne ord:</label>
+	    <div class="form-group" id="beskriv-komplikasjon" style="display: none">
+			<label>Beskriv komplikasjonen med egne ord:</label>
 		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
+		</div>
+		<div id="armenBilde" style="display: none" >
+			<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert.......test.</h4>
+		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
+	      <map name="armenmap">
+			  <area shape="rect" coords="0,0,82,126" alt="Sun" href="sun.htm">
+			  <area shape="circle" coords="90,58,3" alt="Mercury" href="mercur.htm" >
+			  <area shape="circle" coords="124,58,8" alt="Venus" href="venus.htm">
+			</map>
+					  	
+		
 		</div>
 	    <h3>Giverkomplikasjon</h3>
 	    <div class="form-group">
@@ -348,7 +359,7 @@
  -->		   
  	   
 	    <div class="form-group">
-	    	<label>Når fikke blodbanken vite om hendelsen?</label><br>
+	    	<label>Når fikk blodbanken vite om hendelsen?</label><br>
 	    	<input type="date" name="dato-oppdaget"  />
 	    </div>
 	    <!-- <div class="form-group">
@@ -382,7 +393,7 @@
 	    </div>
 	    
 	    <div class="form-group" >
-			<h3>Alvorlighetsgrad (samordnes med komplikasjoner ved tapping av givere)</h3>
+			<h3>Alvorlighetsgrad </h3>
 	
 			<div class="radio">
 				<label>
@@ -444,7 +455,7 @@
 	          </label>
 		    </div>
 	    </div>
-	    <div class="form-group" >
+	   <!--  <div class="form-group" >
 		<h3>Årsakssammenheng</h3>
 			<div class="radio">
 				<label>
@@ -471,7 +482,7 @@
 					<input type="radio" name="aarsaks" id="3 Sannsynlig" value="3 Sikker"/>3 Sikker
 				</label>
 			</div>
-		</div>
+		</div> -->
 	    <h3>Type komplikasjon</h3>
 	    <div class="form-group">
 	      <label>Lokal:</label>
@@ -528,14 +539,7 @@
 			<label>Hvis du har valgt annet, beskriv her:</label>
 			  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
 		</div> 
-		  	<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert.......test.</h4>
-		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
-	      <map name="armenmap">
-			  <area shape="rect" coords="0,0,82,126" alt="Sun" href="sun.htm">
-			  <area shape="circle" coords="90,58,3" alt="Mercury" href="mercur.htm" >
-			  <area shape="circle" coords="124,58,8" alt="Venus" href="venus.htm">
-			</map>
-					  	
+		  	
 		    <h3>Tiltak rettet mot giver</h3>
 		    <div class="form-group">
 		      <label>Strakstiltak:</label>
