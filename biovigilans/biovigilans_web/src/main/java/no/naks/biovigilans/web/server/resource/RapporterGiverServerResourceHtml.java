@@ -282,6 +282,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 //    		System.out.println("Status = "+result.getStatus());
     		// Denne client resource forholder seg til src/main/resource katalogen !!!	
     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+    		
     		Representation pasientkomplikasjonFtl = clres2.get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
