@@ -170,7 +170,7 @@ function deleteRow(obj) {
         <label>Kjønn:</label>
     	<div class="radio">
           <label>
-          	<input type="radio" name="pas-kjonn" id="pas-kjonn-1" value="${pasientkomplikasjon.mann}"/>Mann
+          	<input type="radio" name="pas-kjonn" id="pas-kjonn-1"  value="${pasientkomplikasjon.mann}"/>Mann
           </label>
 	    </div>
         <div class="radio">
@@ -203,7 +203,7 @@ function deleteRow(obj) {
     <br/><br/>
    	<div class="form-group">
       <label>Sykdom pasienten behandles for (diagnose)</label>
-         <input name ="p-antistoff-behandling" list="icd10pasientsykdom"  class="form-control">
+         <input name ="p-antistoff-behandling" list="icd10pasientsykdom" value="${kvittering.sykdomBehandling}"  class="form-control">
       		<datalist id="icd10pasientsykdom">
    	       		<#list pasientkomplikasjon.mainTerms as mainTerms>
         			<option >${mainTerms}</option>
@@ -222,7 +222,7 @@ function deleteRow(obj) {
  
 	<div class="form-group">
       <label>Annen Sykdom av betydning for komplikasjonen (diagnose)</label>
-         <input type="text" name ="p-annen-sykdom" list="icd10gruppe"  class="form-control">
+         <input type="text" name ="p-annen-sykdom" list="icd10gruppe" value="${kvittering.sykdomBetydning}" class="form-control">
       		<datalist id="icd10gruppe">
    	       		<#list pasientkomplikasjon.mainTerms as mainTerms>
         			<option >${mainTerms}</option>
@@ -409,7 +409,7 @@ function deleteRow(obj) {
 	<br/>       
     <div id="avdeling" class="form-group" >
         <label>Avdeling</label>
-       	<input name ="p-avdeling-list" list="avdelinger" class="form-control">
+       	<input name ="p-avdeling-list" list="avdelinger" value="${kvittering.avdeling}" class="form-control">
          		<datalist id="avdelinger">
       	       <#list pasientkomplikasjon.avdelinger as avdeling>
         			<option >${avdeling}</option>
@@ -423,7 +423,7 @@ function deleteRow(obj) {
 	<br/> 
 	<b>Klokkeslett velges fra meny.</b>
 	<div class="form-group">
-		<input type="time" name="transfusjon-time">
+		<input type="time" name="transfusjon-time" value="${kvittering.tidTransfusjon}">
 	</div>
 	<b>Transfusjondato velges fra kalender</b>
 	<div class="form-group">
@@ -448,7 +448,7 @@ function deleteRow(obj) {
   
   <div class="form-group">
          <label>Indikasjon for transfusjonen (diagnose)</label>
-            	<input name ="p-antistoff-transfusjon" list="icd10gruppetrans" class="form-control">
+            	<input name ="p-antistoff-transfusjon" list="icd10gruppetrans" value="${kvittering.indikasjonTransfusjon}" class="form-control">
         		<datalist id="icd10gruppetrans">
       	       <#list pasientkomplikasjon.mainTerms as mainTerms>
         			<option >${mainTerms}</option>

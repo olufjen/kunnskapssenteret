@@ -146,7 +146,16 @@ function deleteRow(obj) {
 	    var table = document.getElementById("hemolyseTableData");
 	    table.deleteRow(index);
 	    
-	}
+}
+function showtext(id,thetext){
+	if (!document.getElementById)
+	return
+	textcontainerobj=document.getElementById(id)
+//	browserdetect=textcontainerobj.filters? "ie" : typeof textcontainerobj.style.MozOpacity=="string"? "mozilla" : ""
+//	instantset(baseopacity)
+	document.getElementById(id).innerHTML=thetext
+//	highlighting=setInterval("gradualfade(textcontainerobj)",50)
+}
 //window.onload=initialize();
 </script>
 
@@ -833,7 +842,7 @@ function deleteRow(obj) {
       <b>Mistenkt årsak til transfusjonsreaksjon </b>
     <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-1" value="ahtr-1" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-1" value="ahtr-1" onmouseover="showtext('p-komp-ahtr-1','En AHTR oppstår innen 24 timer etter en transfusjon.')" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
       </label>
     </div>
     <div class="radio">
