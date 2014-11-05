@@ -17,6 +17,7 @@ import no.naks.biovigilans.web.client.ICD10Soap;
 import no.naks.biovigilans.web.control.SessionAdmin;
 import no.naks.biovigilans.web.control.TableWebService;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
+import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
@@ -50,6 +51,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource {
 		private PasientKomplikasjonWebModel result = null;
 		private TransfusjonWebModel transfusjon = null;
+		private TransfusjonKvitteringWebModel kvittering = null;
 		private String[] avdelinger;
 		private String[] aldergruppe;
 		private String[] kjonnValg; 
@@ -57,7 +59,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		private String[] hemolyseParametre;
 		private String pasientkomplikasjonId = "pasientkomplikasjon"; 	// Benyttes som nøkkel til HTML-sider
 		private String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
-		
+		private String kvitteringsId = "kvittering";					// Benyttes som nøkkel for kvitteringssiden
 		
 	 public RapporterHendelseServerResourceHtml() {
 			super();
@@ -184,6 +186,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 //	 	 List<MainTerm> terms = icd10WebService.getTerms();    
 	     result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(request,pasientkomplikasjonId);
 	     transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
+	     kvittering = (TransfusjonKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringsId);
 	     if (result == null){
 	    	 result = new PasientKomplikasjonWebModel();
 	    	 result.setFormNames(sessionParams);
@@ -200,6 +203,10 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	 transfusjon.setFormNames(sessionParams);
 	  //  	 transfusjon.setHemolyseParametre(hemolyseParametre);
 	     }
+	     if (kvittering == null){
+	    	 kvittering = new TransfusjonKvitteringWebModel();
+	    	 kvittering.setFormNames(sessionParams);
+	     }
 	     result.setTerms(terms);
 		 result.distributeTerms();
 	     String ref = reference.toString();
@@ -214,6 +221,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	     dataModel.put(pasientkomplikasjonId, result);
 	     dataModel.put(transfusjonId,transfusjon);
+	     dataModel.put(kvitteringsId,kvittering);
 	    
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
@@ -221,6 +229,8 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	     LocalReference localUri = new LocalReference(reference);
 	     sessionAdmin.setSessionObject(getRequest(), result,pasientkomplikasjonId);
 	     sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
+	     sessionAdmin.setSessionObject(request,kvittering, kvitteringsId);
+	     
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
 	     
@@ -255,11 +265,13 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    		Representation webTransfusjon = form.getWebRepresentation();
 	    		result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(getRequest(),pasientkomplikasjonId);
 	    		transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(getRequest(),transfusjonId);
+	    	    kvittering = (TransfusjonKvitteringWebModel)sessionAdmin.getSessionObject(getRequest(),kvitteringsId);
 	    		Parameter logout = form.getFirst("avbryt4");
 	    		Parameter lukk = form.getFirst("lukk4");
 	    		if (logout != null || lukk != null){
 	    			sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
 	    			sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
+	    			sessionAdmin.getSession(getRequest(),kvitteringsId).invalidate();
 		    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
 		    		Representation pasientkomplikasjonFtl = clres2.get();
 		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, result,
@@ -289,17 +301,24 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		    	 transfusjon = new TransfusjonWebModel();
 		    	 transfusjon.setFormNames(sessionParams);
 	   	     	}
+	   	     if (kvittering == null){
+		    	 kvittering = new TransfusjonKvitteringWebModel();
+		    	 kvittering.setFormNames(sessionParams);
+		     }
 	    		for (Parameter entry : form) {
 	    			if (entry.getValue() != null && !(entry.getValue().equals("")))
 	    					System.out.println(entry.getName() + "=" + entry.getValue());
 	    			result.setValues(entry);
 	    			transfusjon.setValues(entry);
+	    			kvittering.setValues(entry);
 
 	    		}
 	    		sessionAdmin.setSessionObject(getRequest(), result,pasientkomplikasjonId);
 	    	    sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
 	    	    Map<String, Object> dataModel = new HashMap<String, Object>();
 	    	    dataModel.put(pasientkomplikasjonId, result);
+	    	    dataModel.put(transfusjonId,transfusjon);
+	    	    dataModel.put(kvitteringsId,kvittering);
 /*	
  * IKKE I BRUK    	    
 	    	    Parameter hemolyse = form.getFirst("p_hemolyseleggtil");
