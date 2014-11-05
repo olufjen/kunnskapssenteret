@@ -56,7 +56,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private String sykdomSymptom;
 	private String transfusjon;
 	
-	private String alder = "10-19";
+	private String alder = "-";
 	
 	private List<MainTerm> terms;
 	private List<MainTerm> icd10Elements;
@@ -99,6 +99,9 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	
 	
 	public String getAlder() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "pas-alder";
+		alder = userEntries.get(field);
 		return alder;
 	}
 
