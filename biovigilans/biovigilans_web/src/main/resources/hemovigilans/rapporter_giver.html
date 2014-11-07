@@ -324,18 +324,21 @@
 			<label>Beskriv komplikasjonen med egne ord:</label>
 		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
 		</div>
-		<div id="armenBilde" style="display: none" >
+		<!-- style="display: none" -->
+		<div id="armenBilde"  >
 			<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert.......test.</h4>
 		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
 	      <map name="armenmap">
-			  <area shape="rect" coords="0,0,82,126" alt="Sun" href="sun.htm">
-			  <area shape="circle" coords="90,58,3" alt="Mercury" href="mercur.htm" >
-			  <area shape="circle" coords="124,58,8" alt="Venus" href="venus.htm">
+			  <area shape="rect" coords="235,0,302,80" alt="Cephalic Vein" href="#" onclick="alert('Cephalic Vein')">
+			  <area shape="rect" coords="325,17,400,165" alt="Beslic Vein" href="#" onclick="alert('Beslic Vein')">
+			 <area shape="rect" coords="337,52,305,89" alt="Madhlan Cubital Vein" href="#" onclick="alert('Madhlan Cubital Vein')">
+		    	<area shape="rect" coords="261,94,307,200" alt="Cephalic Vein" href="#" onclick="alert('Cephalic Vein')">
 			</map>
 					  	
 		
 		</div>
 	    <h3>Giverkomplikasjon</h3>
+	    
 	    <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
 	       <select id="re" name ="tab-hvor" list="icd10gruppehvor" class="form-control" onchange="blodbankenOptions()"  >
@@ -345,7 +348,7 @@
 		     	</#list>
 		  </select>
 	    </div>
- 		 
+	    
 	    <div class="form-group" style="display: none" id="hendelseDato">
 	    	<label>Når oppstod symptomene</label><br>
 	    	<input type="date" name="dato-hendelse"  />
@@ -358,10 +361,10 @@
 	    </div>
  -->		   
  	   
-	    <div class="form-group">
+	   <!--  <div class="form-group">
 	    	<label>Når fikk blodbanken vite om hendelsen?</label><br>
 	    	<input type="date" name="dato-oppdaget"  />
-	    </div>
+	    </div> -->
 	    <!-- <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
 	      <input name ="tab-hvor" list="icd10gruppehvor" class="form-control">
@@ -371,7 +374,7 @@
 	    </div> -->
 		<div id="utenfor" style="display: none"  class="form-group">
 	      <label>Utenfor Blodbanken</label>
-	       <select  name ="tab-hvor" list="icd10gruppehvor" class="form-control"  >
+	       <select  name ="tab-utenForBlodbanken" list="icd10gruppehvor" class="form-control"  >
 		      <option  > --- Select --- </option>
 		     	<#list giverkomplikasjon.utenforBlodbankengruppe as utenforBlodbanken >
 			     	<option >${utenforBlodbanken}  </option>
@@ -576,7 +579,25 @@
 		  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"></textarea>   
 		      
 	  		<br/>
-	  	</div>	
+	  	</div>
+	  	 <div class="form-group">
+		      <label>Var komplikasjonen/hendelsen forebyggbar?</label>
+		      	<div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar1" value="forebyggbar-ja"/>Ja
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei"/>Nei
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke"/>Vet ikke
+		          </label>
+			    </div>
+	    	</div>	
 	     <div class="form-group">
 	      <label>Videre behandling/oppfølging nødvendig?</label>
 	         <div class="radio">
