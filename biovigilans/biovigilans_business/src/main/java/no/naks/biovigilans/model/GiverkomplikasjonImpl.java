@@ -124,7 +124,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 
 	public void setTilleggsopplysninger(String tilleggsopplysninger) {
 		if(tilleggsopplysninger == null){
-			tilleggsopplysninger =  komplikasjonsFields.get(keys[9]);
+			tilleggsopplysninger =  komplikasjonsFields.get(keys[10]);
 			
 			
 			
