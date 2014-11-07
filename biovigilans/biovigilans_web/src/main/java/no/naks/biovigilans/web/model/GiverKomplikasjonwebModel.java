@@ -148,7 +148,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	
 	public void giverKomplikasjonDistribute(){
 		String[] formFields = getFormNames();
-		String meldingFields[] = {formFields[13],formFields[14],formFields[15],formFields[33],formFields[17],formFields[18],formFields[19],formFields[20],formFields[21],formFields[34]};
+		String meldingFields[] = {formFields[13],formFields[14],formFields[15],formFields[33],formFields[17],formFields[18],formFields[19],formFields[20],formFields[21],formFields[34],formFields[35]};
 		giverKomplikasjon.setGiverkomplicationfieldMaps(meldingFields);
 	}
 	
