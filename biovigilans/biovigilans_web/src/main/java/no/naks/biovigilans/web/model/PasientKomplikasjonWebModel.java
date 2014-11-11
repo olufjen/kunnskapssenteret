@@ -49,12 +49,13 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
 	private String[] kjonnValg; 	// Inneholder definisjon av kjønn for mann/kvinne
 	private String mann; 			//definisjon kjønn mann
-	private String kvinne;			//definisjonj kjønn kvinne 
+	private String kvinne;			//definisjon kjønn kvinne 
 	private String antiStoffjanei;
 	private String [] antiStofflabel;
 	private String [] antiStoffid;
 	private String sykdomSymptom;
 	private String transfusjon;
+	private String kjonnValgt;		//Viser hvilket kjønn som er valgt 		
 	
 	private String alder = "-";
 	
@@ -97,7 +98,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+
+
 	public String getAlder() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "pas-alder";
@@ -386,6 +388,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		pasient.produceAntistoffer(antistoff);
 		pasient.getSykdommer().put(sykdom.getDiagnosekode(),sykdom);
 		pasient.getSykdommer().put(annenSykdom.getDiagnosekode(),annenSykdom);
+		kjonnValgt = pasient.getKjonn();
 //		pasient.getSykdommer().put(transfusjonKomplikasjon.getDiagnosekode(),transfusjonKomplikasjon);
 		
 	}
