@@ -16,6 +16,7 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 	private String tidTransfusjon;
 	private String datoTransfusjon;
 	private String indikasjonTransfusjon;
+	private String kjonn;
 	
 	
 	public TransfusjonKvitteringWebModel() {
