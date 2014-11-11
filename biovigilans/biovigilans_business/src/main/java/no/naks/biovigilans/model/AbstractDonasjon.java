@@ -97,7 +97,7 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 	}
 	public void setLokalisasjonvenepunksjon(String lokalisasjonvenepunksjon) {
 		if(lokalisasjonvenepunksjon == null){
-			lokalisasjonvenepunksjon = donasjonsFields.get(keys[7]);
+			lokalisasjonvenepunksjon = donasjonsFields.get(keys[8]);
 		}
 		this.lokalisasjonvenepunksjon = lokalisasjonvenepunksjon;
 	}

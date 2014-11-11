@@ -31,7 +31,7 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	 */
 	public void setDonasjonsfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<8;i++){
+		for (int i = 0;i<keys.length ;i++){
 			donasjonsFields.put(userFields[i],null);
 		}
 	}
@@ -44,7 +44,6 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	public void saveField(String userField, String userValue) {
 		if (donasjonsFields.containsKey(userField) && userValue != null && !userValue.equals("")){
 			donasjonsFields.put(userField,userValue);	
-	
 		}
 		
 	}
