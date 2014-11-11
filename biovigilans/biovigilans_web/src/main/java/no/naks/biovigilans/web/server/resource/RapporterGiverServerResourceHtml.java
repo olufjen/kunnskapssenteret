@@ -81,7 +81,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
-
+	    
 	     result = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
 		 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request, donasjonId);  
 		 komDiagnosegiver =(KomDiagnosegiverwebModel) sessionAdmin.getSessionObject(request,komDiagnosegiverId );
@@ -121,6 +121,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/pasientkomplikasjon/nymeldingfagprosedyre.html").get();
 	        Representation givertkomplikasjonFtl = clres2.get();
+	   
 	//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
 	        
 //	        TemplateRepresentation  templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, result,
@@ -279,10 +280,11 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
     		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
     		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
+    
 //    		System.out.println("Status = "+result.getStatus());
     		// Denne client resource forholder seg til src/main/resource katalogen !!!	
     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-    		
+   //  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giverkvittering.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
