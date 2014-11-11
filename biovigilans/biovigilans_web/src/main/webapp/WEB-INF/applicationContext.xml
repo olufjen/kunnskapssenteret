@@ -102,7 +102,7 @@
 
         </bean>
         <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--   C:\\biovigilans\\temp\\ICD10CM.xml Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml     -->
+<!--C:\\biovigilans\\temp\\ICD10CM.xml         -->
 <!--  -->               <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>  
 <!-- 				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
@@ -218,7 +218,7 @@
                                 ${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinisk},${giver.arm},${giver.tabskadearm},
                                 ${giver.bivirk},${giver.systemiskbivirkning},${giver.annenreaksjon},${giver.annetreaksjon},${giver.annenreak},
                                 ${giver.kortbeskr},${giver.strakstiltak},${giver.annenreak},${giver.behandlingoppfolging},${giver.hvorbehandling},
-                                ${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak},${giver.alvormang},${giver.aarsaks},${giver.forebyggbar}">
+                                ${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak},${giver.alvormang},${giver.aarsaks},${giver.forebyggbar},${giver.imgarea}">
         </property>
   </bean>       
   <bean name="/hemovigilans/rapporter_andrehendelser.html" id="rapporterhendelserServerResource" autowire="byName" scope="prototype"
