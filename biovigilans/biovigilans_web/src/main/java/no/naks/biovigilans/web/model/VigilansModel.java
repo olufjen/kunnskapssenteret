@@ -72,11 +72,11 @@ public class VigilansModel {
 		this.accountRef = accountRef;
 	}
 	
-	public void distributeTerms(){
+	/*public void distributeTerms(){
 		String[] formFields = getFormNames();
 		String donasjonFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[11],formFields[12],formFields[25]};
 		//vigilans.set .setDonasjonsfieldMaps(donasjonFields);
 	}
-	
+	*/
 	
 }
