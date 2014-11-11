@@ -106,6 +106,10 @@
 		e.target.setCustomValidity("");
 		if (!e.target.validity.valid) { e.target.setCustomValidity("Please enter only number value"); }
 		};
+	
+	function setImageValue(val){
+			document.getElementById("tab-imgarea").setAttribute('value',val);
+	}
 	//window.onload=initialize();
 	</script>
 	
@@ -320,17 +324,18 @@
 	          </label>
 		    </div>
 	    </div>
-	    <div class="form-group" id="beskriv-komplikasjon" style="display: none">
+	    <div class="form-group" id="beskriv-komplikasjon" style="display: none" >
 			<label>Beskriv komplikasjonen med egne ord:</label>
 		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
 		</div>
-		<div id="armenBilde" style="display: none" >
-			<h4>Lokalisasjon venepunksjon (figur med 2 armer) kommer her etterhvert.......test.</h4>
+		<div id="armenBilde" style="display: none"  >
+			<h4>Lokalisasjon venepunksjon </h4>
 		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
+		    <input type="text" id="tab-imgarea" name="tab-imgarea" value="" hidden="true"  />
 	      <map name="armenmap">
-			  <area shape="rect" coords="222,9,302,202" alt="Cephalic Vein" href="#" onclick="alert('Cephalic Vein')">
-			 <area shape="rect" coords="300,94,341,48" alt="Madhlan Cubital Vein" href="#" onclick="alert('Madhlan Cubital Vein')">
-			 <area shape="rect" coords="325,17,400,165" alt="Beslic Vein" href="#" onclick="alert('Beslic Vein')">
+			  <area shape="rect" title="Cephalic Vein" coords="222,9,302,202" alt="Cephalic Vein" href="javascript: return false;"  onclick="setImageValue('Cephalic Vein');">
+			 <area shape="rect" title="Madhlan Cubital Vein" coords="300,94,341,48" alt="Madhlan Cubital Vein" href="javascript: return false;" onclick="setImageValue('Madhlan Cubital Vein');">
+			 <area shape="rect" title="Beslic Vein" coords="325,17,400,165" alt="Beslic Vein" href="javascript: return false;" onclick="setImageValue('Beslic Vein');">
 			</map>
 					  	
 		
