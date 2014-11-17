@@ -102,8 +102,8 @@
 
         </bean>
         <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--C:\\biovigilans\\temp\\ICD10CM.xml         -->
-<!--  -->               <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>  
+<!--   C:\\biovigilans\\temp\\ICD10CM.xml Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml     -->
+<!--   -->           <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>     
 <!-- 				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
         </bean> 
