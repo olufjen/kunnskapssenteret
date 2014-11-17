@@ -9,8 +9,10 @@ import java.util.Map;
 import no.naks.biovigilans.model.DonasjonImpl;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
+import no.naks.biovigilans.web.model.GiverKvitteringWebModel;
 import no.naks.biovigilans.web.model.KomDiagnosegiverwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
+import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
@@ -43,6 +45,8 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	private String donasjonId ="donasjon";
 	private String komDiagnosegiverId = "komDiagnosegiver";
 	private String vigilansmeldingId="vigilansmelding";
+	private GiverKvitteringWebModel giverKvittering = null;
+	private String kvitteringsId="giverKvittering";
 
 	
 	public RapporterGiverServerResourceHtml() {
@@ -85,7 +89,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	     result = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
 		 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request, donasjonId);  
 		 komDiagnosegiver =(KomDiagnosegiverwebModel) sessionAdmin.getSessionObject(request,komDiagnosegiverId );
-	
+		 giverKvittering = (GiverKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringsId);
 	     if(result==null){
 	    	 result = new GiverKomplikasjonwebModel();
 	    	 result.setFormNames(sessionParams);
@@ -103,6 +107,11 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	    	 komDiagnosegiver.setFormNames(sessionParams);
 	     }
 	     
+	     if (giverKvittering == null){
+	    	 giverKvittering = new GiverKvitteringWebModel();
+	    	 giverKvittering.setFormNames(sessionParams);
+	     }
+	     
 	     result.distributeTerms();
 	     result.giverKomplikasjonDistribute();
 	     result.giveroppfolgingDistribute();
@@ -112,10 +121,12 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
 	     dataModel.put(giverkomplikasjonId, result);
 	     dataModel.put(donasjonId, donasjon);
 	     dataModel.put(komDiagnosegiverId, komDiagnosegiver);
+	     dataModel.put(kvitteringsId,giverKvittering);
 	     
 	     sessionAdmin.setSessionObject(getRequest(), result,giverkomplikasjonId);
 	     sessionAdmin.setSessionObject(getRequest(), donasjon,donasjonId);
 	     sessionAdmin.setSessionObject(getRequest(), komDiagnosegiver, komDiagnosegiverId);
+	     sessionAdmin.setSessionObject(request,giverKvittering, kvitteringsId);
 	     
 	     // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -201,6 +212,7 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     		result = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),giverkomplikasjonId);
     		donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(getRequest(), donasjonId);
     		komDiagnosegiver = (KomDiagnosegiverwebModel) sessionAdmin.getSessionObject(getRequest(),komDiagnosegiverId );
+    		giverKvittering = (GiverKvitteringWebModel)sessionAdmin.getSessionObject(getRequest(),kvitteringsId);
     		
     		Parameter logout = form.getFirst("avbryt4");
     		Parameter lukk = form.getFirst("lukk4");
@@ -210,6 +222,8 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     			sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
     			sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
     			sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
+    			sessionAdmin.getSession(getRequest(),kvitteringsId).invalidate();
+    			
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    	/*	templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
@@ -235,18 +249,26 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     	    	 komDiagnosegiver.setFormNames(sessionParams);
     	     }
     		
+    		if (giverKvittering == null){
+    			giverKvittering = new GiverKvitteringWebModel();
+    			giverKvittering.setFormNames(sessionParams);
+		     }
+    		
     		for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
     					System.out.println(entry.getName() + "=" + entry.getValue());
     			result.setValues(entry);
     			donasjon.setValues(entry);
     			komDiagnosegiver.setValues(entry);
+    			giverKvittering.setValues(entry);
     		}
     		
     		sessionAdmin.setSessionObject(getRequest(), result,giverkomplikasjonId);
     		sessionAdmin.setSessionObject(getRequest(), donasjon, donasjonId);
     		sessionAdmin.setSessionObject(getRequest(), komDiagnosegiver, komDiagnosegiverId);
     		dataModel.put(giverkomplikasjonId, result);
+    		dataModel.put(kvitteringsId, giverKvittering);
+    		
     		Parameter lagre = form.getFirst("lagre4");
     		if(lagre!=null){
     			result.saveValues();
@@ -274,18 +296,27 @@ public class RapporterGiverServerResourceHtml extends ProsedyreServerResource {
     			result.getGiveroppfolging().setMeldeid(meldeId);
     			giverWebService.saveGiveroppfolging(result);
     		    //lagre i vigiansmelding
-    		    
-    		   
     		}
-    		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
-    		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
-    		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
-    
-//    		System.out.println("Status = "+result.getStatus());
-    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-   //  		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giverkvittering.html"));
-    		Representation pasientkomplikasjonFtl = clres2.get();
+     		ClientResource clres2  ;
+  		
+    		Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
+    		/*if(godkjent!= null){
+         		// clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+
+    		}else */
+    		if(ikkegodkjet != null){
+         		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+    		}else{
+	    		
+	    		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
+	    		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
+	    		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
+	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giverkvittering.html"));
+	//    		System.out.println("Status = "+result.getStatus());
+	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
+	   // 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+    		}
+	     	Representation pasientkomplikasjonFtl = clres2.get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
     		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
