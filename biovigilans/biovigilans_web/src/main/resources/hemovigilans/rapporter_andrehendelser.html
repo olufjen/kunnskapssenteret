@@ -21,43 +21,21 @@
 			</ul>
 			
 			<div class="tab-pane" id="andrehendelser">
-				<h3>
-					Date For hendelsen
-				</h3>
+	
 				<div class="form-group">
+					<label>Dato For hendelsen</label>
 					<input type="date" name="hendelsen-date">
 				</div>
-				<h3>
-					Beskrivelse av hendelsen
-				</h3>
+	
 				<div class="form-group">
-					<textarea class="form-control" name="beskrivelse" rows="2" ></textarea>
+				<label>Beskrivelse av hendelsen</label>
+					<textarea class="form-control" name="beskrivelse" rows="3" ></textarea>
 				</div>
-				
+			
 				<div class="form-group">
-					<label>Definisjon av alvorlig hendelse</label>
-					 <input name ="tab-hendelse" list="hendelse" class="form-control">
-					<datalist id="alvorig-list">
-						<%list>
-							<option selected="selected">velg fra listen..</option>
-						</%list>
-					</datalist>
-				</div>
-				
-				<div class="form-group">
-					<label>Klassifikasjon av feilen eller</label>
-					 <input name ="tab-klassifikasjon" list="klassifikasjon" class="form-control">
-					<datalist id="klassifikasjon-list">
-						<%list>
-							<option selected="selected">velg fra listen..</option>
-						</%list>
-					</datalist>
-				</div>
-				
-				<div class="form-group">
-					<label>avviket</label>
-					 <input name ="tab-avviket" list="avviket" class="form-control">
-					<datalist id="avviket-list">
+					<label>Hvilken hovedeprosess gjaldt hendelsen?</label>
+					 <input name ="tab-prosess" list="" class="form-control">
+					<datalist id="prosess-list">
 						<%list>
 							<option selected="selected">velg fra listen..</option>
 						</%list>
@@ -75,31 +53,43 @@
 				</div>
 				
 				<div class="form-group">
-					<label>Hvilken prosess gjaldt hendelsen?</label>
-					 <input name ="tab-prosess" list="" class="form-control">
-					<datalist id="prosess-list">
+					<label>Definisjon av alvorlig hendelse</label>
+					 <input name ="tab-hendelse" list="hendelse" class="form-control">
+					<datalist id="alvorig-list">
 						<%list>
 							<option selected="selected">velg fra listen..</option>
 						</%list>
 					</datalist>
 				</div>
-				<h3>
-					Hvordan ble hendelsen oppdaget?
-				</h3>
+				
 				<div class="form-group">
-					<textarea class="form-control" name="oppdaget" rows="2" ></textarea>
+					<label>Klassifikasjon av feilen eller avviket</label>
+					 <input name ="tab-klassifikasjon" list="klassifikasjon" class="form-control">
+					<datalist id="klassifikasjon-list">
+						<%list>
+							<option selected="selected">velg fra listen..</option>
+						</%list>
+					</datalist>
 				</div>
+	
+	
+	
 				<h3>
-					Gjennomført eller planlagte forebyggende tiltak. Beskriv kort.
+					
 				</h3>
 				<div class="form-group">
-					<textarea class="form-control" name="planlagte" rows="2" ></textarea>
+				<label>Hvordan ble hendelsen oppdaget?</label>
+					<textarea class="form-control" name="hendelseoppdaget" rows="3" ></textarea>
 				</div>
-				<h3>
-					Kommentar
-				</h3>
+	
 				<div class="form-group">
-					<textarea class="form-control" name="kommentar" rows="2" ></textarea>
+				<label>Gjennomført eller planlagte forebyggende tiltak. Beskriv kort.</label>
+					<textarea class="form-control" name="planlagtetiltak" rows="3" ></textarea>
+				</div>
+	
+				<div class="form-group">
+				<label>Kommentar</label>
+					<textarea class="form-control" name="hendelsekommentar" rows="3" ></textarea>
 				</div>
 				
 				 	<button name="avbryt3" type="submit" class="btn btn-default">Avbryt</button>
