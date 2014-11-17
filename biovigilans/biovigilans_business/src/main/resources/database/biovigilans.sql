@@ -113,6 +113,12 @@ CREATE TABLE Vigilansmelding
     supplerendeopplysninger   text,
     meldingsdato              timestamptz,
     meldingsnokkel            TEXT                NULL,
+        -- Dette flagget sier om meldingen er en kladd
+    kladd                VARCHAR (3)         NULL,
+    -- Dette flagget sier om meldinger er godkjent fra kvittering
+    godkjent             VARCHAR (3)         NULL,
+    -- Dato melding ble endret. Bare mulig dersom melding er lagret som kladd eller ikke godkjent.  
+    endringsdato         timestamptz                NULL,
     melderid                  int,
     primary key(meldeid),
     foreign key( melderid) references Melder( melderid) on delete CASCADE
@@ -308,6 +314,53 @@ CREATE TABLE Produktegenskap
 
 ALTER TABLE Produktegenskap
     ADD CONSTRAINT blodproduktegenskap FOREIGN KEY ( blodProduktId ) REFERENCES Blodprodukt ( blodProduktId );
+
+    
+
+CREATE TABLE Annenkomplikasjon
+(
+    meldeid              INT           NOT NULL,
+    -- Klassifikasjon av hendelsen (beskrivelse)
+    klassifikasjon       TEXT                NULL,
+    -- Klassifikasjonskode
+    Klassifikasjonkode   TEXT                NULL,
+    -- Beskrivelse av hendelsen
+    komplikasjonbeskrivelse TEXT             NULL,
+    -- Hva slags hendelse er dette?  
+    komplikasjondefinisjon TEXT              NULL,
+    -- Årsak til avviket
+    avvikarsak           TEXT                NULL,
+    -- Under hvilken prosess skjedde hendelsen?
+    hovedprosess         TEXT                NULL,
+    -- Gjennomførte eller planlagte tiltak
+    tiltak               TEXT                NULL,
+    -- Kommentarer til hendelsen
+    kommentar            TEXT                NULL,
+    -- Hvordan ble hendelsen oppdaget
+    oppdaget             TEXT                NULL,
+    PRIMARY KEY ( meldeid )
+);
+
+
+
+/*
+Inneholder diskusjonen knyttet til en melding, og som pågår mellom melder og Mottaker/vurderer
+*/
+CREATE TABLE Diskusjon
+(
+    datoforkommentar     timestamptz            NULL,
+    kommentar            TEXT                NULL,
+    diskusjonid          SERIAL             NOT NULL,
+    meldeid              INT           NOT NULL,
+    PRIMARY KEY ( diskusjonid )
+);
+
+
+ALTER TABLE Annenkomplikasjon
+    ADD CONSTRAINT annenmeldingtilmelding FOREIGN KEY ( meldeid ) REFERENCES Vigilansmelding ( meldeid );
+
+ALTER TABLE Diskusjon
+    ADD CONSTRAINT diskusjontilmelding FOREIGN KEY ( meldeid ) REFERENCES Vigilansmelding ( meldeid );
     
 -- ======================================================================
 
