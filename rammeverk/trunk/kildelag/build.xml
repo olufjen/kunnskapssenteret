@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<project name="kildelag" basedir="." default="usage">
+    <property file="build.properties"/>
+
+    <property name="name" value="kildelag"/>
+	
+    <path id="master-classpath">
+    	<fileset dir="${kunnskapssenteret.common.lib}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+	
+	<path id="master-sourcedir">
+    	<fileset dir="${project.src}">
+            <include name="*.java"/>
+        </fileset>
+    </path>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message="${name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="build     --> Build the application"/>
+        <echo message="package   --> Create a jar for this project"/>
+    	<echo message="clean     --> Remove class- and jar-files for this project"/>
+        <echo message=""/>
+    </target>
+
+	<target name="echo-debug-params">
+		<echo message="kunnskapssenteret.common.lib: ${kunnskapssenteret.common.lib}" />
+	</target>
+	
+    
+	<target name="build" description="Compile main source tree java files">
+		<mkdir dir="${project.build.dir}"/>
+        <javac 
+        	destdir="${project.classes}" source="1.5" target="1.5" debug="true"
+            deprecation="false" optimize="false" failonerror="true">
+            <src path="${project.src}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+        
+        <!-- Separate copy-target to make sure property files are included -->
+		<copy 
+			todir="${project.build.dir}">
+			<fileset 
+				dir="${project.src}"
+				excludes="**/*.java"
+			/>
+		</copy>
+	</target>
+	
+	<target name="package" depends="build">
+		<mkdir dir="${project.target.dir}"/>
+		<jar 
+			destfile="${project.target.dir}\${project.target.filename}"
+			basedir="${project.classes}"
+		/>
+	</target>
+
+	<target name="clean" description="Clean output directories">
+        <delete>
+            <fileset dir="${project.build.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        	<fileset dir="${project.target.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </delete>
+    </target>
+</project>
