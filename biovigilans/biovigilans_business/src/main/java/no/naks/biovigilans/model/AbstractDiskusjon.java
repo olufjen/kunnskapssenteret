@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 /**
- * Inneholder diskusjonen knyttet til en melding, og som pågår mellom melder og Mottaker/vurderer
+ * Inneholder diskusjonen knyttet til en melding, og som pÃ¥gÃ¥r mellom melder og Mottaker/vurderer
  * 
  */
 
