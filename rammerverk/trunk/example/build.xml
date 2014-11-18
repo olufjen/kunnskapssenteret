@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<project name="example" basedir="." default="usage" >
+    <property file="build.properties"/>
+   
+    <path id="master-classpath">
+ 		<fileset dir="${jsf-basics.home}/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${appserver.lib}">
+            <include name="servlet*.jar"/>
+        </fileset>
+   </path>
+   
+   <target name="deploy" depends="build" description="df">
+   		<copy todir="${deploy.path}" preservelastmodified="true">
+			  <fileset dir="${jsf-basics.home}">
+			  		<include name="**/*.*"/>
+			  </fileset>
+		</copy>
+   </target>
+   
+   <target name="build" description="Compile main source tree java files">
+     <!--   <mkdir dir="${build.dir}"/>-->
+        <javac destdir="${jsf-basics.build.dir}" source="1.5" target="1.5" debug="true"
+               deprecation="false" optimize="false" failonerror="true">
+       	<src path="${jsf-basics.src.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+    	
+    	<!--  <copy
+    		todir="${project.lib.dir}"
+    		preservelastmodified="true">
+			<fileset dir="${prosjekt.lib}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>-->
+ 
+    </target>
+  
+</project>

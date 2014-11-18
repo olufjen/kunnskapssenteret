@@ -1,0 +1,45 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building rammeverk_kilde 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+Downloading: http://people.apache.org/repo/m2-snapshot-repository/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://download.java.net/maven/1/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://download.java.net/maven/2/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: https://repository.jboss.org/nexus/content/groups/public/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://repository.jboss.org/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+Downloading: http://repo.maven.apache.org/maven2/opensymphony/quartz/1.6.0/quartz-1.6.0.pom
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ rammeverk_kilde ---
+[INFO] Deleting C:\svnroot2\nokc\rammeverk\trunk\kildelag\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ rammeverk_kilde ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ rammeverk_kilde ---
+[INFO] Compiling 42 source files to C:\svnroot2\nokc\rammeverk\trunk\kildelag\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ rammeverk_kilde ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ rammeverk_kilde ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ rammeverk_kilde ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ rammeverk_kilde ---
+[INFO] Building jar: C:\svnroot2\nokc\rammeverk\trunk\kildelag\target\rammeverk_kilde-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ rammeverk_kilde ---
+[INFO] Installing C:\svnroot2\nokc\rammeverk\trunk\kildelag\target\rammeverk_kilde-1.0-SNAPSHOT.jar to C:\Users\olj\.m2\repository\no\kunnskapssenteret\rammeverk_kilde\1.0-SNAPSHOT\rammeverk_kilde-1.0-SNAPSHOT.jar
+[INFO] Installing C:\svnroot2\nokc\rammeverk\trunk\kildelag\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\rammeverk_kilde\1.0-SNAPSHOT\rammeverk_kilde-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.426s
+[INFO] Finished at: Thu Oct 02 08:13:47 CEST 2014
+[INFO] Final Memory: 15M/154M
+[INFO] ------------------------------------------------------------------------
