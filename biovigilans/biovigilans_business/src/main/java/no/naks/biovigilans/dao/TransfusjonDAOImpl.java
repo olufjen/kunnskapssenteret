@@ -1,5 +1,6 @@
 package no.naks.biovigilans.dao;
 
+import java.sql.Time;
 import java.util.Iterator;
 
 import no.naks.biovigilans.model.AbstractVigilansmelding;
@@ -416,10 +417,13 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 			}
 		}
 		tablesUpdate = null;
+		Time tidForkompl = transfusjon.getTransklokke();
 		Iterator komplikasjoner = transfusjon.getPasientKomplikasjoner().keySet().iterator();
 		while (komplikasjoner.hasNext()){
 			String key = (String)komplikasjoner.next();
 			Pasientkomplikasjon komplikasjon = (Pasientkomplikasjon)transfusjon.getPasientKomplikasjoner().get(key);
+			Vigilansmelding melding = (Vigilansmelding)komplikasjon;
+			melding.setKlokkesletthendelse(tidForkompl);
 			savePasientkomplikasjon(id, komplikasjon);
 		}
 		
