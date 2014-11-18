@@ -1,11 +1,14 @@
 package no.naks.biovigilans.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Vigilansmelding som annen komplikasjon
  */
 
-public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vigilansmelding{
+public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vigilansmelding,Annenkomplikasjon{
 
 	/**
 	 * Klassifikasjon av hendelsen (beskrivelse)
@@ -43,6 +46,15 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	 * Hvordan ble hendelsen oppdaget
 	 */
 	private String oppdaget;
+	
+	private Map<String,String> annenKomplikasjonsFields;
+	private String[] keys;
+	
+	
+	public AnnenkomplikasjonImpl() {
+		super();
+		annenKomplikasjonsFields = new HashMap();
+	}
 	public String getKlassifikasjon() {
 		return klassifikasjon;
 	}
@@ -97,7 +109,57 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setOppdaget(String oppdaget) {
 		this.oppdaget = oppdaget;
 	}
+	public Map<String, String> getAnnenKomplikasjonsFields() {
+		return annenKomplikasjonsFields;
+	}
+	public void setAnnenKomplikasjonsFields(
+			Map<String, String> annenKomplikasjonsFields) {
+		this.annenKomplikasjonsFields = annenKomplikasjonsFields;
+	}
+	public String[] getKeys() {
+		return keys;
+	}
+	public void setKeys(String[] keys) {
+		this.keys = keys;
+	}
+
 	
+	public void setParams(){
+		Long id = getMeldeid();
+		if (id == null){
+			params = new Object[]{getMeldeid(),getKlassifikasjon()};
+		}else
+			params = new Object[]{getMeldeid(),getKlassifikasjon()};
+		
+	}
+	/**
+	 * setAnnenkomplicationfieldMaps
+	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
+	 * @param userFields En liste over skjermbildefelter
+	 */
+	public void setAnnenkomplicationfieldMaps(String[]userFields){
+		keys = userFields;
+		int size = keys.length;
+		for (int i = 0; i<size;i++){
+			annenKomplikasjonsFields.put(userFields[i],null);
+		}
+	
+		
+	}
+	/**
+	 * saveField
+	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
+	 * @param userField
+	 * @param userValue
+	 */
+	public void saveField(String userField, String userValue) {
+		if (annenKomplikasjonsFields.containsKey(userField) && userValue != null && !userValue.equals("")){
+			annenKomplikasjonsFields.put(userField,userValue);	
+	
+		}
+		
+	}
+
 	
 }
 
