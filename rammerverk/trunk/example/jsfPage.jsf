@@ -1,3 +1,0 @@
-<%@taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
-
-<t:outputText value="hello" ></t:outputText>
