@@ -5,7 +5,7 @@ package no.naks.biovigilans.model;
  * Vigilansmelding som annen komplikasjon
  */
 
-public class AnnenkomplikasjonImpl extends AbstractVigilansmelding{
+public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vigilansmelding{
 
 	/**
 	 * Klassifikasjon av hendelsen (beskrivelse)
@@ -24,7 +24,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding{
 	 */
 	private String komplikasjondefinisjon;
 	/**
-	 * Årsak til avviket
+	 * Ã…rsak til avviket
 	 */
 	private String avvikarsak;
 	/**
@@ -32,7 +32,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding{
 	 */
 	private String hovedprosess;
 	/**
-	 * Gjennomførte eller planlagte tiltak
+	 * GjennomfÃ¸rte eller planlagte tiltak
 	 */
 	private String tiltak;
 	/**
