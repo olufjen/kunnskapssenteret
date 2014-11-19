@@ -61,7 +61,7 @@ CREATE TABLE Pasient
     pasient_id        serial,
     kjonn             varchar(2),
     aldersGruppe      varchar(10),
-    inneliggendePoli  varchar(2),
+    inneliggendePoli  varchar(8),
     avdeling          text,
 
     primary key(pasient_id)
