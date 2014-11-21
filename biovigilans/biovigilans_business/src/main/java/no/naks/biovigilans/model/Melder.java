@@ -25,6 +25,7 @@ public interface Melder {
 	public void setKeys(String[] keys);
 	public void setParams();
 	public int[] getTypes();
+	public int[] getUtypes();
 	public Object[] getParams();
 	public void setMelderfieldMaps(String[]userFields);
 	public void saveField(String userField, String userValue);

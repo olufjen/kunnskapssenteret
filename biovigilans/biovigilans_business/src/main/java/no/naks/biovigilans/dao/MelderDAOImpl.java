@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import no.naks.biovigilans.model.Melder;
-import no.naks.biovigilans.model.MelderImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
@@ -63,6 +62,7 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 		Long id = melder.getMelderId();
 		if(id!=null){
 			sql = updateMelderSQL;
+			types = melder.getUtypes();
 		}
 		
 		tablesUpdate = new TablesUpdateImpl(getDataSource(), sql, types);
@@ -75,8 +75,6 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	}
 	
 	public List<Map<String, Object>> selectMelder(String epost){
-		Boolean flag = false;
-		Melder melder = new MelderImpl();
 		String sql = selectMeldingSQL;
 		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql,epost);
 		return rows;
