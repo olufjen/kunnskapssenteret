@@ -54,7 +54,9 @@ public abstract class AbstractMelder extends AbstractModel implements Melder{
 		return meldertlf;
 	}
 	public void setMeldertlf(String meldertlf) {
-		meldertlf = melderFields.get(keys[5]);
+		if(meldertlf == null){
+			meldertlf = melderFields.get(keys[5]);
+		}
 		this.meldertlf = meldertlf;
 	}
 	public String getHelseregion() {

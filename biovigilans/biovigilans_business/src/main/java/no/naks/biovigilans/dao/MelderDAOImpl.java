@@ -1,6 +1,10 @@
 package no.naks.biovigilans.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.MelderImpl;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
@@ -9,10 +13,10 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	
 	private String insertMelderSQL;
 	private String updateMelderSQL;
+	private String selectMeldingSQL;
 	private String melderPrimaryKey;
 	private String[] melderprimarykeyTableDefs;
 	private Tablesupdate tablesUpdate = null;
-	
 	public String getInsertMelderSQL() {
 		return insertMelderSQL;
 	}
@@ -44,6 +48,13 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	public void setUpdateMelderSQL(String updateMelderSQL) {
 		this.updateMelderSQL = updateMelderSQL;
 	}
+	
+	public String getSelectMeldingSQL() {
+		return selectMeldingSQL;
+	}
+	public void setSelectMeldingSQL(String selectMeldingSQL) {
+		this.selectMeldingSQL = selectMeldingSQL;
+	}
 	public void saveMelder(Melder melder){
 		melder.setParams();
 		int[] types= melder.getTypes();
@@ -53,7 +64,7 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 		if(id!=null){
 			sql = updateMelderSQL;
 		}
-
+		
 		tablesUpdate = new TablesUpdateImpl(getDataSource(), sql, types);
 		tablesUpdate.insert(params);
 		
@@ -61,6 +72,14 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 			melder.setMelderId(getPrimaryKey(melderPrimaryKey,melderprimarykeyTableDefs));
 		}
 		
+	}
+	
+	public List<Map<String, Object>> selectMelder(String epost){
+		Boolean flag = false;
+		Melder melder = new MelderImpl();
+		String sql = selectMeldingSQL;
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql,epost);
+		return rows;
 	}
 	
 }

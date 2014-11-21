@@ -1,5 +1,8 @@
 package no.naks.biovigilans.service;
 
+import java.util.List;
+import java.util.Map;
+
 import no.naks.biovigilans.dao.MelderDAO;
 import no.naks.biovigilans.model.Melder;
 
@@ -21,6 +24,10 @@ public class MelderTableServiceImpl implements MelderTableService {
 		
 		melderDAO.saveMelder(melder);
 
+	}
+	
+	public List selectMelder(String epost){
+		return melderDAO.selectMelder(epost);
 	}
 
 }

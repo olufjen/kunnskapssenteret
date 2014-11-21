@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import java.util.List;
+
 import no.naks.biovigilans.model.Melder;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
@@ -15,4 +17,5 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 	public void saveMelder(Melder melder);
 	public String getUpdateMelderSQL() ;
 	public void setUpdateMelderSQL(String updateMelderSQL);
+	public List selectMelder(String epost);
 }
