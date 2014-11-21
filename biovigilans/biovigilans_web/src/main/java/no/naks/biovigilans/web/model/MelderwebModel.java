@@ -106,6 +106,8 @@ public class MelderwebModel extends VigilansModel {
 	
 	public void kontaktValues(List<Map<String, Object>>  rows){
 			for(Map row:rows){
+				Long id = Long.parseLong(row.get("melderid").toString());
+				melder.setMelderId(id);
 				String name = row.get("meldernavn").toString();
 				this.setMeldernavn(name);
 				String tlf = row.get("meldertlf").toString();
