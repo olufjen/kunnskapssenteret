@@ -56,6 +56,7 @@
   <bean id="melderDAO" class="no.naks.biovigilans.dao.MelderDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   	<property name="insertMelderSQL" value="${melder.insertmelder}"></property>
+  	<property name="updateMelderSQL" value="${melder.updatemelder}"></property>
   	<property name="melderPrimaryKey" value="${primarykey.melder}"></property>
   	<property name="melderprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="selectMeldingSQL" value="${melder.selectmelder}"></property>
