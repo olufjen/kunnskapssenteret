@@ -1,5 +1,8 @@
 package no.naks.biovigilans.web.control;
 
+import java.util.List;
+import java.util.Map;
+
 import no.naks.biovigilans.service.MelderTableService;
 import no.naks.biovigilans.web.model.MelderwebModel;
 
@@ -23,5 +26,10 @@ public class MelderWebServiceImpl implements MelderWebService {
 		
 		melderTableService.saveMelder(melderwebModel.getMelder());
 	}
+	
+	public List selectMelder(String epost){
+		return melderTableService.selectMelder(epost);
+	}
+	
 
 }

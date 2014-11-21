@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -11,6 +10,8 @@
 <body>
 <div class="container">
 <form id="rapport" action="?method=PUT" method="post"> 
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->  
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 var Spinner1;
 var foo;
@@ -39,6 +40,34 @@ function initialize()
   //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
     alert("step 2");
 }
+
+function GetLoginInfo()
+{
+	var epost = document.getElementById("k-epost").value;
+	$.ajax({
+	type: "POST",
+	url: "melder/saveToMelder",
+	data: "{'parameter:'epost}",
+	contentType: "application/json; charset=utf-8",
+	dataType: "json",
+	async: true,
+	cache: false,
+	});
+}
+
+function formSubmit(){
+	
+	
+	$("#btnKontak").click();
+	
+	/* var username=$('#k-epost').val();
+	alert(username);
+ 	$.get('/biovigilans_web/restapi/hemovigilans/TestAjax.html',{user:username},function(responseText) { 
+         $('#btnClk').text(responseText);         
+     }); */
+	}
+
+
 //window.onload=initialize();
 </script>
 
@@ -58,37 +87,38 @@ function initialize()
 	<div class="form-group">
         <label for="k-epost">Melders epost:</label>
         <div>
-          <input name="k-epost" type="email" class="form-control" id="k-epost" placeholder="Email">
+          <input name="k-epost" type="email" value="${melder.melderepost}" class="form-control" id="k-epost" placeholder="Email" onblur="formSubmit();"  />
         </div>
+       
       </div>
       <div class="form-group">
         <label for="k-navn">Melders navn:</label>
         <div>
-          <input name="k-navn" type="text" class="form-control" id="k-navn" placeholder="Navn"/>
+          <input name="k-navn" type="text" value="${melder.meldernavn}"  class="form-control" id="k-navn" placeholder="Navn"/>
         </div>
       </div>
       <div class="form-group">
         <label for="k-helseregion">Helseregion:</label>
         <div>
-          <input name="k-helseregion" type="text" class="form-control" id="k-helseregion" placeholder="Helseregion">
+          <input name="k-helseregion" type="text" value="${melder.helseregion}" class="form-control" id="k-helseregion" placeholder="Helseregion">
         </div>
       </div>
       <div class="form-group">
         <label for="k-helseforetak">Helseforetak:</label>
         <div>
-          <input name="k-helseforetak" type="text" class="form-control" id="k-helseforetak" placeholder="Helseforetak">
+          <input name="k-helseforetak" type="text" value="${melder.helseforetak}" class="form-control" id="k-helseforetak" placeholder="Helseforetak">
         </div>
       </div>
       <div class="form-group">
         <label for="k-sykehus">Institusjon/sykehus:</label>
         <div>
-          <input name="k-sykehus" type="text" class="form-control" id="k-sykehus" placeholder="Institusjon/sykehus">
+          <input name="k-sykehus" type="text" value="${melder.sykehus}" class="form-control" id="k-sykehus" placeholder="Institusjon/sykehus">
         </div>
       </div>
       <div class="form-group">
         <label for="k-tlf">Telefonnummer:</label>
         <div>
-          <input name="k-tlf" type="text" class="form-control" id="k-tlf" placeholder="Telefonnummer">
+          <input name="k-tlf" type="text" value="${melder.meldertlf}" class="form-control" id="k-tlf" placeholder="Telefonnummer">
         </div>
       </div>
       <div class="radio">
@@ -113,7 +143,7 @@ function initialize()
           <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
           <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
           <button name="lagre4" type="submit" class="btn btn-primary" >Lagre</button>
-
+		  <button type="submit" id="btnKontak" value="kontakValue"  name="formValue" class="btn btn-primary" style="display: none" > getValue </button>
 </div> <!--slutt på Kontaktinformasjon-->
 </form>
 </div>

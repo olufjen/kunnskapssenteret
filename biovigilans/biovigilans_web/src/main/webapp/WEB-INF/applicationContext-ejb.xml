@@ -37,6 +37,7 @@
   	<property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
   	
+  	
   	<property name="insertGiverkomplikasjonSQL" value="${giverkomplikasjon.insertgiverkomplikasjon}"></property>
   	<property name="giverkomplikasjonPrimaryKey" value="${primarykey.giverkomplikasjon}"></property>
   	<property name="giverkomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
@@ -57,6 +58,7 @@
   	<property name="insertMelderSQL" value="${melder.insertmelder}"></property>
   	<property name="melderPrimaryKey" value="${primarykey.melder}"></property>
   	<property name="melderprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="selectMeldingSQL" value="${melder.selectmelder}"></property>
   </bean>
   <bean id="komplikasjonsdiagnosegiverDAO" class="no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
