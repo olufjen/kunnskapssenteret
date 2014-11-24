@@ -282,5 +282,14 @@ public class TransfusjonWebModel extends VigilansModel {
 		this.transfusjon.setPasient_Id(this.pasient.getPasient_Id());
 	}
 		
-	
+	public void setTransfusjonsFlag(TransfusjonKvitteringWebModel kvittering){
+		String blodProd = blodProdukt.getBlodprodukt();
+		if (blodProd != null && blodProd.equals("p-blod-trauma")){
+			kvittering.setDisplayPakker("block");
+		}
+		String annenBlod = annenBlodprodukt.getBlodprodukt();
+		if (annenBlod != null && annenBlod.equals("p-annenblod-trauma")){
+		//	kvittering.setDisplayandrePakker("block");
+		}
+	}
 }
