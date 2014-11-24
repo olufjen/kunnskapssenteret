@@ -114,25 +114,27 @@ function addRow() {
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
 //    alert("adding 2 ");
-    var scntDiv =  document.getElementById("p_scents");
+
+ //   var scntDiv =  document.getElementById("p_scents");
 //    alert("adding 3 ");
-    var para = document.getElementById("pp_scents");
-    var inpvalg1 = document.getElementById("p_scnt");
+//    var para = document.getElementById("pp_scents");
+//    var inpvalg1 = document.getElementById("p_scnt");
 //    alert("adding 4 ");
-    var i = para.size + 1;
+   var i = rowCount;
 //    alert("size "+i);
 //	$('<input type="text" id="p_scnt" size="20" name="p_scnt_' + i +'" value="ny" placeholder="Input Value" />').appendTo(scntDiv.id);
 //	scntDiv.innerHTML = '<input type="text" id="p_scntx" size="20" name="p_scnt_' + i +'" value="ny" placeholder="Input Valuexx" />';
     row.insertCell(0).innerHTML= '<input type="button" value = "Fjern" onClick="deleteRow(this)">';
-    //myName.name = myName.value;
- 
+    myName.name = myName.value;
+   
     row.name= myName.value;
     row.insertCell(1).innerHTML= '<input type="text" id="p_scnt" size="25" name="p_scnt_' + i +'" value="ny" placeholder="Input Valuexx" />';
+//    alert("value "+myName.value);
     var inpvalg = document.getElementById("p_scnt");
     inpvalg.value = myName.value;
     inpvalg.name = myName.value;
     inpvalg.id = myName.value;
-    
+//    alert("value "+inpvalg.value);
    // row.insertCell(1).innerHTML='<input/>'.attr({type:"text",name:myName.value,value:"abcd"});
     
  //   var html [];
@@ -400,17 +402,17 @@ function showtext(id,thetext){
     <b>Inneliggende/poliklinisk</b>
     <div class="radio">
       <label>
-        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-1" value="in" />Inneliggende
+        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-1" value="inne" />Inneliggende
       </label>
   </div>
   <div class="radio">
       <label>
-        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-2" value="po"/>Poliklinisk
+        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-2" value="poli"/>Poliklinisk
       </label>
   </div>
   <div class="radio">
       <label>
-        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-3" value="vk"/>Vet ikke
+        <input type="radio" name="p-transfusjon-inneliggende" id="p-transfusjon-ip-3" value="vetikke"/>Vet ikke
       </label>
   </div>
  <!--    <b>Avdeling inn her????</b>  -->
@@ -427,7 +429,7 @@ function showtext(id,thetext){
  	<br/> 
  		
 	<!-- Transfusjon  -->
-	<h3>Transfusjon Feiltransfusjon på eget skjema?</h3>
+	<h3>Transfusjon </h3>
 	<br/> 
 	<b>Klokkeslett velges fra meny.</b>
 	<div class="form-group">
@@ -467,11 +469,11 @@ function showtext(id,thetext){
 <!--  <button id="btnShow">Show</button> -->
 <!--  <button id="btnHide">Hide</button>   -->
 
-    <h3>Blodprodukt (Blodtype?)</h3>
+    <h3>Blodprodukt </h3>
     <b>Blodprodukt mistenkt som årsak til komplikasjonen</b>
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-erytrocytt" id="p-blod-erytrocytt"  value="p-blod-erytrocytt" onclick="toggleDisplay('erytrocyttantall', this.checked);toggleDisplay('erytrocyttantall', this.checked)"/>Erytrocyttkonsentrat
+        <input type="checkbox" name="p-blod-erytrocytt" id="p-blod-erytrocytt"  value="blod-erytrocytt" onclick="toggleDisplay('erytrocyttantall', this.checked);toggleDisplay('erytrocyttantall', this.checked)"/>Erytrocyttkonsentrat
       </label>
   	</div>
     <div id="erytrocyttantall" style="display: none"  class="form-group">
@@ -481,7 +483,7 @@ function showtext(id,thetext){
     
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-trombocytt" id="p-blod-trombocytt" value="p-blod-trombocytt" onclick="toggleDisplay('trombocyttantall', this.checked);toggleDisplay('tappingtypetromb', this.checked)"/>Trombocyttkonsentrat
+        <input type="checkbox" name="p-blod-trombocytt" id="p-blod-trombocytt" value="blod-trombocytt" onclick="toggleDisplay('trombocyttantall', this.checked);toggleDisplay('tappingtypetromb', this.checked)"/>Trombocyttkonsentrat
       </label>
     </div>
    <div id="trombocyttantall" style="display: none" class="form-group">
@@ -527,7 +529,7 @@ function showtext(id,thetext){
     </div>
  
      <div class="checkbox">
-      <label>
+    
         <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked);toggleDisplay('blod-plasmagruppe', this.checked)"/>Plasma 
     </div>
     <div id="blod-plasmagruppe" style="display: none" class="form-group">
@@ -1061,15 +1063,15 @@ function showtext(id,thetext){
         	<td><b>Hemolyseparametre valgt</b></td>
 	    </tr>
 	</table> 
- 		
+<!-- 	 
         <div id="p_scents"  class="form-group">
    			 <p id="pp_scents" title="Hemolyseparametre">
         	<label for="p_scnts" title="HEMO">Hemolyseparametre valgt</label><input type="text" id="p_scnt" size="20" name="p_scnt" value="" placeholder="Valgt" />
     		</p>
 		</div>	
-		
+ -->		
     </div>
- 
+ 	
     
 <!-- Ikke i bruk olj 28.09.14 -->      
     <div id="hemolyse-textxxxx" class="form-group" style="display: none">
