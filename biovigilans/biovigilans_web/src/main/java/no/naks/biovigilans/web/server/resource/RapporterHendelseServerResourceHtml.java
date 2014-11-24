@@ -204,8 +204,8 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	  //  	 transfusjon.setHemolyseParametre(hemolyseParametre);
 	     }
 	     if (kvittering == null){
-	    	 kvittering = new TransfusjonKvitteringWebModel();
-	    	 kvittering.setFormNames(sessionParams);
+	    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
+	  //  	 kvittering.setFormNames(sessionParams);
 	     }
 	     result.setTerms(terms);
 		 result.distributeTerms();
@@ -302,8 +302,8 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		    	 transfusjon.setFormNames(sessionParams);
 	   	     	}
 	   	     if (kvittering == null){
-		    	 kvittering = new TransfusjonKvitteringWebModel();
-		    	 kvittering.setFormNames(sessionParams);
+		    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
+		    	 //kvittering.setFormNames(sessionParams);
 		     }
 	    		for (Parameter entry : form) {
 	    			if (entry.getValue() != null && !(entry.getValue().equals("")))
@@ -339,9 +339,10 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    			result.getPasient().getTransfusjoner().put(transfusjon.getTransfusjon().getTransDato(), transfusjon.getTransfusjon());
 	    			hendelseWebService.saveHendelse(result);
 	    			hendelseWebService.saveTransfusjon(transfusjon,result);
+	    			transfusjon.setTransfusjonsFlag(kvittering);
 	    		}
-	    		sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
-	    		sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
+	    		//sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
+	    		//sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
 //	    		System.out.println("Status = "+result.getStatus());
 	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
