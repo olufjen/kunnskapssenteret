@@ -384,307 +384,56 @@ function deleteRow(obj) {
     </div>
      <div id="temperaturstigning" class="form-group" style="display: ${kvittering.displayTemperatur}">
      <label>Temperatur før transfusjonsreaksjonen</label> 
-      <input type="number" step="any" min="0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
+     <label>${kvittering.temperaturFor}</label>
       <label>Temperatur etter transfusjonsreaksjonen</label> 
-      <input type="number" step="any" min="0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
-      <label>Temperaturstigning</label> 
-      <output name="p-stigning" id="p-stigning"></output>
+      <label>${kvittering.temperaturEtter}</label>
+      <label>Temperaturstigning</label>
+      <label>${kvittering.tempendring}</label> 
+     
     </div>    
 
-    <div id="komp-annet-text" class="form-group" style="display: none">
-    <label>Hvis annet, beskriv nærmere i fritekst:</label>
-	 <textarea class="form-control" name="p-komp-annettext" rows="3"></textarea>
-    </div>
-      <b>Mistenkt årsak til transfusjonsreaksjon </b>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-1" value="ahtr-1" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-2" value="ahtr-2" onclick="toggleDisplay('antistofftype', this.checked);toggleDisplay('lga-valg', 0)"/>Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
-      </label>
-    </div>
-    
 
-    
-    <div class="radio">
+      <b>Mistenkt årsak til transfusjonsreaksjon </b>
+      <div class="checkbox" >
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-dhtr" value="dhtr" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Forsinket hemolytisk transfusjonsreaksjon (DHTR)
+        ${kvittering.klassifikasjon}
       </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-fnhtr" value="fnhtr" onclick="toggleDisplay('antistofftype', 0);;toggleDisplay('lga-valg', 0)"/>Febril non-hemolytisk transfusjonsreaksjon (FNHTR)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hemolyse" value="hemolyse" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Ikke immunbetinget hemolyse
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-anafylaktisk" value="anafylaktisk" onclick="toggleDisplay('antistofftype',0);toggleDisplay('lga-valg',this.checked)"/>Anafylaktisk/alvorlig allergisk reaksjon
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-allergisk" value="allergisk" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Annen allergisk reaksjon (mindre alvorlig)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ta-gvhd" value="gvhd" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsassosiert transplantat-mot-vert-reaksjon (TA-GVHD)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ptp" value="ptp" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Posttransfusjonspurpura (PTP)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-trali" value="trali" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsrelatert akutt lungeskade (TRALI)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-tad" value="tad" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)" />Transfusjonsassosiert dyspne (TAD)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-taco" value="taco" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsrelatert overbelastning av kretsløpet (TACO)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hypo" value="hypo" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Hypotensiv transfusjonsreaksjon
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hemo" value="hemo" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Hemosiderose
-      </label>
-    </div>
-    
-        <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hyper" value="hyper" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Hyperkalemi
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-bakterie" value="bakterie" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsoverført bakterieinfeksjon
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-virus" value="virus" onclick="toggleDisplay('antistofftype', 0);;toggleDisplay('lga-valg', 0)"/>Transfusjonsoverført virusinfeksjon
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-smitte" value="smitte" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Annen smitteoverføring
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-aiha" value="aiha" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsutløst autoimmun hemolytisk anemi (AIHA)
-      </label>
-    </div>
-        <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-manglendeeffekt" value="manglendeeffekt" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Manglende effekt av transfusjon
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-uct" value="uct" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Uklassifiserbar transfusjonskomplikasjon (UCT)
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-kanikke" value="kanikke" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Kan ikke konkludere (les definisjonene før du velger dette)
-      </label>
-    </div>
-    <!-- 
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ingenklinisk" value="ingenklinisk" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Ingen klinisk reaksjon (f.eks. ved feil, men forlikelig blod, skal trolig ikke væremed)
-      </label>
-    </div>
-  -->   
+  	</div>
+  
     <h3>Utredning</h3>
     <b>Blodtypeserologisk utredning tyder på HTR</b>
-     <div class="radio">
+     <div class="checkbox">
       <label>
-        <input type="radio" name="p-utredning" id="p-utredning-1" value="HTRnei" onclick="toggleDisplay('antistofftype', 0)" />Nei
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-utredning" id="p-utredning-2" value="HTRja" onclick="toggleDisplay('antistofftype', this.checked)"/>Ja 
-      </label>
-    </div>
-       <div class="radio">
-      <label>
-        <input type="radio" name="p-utredning" id="p-utredning-3" value="HTRvetikke" onclick="toggleDisplay('antistofftype', 0)"/>Ikke utført
-      </label>
-    </div>
-
-    <div id="antistofftype" style="display: none" class="form-group">
-    <b>Type antistoff:</b>
-    <div  class="checkbox">
-     <label>
-      <input name="p-antistoff-erytrocytt" type="checkbox" id="p-antistoff-erytrocytt"  value="antistoff-erytrocytt" onclick="toggleDisplay('antistofferytrocytttext', this.checked)"/> Erytrocyttantistoff.
-    </label>
-    </div>
-       <div id="antistofferytrocytttext" style="display: none" class="form-group">
-     <label>Type antistoff</label> 
-      <input type="text"  name="p-antistofferytrocytttext" size="80"  value="" class="form-control"/>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-antistoff-hla" type="checkbox" id="p-antistoff-hla" value="antistoff-hla"/> HLA-antistoff. 
-    </label>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-antistoff-trombocytt" type="checkbox" id="p-antistoff-trombocytt" value="antistoff-trombocytt"/> Trombocyttspesifikt antistoff. 
-    </label>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-antistoff-leukocytt" type="checkbox" id="p-antistoff-leukocytt" value="antistoff-leukocytt"/> Leukocyttspesifikt antistoff.
-    </label>
-    </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-antistoff-iga" type="checkbox" id="p-antistoff-iga" value="antistoff-iga"/> Anti-lgA.
-    </label>
-    </div>
-    <div id="antistoffannet" class="form-group">
-     <label>Annet antistoff</label> 
-      <input type="text"  name="p-antistoffannet" size="80"  value="" class="form-control"/>
-    </div>
-    </div>    
-<!-- Ikke i bruk olj 28.09.14 -->    
-    <div id="utredningannet-text" class="form-group" style="display: none">
-    <label>Hvis ja, beskriv nærmere i fritekst:</label>
-	 <textarea class="form-control" name="p-utredning" rows="3"></textarea>
-	</div>
-<!-- *********** -->	
-     <b>Hemolyseparametere er positive.</b>
-     <div class="radio">
-      <label>
-        <input type="radio" name="p-hemolyse" id="p-hemolyse-1" value="Hemposnei" onclick="toggleDisplay('hemolyse-text', 0)" />Nei
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-hemolyse" id="p-hemolyse-2" value="Hemposja" onclick="toggleDisplay('hemolyse-text', this.checked)"/>Ja 
-      </label>
-    </div>
-     <div class="radio">
-      <label>
-        <input type="radio" name="p-hemolyse" id="p-hemolyse-3" value="Hemposikkeutført" onclick="toggleDisplay('hemolyse-text', 0)"/>Ikke utført 
+      <#list kvittering.antistoff?chunk(4, '-') as arow>
+  		<#list arow as cell>${cell} </#list>
+	  </#list>
+      
       </label>
     </div>
     
-  	<b>Hemolyseparametre.</b>
-    <div id="hemolyse-text" style="display: none" class="form-group">
-      <table>
-      	<tr>
-      	<td>
-   <!--      <label>Hemolyseparametre</label>  --> 
-            	<input name ="p-hemolysetext"  id="hemolyseparamvalg" list="hemproduktvalg" >
-        		<datalist id="hemproduktvalg">
-      	       <#list pasientkomplikasjon.hemolyseParametre as hemolyse>
-        			<option >${hemolyse}</option>
-			    </#list>  
-        		</datalist> 
-    <!--      		<button name="p_hemolyseleggtil" type="submit" onclick="addRow()" class="btn btn-primary">Legg til</button>  --> 
-      		<input type="button" id="hemolyseadd" value="Legg til" onclick="addRow()"  class="btn btn-primary"> 
-        </td>		
-        </tr>		
-      </table>
-      <table id="hemolyseTableData"  border="1" >
-	    <tr>
-    		<td>&nbsp;</td>
-        	<td><b>Hemolyseparametre valgt</b></td>
-	    </tr>
-	</table> 
- <!--  		
-        <div id="p_scents"  class="form-group">
-   			 <p id="pp_scents" title="Hemolyseparametre">
-        	<label for="p_scnts" title="HEMO">Hemolyseparametre valgt</label><input type="text" id="p_scnt" size="20" name="p_scnt" value="" placeholder="Valgt" />
-    		</p>
-		</div>	
--->		
-    </div>
+    
+
+     <b>Hemolyseparametere er positive.</b>
  
     
-<!-- Ikke i bruk olj 28.09.14 -->      
-    <div id="hemolyse-textxxxx" class="form-group" style="display: none">
-    <label>Hvis ja, beskriv nærmere i fritekst:</label>
-	 <textarea class="form-control" name="p-hemolysetextxxxx" rows="3"></textarea>
-	</div> 
-<!-- *********** -->		
+  	<b>Hemolyseparametre.</b>
+ 	     <div class="checkbox">
+      <label>
+      <#list kvittering.hemolyse?chunk(4, '-') as hrow>
+  		<#list hrow as cell>${cell} </#list>
+	  </#list>
+      
+      </label>
+    </div>	
 
-	 <div id="lga-valg" class="form-group" style="display: none">
-     <b>lgA-mangel/anti-lgA</b>
-     <div class="radio">
-      <label>
-        <input type="radio" name="p-lga" id="p-lga-1" value="lganei" onclick="toggleDisplay('lga-text', 0)" />Nei
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-lga" id="p-lga-2" value="lgaja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-lga" id="p-lga-3" value="lgaikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
-      </label>
-    </div>
-    </div>
-    <div id="lga-text" class="form-group" style="display: none">
-    <label>Hvis ja, beskriv nærmere i fritekst:</label>
-	 <textarea class="form-control" name="p-lgatext" rows="3"></textarea>
-	</div>
+ 
      <b>Dyrkning fra pose utført</b>
-     <div class="radio">
+     <div class="checkbox" >
       <label>
-        <input type="radio" name="p-dyrkning" id="p-dyrkning-1" value="dyrkingnei" onclick="toggleDisplay('dyrkingpositiv', 0)" />Nei
+        ${kvittering.poseDyrkning}
       </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-dyrkning" id="p-dyrkning-2" value="dyrkingja" onclick="toggleDisplay('dyrkingpositiv', this.checked)"/>Ja 
-      </label>
-    </div>
-  
-   <div id="dyrkingpositiv" class="form-group" style="display: none">
-	<p>Hvis ja</p>    
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-positiv" id="p-positiv-1" value="positiv" onclick="toggleDisplay('dyrkingpositiv-text', this.checked)"/>Positiv
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-positiv" id="p-positiv-2" value="negativ" onclick="toggleDisplay('dyrkingpositiv-text', 0)"/>Negativ
-      </label>
-    </div>
-	</div>
-	<div id="dyrkingpositiv-text" class="form-group" style="display: none">
-    <label>Hvis ja, beskriv funn i fritekst:</label>
-	 <textarea class="form-control" name="p-dyrkingpostext" rows="3"></textarea>
-	</div> 
+  	</div>  
+  	
     <div class="form-group" >
 		<h3>Alvorlighetsgrad (samordnes med komplikasjoner ved tapping av givere)</h3>
 
