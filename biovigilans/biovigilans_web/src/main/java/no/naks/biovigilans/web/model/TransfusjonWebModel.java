@@ -2,6 +2,7 @@ package no.naks.biovigilans.web.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -289,7 +290,20 @@ public class TransfusjonWebModel extends VigilansModel {
 		}
 		String annenBlod = annenBlodprodukt.getBlodprodukt();
 		if (annenBlod != null && annenBlod.equals("p-annenblod-trauma")){
-		//	kvittering.setDisplayandrePakker("block");
+			kvittering.setDisplayandrePakker("block");
 		}
+		if (symptomer.getTempFor() > 0 && symptomer.getTempetter() > 0){
+			kvittering.setDisplayTemperatur("block");
+		}
+		Iterator utredIterator = utredning.getHemolyseAnalyser().keySet().iterator();
+		
+		while (utredIterator.hasNext()){
+			String key = (String)utredIterator.next();
+			Hemolyse hemolyseParam = (Hemolyse)utredning.getHemolyseAnalyser().get(key);
+			String hemo = hemolyseParam.getHemolyseParameter();
+			kvittering.getHemolyseParams().add(hemo);
+			
+		}
+		kvittering.convertHemolyse();
 	}
 }

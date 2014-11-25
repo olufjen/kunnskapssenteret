@@ -1,5 +1,7 @@
 package no.naks.biovigilans.web.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +52,15 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 	private String displayPakker = "none";
 	private String displayandrePakker = "none";
 	private String displayTemperatur = "none";
+	private String klassifikasjon = "";
+	private String temperaturFor = "";
+	private String temperaturEtter = "";
+	private String tempendring = "";
+	private String[] antistoff = {"","","","","","","","",""};
+	private String[] hemolyse;
+	private List<String>hemolyseParams;
+	private String poseDyrkning;
+	
 	
 	private String[]  symptomer = {"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
 	
@@ -62,6 +73,7 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		super();
 		setFormNames(sessionParams);
 		formFields = getFormNames();
+		hemolyseParams = new ArrayList<String>();
 
 	}
 
@@ -104,6 +116,139 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 
 	public void setDisplayPakker(String displayPakker) {
 		this.displayPakker = displayPakker;
+	}
+
+	public void convertHemolyse(){
+		hemolyse = new String[hemolyseParams.size()];
+		hemolyse = hemolyseParams.toArray(hemolyse);
+	}
+	public String[] getHemolyse() {
+		return hemolyse;
+	}
+
+
+	public void setHemolyse(String[] hemolyse) {
+		this.hemolyse = hemolyse;
+	}
+
+
+	public List<String> getHemolyseParams() {
+		return hemolyseParams;
+	}
+
+
+	public void setHemolyseParams(List<String> hemolyseParams) {
+		this.hemolyseParams = hemolyseParams;
+	}
+
+
+	public String getPoseDyrkning() {
+		Map<String,String> userEntries = getFormMap();
+		String[] poseFields = {formFields[127],formFields[128]};
+		for (String field : poseFields){
+			String value =  userEntries.get(field);
+			if (value != null && !value.equals("")){
+				poseDyrkning = poseDyrkning + value;
+			}
+		}
+		return poseDyrkning;
+	}
+
+
+	public void setPoseDyrkning(String poseDyrkning) {
+		this.poseDyrkning = poseDyrkning;
+	}
+
+
+	public String[] getAntistoff() {
+		Map<String,String> userEntries = getFormMap();
+		String[] antistoffFields = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[143],formFields[144],formFields[145]};
+		int ct = 0;
+		for (String field : antistoffFields){
+			String value =  userEntries.get(field);
+			if (value != null && !value.equals("")){
+				antistoff[ct] = value + " ";
+				ct++;
+				
+			}
+		}
+		return antistoff;
+	}
+
+
+	public void setAntistoff(String[] antistoff) {
+		this.antistoff = antistoff;
+	}
+
+
+	public String getTemperaturFor() {
+		Map<String,String> userEntries = getFormMap();
+		String field = formFields[178];
+		if (userEntries.get(field) != null){
+			temperaturFor = userEntries.get(field);
+			String tempE = getTemperaturEtter();
+			if (!tempE.equals("") && !temperaturFor.equals("")){
+				double tfx = Double.parseDouble(temperaturFor);
+				double tex = Double.parseDouble(tempE);
+				double diff = tex - tfx;
+				tempendring = String.valueOf(diff);
+			}
+			
+		}
+		
+		return temperaturFor;
+	}
+
+
+	public void setTemperaturFor(String temperaturFor) {
+		this.temperaturFor = temperaturFor;
+	}
+
+
+	public String getTemperaturEtter() {
+		Map<String,String> userEntries = getFormMap();
+		String field = formFields[179];
+		if (userEntries.get(field) != null){
+			temperaturEtter = userEntries.get(field);
+		}
+	
+		return temperaturEtter;
+	}
+
+
+	public void setTemperaturEtter(String temperaturEtter) {
+		this.temperaturEtter = temperaturEtter;
+	}
+
+
+	public String getTempendring() {
+		return tempendring;
+	}
+
+
+	public void setTempendring(String tempendring) {
+		this.tempendring = tempendring;
+	}
+
+
+	public String getKlassifikasjon() {
+		Map<String,String> userEntries = getFormMap();
+		String[] klassifikasjonFields = {formFields[91],formFields[92],formFields[93],formFields[94],formFields[95],formFields[96],
+			formFields[97],formFields[98],formFields[99],formFields[100],formFields[101],formFields[102],formFields[103],formFields[104],
+			formFields[105],formFields[106],formFields[107],formFields[108],formFields[109],formFields[110],formFields[111],formFields[112],formFields[113]};
+		for (String field : klassifikasjonFields){
+			String value =  userEntries.get(field);
+			if (value != null && !value.equals("")){
+				klassifikasjon = value;
+				break;
+			}
+		}
+		return klassifikasjon;
+	}
+
+
+	public void setKlassifikasjon(String klassifikasjon) {
+		this.klassifikasjon = klassifikasjon;
 	}
 
 
