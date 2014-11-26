@@ -283,6 +283,12 @@ public class TransfusjonWebModel extends VigilansModel {
 		this.transfusjon.setPasient_Id(this.pasient.getPasient_Id());
 	}
 		
+	/**
+	 * setTransfusjonsFlag
+	 * Denne rutinen setter opp ulike feltverdier for TransfusjonKvitteringWebModel.
+	 * Dette er blodproduktverdier, symptomer, og hemolyseverdier
+	 * @param kvittering
+	 */
 	public void setTransfusjonsFlag(TransfusjonKvitteringWebModel kvittering){
 		String blodProd = blodProdukt.getBlodprodukt();
 		if (blodProd != null && blodProd.equals("p-blod-trauma")){
@@ -292,9 +298,16 @@ public class TransfusjonWebModel extends VigilansModel {
 		if (annenBlod != null && annenBlod.equals("p-annenblod-trauma")){
 			kvittering.setDisplayandrePakker("block");
 		}
-		if (symptomer.getTempFor() > 0 && symptomer.getTempetter() > 0){
-			kvittering.setDisplayTemperatur("block");
+		Iterator symptomIterator = pasientKomplikasjon.getSymptomer().keySet().iterator();
+		while (symptomIterator.hasNext()){
+			String key = (String)symptomIterator.next();
+			Symptomer symptomer  = (Symptomer)pasientKomplikasjon.getSymptomer().get(key);
+			if (symptomer.getTempFor() > 0 && symptomer.getTempetter() > 0){
+				kvittering.setDisplayTemperatur("block");
+			}
+			
 		}
+	
 		Iterator utredIterator = utredning.getHemolyseAnalyser().keySet().iterator();
 		
 		while (utredIterator.hasNext()){

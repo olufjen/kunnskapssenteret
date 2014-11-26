@@ -59,9 +59,11 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 	private String[] antistoff = {"","","","","","","","",""};
 	private String[] hemolyse;
 	private List<String>hemolyseParams;
-	private String poseDyrkning;
-	
-	
+	private String poseDyrkning = "";
+	private String alvorlighetsGrad = "";
+	private String kliniskRes = "";
+	private String arsak = "";
+
 	private String[]  symptomer = {"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""};
 	
 	
@@ -142,13 +144,73 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 	}
 
 
+	public String getAlvorlighetsGrad() {
+		Map<String,String> userEntries = getFormMap();
+		String[] alvorFields = {formFields[129],formFields[130],formFields[131],formFields[132],formFields[133]};
+		for (String field : alvorFields){
+			String value =  userEntries.get(field);
+			if (value != null && !value.equals("")){
+				alvorlighetsGrad = value;
+				break;
+			}
+		}
+		return alvorlighetsGrad;
+	}
+
+
+	public void setAlvorlighetsGrad(String alvorlighetsGrad) {
+			this.alvorlighetsGrad = alvorlighetsGrad;
+	}
+
+
+	public String getKliniskRes() {
+		Map<String,String> userEntries = getFormMap();
+		String[] kliniskFields = {formFields[134],
+				formFields[135],formFields[136],formFields[137],formFields[138]};
+		for (String field : kliniskFields){
+			String value =  userEntries.get(field);
+			if (value != null && !value.equals("")){
+				kliniskRes = value;
+				break;
+			}
+		}
+		
+		return kliniskRes;
+	}
+
+
+	public void setKliniskRes(String kliniskRes) {
+		this.kliniskRes = kliniskRes;
+	}
+
+
+	public String getArsak() {
+		Map<String,String> userEntries = getFormMap();
+		String[] arsakFields = {formFields[139],formFields[140],formFields[141],formFields[142]};
+		for (String field : arsakFields){
+			String value =  userEntries.get(field);
+			if (value != null && !value.equals("")){
+				arsak = value;
+				break;
+			}
+		}
+		
+		return arsak;
+	}
+
+
+	public void setArsak(String arsak) {
+		this.arsak = arsak;
+	}
+
+
 	public String getPoseDyrkning() {
 		Map<String,String> userEntries = getFormMap();
 		String[] poseFields = {formFields[127],formFields[128]};
 		for (String field : poseFields){
 			String value =  userEntries.get(field);
 			if (value != null && !value.equals("")){
-				poseDyrkning = poseDyrkning + value;
+				poseDyrkning = poseDyrkning + " "+ value;
 			}
 		}
 		return poseDyrkning;
