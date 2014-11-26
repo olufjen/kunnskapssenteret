@@ -383,12 +383,12 @@ function deleteRow(obj) {
       </label>
     </div>
      <div id="temperaturstigning" class="form-group" style="display: ${kvittering.displayTemperatur}">
-     <label>Temperatur før transfusjonsreaksjonen</label> 
-     <label>${kvittering.temperaturFor}</label>
-      <label>Temperatur etter transfusjonsreaksjonen</label> 
-      <label>${kvittering.temperaturEtter}</label>
-      <label>Temperaturstigning</label>
-      <label>${kvittering.tempendring}</label> 
+     <label>Temperatur før transfusjonsreaksjonen: </label> 
+     <label class="checkbox">${kvittering.temperaturFor}</label>
+      <label>Temperatur etter transfusjonsreaksjonen: </label> 
+      <label  class="checkbox">${kvittering.temperaturEtter}</label>
+      <label>Temperaturstigning: </label>
+      <label  class="checkbox">${kvittering.tempendring}</label> 
      
     </div>    
 
@@ -435,113 +435,37 @@ function deleteRow(obj) {
   	</div>  
   	
     <div class="form-group" >
-		<h3>Alvorlighetsgrad (samordnes med komplikasjoner ved tapping av givere)</h3>
+		<h3>Alvorlighetsgrad</h3>
 
 		<div class="radio">
 			<label>
-				<input type="radio" name="alvor-mang" id="grad1" value="Ikke livstruende" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Ikke livstruende
+			  ${kvittering.alvorlighetsGrad}
 			</label>
 		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="alvor-mang" id="grad2" value="Livstruende" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Livstruende
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="alvor-mang" id="grad3"value="Langtidsmorbiditet" onclick="toggleDisplay('langtidsmorbiditet', this.checked)"/>Langtidsmorbiditet
-			</label>
-		</div>
-		<div id="langtidsmorbiditet" class="form-group" style="display: none">
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad1"value="1 uke 6 mnd" />1 uke til 1 mnd
-			</label>
-			</div>
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad2"value="1 mnd 6 mnd" />1 til 6 mnd
-			</label>
-			</div>
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad3"value="6 mnd 12 mnd" />6 til 12 mnd
-			</label>
-			</div>
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad4"value=">12 mnd" />Mer enn 12 mnd
-			</label>
-			</div>
-		
-		</div>
-		
-		<div class="radio">
-			<label>
-				<input type="radio" name="alvor-mang" id="grad4" value="dod" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Dødsfall
-			</label>
-		</div>
+	
 	</div>
 	<div class="form-group" >
-		<h3>Klinisk Resultat (samordnes med komplikasjoner ved tapping av givere)</h3>
+		<h3>Klinisk Resultat</h3>
 		<div class="radio">
 			<label>
-				<input type="radio" name="klinisk-res" id="full-helb" value="helbred"/>Full helbredelse
+				  ${kvittering.kliniskRes}
 			</label>
 		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="klinisk-res" id="lett-sek" value="lettsekvele" />Lett sekvele
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="klinisk-res" id="alv-sek" value="alvorligsekvele" />Alvorlig sekvele
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="klinisk-res" id="dodsfall" value="dod"/>Dødsfall
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="klinisk-res" id="vet-ikke" value="vetikke"/>Vet ikke
-			</label>
-		</div>
+
 	</div>
 	<div class="form-group" >
 		<h3>Årsakssammenheng</h3>
 		<div class="radio">
 			<label>
-				<input type="radio" name="aarsaks" id="utelukket" value="NA kan ikke vurderes" />NA kan ikke vurderes
+				  ${kvittering.arsak}
 			</label>
 		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="aarsaks" id="usannsynlig" value="0 utelukket"/>0 Utelukket
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="aarsaks" id="1 Mulig" value="mulig"/>1 Mulig
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="aarsaks" id="2 Sannsynlig" value="sannsynlig"/>2 Sannsynlig
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" name="aarsaks" id="3 Sannsynlig" value="3 Sikker"/>3 Sikker
-			</label>
-		</div>
+	
 	</div>
     <br/>
        <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
-      <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
-      <button name="lagre4" type="submit" class="btn btn-primary">Lagre</button>
+      <button name="ikkegodkjent" type="submit" class="btn btn-default">Ikke godkjent</button>
+      <button name="godkjent" type="submit" class="btn btn-primary">Godkjent</button>
     
 </div><!--slutt pasientkomplikasjon-->
  </form>
