@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/organisation" xmlns:tns="http://www.example.org/organisation" elementFormDefault="qualified" xmlns:Q1="http:">
+
+ <xs:complexType name="ArrayOfAuthorization">
+   <xs:complexContent>
+     <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+       <xs:sequence>
+         <xs:element name="Authorization" type="tns:Authorization" maxOccurs="unbounded" minOccurs="0"/>
+       </xs:sequence>
+     </xs:restriction>
+   </xs:complexContent>
+ </xs:complexType>
+  
+  <xs:complexType name="ArrayOfSpeciality">
+    <xs:complexContent>
+      <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+        <xs:sequence>
+          <xs:element name="Speciality" type="tns:Speciality" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+ 
+  <xs:complexType name="Requisition">
+    <xs:complexContent>
+      <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+        <xs:sequence>
+          <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+          <xs:element name="Type" type="tns:Code" minOccurs="0"/>
+          <xs:element name="Valid" type="tns:Period" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="Speciality">
+    <xs:complexContent>
+      <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+        <xs:sequence>
+          <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+          <xs:element name="Type" type="{http://register.nhn.no/Common}Code" minOccurs="0"/>
+          <xs:element name="Valid" type="{http://register.nhn.no/Common}Period" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="Authorization">
+    <xs:complexContent>
+      <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+        <xs:sequence>
+          <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+          <xs:element name="Profession" type="tns:Code" minOccurs="0"/>
+          <xs:element name="Requisition" type="tns:Requisition" minOccurs="0"/>
+          <xs:element name="Specialities" type="tns:ArrayOfSpeciality" minOccurs="0"/>
+          <xs:element name="Type" type="tns:Code" minOccurs="0"/>
+          <xs:element name="Valid" type="tns:Period" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  
+ 
+ 
+     <xs:complexType name="Code">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="CodeText" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+             <xs:element name="CodeValue" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+             <xs:element name="OID" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+             <xs:element name="SimpleType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>    
+ 
+  <xs:complexType name="ArrayOfElectronicAddress">
+    <xs:complexContent>
+      <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+        <xs:sequence>
+          <xs:element name="ElectronicAddress" type="tns:ElectronicAddress" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+    
+     <xs:complexType name="ArrayOfPhysicalAddress">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="PhysicalAddress" type="tns:PhysicalAddress" maxOccurs="unbounded" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>
+ 
+   <xs:complexType name="ElectronicAddress">
+     <xs:complexContent>
+       <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+         <xs:sequence>
+           <xs:element name="Address" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+           <xs:element name="Inherited" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+           <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+           <xs:element name="TypeCodeValue" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+         </xs:sequence>
+       </xs:restriction>
+     </xs:complexContent>
+   </xs:complexType>
+  
+ <xs:complexType name="PhysicalAddress">
+   <xs:complexContent>
+     <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+       <xs:sequence>
+         <xs:element name="City" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+         <xs:element name="Description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+         <xs:element name="Inherited" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+         <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+         <xs:element name="PostalCode" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+         <xs:element name="Postbox" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+         <xs:element name="StreetAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+         <xs:element name="TypeCodeValue" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+       </xs:sequence>
+     </xs:restriction>
+   </xs:complexContent>
+ </xs:complexType>
+    
+     <xs:complexType name="Period">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="From" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+             <xs:element name="To" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>   
+    
+    <xs:complexType name="CommunicationParty">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="Active" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+             <xs:element name="DisplayName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+             <xs:element name="ElectronicAddresses" type="tns:ArrayOfElectronicAddress" minOccurs="0"/>
+             <xs:element name="HerId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+             <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+             <xs:element name="Municipality" type="tns:Code" minOccurs="0"/>
+             <xs:element name="Name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+             <xs:element name="ParentBusinessType" type="tns:Code" minOccurs="0"/>
+             <xs:element name="ParentHerId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+             <xs:element name="ParentName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+             <xs:element name="ParentOrganizationNumber" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+             <xs:element name="PhysicalAddresses" type="tns:ArrayOfPhysicalAddress" minOccurs="0"/>
+             <xs:element name="ServerTime" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+             <xs:element name="Type" type="tns:CommunicationPartyType" minOccurs="0"/>
+             <xs:element name="Valid" type="tns:Period" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>
+    
+    <xs:complexType name="Department">
+       <xs:complexContent>
+           <xs:extension base="tns:CommunicationParty">
+           <xs:sequence>
+             <xs:element name="BusinessType" type="tns:Code" minOccurs="0"/>
+             <xs:element name="IndustryCodes" type="tns:ArrayOfCode" minOccurs="0"/>
+             <xs:element name="People" type="tns:ArrayOfOrganizationPerson" minOccurs="0"/>
+           </xs:sequence>
+         </xs:extension>
+       </xs:complexContent>
+     </xs:complexType>   
+    
+    <xs:complexType name="ArrayOfCode">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="Code" type="tns:Code" maxOccurs="unbounded" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>
+    
+     <xs:complexType name="ArrayOfDepartment">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="Department" type="tns:Department" maxOccurs="unbounded" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>
+    
+    <xs:complexType name="Person">
+      <xs:complexContent>
+        <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+          <xs:sequence>
+            <xs:element name="BirthDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+            <xs:element name="CitizenId" type="tns:CitizenId" minOccurs="0"/>
+            <xs:element name="FirstName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+            <xs:element name="HPRInformation" type="tns:HPRInformation" minOccurs="0"/>
+            <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+            <xs:element name="LastName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+            <xs:element name="MiddleName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+            <xs:element name="Sex" type="tns:Code" minOccurs="0"/>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+
+ <xs:complexType name="CitizenId">
+   <xs:complexContent>
+     <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+       <xs:sequence>
+         <xs:element name="CitizenIdType" type="{http://register.nhn.no/Common}CitizenIdType" minOccurs="0"/>
+         <xs:element name="Id" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+         <xs:element name="Sex" type="{http://register.nhn.no/Common}Code" minOccurs="0"/>
+       </xs:sequence>
+     </xs:restriction>
+   </xs:complexContent>
+ </xs:complexType>
+
+  <xs:complexType name="HPRInformation">
+    <xs:complexContent>
+      <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+        <xs:sequence>
+          <xs:element name="Authorizations" type="tns:ArrayOfAuthorization" minOccurs="0"/>
+          <xs:element name="HPRNo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+          <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+ 
+<xs:complexType name="OrganizationPerson">
+  <xs:complexContent>
+    <xs:extension base="tns:CommunicationParty">
+      <xs:sequence>
+        <xs:element name="Departments" type="tns:ArrayOfDepartment" minOccurs="0"/>
+        <xs:element name="Organizations" type="tns:ArrayOfOrganization" minOccurs="0"/>
+        <xs:element name="Person" type="tns:Person" minOccurs="0"/>
+        <xs:element name="Properties" type="tns:ArrayOfCode" minOccurs="0"/>
+        <xs:element name="Title" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+    
+    <xs:complexType name="Organization">
+        <xs:complexContent>
+            <xs:extension base="tns:CommunicationParty">
+ 
+                <xs:sequence>
+                    
+                    <xs:element name="BusinessType" type="tns:Code" minOccurs="0" />
+                    
+                    <xs:element name="Departments" type="tns:ArrayOfDepartment" minOccurs="0" />
+                    
+                    <xs:element name="IndustryCodes" type="tns:ArrayOfCode" minOccurs="0" />
+                    
+                    <xs:element name="OrganizationNumber" type="xs:int" minOccurs="0" />
+                    
+                    <xs:element name="People" type="tns:ArrayOfOrganizationPerson" minOccurs="0" />
+                    
+                    <xs:element name="Services" type="tns:ArrayOfService" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+     <xs:complexType name="Service">
+       <xs:complexContent>
+         <xs:extension base="{http://register.nhn.no/CommunicationParty}CommunicationParty">
+           <xs:sequence>
+             <xs:element name="Code" type="tns:Code" minOccurs="0"/>
+             <xs:element name="LocationDescription" type="xs:string" minOccurs="0"/>
+           </xs:sequence>
+         </xs:extension>
+       </xs:complexContent>
+     </xs:complexType>   
+    
+     <xs:complexType name="ArrayOfService">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="Service" type="tns:Service" maxOccurs="unbounded" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>   
+    
+     <xs:complexType name="ArrayOfOrganization">
+       <xs:complexContent>
+         <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+           <xs:sequence>
+             <xs:element name="Organization" type="tns:Organization" maxOccurs="unbounded" minOccurs="0"/>
+           </xs:sequence>
+         </xs:restriction>
+       </xs:complexContent>
+     </xs:complexType>
+    
+    <xs:complexType name="ArrayOfOrganizationPerson">
+      <xs:complexContent>
+        <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+          <xs:sequence>
+            <xs:element name="OrganizationPerson" type="tns:OrganizationPerson" maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

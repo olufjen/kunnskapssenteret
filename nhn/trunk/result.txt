@@ -1,0 +1,49 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Test av Meldingstjeneste fra Kunnskapssenteret 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ webtjenestetest ---
+[INFO] Deleting C:\svnroot2\nokc\webtjeneste\trunk\tjenestertest\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ webtjenestetest ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ webtjenestetest ---
+[INFO] Compiling 153 source files to C:\svnroot2\nokc\webtjeneste\trunk\tjenestertest\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ webtjenestetest ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ webtjenestetest ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.7.2:test (default-test) @ webtjenestetest ---
+[INFO] No tests to run.
+[INFO] Surefire report directory: C:\svnroot2\nokc\webtjeneste\trunk\tjenestertest\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+There are no tests to run.
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ webtjenestetest ---
+[INFO] Building jar: C:\svnroot2\nokc\webtjeneste\trunk\tjenestertest\target\meldingstjeneste.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ webtjenestetest ---
+[INFO] Installing C:\svnroot2\nokc\webtjeneste\trunk\tjenestertest\target\meldingstjeneste.jar to C:\Users\olj\.m2\repository\no\kunnskapssenteret\webtjenestetest\1.0-SNAPSHOT\webtjenestetest-1.0-SNAPSHOT.jar
+[INFO] Installing C:\svnroot2\nokc\webtjeneste\trunk\tjenestertest\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\webtjenestetest\1.0-SNAPSHOT\webtjenestetest-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5.121s
+[INFO] Finished at: Mon Feb 06 13:57:05 CET 2012
+[INFO] Final Memory: 14M/166M
+[INFO] ------------------------------------------------------------------------
