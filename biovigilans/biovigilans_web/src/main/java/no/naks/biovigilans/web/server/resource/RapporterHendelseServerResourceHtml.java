@@ -16,6 +16,7 @@ import no.naks.biovigilans.web.client.ICD10;
 import no.naks.biovigilans.web.client.ICD10Soap;
 import no.naks.biovigilans.web.control.SessionAdmin;
 import no.naks.biovigilans.web.control.TableWebService;
+import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
@@ -52,6 +53,9 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		private PasientKomplikasjonWebModel result = null;
 		private TransfusjonWebModel transfusjon = null;
 		private TransfusjonKvitteringWebModel kvittering = null;
+		private MelderwebModel melderwebModel;
+		private String melderId = "melder";
+		
 		private String[] avdelinger;
 		private String[] aldergruppe;
 		private String[] kjonnValg; 
@@ -187,6 +191,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	     result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(request,pasientkomplikasjonId);
 	     transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
 	     kvittering = (TransfusjonKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringsId);
+	     melderwebModel = ( MelderwebModel)sessionAdmin.getSessionObject(request,melderId);
 	     if (result == null){
 	    	 result = new PasientKomplikasjonWebModel();
 	    	 result.setFormNames(sessionParams);
@@ -207,12 +212,18 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
 	  //  	 kvittering.setFormNames(sessionParams);
 	     }
+	     if ( melderwebModel == null){
+	    	 melderwebModel = new MelderwebModel();
+	    	 melderwebModel.setFormNames(sessionParams);
+	     }
 	     result.setTerms(terms);
 		 result.distributeTerms();
 	     String ref = reference.toString();
 	     result.setAccountRef(ref);
 	     transfusjon.setAccountRef(ref);
 	     transfusjon.distributeTerms();
+	     melderwebModel.distributeTerms();
+	 
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
  * Hver javaklasse får en id (ex pasientkomplikasjonId) som er tilgjengelig for html
@@ -222,7 +233,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	     dataModel.put(pasientkomplikasjonId, result);
 	     dataModel.put(transfusjonId,transfusjon);
 	     dataModel.put(kvitteringsId,kvittering);
-	    
+	     dataModel.put(melderId, melderwebModel);
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
@@ -230,7 +241,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	     sessionAdmin.setSessionObject(getRequest(), result,pasientkomplikasjonId);
 	     sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
 	     sessionAdmin.setSessionObject(request,kvittering, kvitteringsId);
-	     
+	     sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjon.html"));
 	     
@@ -266,12 +277,14 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    		result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(getRequest(),pasientkomplikasjonId);
 	    		transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(getRequest(),transfusjonId);
 	    	    kvittering = (TransfusjonKvitteringWebModel)sessionAdmin.getSessionObject(getRequest(),kvitteringsId);
+	    	     melderwebModel = ( MelderwebModel)sessionAdmin.getSessionObject(getRequest(),melderId);
 	    		Parameter logout = form.getFirst("avbryt4");
 	    		Parameter lukk = form.getFirst("lukk4");
 	    		if (logout != null || lukk != null){
 	    			sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
 	    			sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
 	    			sessionAdmin.getSession(getRequest(),kvitteringsId).invalidate();
+	    			sessionAdmin.getSession(getRequest(),melderId).invalidate();
 		    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
 		    		Representation pasientkomplikasjonFtl = clres2.get();
 		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, result,
@@ -305,20 +318,27 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
 		    	 //kvittering.setFormNames(sessionParams);
 		     }
+		     if ( melderwebModel == null){
+		    	 melderwebModel = new MelderwebModel();
+		    	 melderwebModel.setFormNames(sessionParams);
+		     }
 	    		for (Parameter entry : form) {
 	    			if (entry.getValue() != null && !(entry.getValue().equals("")))
 	    					System.out.println(entry.getName() + "=" + entry.getValue());
 	    			result.setValues(entry);
 	    			transfusjon.setValues(entry);
 	    			kvittering.setValues(entry);
+	    			melderwebModel.setValues(entry);
 
 	    		}
 	    		sessionAdmin.setSessionObject(getRequest(), result,pasientkomplikasjonId);
 	    	    sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
+	    	    sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
 	    	    Map<String, Object> dataModel = new HashMap<String, Object>();
 	    	    dataModel.put(pasientkomplikasjonId, result);
 	    	    dataModel.put(transfusjonId,transfusjon);
 	    	    dataModel.put(kvitteringsId,kvittering);
+	    	    dataModel.put(melderId, melderwebModel);
 /*	
  * IKKE I BRUK    	    
 	    	    Parameter hemolyse = form.getFirst("p_hemolyseleggtil");
@@ -333,6 +353,7 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    	    }
 */	    	    
 	    		Parameter lagre = form.getFirst("lagre4");
+	    		Parameter formValue = form.getFirst("formValue"); // Fill kontaktform on the base of epost 
 	    		if (lagre != null){
 	    			result.saveValues();
 	    			transfusjon.saveValues();
@@ -340,17 +361,41 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 	    			hendelseWebService.saveHendelse(result);
 	    			hendelseWebService.saveTransfusjon(transfusjon,result);
 	    			transfusjon.setTransfusjonsFlag(kvittering);
+	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
+		    		Representation pasientkomplikasjonFtl = clres2.get();
+		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+		    				MediaType.TEXT_HTML);
 	    		}
-	    		//sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
-	    		//sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
-//	    		System.out.println("Status = "+result.getStatus());
-	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
-	    		Representation pasientkomplikasjonFtl = clres2.get();
-	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
-	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
-	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
-	    				MediaType.TEXT_HTML);
+	    		Parameter godkjent = form.getFirst("godkjent");
+	    		if (godkjent != null){
+		    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+		    		Representation pasientkomplikasjonFtl = clres2.get();
+		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+				    				MediaType.TEXT_HTML);
+	    		}
+	    		if(formValue != null){
+					String epost = melderwebModel.getMelderepost();
+					if(!epost.equalsIgnoreCase("")){
+						List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+						if(rows.size() > 0){
+							melderwebModel.kontaktValues( rows);
+							melderwebModel.saveValues();
+							
+							//sessionAdmin.getSession(getRequest(),melderId).invalidate();
+				    	}
+					}
+					ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+		    		Representation pasientkomplikasjonFtl = clres2.get();
+		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+				    				MediaType.TEXT_HTML);
+	    		}
+	    
 	    	}
 	    	return templateRep;
 	      

@@ -109,8 +109,8 @@ public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource 
     	if (form != null){
     		melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(getRequest(),melderId);
     		 
-    		Parameter logout = form.getFirst("avbryt4");
-    		Parameter lukk = form.getFirst("lukk4");
+    		Parameter logout = form.getFirst("avbrytkontakt");
+    		Parameter lukk = form.getFirst("lukkkontakt");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
     		if (logout != null || lukk != null){
@@ -137,7 +137,7 @@ public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource 
     		dataModel.put(melderId, melderwebModel);
     		
     		Parameter formValue = form.getFirst("formValue"); // Fill kontaktform on the base of epost 
-    		Parameter lagre = form.getFirst("lagre4");
+    		Parameter lagre = form.getFirst("lagrekontakt");
     		
     		if(lagre != null){
     			melderwebModel.saveValues();
