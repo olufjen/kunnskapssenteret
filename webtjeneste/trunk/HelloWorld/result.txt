@@ -1,0 +1,49 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building En HelloWorld meldingstjeneste fra Kunnskapssenteret 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ HelloWorld ---
+[INFO] Deleting C:\svnroot2\nokc\webtjeneste\trunk\helloworld\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ HelloWorld ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ HelloWorld ---
+[INFO] Compiling 2 source files to C:\svnroot2\nokc\webtjeneste\trunk\helloworld\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ HelloWorld ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ HelloWorld ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.7.2:test (default-test) @ HelloWorld ---
+[INFO] No tests to run.
+[INFO] Surefire report directory: C:\svnroot2\nokc\webtjeneste\trunk\helloworld\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+There are no tests to run.
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ HelloWorld ---
+[INFO] Building jar: C:\svnroot2\nokc\webtjeneste\trunk\helloworld\target\HelloWorld.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ HelloWorld ---
+[INFO] Installing C:\svnroot2\nokc\webtjeneste\trunk\helloworld\target\HelloWorld.jar to C:\Users\olj\.m2\repository\no\kunnskapssenteret\HelloWorld\1.0-SNAPSHOT\HelloWorld-1.0-SNAPSHOT.jar
+[INFO] Installing C:\svnroot2\nokc\webtjeneste\trunk\helloworld\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\HelloWorld\1.0-SNAPSHOT\HelloWorld-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.958s
+[INFO] Finished at: Fri Feb 03 14:07:57 CET 2012
+[INFO] Final Memory: 13M/108M
+[INFO] ------------------------------------------------------------------------

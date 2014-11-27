@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich"
+     	xmlns:p="http://primefaces.org/ui" >
+
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+		<ui:define name="content">
+		
+			<div class="ym-column">
+			
+				<div class="ym-col1">
+					<div class="ym-cbox elmersteps">
+							<ul class="ym-vlist">
+								<li><a href="home.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Innledning</a></li>
+								<li class="active nonTransparent">Hvor/Når/Hvem  </li>
+								<li><a href="hendelse.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Hendelse</a></li>
+								<li><a href="diskusjon.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Diskusjon</a></li>
+								<li><a href="kontaktinfo.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Kontaktinformasjon</a></li>
+							</ul>
+					</div>					
+				</div>
+				
+				<div class="ym-col2">
+					<!-- informasjonsboks -->
+				</div>
+				
+				<div class="ym-col3">
+					<div class="ym-cbox">		
+												
+		    <h:form class="ym-form"> 
+		      <f:view>
+              <div class="ym-grid">
+                <div class="ym-g50 ym-gl">
+                  <h2>#{msg.hvorhvem__heading1}</h2>
+                  <div class="ym-gbox ym-fbox-check">
+                  	<h:selectManyCheckbox>
+                  		<f:selectItem itemValue="your-id" id="your-id" itemLabel="Ikke på sykehus (avtalespesialist e.l.)" ></f:selectItem>
+                  	</h:selectManyCheckbox>
+                    <!-- <input type="checkbox" name="your-id" id="your-id" />
+                    <label for="your-id">Ikke på sykehus (avtalespesialist e.l.)</label> -->
+                  </div>
+                  <!--<div class="ym-gbox ym-fbox-select">									
+                    <label for="select-1">Helseforetak/institusjon</label>
+                    <select name="your-id" id="your-id" size="1">
+                      <option value="0" selected="selected" disabled="disabled">Velg</option>
+                      <option value="value #1">Oslo Universitetssykehus</option>
+                      <option value="value #2">Option 2</option>
+                    </select>
+                  </div>-->
+                  <div class="ym-gbox ym-fbox-select">	
+                   
+                   <h:outputText value="Helseforetak" ></h:outputText>
+									<h:panelGroup><f:verbatim><br/></f:verbatim></h:panelGroup>
+									<h:selectOneListbox style="width: 18em;" size="1" id="eksisterende" binding="#{tables.foretakValg}" valueChangeListener="#{tables.collectOrganisation}"  onchange="submit()" >
+										<f:selectItems id="informantitems" value="#{tables.foretakUIlist}"/>
+									</h:selectOneListbox>
+
+									<label for="input-1">Seksjon, sengepost o.l.</label><br />
+									<input type="text" name="input-1" id="input-1" />
+                   
+                   
+                   
+                   <!-- <label for="select-1">Sykehus</label>
+					  	
+										<h:selectOneListbox  size="1" id="eksisterende"  binding="#{tables.foretakValg}" valueChangeListener="#{tables.collectOrganisation}"  onchange="submit()" >
+											<f:selectItems id="informantitems" value="#{tables.foretakUIlist}"/>
+										</h:selectOneListbox>
+							
+										
+                  </div>
+                  <div class="ym-gbox ym-fbox-select">									
+                    <label for="select-1">Avdeling</label>
+ 		
+                  </div>
+                  <div class="ym-gbox ym-fbox-text">
+                    <label for="input-1">Seksjon, sengepost o.l.</label>
+                    <input type="text" name="input-1" id="input-1"/>
+                   -->
+                  </div>
+                </div>
+                <div class="ym-g50 ym-gr">
+                  <h2>#{msg.hvorhvem__heading2}</h2>
+                  <div class="ym-gbox ym-fbox-text">
+                    <label class="ontop" for="input-1">Dato</label>
+                    <div class="ym-contain-dt">
+  											<rich:calendar  popupStyle="width: 40px;" style="float:left; width: 7em;"   buttonIcon="../images/iconDatePicker.gif" />
+ 												<!-- <input type="date" name="input-1" id="input-1" style="float:left; width: 7em;"/><img src="../images/iconDatePicker.gif" style="float:left; margin-left: 5px;"/> -->
+                    </div>
+                    <div class="label-below">(dd.mm.åååå)</div>
+                  </div>
+                  <div class="ym-fbox-check">
+                    <label class="ontop">Tid på døgnet</label><img src="../images/helpicon2.png" style="margin-left: 0.4em; margin-bottom: -0.25em;"/><br/>
+                    <input type="radio" name="your-id" value="value #1" id="your-id" />
+                    <label for="your-id">Dag</label><br/>
+                    <input type="radio" name="your-id" value="value #1" id="your-id" />
+                    <label for="your-id">Kveld</label><br/>
+                    <input type="radio" name="your-id" value="value #1" id="your-id" />
+                    <label for="your-id">Natt</label><br/>
+                    <input type="radio" name="your-id" value="value #1" id="your-id" />
+                    <label for="your-id">Vet ikke</label>
+                  </div>
+                  <div class="ym-fbox-text">
+                    <label class="ontop" for="your-id">Klokkeslett, start for hendelsen</label>
+                    <input type="text" name="your-id" id="event-time" size="5" style="width: 5em;" /> (tt:mm)
+                  </div>
+                </div>
+              </div>
+              <br/><br/>
+              <div class="ym-grid">
+                <div class="ym-g50 ym-gl">
+                  <h2>Om pasienten</h2>
+                  <div class="ym-gbox">
+                    <div class="ym-grid">
+                      <div class="ym-g50 ym-gl">
+                        <div class="ym-gbox">
+                          <div class="ym-fbox-check">
+                            <input type="radio" name="your-id" value="value #1" id="your-id" />
+                            <label for="your-id">Mann</label><br/>
+                            <input type="radio" name="your-id" value="value #1" id="your-id" />
+                            <label for="your-id">Kvinne</label><br/>
+                            <input type="radio" name="your-id" value="value #1" id="your-id" />
+                            <label for="your-id">Flere pasienter involvert</label><br/>
+                            <input type="radio" name="your-id" value="value #1" id="your-id" />
+                            <label for="your-id">Ingen pasienter involvert</label><br/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ym-g50 ym-gr">
+                        <div class="ym-gbox ym-fbox-text">
+                          <label class="ontop" for="your-id">Fødselsår</label>
+                          <input type="text" name="your-id" id="your-id" size="10" style="width: 4em;"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ym-g50 ym-gr">
+                  <h2>Ytterligere informasjon</h2>
+                    <div class="ym-gbox ym-fbox-text">
+                      <label class="ontop" for="your-id">Virksomhetens interne saksnummer<br/> hvis aktuelt</label>
+                      <input type="text" name="your-id" id="your-id" size="10" class="casenumber" />
+                    </div>
+                </div>
+              </div></f:view>
+            </h:form>
+            <div class="ym-fbox-button">
+             <h:form  class="tempbuttonlink">
+	            	 	<h:commandButton action="#{tables.hendelsePage}" value="Neste"  id="btnNeste" styleClass="ym-button" style="font-weight: normal; padding:10px; margin-bottom:10px; float:right" />
+	            	 	<h:commandButton action="#{tables.innledningPage}" value="Forrige"  id="btnForrige" styleClass="ym-button" style="font-weight: normal; padding:10px; margin-bottom:10px; float:right" />
+	           	</h:form>							
+            </div>
+					</div>
+				</div> <!-- ym-col3 -->
+				
+			</div> <!-- / ym-column -->
+		</ui:define>
+	</ui:composition>
+</html> 

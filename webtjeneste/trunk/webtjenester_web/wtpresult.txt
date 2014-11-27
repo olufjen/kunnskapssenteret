@@ -1,0 +1,142 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building NHN web 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-eclipse-plugin:2.8:clean (default-cli) @ webtjenester_web ---
+[INFO] Deleting file: .project
+[INFO] Deleting file: .classpath
+[INFO] Deleting file: .wtpmodules
+[INFO] Deleting file: .component
+[INFO] Deleting file: org.eclipse.wst.common.component
+[INFO] Deleting file: org.eclipse.wst.common.project.facet.core.xml
+[INFO] Deleting file: org.eclipse.jdt.core.prefs
+[INFO] Deleting file: org.eclipse.ajdt.ui.prefs
+[INFO] 
+[INFO] >>> maven-eclipse-plugin:2.8:eclipse (default-cli) @ webtjenester_web >>>
+[INFO] 
+[INFO] <<< maven-eclipse-plugin:2.8:eclipse (default-cli) @ webtjenester_web <<<
+[INFO] 
+[INFO] --- maven-eclipse-plugin:2.8:eclipse (default-cli) @ webtjenester_web ---
+[INFO] Adding support for WTP version 2.0.
+[INFO] Using Eclipse Workspace: null
+[INFO] Adding default classpath container: org.eclipse.jdt.launching.JRE_CONTAINER
+[WARNING] Missing POM for opensymphony:quartz:jar:1.6.0
+[INFO] Wrote settings to C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_web\.settings\org.eclipse.jdt.core.prefs
+[INFO] Wrote Eclipse project for "webtjenester_web" to C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_web.
+[INFO] 
+       Sources for some artifacts are not available.
+       Please run the same goal with the -DdownloadSources=true parameter in order to check remote repositories for sources.
+       List of artifacts without a source archive:
+         o com.lowagie:itext:2.1.3
+         o bouncycastle:bcmail-jdk14:138
+         o bouncycastle:bcprov-jdk14:138
+         o com.lowagie:itext-rtf:2.1.3
+         o com.sun.facelets:jsf-facelets:1.1.11
+         o commons-dbcp:commons-dbcp:1.2.2
+         o commons-pool:commons-pool:1.3
+         o javax.servlet:servlet-api:2.4
+         o javax.activation:activation:1.1
+         o jstl:jstl:1.2
+         o log4j:log4j:1.2.15
+         o javax.mail:mail:1.4
+         o javax.jms:jms:1.1
+         o com.sun.jdmk:jmxtools:1.2.1
+         o com.sun.jmx:jmxri:1.2.1
+         o net.sf.dozer:dozer:5.2.2
+         o commons-logging:commons-logging:1.1.1
+         o commons-beanutils:commons-beanutils:1.8.0
+         o commons-lang:commons-lang:2.4
+         o net.sourceforge.jexcelapi:jxl:2.6.10
+         o no.kunnskapssenteret:rammeverk_kilde:1.0-SNAPSHOT
+         o opensymphony:quartz:1.6.0
+         o org.springframework:spring:2.5.6
+         o postgresql:postgresql:8.2-505.jdbc4
+         o org.apache.myfaces.core:myfaces-api:1.2.7
+         o javax.servlet:jstl:1.1.0
+         o commons-digester:commons-digester:1.8
+         o commons-collections:commons-collections:3.2
+         o org.apache.myfaces.core:myfaces-impl:1.2.7
+         o commons-el:commons-el:1.0
+         o commons-codec:commons-codec:1.3
+         o org.apache.myfaces.tomahawk:tomahawk:1.1.9
+         o commons-validator:commons-validator:1.3.1
+         o commons-fileupload:commons-fileupload:1.2.1
+         o oro:oro:2.0.8
+         o no.kunnskapssenteret:rammeverk_web:1.0-SNAPSHOT
+         o no.kunnskapssenteret:webtjenester_business:1.0-SNAPSHOT
+         o no.kunnskapssenteret:webtjenestetest:1.0-SNAPSHOT
+         o xerces:xercesImpl:2.3.0
+         o commons-discovery:commons-discovery:0.4
+         o commons-io:commons-io:1.3.2
+         o batik:batik-awt-util:1.6-1
+         o batik:batik-util:1.6-1
+         o batik:batik-gui-util:1.6-1
+         o batik:batik-ext:1.6-1
+         o xml-apis:xmlParserAPIs:2.0.2
+         o org.richfaces.framework:richfaces-api:3.3.2.SR1
+         o org.richfaces.framework:richfaces-impl:3.3.2.SR1
+         o org.richfaces.ui:richfaces-ui:3.3.2.SR1
+
+       Javadoc for some artifacts is not available.
+       Please run the same goal with the -DdownloadJavadocs=true parameter in order to check remote repositories for javadoc.
+       List of artifacts without a javadoc archive:
+         o com.lowagie:itext:2.1.3
+         o bouncycastle:bcmail-jdk14:138
+         o bouncycastle:bcprov-jdk14:138
+         o com.lowagie:itext-rtf:2.1.3
+         o com.sun.facelets:jsf-facelets:1.1.11
+         o commons-dbcp:commons-dbcp:1.2.2
+         o commons-pool:commons-pool:1.3
+         o javax.servlet:servlet-api:2.4
+         o javax.activation:activation:1.1
+         o jstl:jstl:1.2
+         o log4j:log4j:1.2.15
+         o javax.mail:mail:1.4
+         o javax.jms:jms:1.1
+         o com.sun.jdmk:jmxtools:1.2.1
+         o com.sun.jmx:jmxri:1.2.1
+         o net.sf.dozer:dozer:5.2.2
+         o commons-logging:commons-logging:1.1.1
+         o commons-beanutils:commons-beanutils:1.8.0
+         o commons-lang:commons-lang:2.4
+         o net.sourceforge.jexcelapi:jxl:2.6.10
+         o no.kunnskapssenteret:rammeverk_kilde:1.0-SNAPSHOT
+         o opensymphony:quartz:1.6.0
+         o org.springframework:spring:2.5.6
+         o postgresql:postgresql:8.2-505.jdbc4
+         o org.apache.myfaces.core:myfaces-api:1.2.7
+         o javax.servlet:jstl:1.1.0
+         o commons-digester:commons-digester:1.8
+         o commons-collections:commons-collections:3.2
+         o org.apache.myfaces.core:myfaces-impl:1.2.7
+         o commons-el:commons-el:1.0
+         o commons-codec:commons-codec:1.3
+         o org.apache.myfaces.tomahawk:tomahawk:1.1.9
+         o commons-validator:commons-validator:1.3.1
+         o commons-fileupload:commons-fileupload:1.2.1
+         o oro:oro:2.0.8
+         o no.kunnskapssenteret:rammeverk_web:1.0-SNAPSHOT
+         o no.kunnskapssenteret:webtjenester_business:1.0-SNAPSHOT
+         o no.kunnskapssenteret:webtjenestetest:1.0-SNAPSHOT
+         o xerces:xercesImpl:2.3.0
+         o commons-discovery:commons-discovery:0.4
+         o commons-io:commons-io:1.3.2
+         o batik:batik-awt-util:1.6-1
+         o batik:batik-util:1.6-1
+         o batik:batik-gui-util:1.6-1
+         o batik:batik-ext:1.6-1
+         o xml-apis:xmlParserAPIs:2.0.2
+         o org.richfaces.framework:richfaces-api:3.3.2.SR1
+         o org.richfaces.framework:richfaces-impl:3.3.2.SR1
+         o org.richfaces.ui:richfaces-ui:3.3.2.SR1
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.360s
+[INFO] Finished at: Tue Feb 28 11:12:52 CET 2012
+[INFO] Final Memory: 12M/166M
+[INFO] ------------------------------------------------------------------------

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich" 
+     	xmlns:t="http://myfaces.apache.org/tomahawk" >
+
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+		<ui:define name="content">
+		<h:form class="ym-form" id="contact-form">
+			<div class="ym-column">  
+		
+				<!-- Col 1 --> 
+	      <div class="ym-col1">
+					<div class="ym-cbox elmersteps">					
+						<ul class="ym-vlist">
+							<li><h:commandLink action="#{kontaktinfo.innledningPage}">Innledning</h:commandLink></li>
+							<!--  hvorHvemPageUten byttes ut med hvorHvemPage for å få tilbake søkefunksjon for sykehus  -->
+							<li><h:commandLink action="#{kontaktinfo.hvorHvemPage}">Hvor/Når/Hvem</h:commandLink></li>
+							<li><h:commandLink action="#{kontaktinfo.hendelsePage}">Hendelse</h:commandLink></li>
+							<li><h:commandLink action="#{kontaktinfo.diskusjonPage}">Diskusjon</h:commandLink></li>
+							<li class="active nonTransparent">Kontaktinformasjon</li>
+						</ul>
+					</div>					
+				</div>
+	      <!-- /Col 1 -->			
+			
+       	<div class="ym-col2"><div><f:verbatim>&#160;</f:verbatim></div>
+	       	<div class="helparea">
+		      	<div class="circle">?</div>
+		       	<div id="info" class="info">
+		       		<br />
+		        	<b>#{msg.info_heading_2}</b>
+		         	<p>#{msg.info_2}</p>
+		         	<p>#{msg.info_2_1}</p>
+		       	</div>
+	     		</div>
+        </div>
+        
+        <div class="ym-col3">
+					<div class="ym-cbox">
+														
+						<h2>Kontaktinformasjon</h2>
+						<div class="ym-fbox-check" style="padding:0; height:190px">
+							<p class="radiolist-label">Vi ber deg oppgi din kontaktinformasjon slik at vi ved behov kan ta kontakt for å innhente ekstra informasjon, eller gi råd og annen tilbakemelding.</p>
+							<br />
+							<div class="ym-grid">											
+								<div class="checkbox">
+								
+									<label for="role">Jeg er:</label>
+									<t:selectOneRadio id="role" layout="spread" value="#{kontaktinfo.melding.rolle}">
+										<f:selectItem id="responsible-manager" itemValue="ansvarlig-leder" itemLabel="Ansvarlig leder"  />
+										<f:selectItem id="nurse" itemValue="sykepleier" itemLabel="Sykepleier"  />
+										<f:selectItem id="doctor" itemValue="lege" itemLabel="Lege/behandler"  />
+										<f:selectItem id="other-health" itemValue="annet-helsepersonell" itemLabel="Annet helsepersonell"  />
+										<f:selectItem id="commercial" itemValue="merkantil" itemLabel="Merkantil"  />
+										<f:selectItem id="quality-worker" itemValue="kvalitetsmedarbeider" itemLabel="Kvalitetsmedarbeider"  />
+										<f:selectItem id="Annet" itemValue="annet" itemLabel="Annet"  />
+									</t:selectOneRadio>
+														    
+							    <h:panelGrid columns="2" class="radiotable">
+							    	<t:radio for="role" index="0"></t:radio>
+							    	<t:radio for="role" index="1"></t:radio>
+							    	<t:radio for="role" index="2"></t:radio>
+							    	<t:radio for="role" index="3"></t:radio>
+							    	
+							    	<t:radio for="role" index="4"></t:radio>
+							    	<t:radio for="role" index="5"></t:radio>
+							    	<t:radio for="role" index="6"></t:radio>
+							    </h:panelGrid>
+							    
+								</div>
+							</div>
+							
+						</div>
+									
+						<br />
+																
+									<div class="ym-grid">
+										<div class="ym-g50 ym-gl">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="name-sender">Navn</label>
+												<h:inputText value="#{kontaktinfo.person.navn}" id="name-sender" >
+
+												</h:inputText>
+												<br/>
+												<label for="phone-sender">Telefonnummer</label>
+												<h:inputText value="#{kontaktinfo.person.telefonNummer}" class="telephone"  id="phone-sender"/>
+												<h:inputHidden id="phoneHidden" valueChangeListener="#{kontaktinfo.phHiddenValue}"  />
+												<br/>
+											</div>
+										</div>
+										<div class="ym-g50 ym-gr">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="email-sender">E-post (arbeid) <sup class="ym-required" style="top:-0.3em">*</sup></label>
+												<h:inputText value="#{kontaktinfo.person.EPost}"  id="email-sender" >
+												</h:inputText>
+												<h:inputHidden id="emailHidden" value="" valueChangeListener="#{kontaktinfo.emailHiddenValue}" />
+												<br/>
+												<label for="email-sender-rep">Gjenta e-post <sup class="ym-required" style="top:-0.3em">*</sup></label>
+												<h:inputText  id="email-sender-rep" value="#{kontaktinfo.gjentaEpost}">
+                   			</h:inputText>
+                   			<h:inputHidden value="" id="gjentaHidden" valueChangeListener="#{kontaktinfo.gjentaHiddenValue}" />
+												<br/>
+											</div>
+										</div>
+									</div>
+													
+									<p class="description">Vi vil gjerne ta kontakt med <strong>nærmeste leder eller annen person</strong> som kan bidra med ytterligere opplysninger. Vi trenger i tilfelle minimum e-postadresse.</p>
+									<div class="ym-grid">
+										<div class="ym-g50 ym-gl">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="name-secondary-source">Navn</label>
+												<h:inputText value="#{kontaktinfo.leder.navn}"  id="name-secondary-source"  />
+												<br/>
+												<label for="phone-secondary-source">Telefonnummer</label>
+												<h:inputText value="#{kontaktinfo.leder.telefonNummer}" class="telephone" id="phone-secondary-source"/>
+												<h:inputHidden id="lederTelefon" valueChangeListener="#{kontaktinfo.lederPhHiddenValue}"  ></h:inputHidden>
+												<br/>
+											</div>
+										</div>
+										<div class="ym-g50 ym-gr">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="email-secondary-source">E-post (arbeid)</label>
+												<h:inputText value="#{kontaktinfo.leder.EPost}" id="email-secondary-source"/>
+												<br/>
+												<label for="email-secondary-source-rep">Gjenta e-post</label>
+												<h:inputText value="#{kontaktinfo.leder.EPost}"  id="email-secondary-source-rep"/>
+												<h:inputHidden id="lederGjentaHidden" value="" />
+												<br/>
+											</div>
+										</div>
+									</div>
+									
+									<div class="ym-fbox-check">
+										<h:selectBooleanCheckbox value="#{kontaktinfo.melding.onskerhjelp}" id="contact-NOKC" />
+										<label for="contact-NOKC">Jeg ønsker at Kunnskapssenteret raskt tar kontakt for råd og veiledning i denne saken. </label>
+										<h:graphicImage name="helpicon2.png" library="images" alt="hjelp" title="Hjelp" id="info-icon-2" class="info-icon" ></h:graphicImage>
+									</div>
+									
+									<div class="buttons">
+										<div style="clear: both;">
+	                  	<h:commandButton 
+	                  		action="#{kontaktinfo.diskusjonPage}" id="btnForrige" class="replacement-forrige" 
+	                  		style="width:100px; height:40px; cursor: pointer;float:left;" value=""/>
+	      							<h:commandButton 
+	      								action="#{kontaktinfo.controllPage}" id="btnKontroll" class="replacement-kontroll" 
+	      								style="cursor: pointer; float:right; width:170px; height:40px;" value=""/>
+										</div>
+      						</div>
+      						
+      						
+      						<!-- This hidden field use to check user come this 
+      									page before or after the kontroll page -->
+      						<h:inputHidden id="kontrollHidden" value="#{kontaktinfo.kontrollHidden}" />
+					</div>
+				</div>
+		  </div>
+		  </h:form>
+		</ui:define>
+	</ui:composition>
+</html> 	

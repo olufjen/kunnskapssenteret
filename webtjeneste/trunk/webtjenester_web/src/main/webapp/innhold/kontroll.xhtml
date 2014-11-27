@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich"
+     	xmlns:t="http://myfaces.apache.org/tomahawk" >
+     	
+<h:head>
+	<title>Meldeordningen - webskjema</title>    
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+	<ui:define name="content">
+	<h:form class="ym-form" id="controll-form">
+	  <div class="ym-column">
+	    
+      <div class="ym-col1">      
+				<div class="ym-cbox elmersteps">
+					<ul class="ym-vlist">
+						<li><a href="home.faces">Innledning</a></li>
+						<li><a href="hvorhvem.faces">Hvor/Når/Hvem</a></li>
+						<li><a href="hendelse.faces">Hendelse</a></li>
+						<li><a href="diskusjon.faces">Diskusjon</a></li>
+						<li><a href="kontaktinfo.faces">Kontaktinformasjon</a></li>
+					</ul>
+				</div>					
+			</div>	    
+	    
+      <!-- <div class="ym-col2">
+        <div class="ym-cbox helparea">
+          <div class="circle">i</div>
+          <p>I denne ruten vil det dukke opp informasjon dersom du trykker på symbolet <h:graphicImage name="helpicon2.png" library="images" alt="hjelp" title="Hjelp" /> ved siden av et spørsmål.</p>
+        </div>
+      </div>  -->
+	    
+      <div class="ym-col3">
+          <div class="ym-cbox">
+           <h:panelGrid style="border:2px solid white; margin-top:-1px"  >
+           	<h:panelGroup rendered="#{kontrollBean.hasError}" >
+              <h2>Kontrollside</h2>
+	            <!-- Hvis det er feil så skal denne teksten vises, men kun de aktuelle feilene, lenke går til riktig side -->
+	            <p>Skjemaet inneholder noen feil og mangler som må rettes opp før det kan sendes til Kunnskapssenteret. Vennligst følg lenkene nedenfor for å gå til de aktuelle stedene i skjemaet der noe må rettes eller fylles ut.</p>
+           	 <br/><br/>
+           	 <b><h:outputText rendered="#{kontrollBean.hvorHvemErro}"  value="Hvor/når/hvem" /></b>
+           	 <ul class="kontroll-ul">
+           	 	<h:panelGroup rendered="#{!tables.spesialistHidden}">	<li><h:commandLink  action="#{diskusjon.hvorHvemPage}" >Du må fylle ut hvor hendelsen skjedde.</h:commandLink> </li> </h:panelGroup >
+           	 	<h:panelGroup rendered="#{!tables.sykehusHidden}">	<li><h:commandLink  action="#{diskusjon.hvorHvemPage}" >Du må fylle ut hvor hendelsen skjedde.</h:commandLink> </li> </h:panelGroup >
+           	 	
+           	 	<h:panelGroup rendered="#{!tables.datoHidden}">	<li><h:commandLink  action="#{diskusjon.hvorHvemPage}" >Datoformatet er ikke korrekt. Det skal være DD.MM.ÅÅÅÅ</h:commandLink> </li> </h:panelGroup >
+           	 	<h:panelGroup rendered="#{!tables.klokkeHidden}"><li><h:commandLink action="#{diskusjon.hvorHvemPage}">Klokkeslettet er ikke oppgitt på riktig format. Det skal være TT:MM.</h:commandLink></li></h:panelGroup >
+           	 	<h:panelGroup rendered="#{!tables.aarHidden}"><li><h:commandLink action="#{diskusjon.hvorHvemPage}">Fødselsår må være på formen "åååå". </h:commandLink></li></h:panelGroup >
+           	 </ul>
+           	 <br/>
+           	  <b><h:outputText rendered="#{kontrollBean.hendelse}">Hendelse</h:outputText></b>
+           	 <ul class="kontroll-ul">
+           	 <h:panelGroup rendered="#{!hendelse.hendelseHidden}"><li><h:commandLink action="#{diskusjon.hendelsePage}">Feltet 'Beskriv hva som har skjedd (ikke oppgi navn eller annet som identifiserer pasienten eller arbeidstaker(e)' er obligatorisk å fylle ut.</h:commandLink></li></h:panelGroup>	
+           	 </ul>
+           	 <br/>
+           	 <b><h:outputText rendered="#{kontrollBean.kontaktinfo}" value="Kontaktinfo"/></b>
+           	 <ul class="kontroll-ul">
+           	 <h:panelGroup rendered="#{!kontaktinfo.blEmailHidden}" >		<li><h:commandLink action="#{diskusjon.kontaktinfoPage}">Din e-post adresse må være fylt ut slik at vi kan kontakte deg.</h:commandLink></li></h:panelGroup>
+           	 <h:panelGroup rendered="#{!kontaktinfo.blGjentaHidden}" >		<li><h:commandLink action="#{diskusjon.kontaktinfoPage}">E-postadressen i felt to må være lik som i det første feltet.</h:commandLink></li></h:panelGroup>
+           	 
+           	 <h:panelGroup rendered="#{!kontaktinfo.blPhone}" >		<li><h:commandLink action="#{diskusjon.kontaktinfoPage}">Telefonnummeret er på feil format, det skal kun være heltall.</h:commandLink></li></h:panelGroup>
+           	 <h:panelGroup rendered="#{!kontaktinfo.blLederPhone}" >		<li><h:commandLink action="#{diskusjon.kontaktinfoPage}">Telefonnummeret er på feil format, det skal kun være heltall.</h:commandLink></li></h:panelGroup>
+           	 </ul>
+           	 </h:panelGroup>
+          	 <h:panelGroup rendered="#{!kontrollBean.hasError}">
+           	 <!-- Hvis det ikke er feil, så skal denne teksten vises + en knapp for å sende inn-->
+           	 <p>Skjemaet er riktig utfylt og kan nå sendes inn til Kunnskapssenteret.</p>
+						 <br/>
+           	  <h:commandButton 
+           	 	action="#{kontrollBean.getKvittering}" class="replacement-send" id="btnKontroll" 
+           	 	style="width:230px; cursor: pointer;" value="" />
+
+           	 <br/>
+           	 <h2>Sammendrag</h2>
+           	 <b><h:outputText  value ="Hvor/når/hvem" /></b>
+           	 	
+           		<p>Hvor skjedde hendelsen?</p>
+           		
+           	 <h:panelGrid  columns="2" class="summary" >
+           	 	<h:panelGroup >
+           	 		<h:outputText value="Valg/felt"/>
+           	 	</h:panelGroup>
+           	 	
+           	 	<h:panelGroup  >
+           	 		<h:outputText  value="Du har svart/valgt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Hvor skjedde hendelsen" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.spesialSted}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Sykehus" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.valgtOrganisasjon}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Avdeling" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.valgtDepartment}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Seksjon, sengepost o.l." />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.seksjon}" />
+           	 	</h:panelGroup>
+           </h:panelGrid>
+          	 <br/>	
+           	 	<p>
+           	 		Når skjedde hendelsen?
+           	 	</p>
+            <h:panelGrid columns="2" class="summary" >	 	
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Valg/felt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Du har svart/valgt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Dato" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.tidForhendelsen}">
+           	 		<f:convertDateTime type="date" timeZone="Europe/Paris"/>
+           	 		</h:outputText>
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Tid på døgnet start for hendelsen" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.dognkode}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Klokkeslett start for hendelsen" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.klokkeSlett}" />
+           	 	</h:panelGroup>
+           </h:panelGrid  >
+           <br/>
+           	<p>
+           	 		Om Pasienten
+           	 	</p>
+           <h:panelGrid columns="2" class="summary"> 	            	 	
+           	 	
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Valg/felt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Du har svart/valgt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Kjønn" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.kjonn}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Fødselsår" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.arfodt}" />
+           	 	</h:panelGroup>
+           </h:panelGrid>	 	
+           	<br/>
+           	<p>
+           	 		Ytterligere informasjon
+           	</p>
+           <h:panelGrid columns="2" class="summary" > 
+           <h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>	 	 	
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Saksnummer" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{tables.caseNr}" />
+           	 	</h:panelGroup>
+         	 </h:panelGrid>
+         	 
+         	 
+         	 <br/><br/>
+         	
+         	 	<b>Hendelse</b>
+         	 	
+         		
+         	 <h:panelGrid  columns="2" class="summary" >
+         	 	<h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Beskriv hva som har skjedd" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{hendelse.orgHendelse}" />
+         	 	</h:panelGroup>
+                  	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Hvilke umiddelbare konsekvenser fikk dette?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{hendelse.melding.konsekvenser}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Alvorlighet" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{hendelse.melding.alvorlighetsgrad.DN}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Beskriv tiltak som ble gjennomført for å begrense skaden" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{hendelse.melding.utfortestrakstiltak}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Hvordan ble hendelsen oppdaget?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{hendelse.melding.hvordanoppdaget}" />
+         	 	</h:panelGroup>
+         	</h:panelGrid>
+         	 <br/>
+         		 <br/>
+         	 	<b>Diskusjon</b>
+         	 
+         		
+         	 <h:panelGrid  columns="2" class="summary" >
+         	 	<h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Hvorfor tror du hendelsen skjedde?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{diskusjon.melding.arsaksbeskrivelse}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Beskriv tiltak som bør gjøres for at noe lignende ikke skal skje igjen" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{diskusjon.melding.forslagtiltak}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Kan andre i Helse-Norge lære av denne hendelsen? På hvilken måte?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{diskusjon.lareavHendelse}" />
+         	 	</h:panelGroup>
+         	 	
+         	 </h:panelGrid> 
+         	 
+         	 <br/><br/>
+         	  
+         	 <b>Kontaktinformasjon</b>
+         		
+         	 <h:panelGrid  columns="2" class="summary" >
+         	 	<h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Jeg er " />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.melding.rolle}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Navn" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.person.navn}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="E-post (arbeid)" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.person.EPost}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Telefonnummer" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.person.telefonNummer}" />
+         	 	</h:panelGroup>
+         	 
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Leder Navn" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.leder.navn}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Leder E-post (arbeid)" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.leder.EPost}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Leder Telefonnummer" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.leder.telefonNummer}" />
+         	 	</h:panelGroup>
+         	 
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Jeg ønsker at Kunnskapssenteret raskt tar kontakt for råd og veiledning i denne saken" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kontaktinfo.onskerhjelp}" />
+         	 	</h:panelGroup>
+         	 	
+         	 </h:panelGrid> 
+         	  <br/>
+           	  <h:commandButton 
+           	 	action="#{kontrollBean.getKvittering}" class="replacement-send" id="btnKontroll2" 
+           	 	style="width:90px; width:250px; cursor: pointer;" value="" />
+         	 
+        	</h:panelGroup>
+         </h:panelGrid> 
+         </div>
+       </div>		
+    </div>	</h:form>
+	</ui:define> 
+</ui:composition>
+</h:body>
+</html> 

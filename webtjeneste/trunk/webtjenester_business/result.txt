@@ -1,0 +1,68 @@
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building webtjenester business 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+Downloading: http://people.apache.org/repo/m2-snapshot-repository/org/apache/geronimo/specs/geronimo-activation_1.1_spec/1.0.1/geronimo-activation_1.1_spec-1.0.1.pom
+Downloading: http://download.java.net/maven/1/org/apache/geronimo/specs/geronimo-activation_1.1_spec/1.0.1/geronimo-activation_1.1_spec-1.0.1.pom
+Downloading: http://download.java.net/maven/2/org/apache/geronimo/specs/geronimo-activation_1.1_spec/1.0.1/geronimo-activation_1.1_spec-1.0.1.pom
+Downloading: http://repository.jboss.org/org/apache/geronimo/specs/geronimo-activation_1.1_spec/1.0.1/geronimo-activation_1.1_spec-1.0.1.pom
+Downloading: http://repo1.maven.org/maven2/org/apache/geronimo/specs/geronimo-activation_1.1_spec/1.0.1/geronimo-activation_1.1_spec-1.0.1.pom
+886 B   3 KB           Downloaded: http://repo1.maven.org/maven2/org/apache/geronimo/specs/geronimo-activation_1.1_spec/1.0.1/geronimo-activation_1.1_spec-1.0.1.pom (3 KB at 6.0 KB/sec)
+Downloading: http://people.apache.org/repo/m2-snapshot-repository/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.2/geronimo-javamail_1.4_spec-1.2.pom
+       Downloading: http://download.java.net/maven/1/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.2/geronimo-javamail_1.4_spec-1.2.pom
+       Downloading: http://download.java.net/maven/2/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.2/geronimo-javamail_1.4_spec-1.2.pom
+       Downloading: http://repository.jboss.org/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.2/geronimo-javamail_1.4_spec-1.2.pom
+       Downloading: http://repo1.maven.org/maven2/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.2/geronimo-javamail_1.4_spec-1.2.pom
+885 B   3 KB    3 KB          Downloaded: http://repo1.maven.org/maven2/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.2/geronimo-javamail_1.4_spec-1.2.pom (3 KB at 8.7 KB/sec)
+Downloading: http://people.apache.org/repo/m2-snapshot-repository/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom
+       Downloading: http://download.java.net/maven/1/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom
+       Downloading: http://download.java.net/maven/2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom
+       Downloading: http://repository.jboss.org/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom
+       Downloading: http://repo1.maven.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom
+1023 B   2 KB            Downloaded: http://repo1.maven.org/maven2/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.pom (2 KB at 6.0 KB/sec)
+[WARNING] The POM for opensymphony:quartz:jar:1.6.0 is missing, no dependency information available
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ webtjenester_business ---
+[INFO] Deleting C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_business\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:resources (default-resources) @ webtjenester_business ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:compile (default-compile) @ webtjenester_business ---
+[INFO] Compiling 95 source files to C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_business\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.2:testResources (default-testResources) @ webtjenester_business ---
+[INFO] Using encoding: 'utf-8' to copy filtered resources.
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.0.2:testCompile (default-testCompile) @ webtjenester_business ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.7.2:test (default-test) @ webtjenester_business ---
+[INFO] No tests to run.
+[INFO] Surefire report directory: C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_business\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+There are no tests to run.
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.1:jar (default-jar) @ webtjenester_business ---
+[INFO] Building jar: C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_business\target\webtjenester_business.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ webtjenester_business ---
+[INFO] Installing C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_business\target\webtjenester_business.jar to C:\Users\olj\.m2\repository\no\kunnskapssenteret\webtjenester_business\1.0-SNAPSHOT\webtjenester_business-1.0-SNAPSHOT.jar
+[INFO] Installing C:\svnroot2\nokc\webtjeneste\trunk\webtjenester_business\pom.xml to C:\Users\olj\.m2\repository\no\kunnskapssenteret\webtjenester_business\1.0-SNAPSHOT\webtjenester_business-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 12.416s
+[INFO] Finished at: Mon Jun 04 12:29:22 CEST 2012
+[INFO] Final Memory: 19M/170M
+[INFO] ------------------------------------------------------------------------

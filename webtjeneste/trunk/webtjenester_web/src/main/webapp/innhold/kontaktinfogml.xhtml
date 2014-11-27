@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich" 
+     	xmlns:t="http://myfaces.apache.org/tomahawk" >
+
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+		<ui:define name="content">
+			<div class="ym-column">  
+		
+				<!-- Col 1 --> 
+	      <div class="ym-col1">
+					<div class="ym-cbox elmersteps">
+					
+							<ul class="ym-vlist">
+								<li><a href="home.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Innledning</a></li>
+								<li><a href="hvorhvem.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Hvor/Når/Hvem</a></li>
+								<li><a href="hendelse.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Hendelse</a></li>
+								<li><a href="hendelse.faces" style="font-family:'Sun Cd TFm', Verdana; color: #00B0E6;">Diskusjon</a></li>
+								<li class="active nonTransparent">Kontaktinformasjon</li>
+							</ul>
+
+					</div>					
+				</div>
+	      <!-- /Col 1 -->			
+			
+       	<div class="ym-col2">
+	       	<div class="helparea">
+		       <div class="circle">!</div>
+		       <div id="info-2" class="info">
+		         <h3 id="info-heading-2">#{msg.info_heading_2}</h3>
+		         <p>#{msg.info_2}</p>
+				 <p>#{msg.info_2_1}</p>
+		       </div>
+	     	</div>
+        </div>
+        
+        <div class="ym-col3">
+					<div class="ym-cbox">
+					
+						<h:form class="ym-form" id="contact-form">								
+							<h2>Kontaktinformasjon</h2>
+									<div class="ym-fbox-check">
+										<p class="radiolist-label">Vi ber deg oppgi din kontaktinformasjon slik at vi ved behov kan ta kontakt for å innhente ekstra informasjon, eller gi råd og annen tilbakemelding.</p>
+										<p class="checkboxlist-label">Jeg er:</p>
+										<div class="ym-grid two-col-checkboxes">
+											<div class="ym-g50 ym-gl">
+												<div class="ym-gbox">
+													<div class="checkbox">
+														<h:panelGrid columns="2">
+														    <h:panelGroup>
+														      <t:selectOneRadio id="role" styleClass="checkbox-list" layout="spread" value="#{kontaktinfo.melding.rolle}">
+														        <f:selectItem id="responsible-manager"  itemValue="ansvarlig-leder" itemLabel="Ansvarlig leder"  />
+																		<f:selectItem id="nurse" itemValue="sykepleier" itemLabel="Sykepleier"  />
+																		<f:selectItem id="doctor" itemValue="lege" itemLabel="Lege/behandler"  />
+																		<f:selectItem id="other-health" itemValue="annet-helsepersonell" itemLabel="Annet helsepersonell"  />
+																  
+																	  <f:selectItem  id="commercial" itemValue="merkantil" itemLabel="Merkantil"  />
+																		<f:selectItem id="quality-worker" itemValue="kvalitetsmedarbeider" itemLabel="Kvalitetsmedarbeider"  />
+																		<f:selectItem id="Annet" itemValue="annet" itemLabel="Annet"  />
+																  </t:selectOneRadio>
+														    </h:panelGroup>
+														    <h:panelGrid columns="2">
+														    	<t:radio for="role" index="0"></t:radio>
+														    	<t:radio for="role" index="1"></t:radio>
+														    	<t:radio for="role" index="2"></t:radio>
+														    	<t:radio for="role" index="3"></t:radio>
+														    	
+														    	<t:radio for="role" index="4"></t:radio>
+														    	<t:radio for="role" index="5"></t:radio>
+														    	<t:radio for="role" index="6"></t:radio>
+														    </h:panelGrid>
+	  												</h:panelGrid>	
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>							
+									<div class="ym-grid">
+										<div class="ym-g50 ym-gl">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="name-sender">Navn</label>
+												<h:inputText value="#{kontaktinfo.person.navn}" id="name-sender" >
+
+												</h:inputText>
+												<br/>
+												<label for="phone-sender">Telefonnummer</label>
+												<h:inputText value="#{kontaktinfo.person.telefonNummer}" class="telephone"  id="phone-sender"/>
+												<br/>
+											</div>
+										</div>
+										<div class="ym-g50 ym-gr">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="email-sender">E-post (arbeid) <sup class="ym-required" style="top:-0.3em">*</sup></label>
+												<h:inputText value="#{kontaktinfo.person.EPost}"  id="email-sender" >
+												
+												</h:inputText>
+												<br/>
+												<label for="email-sender-rep">Gjenta e-post <sup class="ym-required" style="top:-0.3em">*</sup></label>
+												<h:inputText value="#{kontaktinfo.person.EPost}" id="email-sender-rep">
+                    
+												</h:inputText>
+												<br/>
+											</div>
+										</div>
+									</div>							
+									<p class="description">Vil vil gjerne ta kontakt med <strong>nærmeste leder eller annen person</strong> som kan bidra med ytterligere opplysninger. Vi trenger i tilfelle minimum e-postadresse.</p>
+									<div class="ym-grid">
+										<div class="ym-g50 ym-gl">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="name-secondary-source">Navn</label>
+												<h:inputText value="#{kontaktinfo.leder.navn}"  id="name-secondary-source"  />
+												<br/>
+												<label for="phone-secondary-source">Telefonnummer</label>
+												<h:inputText value="#{kontaktinfo.leder.telefonNummer}" class="telephone" id="phone-secondary-source"/>
+												<br/>
+											</div>
+										</div>
+										<div class="ym-g50 ym-gr">
+											<div class="ym-gbox ym-fbox-text">
+												<label for="email-secondary-source">E-post (arbeid)</label>
+												<h:inputText value="#{kontaktinfo.leder.EPost}" id="email-secondary-source"/>
+												<br/>
+												<label for="email-secondary-source-rep">Gjenta e-post</label>
+												<h:inputText value="#{kontaktinfo.leder.EPost}"  id="email-secondary-source-rep"/>
+												<br/>
+											</div>
+										</div>
+									</div>
+									<br/>
+									<div class="ym-fbox-check">
+										<h:selectBooleanCheckbox value="#{kontaktinfo.melding.onskerhjelp}" id="contact-NOKC" />
+										<label for="contact-NOKC">Jeg ønsker at Kunnskapssenteret raskt tar kontakt for råd og veiledning i denne saken.</label>
+										<h:graphicImage name="helpicon2.png" library="images" alt="hjelp" title="Hjelp" id="info-icon-2" class="info-icon" ></h:graphicImage>
+									</div>
+<!-- 								</form>	
+								
+							<div class="ym-fbox-button">
+								<h:form  class="tempbuttonlink" id="contact-form-buttons">
+ -->		            	 
+ 										<h:commandButton action="#{kontaktinfo.controlPage}" value="Neste"  id="btnNeste" styleClass="ym-button" style="font-weight: normal; padding:10px; margin-bottom:10px; float:right" />
+		            	 	<h:commandButton value="Forrige"  id="btnForrige" styleClass="ym-button" style="font-weight: normal; padding:10px; margin-bottom:10px; float:right" />
+		           	</h:form>									
+<!-- 		          </div>	 -->
+							
+					</div>
+				</div>
+		  </div>
+		</ui:define>
+	</ui:composition>
+</html> 	

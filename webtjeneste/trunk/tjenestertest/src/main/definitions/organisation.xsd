@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:complexType name="Organization">
+        <xs:complexContent>
+            <xs:extension
+                base="{http://register.nhn.no/CommunicationParty}CommunicationParty">
+                <xs:sequence>
+
+                    <xs:element name="BusinessType" type="Q1://register.nhn.no/Common}Code"
+                        minOccurs="0"/>
+
+                    <xs:element name="Departments"
+                        type="Q1://register.nhn.no/CommunicationParty}ArrayOfDepartment"
+                        minOccurs="0"/>
+
+                    <xs:element name="IndustryCodes" type="Q1://register.nhn.no/Common}ArrayOfCode"
+                        minOccurs="0"/>
+
+                    <xs:element name="OrganizationNumber" type="Q1://www.w3.org/2001/XMLSchema}int"
+                        minOccurs="0"/>
+
+                    <xs:element name="People"
+                        type="Q1://register.nhn.no/CommunicationParty}ArrayOfOrganizationPerson"
+                        minOccurs="0"/>
+
+                    <xs:element name="Services"
+                        type="Q1://register.nhn.no/CommunicationParty}ArrayOfService" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

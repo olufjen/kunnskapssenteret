@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>no.kunnskapssenteret</groupId>
+    <artifactId>webtjenester</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>no.kunnskapssenteret</groupId>
+    <artifactId>webtjenestetest</artifactId>
+<!--    <packaging>war</packaging>  -->
+     <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Test av Meldingstjeneste fra Kunnskapssenteret</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+         <dependency>
+             <groupId>com.sun.xml.security</groupId>
+             <artifactId>apache-xmlsec</artifactId>
+             <version>1.0.1</version>
+         </dependency>
+         
+    	<!-- for axis 2 added 04.06.12 olj -->
+	<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ws.commons.axiom</groupId>
+			<artifactId>axiom-impl</artifactId>
+			<version>1.2.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-transport-local</artifactId>
+			<version>1.5.4</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-transport-http</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		<!-- end for axix 2 -->     
+<!--  
+        <dependency>
+            <groupId>no.kunnskapssenteret</groupId>
+            <artifactId>meldingstjeneste</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        
+      <dependency>
+            <groupId>no.kunnskapssenteret</groupId>
+            <artifactId>HelloWorld</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+-->        
+    </dependencies>
+	<build>
+		<finalName>meldingstjeneste</finalName>
+		<!--  
+		<plugins>
+			<plugin>
+				<groupId>org.apache.axis2</groupId>
+				<artifactId>axis2-wsdl2code-maven-plugin</artifactId>
+				<version>1.5.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>wsdl2code</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<packageName>no.naks.services.nhn.client.adr</packageName>
+					<wsdlFile>https://ws-test.nhn.no/Basic/v1/AR?wsdl</wsdlFile>
+					<generateTestcase>false</generateTestcase>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+			</plugins>
+		</pluginManagement>
+	 -->	
+	</build>
+</project>

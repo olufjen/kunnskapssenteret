@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich" >
+
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+		<ui:define name="content">
+		
+			<div class="ym-column">  
+		
+				<!-- Col 1 --> 
+	      <div class="ym-col1">
+						<div class="ym-cbox elmersteps">
+								<ul class="ym-vlist">
+									<li><a href="home.faces" >Innledning</a></li>
+									<li><a href="hvorhvem.faces" >Hvor/Når/Hvem</a></li>
+									<li class="active nonTransparent">Hendelse</li>
+									<li><a href="diskusjon.faces" >Diskusjon</a></li>
+									<li><a href="kontaktinfo.faces" >Kontaktinformasjon</a></li>
+								</ul>
+						</div>					
+					</div>
+	      <!-- /Col 1 --> 
+			
+			
+       <div class="ym-col2">
+          <!--<div class="ym-cbox helparea">
+            <div class="circle">i</div>
+            <br/><br/><br></br> 
+            </div>-->
+        </div>
+        
+        <div class="ym-col3">
+          <div class="ym-cbox">
+            
+            <h:form class="ym-form" id="incident-form">
+	            <h2>Hendelse</h2>
+              <div class="ym-fbox-text">
+                <label for="incident">Beskriv hva som har skjedd (ikke oppgi navn eller annet som identifiserer pasienten eller arbeidstaker(e) <sup class="ym-required" style="top: -0.1em;">*</sup></label>
+                <h:inputTextarea id="incident" cols="30" rows="7" value="#{hendelse.melding.hendelsesbeskrivelse}" ></h:inputTextarea>
+          	     <br/>
+                <label for="consequence">Hvilke umiddelbare konsekvenser fikk dette?</label>
+                <h:inputTextarea id="consequence" cols="30" rows="7" value="#{hendelse.melding.konsekvenser}" ></h:inputTextarea>
+              </div>
+              <div class="ym-fbox-check">
+                <p class="radiolist-label">Hendelse:</p>
+                <h:selectOneRadio value="#{hendelse.melding.alvorlighetsgrad.DN}" id="caused-injury" layout="pageDirection">
+                	<f:selectItem itemValue="alvorlig_skade" itemLabel="Førte til alvorlig skade" />
+                	<f:selectItem itemValue="potensiell_skade" itemLabel="Kunne ha ført til alvorlig skade" />
+                </h:selectOneRadio>
+             </div>
+              <br/>
+              <div class="ym-fbox-text">								
+                <label for="actions">Beskriv tiltak som ble gjennomført for å begrense skaden (ikke oppgi navn eller annet som identifiserer pasienten eller arbeidstaker(e).</label>
+                 <h:inputTextarea value="#{hendelse.melding.utfortestrakstiltak}" id="actions" cols="30" rows="7" ></h:inputTextarea>
+                <br/>
+                <label for="discovery">Hvordan ble hendelsen oppdaget?</label>
+                <h:inputTextarea value="#{hendelse.melding.hvordanoppdaget}" id="discovery" cols="30" rows="7" ></h:inputTextarea>
+              </div>
+ <!--            </h:form>
+            <div class="ym-fbox-button">
+            	<h:form  class="tempbuttonlink" id="incident-form-buttons">
+	 -->            	 
+	 								<h:commandButton action="#{hendelse.diskusjonPage}" value="Neste"  id="btnNeste" styleClass="ym-button" style="font-weight: normal; padding:10px; margin-bottom:10px; float:right" />
+	            	 	<h:commandButton action="#{hendelse.hvorHvemPage}" value="Forrige"  id="btnForrige" styleClass="ym-button" style="font-weight: normal; padding:10px; margin-bottom:10px; float:right" />
+	           	</h:form>
+<!--           </div> -->
+            
+          </div>
+        </div>
+      </div>
+		</ui:define>
+	</ui:composition>
+</html> 

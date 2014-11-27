@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/organisation" xmlns:tns="http://www.example.org/organisation" elementFormDefault="qualified" xmlns:Q1="http:">
+
+
+
+    <xs:complexType name="Requisition">
+        <xs:complexContent>
+            <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+                <xs:sequence>
+                    <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+                    <xs:element name="Type" type="{http://register.nhn.no/Common}Code" minOccurs="0"/>
+                    <xs:element name="Valid" type="{http://register.nhn.no/Common}Period" minOccurs="0"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="Speciality">
+        <xs:complexContent>
+            <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+                <xs:sequence>
+                    <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+                    <xs:element name="Type" type="{http://register.nhn.no/Common}Code" minOccurs="0"/>
+                    <xs:element name="Valid" type="{http://register.nhn.no/Common}Period" minOccurs="0"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="Authorization">
+        <xs:complexContent>
+            <xs:restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+                <xs:sequence>
+                    <xs:element name="LastChanged" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+                    <xs:element name="Profession" type="{http://register.nhn.no/Common}Code" minOccurs="0"/>
+                    <xs:element name="Requisition" type="{http://register.nhn.no/HPR}Requisition" minOccurs="0"/>
+                    <xs:element name="Specialities" type="{http://register.nhn.no/HPR}ArrayOfSpeciality" minOccurs="0"/>
+                    <xs:element name="Type" type="{http://register.nhn.no/Common}Code" minOccurs="0"/>
+                    <xs:element name="Valid" type="{http://register.nhn.no/Common}Period" minOccurs="0"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+ 
+</xs:schema>

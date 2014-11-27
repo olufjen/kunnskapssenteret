@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" >
+      
+<h:head>
+
+	<title>Meldeordningen</title>
+	
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Serif:400,700italic,700,400italic|PT+Sans+Narrow:400,700|PT+Sans:400italic,400,700,700italic" />	
+	
+	<h:outputStylesheet name="yaml/core/base.min.css" library="css" />
+	<h:outputStylesheet name="yaml/screen/typography.css" library="css" />
+	<h:outputStylesheet name="yaml/forms/webskjema-theme.css" library="css" />
+	<h:outputStylesheet name="yaml/forms/webskjema.css" library="css" />
+<!-- 	<h:outputStylesheet name="jquery-ui/custom-theme/jquery-ui-1.8.20.custom.css" library="js" /> -->
+	<h:outputStylesheet name="yaml/forms/print.css" library="css" media="print"/>
+
+	<!--[if lte IE 7]>	
+		<link href="https://skjema.melde.no/yaml/core/iehacks.min.css" rel="stylesheet" type="text/css" />		    
+  <![endif]-->
+  
+  <!--[if lt IE 9]>
+    <script>
+      document.createElement('header');
+      document.createElement('nav');
+      document.createElement('section');
+      document.createElement('article');
+      document.createElement('aside');
+      document.createElement('footer');
+      document.createElement('hgroup');
+    </script>
+  <![endif]--> 
+   
+  <!-- Google analytics -->
+  <script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-2621281-19']);
+	  _gaq.push(['_setDomainName', 'melde.no']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>	
+
+</h:head>
+ 
+<h:body>
+		
+ 	<ui:insert name="top" >
+		<ui:include src="/templates/emok/top.xhtml" />
+	</ui:insert>	
+		
+	<div class="ym-wrapper">
+		<div class="ym-wbox">
+		
+			<header><h1>Melding om uønsket hendelse</h1></header> 	    
+	  
+	 		<ui:insert name="content" >
+	   		<ui:include src="/templates/emok/content.xhtml" />
+	   	</ui:insert>	  
+			      
+		  <div id="footer">
+		  	<ui:insert name="footer" >
+		  		<ui:include src="/templates/emok/footer.xhtml" />
+		  	</ui:insert>
+		 	</div>
+	 	 
+	 	</div>	<!--  ym-wbox  -->
+	</div>  <!--  ym-wrapper  -->
+	
+	<!-- jQuery -->
+	<h:outputScript name="jquery-1.6.1.min.js" type="text/javascript" library="js"/>
+	<h:outputScript name="jquery.validate.min.js" type="text/javascript" library="js"/>
+	<h:outputScript name="jquery.validate.methods_no.js" type="text/javascript" library="js"/>
+	<h:outputScript name="jquery.validate.messages_no.js" type="text/javascript" library="js"/>
+	<h:outputScript name="jquery.validate.init_no.js" type="text/javascript" library="js"/>
+	<h:outputScript name="js/jquery-ui/jquery.ui.datepicker-no.js" type="text/javascript" />
+	<h:outputScript name="js/jquery-ui/jquery-ui-1.8.20.custom.min.js" type="text/javascript"   />
+	
+
+</h:body>
+</html>

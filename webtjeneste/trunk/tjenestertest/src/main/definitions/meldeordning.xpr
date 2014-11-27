@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="13.2">
+    <meta>
+        <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
+        <options/>
+    </meta>
+    <projectTree name="meldeordning.xpr">
+        <file name="../../../../../../../../Users/olj/Dropbox/jobb/meldesystem3-3/kith/EMOK-Leveranse-2012-03-01.xsd"/>
+        <file name="../../../../../../../../Users/olj/Dropbox/jobb/meldesystem3-3/kith/kith.xsd"/>
+        <file name="../../../../../../../../Users/olj/Dropbox/jobb/meldesystem3-3/kith/meldinger.xsd"/>
+        <file name="../../../../../../../../Users/olj/Dropbox/jobb/meldesystem3-3/kith/MsgHead-v1_2.xsd"/>
+        <file name="organisation.xsd"/>
+    </projectTree>
+</project>

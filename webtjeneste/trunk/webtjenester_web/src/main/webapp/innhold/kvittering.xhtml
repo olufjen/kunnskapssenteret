@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+     	xmlns:rich="http://richfaces.org/rich" >
+     	
+<h:head>
+	<title>Meldeordningen - webskjema</title>    
+</h:head>
+
+
+	
+	<ui:composition template="/templates/emok/commonLayout.xhtml">
+	
+	<ui:define name="content">
+	<h:body>
+	  <div class="ym-column">
+	    
+      <div class="standalonepage">
+	    
+            <h:form  class="ym-form" id="summary-form" >
+            	
+            	<!-- This hidden field call a method which removes the session object 
+ 	          	<h:commandButton action="" id="sessionKill" style="display: none"  ></h:commandButton>-->
+	            <h2>Takk for meldingen!</h2>
+	            <p><strong>Vi har mottatt meldingen, </strong>og vil starte behandlingen av den innen kort tid. Ved behov vil vi ta kontakt med deg eller personen du oppga for å innhente flere opplysninger. Vi vil også ta kontakt hvis vi ser at vi kan bidra med råd eller veiledning. </p>
+	            <p>Ta gjerne kontakt med oss på tlf. eller <a href="mailto:meldeordning@kunnskapssenteret.no">e-post</a> hvis du har spørsmål eller kommentarer.</p>
+	           	<br/>
+	           	<div class="ym-grid" style="padding:0;width:100%;">
+			           	 
+							<div class="ym-g50 ym-gl" style="padding:0;width:48%;">
+							<strong>Ingen kvittering på e-post</strong><br/>
+			           	 		Av sikkerhetshensyn kan vi dessverre ikke sende deg kvittering med innholdet av meldingen på e-post. Vi ber deg derfor ta en <a href="JavaScript:window.print();">utskrift </a>,
+			        				eller&#160; <h:commandLink value="lagre kvittering som PDF" action="#{pdfCreator.createPDF}"/>. <br/><br/>
+			        				
+			        				<a href="javascript:window.print();" class="button1">Ta utskrift</a>&#160;&#160;<h:commandLink value="Lagre som PDF" action="#{pdfCreator.createPDF}" class="button1"/>
+			        </div>
+			        
+							<div id="noprint" class="ym-g50 ym-gr" style="padding:0;width:48%;">
+							<strong>Fortsette innlegging?</strong><br/>
+			           	 		Hvis du ønsker kan du nå <h:commandLink value=" legge inn en ny melding" action="#{kontrollBean.sessionKiller}"/>.<br/><br/><br/><br/><h:commandLink value="Ny melding" action="#{kontrollBean.sessionKiller}" class="button1"/>
+							</div>
+						 </div>
+           	 <br/><br/>
+           	 <h2 class="Trebuchet">Sammendrag</h2>
+           	 <b><h:outputText  value ="Hvor/når/hvem" /></b>
+           	 	
+           		<p>
+           	 	Hvor skjedde hendelsen?
+           	 	</p>
+           	 <h:panelGrid  columns="2" class="summary" >
+           	 	<h:panelGroup >
+           	 		<h:outputText value="Valg/felt"/>
+           	 	</h:panelGroup>
+           	 	
+           	 	<h:panelGroup  >
+           	 		<h:outputText  value="Du har svart/valgt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Hvor skjedde hendelsen" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.webPagesService.spesialSted}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Sykehus" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.webPagesService.valgtOrganisasjon}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Avdeling" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.webPagesService.valgtDepartment}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Seksjon, sengepost o.l." />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.webPagesService.stedforHendelsen}" />
+           	 	</h:panelGroup>
+           </h:panelGrid>
+          	 <br/>	
+           	 	<p>
+           	 		Når skjedde hendelsen?
+           	 	</p>
+            <h:panelGrid columns="2" class="summary" >	 	
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Valg/felt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Du har svart/valgt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Dato" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.webPagesService.tidForhendelsen}" ><f:convertDateTime type="date" timeZone="Europe/Paris"/></h:outputText>
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Tid på døgnet start for hendelsen" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.dognkode}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Klokkeslett start for hendelsen" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.webPagesService.klokkeSlett}" />
+           	 	</h:panelGroup>
+           </h:panelGrid  >
+           <br/>
+           	<p>
+           	 		Om Pasienten
+           	 	</p>
+           <h:panelGrid columns="2" class="summary"> 	            	 	
+           	 	
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Valg/felt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Du har svart/valgt" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Kjønn" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.kjonn}" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Fødselsår" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.aarFodt}" />
+           	 	</h:panelGroup>
+           </h:panelGrid>	 	
+           	<br/>
+           	<p>
+           	 		Ytterligere informasjon
+           	</p>
+           <h:panelGrid columns="2" class="summary" > 
+           <h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>	 	 	
+           	 	<h:panelGroup>
+           	 		<h:outputText value="Saksnummer" />
+           	 	</h:panelGroup>
+           	 	<h:panelGroup>
+           	 		<h:outputText value="#{kvittering.webPagesService.caseNr}" />
+           	 	</h:panelGroup>
+         	 </h:panelGrid>
+         	 
+         	 
+         	 <br/><br/>
+         	
+         	 	<b>Hendelse</b>
+         	 	
+         		
+         	 <h:panelGrid  columns="2" class="summary" >
+         	 	<h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Beskriv hva som har skjedd" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.beskriv}" />
+         	 	</h:panelGroup>
+                  	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Hvilke umiddelbare konsekvenser fikk dette?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.konsekvenser}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Alvorlighet" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.alvorlighet}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Beskriv tiltak som ble gjennomført for å begrense skaden" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.skaden}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Hvordan ble hendelsen oppdaget?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.oppdaget}" />
+         	 	</h:panelGroup>
+         	</h:panelGrid>
+         	 <br/>
+         		 <br/>
+         	 	<b>Diskusjon</b>
+         	 
+         		
+         	 <h:panelGrid  columns="2" class="summary" >
+         	 	<h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Hvorfor tror du hendelsen skjedde?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.arsaksbeskrivelse}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Beskriv tiltak som bør gjøres for at noe lignende ikke skal skje igjen" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.tiltak}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Kan andre i Helse-Norge lære av denne hendelsen? På hvilken måte?" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.andre}" />
+         	 	</h:panelGroup>
+         	 	
+         	 </h:panelGrid> 
+         	 
+         	 <br/><br/>
+         	  
+         	 <b>Kontaktinformasjon</b>
+         		
+         	 <h:panelGrid  columns="2" class="summary" >
+         	 	<h:panelGroup >
+         	 		<h:outputText value="Valg/felt" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup  >
+         	 		<h:outputText  value="Du har svart/valgt" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Jeg er " />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.webPagesService.melding.rolle}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Navn" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.webPagesService.person.navn}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="E-post (arbeid)" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.webPagesService.person.EPost}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Telefonnummer" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.webPagesService.person.telefonNummer}" />
+         	 	</h:panelGroup>
+         	 
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Leder Navn" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.webPagesService.leder.navn}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Leder E-post (arbeid)" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.webPagesService.leder.EPost}" />
+         	 	</h:panelGroup>
+         	 	
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Leder Telefonnummer" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.webPagesService.leder.telefonNummer}" />
+         	 	</h:panelGroup>
+         	 
+         	 	<h:panelGroup>
+         	 		<h:outputText value="Jeg ønsker at Kunnskapssenteret raskt tar kontakt for råd og veiledning i denne saken" />
+         	 	</h:panelGroup>
+         	 	<h:panelGroup>
+         	 		<h:outputText value="#{kvittering.onsker}" />
+         	 	</h:panelGroup>
+         	 	
+         	 </h:panelGrid> 
+         	 
+        	</h:form>
+         </div>
+       </div>	
+    </h:body>	
+	</ui:define> 
+</ui:composition>
+
+</html> 
