@@ -368,6 +368,8 @@ public class RapporterHendelseServerResourceHtml extends ProsedyreServerResource
 		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 		    				MediaType.TEXT_HTML);
 	    		}
+	    		
+	    		
 	    		Parameter godkjent = form.getFirst("godkjent");
 	    		if (godkjent != null){
 		    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));

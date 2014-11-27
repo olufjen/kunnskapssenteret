@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
+import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
@@ -31,6 +32,21 @@ import org.restlet.resource.Post;
 
 public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource {
 
+	private PasientKomplikasjonWebModel result = null;
+	private TransfusjonWebModel transfusjon = null;
+	private TransfusjonKvitteringWebModel kvittering = null;
+	private String pasientkomplikasjonId = "pasientkomplikasjon"; 	// Benyttes som nøkkel til HTML-sider
+	private String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
+	private String kvitteringsId = "kvittering";	
+	
+	private String[] avdelinger;
+	private String[] aldergruppe;
+	private String[] kjonnValg; 
+	private String[] blodProdukt;
+	private String[] hemolyseParametre;
+	
+	
+	
 	private MelderwebModel melderwebModel;
 	private String melderId = "melder";
 	
@@ -72,6 +88,62 @@ public class RapporterKontaktServerResourceHtml extends ProsedyreServerResource 
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	     
+/*
+ * 	     
+ */
+	     icd10WebService.readXml();
+	     List<Letter> letters = icd10WebService.getLetters();
+	     List<MainTerm> terms = new ArrayList();
+	     for (Letter letter : letters){
+	    	 terms.addAll(letter.getMainTerm());
+	     }
+	     result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(request,pasientkomplikasjonId);
+	     transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
+	     kvittering = (TransfusjonKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringsId);
+	     if (result == null){
+	    	 result = new PasientKomplikasjonWebModel();
+	    	 result.setFormNames(sessionParams);
+	    	 result.setAldergruppe(aldergruppe);
+	    	 result.setKjonnValg(kjonnValg);
+	    	 result.setblodProducts(blodProdukt);
+	    	 result.setHemolyseparams(hemolyseParametre);
+	    	 result.setAvdelinger(avdelinger);
+	
+	    
+	     }
+	     if (transfusjon == null){
+	    	 transfusjon = new TransfusjonWebModel();
+	    	 transfusjon.setFormNames(sessionParams);
+	  //  	 transfusjon.setHemolyseParametre(hemolyseParametre);
+	     }
+	     if (kvittering == null){
+	    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
+	  //  	 kvittering.setFormNames(sessionParams);
+	     }
+	     if ( melderwebModel == null){
+	    	 melderwebModel = new MelderwebModel();
+	    	 melderwebModel.setFormNames(sessionParams);
+	     }
+	     result.setTerms(terms);
+		 result.distributeTerms();
+	     String ref = reference.toString();
+	     result.setAccountRef(ref);
+	     transfusjon.setAccountRef(ref);
+	     transfusjon.distributeTerms();
+	     melderwebModel.distributeTerms();
+	 
+/*
+ * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
+ * Hver javaklasse får en id (ex pasientkomplikasjonId) som er tilgjengelig for html
+ *      
+*/	     
+
+	     dataModel.put(pasientkomplikasjonId, result);
+	     dataModel.put(transfusjonId,transfusjon);
+	     dataModel.put(kvitteringsId,kvittering);
+	     dataModel.put(melderId, melderwebModel);
+	     
+//=======================	     
 	     if(melderwebModel == null){
 	    	 melderwebModel = new MelderwebModel();
 	    	 melderwebModel.setFormNames(sessionParams);
