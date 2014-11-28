@@ -15,7 +15,7 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
-public class RapporterAndreHendelserServerResourceHtml extends ProsedyreServerResource {
+public class RapporterAndreHendelserServerResourceHtml extends SessionServerResource {
 	
 	public RapporterAndreHendelserServerResourceHtml (){
 		super();
@@ -36,7 +36,7 @@ public class RapporterAndreHendelserServerResourceHtml extends ProsedyreServerRe
 	     Request request = getRequest();
 
 
-	    
+	     setTransfusjonsObjects(); // Setter opp alle session objekter
 
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	

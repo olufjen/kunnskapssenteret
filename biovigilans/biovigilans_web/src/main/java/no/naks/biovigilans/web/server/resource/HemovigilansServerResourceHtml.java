@@ -54,8 +54,8 @@ import edu.unc.ils.mrc.hive2.api.HiveConcept;
  * Denne resursen håndterer all dialog for hemovigilans
  * 
  */
-public class HemovigilansServerResourceHtml extends ProsedyreServerResource {
-		private PasientKomplikasjonWebModel result = null;
+public class HemovigilansServerResourceHtml extends SessionServerResource {
+		
 
 		
 	 public HemovigilansServerResourceHtml() {
