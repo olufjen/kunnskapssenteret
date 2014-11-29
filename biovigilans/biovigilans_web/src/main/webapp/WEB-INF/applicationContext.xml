@@ -220,8 +220,8 @@
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property> 
         <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
-        <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
-                    ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
+        <property name="aldergruppe" value="${aldergruppegiver1},${aldergruppegiver2},${aldergruppegiver3},${aldergruppegiver4},${aldergruppegiver5},
+                    ${aldergruppegiver6},${aldergruppegiver7},${aldergruppepasient8}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
                       ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
