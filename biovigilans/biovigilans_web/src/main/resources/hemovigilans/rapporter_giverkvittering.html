@@ -125,17 +125,14 @@
 	<div class="tab-pane" id="tapping">
 		<h3>Giver</h3>
 	    <div class="form-group">
-	        <label>Kjønn:</label>
-	    	<div class="radio">
-	          <label >
-	          	<output name="tab-kjonn" id="tab-kjonn-1"  >${giverKvittering.kjonn}</output>
-	          </label>
+	        <label>Kjønn:</label><br>
+	         <span  id="tab-kjonn-1" >${giverKvittering.kjonn} </span>
 		    </div>
 	    </div>
 	    
 	    <div class="form-group">
-	      <label>Alder:</label>
-	      <output name="tab-alder" id="tab-alder"  >${giverKvittering.alder}</output>
+	      <label>Alder:</label><br>
+	      <span  id="tab-alder"  >${giverKvittering.alder}</span>
 	    
 	     <!--  <select name ="tab-alder" id="giveralder" class="form-control">
 	       		<option> --- Select --- </option>
@@ -147,14 +144,14 @@
 	    
 	   <div class="form-group">
 	    
-	     <label>Vekt i kg</label> 
+	     <label>Vekt i kg</label> <br>
 	      <!-- <input type="number"  min="0" name="givervektkg" size="80"  value="" class="form-control"/> -->
-	      <output name="givervektkg" id="givervektkg"  >${giverKvittering.givervektkg}</output>
+	      <span id="givervektkg"  >${giverKvittering.givervektkg}</span>
 	   </div>
 	    
 	    <div class="form-group">
-	      <label>Givererfaring:</label>
-	      	 <output name="tab-givererfaring" id="tab-givererfaring"  >${giverKvittering.givererfaring}</output>
+	      <label>Givererfaring:</label><br>
+	      	 <span  id="tab-givererfaring"  >${giverKvittering.givererfaring}</span>
 	      	<!-- <div class="radio">
 	          <label>
 	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver"  />Første gang giver
@@ -167,8 +164,8 @@
 		    </div> -->
 	     </div>
 	     <div id="type-tapping"  class="form-group">
-	      <label>Type tapping:</label> <!-- Dersom aferese : første gang aferese /etablert aferese -->
-	      	 <output name="givervektkg" id="givervektkg"  >${giverKvittering.tapping}</output>
+	      <label>Type tapping:</label><br> <!-- Dersom aferese : første gang aferese /etablert aferese -->
+	      	 <span  id="givervektkg"  >${giverKvittering.tapping}</span>
 	      <!-- 	<div class="radio">
 		      	<label>
 		      		<input type="radio" name="type-tapping"  id="type-tapping" value="fullblod" onclick="toggleDisplay('fullblod-options',this.checked); toggleDisplay('aferese-options',0)" /> Fullblod 
@@ -248,8 +245,8 @@
 		     </div> -->
 	    </div>
 	    <div class="form-group">
-	      <label>Tidligere reaksjoner på tapping:</label>
-	      <output id="tab-tidl-tapp" name="tab-tidl-tapp">${giverKvittering.tidlTapp}</output>
+	      <label>Tidligere reaksjoner på tapping:</label><br>
+	      <span id="tab-tidl-tapp">${giverKvittering.tidlTapp}</span>
 	      <!-- <div class="radio">
 	          <label>
 	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="ja" onclick="toggleDisplay('beskriv-ja',  this.checked);"/>Ja
@@ -268,19 +265,19 @@
 	    </div>
 	    
 	    <div id="beskriv-ja" style="display:none">
-	    	<label>Beskrivelse av tidligere reaksjon:</label>
-	    	<output id="tab-reaksjon-beskriv" name="tab-reaksjon-beskriv">${giverKvittering.reaksjonBeskriv}</output>
+	    	<label>Beskrivelse av tidligere reaksjon:</label><br>
+	    	<span id="tab-reaksjon-beskriv" >${giverKvittering.reaksjonBeskriv}</span>
 		  	<!-- <textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea> -->
 	    </div>
 	    <h3>Donasjon</h3>
 	    <div class="form-group">
 	    	<label>Når Oppstod Symptomene</label><br>
-	    	<output id="dato-donasjon" name="dato-donasjon">${giverKvittering.datoDonasjon}</output>
+	    	<span id="dato-donasjon" >${giverKvittering.datoDonasjon}</span>
 	    	<!-- <input type="date" name="dato-donasjon" /> -->
 	    </div>
 	    <div class="form-group">
-	      <label>Donasjonssted:</label>
-	      <output id="tab-sted" name="tab-sted">${giverKvittering.donasjonSted}</output>
+	      <label>Donasjonssted:</label><br>
+	      <span id="tab-sted" >${giverKvittering.donasjonSted}</span>
 	     <!--  <select name ="tab-sted" id="tappested" class="form-control">
 	       		<option> --- Select --- </option>
 	       		<#list giverkomplikasjon.donasjonsstedgruppe as donasjonssted>
@@ -289,8 +286,8 @@
 	     </select> -->
 	    </div>
 	    <div class="form-group">
-	      <label>Måltid innen tre timer før tapping:</label>
-	       <output id="tab-maltid" name="tab-maltid">${giverKvittering.maaltid}</output>
+	      <label>Måltid innen tre timer før tapping:</label><br>
+	       <span id="tab-maltid" >${giverKvittering.maaltid}</span>
 	      	<!-- <div class="radio">
 	          <label>
 	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="ja"/>Ja
@@ -308,8 +305,8 @@
 		    </div> -->
 	    </div>
 	    <div class="form-group">
-	      <label>Komplisert venepunksjon:</label>
-	      <output id="tab-vene" name="tab-vene">${giverKvittering.tabVene}</output>
+	      <label>Komplisert venepunksjon:</label><br>
+	      <span id="tab-vene">${giverKvittering.tabVene}</span>
 	     <!--  <div class="radio">
 	          <label>
 	          	<input type="radio" name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon', this.checked);toggleDisplay('armenBilde', this.checked);"/>Ja
@@ -328,7 +325,7 @@
 	    </div>
 	   <!--  <div class="form-group" id="beskriv-komplikasjon" >
 			<label>Beskriv komplikasjonen med egne ord:</label>
-			<output id="form-control" name="form-control">${giverKvittering.formControl}</output>
+			<label id="form-control" name="form-control">${giverKvittering.formControl}</label>
 		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea> 
 		</div>
 		"
@@ -343,7 +340,7 @@
 			</map>
 		</div> -->
 	    <h3>Giverkomplikasjon</h3>
-	    <output id="tab-hvor" name="tab-hvor">${giverKvittering.tabHvor}</output>
+	    <span id="tab-hvor">${giverKvittering.tabHvor}</span><br>
 	   <!--  <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
 	       <select id="re" name ="tab-hvor" list="icd10gruppehvor" class="form-control" onchange="blodbankenOptions()"  >
@@ -356,7 +353,7 @@
 	    
 	    <div class="form-group"  id="hendelseDato">
 	    	<label>Når oppstod symptomene</label><br>
-	    	 <output id="dato-hendelse" name="dato-hendelse">${giverKvittering.datoHendelse}</output>
+	    	 <span id="dato-hendelse">${giverKvittering.datoHendelse}</span>
 	    	<!-- <input type="date" name="dato-hendelse"  /> -->
 	    </div>
 	    
@@ -379,8 +376,8 @@
 	     </datalist>
 	    </div> -->
 		<div id="utenfor"   class="form-group">
-	      <label>Utenfor Blodbanken</label>
-	      <output id="tab-utenForBlodbanken" name="tab-utenForBlodbanken">${giverKvittering.utenForBlodbanken}</output>
+	      <label>Utenfor Blodbanken</label><br>
+	      <span id="tab-utenForBlodbanken" >${giverKvittering.utenForBlodbanken}</span>
 	      <!--  <select  name ="tab-utenForBlodbanken" list="icd10gruppehvor" class="form-control"  >
 		      <option  > --- Select --- </option>
 		     	<#list giverkomplikasjon.utenforBlodbankengruppe as utenforBlodbanken >
@@ -389,8 +386,8 @@
 		  </select> -->
 	    </div>
 		<div class="form-group">
-	    	<label>Tid fra start tapping til reaksjon:</label>
-	    	<output id="tab-tapp-reak" name="tab-tapp-reak">${giverKvittering.tappReak}</output>
+	    	<label>Tid fra start tapping til reaksjon:</label><br>
+	    	<span id="tab-tapp-reak">${giverKvittering.tappReak}</span>
 	    	
 	       <!--  <div>
 	          <input name="tab-tapp-reak" type="text" class="form-control" id="tab-tapp-reak" placeholder="Skriv inn..">
@@ -398,8 +395,8 @@
 	    </div>
 	      
 	   	<div class="form-group">
-		    <label>Varighet av komplikasjon/bivirkning/skade:</label>
-		    <output id="tab-varighet" name="tab-varighet">${giverKvittering.tabVarighet}</output>
+		    <label>Varighet av komplikasjon/bivirkning/skade:</label><br>
+		    <span id="tab-varighet" >${giverKvittering.tabVarighet}</span>
 		    
 	    <!--     <div>
 	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
@@ -408,7 +405,7 @@
 	    
 	    <div class="form-group" >
 			<h3>Alvorlighetsgrad </h3>
-			<output id="alvor-mang" name="alvor-mang">${giverKvittering.alvorMang}</output>
+			<span id="alvor-mang">${giverKvittering.alvorMang}</span><br>
 	
 			<!-- <div class="radio">
 				<label>
@@ -433,8 +430,8 @@
 		</div>
 	    
 	    <div class="form-group">
-	      <label>Klinisk Resultat (samordnes med komplikasjoner ved tapping av givere)</label>
-	      <output id="tab-klinisk" name="tab-klinisk">${giverKvittering.tabKlinisk}</output>
+	      <label>Klinisk Resultat (samordnes med komplikasjoner ved tapping av givere)</label><br>
+	      <span id="tab-klinisk">${giverKvittering.tabKlinisk}</span>
 	      <!-- <div class="radio">
 	          <label>
 	          	<input type="radio" name="tab-klinisk" id="tab-helbredelse" value="Full-helbredelse"/>Full helbredelse
@@ -501,8 +498,8 @@
 		</div> -->
 	    <h3>Type komplikasjon</h3>
 	    <div class="form-group">
-	      <label>Lokal:</label>
-	      <output id="tab-arm" name="tab-arm">${giverKvittering.tabArm}</output> 
+	      <label>Lokal:</label><br>
+	      <span id="tab-arm" >${giverKvittering.tabArm}</span> 
 	      <!-- <div class="radio">
 	          <label>
 	          	<input type="radio" name="tab-arm" id="tab-arm" value="Lokal-Ja" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
@@ -516,14 +513,14 @@
 	    </div>
 	
 	    <div id="tabskaearm-ja" class="form-group" >
-	      <label>Hvis Ja:</label>
-	      <output id="tab-tabskadearm" name="tab-tabskadearm">${giverKvittering.tabskadearm}</output> 
+	      <label>Hvis Ja:</label><br>
+	      <span id="tab-tabskadearm" >${giverKvittering.tabskadearm}</span> 
 	      <!-- <input name ="tab-tabskadearm" list="tabskadearm" class="form-control"> -->
 	      
 	    </div>
 	    <div class="form-group">
-	      <label>Systemisk:</label>
-	      <output id="tab-bivirk" name="tab-bivirk">${giverKvittering.tabBivirk}</output> 
+	      <label>Systemisk:</label><br>
+	      <span id="tab-bivirk">${giverKvittering.tabBivirk}</span> 
 	      
 	      <!-- <div class="radio">
 	          <label>
@@ -537,13 +534,13 @@
 		    </div> -->
 	    </div>
 	    <div id="systemiskbivirkning-ja"  class="form-group">
-	      <label>Hvis Ja:</label>
-	       <output id="tab-systemiskbivirkning" name="tab-systemiskbivirkning">${giverKvittering.systemiskbivirkning}</output>
+	      <label>Hvis Ja:</label><br>
+	       <span id="tab-systemiskbivirkning">${giverKvittering.systemiskbivirkning}</span>
 	    <!--   <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
 	    </div>
 		    <div class="form-group">
-	      <label>Annen reaksjon(spesifiser):</label>
-	      <output id="tab-annenreaksjon" name="tab-annenreaksjon">${giverKvittering.annenreaksjon}</output>
+	      <label>Annen reaksjon(spesifiser):</label><br>
+	      <span id="tab-annenreaksjon" >${giverKvittering.annenreaksjon}</span>
 	      
 	      <!-- <div class="radio">
 	          <label>
@@ -557,15 +554,15 @@
 		    </div> -->
 	    </div>
 	    <div id="annenreaksjon-nei"  class="form-group">
-			<label>Hvis du har valgt annet, beskriv her:</label>
-			  <output id="tab-annet-beskriv" name="tab-annet-beskriv">${giverKvittering.annenreaksjonBeskriv}</output>
+			<label>Hvis du har valgt annet, beskriv her:</label><br>
+			  <span id="tab-annet-beskriv" >${giverKvittering.annenreaksjonBeskriv}</span>
 			<!--   <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea> -->
 		</div> 
 		  	
 		    <h3>Tiltak rettet mot giver</h3>
 		    <div class="form-group">
-		      <label>Strakstiltak:</label>
-		      <output id="tab-strakstiltak" name="tab-strakstiltak">${giverKvittering.strakstiltak}</output>
+		      <label>Strakstiltak:</label><br>
+		      <span id="tab-strakstiltak">${giverKvittering.strakstiltak}</span>
 		      
 		      	<!-- <div class="radio">
 		          <label>
@@ -591,21 +588,21 @@
 		          <label>
 		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak5" value="Strakstiltak-annet-sted"/>Behandling annet sted (spesifiser)
 		          </label>
-			    </div> -->
-	    	</div>
+			    </div> 
+	    	</div>-->
 	    </div>
 	       
 	    <div class="form-group">
-		 <label>Planlagte eller gjennomførte forbedringstiltak</label>
-		 <output id="tab-forbedringstiltak" name="tab-forbedringstiltak">${giverKvittering.forbedringstiltak}</output>
+		 <label>Planlagte eller gjennomførte forbedringstiltak</label><br>
+		 <span id="tab-forbedringstiltak">${giverKvittering.forbedringstiltak}</span>
 		 
 		 <!--  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"></textarea>  -->  
 		      
 	  		<br/>
 	  	</div>
 	  	 <div class="form-group">
-		      <label>Var komplikasjonen/hendelsen forebyggbar?</label>
-		      <output id="tab-forebyggbar" name="tab-forebyggbar">${giverKvittering.forebyggbar}</output>
+		      <label>Var komplikasjonen/hendelsen forebyggbar?</label><br>
+		      <span id="tab-forebyggbar">${giverKvittering.forebyggbar}</span>
 		      
 		      	<!-- <div class="radio">
 		          <label>
@@ -624,8 +621,8 @@
 			    </div> -->
 	    	</div>	
 	     <div class="form-group">
-	      <label>Videre behandling/oppfølging nødvendig?</label>
-	      <output id="tab-annenreak" name="tab-annenreak">${giverKvittering.annenreak}</output>
+	      <label>Videre behandling/oppfølging nødvendig?</label><br>
+	      <span id="tab-annenreak" >${giverKvittering.annenreak}</span>
 	      
 	        <!--  <div class="radio">
 	          <label>
@@ -671,8 +668,8 @@
 	</div>
 	 -->
 	    <div class="form-group">
-	      <label>Giver er avregistrert (p.g.a komplikasjonen)</label>
-	  	  <output id="tab-avreg" name="tab-avreg">${giverKvittering.avreg}</output>
+	      <label>Giver er avregistrert (p.g.a komplikasjonen)</label><br>
+	  	  <span id="tab-avreg" >${giverKvittering.avreg}</span>
 	      
 	    <!--   <div class="radio">
 	          <label>
@@ -692,6 +689,7 @@
 	    </div>
 	      <button name="ikkegodkjent" type="button" class="btn btn-default" value="ikkegodkjent" onclick="document.location='rapporter_giver.html';">Ikke Godkjent</button>
 	      <button name="godkjent" type="button"  class="btn btn-primary" onclick="document.location='rapporter_kontakt.html';">Godkjent</button>
+	</form>
 	</div> <!--slutt Tapping av blodgivere-->
 	  
 </body>
