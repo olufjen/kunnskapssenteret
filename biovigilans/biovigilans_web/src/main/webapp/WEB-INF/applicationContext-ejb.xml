@@ -89,6 +89,13 @@
   	  	<property name="blodproduktPrimarykey" value="${primarykey.blodprodukt}"></property>
   	  	<property name="blodproduktPrimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   </bean>
+  <bean id="annenkomplikasjonDAO" class="no.naks.biovigilans.dao.AnnenkomplikasjonDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertAnnenKomplikasjonSQL" value="${annenkomplikasjon.insert}"></property>
+ 	<property name="annenKomplikasjonPrimaryKey" value="${primarykey.annenkomplikasjon}"></property>
+  	<property name="annenKomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	
+  </bean>
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
   	<property name="transfusjonDAO" ref="transfusjonDAO"></property>
@@ -104,6 +111,9 @@
   </bean>
   <bean id="melderTableService" class="no.naks.biovigilans.service.MelderTableServiceImpl">
   	<property name="melderDAO" ref="melderDAO"></property>
+  </bean>
+  <bean id="annenKomplikasjonTableService" class="no.naks.biovigilans.service.AnnenKomplikasjonTableServiceImpl" >
+  	<property name="annenKomplikasjonDAO" ref="annenkomplikasjonDAO"></property>
   </bean>
   <!-- /usr/local/tomcat6/xml/ -->
   <!-- c:\\temp\\c:\\temp\\ -->

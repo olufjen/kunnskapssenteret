@@ -103,7 +103,7 @@
         </bean>
         <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
 <!--   C:\\biovigilans\\temp\\ICD10CM.xml Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml     -->
-<!--   -->           <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>     
+         <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>     
 <!-- 				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
         </bean> 
@@ -191,7 +191,9 @@
         <property name="donasjonWebService" ref="donasjonWebService"></property>
         <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
         <property name="melderWebService" ref="melderWebService"></property>
-        <property name="icd10WebService" ref="ICD10WebService"></property>  
+        <property name="icd10WebService" ref="ICD10WebService"></property> 
+        <property name="annenKomplikasjonWebService" ref="annenKomplikasjonWebService"></property>
+         
   </bean>       
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
@@ -211,7 +213,6 @@
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property>  
-          
   </bean>       
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterGiverServerResourceHtml">
@@ -236,12 +237,25 @@
                                 ${giver.kortbeskr},${giver.strakstiltak},${giver.annenreak},${giver.behandlingoppfolging},${giver.hvorbehandling},
                                 ${giver.behandlingspesifiser},${giver.avreg},${giver.forbedringstiltak},${giver.alvormang},${giver.aarsaks},${giver.forebyggbar},${giver.imgarea}">
         </property>
-  </bean>       
+  </bean>   
   <bean name="/hemovigilans/rapporter_andrehendelser.html" id="rapporterhendelserServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
-                ${andreHendelser.avviket},${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
+                ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
                 ${andreHendelser.planlagte},${andreHendelser.kommentar}"></property>
+         
+      <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
+      <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},${hovedprosessoption10}"></property>
+      <property name="feilelleravvik" value="${feilelleravvikoption1},${feilelleravvikoption2},${feilelleravvikoption3},${feilelleravvikoption4}"></property>  
+      <property name="hendelsenoppdaget" value="${hendelsenoppdagetoption1},${hendelsenoppdagetoption2},${hendelsenoppdagetoption3},${hendelsenoppdagetoption4},${hendelsenoppdagetoption5},${hendelsenoppdagetoption6},"></property>  
+        
+           <property name="icd10WebService" ref="ICD10WebService"></property>
+        <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
+        <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
+                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
+        <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
+        <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
+       
   </bean>
         <bean name="/hemovigilans/rapporter_transfusjon.html" id="rapporterServerResource" autowire="byName" scope="prototype"
                   class="no.naks.biovigilans.web.server.resource.RapporterHendelseServerResourceHtml">
@@ -320,8 +334,8 @@
         <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
         <property name="melderWebService" ref="melderWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property>
-    
- 
+        <property name="annenKomplikasjonWebService" ref="annenKomplikasjonWebService"></property>
+   
         </bean>
  
      
@@ -339,7 +353,9 @@
         <bean id="giverWebService" class="no.naks.biovigilans.web.control.GiverWebServiceImpl" >
                 <property name="giverTableService" ref="giverTableService"></property>
         </bean>
-
+		<bean id="annenKomplikasjonWebService"  class="no.naks.biovigilans.web.control.AnnenKomplikasjonWebServiceImpl">
+				<property name="annenKomplikasjonTableService" ref="annenKomplikasjonTableService"></property>
+		</bean>
         <bean id="donasjonWebService" class="no.naks.biovigilans.web.control.DonasjonWebServiceImpl">
                 <property name="donasjonTableService" ref="donasjonTableService"></property>
         </bean>
