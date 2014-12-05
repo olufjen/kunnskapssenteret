@@ -6,6 +6,7 @@ import java.util.List;
 import org.restlet.Request;
 import org.restlet.data.Reference;
 
+import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKvitteringWebModel;
@@ -54,11 +55,56 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String vigilansmeldingId="vigilansmelding";
 	protected GiverKvitteringWebModel giverKvittering = null;
 	
-	
+	//Rapporter AndreHendelse
+	protected AnnenKomplikasjonwebModel annenModel =  null;
+	protected String[] alvorligHendelse; 
+	protected String andreHendelseId ="andreHendelse";
+	protected String[] hovedprosesslist;
+	protected String[] feilelleravvik;
+	protected String[] hendelsenoppdaget;
 	
 	protected MelderwebModel melderwebModel;
 	protected String melderId = "melder";
 	
+	
+	
+	
+	public String[] getHendelsenoppdaget() {
+		return hendelsenoppdaget;
+	}
+	public void setHendelsenoppdaget(String[] hendelsenoppdaget) {
+		this.hendelsenoppdaget = hendelsenoppdaget;
+	}
+	public String[] getFeilelleravvik() {
+		return feilelleravvik;
+	}
+	public void setFeilelleravvik(String[] feilelleravvik) {
+		this.feilelleravvik = feilelleravvik;
+	}
+	public String[] getHovedprosesslist() {
+		return hovedprosesslist;
+	}
+	public void setHovedprosesslist(String[] hovedprosesslist) {
+		this.hovedprosesslist = hovedprosesslist;
+	}
+	public AnnenKomplikasjonwebModel getAnnenModel() {
+		return annenModel;
+	}
+	public void setAnnenModel(AnnenKomplikasjonwebModel annenModel) {
+		this.annenModel = annenModel;
+	}
+	public String getAndreHendelseId() {
+		return andreHendelseId;
+	}
+	public void setAndreHendelseId(String andreHendelseId) {
+		this.andreHendelseId = andreHendelseId;
+	}
+	public String[] getAlvorligHendelse() {
+		return alvorligHendelse;
+	}
+	public void setAlvorligHendelse(String[] alvorligHendelse) {
+		this.alvorligHendelse = alvorligHendelse;
+	}
 	public PasientKomplikasjonWebModel getResult() {
 		return result;
 	}
@@ -204,6 +250,8 @@ public class SessionServerResource extends ProsedyreServerResource {
 		this.melderId = melderId;
 	}
 	
+	
+	
 	public void invalidateSessionobjects(){
 		sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
 		sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
@@ -211,6 +259,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
 		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
 		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
+		sessionAdmin.getSession(getRequest(), andreHendelseId).invalidate();
 	}
 	/**
 	 * setTransfusjonsObjects
@@ -287,14 +336,23 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    
 	     }
 	
-/*
- * Må også sette opp session objekter for Andre hendelser !!!
- * 	     
- */
+	     /*
+	      * Andre Hendelse session
+	      */
+	     annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
+	     if(annenModel == null){
+	    	 annenModel = new AnnenKomplikasjonwebModel();
+	    	 annenModel.setAlvorligHendelse(alvorligHendelse);
+	    	 annenModel.setHovedprosesslist(hovedprosesslist);
+	    	 annenModel.setFeilelleravvik(feilelleravvik);
+	    	 annenModel.setHendelsenoppdaget(hendelsenoppdaget);
+	     }
+	   
 	     
 	     
 	     
 	}
+	
 	public String getPage(){
 		String page = "/hemovigilans/rapporter_hendelse_main.html";
 		return page;

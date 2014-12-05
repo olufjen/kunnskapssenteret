@@ -3,6 +3,9 @@ package no.naks.biovigilans.web.server.resource;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
+import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
+
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -36,7 +39,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     Request request = getRequest();
 
 
-	     setTransfusjonsObjects(); // Setter opp alle session objekter
+	    
 
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
@@ -52,6 +55,13 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+	  //   setAndreHendelser(); // Setter opp andreHendelser session objekter
+	     setTransfusjonsObjects(); 
+	     annenModel.setFormNames(sessionParams);
+	     annenModel.distributeTerms();
+	     
+	     dataModel.put(andreHendelseId, annenModel);
+	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -74,11 +84,13 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     @Post
     public Representation storeHemovigilans(Form form) {
     	TemplateRepresentation  templateRep = null;
-    	
+    	if(form == null){
+    		invalidateSessionobjects();
+    	}
  
     	if (form != null){
-    		Parameter logout = form.getFirst("avbryt4");
-    		Parameter lukk = form.getFirst("lukk4");
+    		Parameter logout = form.getFirst("avbryt3");
+    		Parameter lukk = form.getFirst("lukk3");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
     		if (logout != null || lukk != null){
@@ -89,25 +101,43 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    				MediaType.TEXT_HTML);
     			return templateRep; // return a new page!!!
     		}
-    			
+    		
+  		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(getRequest(), andreHendelseId);
+  		  if(annenModel == null){
+  			  annenModel = new AnnenKomplikasjonwebModel();
+  			  annenModel.setFormNames(sessionParams);
+  		  }
+    		
  
     		for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
     					System.out.println(entry.getName() + "=" + entry.getValue());
-    	
+    			annenModel.setValues(entry);
     		}
-
-    	
-    		Parameter lagre = form.getFirst("lagre4");
- 
-//    		System.out.println("Status = "+result.getStatus());
-    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/hemovigilans.html"));
+    		
+    		sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
+    		dataModel.put(andreHendelseId,annenModel);
+    		Parameter lagre = form.getFirst("lagre3");
+    		
+    		if(lagre != null){
+    			giverModel = new GiverKomplikasjonwebModel();
+    			giverModel.getVigilansmelding().saveToVigilansmelding();
+    			giverWebService.saveVigilansmelding(giverModel);
+    			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
+    			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
+    			annenModel.saveValues();
+    			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
+    		}
+    		
+    		
+    		String page = getPage();
+    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
     		Representation pasientkomplikasjonFtl = clres2.get();
-    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
-    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+    		invalidateSessionobjects();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     				MediaType.TEXT_HTML);
+    		
+    	
     	}
     	return templateRep;
       

@@ -1,5 +1,6 @@
 package no.naks.biovigilans.web.server.resource;
 
+import no.naks.biovigilans.web.control.AnnenKomplikasjonWebService;
 import no.naks.biovigilans.web.control.DonasjonWebService;
 import no.naks.biovigilans.web.control.GiverWebService;
 import no.naks.biovigilans.web.control.ICD10WebService;
@@ -21,9 +22,19 @@ public class ProsedyreServerResource extends ServerResource {
 	protected DonasjonWebService donasjonWebService;
 	protected MelderWebService melderWebService;
 	protected KomDiagnosegiverWebService komDiagnosegiverWebService;
+	protected AnnenKomplikasjonWebService annenKomplikasjonWebService;
+	
 	
 	protected String[]sessionParams;
 	
+	
+	public AnnenKomplikasjonWebService getAnnenKomplikasjonWebService() {
+		return annenKomplikasjonWebService;
+	}
+	public void setAnnenKomplikasjonWebService(
+			AnnenKomplikasjonWebService annenKomplikasjonWebService) {
+		this.annenKomplikasjonWebService = annenKomplikasjonWebService;
+	}
 	public SessionAdmin getSessionAdmin() {
 		return sessionAdmin;
 	}
