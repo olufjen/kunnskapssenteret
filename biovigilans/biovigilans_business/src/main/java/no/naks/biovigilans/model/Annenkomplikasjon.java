@@ -23,6 +23,8 @@ public interface Annenkomplikasjon {
 	public void setKommentar(String kommentar);
 	public String getOppdaget();
 	public void setOppdaget(String oppdaget);
+	public Long getMeldeid();
+	public void setMeldeid(Long meldeid);
 	public Map<String, String> getAnnenKomplikasjonsFields();
 	public void setAnnenKomplikasjonsFields(
 			Map<String, String> annenKomplikasjonsFields);
@@ -32,6 +34,8 @@ public interface Annenkomplikasjon {
 	public void setParams();
 	public int[] getTypes();
 	public Object[] getParams();
-	public int[] getUtypes();		
+	public int[] getUtypes();	
+	public void saveField(String userField, String userValue);
+	public void saveToAnnenKomplikasjon();
 
 }
