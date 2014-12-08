@@ -336,10 +336,15 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    
 	     }
 	
-	     /*
-	      * Andre Hendelse session
-	      */
-	     annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
+	}
+
+    /*
+     * Andre Hendelse session
+     */
+   	
+	public void setAndreHendelser(){
+		 Request request = getRequest();
+		 annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
 	     if(annenModel == null){
 	    	 annenModel = new AnnenKomplikasjonwebModel();
 	    	 annenModel.setAlvorligHendelse(alvorligHendelse);
@@ -347,10 +352,6 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 annenModel.setFeilelleravvik(feilelleravvik);
 	    	 annenModel.setHendelsenoppdaget(hendelsenoppdaget);
 	     }
-	   
-	     
-	     
-	     
 	}
 	
 	public String getPage(){
