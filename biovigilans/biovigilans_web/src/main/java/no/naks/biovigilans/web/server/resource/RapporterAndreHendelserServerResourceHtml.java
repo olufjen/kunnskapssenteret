@@ -1,8 +1,13 @@
 package no.naks.biovigilans.web.server.resource;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
 
@@ -107,8 +112,6 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
   			  annenModel = new AnnenKomplikasjonwebModel();
   			  annenModel.setFormNames(sessionParams);
   		  }
-    		
- 
     		for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
     					System.out.println(entry.getName() + "=" + entry.getValue());
@@ -121,7 +124,20 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     		
     		if(lagre != null){
     			giverModel = new GiverKomplikasjonwebModel();
-    			giverModel.getVigilansmelding().saveToVigilansmelding();
+    			//giverModel.getVigilansmelding().saveToVigilansmelding();
+    			String strDate = form.getValues("hendelsen-date");
+    			Date datoforhendelse = null;
+    			if(strDate != null){
+					try {
+						DateFormat dateFormat =  new SimpleDateFormat("yyyy-MM-dd");
+						datoforhendelse = dateFormat.parse(strDate);
+					} catch (ParseException e) {
+						System.out.println("date format problem: " + e.toString());
+	
+					}
+    			}
+    			giverModel.getVigilansmelding().setDatoforhendelse(datoforhendelse);
+    			giverModel.getVigilansmelding().setMeldingsdato(null);
     			giverWebService.saveVigilansmelding(giverModel);
     			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
     			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
