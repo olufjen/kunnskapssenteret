@@ -1,17 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Rapporter hendelse - Hemovigilans</title>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<!--<link rel="stylesheet" href="css/bootstrap.css">-->
-
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Rapporter hendelse - Hemovigilans</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/fonts/font-source-sans-pro.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/vendor/bootstrap.min.css"/>
+	<!-- <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/defaults.css"/> -->
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
+	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
+	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
-
 <body>
+<header class="master-header" role="navation">
+      <div class="container">
+        <!-- synlig header -->
+        <div class="row">
+          <div class="col-xs-9 col-sm-6 col-sm-push-3 col-vertical-bottom-sm logo-container">
+            <div class="bottom">
+              <a class="home" href="#" id="home" rel="home" title="">
+                <img class="logo" src="http://newwindow.no/ks/nokc-0.1.7/img/ks-logo.png" alt="" />
+              </a>
+            </div>
+          </div>
+          <div class="hidden-xs col-sm-3 col-sm-push-3 col-vertical-bottom-sm">
+            <div class="bottom">
+              <span class="nkfh">Nasjonalt kunnskapssenter<br />for helsetjenesten</span>
+            </div>
+          </div>
+          <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
+            <div class="bottom">
+              <button type="button" class="btn-master-menu" data-toggle="collapse" data-target=".master-menu">
+                <!-- <button type="button" class="btn-master-menu"> -->
+                <span class="sr-only">Åpne eller lukke meny.</span>
+                <span class="text hidden-xs">Meny</span>
+                <div class="bar-box">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </div>
+              </button>
+              <ul class="list-inline english-aa hidden-xs">
+                <li class="english">
+                  <a href="#" id="english" title="">English</a></li><li class="aa">
+                  <a href="#">
+                    <span class="small">A </span>
+                    <span class="medium">A</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 	<div class="container">
+		<script type="text/javascript">
+
+				function toggleDisplay(id)
+				{    
+					document.getElementById('smitte').style.display = 'none';
+					document.getElementById('feilblod').style.display = 'none';
+					document.getElementById('intervju').style.display = 'none';
+					document.getElementById('giveren').style.display = 'none';
+					document.getElementById('utstyr').style.display = 'none';
+					document.getElementById('analyser').style.display = 'none';
+					document.getElementById('merking').style.display = 'none';
+					
+					document.getElementById(id).style.display = 'block';
+				    
+				}
+			</script>
+			
 		<form id="rapport" action="?method=PUT" method="post"> 
-	
+			
 			<h1>Rapporter Andre Hendelser</h1>
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs">
@@ -53,54 +116,182 @@
 				<div class="form-group">
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
-			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="Feil blod transfudert"  />Feil blod
-			          </label>
+				          <label>
+				          	<input type="radio" name="tab-klassifikasjon"  value="Feil blod transfudert" onclick="toggleDisplay('feilblod');"  />Feil Blod transfudert
+				          </label>
+				          <div id="feilblod" style="display: none" >
+					          <div class="radio" >
+					          	 <label>
+					          		<input type="radio" name="tab-feilblod"   value="Transfudert blod som ikke fyller kraV"  />Transfudert blod som ikke fyller kraV 
+					          	 </label>
+					          </div>
+					          <div class="radio">	 
+					          	 <label>
+					          		<input type="radio" name="tab-feilblod"  value="Transfudert blod til feil pasient"  />Transfudert blod til feil pasient
+					          	 </label>
+					          </div>
+					          <div class="radio">	 
+					          	 <label>
+					          		<input type="radio" name="tab-feilblod"  value="Ikke i  for transfusjon"  />Ikke i  for transfusjon
+					          	 </label>
+					          </div>
+					      </div>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="smitte ved testing"  />Smitte påvist ved testing
+			          	<input type="radio" name="tab-klassifikasjon"  value="Smitte ved testing" onclick="toggleDisplay('smitte');"  />Smitte påvist ved testing
 			          </label>
+			          <div id="smitte" style="display: none" >
+				           <div class="radio">
+				          	 <label>
+				          		<input type="radio" name="tab-smitte"  value="Smitte påvist ved testing(nyregistrering)"  />Smitte påvist ved testing(nyregistrering)
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-smitte"  value="Smitte påvist ved testing(tapping)"  />Smitte påvist ved testing(tapping)
+				          	 </label>
+				          </div>
+			          </div>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="intervju fremkommer det informasjon"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen
-			          					om forrige og evt tidligere
+			          	<input type="radio" name="tab-klassifikasjon"  value="Ved intervju fremkommer det informasjon" onclick="toggleDisplay('intervju');"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og evt tidligere tappinger
 			          </label>
+			          <div id="intervju" style="display: none" >
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-intervju"  value="Smitte"  />Smitte
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-intervju"  value="Medisiner"  />Medisiner
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-intervju"  value="Sykdom"  />Sykdom
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-intervju"  value="Reise"  />Reise
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-intervju"  value="Annen smitterisiko"  />Annen smitterisiko
+				          	 </label>
+				          </div>
+				      </div>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="giveren fyller"  />Giveren fyller ikke kravene men blir likevel tappet
+			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('');"  value="giveren fyller"  />Giveren fyller ikke kravene men blir likevel tappet
 			          </label>
 				    </div>
 				     <div class="radio">
-			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="giver inform"  />Giver inform
+			     	  <label>
+			          	<input type="radio" name="tab-klassifikasjon"   onclick="toggleDisplay('giveren');"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
 			          </label>
+				      <div id="giveren" style="display: none" >    
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-giveren"  value="Annen smitterisiko"  />Sykdom
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-giveren"  value="Smitterisiko"  />Smitterisiko
+				          	 </label>
+				          </div>
+				       </div>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="teknisk svikt utstyr"  />Teknisk svikt utstyr
+			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('utstyr');"  value="Utstyr og reagenser"  />Utstyr og reagenser
 			          </label>
+			          <div id="utstyr" style="display: none" >
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-utstyr"  value="Tappet for mye"  />Tappet for mye
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-utstyr"  value="Teknisk svikt reagenser"  />Teknisk svikt reagenser
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-utstyr"  value="Utstyr annet"  />Utstyr annet
+				          	 </label>
+				          </div>
+				      </div>
+			        </div>
+				    <div class="radio">
+			          <label>
+			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('analyser');" value="Analyser"  />Analyser
+			          </label>
+			          <div id="analyser" style="display: none" >
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-analyser"  value="Virusanalyse ikke utført"  />Virusanalyse ikke utført
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-analyser"  value="Blodtypen var feil"  />Blodtypen var feil
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-analyser"  value="Feil test brukt"  />Feil test brukt
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-analyser"  value=" Analysen feil registrert eller ikke registrert"  /> Analysen feil registrert eller ikke registrert
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-analyser"  value="Ikke tatt hensyn tuil feil antistoff"  />Ikke tatt hensyn tuil feil antistoff
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-analyser"  value="Analyse annet"  />Analyse annet
+				          	 </label>
+				          </div>
+			          </div>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="Analyser"  />Analyser
+			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('');"  value="Henting og transport"  />Henting og transport
 			          </label>
 				    </div>
 				    <div class="radio">
-			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="Henting og transport"  />Henting og transport
+		              <label>
+			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('merking');"  value="Merking feil"  />Merking feil
 			          </label>
+			         	<div id="merking" style="display: none" >
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Prøver merket feil
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-merking"  value="Poser merket feil"  />Poser merket feil
+				          	 </label>
+				          </div>
+				        </div>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="Merking feil"  />Merking feil
-			          </label>
-				    </div>
-				    <div class="radio">
-			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="Annet"  />Annet
+			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('');"  value="Annet"  />Annet
 			          </label>
 				    </div>
 				   
