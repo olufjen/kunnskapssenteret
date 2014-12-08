@@ -55,8 +55,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
-	  //   setAndreHendelser(); // Setter opp andreHendelser session objekter
-	     setTransfusjonsObjects(); 
+	     setAndreHendelser(); // Setter opp andreHendelser session objekter
+	    // setTransfusjonsObjects(); 
 	     annenModel.setFormNames(sessionParams);
 	     annenModel.distributeTerms();
 	     
@@ -136,8 +136,6 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     		invalidateSessionobjects();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     				MediaType.TEXT_HTML);
-    		
-    	
     	}
     	return templateRep;
       
