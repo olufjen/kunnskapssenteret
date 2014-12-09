@@ -102,7 +102,7 @@
 
         </bean>
         <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
-<!--    C:\\biovigilans\\temp\\ICD10CM.xml      -->
+<!--  C:\\biovigilans\\temp\\ICD10CM.xml      -->
          <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>     
 <!-- 				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
@@ -242,7 +242,9 @@
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
-                ${andreHendelser.planlagte},${andreHendelser.kommentar}"></property>
+                ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHenelser.feilblod},${andreHenelser.smitte},${andreHenelser.intervju},${andreHenelser.giveren},${andreHenelser.utstyr},${andreHenelser.analyser},${andreHenelser.merking}">
+        
+        </property>
          
       <property name="alvorligHendelse" value="${andrealvorlighendelsenoption1},${andrealvorlighendelsenoption2},${andrealvorlighendelsenoption3},${andrealvorlighendelsenoption4},${andrealvorlighendelsenoption5}"></property>
       <property name="hovedprosesslist" value ="${hovedprosessoption1},${hovedprosessoption2},${hovedprosessoption3},${hovedprosessoption4},${hovedprosessoption5},${hovedprosessoption6},${hovedprosessoption7},${hovedprosessoption8},${hovedprosessoption9},${hovedprosessoption10}"></property>
