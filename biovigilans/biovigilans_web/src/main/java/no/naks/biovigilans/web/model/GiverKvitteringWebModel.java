@@ -231,7 +231,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-utenForBlodbanken";
 		utenForBlodbanken = userEntries.get(field);
-		if (utenForBlodbanken == null){
+		if (utenForBlodbanken == null || utenForBlodbanken.equalsIgnoreCase("--- Select ---")){
 			utenForBlodbanken = "-";
 		}
 		return utenForBlodbanken;
@@ -256,7 +256,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-hvor";
 		tabHvor = userEntries.get(field);
-		if (tabHvor == null){
+		if (tabHvor == null || tabHvor.equalsIgnoreCase("--- Select ---")){
 			tabHvor = "-";
 		}
 		return tabHvor;
@@ -280,8 +280,17 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-vene";
 		tabVene = userEntries.get(field);
+		String beskrive = userEntries.get("tab-kortbeskr");
+		String imageArea = userEntries.get("tab-imgarea");
 		if (tabVene == null){
 			tabVene = "-";
+		}else if(tabVene.equalsIgnoreCase("ja") ){
+			if(! beskrive.equals("")){
+				tabVene = tabVene + ": " + beskrive;
+			}
+			if(! imageArea.equals("")){
+				tabVene = tabVene + ", " + imageArea;
+			}
 		}
 		return tabVene;
 	}
@@ -305,7 +314,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-sted";
 		donasjonSted = userEntries.get(field);
-		if (donasjonSted == null){
+		if (donasjonSted == null || donasjonSted.equalsIgnoreCase("--- Select ---")){
 			donasjonSted = "-";
 		}
 		return donasjonSted;
@@ -344,9 +353,13 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-tidl-tapp";
 		tidlTapp = userEntries.get(field);
+		String beskriv = userEntries.get("tab-reaksjon-beskriv");
 		if (tidlTapp == null){
 			tidlTapp = "-";
+		}else if(tidlTapp.equalsIgnoreCase("ja") && beskriv != null ){
+			tidlTapp = tidlTapp +": " + beskriv ;
 		}
+		
 		return tidlTapp;
 	}
 	public void setTidlTapp(String tidlTapp) {
@@ -359,16 +372,20 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		tapping = userEntries.get(field);
 		if (tapping == null){
 			tapping = "-";
-		}else if(tapping.equalsIgnoreCase("fullblod"))	{
+		}else if( tapping.equalsIgnoreCase("fullblod"))	{
 			String fullblodOption = userEntries.get("fullblod");
-			if(fullblodOption.equalsIgnoreCase("fullblod-ja")){
+			if(fullblodOption == null){
+				tapping ="Fullblod";
+			}else if(fullblodOption.equalsIgnoreCase("fullblod-ja")){
 				tapping = "Fullblod-Ja";
 			}else{
 				tapping = "Fullblod-Nei";
 			}
 		}else if(tapping.equalsIgnoreCase("aferese"))	{
 			String fullblodOption = userEntries.get("aferese-options");
-			if(fullblodOption.equalsIgnoreCase("aferese-ja")){
+			if(fullblodOption == null){
+				tapping ="Aferese";
+			}else if(fullblodOption.equalsIgnoreCase("aferese-ja")){
 				tapping = "Aferese-Ja";
 			}else{
 				tapping = "Aferese-Nei";
