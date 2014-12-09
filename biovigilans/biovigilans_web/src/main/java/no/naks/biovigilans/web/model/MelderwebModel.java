@@ -102,6 +102,16 @@ public class MelderwebModel extends VigilansModel {
 		}
 		
 		melder.saveToMelder();
+		
+		// For å kunne vise om kontaktskjema er forhåndsutfylt
+		
+		this.setMeldernavn(melder.getMeldernavn());
+		this.setMeldertlf(melder.getMeldertlf());
+		this.setHelseregion(melder.getHelseregion());
+		this.setHelseforetak(melder.getHelseforetak());
+		this.setSykehus(melder.getSykehus());
+		
+		
 	}
 	
 	public void kontaktValues(List<Map<String, Object>>  rows){

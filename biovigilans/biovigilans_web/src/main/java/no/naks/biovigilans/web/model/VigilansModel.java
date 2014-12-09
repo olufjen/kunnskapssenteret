@@ -14,6 +14,7 @@ import org.restlet.data.Parameter;
  */
 public class VigilansModel {
 
+	protected boolean lagret = false; // Satt true dersom session objects er lagret
 	private Map formMap; // Inneholder brukers input verdier fra skjermbildet
 	private String[] formNames; // Inneholder navn på input felt i skjermbildet
 	private String accountRef;
@@ -27,6 +28,16 @@ public class VigilansModel {
 		// TODO Auto-generated constructor stub
 	}
 
+
+	public boolean isLagret() {
+		return lagret;
+	}
+
+
+
+	public void setLagret(boolean lagret) {
+		this.lagret = lagret;
+	}
 
 	/**
 	 * setValues

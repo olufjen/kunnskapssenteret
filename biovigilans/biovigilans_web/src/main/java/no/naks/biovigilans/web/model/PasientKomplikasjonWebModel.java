@@ -40,6 +40,8 @@ import org.restlet.data.Parameter;
  */
 public class PasientKomplikasjonWebModel extends VigilansModel{
 
+
+	
 	private Pasient pasient;
 	private Sykdom sykdom;
 	private Sykdom transfusjonKomplikasjon;
@@ -94,12 +96,10 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		mapComponent = new HashMap<String, Object>();
 		blodProdukt = new ArrayList<String>();
 		hemolyseParametre = new ArrayList<String>();
-		
+		lagret = false;
 		// TODO Auto-generated constructor stub
 	}
 	
-
-
 	public String getAlder() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "pas-alder";
