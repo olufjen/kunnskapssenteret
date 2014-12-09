@@ -152,122 +152,15 @@
 	    <div class="form-group">
 	      <label>Givererfaring:</label><br>
 	      	 <span  id="tab-givererfaring"  >${giverKvittering.givererfaring}</span>
-	      	<!-- <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver"  />Første gang giver
-	          </label>
-		    </div>
-		    <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver"  />Etablert giver
-	          </label>
-		    </div> -->
 	     </div>
 	     <div id="type-tapping"  class="form-group">
 	      <label>Type tapping:</label><br> <!-- Dersom aferese : første gang aferese /etablert aferese -->
 	      	 <span  id="givervektkg"  >${giverKvittering.tapping}</span>
-	      <!-- 	<div class="radio">
-		      	<label>
-		      		<input type="radio" name="type-tapping"  id="type-tapping" value="fullblod" onclick="toggleDisplay('fullblod-options',this.checked); toggleDisplay('aferese-options',0)" /> Fullblod 
-		      	</label>
-	      	</div>
-	      	<div style="margin-left: 0.5cm;">
-		      	<div id="fullblod-options"  style="margin-left: 0.5cm; display: none" >
-			      	<label>Første gangs fullblodgivning?</label>
-			      	<div class="radio" >
-			          <label>
-			          	<input type="radio" name="fullblod" id="fullblod-ja" value="fullblod-ja"/>Ja
-			          </label>
-				    </div>
-				    <div class="radio">
-			          <label>
-			          	<input type="radio" name="fullblod" id="fullblod-nei" value="fullblod-nei"/>Nei
-			          </label>
-				    </div>
-				</div>
-			</div>
-	      	<div class="radio">
-		      	<label>
-		      		<input type="radio" name="type-tapping"  id="type-tapping" value="aferese" onclick="toggleDisplay('fullblod-options',0); toggleDisplay('aferese-options',this.checked)" /> Aferese
-		      	</label>
-	      	</div>
-	      	<div id="aferese-options" style="margin-left: 0.5cm; display: none" >
-	      		<label>Første gangs aferesegivining?</label>
-		      	<div class="radio">
-		      		<label>
-		      			<input type="radio" name="aferese-options" id="aferese-ja" value="aferese-ja" onclick="toggleDisplay('aferese-options-ja',this.checked)" /> Ja
-		      		</label>
-		      	</div>
-		      	<div class="radio">
-		      		<label>
-		      			<input type="radio" name="aferese-options" id="aferese-nei" value="aferese-nei" onclick="toggleDisplay('aferese-options-ja',0)" /> Nei
-		      		</label>
-		      	</div>
-		    
-			     <div id="aferese-options-ja" style="margin-left: 0.5cm; display: none" >
-		      		<label>Type aferese</label>
-			      	<div class="radio">
-			      		<label>
-			      			<input type="radio" name="type-aferese" id="plasmaferese" value="plasmaferese" /> Plasmaferese
-			      		</label>
-			      	</div>
-			      	<div class="radio">
-			      		<label>
-			      			<input type="radio" name="type-aferese" id="plateaferese" value="plateaferese" /> Plateaferese
-			      		</label>
-			      	</div>
-			      	<div class="radio">
-			      		<label>
-			      			<input type="radio" name="type-aferese" id="enkel-erytrocyttaferese" value="enkel erytrocyttaferese" /> Enkel erytrocyttaferese
-			      		</label>
-			      	</div>
-			      	<div class="radio">
-			      		<label>
-			      			<input type="radio" name="type-aferese" id="dobbel-erytrocyttaferese" value="dobbel erytrocyttaferese" /> Dobbel erytrocyttaferese
-			      		</label>
-			      	</div>
-			      	<div class="radio">
-			      		<label>
-			      			<input type="radio" name="type-aferese" id="ery-plateferese" value="Erytrocytt + plateferese" /> Erytrocytt + plateferese
-			      		</label>
-			      	</div>
-			      	<div class="radio">
-			      		<label>
-			      			<input type="radio" name="type-aferese" id="ery-plasmaferese" value="Erytrocytt + plasmaferese" /> Erytrocytt + plasmaferese
-			      		</label>
-			      	</div>
-			      	<div class="radio">
-			      		<label>
-			      			<input type="radio" name="type-aferese" id="annen-aferese" value="Annen aferese" /> Annen aferese
-			      		</label>
-			      	</div>
-			     </div>
-		     </div> -->
+	     
 	    </div>
 	    <div class="form-group">
 	      <label>Tidligere reaksjoner på tapping:</label><br>
 	      <span id="tab-tidl-tapp">${giverKvittering.tidlTapp}</span>
-	      <!-- <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="ja" onclick="toggleDisplay('beskriv-ja',  this.checked);"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="nei" onclick="toggleDisplay('beskriv-ja',  0);" />Nei
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="vet ikke" onclick="toggleDisplay('beskriv-ja',  0);" />Vet ikke
-	          </label>
-		    </div> -->
-	    </div>
-	    
-	    <div id="beskriv-ja" style="display:none">
-	    	<label>Beskrivelse av tidligere reaksjon:</label><br>
-	    	<span id="tab-reaksjon-beskriv" >${giverKvittering.reaksjonBeskriv}</span>
-		  	<!-- <textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea> -->
 	    </div>
 	    <h3>Donasjon</h3>
 	    <div class="form-group">
@@ -278,414 +171,94 @@
 	    <div class="form-group">
 	      <label>Donasjonssted:</label><br>
 	      <span id="tab-sted" >${giverKvittering.donasjonSted}</span>
-	     <!--  <select name ="tab-sted" id="tappested" class="form-control">
-	       		<option> --- Select --- </option>
-	       		<#list giverkomplikasjon.donasjonsstedgruppe as donasjonssted>
-	       		<option>${donasjonssted} </option>
-	     		   </#list>
-	     </select> -->
 	    </div>
 	    <div class="form-group">
 	      <label>Måltid innen tre timer før tapping:</label><br>
 	       <span id="tab-maltid" >${giverKvittering.maaltid}</span>
-	      	<!-- <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="ja"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="nei"/>Nei
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-maltid" id="tab-maltid" value="vet ikke"/>Vet ikke
-	          </label>
-		    </div> -->
 	    </div>
 	    <div class="form-group">
 	      <label>Komplisert venepunksjon:</label><br>
 	      <span id="tab-vene">${giverKvittering.tabVene}</span>
-	     <!--  <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon', this.checked);toggleDisplay('armenBilde', this.checked);"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="nei" onclick="toggleDisplay('beskriv-komplikasjon', 0);toggleDisplay('armenBilde', 0);"/>Nei
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="option3" onclick="toggleDisplay('beskriv-komplikasjon', 0);toggleDisplay('armenBilde', 0);" />Vet ikke
-	          </label>
-		    </div> -->
 	    </div>
-	   <!--  <div class="form-group" id="beskriv-komplikasjon" >
-			<label>Beskriv komplikasjonen med egne ord:</label>
-			<label id="form-control" name="form-control">${giverKvittering.formControl}</label>
-		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea> 
-		</div>
-		"
-		<div id="armenBilde" style="display: none  >
-			<h4>Lokalisasjon venepunksjon</h4>
-		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap"  />
-		   
-	      <map name="armenmap">
-			  <area shape="rect" coords="222,9,302,202" alt="Cephalic Vein" href="#" onclick="setImageValue('Cephalic Vein')">
-			 <area shape="rect" coords="300,94,341,48" alt="Madhlan Cubital Vein" href="#" onclick="setImageValue('Madhlan Cubital Vein')">
-			 <area shape="rect" coords="325,17,400,165" alt="Beslic Vein" href="#"  onclick="setImageValue('Beslic Vein')">
-			</map>
-		</div> -->
 	    <h3>Giverkomplikasjon</h3>
 	    <span id="tab-hvor">${giverKvittering.tabHvor}</span><br>
-	   <!--  <div class="form-group">
-	      <label>Hvor startet reaksjonen?</label>
-	       <select id="re" name ="tab-hvor" list="icd10gruppehvor" class="form-control" onchange="blodbankenOptions()"  >
-		      <option  > --- Select --- </option>
-		     	<#list giverkomplikasjon.reaksjonengruppe as reaksjonen >
-			     	<option >${reaksjonen}  </option>
-		     	</#list>
-		  </select>
-	    </div> -->
-	    
 	    <div class="form-group"  id="hendelseDato">
 	    	<label>Når oppstod symptomene</label><br>
 	    	 <span id="dato-hendelse">${giverKvittering.datoHendelse}</span>
-	    	<!-- <input type="date" name="dato-hendelse"  /> -->
 	    </div>
-	    
-<!-- Klokkeslett tas ut    
-	    <div class="form-group">
-	    	<label>Klokkeslett Hendelse</label>
-	    	<input type="time" name="kl-hendelse" class="form-control" />
-	    </div>
- -->		   
- 	   
-	   <!--  <div class="form-group">
-	    	<label>Når fikk blodbanken vite om hendelsen?</label><br>
-	    	<input type="date" name="dato-oppdaget"  />
-	    </div> -->
-	    <!-- <div class="form-group">
-	      <label>Hvor startet reaksjonen?</label>
-	      <input name ="tab-hvor" list="icd10gruppehvor" class="form-control">
-	      <datalist id="icd10gruppehvor">
-	
-	     </datalist>
-	    </div> -->
 		<div id="utenfor"   class="form-group">
 	      <label>Utenfor Blodbanken</label><br>
 	      <span id="tab-utenForBlodbanken" >${giverKvittering.utenForBlodbanken}</span>
-	      <!--  <select  name ="tab-utenForBlodbanken" list="icd10gruppehvor" class="form-control"  >
-		      <option  > --- Select --- </option>
-		     	<#list giverkomplikasjon.utenforBlodbankengruppe as utenforBlodbanken >
-			     	<option >${utenforBlodbanken}  </option>
-		     	</#list>
-		  </select> -->
 	    </div>
 		<div class="form-group">
 	    	<label>Tid fra start tapping til reaksjon:</label><br>
 	    	<span id="tab-tapp-reak">${giverKvittering.tappReak}</span>
-	    	
-	       <!--  <div>
-	          <input name="tab-tapp-reak" type="text" class="form-control" id="tab-tapp-reak" placeholder="Skriv inn..">
-	        </div> -->
 	    </div>
 	      
 	   	<div class="form-group">
 		    <label>Varighet av komplikasjon/bivirkning/skade:</label><br>
 		    <span id="tab-varighet" >${giverKvittering.tabVarighet}</span>
-		    
-	    <!--     <div>
-	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
-	        </div> -->
 	    </div>
 	    
 	    <div class="form-group" >
 			<h3>Alvorlighetsgrad </h3>
 			<span id="alvor-mang">${giverKvittering.alvorMang}</span><br>
-	
-			<!-- <div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad1" value="Ikke livstruende"/>Ikke livstruende
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad2" value="Livstruende" />Livstruende
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad3"value="Langtidsmorbiditet" />Langtidsmorbiditet
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad4" value="dod"/>Dødsfall
-				</label>
-			</div> -->
 		</div>
 	    
 	    <div class="form-group">
 	      <label>Klinisk Resultat (samordnes med komplikasjoner ved tapping av givere)</label><br>
 	      <span id="tab-klinisk">${giverKvittering.tabKlinisk}</span>
-	      <!-- <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-helbredelse" value="Full-helbredelse"/>Full helbredelse
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="Lette-sekvele"/>Lette sekvele
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-sykemelding" value="Sykemelding"/>Sykemelding (med spm om antall dager)
-	          </label>
-		    </div>
-		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-uforetrydg" value="Uføretrydg"/>Uføretrygd
-	          </label>
-		    </div>
-		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="Alvorlig-sekvele"/>Alvorlig sekvele (spesifiser)
-	          </label>
-		    </div>
-		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-dodsfall" value="Dødsfall"/>Dødsfall
-	          </label>
-		    </div>
-		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-vene" value="Vet-ikke"/>Vet ikke
-	          </label>
-		    </div> -->
 	    </div>
-	   <!--  <div class="form-group" >
-		<h3>Årsakssammenheng</h3>
-			<div class="radio">
-				<label>
-					<input type="radio" name="aarsaks" id="utelukket" value="NA kan ikke vurderes" />NA kan ikke vurderes
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="aarsaks" id="usannsynlig" value="0 utelukket"/>0 Utelukket
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="aarsaks" id="1 Mulig" value="mulig"/>1 Mulig
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="aarsaks" id="2 Sannsynlig" value="sannsynlig"/>2 Sannsynlig
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" name="aarsaks" id="3 Sannsynlig" value="3 Sikker"/>3 Sikker
-				</label>
-			</div>
-		</div> -->
 	    <h3>Type komplikasjon</h3>
 	    <div class="form-group">
 	      <label>Lokal:</label><br>
 	      <span id="tab-arm" >${giverKvittering.tabArm}</span> 
-	      <!-- <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-arm" id="tab-arm" value="Lokal-Ja" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-arm" id="tab-arm2" value="Lokal-Nei"  onclick="toggleDisplay('tabskaearm-ja', 0);"/>Nei
-	          </label>
-		    </div> -->
 	    </div>
 	
 	    <div id="tabskaearm-ja" class="form-group" >
-	      <label>Hvis Ja:</label><br>
+	      <label>Ja:</label><br>
 	      <span id="tab-tabskadearm" >${giverKvittering.tabskadearm}</span> 
-	      <!-- <input name ="tab-tabskadearm" list="tabskadearm" class="form-control"> -->
-	      
 	    </div>
 	    <div class="form-group">
 	      <label>Systemisk:</label><br>
 	      <span id="tab-bivirk">${giverKvittering.tabBivirk}</span> 
-	      
-	      <!-- <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
-	          </label>
-		    </div> -->
 	    </div>
 	    <div id="systemiskbivirkning-ja"  class="form-group">
-	      <label>Hvis Ja:</label><br>
+	      <label>Ja:</label><br>
 	       <span id="tab-systemiskbivirkning">${giverKvittering.systemiskbivirkning}</span>
 	    <!--   <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
 	    </div>
 		    <div class="form-group">
 	      <label>Annen reaksjon(spesifiser):</label><br>
 	      <span id="tab-annenreaksjon" >${giverKvittering.annenreaksjon}</span>
-	      
-	      <!-- <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-nei',this.checked );" />Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-nei',0 );" />Nei
-	          </label>
-		    </div> -->
 	    </div>
 	    <div id="annenreaksjon-nei"  class="form-group">
-			<label>Hvis du har valgt annet, beskriv her:</label><br>
+			<label>Hvis du har valgt annet:</label><br>
 			  <span id="tab-annet-beskriv" >${giverKvittering.annenreaksjonBeskriv}</span>
-			<!--   <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea> -->
 		</div> 
 		  	
 		    <h3>Tiltak rettet mot giver</h3>
 		    <div class="form-group">
 		      <label>Strakstiltak:</label><br>
 		      <span id="tab-strakstiltak">${giverKvittering.strakstiltak}</span>
-		      
-		      	<!-- <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak1" value="Strakstiltak-BB-tappepersonalet"/>Behandlet av BB tappepersonalet
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak2" value="Strakstiltak-BB-Lege"/>Behandlet av BB lege
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Strakstiltak-Akutt-Mottak"/>Observasjon akutt mottak
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak4" value="Strakstiltak-Sykehusinnleggelse"/>Sykehusinnleggelse
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak5" value="Strakstiltak-annet-sted"/>Behandling annet sted (spesifiser)
-		          </label>
-			    </div> 
-	    	</div>-->
 	    </div>
 	       
 	    <div class="form-group">
 		 <label>Planlagte eller gjennomførte forbedringstiltak</label><br>
 		 <span id="tab-forbedringstiltak">${giverKvittering.forbedringstiltak}</span>
-		 
-		 <!--  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"></textarea>  -->  
-		      
 	  		<br/>
 	  	</div>
 	  	 <div class="form-group">
 		      <label>Var komplikasjonen/hendelsen forebyggbar?</label><br>
 		      <span id="tab-forebyggbar">${giverKvittering.forebyggbar}</span>
-		      
-		      	<!-- <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar1" value="forebyggbar-ja"/>Ja
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei"/>Nei
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke"/>Vet ikke
-		          </label>
-			    </div> -->
-	    	</div>	
+	     </div>	
 	     <div class="form-group">
 	      <label>Videre behandling/oppfølging nødvendig?</label><br>
 	      <span id="tab-annenreak" >${giverKvittering.annenreak}</span>
-	      
-	        <!--  <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="videre-behandling"  />Ikke behov for videre behandling/oppfølging
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="egen-lege" />Henvist egen lege
-	          </label>
-		    </div>
-	 		<div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="legespesialist" />Henvist legespesialist(spesifiser)
-	          </label>
-		    </div>
-		    <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="vet-ikke" />Vet Ikke
-	          </label>
-		    </div> -->
 	    </div>
-	 <!-- 
-	 <div id="videreBehandling-ja" style="display: none">   
-	     <div class="form-group">
-	      <label>Hva slags behandling?</label>
-	         <input name ="tab-behandlingoppfolging" list="behandlingoppfolging" class="form-control">
-	      <datalist id="behandlingoppfolging">
-	  
-	     </datalist>
-	    </div> 
-	    <div class="form-group">
-	      <label>Hvor ble giver behandlet?</label>
-	      <input name ="tab-hvorbehandling" list="hvorbehandling" class="form-control">
-	      <datalist id="hvorbehandling">
-	  
-	     </datalist>
-	    </div>
-	   <div class="form-group">
-	    <label>Behandling, spesifiser:</label>
-		  <textarea class="form-control" name="tab-behandlingspesifiser" rows="3"></textarea>
-		</div>
-	</div>
-	 -->
 	    <div class="form-group">
 	      <label>Giver er avregistrert (p.g.a komplikasjonen)</label><br>
 	  	  <span id="tab-avreg" >${giverKvittering.avreg}</span>
-	      
-	    <!--   <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Ja"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Nei"/>Nei
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Vet-Ikke"/>Vet ikke
-	          </label>
-		    </div> -->
 	    </div>
 	      <button name="ikkegodkjent" type="button" class="btn btn-default" value="ikkegodkjent" onclick="document.location='rapporter_giver.html';">Ikke Godkjent</button>
 	      <button name="godkjent" type="button"  class="btn btn-primary" onclick="document.location='rapporter_kontakt.html';">Godkjent</button>

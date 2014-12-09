@@ -329,8 +329,8 @@
 		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
 		</div>
 		<div id="armenBilde" style="display: none"  >
-			<h4>Lokalisasjon venepunksjon  
-			<input type="text" style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /></h4><br>
+			<h4>Lokalisasjon venepunksjon</h4><br>  
+			<input type="text" style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /><br>
 		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
 		  <map name="armenmap">
 			  <area shape="rect" title="Cephalic Vein" coords="222,9,302,202" alt="Cephalic Vein" href="javascript: return false;"  onclick="setImageValue('Cephalic Vein');">
@@ -378,7 +378,7 @@
 		<div id="utenfor" style="display: none"  class="form-group">
 	      <label>Utenfor Blodbanken</label>
 	       <select  name ="tab-utenForBlodbanken" list="icd10gruppehvor" class="form-control"  >
-		      <option  > --- Select --- </option>
+		      <option  >--- Select ---</option>
 		     	<#list giverkomplikasjon.utenforBlodbankengruppe as utenforBlodbanken >
 			     	<option >${utenforBlodbanken}  </option>
 		     	</#list>
