@@ -301,7 +301,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	    }
 */	    	    
 	    		Parameter lagre = form.getFirst("lagre4");
-	    		Parameter formValue = form.getFirst("formValue"); // Fill kontaktform on the base of epost 
+
 	    		if (lagre != null){
 	    			result.saveValues();
 	    			transfusjon.saveValues();
@@ -309,6 +309,9 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			hendelseWebService.saveHendelse(result);
 	    			hendelseWebService.saveTransfusjon(transfusjon,result);
 	    			transfusjon.setTransfusjonsFlag(kvittering);
+	    			result.setLagret(true);
+	    			transfusjon.setLagret(true);
+	    			
 	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
 		    		Representation pasientkomplikasjonFtl = clres2.get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();

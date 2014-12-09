@@ -160,8 +160,13 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
         		String page = getPage();
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
-	    		invalidateSessionobjects();
-	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
+/*
+ * Invalidate session objects kun dersom et meldeskjema er fylt ut	    		
+ */
+	    		if (checkSavedModel()){
+	    			invalidateSessionobjects();
+	    		}
+//	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
 	    		

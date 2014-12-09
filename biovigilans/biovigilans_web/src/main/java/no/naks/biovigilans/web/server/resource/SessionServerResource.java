@@ -358,4 +358,21 @@ public class SessionServerResource extends ProsedyreServerResource {
 		String page = "/hemovigilans/rapporter_hendelse_main.html";
 		return page;
 	}
+	/**
+	 * checkSavedModel
+	 * Denne rutinen sjekker om et skjema er lagret
+	 * @return true dersom et skjema er lagret.
+	 */
+	public boolean checkSavedModel(){
+		if (giverModel != null){
+			return giverModel.isLagret();
+		}
+		if (result != null){
+			return result.isLagret();
+		}
+		if (transfusjon != null){
+			return transfusjon.isLagret();
+		}
+		return false;
+	}
 }
