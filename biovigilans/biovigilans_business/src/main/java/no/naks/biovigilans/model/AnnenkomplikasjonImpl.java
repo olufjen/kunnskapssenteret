@@ -48,7 +48,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	 * Hvordan ble hendelsen oppdaget
 	 */
 	private String oppdaget;
-	
+
 	private Long meldeid;
 	private Map<String,String> annenKomplikasjonsFields;
 	private String[] keys;
@@ -66,6 +66,12 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setKlassifikasjon(String klassifikasjon) {
 		if(klassifikasjon == null){
 			klassifikasjon = (annenKomplikasjonsFields.get(keys[3])==null ? "" : annenKomplikasjonsFields.get(keys[3])) ;
+			for(int i=9;i<16;i++){
+				if(annenKomplikasjonsFields.get(keys[i])!=null){
+					klassifikasjon = klassifikasjon +" ; " + annenKomplikasjonsFields.get(keys[i]);
+					i=16;
+				}
+			}
 		}
 		this.klassifikasjon = klassifikasjon;
 	}
