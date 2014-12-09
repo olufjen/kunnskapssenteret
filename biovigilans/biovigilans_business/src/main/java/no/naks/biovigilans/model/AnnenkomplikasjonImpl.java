@@ -74,13 +74,6 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 	public void setKlassifikasjonkode(String klassifikasjonkode) {
 		
-		if(klassifikasjonkode == null){
-			klassifikasjonkode = (annenKomplikasjonsFields.get(keys[2])==null ? "" : annenKomplikasjonsFields.get(keys[2])) ;
-			if(klassifikasjonkode.equalsIgnoreCase("--- Select ---")){
-				klassifikasjonkode =null;
-			}
-		}
-		
 		Klassifikasjonkode = klassifikasjonkode;
 	}
 	public String getKomplikasjonbeskrivelse() {
@@ -97,7 +90,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 	public void setKomplikasjondefinisjon(String komplikasjondefinisjon) {
 		if(komplikasjondefinisjon == null){
-			komplikasjondefinisjon = (annenKomplikasjonsFields.get(keys[7])==null ? "" : annenKomplikasjonsFields.get(keys[7])) ;
+			komplikasjondefinisjon = (annenKomplikasjonsFields.get(keys[2])==null ? "" : annenKomplikasjonsFields.get(keys[2])) ;
 		}
 		this.komplikasjondefinisjon = komplikasjondefinisjon;
 	}
@@ -130,7 +123,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 	public void setTiltak(String tiltak) {
 		if(tiltak == null){
-			tiltak = (annenKomplikasjonsFields.get(keys[0])==null ? "" : annenKomplikasjonsFields.get(keys[0])) ;
+			tiltak = (annenKomplikasjonsFields.get(keys[7])==null ? "" : annenKomplikasjonsFields.get(keys[7])) ;
 		}
 		this.tiltak = tiltak;
 	}

@@ -81,7 +81,6 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		if(datoforhendelse==null){
 			DateFormat dateFormat = 
 			            new SimpleDateFormat("yyyy-MM-dd");
-		//	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Date date = new Date();
 			try {
 				String strDate = dateFormat.format(date);
