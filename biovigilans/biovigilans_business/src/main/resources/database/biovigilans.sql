@@ -26,7 +26,7 @@ CREATE TABLE Giver
   (
     giverId                          serial,
     kjonn                            varchar(2),
-    alder                            varchar(10),
+    alder                            text,
     vekt                             int4,
     givererfaring                    text,
     tidligerekomplikasjonjanei       text,
