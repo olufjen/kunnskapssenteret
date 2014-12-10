@@ -8,6 +8,9 @@ public interface Pasientkomplikasjon {
 	
 	public Long getMeldeid();
 	public void setMeldeid(Long meldeid);
+	
+	public Long getMelderId();
+	public void setMelderId(Long melderId);
 	public Long getTransfusjonsId();
 
 	public void setTransfusjonsId(Long transfusjonsId);

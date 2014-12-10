@@ -10,6 +10,9 @@ public interface Vigilansmelding {
 
 	public Long getMeldeid();
 	public void setMeldeid(Long meldeid);
+	
+	public Long getMelderId();
+	public void setMelderId(Long melderId);
 	public Date getDatoforhendelse();
 	public void setDatoforhendelse(Date datoforhendelse);
 	public Time getKlokkesletthendelse();

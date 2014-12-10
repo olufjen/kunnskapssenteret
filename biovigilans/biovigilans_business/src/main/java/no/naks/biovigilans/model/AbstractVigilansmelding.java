@@ -25,6 +25,11 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	private Long meldeid;
 
 	/**
+	 * Fremmednøkkel til melder
+	 */
+	private Long melderId;
+	
+	/**
 	 * Dato for hendelsen
 	 */
 	protected String[]keys;
@@ -73,6 +78,13 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 	public void setMeldeid(Long meldeid) {
 		this.meldeid = meldeid;
+	}
+	
+	public Long getMelderId() {
+		return melderId;
+	}
+	public void setMelderId(Long melderId) {
+		this.melderId = melderId;
 	}
 	public Date getDatoforhendelse() {
 		return datoforhendelse;
