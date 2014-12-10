@@ -67,6 +67,10 @@
 					document.getElementById('utstyr').style.display = 'none';
 					document.getElementById('analyser').style.display = 'none';
 					document.getElementById('merking').style.display = 'none';
+					document.getElementById('giver').style.display = 'none';
+					document.getElementById('transport').style.display = 'none';
+					document.getElementById('merking').style.display = 'none';
+					document.getElementById('annet').style.display = 'none';
 					
 					document.getElementById(id).style.display = 'block';
 				    
@@ -122,7 +126,7 @@
 				          <div id="feilblod" style="display: none" >
 					          <div class="radio" >
 					          	 <label>
-					          		<input type="radio" name="tab-feilblod"   value="Transfudert blod som ikke fyller kraV"  />Transfudert blod som ikke fyller kraV 
+					          		<input type="radio" name="tab-feilblod"   value="Transfudert blod som ikke fyller krav"  />Transfudert blod som ikke fyller krav 
 					          	 </label>
 					          </div>
 					          <div class="radio">	 
@@ -208,9 +212,9 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('');"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
+			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('giver');"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
 			          </label>
-				    </div>
+				  
 				      <div id="giver" style="display: none" >
 				          <div class="radio">	 
 				          	 <label>
@@ -223,6 +227,7 @@
 				          	 </label>
 				          </div>
 				      </div>  
+				     </div>
 				     <div class="radio">
 			     	  <label>
 			          	<input type="radio" name="tab-klassifikasjon"   onclick="toggleDisplay('giveren');"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
@@ -346,7 +351,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('');"  value="Henting og transport"  />Henting og transport
+			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('transport');"  value="Henting og transport"  />Henting og transport
 			          </label>
 			          <div id="transport" style="display: none" >
 				          <div class="radio">	 
@@ -376,7 +381,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('');"  value="Annet"  />Annet
+			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('annet');"  value="Annet"  />Annet
 			          </label>
 			          <div id="annet" style="display: none" >
 				          <div class="radio">	 
