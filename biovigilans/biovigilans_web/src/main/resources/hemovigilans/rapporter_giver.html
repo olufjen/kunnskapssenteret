@@ -144,7 +144,7 @@
 	      <label>Alder:</label>
 <!-- 	      <input name ="tab-alder" list="giveralder" class="form-control"> -->
 	      <select name ="tab-alder" id="giveralder" class="form-control">
-	       		<option> --- Select --- </option>
+	       		<option>--- Select ---</option>
 	       		<#list giverkomplikasjon.aldergruppe as alder>
 	       		<option>${alder} </option>
 	     		   </#list>
@@ -356,25 +356,7 @@
 	    	<label>Når oppstod symptomene</label><br>
 	    	<input type="date" name="dato-hendelse"  />
 	    </div>
-	    
-<!-- Klokkeslett tas ut    
-	    <div class="form-group">
-	    	<label>Klokkeslett Hendelse</label>
-	    	<input type="time" name="kl-hendelse" class="form-control" />
-	    </div>
- -->		   
- 	   
-	   <!--  <div class="form-group">
-	    	<label>Når fikk blodbanken vite om hendelsen?</label><br>
-	    	<input type="date" name="dato-oppdaget"  />
-	    </div> -->
-	    <!-- <div class="form-group">
-	      <label>Hvor startet reaksjonen?</label>
-	      <input name ="tab-hvor" list="icd10gruppehvor" class="form-control">
-	      <datalist id="icd10gruppehvor">
-	
-	     </datalist>
-	    </div> -->
+
 		<div id="utenfor" style="display: none"  class="form-group">
 	      <label>Utenfor Blodbanken</label>
 	       <select  name ="tab-utenForBlodbanken" list="icd10gruppehvor" class="form-control"  >
@@ -532,16 +514,16 @@
 	      <label>Annen reaksjon(spesifiser):</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-nei',this.checked );" />Ja
+	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-ja',this.checked );" />Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-nei',0 );" />Nei
+	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-ja',0 );" />Nei
 	          </label>
 		    </div>
 	    </div>
-	    <div id="annenreaksjon-nei" style="display: none" class="form-group">
+	    <div id="annenreaksjon-ja" style="display: none" class="form-group">
 			<label>Hvis du har valgt annet, beskriv her:</label>
 			  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
 		</div> 
@@ -550,31 +532,24 @@
 		    <div class="form-group">
 		      <label>Strakstiltak:</label>
 		      	<div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak1" value="Strakstiltak-BB-tappepersonalet"/>Behandlet av BB tappepersonalet
+		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
+		          	Behandlet av blodbankpersonale
 		          </label>
 			    </div>
 			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak2" value="Strakstiltak-BB-Lege"/>Behandlet av BB lege
+		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
+		          	Behandlet av blodbanklege
 		          </label>
 			    </div>
 			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Strakstiltak-Akutt-Mottak"/>Observasjon akutt mottak
+		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
+		          		Behandling på sykehus
 		          </label>
 			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak4" value="Strakstiltak-Sykehusinnleggelse"/>Sykehusinnleggelse
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak5" value="Strakstiltak-annet-sted"/>Behandling annet sted (spesifiser)
-		          </label>
-			    </div>
-	    	</div>
+			</div>
 	    </div>
 	       
 	    <div class="form-group">
@@ -604,23 +579,25 @@
 	     <div class="form-group">
 	      <label>Videre behandling/oppfølging nødvendig?</label>
 	         <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="videre-behandling"  />Ikke behov for videre behandling/oppfølging
+	          <label title="Giver ble henvist til egen lege eller spesialist. ">
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Henvist til egen lege/spesialist" title="Giver ble henvist til egen lege eller spesialist. "  />
+	          		Henvist til egen lege/spesialist
 	          </label>
 		    </div>
 	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="egen-lege" />Henvist egen lege
+	          <label title="Giver oppsøkte selv egen lege.">
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Oppsøkt egen lege" title="Giver oppsøkte selv egen lege." />
+	          	Oppsøkt egen lege
 	          </label>
 		    </div>
 	 		<div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="legespesialist" />Henvist legespesialist(spesifiser)
+	          <label title="Giver ble sykemeldt pga. komplikasjonen.">
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Sykemelding" title="Giver ble sykemeldt pga. komplikasjonen." />Sykemelding
 	          </label>
 		    </div>
 		    <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="vet-ikke" />Vet Ikke
+	          <label title="Giver ble uføretrygdet pga. komplikasjonen. ">
+	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Uføretrygd" title="Giver ble uføretrygdet pga. komplikasjonen. " />Uføretrygd
 	          </label>
 		    </div>
 	    </div>
