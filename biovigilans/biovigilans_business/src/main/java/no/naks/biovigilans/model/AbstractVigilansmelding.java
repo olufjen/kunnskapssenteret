@@ -5,8 +5,10 @@ import java.sql.Types;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+
 import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 
@@ -178,7 +180,16 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 	public void setMeldingsnokkel(String meldingsnokkel) {
 		if(meldingsnokkel == null){
-			meldingsnokkel = "Hem " + getMeldeid() + " " + getMeldingsdato() ;
+			 Calendar cal = Calendar.getInstance();
+			    cal.setTime(getMeldingsdato());
+			int day =  cal.get(Calendar.DAY_OF_MONTH) ;
+			int month= cal.get(Calendar.MONTH)+1;
+			int year = cal.get(Calendar.YEAR);
+			String date= Integer.toString(day);
+			date = date + Integer.toString(month);
+			date = date + Integer.toString(year);
+			
+			meldingsnokkel = "Hem" + getMeldeid() + date ;
 		}
 		this.meldingsnokkel = meldingsnokkel;
 	}
