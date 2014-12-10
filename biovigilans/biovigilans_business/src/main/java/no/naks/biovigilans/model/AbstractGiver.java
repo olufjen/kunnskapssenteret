@@ -62,7 +62,9 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 	}
 	public void setAlder(String alder) {
 		if(alder==null)
-				alder = (giverFields.get(keys[1])==null ? "" : giverFields.get(keys[1])) ;
+			alder = (giverFields.get(keys[1])==null ? "" : giverFields.get(keys[1])) ;
+		if(alder.equalsIgnoreCase("--- Select ---"))
+			alder ="";
 		this.alder = alder;
 	}
 	public String getVekt() {
