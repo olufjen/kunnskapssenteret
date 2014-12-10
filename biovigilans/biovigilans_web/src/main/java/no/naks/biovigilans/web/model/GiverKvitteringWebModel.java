@@ -105,7 +105,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-annet-beskriv";
 		annenreaksjonBeskriv = userEntries.get(field);
 		if (annenreaksjonBeskriv == null){
-			annenreaksjonBeskriv = "-";
+			annenreaksjonBeskriv = "";
 		}
 		return annenreaksjonBeskriv;
 	}
@@ -116,8 +116,8 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-annenreaksjon";
 		annenreaksjon = userEntries.get(field);
-		if (annenreaksjon == null){
-			annenreaksjon = "-";
+		if (annenreaksjon == null || annenreaksjon.equalsIgnoreCase("Annen-Reaksjon-Ja")){
+			annenreaksjon = "";
 		}
 		return annenreaksjon;
 	}
@@ -130,7 +130,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-systemiskbivirkning";
 		systemiskbivirkning = userEntries.get(field);
 		if (systemiskbivirkning == null){
-			systemiskbivirkning = "-";
+			systemiskbivirkning = "";
 		}
 		return systemiskbivirkning;
 	}
@@ -141,8 +141,8 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-bivirk";
 		tabBivirk = userEntries.get(field);
-		if (tabBivirk == null){
-			tabBivirk = "-";
+		if (tabBivirk == null || tabBivirk.equalsIgnoreCase("Systemisk-Ja")){
+			tabBivirk = "";
 		}
 		return tabBivirk;
 	}
@@ -155,7 +155,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-tabskadearm";
 		tabskadearm = userEntries.get(field);
 		if (tabskadearm == null){
-			tabskadearm = "-";
+			tabskadearm = "";
 		}
 		return tabskadearm;
 	}
@@ -167,8 +167,8 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-arm";
 		tabArm = userEntries.get(field);
-		if (tabArm == null){
-			tabArm = "-";
+		if (tabArm == null || tabArm.equalsIgnoreCase("Lokal-Ja")){
+			tabArm = "";
 		}
 		return tabArm;
 	}
@@ -232,7 +232,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-utenForBlodbanken";
 		utenForBlodbanken = userEntries.get(field);
 		if (utenForBlodbanken == null || utenForBlodbanken.equalsIgnoreCase("--- Select ---")){
-			utenForBlodbanken = "-";
+			utenForBlodbanken = "";
 		}
 		return utenForBlodbanken;
 	}
@@ -245,7 +245,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "dato-hendelse";
 		datoHendelse = userEntries.get(field);
 		if (datoHendelse == null){
-			datoHendelse = "-";
+			datoHendelse = "";
 		}
 		return datoHendelse;
 	}
