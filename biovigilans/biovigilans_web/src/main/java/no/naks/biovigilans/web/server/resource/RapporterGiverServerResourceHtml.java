@@ -11,6 +11,7 @@ import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKvitteringWebModel;
 import no.naks.biovigilans.web.model.KomDiagnosegiverwebModel;
+import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
@@ -179,7 +180,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(getRequest(), donasjonId);
     		komDiagnosegiver = (KomDiagnosegiverwebModel) sessionAdmin.getSessionObject(getRequest(),komDiagnosegiverId );
     		giverKvittering = (GiverKvitteringWebModel)sessionAdmin.getSessionObject(getRequest(),kvitteringGiverId);
-    		
+   	     	melderwebModel = ( MelderwebModel)sessionAdmin.getSessionObject(getRequest(),melderId);
     		Parameter logout = form.getFirst("avbryt4");
     		Parameter lukk = form.getFirst("lukk4");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -232,6 +233,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		sessionAdmin.setSessionObject(getRequest(), giverModel,giverkomplikasjonId);
     		sessionAdmin.setSessionObject(getRequest(), donasjon, donasjonId);
     		sessionAdmin.setSessionObject(getRequest(), komDiagnosegiver, komDiagnosegiverId);
+    	    sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
     		dataModel.put(giverkomplikasjonId, giverModel);
     		dataModel.put(kvitteringGiverId, giverKvittering);
     		
