@@ -161,7 +161,7 @@
 	      <label>Givererfaring:</label>
 	      	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver"  />Første gang giver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver"  />Førstegangsgiver
 	          </label>
 		    </div>
 		    <div class="radio">
@@ -235,7 +235,7 @@
 			      	</div>
 			      	<div class="radio">
 			      		<label>
-			      			<input type="radio" name="type-aferese" id="ery-plateferese" value="Erytrocytt + plateferese" /> Erytrocytt + plateferese
+			      			<input type="radio" name="type-aferese" id="ery-plateferese" value="Erytrocytt + plateferese" /> Erytrocytt + plataferese
 			      		</label>
 			      	</div>
 			      	<div class="radio">
@@ -276,7 +276,7 @@
 	    </div>
 	    <h3>Donasjon</h3>
 	    <div class="form-group">
-	    	<label>Når Oppstod Symptomene</label><br>
+	    	<label>Donasjonsdato</label><br>
 	    	<input type="date" name="dato-donasjon" />
 	    </div>
 	    <div class="form-group">
@@ -384,25 +384,37 @@
 			<h3>Alvorlighetsgrad </h3>
 	
 			<div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad1" value="Ikke livstruende"/>Ikke livstruende
+				<label title="Forbigående skade/ negativ helseeffekt som ikke krevde omfattende behandling.">
+					<input type="radio" name="alvor-mang" id="grad1" value="Grad 1 Mindre alvorlig 1a Ubetydelig"/>
+					Grad 1 Mindre alvorlig 1a Ubetydelig
 				</label>
 			</div>
 			<div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad2" value="Livstruende" />Livstruende
+				<label title="Behov for medisinsk behandling (for eksempel symptomatisk behandling), men mangel på slik ville ikke ha ført til varige skader eller redusert funksjon.">
+					<input type="radio" name="alvor-mang" id="grad2" value="Grad 1 Mindre alvorlig 1b Moderat" />
+					Grad 1 Mindre alvorlig 1b Moderat
 				</label>
 			</div>
 			<div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad3"value="Langtidsmorbiditet" />Langtidsmorbiditet
+				<label title="Behov for innleggelse på sykehus eller forlenget sykehusopphold som følge av komplikasjonen; og/eller -  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming; eller - behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.">
+					<input type="radio" name="alvor-mang" id="grad3" value="Grad 2 Alvorlig" />
+					Grad 2 Alvorlig 
 				</label>
 			</div>
 			<div class="radio">
-				<label>
-					<input type="radio" name="alvor-mang" id="grad4" value="dod"/>Dødsfall
+				<label title="Behov for omfattende medisinsk intervensjon etter komplikasjonen (vasopressor-behandling, intubering, overflytting til intensivavdeling) for å redde livet.">
+					<input type="radio" name="alvor-mang" id="grad4" value="Grad 3 Livstruende "/>
+					Grad 3 Livstruende 
 				</label>
 			</div>
+			
+			<div class="radio">
+				<label title="Døde etter en komplikasjon.">
+					<input type="radio" name="alvor-mang" id="grad4" value="Grad 4 Dødsfall"/>
+					Grad 4 Dødsfall 
+				</label>
+			</div>
+			
 		</div>
 	    
 	    <div class="form-group">
@@ -619,19 +631,32 @@
 	 -->
 	    <div class="form-group">
 	      <label>Giver er avregistrert (p.g.a komplikasjonen)</label>
-	      <div class="radio">
+	      	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Ja"/>Ja
+	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Ja" onclick="toggleDisplay('tab-avregistrert-ja', this.checked);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Nei"/>Nei
+	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Nei" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Vet-Ikke"/>Vet ikke
+	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Vet-Ikke" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Vet ikke
+	          </label>
+		    </div>
+	    </div>
+	    <div class="form-group" id="tab-avregistrert-ja" style="display: none">
+	     <label>Hvis Ja: </label>
+	    	<div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-onske" id="tab-onske1" value="Givers Ønske"/>Givers Ønske
+	          </label>
+		    </div>
+	        <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-onske" id="tab-onske2" value="Blodbankens Ønske"/>Blodbankens Ønske
 	          </label>
 		    </div>
 	    </div>
