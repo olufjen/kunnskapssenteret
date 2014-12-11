@@ -406,42 +406,36 @@
 		</div>
 	    
 	    <div class="form-group">
-	      <label>Klinisk Resultat (samordnes med komplikasjoner ved tapping av givere)</label>
+	      <label>Endelig utfall av skaden</label>
 	      <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-helbredelse" value="Full-helbredelse"/>Full helbredelse
+	          <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
+	          	<input type="radio" name="tab-klinisk" id="tab-helbredelse" value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
+	          	Ingen sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="Lette-sekvele"/>Lette sekvele
+	          <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
+	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
+	          	Mindre alvorlig sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-sykemelding" value="Sykemelding"/>Sykemelding (med spm om antall dager)
+	          <label title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet">
+	          	<input type="radio" name="tab-klinisk" id="tab-sykemelding" value="alvorlig-sekvele" title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet"/>
+	          	Alvorlig sekvele
 	          </label>
 		    </div>
 		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-uforetrydg" value="Uføretrydg"/>Uføretrygd
+	          <label title="Død som følge av skaden.">
+	          	<input type="radio" name="tab-klinisk" id="tab-uforetrydg" value="død" title="Død som følge av skaden."/>Død
 	          </label>
 		    </div>
 		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="Alvorlig-sekvele"/>Alvorlig sekvele (spesifiser)
+	          <label >
+	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="vet-ikke"/>Vet Ikke
 	          </label>
 		    </div>
-		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-dodsfall" value="Dødsfall"/>Dødsfall
-	          </label>
-		    </div>
-		     <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-klinisk" id="tab-vene" value="Vet-ikke"/>Vet ikke
-	          </label>
-		    </div>
+		    
 	    </div>
 	   <!--  <div class="form-group" >
 		<h3>Årsakssammenheng</h3>
