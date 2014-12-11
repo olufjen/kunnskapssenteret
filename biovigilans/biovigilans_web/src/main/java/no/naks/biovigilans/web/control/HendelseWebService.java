@@ -13,5 +13,6 @@ public interface HendelseWebService extends MasterWebService {
 
 
 	public void setPasientService(PasientTableService pasientService);
+	public void saveVigilansMelder(TransfusjonWebModel transfusjon);
 	
 }

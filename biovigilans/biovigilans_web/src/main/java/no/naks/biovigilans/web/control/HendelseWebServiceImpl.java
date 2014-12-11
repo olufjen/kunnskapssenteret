@@ -1,6 +1,7 @@
 package no.naks.biovigilans.web.control;
 
 import no.naks.biovigilans.model.PasientGruppeImpl;
+import no.naks.biovigilans.service.HendelseTablesService;
 import no.naks.biovigilans.service.PasientTableService;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
@@ -10,6 +11,7 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 		HendelseWebService{
 
 	private PasientTableService pasientService;
+	private HendelseTablesService hendelseTablesService;
 	
 	public HendelseWebServiceImpl() {
 		super();
@@ -17,6 +19,16 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 	}
 
 	
+	public HendelseTablesService getHendelseTablesService() {
+		return hendelseTablesService;
+	}
+
+
+	public void setHendelseTablesService(HendelseTablesService hendelseTablesService) {
+		this.hendelseTablesService = hendelseTablesService;
+	}
+
+
 	public PasientTableService getPasientService() {
 		return pasientService;
 	}
@@ -39,6 +51,9 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 	public void saveTransfusjon(TransfusjonWebModel transfusjon,PasientKomplikasjonWebModel innMelding) {
 		transfusjon.setPasient(innMelding.getPasient());
 		pasientService.saveTransfusjon(transfusjon.getTransfusjon());
+		
+	}
+	public void saveVigilansMelder(TransfusjonWebModel transfusjon){
 		
 	}
 
