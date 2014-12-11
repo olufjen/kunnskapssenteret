@@ -351,6 +351,7 @@
         </bean>
         <bean id="hendelseWebService" class="no.naks.biovigilans.web.control.HendelseWebServiceImpl">
                 <property name="pasientService" ref="PasientTableService"></property>
+                <property name="hendelseTablesService" ref="hendelseTablesService"></property>
         </bean>
         <bean id="giverWebService" class="no.naks.biovigilans.web.control.GiverWebServiceImpl" >
                 <property name="giverTableService" ref="giverTableService"></property>
