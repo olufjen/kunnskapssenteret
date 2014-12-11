@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.SqlParameter;
 
+import no.naks.biovigilans.dao.HendelsehemovigilansDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 
 
@@ -15,6 +16,10 @@ import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
  */
 public interface HendelseTablesService {
 	
+	public HendelsehemovigilansDAO getHendelsehemovigilansDAO();
+
+	public void setHendelsehemovigilansDAO(
+			HendelsehemovigilansDAO hendelsehemovigilansDAO);
 
 
 }

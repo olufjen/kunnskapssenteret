@@ -17,16 +17,18 @@ import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
  **/
 public class HendelseTablesServiceImpl implements HendelseTablesService {
 	
-	private HendelsehemovigilansDAO hendelseBiovigilansDAO;
+	private HendelsehemovigilansDAO hendelsehemovigilansDAO;
 
-	public HendelsehemovigilansDAO getHendelseBiovigilansDAO() {
-		return hendelseBiovigilansDAO;
+	public HendelsehemovigilansDAO getHendelsehemovigilansDAO() {
+		return hendelsehemovigilansDAO;
 	}
 
-	public void setHendelseBiovigilansDAO(
-			HendelsehemovigilansDAO hendelseBiovigilansDAO) {
-		this.hendelseBiovigilansDAO = hendelseBiovigilansDAO;
+	public void setHendelsehemovigilansDAO(
+			HendelsehemovigilansDAO hendelsehemovigilansDAO) {
+		this.hendelsehemovigilansDAO = hendelsehemovigilansDAO;
 	}
+
+
 
 
 	
