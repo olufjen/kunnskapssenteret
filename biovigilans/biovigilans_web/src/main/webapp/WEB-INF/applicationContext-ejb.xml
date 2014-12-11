@@ -96,6 +96,12 @@
   	<property name="annenKomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	
   </bean>
+  <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  </bean>
+  <bean id="hendelseTablesService" class="no.naks.biovigilans.service.HendelseTablesServiceImpl">
+  	<property name="hendelsehemovigilansDAO" ref="hendelsehemovigilansDAO"></property>
+  </bean>
   <bean id="PasientTableService" class="no.naks.biovigilans.service.PasientTableServiceImpl">
   	<property name="pasientDAO" ref="pasientDAO"></property>
   	<property name="transfusjonDAO" ref="transfusjonDAO"></property>
