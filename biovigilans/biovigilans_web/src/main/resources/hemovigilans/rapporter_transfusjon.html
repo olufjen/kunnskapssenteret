@@ -1222,47 +1222,46 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
 		<h3>Alvorlighetsgrad</h3>
 
 		<div class="radio">
-			<label>
-				<input type="radio" name="alvor-mang" id="grad1" value="Ikke livstruende" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Ikke livstruende
+			<label title="Ingen subjektive symptomer eller kliniske funn">
+				<input type="radio" name="alvor-mang" id="grad1" value="Grad 0 Ingen klinisk effekt" title="Ingen subjektive symptomer eller kliniske funn" />Grad 0 Ingen klinisk effekt
 			</label>
 		</div>
 		<div class="radio">
-			<label>
-				<input type="radio" name="alvor-mang" id="grad2" value="Livstruende" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Livstruende
+			<label title="Forbigående skade/ negativ helseeffekt som ikke krevde omfattende behandling. ">
+				<input type="radio" name="alvor-mang" id="grad2" value="Grad 1 Mindre alvorlig 1a Ubetydelig" title="Forbigående skade/ negativ helseeffekt som ikke krevde omfattende behandling. " />Grad 1 Mindre alvorlig 1a Ubetydelig
+				
 			</label>
 		</div>
 		<div class="radio">
-			<label>
-				<input type="radio" name="alvor-mang" id="grad3"value="Langtidsmorbiditet" onclick="toggleDisplay('langtidsmorbiditet', this.checked)"/>Langtidsmorbiditet
+			<label title="Behov for medisinsk behandling (for eksempel symptomatisk behandling), men mangel på slik ville ikke ha ført til varige skader eller redusert funksjon.">
+				<input type="radio" name="alvor-mang" id="grad3"value="Grad 1 Mindre alvorlig 1b Moderat" title="Behov for medisinsk behandling (for eksempel symptomatisk behandling), men mangel på slik ville ikke ha ført til varige skader eller redusert funksjon." />Grad 1 Mindre alvorlig 1b Moderat
 			</label>
 		</div>
-		<div id="langtidsmorbiditet" class="form-group" style="display: none">
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad1"value="1 uke 6 mnd" />1 uke til 1 mnd
+		<div class="radio">
+			<label title="Behov for innleggelse på sykehus eller forlenget sykehusopphold 
+			som følge av komplikasjonen;
+og/eller
+-  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming;
+eller
+- behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.
+			">
+				<input type="radio" name="alvor-mang" id="grad4" value="Grad 2 Alvorlig" title="Behov for innleggelse på sykehus eller forlenget sykehusopphold som følge av komplikasjonen;
+og/eller
+-  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming;
+eller
+- behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.
+				"/>Grad 2 Alvorlig
 			</label>
-			</div>
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad2"value="1 mnd 6 mnd" />1 til 6 mnd
+		</div>
+		<div class="radio">
+			<label title="Behov for omfattende medisinsk intervensjon etter komplikasjonen (vasopressor-behandling, intubering, overflytting til intensivavdeling) for å redde livet.">
+				<input type="radio" name="alvor-mang" id="grad4" value="Grad 3 Livstruende" title="Behov for omfattende medisinsk intervensjon etter komplikasjonen (vasopressor-behandling, intubering, overflytting til intensivavdeling) for å redde livet."/>Grad 3 Livstruende
 			</label>
-			</div>
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad3"value="6 mnd 12 mnd" />6 til 12 mnd
-			</label>
-			</div>
-			<div class="radio">
-			<label>
-				<input type="radio" name="alvor-langtid" id="langgrad4"value=">12 mnd" />Mer enn 12 mnd
-			</label>
-			</div>
+		</div>	
 		
-		</div>
-		
 		<div class="radio">
-			<label>
-				<input type="radio" name="alvor-mang" id="grad4" value="dod" onclick="toggleDisplay('langtidsmorbiditet', 0)"/>Dødsfall
+			<label title="Døde etter en komplikasjon.">
+				<input type="radio" name="alvor-mang" id="grad4" value="dod" title="Døde etter en komplikasjon."/>Dødsfall
 			</label>
 		</div>
 	</div>
