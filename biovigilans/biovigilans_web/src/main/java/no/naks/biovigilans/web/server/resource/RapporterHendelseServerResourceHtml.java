@@ -311,7 +311,11 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			transfusjon.setTransfusjonsFlag(kvittering);
 	    			result.setLagret(true);
 	    			transfusjon.setLagret(true);
-	    			
+	    			Long melderId = melderwebModel.getMelder().getMelderId();
+	    			if (melderId != null){
+	    				transfusjon.getPasientKomplikasjon().setMelderId(melderId);
+	    				hendelseWebService.saveVigilansMelder(transfusjon);
+	    			}
 	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
 		    		Representation pasientkomplikasjonFtl = clres2.get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
