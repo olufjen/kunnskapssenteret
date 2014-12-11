@@ -355,7 +355,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	}
 	
 	public String getPage(){
-		String page = "/hemovigilans/rapporter_hendelse_main.html";
+		String page = "/hemovigilans/hemovigilans.html";
 		return page;
 	}
 	/**
