@@ -80,6 +80,9 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 	public void setAvregistering(String avregistering) {
 		if(avregistering == null){
 			avregistering  = giveroppfolgingFields.get(keys[3]);
+			if(giveroppfolgingFields.get(keys[4])!= null && avregistering.equalsIgnoreCase("avregistrert-Ja")){
+				avregistering = avregistering +"; " + giveroppfolgingFields.get(keys[4]);
+			}
 		}
 		this.avregistering = avregistering;
 	}
