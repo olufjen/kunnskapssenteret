@@ -154,7 +154,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	
 	public void giveroppfolgingDistribute(){
 		String[] formFields = getFormNames();
-		String giveroppfolgingFields[]={formFields[22],formFields[16],formFields[32],formFields[31]};
+		String giveroppfolgingFields[]={formFields[22],formFields[16],formFields[32],formFields[31],formFields[37]};
 		giveroppfolging.setGiveroppfolgingfieldMaps(giveroppfolgingFields);
 	}
 	
