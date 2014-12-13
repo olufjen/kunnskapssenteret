@@ -54,6 +54,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String komDiagnosegiverId = "komDiagnosegiver";
 	protected String vigilansmeldingId="vigilansmelding";
 	protected GiverKvitteringWebModel giverKvittering = null;
+	protected String[] systemiskgruppe;
+	protected String[] skadeiarmen;
+	protected String[] sykemeldinggruppe;
 	
 	//Rapporter AndreHendelse
 	protected AnnenKomplikasjonwebModel annenModel =  null;
@@ -69,6 +72,24 @@ public class SessionServerResource extends ProsedyreServerResource {
 	
 	
 	
+	public String[] getSykemeldinggruppe() {
+		return sykemeldinggruppe;
+	}
+	public void setSykemeldinggruppe(String[] sykemeldinggruppe) {
+		this.sykemeldinggruppe = sykemeldinggruppe;
+	}
+	public String[] getSystemiskgruppe() {
+		return systemiskgruppe;
+	}
+	public void setSystemiskgruppe(String[] systemiskgruppe) {
+		this.systemiskgruppe = systemiskgruppe;
+	}
+	public String[] getSkadeiarmen() {
+		return skadeiarmen;
+	}
+	public void setSkadeiarmen(String[] skadeiarmen) {
+		this.skadeiarmen = skadeiarmen;
+	}
 	public String[] getHendelsenoppdaget() {
 		return hendelsenoppdaget;
 	}
@@ -321,6 +342,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 giverModel.setReaksjonengruppe(reaksjonengruppe);
 	    	 giverModel.setUtenforBlodbankengruppe(utenforBlodbankengruppe);  
 	    	 giverModel.setDonasjonsstedgruppe(donasjonsstedgruppe);
+	    	 giverModel.setSkadeiarmen(skadeiarmen);
+	    	 giverModel.setSystemiskgruppe(systemiskgruppe);
+	    	 giverModel.setSykemeldinggruppe(sykemeldinggruppe);
 	     }
 	     if(donasjon==null){
 	    	 donasjon = new DonasjonwebModel();

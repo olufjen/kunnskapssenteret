@@ -21,6 +21,9 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	private String[] reaksjonengruppe; 
 	private String[] utenforBlodbankengruppe;
 	private String[] donasjonsstedgruppe;
+	protected String[] systemiskgruppe;
+	protected String[] skadeiarmen;
+	protected String[] sykemeldinggruppe;
 	
 	public GiverKomplikasjonwebModel() {
 		super();
@@ -34,22 +37,33 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	
 	
 
+	public String[] getSykemeldinggruppe() {
+		return sykemeldinggruppe;
+	}
+	public void setSykemeldinggruppe(String[] sykemeldinggruppe) {
+		this.sykemeldinggruppe = sykemeldinggruppe;
+	}
+	public String[] getSystemiskgruppe() {
+		return systemiskgruppe;
+	}
+	public void setSystemiskgruppe(String[] systemiskgruppe) {
+		this.systemiskgruppe = systemiskgruppe;
+	}
+	public String[] getSkadeiarmen() {
+		return skadeiarmen;
+	}
+	public void setSkadeiarmen(String[] skadeiarmen) {
+		this.skadeiarmen = skadeiarmen;
+	}
 	public Vigilansmelding getVigilansmelding() {
 		return vigilansmelding;
 	}
-
-
-
 	public void setVigilansmelding(Vigilansmelding vigilansmelding) {
 		this.vigilansmelding = vigilansmelding;
 	}
-
-
-
 	public Giver getGiver() {
 		return giver;
 	}
-
 	public void setGiver(Giver giver) {
 		this.giver = giver;
 	}

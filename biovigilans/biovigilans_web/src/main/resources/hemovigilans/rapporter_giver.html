@@ -89,7 +89,14 @@
 			document.getElementById('utenfor').style.display = 'none';
 		}
 	}
-	
+	function showarmenblide(){
+		var selectedValue = document.getElementById("tabskadearm").value;
+		if(selectedValue=="Nerveirritasjon"){
+			document.getElementById('armenBilde').style.display = 'block';
+		}else{
+			document.getElementById('armenBilde').style.display = 'none';
+		}
+	}
 	function initialize()
 	{
 	    var SpinnerValue_Changed = function() {
@@ -161,16 +168,54 @@
 	      <label>Givererfaring:</label>
 	      	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver"  />Førstegangsgiver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver" onclick="toggleDisplay('type-tapping',0)" />Førstegangsgiver
 	          </label>
 		    </div>
 		    <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver"  />Etablert giver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver" onclick="toggleDisplay('type-tapping',this.checked)"   />Etablert giver
 	          </label>
 		    </div>
 	     </div>
-	     <div id="type-tapping"  class="form-group">
+	    <div class="form-group">
+	      <label>Tidligere reaksjoner på tapping:</label>
+	      <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="ja" onclick="toggleDisplay('beskriv-ja',  this.checked);"/>Ja
+	          </label>
+		    </div>
+	        <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="nei" onclick="toggleDisplay('beskriv-ja',  0);" />Nei
+	          </label>
+		    </div>
+	        <div class="radio">
+	          <label>
+	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="vet ikke" onclick="toggleDisplay('beskriv-ja',  0);" />Vet ikke
+	          </label>
+		    </div>
+	    </div>
+	    
+	    <div id="beskriv-ja" style="display:none">
+	    	<label>Beskrivelse av tidligere reaksjon:</label>
+		  	<textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
+	    </div>
+	    <h3>Donasjon</h3>
+	    <div class="form-group">
+	    	<label>Donasjonsdato</label><br>
+	    	<input type="date" name="dato-donasjon" />
+	    </div>
+	    <div class="form-group">
+	      <label>Donasjonssted:</label>
+	      <select name ="tab-sted" id="tappested" class="form-control">
+	       		<option> --- Select --- </option>
+	       		<#list giverkomplikasjon.donasjonsstedgruppe as donasjonssted>
+	       		<option>${donasjonssted} </option>
+	     		   </#list>
+	     </select>
+	    </div>
+	    
+	    <div id="type-tapping"  class="form-group" style="display: none">
 	      <label>Type tapping:</label> <!-- Dersom aferese : første gang aferese /etablert aferese -->
 	      	
 	      	<div class="radio">
@@ -251,43 +296,7 @@
 			     </div>
 		     </div>
 	    </div>
-	    <div class="form-group">
-	      <label>Tidligere reaksjoner på tapping:</label>
-	      <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="ja" onclick="toggleDisplay('beskriv-ja',  this.checked);"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="nei" onclick="toggleDisplay('beskriv-ja',  0);" />Nei
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-tidl-tapp" id="tab-tidl-tapp" value="vet ikke" onclick="toggleDisplay('beskriv-ja',  0);" />Vet ikke
-	          </label>
-		    </div>
-	    </div>
 	    
-	    <div id="beskriv-ja" style="display:none">
-	    	<label>Beskrivelse av tidligere reaksjon:</label>
-		  	<textarea class="form-control" name="tab-reaksjon-beskriv" rows="3"></textarea>
-	    </div>
-	    <h3>Donasjon</h3>
-	    <div class="form-group">
-	    	<label>Donasjonsdato</label><br>
-	    	<input type="date" name="dato-donasjon" />
-	    </div>
-	    <div class="form-group">
-	      <label>Donasjonssted:</label>
-	      <select name ="tab-sted" id="tappested" class="form-control">
-	       		<option> --- Select --- </option>
-	       		<#list giverkomplikasjon.donasjonsstedgruppe as donasjonssted>
-	       		<option>${donasjonssted} </option>
-	     		   </#list>
-	     </select>
-	    </div>
 	    <div class="form-group">
 	      <label>Måltid innen tre timer før tapping:</label>
 	      <div class="radio">
@@ -310,41 +319,20 @@
 	      <label>Komplisert venepunksjon:</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon', this.checked);toggleDisplay('armenBilde', this.checked);"/>Ja
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon', this.checked);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="nei" onclick="toggleDisplay('beskriv-komplikasjon', 0);toggleDisplay('armenBilde', 0);"/>Nei
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="nei" onclick="toggleDisplay('beskriv-komplikasjon', 0);"/>Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-vene" id="tab-vene" value="option3" onclick="toggleDisplay('beskriv-komplikasjon', 0);toggleDisplay('armenBilde', 0);" />Vet ikke
+	          	<input type="radio" name="tab-vene" id="tab-vene" value="option3" onclick="toggleDisplay('beskriv-komplikasjon', 0);" />Vet ikke
 	          </label>
 		    </div>
 	    </div>
-	    <div class="form-group" id="beskriv-komplikasjon" style="display: none" >
-			<label>Beskriv komplikasjonen med egne ord:</label>
-		  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
-		</div>
-		<div id="armenBilde" style="display: none"  >
-			<h4>Lokalisasjon venepunksjon</h4><br>  
-			<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /><br>
-		    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
-		  <map name="armenmap">
-			 <area shape="rect" title="Cephalic Vein H" coords="222,9,302,202" alt="Cephalic Vein H" href="javascript: return false;"  onclick="setImageValue('Cephalic Vein H');">
-			 <area shape="rect" title="Medhlan Cubital Vein H" coords="300,94,341,48" alt="Medhlan Cubital Vein H" href="javascript: return false;" onclick="setImageValue('Madhlan Cubital Vein H');">
-			 <area shape="rect" title="Beslic Vein H" coords="325,17,400,165" alt="Beslic Vein H" href="javascript: return false;" onclick="setImageValue('Beslic Vein H');">
-			 
-			 <area shape="rect" title="Medhlan Cubital Vein V" coords="655,47,690,110" alt="Medhlan Cubital Vein V" href="javascript: return false;" onclick="setImageValue('Madhlan Cubital Vein V');">
-			 <area shape="rect" title="Beslic Vein V" coords="669,17,575,169" alt="Beslic Vein V" href="javascript: return false;"  onclick="setImageValue('Beslic Vein V');">
-		 	 <area shape="rect" title="Cephalic Vein V" coords="690,14,756,207" alt="Cephalic Vein V" href="javascript: return false;" onclick="setImageValue('Cephalic Vein V');">
-			
-		</map>
-					  	
-		
-		</div>
 	    <h3>Giverkomplikasjon</h3>
 	    
 	    <div class="form-group">
@@ -384,8 +372,54 @@
 	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div>
 	    </div>
-	    
-	    <div class="form-group" >
+	    <div class="form-group">
+	    	<h3>Tiltak rettet mot giver</h3>
+		      <label>Strakstiltak:</label>
+		      	<div class="radio">
+		          <label title="Ingen">
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak0"  onclick="toggleDisplay('behandlingselected', 0);" value="Ingen" title="Ingen"/>
+		          	Ingen
+		          </label>
+			    </div>
+		      	<div class="radio">
+		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
+		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
+		          	Behandlet av blodbankpersonale
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
+		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
+		          	Behandlet av blodbanklege
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
+		          		Behandling på sykehus
+		          </label>
+			    </div>
+			    <div class="form-group" id="behandlingselected" style="margin-left: 0.5cm;display: none">
+			    	<label>bla bla bla</label>
+			    	<div class="radio">
+			          <label >
+			          	<input type="radio" name="tab-behandling" id="tab-behandling1"  onclick="toggleDisplay('innleggelseoption', 0);"  value="Observasjon i akuttmotakk"  />
+			          		Observasjon i akuttmotakk
+			          </label>
+			    	</div>
+			    	<div class="radio">
+			          <label >
+			          	<input type="radio" name="tab-behandling" id="tab-behandling2"  onclick="toggleDisplay('innleggelseoption', this.checked);" value="Innleggelse" />
+			          		Innleggelse
+			          </label>
+			    	</div>
+			    	<div style="display: none"  id="innleggelseoption"  name="innleggelseoption">
+				    	<label>Varighet av sykehus innleggelse</label><br>
+				    	<input  type="text" size="30" id="innleggelsetxt"  name="innleggelsetxt"  value="" /><br>
+			    	</div>
+			    </div>
+		</div>
+ 	    <div class="form-group" >
 			<h3>Alvorlighetsgrad </h3>
 	
 			<div class="radio">
@@ -482,85 +516,96 @@
 				</label>
 			</div>
 		</div> -->
-	    <h3>Type komplikasjon</h3>
-	    <div class="form-group">
-	      <label>Lokal:</label>
-	      <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-arm" id="tab-arm" value="Lokal-Ja" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-arm" id="tab-arm2" value="Lokal-Nei"  onclick="toggleDisplay('tabskaearm-ja', 0);"/>Nei
-	          </label>
-		    </div>
-	    </div>
-	
-	    <div id="tabskaearm-ja" class="form-group" style="display: none">
-	      <label>Hvis Ja:</label>
-	      <input name ="tab-tabskadearm" list="tabskadearm" class="form-control">
-	      <datalist id="tabskadearm">
-	
-	     </datalist>
-	    </div>
-	    <div class="form-group">
-	      <label>Systemisk:</label>
-	      <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
-	          </label>
-		    </div>
-	    </div>
-	    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
-	      <label>Hvis Ja:</label>
-	      <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control">
-	    </div>
+		<div class="form-group" >
+		    <h3>Type komplikasjon</h3>
 		    <div class="form-group">
-	      <label>Annen reaksjon(spesifiser):</label>
-	      <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-ja',this.checked );" />Ja
-	          </label>
+		      <label>Lokal:</label>
+		      <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-arm" id="tab-arm" value="Lokal-Ja" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
+		          </label>
+			    </div>
+		        <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-arm" id="tab-arm2" value="Lokal-Nei"  onclick="toggleDisplay('tabskaearm-ja', 0);"/>Nei
+		          </label>
+			    </div>
 		    </div>
-	        <div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-ja',0 );" />Nei
-	          </label>
+		
+		    <div id="tabskaearm-ja" class="form-group" style="display: none">
+		      <label>Hvis Ja:</label>
+		      <select name ="tab-tabskadearm" id="tabskadearm" class="form-control" onchange="showarmenblide();">
+	       		<option> --- Select --- </option>
+	       		<#list giverkomplikasjon.skadeiarmen as skadeiarmen>
+	       		<option>${skadeiarmen} </option>
+	     		   </#list>
+	     	  </select>
+		      <!-- <input name ="tab-tabskadearm" list="tabskadearm" class="form-control"> -->
 		    </div>
-	    </div>
-	    <div id="annenreaksjon-ja" style="display: none" class="form-group">
-			<label>Hvis du har valgt annet, beskriv her:</label>
-			  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
-		</div> 
-		  	
-		    <h3>Tiltak rettet mot giver</h3>
-		    <div class="form-group">
-		      <label>Strakstiltak:</label>
-		      	<div class="radio">
-		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
-		          	Behandlet av blodbankpersonale
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
-		          	Behandlet av blodbanklege
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
-		          		Behandling på sykehus
-		          </label>
-			    </div>
+		    
+		    <div id="armenBilde" style="display: none"  >
+				<h4>Lokalisasjon venepunksjon</h4><br>  
+				<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /><br>
+			    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
+			  	<map name="armenmap">
+				 <area shape="rect" title="Cephalic Vein H" coords="222,9,302,202" alt="Cephalic Vein H" href="javascript: return false;"  onclick="setImageValue('Cephalic Vein H');">
+				 <area shape="rect" title="Medhlan Cubital Vein H" coords="300,94,341,48" alt="Medhlan Cubital Vein H" href="javascript: return false;" onclick="setImageValue('Madhlan Cubital Vein H');">
+				 <area shape="rect" title="Beslic Vein H" coords="325,17,400,165" alt="Beslic Vein H" href="javascript: return false;" onclick="setImageValue('Beslic Vein H');">
+				 
+				 <area shape="rect" title="Medhlan Cubital Vein V" coords="655,47,690,110" alt="Medhlan Cubital Vein V" href="javascript: return false;" onclick="setImageValue('Madhlan Cubital Vein V');">
+				 <area shape="rect" title="Beslic Vein V" coords="669,17,575,169" alt="Beslic Vein V" href="javascript: return false;"  onclick="setImageValue('Beslic Vein V');">
+			 	 <area shape="rect" title="Cephalic Vein V" coords="690,14,756,207" alt="Cephalic Vein V" href="javascript: return false;" onclick="setImageValue('Cephalic Vein V');">
+				</map>
 			</div>
+		    
+		    <div class="form-group">
+		      <label>Systemisk:</label>
+		      <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
+		          </label>
+			    </div>
+		        <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
+		          </label>
+			    </div>
+		    </div>
+		    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
+		      <label>Hvis Ja:</label>
+		      
+		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control">
+	       		<option> --- Select --- </option>
+	       		<#list giverkomplikasjon.systemiskgruppe as systemisk>
+	       		<option>${systemisk} </option>
+	     		   </#list>
+	     	  </select>
+		      
+		     <!--  <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
+		    </div>
+			<div class="form-group">
+		      <label>Annen reaksjon(spesifiser):</label>
+		      <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-ja',this.checked );" />Ja
+		          </label>
+			    </div>
+		        <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-ja',0 );" />Nei
+		          </label>
+			    </div>
+		    	 <div class="form-group" id="beskriv-komplikasjon" style="display: none" >
+					<label>Beskriv komplikasjonen med egne ord:</label>
+				  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
+				</div>
+	   		</div>
+	    
+		    <div id="annenreaksjon-ja" style="display: none" class="form-group">
+				<label>Hvis du har valgt annet, beskriv her:</label>
+				  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
+			</div> 
+		
 	    </div>
 	       
 	    <div class="form-group">
@@ -587,30 +632,65 @@
 		          </label>
 			    </div>
 	    	</div>	
-	     <div class="form-group">
-	      <label>Videre behandling/oppfølging nødvendig?</label>
-	         <div class="radio">
-	          <label title="Giver ble henvist til egen lege eller spesialist. ">
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Henvist til egen lege/spesialist" title="Giver ble henvist til egen lege eller spesialist. "  />
-	          		Henvist til egen lege/spesialist
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label title="Giver oppsøkte selv egen lege.">
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Oppsøkt egen lege" title="Giver oppsøkte selv egen lege." />
-	          	Oppsøkt egen lege
-	          </label>
-		    </div>
-	 		<div class="radio">
-	          <label title="Giver ble sykemeldt pga. komplikasjonen.">
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Sykemelding" title="Giver ble sykemeldt pga. komplikasjonen." />Sykemelding
-	          </label>
-		    </div>
-		    <div class="radio">
-	          <label title="Giver ble uføretrygdet pga. komplikasjonen. ">
-	          	<input type="radio" name="tab-annenreak" id="tab-annenreak" value="Uføretrygd" title="Giver ble uføretrygdet pga. komplikasjonen. " />Uføretrygd
-	          </label>
-		    </div>
+	     <div class="form-group" >
+	       <label>Videre behandling/oppfølging </label>
+	       	  <div class="radio">
+		          <label >
+		          	<input type="radio" name="tab-behandling" id="tab-behandling-ja" onclick="toggleDisplay('behandlingJa', this.checked);" value="Videre Behandling Ja"  />
+		          		Ja
+		          </label>
+			  </div>
+			  <div class="radio">
+		          <label >
+		          	<input type="radio" name="tab-behandling" id="tab-behandling-nei" onclick="toggleDisplay('behandlingJa', 0);" value="Videre Behandling Nei"  />
+		          		Nei
+		          </label>
+			  </div>
+			  <div class="radio">
+		          <label >
+		          	<input type="radio" name="tab-behandling" id="tab-behandling-vetIkke" onclick="toggleDisplay('behandlingJa',0);toggleDisplay('sykemelding',0);" value="Videre Behandling Vet ikke"  />
+		          		Vet Ikke
+		          </label>
+			  </div>
+	       	  <div id="behandlingJa" style="margin-left: 0.5cm;display: none" >
+		         <div class="radio">
+		          <label title="Giver ble henvist til egen lege eller spesialist. ">
+		          	<input type="radio" name="tab-annenreak" id="tab-annenreak" onclick="toggleDisplay('spesialist-txt',this.checked);toggleDisplay('sykemelding',0);" value="Henvist til egen lege/spesialist" title="Giver ble henvist til egen lege eller spesialist. "  />
+		          		Henvist til egen lege/spesialist
+		          </label>
+		          <div id="spesialist-txt" style="margin-left: 0.5cm;display: none" >
+		          	<label>Spesifiser</label><br>
+		          	<input type="text">
+		          </div>
+		        </div>
+		        <div class="radio">
+		          <label title="Giver oppsøkte selv egen lege.">
+		          	<input type="radio" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('spesialist-txt',0);toggleDisplay('sykemelding',0);" value="Oppsøkt egen lege" title="Giver oppsøkte selv egen lege." />
+		          	Oppsøkt egen lege
+		          </label>
+			    </div>
+		 		<div class="radio">
+		          <label title="Giver ble sykemeldt pga. komplikasjonen.">
+		          	<input type="radio" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('spesialist-txt',0);toggleDisplay('sykemelding',this.checked);" value="Sykemelding" title="Giver ble sykemeldt pga. komplikasjonen." />Sykemelding
+		          </label>
+		          
+		          <div id="sykemelding" style="margin-left: 0.5cm;display: none">
+		          <label>bla bla bla:</label>
+				       <select name ="tab-sykemeldinggruppe" id="sykemeldinggruppe" class="form-control">
+			       		<option>--- Select ---</option>
+			       		<#list giverkomplikasjon.sykemeldinggruppe as sykemelding>
+			       		<option>${sykemelding} </option>
+			     		   </#list>
+			     	  </select>
+				  </div>
+		          
+			    </div>
+			    <div class="radio">
+		          <label title="Giver ble uføretrygdet pga. komplikasjonen. ">
+		          	<input type="radio" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('spesialist-txt',0);toggleDisplay('sykemelding',0);" value="Uføretrygd" title="Giver ble uføretrygdet pga. komplikasjonen. " />Uføretrygd
+		          </label>
+			    </div>
+			 </div>
 	    </div>
 	 <!-- 
 	 <div id="videreBehandling-ja" style="display: none">   
