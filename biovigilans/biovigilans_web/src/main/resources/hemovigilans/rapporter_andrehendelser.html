@@ -106,6 +106,17 @@
 			       		 </#list>
 	     		   	</select>
 				</div>
+			<div class="form-group">
+					<label>Delprosesser</label>
+					<div class="radio">
+				          <label>
+				          	<input type="radio" name="tab-delprosess"  value="delprosess"   />Delprosess
+				          </label>
+				    </div>
+				          
+				</div>
+
+
 				
 				<div class="form-group">
 					<label>Primærårsak til feil eller avvik fra kvalitetskrav</label>
@@ -121,27 +132,27 @@
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
 				          <label>
-				          	<input type="radio" name="tab-klassifikasjon"  value="Feil blod transfudert" onclick="toggleDisplay('feilblod');"  />Feil Blod transfudert
+				          	<input type="radio" name="tab-klassifikasjon"  value="Feil blod transfudert" onclick="toggleDisplay('feilblod');"  />Feil Blod transfundert
 				          </label>
 				          <div id="feilblod" style="display: none" >
 					          <div class="radio" >
 					          	 <label>
-					          		<input type="radio" name="tab-feilblod"   value="Transfudert blod som ikke fyller krav"  />Transfudert blod som ikke fyller krav 
+					          		<input type="radio" name="tab-feilblod"   value="Transfudert blod som ikke fyller krav"  />Blodproduktet oppfylte ikke spesifiserte krav 
 					          	 </label>
 					          </div>
 					          <div class="radio">	 
 					          	 <label>
-					          		<input type="radio" name="tab-feilblod"  value="Transfudert blod til feil pasient"  />Transfudert blod til feil pasient
+					          		<input type="radio" name="tab-feilblod"  value="Transfudert blod til feil pasient"  />Blodproduktet som ble gitt var tiltenkt en annen pasient
+					           	 </label>
+					          </div>
+					          <div class="radio">	 
+					          	 <label>
+					          		<input type="radio" name="tab-feilblod"  value="Ikke indikasjon for transfusjon"  />Feil type blodprodukt gitt
 					          	 </label>
 					          </div>
 					          <div class="radio">	 
 					          	 <label>
-					          		<input type="radio" name="tab-feilblod"  value="Ikke indikasjon for transfusjon"  />Ikke indikasjon  for transfusjon
-					          	 </label>
-					          </div>
-					          <div class="radio">	 
-					          	 <label>
-					          		<input type="radio" name="tab-feilblod"  value="Annet"  />Annet
+					          		<input type="radio" name="tab-feilblod"  value="Annet"  />Blodproduktet gitt på feil indikasjon
 					          	 </label>
 					          </div>
 					      </div>
@@ -153,12 +164,12 @@
 			          <div id="smitte" style="display: none" >
 				           <div class="radio">
 				          	 <label>
-				          		<input type="radio" name="tab-smitte"  value="Smitte påvist ved testing(nyregistrering)"  />Smitte påvist ved testing(nyregistrering)
+				          		<input type="radio" name="tab-smitte"  value="Smitte påvist ved testing(nyregistrering)"  />Smitte påvist ved nyregistrering
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-smitte"  value="Smitte påvist ved testing(tapping)"  />Smitte påvist ved testing(tapping)
+				          		<input type="radio" name="tab-smitte"  value="Smitte påvist ved testing(tapping)"  />Smitte påvist ved tapping
 				          	 </label>
 				          </div>
 			          </div>
@@ -175,7 +186,7 @@
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-intervju"  value="Blodtype antistoff"  />Blodtype antistoff
+				          		<input type="radio" name="tab-intervju"  value="Blodtype antistoff"  />Blodtypeantistoff
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
@@ -218,7 +229,12 @@
 				      <div id="giver" style="display: none" >
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-giver"  value="HBlav"  />Hemoglobin ikke målet før tapping. HB målt etter tapping var for lav.
+				          		<input type="radio" name="tab-giver"  value="HBlav"  />Hemoglobin ikke målet før tapping. Hemoglobin målt etter tapping var for lav.
+				          	 </label>
+				          </div>
+				          <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-giver"  value="smittetesting"  />Påkrevet smittetesting ikke utført.
 				          	 </label>
 				          </div>
 				          <div class="radio">	 
@@ -258,16 +274,12 @@
 				          		<input type="radio" name="tab-giveren"  value="annen"  />Annen informasjon
 				          	 </label>
 				          </div>
-				            <div class="radio">	 
-				          	 <label>
-				          		<input type="radio" name="tab-giveren"  value="kanbrukes"  />Blodet kan likevel brukes
-				          	 </label>
-				          </div>
+				        
 				       </div>
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('utstyr');"  value="Utstyr og reagenser"  />Utstyr og reagenser
+			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('utstyr');"  value="Utstyr"  />Utstyr og reagenser
 			          </label>
 			          <div id="utstyr" style="display: none" >
 				          <div class="radio">	 
@@ -280,11 +292,7 @@
 				          		<input type="radio" name="tab-utstyr"  value="Teknisk svikt utstyr"  />Teknisk svikt utstyr
 				          	 </label>
 				          </div>
-				          <div class="radio">	 
-				          	 <label>
-				          		<input type="radio" name="tab-utstyr"  value="Teknisk svikt reagenser"  />Teknisk svikt reagenser
-				          	 </label>
-				          </div>
+				         
 				          <div class="radio">	 
 				          	 <label>
 				          		<input type="radio" name="tab-utstyr"  value="Utstyr annet"  />Utstyr annet
@@ -292,6 +300,16 @@
 				          </div>
 				      </div>
 			        </div>
+			          
+				    <div class="radio">
+			          <label>
+			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('analyser');" value="IKT"  /> IKT (utstyr og programvare)
+			          </label>
+			          
+			          
+			        </div>
+			        
+			        
 				    <div class="radio">
 			          <label>
 			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('analyser');" value="Analyser"  />Analyser
@@ -386,42 +404,41 @@
 			          <div id="annet" style="display: none" >
 				          <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Feil med produktet, blodet
+				          		<input type="radio" name="tab-merking"  value="feilblodprodukt"  />Feil med blodproduktet				          	 </label>
+				          </div>
+				           <div class="radio">	 
+				          	 <label>
+				          		<input type="radio" name="tab-merking"  value="feilutstyrreagens"  />Feil utstyr eller reagens brukt
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Feil utstyr eller reagens brukt
+				          		<input type="radio" name="tab-merking"  value="feilblodtilpasient"  />Bestilt blod til feil pasient
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Bestilt blod til feil pasient
-				          	 </label>
-				          </div>
-				           <div class="radio">	 
-				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Blod ut av karantene uten ast krav til frigiving er oppfylt
+				          		<input type="radio" name="tab-merking"  value="blodutavkarantene"  />Blod ut av karantene uten at krav til frigiving er oppfylt
 				          	 </label>
 				          </div>
 				      		<div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Blod ikke bestilt
+				          		<input type="radio" name="tab-merking"  value="blodikkebestilt"  />Blod ikke bestilt
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Problem med hjelpenummer
+				          		<input type="radio" name="tab-merking"  value="hjelpenummernodnummer"  />Problem med hjelpenummer/nødnummer
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Blod klargjort klargjort av sykepleier til feil pasient
+				          		<input type="radio" name="tab-merking"  value="klargjorttilfeilpasient"  />Blod klargjort av sykepleier til feil pasient
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
 				          	 <label>
-				          		<input type="radio" name="tab-merking"  value="Prøver merket feil"  />Blodbanken feiltolket bestillingen,pasient eller produkt
+				          		<input type="radio" name="tab-merking"  value="feiltolketbestilling"  />Blodbanken feiltolket bestillingen/(pasient eller produkt)
 				          	 </label>
 				          </div>
 				           <div class="radio">	 
@@ -458,7 +475,7 @@
 				</div>
 	
 				<div class="form-group">
-				<label>Gjennomført eller planlagte forebyggende tiltak. Beskriv kort.</label>
+				<label>Gjennomførte eller planlagte forebyggende tiltak. Beskriv kort.</label>
 					<textarea class="form-control" name="planlagtetiltak" rows="3" ></textarea>
 				</div>
 	
