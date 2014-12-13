@@ -211,7 +211,7 @@
         <property name="donasjonsstedgruppe" value="${donasjonsstedgruppeblodbank},${donasjonsstedgruppetappestasjon},${donasjonsstedgruppeblodbuss}"></property>
         <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktferskplasma}${blodproduktuniplas},${blodproduktannen}"></property>
+                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktferskplasma},${blodproduktuniplas},${blodproduktannen}"></property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property>  
