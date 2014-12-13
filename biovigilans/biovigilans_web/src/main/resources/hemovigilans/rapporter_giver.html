@@ -79,13 +79,13 @@
 		var selectedValue = document.getElementById("re").value;
 		if(selectedValue=="Utenfor blodbanken"){
 			document.getElementById('utenfor').style.display = 'block';
-			document.getElementById('hendelseDato').style.display = 'none'
-		}
-		else if(selectedValue=="På blodgiverbenk"){
 			document.getElementById('hendelseDato').style.display = 'block'
+		}
+		else if(selectedValue=="--- Select ---"){
+			document.getElementById('hendelseDato').style.display = 'none'
 			document.getElementById('utenfor').style.display = 'none';
 		}else{
-			document.getElementById('hendelseDato').style.display = 'none'
+			document.getElementById('hendelseDato').style.display = 'block'
 			document.getElementById('utenfor').style.display = 'none';
 		}
 	}
@@ -338,7 +338,7 @@
 	    <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
 	       <select id="re" name ="tab-hvor" list="icd10gruppehvor" class="form-control" onchange="blodbankenOptions()"  >
-		      <option  > --- Select --- </option>
+		      <option  >--- Select ---</option>
 		     	<#list giverkomplikasjon.reaksjonengruppe as reaksjonen >
 			     	<option >${reaksjonen}  </option>
 		     	</#list>
@@ -365,6 +365,99 @@
 	          <input name="tab-tapp-reak" type="text" class="form-control" id="tab-tapp-reak" placeholder="Skriv inn..">
 	        </div>
 	    </div>
+	    
+	    <div class="form-group" >
+		    <h2>Type komplikasjon</h2>
+		    <div class="form-group">
+		      <label>Lokal:</label>
+		      <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-arm" id="tab-arm" value="Lokal-Ja" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
+		          </label>
+			    </div>
+		        <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-arm" id="tab-arm2" value="Lokal-Nei"  onclick="toggleDisplay('tabskaearm-ja', 0);"/>Nei
+		          </label>
+			    </div>
+		    </div>
+		
+		    <div id="tabskaearm-ja" class="form-group" style="display: none">
+		      <label>Hvis Ja:</label>
+		      <select name ="tab-tabskadearm" id="tabskadearm" class="form-control" onchange="showarmenblide();">
+	       		<option> --- Select --- </option>
+	       		<#list giverkomplikasjon.skadeiarmen as skadeiarmen>
+	       		<option>${skadeiarmen} </option>
+	     		   </#list>
+	     	  </select>
+		      <!-- <input name ="tab-tabskadearm" list="tabskadearm" class="form-control"> -->
+		    </div>
+		    
+		    <div id="armenBilde" style="display: none"  >
+				<h4>Lokalisasjon venepunksjon</h4><br>  
+				<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /><br>
+			    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
+			  	<map name="armenmap">
+				 <area shape="rect" title="H. Cephalic dx" coords="222,9,302,202" alt="H. Cephalic dx" href="javascript: return false;"  onclick="setImageValue('H. Cephalic dx');">
+				 <area shape="rect" title="H. cubiti media dx" coords="300,94,341,48" alt="H. cubiti media dx" href="javascript: return false;" onclick="setImageValue('H. cubiti media dx');">
+				 <area shape="rect" title="H. basilica dx" coords="325,17,400,165" alt="H. basilica dx" href="javascript: return false;" onclick="setImageValue('H. basilica dx');">
+				 
+				 <area shape="rect" title="V. cubiti media sin" coords="655,47,690,110" alt="V. cubiti media sin" href="javascript: return false;" onclick="setImageValue('V. cubiti media sin');">
+				 <area shape="rect" title="V. basilica sin" coords="669,17,575,169" alt="V. basilica sin" href="javascript: return false;"  onclick="setImageValue('V. basilica sin');">
+			 	 <area shape="rect" title="V. cephalica sin" coords="690,14,756,207" alt="V. cephalica sin" href="javascript: return false;" onclick="setImageValue('V. cephalica sin');">
+				</map>
+			</div>
+		    
+		    <div class="form-group">
+		      <label>Systemisk:</label>
+		      <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
+		          </label>
+			    </div>
+		        <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
+		          </label>
+			    </div>
+		    </div>
+		    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
+		      <label>Hvis Ja:</label>
+		      
+		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control">
+	       		<option> --- Select --- </option>
+	       		<#list giverkomplikasjon.systemiskgruppe as systemisk>
+	       		<option>${systemisk} </option>
+	     		   </#list>
+	     	  </select>
+		      
+		     <!--  <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
+		    </div>
+			<!-- <div class="form-group">
+		      <label>Annen reaksjon(spesifiser):</label>
+		      <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-ja',this.checked );" />Ja
+		          </label>
+			    </div>
+		        <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-ja',0 );" />Nei
+		          </label>
+			    </div>
+		    	 <div class="form-group" id="beskriv-komplikasjon" style="display: none" >
+					<label>Beskriv komplikasjonen med egne ord:</label>
+				  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
+				</div>
+	   		</div>
+	    
+		    <div id="annenreaksjon-ja" style="display: none" class="form-group">
+				<label>Hvis du har valgt annet, beskriv her:</label>
+				  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
+			</div>  -->
+		
+	    </div>
+	    
 	      
 	   	<div class="form-group">
 		    <label>Varighet av komplikasjon/bivirkning/skade:</label>
@@ -515,98 +608,7 @@
 				</label>
 			</div>
 		</div> -->
-		<div class="form-group" >
-		    <h3>Type komplikasjon</h3>
-		    <div class="form-group">
-		      <label>Lokal:</label>
-		      <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-arm" id="tab-arm" value="Lokal-Ja" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
-		          </label>
-			    </div>
-		        <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-arm" id="tab-arm2" value="Lokal-Nei"  onclick="toggleDisplay('tabskaearm-ja', 0);"/>Nei
-		          </label>
-			    </div>
-		    </div>
-		
-		    <div id="tabskaearm-ja" class="form-group" style="display: none">
-		      <label>Hvis Ja:</label>
-		      <select name ="tab-tabskadearm" id="tabskadearm" class="form-control" onchange="showarmenblide();">
-	       		<option> --- Select --- </option>
-	       		<#list giverkomplikasjon.skadeiarmen as skadeiarmen>
-	       		<option>${skadeiarmen} </option>
-	     		   </#list>
-	     	  </select>
-		      <!-- <input name ="tab-tabskadearm" list="tabskadearm" class="form-control"> -->
-		    </div>
-		    
-		    <div id="armenBilde" style="display: none"  >
-				<h4>Lokalisasjon venepunksjon</h4><br>  
-				<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /><br>
-			    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
-			  	<map name="armenmap">
-				 <area shape="rect" title="Cephalic Vein H" coords="222,9,302,202" alt="Cephalic Vein H" href="javascript: return false;"  onclick="setImageValue('Cephalic Vein H');">
-				 <area shape="rect" title="Medhlan Cubital Vein H" coords="300,94,341,48" alt="Medhlan Cubital Vein H" href="javascript: return false;" onclick="setImageValue('Madhlan Cubital Vein H');">
-				 <area shape="rect" title="Beslic Vein H" coords="325,17,400,165" alt="Beslic Vein H" href="javascript: return false;" onclick="setImageValue('Beslic Vein H');">
-				 
-				 <area shape="rect" title="Medhlan Cubital Vein V" coords="655,47,690,110" alt="Medhlan Cubital Vein V" href="javascript: return false;" onclick="setImageValue('Madhlan Cubital Vein V');">
-				 <area shape="rect" title="Beslic Vein V" coords="669,17,575,169" alt="Beslic Vein V" href="javascript: return false;"  onclick="setImageValue('Beslic Vein V');">
-			 	 <area shape="rect" title="Cephalic Vein V" coords="690,14,756,207" alt="Cephalic Vein V" href="javascript: return false;" onclick="setImageValue('Cephalic Vein V');">
-				</map>
-			</div>
-		    
-		    <div class="form-group">
-		      <label>Systemisk:</label>
-		      <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
-		          </label>
-			    </div>
-		        <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
-		          </label>
-			    </div>
-		    </div>
-		    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
-		      <label>Hvis Ja:</label>
-		      
-		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control">
-	       		<option> --- Select --- </option>
-	       		<#list giverkomplikasjon.systemiskgruppe as systemisk>
-	       		<option>${systemisk} </option>
-	     		   </#list>
-	     	  </select>
-		      
-		     <!--  <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
-		    </div>
-			<!-- <div class="form-group">
-		      <label>Annen reaksjon(spesifiser):</label>
-		      <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Ja" onclick="toggleDisplay('annenreaksjon-ja',this.checked );" />Ja
-		          </label>
-			    </div>
-		        <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-ja',0 );" />Nei
-		          </label>
-			    </div>
-		    	 <div class="form-group" id="beskriv-komplikasjon" style="display: none" >
-					<label>Beskriv komplikasjonen med egne ord:</label>
-				  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
-				</div>
-	   		</div>
-	    
-		    <div id="annenreaksjon-ja" style="display: none" class="form-group">
-				<label>Hvis du har valgt annet, beskriv her:</label>
-				  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
-			</div>  -->
-		
-	    </div>
-	       
+			       
 	    <div class="form-group">
 		 <label>Planlagte eller gjennomførte forbedringstiltak</label>
 		  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"></textarea>   
