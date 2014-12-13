@@ -214,7 +214,6 @@
                         ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
-        
         <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property>  
   </bean>       
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
@@ -233,6 +232,9 @@
         <property name="reaksjonengruppe" value="${blodgiverbenk},${annetStedBlodbanken},${utenforBlodbanken}"></property>
         <property name="utenforBlodbankengruppe" value="${påJobb},${hjemme},${gaten},${annestSted}"></property>
         <property name="donasjonsstedgruppe" value="${donasjonsstedgruppeblodbank},${donasjonsstedgruppetappestasjon},${donasjonsstedgruppeblodbuss}"></property>
+        <property name="skadeiarmen" value="${skadeiarmenoption1},${skadeiarmenoption2},${skadeiarmenoption3},${skadeiarmenoption4},${skadeiarmenoption5},${skadeiarmenoption6},${skadeiarmenoption7},${skadeiarmenoption8},${skadeiarmenoption9}"></property>
+        <property name="systemiskgruppe" value="${systemiskoption1},${systemiskoption2},${systemiskoption3},${systemiskoption4},${systemiskoption5},${systemiskoption6},${systemiskoption7}"></property>
+        <property name="sykemeldinggruppe" value="${sykemeldingoption1},${sykemeldingoption2},${sykemeldingoption3},${sykemeldingoption4},${sykemeldingoption5},"></property>
         <property name="sessionParams" value="${giver.kjonn},${giver.alder},${giver.vektkg},${giver.erfaring},${giver.tidl},${giver.reaksjon},
                                 ${giver.sted},${giver.maltid},${giver.vene},${giver.tapping},${giver.fullblod},${giver.aferese-options},${giver.type-aferese},
                                 ${giver.hvor},${giver.tapp},${giver.varighet},${giver.alvorlighetgrad},${giver.klinisk},${giver.arm},${giver.tabskadearm},
@@ -268,7 +270,7 @@
                 <property name="tablewebservice" ref="tableWebService"></property>
                 <property name="innmeldingWebService" ref="hendelseWebService"></property>
                 <property name="icd10WebService" ref="ICD10WebService"></property>
-                <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingutenfor},${avdelingandre},${avdelingvetikke}"></property>
+                <property name="avdelinger" value="${avdelingkir},${avdelingintsensiv},${avdelingpediadrisk},${avdelingmedisinsk},${avdelinggyn},${avdelingvetikke}"></property>
                 <property name="aldergruppe" value="${aldergruppepasient1},${aldergruppepasient2},${aldergruppepasient3},${aldergruppepasient4},${aldergruppepasient5},
                         ${aldergruppepasient6},${aldergruppepasient7},${aldergruppepasient8},${aldergruppepasient9},${aldergruppepasient10},${aldergruppepasient11},${aldergruppepasient12}"></property>
                 <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
