@@ -400,11 +400,10 @@
 		          </label>
 			    </div>
 			    <div class="form-group" id="behandlingselected" style="margin-left: 0.5cm;display: none">
-			    	<label>bla bla bla</label>
 			    	<div class="radio">
 			          <label >
 			          	<input type="radio" name="tab-behandling" id="tab-behandling1"  onclick="toggleDisplay('innleggelseoption', 0);"  value="Observasjon i akuttmotakk"  />
-			          		Observasjon i akuttmotakk
+			          		Observasjon i akuttmottak
 			          </label>
 			    	</div>
 			    	<div class="radio">
@@ -414,7 +413,7 @@
 			          </label>
 			    	</div>
 			    	<div style="display: none"  id="innleggelseoption"  name="innleggelseoption">
-				    	<label>Varighet av sykehus innleggelse</label><br>
+				    	<label>Varighet av sykehusinnleggelse</label><br>
 				    	<input  type="text" size="30" id="innleggelsetxt"  name="innleggelsetxt"  value="" /><br>
 			    	</div>
 			    </div>
@@ -583,7 +582,7 @@
 		      
 		     <!--  <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
 		    </div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 		      <label>Annen reaksjon(spesifiser):</label>
 		      <div class="radio">
 		          <label>
@@ -604,7 +603,7 @@
 		    <div id="annenreaksjon-ja" style="display: none" class="form-group">
 				<label>Hvis du har valgt annet, beskriv her:</label>
 				  <textarea class="form-control" name="tab-annet-beskriv" rows="3"></textarea>
-			</div> 
+			</div>  -->
 		
 	    </div>
 	       
@@ -639,6 +638,46 @@
 		          	<input type="radio" name="tab-behandling" id="tab-behandling-ja" onclick="toggleDisplay('behandlingJa', this.checked);" value="Videre Behandling Ja"  />
 		          		Ja
 		          </label>
+		          
+		         <div id="behandlingJa" style="margin-left: 0.5cm;display: none" >
+			         <div class="radio">
+			          <label title="Giver ble henvist til egen lege eller spesialist. ">
+			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak" onclick="toggleDisplay('spesialist-txt',this.checked);" value="Henvist til egen lege/spesialist" title="Giver ble henvist til egen lege eller spesialist. "  />
+			          		Henvist til egen lege/spesialist
+			          </label>
+			          <div id="spesialist-txt" style="margin-left: 0.5cm;display: none" >
+			          	<label>Spesifiser</label><br>
+			          	<input type="text">
+			          </div>
+			        </div>
+			        <div class="radio">
+			          <label title="Giver oppsøkte selv egen lege.">
+			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak"   value="Oppsøkt egen lege" title="Giver oppsøkte selv egen lege." />
+			          	Oppsøkt egen lege
+			          </label>
+				    </div>
+			 		<div class="radio">
+			          <label title="Giver ble sykemeldt pga. komplikasjonen.">
+			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('sykemelding',this.checked);" value="Sykemelding" title="Giver ble sykemeldt pga. komplikasjonen." />Sykemelding
+			          </label>
+			          
+			          <div id="sykemelding" style="margin-left: 0.5cm;display: none">
+			          <label>Varighet:</label>
+					       <select name ="tab-sykemeldinggruppe" id="sykemeldinggruppe" class="form-control">
+				       		<option>--- Select ---</option>
+				       		<#list giverkomplikasjon.sykemeldinggruppe as sykemelding>
+				       		<option>${sykemelding} </option>
+				     		   </#list>
+				     	  </select>
+					  </div>
+			          
+				    </div>
+				    <div class="radio">
+			          <label title="Giver ble uføretrygdet pga. komplikasjonen. ">
+			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak"   value="Uføretrygd" title="Giver ble uføretrygdet pga. komplikasjonen. " />Uføretrygd
+			          </label>
+				    </div>
+			 	</div>
 			  </div>
 			  <div class="radio">
 		          <label >
@@ -652,45 +691,6 @@
 		          		Vet Ikke
 		          </label>
 			  </div>
-	       	  <div id="behandlingJa" style="margin-left: 0.5cm;display: none" >
-		         <div class="radio">
-		          <label title="Giver ble henvist til egen lege eller spesialist. ">
-		          	<input type="radio" name="tab-annenreak" id="tab-annenreak" onclick="toggleDisplay('spesialist-txt',this.checked);toggleDisplay('sykemelding',0);" value="Henvist til egen lege/spesialist" title="Giver ble henvist til egen lege eller spesialist. "  />
-		          		Henvist til egen lege/spesialist
-		          </label>
-		          <div id="spesialist-txt" style="margin-left: 0.5cm;display: none" >
-		          	<label>Spesifiser</label><br>
-		          	<input type="text">
-		          </div>
-		        </div>
-		        <div class="radio">
-		          <label title="Giver oppsøkte selv egen lege.">
-		          	<input type="radio" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('spesialist-txt',0);toggleDisplay('sykemelding',0);" value="Oppsøkt egen lege" title="Giver oppsøkte selv egen lege." />
-		          	Oppsøkt egen lege
-		          </label>
-			    </div>
-		 		<div class="radio">
-		          <label title="Giver ble sykemeldt pga. komplikasjonen.">
-		          	<input type="radio" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('spesialist-txt',0);toggleDisplay('sykemelding',this.checked);" value="Sykemelding" title="Giver ble sykemeldt pga. komplikasjonen." />Sykemelding
-		          </label>
-		          
-		          <div id="sykemelding" style="margin-left: 0.5cm;display: none">
-		          <label>bla bla bla:</label>
-				       <select name ="tab-sykemeldinggruppe" id="sykemeldinggruppe" class="form-control">
-			       		<option>--- Select ---</option>
-			       		<#list giverkomplikasjon.sykemeldinggruppe as sykemelding>
-			       		<option>${sykemelding} </option>
-			     		   </#list>
-			     	  </select>
-				  </div>
-		          
-			    </div>
-			    <div class="radio">
-		          <label title="Giver ble uføretrygdet pga. komplikasjonen. ">
-		          	<input type="radio" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('spesialist-txt',0);toggleDisplay('sykemelding',0);" value="Uføretrygd" title="Giver ble uføretrygdet pga. komplikasjonen. " />Uføretrygd
-		          </label>
-			    </div>
-			 </div>
 	    </div>
 	 <!-- 
 	 <div id="videreBehandling-ja" style="display: none">   
