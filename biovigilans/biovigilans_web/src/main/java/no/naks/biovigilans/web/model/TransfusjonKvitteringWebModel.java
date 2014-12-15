@@ -342,6 +342,8 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = formFields[175];
 		annenAntallerytrocyt = userEntries.get(field);
+		if (annenAntallerytrocyt == null)
+			annenAntallerytrocyt = "";
 		return annenAntallerytrocyt;
 	}
 
@@ -355,6 +357,8 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = formFields[176];
 		annenAntalltrombo = userEntries.get(field);
+		if (annenAntalltrombo == null)
+			annenAntalltrombo = "";
 		return annenAntalltrombo;
 	}
 
@@ -368,6 +372,8 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = formFields[177];
 		annenAntallplasma = userEntries.get(field);
+		if (annenAntallplasma == null)
+			annenAntallplasma  = "";
 		return annenAntallplasma;
 	}
 
@@ -511,6 +517,8 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = formFields[184];
 		erytrocytipakke = userEntries.get(field);
+		if (erytrocytipakke == null)
+			erytrocytipakke = "";
 		return erytrocytipakke;
 	}
 
@@ -524,6 +532,8 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = formFields[185];
 		tromboipakke = userEntries.get(field);
+		if (tromboipakke == null) 
+			tromboipakke = "";
 		return tromboipakke;
 	}
 
@@ -537,6 +547,8 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = formFields[186];
 		plasmaipakke = userEntries.get(field);
+		if (plasmaipakke == null)
+			plasmaipakke = "";
 		return plasmaipakke;
 	}
 
@@ -560,6 +572,8 @@ public class TransfusjonKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = formFields[31];
 		plasma = userEntries.get(field);
+		if (plasma == null)
+			plasma = "";
 		return plasma;
 	}
 
