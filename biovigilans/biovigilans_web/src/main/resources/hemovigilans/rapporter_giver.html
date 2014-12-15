@@ -247,16 +247,16 @@
 	      		<label>Første gangs aferesegivining?</label>
 		      	<div class="radio">
 		      		<label>
-		      			<input type="radio" name="aferese-options" id="aferese-ja" value="aferese-ja" onclick="toggleDisplay('aferese-options-ja',this.checked)" /> Ja
+		      			<input type="radio" name="aferese-options" id="aferese-ja" value="aferese-ja"  /> Ja
 		      		</label>
 		      	</div>
 		      	<div class="radio">
 		      		<label>
-		      			<input type="radio" name="aferese-options" id="aferese-nei" value="aferese-nei" onclick="toggleDisplay('aferese-options-ja',0)" /> Nei
+		      			<input type="radio" name="aferese-options" id="aferese-nei" value="aferese-nei"  /> Nei
 		      		</label>
 		      	</div>
 		     
-			     <div id="aferese-options-ja" style="margin-left: 0.5cm; display: none" >
+			     <div id="aferese-options-ja"  >
 		      		<label>Type aferese</label>
 			      	<div class="radio">
 			      		<label>
@@ -361,9 +361,45 @@
 	    </div>
 		<div class="form-group">
 	    	<label>Tid fra start tapping til reaksjon:</label>
-	        <div>
+	    	<div class="radio">
+	          <label >
+	          	<input type="radio" name="tab-tapp-reak" id="tab-tapp-reak1"   value="lessthan or equal to 5 min"  />
+	          		≤5 min
+	          </label>
+	    	</div>
+	    	<div class="radio">
+	          <label >
+	          	<input type="radio" name="tab-tapp-reak" id="tab-tapp-reak2"   value="6-30 min"  />
+	          		6-30 min
+	          </label>
+	    	</div>
+	    	<div class="radio">
+	          <label >
+	          	<input type="radio" name="tab-tapp-reak" id="tab-tapp-reak3"   value="31-59 min"  />
+	          		31-59 min
+	          </label>
+	    	</div>
+	    	<div class="radio">
+	          <label >
+	          	<input type="radio" name="tab-tapp-reak" id="tab-tapp-reak4"   value="1-6 timer"  />
+	          		1-6 timer
+	          </label>
+	    	</div>
+	    	<div class="radio">
+	          <label >
+	          	<input type="radio" name="tab-tapp-reak" id="tab-tapp-reak5"   value="7-24 timer"  />
+	          		7-24 timer
+	          </label>
+	    	</div>
+	    	<div class="radio">
+	          <label >
+	          	<input type="radio" name="tab-tapp-reak" id="tab-tapp-reak6"   value="greaterthan 24 timer"  />
+	          		> 24 timer
+	          </label>
+	    	</div>
+	        <!-- <div>
 	          <input name="tab-tapp-reak" type="text" class="form-control" id="tab-tapp-reak" placeholder="Skriv inn..">
-	        </div>
+	        </div> -->
 	    </div>
 	    
 	    <div class="form-group" >
@@ -398,9 +434,9 @@
 				<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /><br>
 			    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
 			  	<map name="armenmap">
-				 <area shape="rect" title="H. Cephalic dx" coords="222,9,302,202" alt="H. Cephalic dx" href="javascript: return false;"  onclick="setImageValue('H. Cephalic dx');">
-				 <area shape="rect" title="H. cubiti media dx" coords="300,94,341,48" alt="H. cubiti media dx" href="javascript: return false;" onclick="setImageValue('H. cubiti media dx');">
-				 <area shape="rect" title="H. basilica dx" coords="325,17,400,165" alt="H. basilica dx" href="javascript: return false;" onclick="setImageValue('H. basilica dx');">
+				 <area shape="rect" title="V. Cephalic dx" coords="222,9,302,202" alt="V. Cephalic dx" href="javascript: return false;"  onclick="setImageValue('V. Cephalic dx');">
+				 <area shape="rect" title="V. cubiti media dx" coords="300,94,341,48" alt="V. cubiti media dx" href="javascript: return false;" onclick="setImageValue('V. cubiti media dx');">
+				 <area shape="rect" title="V. basilica dx" coords="325,17,400,165" alt="V. basilica dx" href="javascript: return false;" onclick="setImageValue('V. basilica dx');">
 				 
 				 <area shape="rect" title="V. cubiti media sin" coords="655,47,690,110" alt="V. cubiti media sin" href="javascript: return false;" onclick="setImageValue('V. cubiti media sin');">
 				 <area shape="rect" title="V. basilica sin" coords="669,17,575,169" alt="V. basilica sin" href="javascript: return false;"  onclick="setImageValue('V. basilica sin');">
