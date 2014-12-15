@@ -1167,7 +1167,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
 	</div> 
 <!-- *********** -->		
 
-	 <div id="lga-valg" class="form-group" style="display: none">
+ <div id="lga-valg" class="form-group" style="display: none">
      <label>lgA-mangel/anti-lgA</label>
      <div class="radio">
       <label>
@@ -1184,7 +1184,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         <input type="radio" name="p-lga" id="p-lga-3" value="lgaikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
       </label>
     </div>
-    </div>
+  </div>
     <div id="lga-text" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-lgatext" rows="3"></textarea>
@@ -1327,12 +1327,240 @@ Vurder om du skal melde denne."/>Utelukket
 			</label>
 		</div>
 	</div>
-	<div class="form-group" >
+<div class="form-group" >
 		<h3>Hvorfor skjedde denne komplikasjonen?</h3>
-	</div>
-	<div class="form-group" >
+	<div class="checkbox">
+    <label>
+    	<input name="p-forholdpasient" type="checkbox" id="p-forholdpasient" value="forholdpasient" onclick="toggleDisplay('gikkgalt', 0)"/>Forhold ved pasient (disponerende faktorer)  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-forholdutstyr" type="checkbox" id="p-forholdutstyr" value="forholdutstyr" onclick="toggleDisplay('gikkgalt', 0)"/>Forhold ved utstyr  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-uforlikeligprodukt" type="checkbox" id="p-uforlikeligprodukt" value="uforlikeligprodukt" onclick="toggleDisplay('gikkgalt', 0)"/>Uforlikelig blodprodukt  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-feilblodtrans" type="checkbox" id="p-feilblodtrans" value="feilblodtrans"  onclick="toggleDisplay('gikkgalt', this.checked)"/>Feil blod transfundert   
+    </label>
+    </div>
+   <div id="gikkgalt" class="form-group" style="display: none">
+     <label></label>
+     <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-betillingrekvirering" id="p-betillingrekvirering" value="betillingrekvirering" />Indikasjonsstilling/rekvirering
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="checkbox" name="p-bestilling" id="p-bestilling" value="bestilling" />Bestilling 
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-provetaking" id="p-provetaking" value="provetaking" />Prøvetaking
+      </label>
+    </div>
+     <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-feilmerkingror" id="p-feilmerkingror" value="feilmerkingror" />Feilmerking av prøverør
+      </label>
+    </div>
+    
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-forveksling" id="p-forveksling" value="forvekslingprover" />Forveksling av prøver/ resultater
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-pretransfusjonstesting" id="p-pretransfusjonstesting" value="pretransfusjonstesting" />Pretransfusjonstesting i blodbanken
+      </label>
+    </div>    
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-mangelfullbehandlingblod" id="p--mangelfullbehandlingblod" value="-mangelfullbehandlingblod" />Feil/ mangelfull behandling av blodet i blodbanken
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-utleveringblodblodbank" id="p-utleveringblodblodbank" value="utleveringblodblodbank" />Valg/utlevering av blodprodukt (blodbankpersonell)
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-hentingblodblodbank" id="p-hentingblodblodbank" value="hentingblodblodbank" />Henting av blod i blodbanken (ikke blodbankpersonell)
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-hentingblodiskap" id="p-hentingblodiskap" value="hentingblodiskap" />Henting av blod i skap/fryser utenfor blodbank
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-hentingblodrorpost" id="p-hentingblodrorpost" value="hentingblodrorpost" />Henting av blod ved rørpoststasjon
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-identitestkontroll" id="p-identitestkontroll" value="identitestkontrollikkefulgt" />Rutiner for identitetskontroll ved transfusjon ikke fulgt
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-mangelfullkomm" id="p-mangelfullkomm" value="mangelfullkommunikasjon" />Mangelfull kommunikasjon
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-intetavvik" id="p-intetavvik" value="intetavvik" />Intet avvik
+      </label>
+    </div>
+  <div class="checkbox">
+      <label>
+        <input type="checkbox" name="p-vetikkegikkgalt" id="p-vetikkegikkgalt" value="vetikkegikkgalt" />Vet ikke
+      </label>
+    </div>
+  
+  </div>   
+    
+   <div id="blodkrav" class="form-group" >
+     <label></label>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodkrav" id="p-blodkrav" value="blodkravikkeoppfylt" onclick="toggleDisplay('gikkgalt', 0)"/>Blodproduktet oppfylte ikke spesifiserte krav
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodkrav" id="p-tiltenkt" value="tiltenktannenpasient" onclick="toggleDisplay('gikkgalt', 0)" />Blodproduktet som ble gitt var tiltenkt annen pasient 
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodkrav" id="p-feiltype" value="feilblodproduktgitt" onclick="toggleDisplay('gikkgalt', 0)"/>Feil type blodprodukt gitt
+      </label>
+    </div>
+      <div class="radio">
+      <label>
+        <input type="radio" name="p-blodkrav" id="p-feilindikasjon" value="blodproduktgittfeilindikasjon" onclick="toggleDisplay('gikkgalt', 0)" />Blodprodukt gitt på feil indikasjon
+      </label>
+    </div>
+  </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-paregnelig" type="checkbox" id="g" value="paregnelig" onclick="toggleDisplay('gikkgalt', 0)"/>Påregnelig risiko  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-annetskjedde" type="checkbox" id="p-annetskjedde" value="annetskjedde" onclick="toggleDisplay('gikkgalt', 0)"/>Annet  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-vetikkeskjedde" type="checkbox" id="p-vetikkeskjedde" value="vetikkeskjedde" onclick="toggleDisplay('gikkgalt', 0)"/>Vet ikke  
+    </label>
+    </div>    
+                		
+</div>
+<div class="form-group" >
+	<h3>Kunne transfusjonskomplikasjonen ha vært forebygget?</h3>
+	<div class="radio">
+      <label>
+        <input type="radio" name="p-forebygg" id="p-forebygg" value="lganei" onclick="toggleDisplay('transfusjonforebyggtext', this.checked)" />Ja
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-forebygg" id="p-forebygg-2" value="lgaja" onclick="toggleDisplay('transfusjonforebyggtext', this.checked)"/>Ja,delvis 
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-forebygg" id="p-forebygg-3" value="lgaikkeutført" onclick="toggleDisplay('transfusjonforebyggtext', 0)"/>Nei
+      </label>
+    </div>	
+	  <div class="radio">
+      <label>
+        <input type="radio" name="p-forebygg" id="p-forebygg-4" value="lgaikkeutført" onclick="toggleDisplay('transfusjonforebyggtext', 0)"/>Vet ikke
+      </label>
+    </div>	
+  <div id="transfusjonforebyggtext" class="form-group" style="display: none">
+    <label>Hvis ja, beskriv funn i fritekst:</label>
+	 <textarea class="form-control" name="p-transfusjonforebygg" rows="3"></textarea>
+  </div> 		
+		
+</div>		
+
+<div class="form-group" >
 		<h3>Er forebyggende tiltak anbefalt, planlagt eller gjennomført?</h3>
-	</div>
+		<div class="radio">
+      <label>
+        <input type="radio" name="p-forebyggtitak" id="p-forebygg" value="forebyggja" onclick="toggleDisplay('forebyggtiltak', this.checked)" />Ja
+      </label>
+    </div>
+      <div class="radio">
+      <label>
+        <input type="radio" name="p-forebyggtitak" id="p-orebygg-3" value="forebyggnei" onclick="toggleDisplay('forebyggtiltak', 0)"/>Nei
+      </label>
+    </div>	
+	  <div class="radio">
+      <label>
+        <input type="radio" name="p-forebyggtitak" id="p-orebygg-4" value="forebyggvetikke" onclick="toggleDisplay('forebyggtiltak', 0)"/>Vet ikke
+      </label>
+    </div>		
+<div id="forebyggtiltak" class="form-group" style="display: none">
+  <label>Hvis ja:</label>
+	
+	<div class="checkbox">
+    <label>
+    	<input name="p-paregnelig" type="checkbox" id="g" value="paregnelig" />Tiltak ved neste transfusjon av denne pasienten  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-forebyggendetiltakblodbank" type="checkbox" id="p-annetskjedde" value="forebyggendetiltakblodbank" />Forebyggende tiltak ved blodbanken  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-forebyggendetiltakavdeling" type="checkbox" id="p-forebyggendetiltakavdeling" value="forebyggendetiltakavdeling" />Forebyggende tiltak ved aktuell klinisk avdeling  
+    </label>
+    </div>   
+    <div class="checkbox">
+    <label>
+    	<input name="p-prosedyrendring" type="checkbox" id="p-prosedyrendring" value="prosedyrendring" />Prosedyreendring  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-opplaring" type="checkbox" id="p-p-opplaring" value="p-opplaring" />Opplæring/ kompetanseheving  
+    </label>
+    </div>
+	<div class="checkbox">
+    <label>
+    	<input name="p-sykehuskvalitet" type="checkbox" id="p-sykehuskvalitet" value="sykehuskvalitet" />Tatt opp i sykehusets kvalitetsutvalg  
+    </label>
+    </div>        	 
+	<div class="checkbox">
+    <label>
+    	<input name="p-tiltakannet" type="checkbox" id="p-tiltakannet" value="tiltakannet" />Annet  
+    </label>
+    </div>    
+	 <label>Hvis ja, beskriv funn i fritekst:</label>
+	 <textarea class="form-control" name="p-tiltaktext" rows="3"></textarea> 	  
+	  
+</div>	
+</div>		
+		
+</div>
     <br/>
        <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
       <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
