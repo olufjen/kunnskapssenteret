@@ -280,18 +280,19 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-vene";
 		tabVene = userEntries.get(field);
-		String beskrive = userEntries.get("tab-kortbeskr");
-		String imageArea = userEntries.get("tab-imgarea");
+	//	String beskrive = userEntries.get("tab-kortbeskr");
+	//	String imageArea = userEntries.get("tab-imgarea");
 		if (tabVene == null){
 			tabVene = "-";
-		}else if(tabVene.equalsIgnoreCase("ja") ){
+		}
+		/*else if(tabVene.equalsIgnoreCase("ja") ){
 			if(! beskrive.equals("")){
 				tabVene = tabVene + ": " + beskrive;
 			}
 			if(! imageArea.equals("")){
 				tabVene = tabVene + ", " + imageArea;
 			}
-		}
+		}*/
 		return tabVene;
 	}
 	public void setTabVene(String tabVene) {
