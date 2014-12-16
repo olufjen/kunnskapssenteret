@@ -401,7 +401,7 @@ CREATE TABLE Tiltak
     -- En generell beskrivelse av tiltaket
     beskrivelse          TEXT                NULL,
     tiltakid             SERIAL             NOT NULL,
-    pasientid            INTEGER           NOT NULL,
+    pasient_id            INTEGER           NOT NULL,
     PRIMARY KEY ( tiltakid )
 );
 
@@ -411,5 +411,5 @@ ALTER TABLE Forebyggendetiltak
     ADD CONSTRAINT tiltakforebyggende FOREIGN KEY ( tiltakid ) REFERENCES Tiltak ( tiltakid );
 
 ALTER TABLE Tiltak
-    ADD CONSTRAINT pasientertiltak FOREIGN KEY ( pasientid ) REFERENCES Pasient ( pasientid );
+    ADD CONSTRAINT pasientertiltak FOREIGN KEY ( pasient_id ) REFERENCES Pasient ( pasient_id );
 
