@@ -308,17 +308,17 @@ CREATE TABLE Komplikasjonsklassifikasjon
     klassifikasjonsid           serial,
     klassifikasjon              text,
     klassifikasjonsbeskrivelse  text,
-    meldeid                     int NULL,
-    meldeid1					int NULL,
+    meldeidpasient                     int NULL,
+    meldeidannen					int NULL,
 
     primary key(klassifikasjonsid),
   );
 
 ALTER TABLE Komplikasjonsklassifikasjon
-    ADD CONSTRAINT klassifikasjonannenkomplikasjon FOREIGN KEY ( meldeid1 ) REFERENCES Annenkomplikasjon ( meldeid );
+    ADD CONSTRAINT klassifikasjonannenkomplikasjon FOREIGN KEY ( meldeidannen ) REFERENCES Annenkomplikasjon ( meldeid );
 
 ALTER TABLE Komplikasjonsklassifikasjon
-    ADD CONSTRAINT klassifikasjontilkomplikasjon FOREIGN KEY ( meldeid ) REFERENCES Pasientkomplikasjon ( meldeid );
+    ADD CONSTRAINT klassifikasjontilkomplikasjon FOREIGN KEY ( meldeidpasient ) REFERENCES Pasientkomplikasjon ( meldeid );
 
 CREATE TABLE Hemolyse
 (
