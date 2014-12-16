@@ -274,6 +274,31 @@ CREATE TABLE Utredning
 
 -- ======================================================================
 
+CREATE TABLE Annenkomplikasjon
+(
+    meldeid              INT           NOT NULL,
+    -- Klassifikasjon av hendelsen (beskrivelse)
+    klassifikasjon       TEXT                NULL,
+    -- Klassifikasjonskode
+    Klassifikasjonkode   TEXT                NULL,
+    -- Beskrivelse av hendelsen
+    komplikasjonbeskrivelse TEXT             NULL,
+    -- Hva slags hendelse er dette?  
+    komplikasjondefinisjon TEXT              NULL,
+    -- Årsak til avviket
+    avvikarsak           TEXT                NULL,
+    -- Under hvilken prosess skjedde hendelsen?
+    hovedprosess         TEXT                NULL,
+    -- Gjennomførte eller planlagte tiltak
+    tiltak               TEXT                NULL,
+    -- Kommentarer til hendelsen
+    kommentar            TEXT                NULL,
+    -- Hvordan ble hendelsen oppdaget
+    oppdaget             TEXT                NULL,
+    PRIMARY KEY ( meldeid )
+);
+  
+  
 CREATE TABLE Komplikasjonsklassifikasjon
   (
     klassifikasjonsid           serial,
@@ -283,7 +308,7 @@ CREATE TABLE Komplikasjonsklassifikasjon
 
     primary key(klassifikasjonsid),
 
-    foreign key(meldeid) references Pasientkomplikasjon(meldeid) on delete CASCADE
+    foreign key(meldeid) references Pasientkomplikasjon(meldeid) on delete CASCADE,
     foreign key(meldeid) references Annenkomplikasjon(meldeid) on delete CASCADE
   );
 
@@ -318,29 +343,6 @@ ALTER TABLE Produktegenskap
 
     
 
-CREATE TABLE Annenkomplikasjon
-(
-    meldeid              INT           NOT NULL,
-    -- Klassifikasjon av hendelsen (beskrivelse)
-    klassifikasjon       TEXT                NULL,
-    -- Klassifikasjonskode
-    Klassifikasjonkode   TEXT                NULL,
-    -- Beskrivelse av hendelsen
-    komplikasjonbeskrivelse TEXT             NULL,
-    -- Hva slags hendelse er dette?  
-    komplikasjondefinisjon TEXT              NULL,
-    -- Årsak til avviket
-    avvikarsak           TEXT                NULL,
-    -- Under hvilken prosess skjedde hendelsen?
-    hovedprosess         TEXT                NULL,
-    -- Gjennomførte eller planlagte tiltak
-    tiltak               TEXT                NULL,
-    -- Kommentarer til hendelsen
-    kommentar            TEXT                NULL,
-    -- Hvordan ble hendelsen oppdaget
-    oppdaget             TEXT                NULL,
-    PRIMARY KEY ( meldeid )
-);
 
 
 
