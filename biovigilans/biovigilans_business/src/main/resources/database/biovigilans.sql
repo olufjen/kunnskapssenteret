@@ -311,7 +311,7 @@ CREATE TABLE Komplikasjonsklassifikasjon
     meldeidpasient                     int NULL,
     meldeidannen					int NULL,
 
-    primary key(klassifikasjonsid),
+    primary key(klassifikasjonsid)
   );
 
 ALTER TABLE Komplikasjonsklassifikasjon
