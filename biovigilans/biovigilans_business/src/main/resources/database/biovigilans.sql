@@ -374,4 +374,42 @@ ALTER TABLE Diskusjon
     ADD CONSTRAINT diskusjontilmelding FOREIGN KEY ( meldeid ) REFERENCES Vigilansmelding ( meldeid );
     
 -- ======================================================================
+/*
+Beskriver et forebyggende tiltak
+*/
+CREATE TABLE Forebyggendetiltak
+(
+    tiltakvalg           TEXT                NULL,
+    -- fritekst beskrivelse av forebyggende tiltak
+    tiltakbeskrivelse    TEXT                NULL,
+    forebyggendetiltakid SERIAL             NOT NULL,
+    tiltakid             INTEGER             NOT NULL,
+    PRIMARY KEY ( forebyggendetiltakid )
+);
+
+
+
+/*
+Tiltak beskriver tiltak som er gjennomført. Et tiltak er enten forebyggende eller korrigerende
+*/
+CREATE TABLE Tiltak
+(
+    -- Dato for når tiltaket ble beskrevet (logg)
+    tiltaksdato          timestamptz            NULL,
+    -- Når tiltaket ble gjennomført
+    gjennomfortdato      timestamptz            NULL,
+    -- En generell beskrivelse av tiltaket
+    beskrivelse          TEXT                NULL,
+    tiltakid             SERIAL             NOT NULL,
+    pasientid            INTEGER           NOT NULL,
+    PRIMARY KEY ( tiltakid )
+);
+
+
+
+ALTER TABLE Forebyggendetiltak
+    ADD CONSTRAINT tiltakforebyggende FOREIGN KEY ( tiltakid ) REFERENCES Tiltak ( tiltakid );
+
+ALTER TABLE Tiltak
+    ADD CONSTRAINT pasientertiltak FOREIGN KEY ( pasientid ) REFERENCES Pasient ( pasientid );
 
