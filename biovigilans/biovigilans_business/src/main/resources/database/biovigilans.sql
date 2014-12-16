@@ -284,6 +284,7 @@ CREATE TABLE Komplikasjonsklassifikasjon
     primary key(klassifikasjonsid),
 
     foreign key(meldeid) references Pasientkomplikasjon(meldeid) on delete CASCADE
+    foreign key(meldeid) references Annenkomplikasjon(meldeid) on delete CASCADE
   );
 
 CREATE TABLE Hemolyse
