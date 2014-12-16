@@ -47,6 +47,7 @@ CREATE TABLE Donasjon
     tappevarighet             text,
     lokalisasjonvenepunksjon  text,
     maltidfortapping          text,
+    donasjonsdato			  timestamptz,	
     giverId                   int,
 
     primary key(donasjonsid),
@@ -160,6 +161,7 @@ CREATE TABLE Giverkomplikasjon
     alvorlighetsgrad                   text,
     kliniskresultat                    text,
     varighetkomplikasjon               text,
+    datosymptomer					   timestamptz, 	
     donasjonsid                        int,
     meldeid                            int,
 
@@ -177,6 +179,8 @@ CREATE TABLE Giveroppfolging
     klassifikasjongiveroppfolging  text,
     giveroppfolgingbeskrivelse     text,
     avregistrering                 text,
+    strakstiltak				   text,
+    videreoppfolging			   text,	
     meldeid                        int,
 
     primary key(giveroppfolgingid),
@@ -304,13 +308,17 @@ CREATE TABLE Komplikasjonsklassifikasjon
     klassifikasjonsid           serial,
     klassifikasjon              text,
     klassifikasjonsbeskrivelse  text,
-    meldeid                     int,
+    meldeid                     int NULL,
+    meldeid1					int NULL,
 
     primary key(klassifikasjonsid),
-
-    foreign key(meldeid) references Pasientkomplikasjon(meldeid) on delete CASCADE,
-    foreign key(meldeid) references Annenkomplikasjon(meldeid) on delete CASCADE
   );
+
+ALTER TABLE Komplikasjonsklassifikasjon
+    ADD CONSTRAINT klassifikasjonannenkomplikasjon FOREIGN KEY ( meldeid1 ) REFERENCES Annenkomplikasjon ( meldeid );
+
+ALTER TABLE Komplikasjonsklassifikasjon
+    ADD CONSTRAINT klassifikasjontilkomplikasjon FOREIGN KEY ( meldeid ) REFERENCES Pasientkomplikasjon ( meldeid );
 
 CREATE TABLE Hemolyse
 (
