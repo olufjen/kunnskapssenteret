@@ -9,21 +9,22 @@ import java.util.Map;
  * @author olj
  *
  */
-public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak {
+public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,Forebyggendetiltak {
 	
 	private String tiltakvalg;
 	private String tiltakbeskrivelse;
 	private Long forebyggendetiltakid;
 	private Map<String,String> forebyggendeTiltakFields;
-	private String[] keys;
+	protected Map<String,Forebyggendetiltak> alleforebyggendeTiltak;
 
 	
 	
 	public ForebyggendetiltakImpl() {
 		super();
 		forebyggendeTiltakFields = new HashMap();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		
 	}
 	public String getTiltakvalg() {
 		return tiltakvalg;
@@ -51,26 +52,58 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak {
 		this.forebyggendeTiltakFields = forebyggendeTiltakFields;
 	}
 	
-	public String[] getKeys() {
-		return keys;
-	}
-	public void setKeys(String[] keys) {
-		this.keys = keys;
-	}
+
 	
 	
+	public Map<String, Forebyggendetiltak> getAlleforebyggendeTiltak() {
+		return alleforebyggendeTiltak;
+	}
+	public void setAlleforebyggendeTiltak(
+			Map<String, Forebyggendetiltak> alleforebyggendeTiltak) {
+		this.alleforebyggendeTiltak = alleforebyggendeTiltak;
+	}
 	@Override
 	public void setParams() {
 		Long id = getForebyggendetiltakid();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getTiltakbeskrivelse(),getForebyggendetiltakid()};
 		}else
 			params = new Object[]{};
 	
 		
 	}
 	
+	/**
+	 * setforebyggendefieldMaps
+	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
+	 * @param userFields En liste over skjermbildefelter
+	 */
+	public void setforebyggendefieldMaps(String[]userFields){
+
+		keys = userFields;
+		
+		for (int i = 0; i<7;i++){
+			forebyggendeTiltakFields.put(userFields[i],null);
+			
+		}
 	
+		
+
+
+	}
+	/**
+	 * saveField
+	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
+	 * @param userField
+	 * @param userValue
+	 */
+	
+	public void saveField(String userField, String userValue) {
+		if (forebyggendeTiltakFields.containsKey(userField) && userValue != null && !userValue.equals("")){
+			forebyggendeTiltakFields.put(userField,userValue);	
+
+		}	
+	}
 	
 
 }
