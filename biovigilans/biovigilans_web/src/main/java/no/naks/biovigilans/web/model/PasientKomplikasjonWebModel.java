@@ -17,8 +17,12 @@ import java.util.Map;
 
 
 
+
+
 import no.naks.biovigilans.model.Antistoff;
 import no.naks.biovigilans.model.AntistoffImpl;
+import no.naks.biovigilans.model.Forebyggendetiltak;
+import no.naks.biovigilans.model.ForebyggendetiltakImpl;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.PasientImpl;
 import no.naks.biovigilans.model.Sykdom;
@@ -47,6 +51,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private Sykdom transfusjonKomplikasjon;
 	private Sykdom annenSykdom;
 	private Antistoff antistoff;
+	private Forebyggendetiltak tiltak;
+	
 	private String[] avdelinger; 	// Inneholder navn på avdelinger tilgjengelig for brukerrvalg
 	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
 	private String[] kjonnValg; 	// Inneholder definisjon av kjønn for mann/kvinne
@@ -82,6 +88,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		sykdom = new SykdomImpl();
 		annenSykdom = new SykdomImpl();
 		antistoff = new AntistoffImpl();
+		tiltak = new ForebyggendetiltakImpl();
 		
 		//sykdom.setSymptomer(sykdomSymptom);
 		transfusjonKomplikasjon = new SykdomImpl();
@@ -184,6 +191,14 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		mann = kjonnValg[1];
 	}
 
+
+	public Forebyggendetiltak getTiltak() {
+		return tiltak;
+	}
+
+	public void setTiltak(Forebyggendetiltak tiltak) {
+		this.tiltak = tiltak;
+	}
 
 	public Sykdom getSykdom() {
 		return sykdom;
@@ -360,11 +375,14 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[13]};
 		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[143],formFields[144],formFields[145]};
+		String tiltakFields[] = {};
+		
 		pasient.setPatientfieldMaps(patientFields);
 		sykdom.setsykdomfieldMaps(sykdomFields);
 		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);
 		annenSykdom.setsykdomfieldMaps(annenSykdomFields);
 		antistoff.setantistofffieldMaps(antistoffFields);
+		tiltak.setforebyggendefieldMaps(tiltakFields);
 	}
 	/**
 	 * saveValues
