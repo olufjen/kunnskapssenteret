@@ -325,7 +325,11 @@
                         ${pasientkomplikasjon.p-temperaturforstigning},${pasientkomplikasjon.p-temperaturetterstigning},${pasientkomplikasjon.p-langtid1},${pasientkomplikasjon.p-langtid2},
                         ${pasientkomplikasjon.p-langtid3},${pasientkomplikasjon.p-langtid4},${pasientkomplikasjon.p-traume-antallerytrocytipakke},
                         ${pasientkomplikasjon.p-traume-antalltromboipakke},${pasientkomplikasjon.p-traume-antallplasmaipakke},${hemolyseparam1},
-                        ${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}">
+                        ${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5},${pasientkomplikasjon.tiltakvalg},${pasientkomplikasjon.tiltakvalg1},
+                        ${pasientkomplikasjon.tiltakvalg2},${pasientkomplikasjon.tiltakparegnelig},${pasientkomplikasjon.tiltakblodbank},${pasientkomplikasjon.tiltakavdeling},
+                        ${pasientkomplikasjon.tiltakprosedyre},${pasientkomplikasjon.tiltakopplaring},${pasientkomplikasjon.tiltakkvalitet},${pasientkomplikasjon.tiltakannet},
+                        ${pasientkomplikasjon.tiltaktext},${pasientkomplikasjon.tiltakforebygget},${pasientkomplikasjon.tiltakforebygget1},${pasientkomplikasjon.tiltakforebygget2},
+                        ${pasientkomplikasjon.tiltakforebygget3,${pasientkomplikasjon.tiltakforebyggettext}">
                 </property>
         </bean> 
                 
