@@ -43,6 +43,10 @@ public interface Pasient {
 
 	public void setSykdommer(Map<String, Sykdom> sykdommer);
 	
+	public Map<String, Forebyggendetiltak> getForebyggendeTiltak();
+
+	public void setForebyggendeTiltak(
+			Map<String, Forebyggendetiltak> forebyggendeTiltak);
 	public void produceSykdommer(Sykdom sykdom);
 	public void produceAntistoffer(Antistoff antistoff);
 	

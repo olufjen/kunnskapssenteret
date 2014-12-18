@@ -15,6 +15,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 	private Map<String,Antistoff> antistoffer;
 	private Map<String,Sykdom> sykdommer;
 	private Map<String,Transfusjon> transfusjoner;
+	private Map<String,Forebyggendetiltak> forebyggendeTiltak;
 	
 	
 	public PasientImpl() {
@@ -31,7 +32,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		antistoffer = new HashMap();
 		sykdommer = new HashMap();
 		transfusjoner = new HashMap();
-		
+		forebyggendeTiltak = new HashMap();
 		
 	}
 
@@ -120,6 +121,16 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 
 	public void setTransfusjoner(Map<String, Transfusjon> transfusjoner) {
 		this.transfusjoner = transfusjoner;
+	}
+
+	
+	public Map<String, Forebyggendetiltak> getForebyggendeTiltak() {
+		return forebyggendeTiltak;
+	}
+
+	public void setForebyggendeTiltak(
+			Map<String, Forebyggendetiltak> forebyggendeTiltak) {
+		this.forebyggendeTiltak = forebyggendeTiltak;
 	}
 
 	public void produceAntistoffer(Antistoff antistoff) {

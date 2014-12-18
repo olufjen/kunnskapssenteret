@@ -66,9 +66,9 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 	public void setParams() {
 		Long id = getForebyggendetiltakid();
 		if (id == null){
-			params = new Object[]{getTiltakbeskrivelse(),getForebyggendetiltakid()};
+			params = new Object[]{getTiltakvalg(),getTiltakbeskrivelse(),getTiltakid()};
 		}else
-			params = new Object[]{};
+			params = new Object[]{getTiltakvalg(),getTiltakbeskrivelse(),getTiltakid(),getForebyggendetiltakid()};
 	
 		
 	}
