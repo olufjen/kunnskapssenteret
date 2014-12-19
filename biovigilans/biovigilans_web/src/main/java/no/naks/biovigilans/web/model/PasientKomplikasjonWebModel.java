@@ -19,6 +19,8 @@ import java.util.Map;
 
 
 
+
+
 import no.naks.biovigilans.model.Antistoff;
 import no.naks.biovigilans.model.AntistoffImpl;
 import no.naks.biovigilans.model.Forebyggendetiltak;
@@ -27,6 +29,8 @@ import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.PasientImpl;
 import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.SykdomImpl;
+import no.naks.biovigilans.model.Tiltak;
+import no.naks.biovigilans.model.TiltakImpl;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 import no.naks.biovigilans.web.xml.Term;
@@ -51,7 +55,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private Sykdom transfusjonKomplikasjon;
 	private Sykdom annenSykdom;
 	private Antistoff antistoff;
-	private Forebyggendetiltak tiltak;
+	private Forebyggendetiltak forebyggendeTiltak;
+	private Tiltak tiltak;
 	
 	private String[] avdelinger; 	// Inneholder navn på avdelinger tilgjengelig for brukerrvalg
 	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
@@ -88,7 +93,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		sykdom = new SykdomImpl();
 		annenSykdom = new SykdomImpl();
 		antistoff = new AntistoffImpl();
-		tiltak = new ForebyggendetiltakImpl();
+		forebyggendeTiltak = new ForebyggendetiltakImpl();
+		tiltak = new TiltakImpl();
 		
 		//sykdom.setSymptomer(sykdomSymptom);
 		transfusjonKomplikasjon = new SykdomImpl();
@@ -192,13 +198,6 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	}
 
 
-	public Forebyggendetiltak getTiltak() {
-		return tiltak;
-	}
-
-	public void setTiltak(Forebyggendetiltak tiltak) {
-		this.tiltak = tiltak;
-	}
 
 	public Sykdom getSykdom() {
 		return sykdom;
@@ -375,14 +374,17 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[13]};
 		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[143],formFields[144],formFields[145]};
-		String tiltakFields[] = {};
+		String tiltakFields[] = {formFields[192],formFields[193],formFields[194],formFields[207]};
+		String forebyggendeTiltakFields[] = {formFields[195],formFields[196],formFields[197],formFields[198],
+				formFields[199],formFields[200],formFields[201],formFields[202],formFields[203],formFields[204],formFields[205],formFields[206]};
 		
 		pasient.setPatientfieldMaps(patientFields);
 		sykdom.setsykdomfieldMaps(sykdomFields);
 		transfusjonKomplikasjon.setsykdomfieldMaps(transFields);
 		annenSykdom.setsykdomfieldMaps(annenSykdomFields);
 		antistoff.setantistofffieldMaps(antistoffFields);
-		tiltak.setforebyggendefieldMaps(tiltakFields);
+		forebyggendeTiltak.setforebyggendefieldMaps(forebyggendeTiltakFields);
+		tiltak.setTiltakFieldMap(tiltakFields);
 	}
 	/**
 	 * saveValues
@@ -398,12 +400,15 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 			transfusjonKomplikasjon.saveField(field, userEntries.get(field));
 			annenSykdom.saveField(field,userEntries.get(field));
 			antistoff.saveField(field,userEntries.get(field));
+			forebyggendeTiltak.saveField(field,userEntries.get(field));
+			tiltak.saveField(field,userEntries.get(field));
 		}
 		pasient.savetoPatient();
 		sykdom.saveSykdom();
 		transfusjonKomplikasjon.saveSykdom();
 		annenSykdom.saveSykdom();
 		pasient.produceAntistoffer(antistoff);
+		pasient.produceTiltak(tiltak, forebyggendeTiltak);
 		pasient.getSykdommer().put(sykdom.getDiagnosekode(),sykdom);
 		pasient.getSykdommer().put(annenSykdom.getDiagnosekode(),annenSykdom);
 		kjonnValgt = pasient.getKjonn();
