@@ -10,7 +10,7 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
  * @author olj
  *
  */
-public class AbstractTiltak extends AbstractModel implements Tiltak {
+public class AbstractTiltak extends AbstractModel {
 	
 	private Date tiltaksDato;
 	private Date gjennomfortDato;
@@ -18,8 +18,15 @@ public class AbstractTiltak extends AbstractModel implements Tiltak {
 	private Long pasient_id;
 	private Long tiltakid;
 	
-	protected Map<String,Tiltak> alleTiltak;
+
 	protected String[] keys;
+	protected String[] tiltakKeys;
+	
+	protected Map<String,String> forebyggendeTiltakFields;
+	protected Map<String,String> tiltakFields;
+
+	protected Map<String,Forebyggendetiltak> alleforebyggendeTiltak;
+
 	
 	public Date getTiltaksDato() {
 		return tiltaksDato;
@@ -36,8 +43,8 @@ public class AbstractTiltak extends AbstractModel implements Tiltak {
 	public String getBeskrivelse() {
 		return beskrivelse;
 	}
-	public void setBeskrivelse(String beskrivelse) {
-		this.beskrivelse = beskrivelse;
+	public void setBeskrivelse(String beskrvelse) {
+			this.beskrivelse = beskrvelse;
 	}
 	public Long getPasient_id() {
 		return pasient_id;
@@ -58,7 +65,32 @@ public class AbstractTiltak extends AbstractModel implements Tiltak {
 	public void setKeys(String[] keys) {
 		this.keys = keys;
 	}
+	public Map<String, Forebyggendetiltak> getAlleforebyggendeTiltak() {
+		return alleforebyggendeTiltak;
+	}
+	public void setAlleforebyggendeTiltak(
+			Map<String, Forebyggendetiltak> alleforebyggendeTiltak) {
+		this.alleforebyggendeTiltak = alleforebyggendeTiltak;
+	}
+	public Map<String, String> getTiltakFields() {
+		return tiltakFields;
+	}
+	public void setTiltakFields(Map<String, String> tiltakFields) {
+		this.tiltakFields = tiltakFields;
+	}
 
-	
+	public String[] getTiltakKeys() {
+		return tiltakKeys;
+	}
+	public void setTiltakKeys(String[] tiltakKeys) {
+		this.tiltakKeys = tiltakKeys;
+	}
+	public void setTiltakFieldMap(String[]userFields){
+		tiltakKeys = userFields;
+		for (int i = 0; i<3;i++){
+			tiltakFields.put(userFields[i],null);
+			
+		}
+	}
 
 }

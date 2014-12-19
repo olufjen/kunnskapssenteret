@@ -43,13 +43,14 @@ public interface Pasient {
 
 	public void setSykdommer(Map<String, Sykdom> sykdommer);
 	
-	public Map<String, Forebyggendetiltak> getForebyggendeTiltak();
 
-	public void setForebyggendeTiltak(
-			Map<String, Forebyggendetiltak> forebyggendeTiltak);
+	public Map<String, Tiltak> getAlleTiltak();
+
+	public void setAlleTiltak(Map<String, Tiltak> alleTiltak);
+
 	public void produceSykdommer(Sykdom sykdom);
 	public void produceAntistoffer(Antistoff antistoff);
-	
+	public void produceTiltak(Tiltak tiltak, Forebyggendetiltak forebyggendeTiltak);
 	public Map<String, Transfusjon> getTransfusjoner();
 
 	public void setTransfusjoner(Map<String, Transfusjon> transfusjoner);

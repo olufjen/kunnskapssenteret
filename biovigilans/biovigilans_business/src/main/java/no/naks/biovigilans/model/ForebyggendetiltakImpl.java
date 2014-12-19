@@ -14,10 +14,7 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 	private String tiltakvalg;
 	private String tiltakbeskrivelse;
 	private Long forebyggendetiltakid;
-	private Map<String,String> forebyggendeTiltakFields;
-	protected Map<String,Forebyggendetiltak> alleforebyggendeTiltak;
 
-	
 	
 	public ForebyggendetiltakImpl() {
 		super();
@@ -30,12 +27,27 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 		return tiltakvalg;
 	}
 	public void setTiltakvalg(String tiltakvalg) {
+		if (tiltakvalg == null){
+			String aProd = null;
+			for (int i=3;i<10;i++){
+				aProd = forebyggendeTiltakFields.get(keys[i]);
+				if (aProd != null){
+					tiltakvalg = aProd;
+					break;
+				}
+			}
+		}
 		this.tiltakvalg = tiltakvalg;
 	}
 	public String getTiltakbeskrivelse() {
 		return tiltakbeskrivelse;
 	}
 	public void setTiltakbeskrivelse(String tiltakbeskrivelse) {
+		if (tiltakbeskrivelse == null){
+			String aProd = null;
+			aProd = forebyggendeTiltakFields.get(keys[10]); 
+			tiltakbeskrivelse = aProd;
+		}
 		this.tiltakbeskrivelse = tiltakbeskrivelse;
 	}
 	public Long getForebyggendetiltakid() {
@@ -53,15 +65,6 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 	}
 	
 
-	
-	
-	public Map<String, Forebyggendetiltak> getAlleforebyggendeTiltak() {
-		return alleforebyggendeTiltak;
-	}
-	public void setAlleforebyggendeTiltak(
-			Map<String, Forebyggendetiltak> alleforebyggendeTiltak) {
-		this.alleforebyggendeTiltak = alleforebyggendeTiltak;
-	}
 	@Override
 	public void setParams() {
 		Long id = getForebyggendetiltakid();
@@ -82,7 +85,7 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 
 		keys = userFields;
 		
-		for (int i = 0; i<7;i++){
+		for (int i = 0; i<11;i++){
 			forebyggendeTiltakFields.put(userFields[i],null);
 			
 		}

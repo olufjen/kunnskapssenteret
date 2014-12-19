@@ -1,6 +1,7 @@
 package no.naks.biovigilans.model;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Tiltak
@@ -26,6 +27,15 @@ public interface Tiltak {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();		
+	public Map<String, Forebyggendetiltak> getAlleforebyggendeTiltak();
+	public void setAlleforebyggendeTiltak(
+			Map<String, Forebyggendetiltak> alleforebyggendeTiltak);
+	public Map<String, String> getTiltakFields();
+	public void setTiltakFields(Map<String, String> tiltakFields);
 
-	
+	public String[] getTiltakKeys();
+	public void setTiltakKeys(String[] tiltakKeys);
+	public void setTiltakFieldMap(String[]userFields);
+	public void saveField(String userField, String userValue);
+	public void setParams();
 }

@@ -15,7 +15,6 @@ public interface Forebyggendetiltak {
 			Map<String, String> forebyggendeTiltakFields);
 	public void setParams();
 	public void setforebyggendefieldMaps(String[]userFields);
-	public Map<String, Forebyggendetiltak> getAlleforebyggendeTiltak();
-	public void setAlleforebyggendeTiltak(
-			Map<String, Forebyggendetiltak> alleforebyggendeTiltak);
+
+	public void saveField(String userField, String userValue);
 }

@@ -15,8 +15,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 	private Map<String,Antistoff> antistoffer;
 	private Map<String,Sykdom> sykdommer;
 	private Map<String,Transfusjon> transfusjoner;
-	private Map<String,Forebyggendetiltak> forebyggendeTiltak;
-	
+	protected Map<String,Tiltak> alleTiltak;
 	
 	public PasientImpl() {
 		super();
@@ -32,7 +31,7 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		antistoffer = new HashMap();
 		sykdommer = new HashMap();
 		transfusjoner = new HashMap();
-		forebyggendeTiltak = new HashMap();
+		alleTiltak = new HashMap();
 		
 	}
 
@@ -123,14 +122,14 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		this.transfusjoner = transfusjoner;
 	}
 
-	
-	public Map<String, Forebyggendetiltak> getForebyggendeTiltak() {
-		return forebyggendeTiltak;
+
+
+	public Map<String, Tiltak> getAlleTiltak() {
+		return alleTiltak;
 	}
 
-	public void setForebyggendeTiltak(
-			Map<String, Forebyggendetiltak> forebyggendeTiltak) {
-		this.forebyggendeTiltak = forebyggendeTiltak;
+	public void setAlleTiltak(Map<String, Tiltak> alleTiltak) {
+		this.alleTiltak = alleTiltak;
 	}
 
 	public void produceAntistoffer(Antistoff antistoff) {
@@ -145,5 +144,20 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		}
 		
 	}
-	
+	public void produceTiltak(Tiltak tiltak, Forebyggendetiltak forebyggendeTiltak){
+		for (String ettiltak : tiltak.getTiltakFields().values()){
+			if (ettiltak != null && !ettiltak.equals("")){
+				Tiltak lokalTiltak = new TiltakImpl();
+				lokalTiltak.setBeskrivelse(ettiltak);
+				for (String forebyggende : forebyggendeTiltak.getForebyggendeTiltakFields().values()){
+					Forebyggendetiltak forebyggendeLokal = new ForebyggendetiltakImpl();
+					forebyggendeLokal.setTiltakvalg(forebyggende);
+					forebyggendeLokal.setTiltakbeskrivelse(forebyggende);
+					lokalTiltak.getAlleforebyggendeTiltak().put(forebyggende, forebyggendeLokal);
+				}
+				this.alleTiltak.put(ettiltak, lokalTiltak);
+			}
+		}
+		
+	}
 }
