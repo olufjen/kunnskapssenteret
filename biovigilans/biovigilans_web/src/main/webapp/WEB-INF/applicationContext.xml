@@ -329,7 +329,7 @@
                         ${pasientkomplikasjon.tiltakvalg2},${pasientkomplikasjon.tiltakparegnelig},${pasientkomplikasjon.tiltakblodbank},${pasientkomplikasjon.tiltakavdeling},
                         ${pasientkomplikasjon.tiltakprosedyre},${pasientkomplikasjon.tiltakopplaring},${pasientkomplikasjon.tiltakkvalitet},${pasientkomplikasjon.tiltakannet},
                         ${pasientkomplikasjon.tiltaktext},${pasientkomplikasjon.tiltakforebygget},${pasientkomplikasjon.tiltakforebygget1},${pasientkomplikasjon.tiltakforebygget2},
-                        ${pasientkomplikasjon.tiltakforebygget3,${pasientkomplikasjon.tiltakforebyggettext}">
+                        ${pasientkomplikasjon.tiltakforebygget3},${pasientkomplikasjon.tiltakforebyggettext}">
                 </property>
         </bean> 
                 
