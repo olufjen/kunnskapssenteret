@@ -27,27 +27,12 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 		return tiltakvalg;
 	}
 	public void setTiltakvalg(String tiltakvalg) {
-		if (tiltakvalg == null){
-			String aProd = null;
-			for (int i=3;i<10;i++){
-				aProd = forebyggendeTiltakFields.get(keys[i]);
-				if (aProd != null){
-					tiltakvalg = aProd;
-					break;
-				}
-			}
-		}
 		this.tiltakvalg = tiltakvalg;
 	}
 	public String getTiltakbeskrivelse() {
 		return tiltakbeskrivelse;
 	}
 	public void setTiltakbeskrivelse(String tiltakbeskrivelse) {
-		if (tiltakbeskrivelse == null){
-			String aProd = null;
-			aProd = forebyggendeTiltakFields.get(keys[10]); 
-			tiltakbeskrivelse = aProd;
-		}
 		this.tiltakbeskrivelse = tiltakbeskrivelse;
 	}
 	public Long getForebyggendetiltakid() {
@@ -104,7 +89,7 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 	public void saveField(String userField, String userValue) {
 		if (forebyggendeTiltakFields.containsKey(userField) && userValue != null && !userValue.equals("")){
 			forebyggendeTiltakFields.put(userField,userValue);	
-
+			System.out.println("Forebyggende field "+ userField+" value "+userValue);
 		}	
 	}
 	

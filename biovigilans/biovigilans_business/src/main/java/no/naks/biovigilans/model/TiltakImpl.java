@@ -8,6 +8,7 @@ public class TiltakImpl extends AbstractTiltak implements Tiltak {
 	public TiltakImpl() {
 		super();
 		tiltakFields = new HashMap();
+		alleforebyggendeTiltak = new HashMap();
 	}
 
 	public void setParams() {
@@ -29,6 +30,7 @@ public class TiltakImpl extends AbstractTiltak implements Tiltak {
 	public void saveField(String userField, String userValue) {
 		if (tiltakFields.containsKey(userField) && userValue != null && !userValue.equals("")){
 			tiltakFields.put(userField,userValue);	
+			System.out.println("Tiltak field "+ userField+" value "+userValue);
 
 		}	
 	}
