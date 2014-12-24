@@ -28,7 +28,7 @@ public class TiltakImpl extends AbstractTiltak implements Tiltak {
 	 */
 	
 	public void saveField(String userField, String userValue) {
-		if (tiltakFields.containsKey(userField) && userValue != null && !userValue.equals("")){
+		if (tiltakFields.containsKey(userField) && userValue != null && !userValue.equals("") && !userValue.equals("ja")){
 			tiltakFields.put(userField,userValue);	
 			System.out.println("Tiltak field "+ userField+" value "+userValue);
 
