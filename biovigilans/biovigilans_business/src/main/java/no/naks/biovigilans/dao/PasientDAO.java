@@ -35,4 +35,18 @@ public interface PasientDAO {
 	public void setUpdateAntistoffSQL(String updateAntistoffSQL);
 	public String[] getAntistoffTableDefs();
 	public void setAntistoffTableDefs(String[] antistoffTableDefs);
+	public String getInsertForebyggendeSQL();
+	public void setInsertForebyggendeSQL(String insertForebyggendeSQL);
+	public String getInsertTiltakSQL();
+	public void setInsertTiltakSQL(String insertTiltakSQL);
+	public String getUpdateTiltakSQL();
+	public void setUpdateTiltakSQL(String updateTiltakSQL);
+	public String[] getTiltakTableDefs();
+	public void setTiltakTableDefs(String[] tiltakTableDefs);
+	public String getUpdateForebyggendeSQL();
+	public void setUpdateForebyggendeSQL(String updateForebyggendeSQL);
+	public String[] getForebyggendeTableDefs();
+	public void setForebyggendeTableDefs(String[] forebyggendeTableDefs);
+	public String getTiltakPrimarykey();
+	public void setTiltakPrimarykey(String tiltakPrimarykey);
 }

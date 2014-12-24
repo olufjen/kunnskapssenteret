@@ -5,8 +5,10 @@ import java.util.Iterator;
 import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.model.Antistoff;
+import no.naks.biovigilans.model.Forebyggendetiltak;
 import no.naks.biovigilans.model.Pasient;
 import no.naks.biovigilans.model.Sykdom;
+import no.naks.biovigilans.model.Tiltak;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
@@ -36,8 +38,58 @@ public class PasientDAOImpl extends AbstractAdmintablesDAO implements
 	private String updateAntistoffSQL;
 	private String[] antistoffTableDefs;
 	
+	private String insertTiltakSQL;
+	private String updateTiltakSQL;
+	private String[] tiltakTableDefs;
+	private String insertForebyggendeSQL;
+	private String updateForebyggendeSQL;
+	private String[] forebyggendeTableDefs;
+	private String tiltakPrimarykey;
 	
 	
+	
+	public String getTiltakPrimarykey() {
+		return tiltakPrimarykey;
+	}
+	public void setTiltakPrimarykey(String tiltakPrimarykey) {
+		this.tiltakPrimarykey = tiltakPrimarykey;
+	}
+	public String getInsertForebyggendeSQL() {
+		return insertForebyggendeSQL;
+	}
+	public void setInsertForebyggendeSQL(String insertForebyggendeSQL) {
+		this.insertForebyggendeSQL = insertForebyggendeSQL;
+	}
+	public String getInsertTiltakSQL() {
+		return insertTiltakSQL;
+	}
+	public void setInsertTiltakSQL(String insertTiltakSQL) {
+		this.insertTiltakSQL = insertTiltakSQL;
+	}
+	public String getUpdateTiltakSQL() {
+		return updateTiltakSQL;
+	}
+	public void setUpdateTiltakSQL(String updateTiltakSQL) {
+		this.updateTiltakSQL = updateTiltakSQL;
+	}
+	public String[] getTiltakTableDefs() {
+		return tiltakTableDefs;
+	}
+	public void setTiltakTableDefs(String[] tiltakTableDefs) {
+		this.tiltakTableDefs = tiltakTableDefs;
+	}
+	public String getUpdateForebyggendeSQL() {
+		return updateForebyggendeSQL;
+	}
+	public void setUpdateForebyggendeSQL(String updateForebyggendeSQL) {
+		this.updateForebyggendeSQL = updateForebyggendeSQL;
+	}
+	public String[] getForebyggendeTableDefs() {
+		return forebyggendeTableDefs;
+	}
+	public void setForebyggendeTableDefs(String[] forebyggendeTableDefs) {
+		this.forebyggendeTableDefs = forebyggendeTableDefs;
+	}
 	public String getInsertPatientSQL() {
 		return insertPatientSQL;
 	}
@@ -166,6 +218,47 @@ public class PasientDAOImpl extends AbstractAdmintablesDAO implements
 			antistoffTablesUpdate.insert(aParams);
 			antistoffTablesUpdate = null;
 		}
-
+		saveTiltak(pasient);
+	}
+	private void saveTiltak(Pasient pasient){
+		Iterator tiltakIterator = pasient.getAlleTiltak().keySet().iterator();
+		while (tiltakIterator.hasNext()){
+			String key = (String) tiltakIterator.next();
+			Tiltak tiltak = (Tiltak)pasient.getAlleTiltak().get(key);
+			tiltak.setPasient_id(pasient.getPasient_Id());
+			tiltak.setParams();
+			int[] tTypes = tiltak.getTypes();
+			Object[] tParams = tiltak.getParams();
+			Long tId = tiltak.getTiltakid();
+			String tSQL = insertTiltakSQL;
+			if (tId != null){
+				tSQL = updateTiltakSQL;
+				tTypes =tiltak.getUtypes();
+			}
+			TablesUpdateImpl tiltakTableUpdate = new TablesUpdateImpl(getDataSource(), tSQL,tTypes);
+			tiltakTableUpdate.insert(tParams);
+			if (tId == null){
+				tiltak.setTiltakid(getPrimaryKey(tiltakPrimarykey,pasientprimarykeyTableDefs));
+			}
+			tiltakTableUpdate = null;
+			Iterator alleForebyggende = tiltak.getAlleforebyggendeTiltak().keySet().iterator();
+			while (alleForebyggende.hasNext()){
+				String fKey = (String) alleForebyggende.next();
+				Forebyggendetiltak forebyggende = (Forebyggendetiltak) tiltak.getAlleforebyggendeTiltak().get(fKey);
+				forebyggende.setForebyggendetiltakid(tiltak.getTiltakid());
+				forebyggende.setParams();
+				int[] forTypes = forebyggende.getTypes();
+				Object[] forParams = forebyggende.getParams();
+				Long fId = forebyggende.getForebyggendetiltakid();
+				String fSQL = insertForebyggendeSQL;
+				if (tId != null){
+					fSQL = updateForebyggendeSQL;
+					forTypes =forebyggende.getUtypes();
+				}
+				TablesUpdateImpl forebyggendeTableUpdate = new TablesUpdateImpl(getDataSource(), fSQL,forTypes);
+				forebyggendeTableUpdate.insert(forParams);
+			}
+			
+		}
 	}
 }
