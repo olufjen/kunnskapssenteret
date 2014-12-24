@@ -87,7 +87,7 @@ public class AbstractTiltak extends AbstractModel {
 	}
 	public void setTiltakFieldMap(String[]userFields){
 		tiltakKeys = userFields;
-		for (int i = 0; i<5;i++){
+		for (int i = 0; i<1;i++){
 			tiltakFields.put(userFields[i],null);
 			
 		}

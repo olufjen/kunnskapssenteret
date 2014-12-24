@@ -70,7 +70,7 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 
 		keys = userFields;
 		
-		for (int i = 0; i<11;i++){
+		for (int i = 0; i<8;i++){
 			forebyggendeTiltakFields.put(userFields[i],null);
 			
 		}
@@ -87,7 +87,7 @@ public class ForebyggendetiltakImpl extends AbstractTiltak implements Tiltak,For
 	 */
 	
 	public void saveField(String userField, String userValue) {
-		if (forebyggendeTiltakFields.containsKey(userField) && userValue != null && !userValue.equals("") && !userValue.equals("ja")){
+		if (forebyggendeTiltakFields.containsKey(userField) && userValue != null && !userValue.equals("") ){
 			forebyggendeTiltakFields.put(userField,userValue);	
 			System.out.println("Forebyggende field "+ userField+" value "+userValue);
 		}	

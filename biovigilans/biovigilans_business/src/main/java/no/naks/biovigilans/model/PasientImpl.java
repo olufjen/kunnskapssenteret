@@ -132,6 +132,9 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		this.alleTiltak = alleTiltak;
 	}
 
+	/* produceAntistoffer
+	 * DEnne rutinen lager riktig antall antistoffer registrert til pasient
+	 */
 	public void produceAntistoffer(Antistoff antistoff) {
 		for (String antistoffer : antistoff.getAntistoffFields().values()){
 			if (antistoffer != null && !antistoffer.equals("")){
@@ -144,11 +147,18 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		}
 		
 	}
-	public void produceTiltak(Tiltak tiltak, Forebyggendetiltak forebyggendeTiltak){
+	/* produceTiltak
+	 * DEnne rutinen lager riktig antall tiltak registrert til pasient
+	 */public void produceTiltak(Tiltak tiltak, Forebyggendetiltak forebyggendeTiltak){
 		for (String ettiltak : tiltak.getTiltakFields().values()){
+			Tiltak lokalTiltak = new TiltakImpl();
+			String tempTiltak = "";
+			if (ettiltak == null || ettiltak.equals("")){
+				System.out.println("Kunne ikke forebygges");
+			}
 			if (ettiltak != null && !ettiltak.equals("")){
-				Tiltak lokalTiltak = new TiltakImpl();
-				lokalTiltak.setBeskrivelse(ettiltak);
+				tempTiltak = ettiltak;
+				lokalTiltak.setBeskrivelse(tempTiltak);
 				for (String forebyggende : forebyggendeTiltak.getForebyggendeTiltakFields().values()){
 					Forebyggendetiltak forebyggendeLokal = new ForebyggendetiltakImpl();
 					forebyggendeLokal.setTiltakvalg(forebyggende);
