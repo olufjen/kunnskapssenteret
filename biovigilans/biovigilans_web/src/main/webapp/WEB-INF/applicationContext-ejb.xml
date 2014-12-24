@@ -25,6 +25,10 @@
   	<property name="pasientPrimaryKey" value="${primarykey.pasient}"></property>
   	<property name="pasientprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="insertAntistoffSQL" value="${antistoff.insertantistoff}"></property>
+  	<property name="insertTiltakSQL" value="${tiltak.inserttiltak}"></property>
+  	<property name="insertForebyggendeSQL" value="${forebyggendetiltak.inserttiltak}"></property>
+  	<property name="tiltakPrimarykey" value="${primarkey.tiltak}"></property>
+ 
   </bean>
   <bean id="giverDAO" class ="no.naks.biovigilans.dao.GiverDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
