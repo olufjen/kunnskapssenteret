@@ -2,9 +2,12 @@ package no.naks.biovigilans.model;
 
 import java.sql.Types;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MelderImpl extends AbstractMelder implements Melder {
 
+	private Map<String,Vigilansmelding> meldinger;
+	
 	public MelderImpl(){
 		super();
 		types = new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
@@ -34,6 +37,15 @@ public class MelderImpl extends AbstractMelder implements Melder {
 		}
 	}
 	
+	
+	public Map<String, Vigilansmelding> getMeldinger() {
+		return meldinger;
+	}
+
+	public void setMeldinger(Map<String, Vigilansmelding> meldinger) {
+		this.meldinger = meldinger;
+	}
+
 	/**
 	 * saveField
 	 * Denne rutinen lagrer kontaktfelter til riktig databasefelt

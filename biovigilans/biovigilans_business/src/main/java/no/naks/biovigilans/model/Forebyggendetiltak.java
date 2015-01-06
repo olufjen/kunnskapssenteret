@@ -10,6 +10,8 @@ public interface Forebyggendetiltak {
 	public void setTiltakbeskrivelse(String tiltakbeskrivelse);
 	public Long getForebyggendetiltakid();
 	public void setForebyggendetiltakid(Long forebyggendetiltakid);
+	public Long getTiltakid();
+	public void setTiltakid(Long tiltakid);
 	public Map<String, String> getForebyggendeTiltakFields();
 	public void setForebyggendeTiltakFields(
 			Map<String, String> forebyggendeTiltakFields);

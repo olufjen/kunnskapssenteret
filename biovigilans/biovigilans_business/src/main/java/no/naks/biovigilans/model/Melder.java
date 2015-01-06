@@ -30,5 +30,7 @@ public interface Melder {
 	public void setMelderfieldMaps(String[]userFields);
 	public void saveField(String userField, String userValue);
 	public void saveToMelder();
+	public Map<String, Vigilansmelding> getMeldinger();
+	public void setMeldinger(Map<String, Vigilansmelding> meldinger);
 	
 }
