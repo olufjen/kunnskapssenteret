@@ -25,6 +25,7 @@ public class HendelsehemovigilansDAOImpl extends AbstractAdmintablesDAO
 	public void updateVigilansMelding(Vigilansmelding melding){
 		
 		melding.setMelderParams();
+		melding.setMelderTypes();
 		int[] types = melding.getTypes();
 		Object[] params = melding.getParams();
 		String sql = updateVigilansmeldingSQL;
