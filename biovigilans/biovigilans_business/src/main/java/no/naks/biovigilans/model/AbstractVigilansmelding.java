@@ -227,14 +227,14 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	 * Rutine for oppsett av types til oppdatering av melderId fremmednøkkel
 	 */
 	public void setMelderTypes(){
-		types = new int[] {Types.INTEGER};
+		types = new int[] {Types.INTEGER,Types.INTEGER};
 	}
 	/**
 	 * setMelderParams
 	 * Rutine for oppsett av parametre til oppdatering av melderid fremmednøkkel
 	 */
 	public void setMelderParams(){
-		params =  new Object[] {getMelderId()};
+		params =  new Object[] {getMelderId(),getMeldeid()};
 	}
 	/**
 	 * setVigilansmeldingfieldMaps
