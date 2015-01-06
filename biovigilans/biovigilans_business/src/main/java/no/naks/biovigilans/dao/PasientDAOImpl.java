@@ -245,7 +245,8 @@ public class PasientDAOImpl extends AbstractAdmintablesDAO implements
 			while (alleForebyggende.hasNext()){
 				String fKey = (String) alleForebyggende.next();
 				Forebyggendetiltak forebyggende = (Forebyggendetiltak) tiltak.getAlleforebyggendeTiltak().get(fKey);
-				forebyggende.setForebyggendetiltakid(tiltak.getTiltakid());
+				forebyggende.setTiltakid(tiltak.getTiltakid());
+
 				forebyggende.setParams();
 				int[] forTypes = forebyggende.getTypes();
 				Object[] forParams = forebyggende.getParams();
