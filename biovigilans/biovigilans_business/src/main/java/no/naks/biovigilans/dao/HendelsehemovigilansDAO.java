@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.SqlParameter;
 
 
 
+
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 import no.naks.rammeverk.kildelag.model.LineKey;
@@ -23,6 +25,9 @@ import no.naks.rammeverk.kildelag.model.LineKey;
  */
 public interface HendelsehemovigilansDAO {
 	
+	public String getUpdateVigilansmeldingSQL();
+	public void setUpdateVigilansmeldingSQL(String updateVigilansmeldingSQL);
 	
+	public void updateVigilansMelding(Vigilansmelding melding);	
 
 }
