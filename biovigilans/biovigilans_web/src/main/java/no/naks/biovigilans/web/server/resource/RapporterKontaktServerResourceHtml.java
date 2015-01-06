@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
@@ -119,7 +120,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
  
     	if (form != null){
     		melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(getRequest(),melderId);
-    		 
+    		transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(getRequest(),transfusjonId);
     		Parameter logout = form.getFirst("avbrytkontakt");
     		Parameter lukk = form.getFirst("lukkkontakt");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -137,6 +138,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		 if(melderwebModel == null){
     	    	 melderwebModel = new MelderwebModel();
     	    	 melderwebModel.setFormNames(sessionParams);
+    	    	 melderwebModel.distributeTerms();
     	     }
  
     		for (Parameter entry : form) {
@@ -154,7 +156,14 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		if(lagre != null){
     			melderwebModel.saveValues();
     			melderWebService.saveMelder(melderwebModel);
-
+    			Long melderKey = melderwebModel.getMelder().getMelderId();
+    			if (melderId != null && transfusjon != null){
+    				if (transfusjon.isLagret()){
+    					transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
+    					Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
+    					hendelseWebService.saveVigilansMelder(melding);
+    				}
+    			}
     			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
         		String page = getPage();

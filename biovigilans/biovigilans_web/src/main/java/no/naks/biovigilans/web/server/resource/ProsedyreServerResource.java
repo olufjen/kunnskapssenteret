@@ -16,7 +16,7 @@ public class ProsedyreServerResource extends ServerResource {
 
 	protected SessionAdmin sessionAdmin = null;
 	protected TableWebService tablewebservice;
-	protected HendelseWebService hendelseWebService;
+	protected HendelseWebService hendelseWebService; // OBS: Get/set heter innmeldingWebService !!!
 	protected ICD10WebService icd10WebService;
 	protected GiverWebService giverWebService; 
 	protected DonasjonWebService donasjonWebService;

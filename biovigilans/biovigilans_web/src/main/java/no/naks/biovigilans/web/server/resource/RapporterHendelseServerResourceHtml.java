@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
 import javax.xml.namespace.QName;
 
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.client.ICD10;
 import no.naks.biovigilans.web.client.ICD10Soap;
 import no.naks.biovigilans.web.control.SessionAdmin;
@@ -311,10 +312,11 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			transfusjon.setTransfusjonsFlag(kvittering);
 	    			result.setLagret(true);
 	    			transfusjon.setLagret(true);
-	    			Long melderId = melderwebModel.getMelder().getMelderId();
-	    			if (melderId != null){
-	    				transfusjon.getPasientKomplikasjon().setMelderId(melderId);
-	    				hendelseWebService.saveVigilansMelder(transfusjon);
+	    			Long melderKey = melderwebModel.getMelder().getMelderId();
+	    			if (melderKey != null){
+	    				transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
+	    				Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
+	    				hendelseWebService.saveVigilansMelder(melding);
 	    			}
 	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
 		    		Representation pasientkomplikasjonFtl = clres2.get();

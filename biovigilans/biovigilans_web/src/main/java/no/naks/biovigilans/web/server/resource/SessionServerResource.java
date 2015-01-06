@@ -27,6 +27,9 @@ import no.naks.biovigilans.web.xml.MainTerm;
  */
 public class SessionServerResource extends ProsedyreServerResource {
 
+/*
+ * Session objekter for transfusjon	
+ */
 	protected PasientKomplikasjonWebModel result = null;
 	protected TransfusjonWebModel transfusjon = null;
 	protected TransfusjonKvitteringWebModel kvittering = null;
@@ -41,10 +44,13 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
 	protected String kvitteringsId = "kvittering";					// Benyttes som nøkkel for kvitteringssiden
 	protected String kvitteringGiverId = "giverKvittering";
-	
+/*
+ * Sessiomn objekter for giver	
+ */
 	protected GiverKomplikasjonwebModel giverModel = null;
 	protected DonasjonwebModel donasjon = null;
 	protected KomDiagnosegiverwebModel komDiagnosegiver = null;
+	protected GiverKvitteringWebModel giverKvittering = null;
 
 	protected String[] reaksjonengruppe;
 	protected String[] utenforBlodbankengruppe;
@@ -53,19 +59,22 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String donasjonId ="donasjon";
 	protected String komDiagnosegiverId = "komDiagnosegiver";
 	protected String vigilansmeldingId="vigilansmelding";
-	protected GiverKvitteringWebModel giverKvittering = null;
+
 	protected String[] systemiskgruppe;
 	protected String[] skadeiarmen;
 	protected String[] sykemeldinggruppe;
 	
 	//Rapporter AndreHendelse
 	protected AnnenKomplikasjonwebModel annenModel =  null;
-	protected String[] alvorligHendelse; 
 	protected String andreHendelseId ="andreHendelse";
+	
+	protected String[] alvorligHendelse; 
 	protected String[] hovedprosesslist;
 	protected String[] feilelleravvik;
 	protected String[] hendelsenoppdaget;
-	
+/*
+ * Session objekter for kontakt	
+ */
 	protected MelderwebModel melderwebModel;
 	protected String melderId = "melder";
 	
@@ -284,7 +293,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	}
 	/**
 	 * setTransfusjonsObjects
-	 * Denne rutinene setter opp alle session objeter som er nødvendig for å fylle ut 
+	 * Denne rutinene setter opp alle session objekter som er nødvendig for å fylle ut 
 	 * et hendelsesskjema
 	 */
 	public void setTransfusjonsObjects(){
