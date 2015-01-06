@@ -223,6 +223,20 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 	
 	/**
+	 * setMelderTypes
+	 * Rutine for oppsett av types til oppdatering av melderId fremmednøkkel
+	 */
+	public void setMelderTypes(){
+		types = new int[] {Types.INTEGER};
+	}
+	/**
+	 * setMelderParams
+	 * Rutine for oppsett av parametre til oppdatering av melderid fremmednøkkel
+	 */
+	public void setMelderParams(){
+		params =  new Object[] {getMelderId()};
+	}
+	/**
 	 * setVigilansmeldingfieldMaps
 	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
 	 * @param userFields En liste over skjermbildefelter

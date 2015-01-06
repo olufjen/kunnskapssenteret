@@ -34,6 +34,8 @@ public interface Vigilansmelding {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
+	public void setMelderTypes();
+	public void setMelderParams();
 	public void setVigilansmeldingfieldMaps(String[]userFields);
 	public void saveToVigilansmelding();
 	public String getMeldingsnokkel();
