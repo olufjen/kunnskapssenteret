@@ -6,12 +6,13 @@ import java.util.List;
 import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.dao.HendelsehemovigilansDAO;
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 
 
 /**
- * Denne klassen er en implementasjon av klassen HendelseTablesService
- * 
+ * Denne klassen er en implementasjon av klassen HendelseTablesService og 
+ * håndterer lagring/oppdatering av Vigilansmeldinger
  * Følgende tabeller blir berørt i db:
  * 		
  **/
@@ -28,7 +29,9 @@ public class HendelseTablesServiceImpl implements HendelseTablesService {
 		this.hendelsehemovigilansDAO = hendelsehemovigilansDAO;
 	}
 
-
+	public void saveVigilansmelding(Vigilansmelding melding){
+		hendelsehemovigilansDAO.updateVigilansMelding(melding);
+	}
 
 
 	
