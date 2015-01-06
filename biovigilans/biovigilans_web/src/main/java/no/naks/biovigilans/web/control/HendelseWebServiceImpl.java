@@ -1,6 +1,7 @@
 package no.naks.biovigilans.web.control;
 
 import no.naks.biovigilans.model.PasientGruppeImpl;
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.HendelseTablesService;
 import no.naks.biovigilans.service.PasientTableService;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
@@ -53,8 +54,12 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 		pasientService.saveTransfusjon(transfusjon.getTransfusjon());
 		
 	}
-	public void saveVigilansMelder(TransfusjonWebModel transfusjon){
-		
+	/* 
+	 * saveVigilansMelder
+	 * Denne rutinen oppdaterer Vigilansmelding med melderid
+	 */
+	public void saveVigilansMelder(Vigilansmelding melding){
+		hendelseTablesService.saveVigilansmelding(melding);
 	}
 
 
