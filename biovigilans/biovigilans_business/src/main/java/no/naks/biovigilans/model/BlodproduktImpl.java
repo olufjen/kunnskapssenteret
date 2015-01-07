@@ -68,6 +68,8 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		egenskaperFields.put(userFields[4], null);
 		egenskaperFields.put(userFields[5], null);
 		egenskaperFields.put(userFields[6], null);
+		egenskaperFields.put(userFields[7], null);
+		egenskaperFields.put(userFields[8], null);
 //		ArrayList egenskaper = (ArrayList) egenskaperFields.values();
 //		String first = (String) egenskaper.get(0);
 	}
