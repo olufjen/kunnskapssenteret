@@ -74,7 +74,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] formFields = getFormNames();
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
-		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56]};
+		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56],formFields[208],formFields[209]};
 		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a4",formFields[184],formFields[185],formFields[186]};
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
@@ -90,7 +90,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		
 		String[] annenblodProduktfields = {formFields[38],formFields[39],formFields[40],formFields[41],formFields[42],formFields[43],
 				"p1","p2","p3","p4","p5","p6"};
-		String[] annenEgenskaper = {"e1","e2","e3","e4","e5","e6","e7"};
+		String[] annenEgenskaper = {"e1","e2","e3","e4","e5","e6","e7","e8","e9"};
 		String[] annenblodAntallFields = {formFields[44],formFields[45],formFields[46],formFields[47],formFields[48],formFields[49],formFields[175],formFields[176],formFields[177]};
 		annenBlodprodukt.setBlodProduktfieldMaps(annenblodProduktfields);
 		annenBlodprodukt.setEgenskaperfieldMaps(annenEgenskaper);
