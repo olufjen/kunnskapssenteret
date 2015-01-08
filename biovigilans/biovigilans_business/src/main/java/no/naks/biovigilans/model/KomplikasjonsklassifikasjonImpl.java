@@ -8,17 +8,17 @@ public class KomplikasjonsklassifikasjonImpl extends
 
 	public KomplikasjonsklassifikasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
 		komplikasjonklassifikasjonFields = new HashMap();
 	}
 
 	public void setParams(){
 		Long id = getKlassifikasjonsid();
 		if (id == null){
-			params = new Object[]{};
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonsbeskrivelse(),getMeldeidpasient(),getMeldeidannen()};
 		}else
-			params = new Object[]{getKlassifikasjonsid()};
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonsbeskrivelse(),getMeldeidpasient(),getMeldeidannen(),getKlassifikasjonsid()};
 		
 	}
 
@@ -29,7 +29,7 @@ public class KomplikasjonsklassifikasjonImpl extends
 	 */
 	public void setkomplikasjonklassifikasjonFieldsMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0; i<22;i++){
+		for (int i = 0; i<userFields.length;i++){
 			komplikasjonklassifikasjonFields.put(userFields[i],null);
 		}
 	
@@ -46,8 +46,12 @@ public class KomplikasjonsklassifikasjonImpl extends
 			komplikasjonklassifikasjonFields.put(userField,userValue);	
 
 		}	
+	}
+	
+	public void savetoKomplikasjonklassifikasjon(){
 		
-		
+		setKlassifikasjon(null);
+		setKlassifikasjonsbeskrivelse(null);
 	}
 
 }

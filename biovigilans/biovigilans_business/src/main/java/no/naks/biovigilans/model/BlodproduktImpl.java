@@ -74,11 +74,10 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 //		String first = (String) egenskaper.get(0);
 	}
 	public void setAntallfieldMaps(String[]userFields){
-		int l = userFields.length;
 		for (String field : userFields){
 			this.userFields.add(field);
 		}
-		for (int i = 0;i<l;i++){
+		for (int i = 0;i<9;i++){
 			antallFields.put(userFields[i],null);
 		}
 	
@@ -114,7 +113,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	}
 	public void saveToBlodprodukt(){
 		setAntallEnheter(-1);
-	//	setBlodprodukt(null); Produktet settes fast!
+		setBlodprodukt(null);
 		setProduktetsegenskap(null);
 		setTappetype(null);
 		setSuspensjon(null);

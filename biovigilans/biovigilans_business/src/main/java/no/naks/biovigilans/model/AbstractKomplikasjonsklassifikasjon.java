@@ -22,7 +22,8 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 	private String klassifikasjonsbeskrivelse;
 	
 	private Long klassifikasjonsid;
-	private Long meldeid;
+	private Long meldeidannen;
+	private Long meldeidpasient;
 	
 	protected Map<String,String> komplikasjonklassifikasjonFields;
 	protected String[] keys;
@@ -67,11 +68,19 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 		this.klassifikasjonsid = klassifikasjonsid;
 	}
 	
-	public Long getMeldeid() {
-		return meldeid;
+	
+	public Long getMeldeidannen() {
+		return meldeidannen;
 	}
-	public void setMeldeid(Long meldeid) {
-		this.meldeid = meldeid;
+	public void setMeldeidannen(Long meldeidannen) {
+		this.meldeidannen = meldeidannen;
+	}
+	
+	public Long getMeldeidpasient() {
+		return meldeidpasient;
+	}
+	public void setMeldeidpasient(Long meldeidpasient) {
+		this.meldeidpasient = meldeidpasient;
 	}
 	public Map<String,String> getKomplikasjonklassifikasjonFields() {
 		return komplikasjonklassifikasjonFields;
