@@ -194,6 +194,7 @@
         <property name="melderWebService" ref="melderWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property> 
         <property name="annenKomplikasjonWebService" ref="annenKomplikasjonWebService"></property>
+        <property name="komplikasjonsklassifikasjonWebService" ref="komplikasjonsklassifikasjonWebService"></property>
          
   </bean>       
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
@@ -245,7 +246,7 @@
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
-                ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHenelser.feilblod},${andreHenelser.smitte},${andreHenelser.intervju},${andreHenelser.giveren},${andreHenelser.utstyr},${andreHenelser.analyser},${andreHenelser.merking}">
+                ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.feilblod},${andreHendelser.smitte},${andreHendelser.intervju},${andreHendelser.giveren},${andreHendelser.utstyr},${andreHendelser.analyser},${andreHendelser.merking},${andreHendelser.hvagikkgalt}">
         
         </property>
          
@@ -329,7 +330,7 @@
                         ${pasientkomplikasjon.tiltakvalg2},${pasientkomplikasjon.tiltakparegnelig},${pasientkomplikasjon.tiltakblodbank},${pasientkomplikasjon.tiltakavdeling},
                         ${pasientkomplikasjon.tiltakprosedyre},${pasientkomplikasjon.tiltakopplaring},${pasientkomplikasjon.tiltakkvalitet},${pasientkomplikasjon.tiltakannet},
                         ${pasientkomplikasjon.tiltaktext},${pasientkomplikasjon.tiltakforebygget},${pasientkomplikasjon.tiltakforebygget1},${pasientkomplikasjon.tiltakforebygget2},
-                        ${pasientkomplikasjon.tiltakforebygget3},${pasientkomplikasjon.tiltakforebyggettext},${pasientkomplikasjon.egenskaptranspakke},${pasientkomplikasjon.egenskapautologt}">
+                        ${pasientkomplikasjon.tiltakforebygget3},${pasientkomplikasjon.tiltakforebyggettext}">
                 </property>
         </bean> 
                 
@@ -344,7 +345,7 @@
         <property name="melderWebService" ref="melderWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property>
         <property name="annenKomplikasjonWebService" ref="annenKomplikasjonWebService"></property>
-   
+   		<property name="komplikasjonsklassifikasjonWebService" ref="komplikasjonsklassifikasjonWebService"></property>
         </bean>
  
      
@@ -365,6 +366,9 @@
         </bean>
 		<bean id="annenKomplikasjonWebService"  class="no.naks.biovigilans.web.control.AnnenKomplikasjonWebServiceImpl">
 				<property name="annenKomplikasjonTableService" ref="annenKomplikasjonTableService"></property>
+		</bean>
+		<bean id="komplikasjonsklassifikasjonWebService" class="no.naks.biovigilans.web.control.KomplikasjonsklassifikasjonWebServiceImpl" >
+			<property name="komplikasjonsklassifikasjonTableService" ref="komplikasjonsklassifikasjonTableService"></property>
 		</bean>
         <bean id="donasjonWebService" class="no.naks.biovigilans.web.control.DonasjonWebServiceImpl">
                 <property name="donasjonTableService" ref="donasjonTableService"></property>

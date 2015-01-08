@@ -16,8 +16,7 @@
 	</bean>
 	<bean id="domainDictionary" class="no.naks.framework.web.control.DomainDictionaryImpl">
   </bean>
-  
-  
+ 
   <bean id="pasientDAO" class="no.naks.biovigilans.dao.PasientDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   	<property name="insertPatientSQL" value="${pasient.insertpasient}"></property>
@@ -98,11 +97,16 @@
   	<property name="insertAnnenKomplikasjonSQL" value="${annenkomplikasjon.insert}"></property>
  	<property name="annenKomplikasjonPrimaryKey" value="${primarykey.annenkomplikasjon}"></property>
   	<property name="annenKomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
-  	
+  </bean>
+  <bean id="komplikasjonsklassifikasjonDAO" class="no.naks.biovigilans.dao.KomplikasjonsklassifikasjonDAOImpl">
+  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+  	<property name="insertKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.insert}"></property>
+  	<property name="komplikasjonsklassifikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+  	<property name="komplikasjonsklassifikasjonPrimaryKey" value="${primarykey.komplikasjonsklassifikasjon}" ></property>
+  	<property name="updateKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.update}"></property>
   </bean>
   <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
-  	<property name="updateVigilansmeldingSQL" value="${vigilansmelding.updatemelderid}"></property>
   </bean>
   <bean id="hendelseTablesService" class="no.naks.biovigilans.service.HendelseTablesServiceImpl">
   	<property name="hendelsehemovigilansDAO" ref="hendelsehemovigilansDAO"></property>
@@ -125,6 +129,9 @@
   </bean>
   <bean id="annenKomplikasjonTableService" class="no.naks.biovigilans.service.AnnenKomplikasjonTableServiceImpl" >
   	<property name="annenKomplikasjonDAO" ref="annenkomplikasjonDAO"></property>
+  </bean>
+  <bean id="komplikasjonsklassifikasjonTableService" class="no.naks.biovigilans.service.KomplikasjonsklassifikasjonTableServiceImpl" >
+  	<property name="komplikasjonsklassifikasjonDAO" ref="komplikasjonsklassifikasjonDAO"></property>
   </bean>
   <!-- /usr/local/tomcat6/xml/ -->
   <!-- c:\\temp\\c:\\temp\\ -->
