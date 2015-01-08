@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import no.naks.biovigilans.model.Annenkomplikasjon;
+import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
-
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -143,6 +143,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
+    			
+    			Long meldeid = annenModel.getAnnenKomplikasjon().getMeldeid();
+    			Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
+    			klassifikasjon.setMeldeidannen(meldeid);
+    			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
     		}
     		
     		
