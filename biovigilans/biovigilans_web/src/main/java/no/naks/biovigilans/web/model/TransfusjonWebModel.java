@@ -2,6 +2,7 @@ package no.naks.biovigilans.web.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import no.naks.biovigilans.model.Produktegenskap;
 import no.naks.biovigilans.model.ProduktegenskapImpl;
 import no.naks.biovigilans.model.Symptomer;
 import no.naks.biovigilans.model.SymptomerImpl;
+import no.naks.biovigilans.model.Tiltak;
 import no.naks.biovigilans.model.Transfusjon;
 import no.naks.biovigilans.model.TransfusjonImpl;
 import no.naks.biovigilans.model.Utredning;
@@ -45,11 +47,13 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Pasient pasient;
 	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
 	private String[] hemolysparams;
+	private Map<String,Blodprodukt> blodprodukter;
 	
 	public TransfusjonWebModel() {
 		super();
+		blodprodukter = new HashMap();
+		blodProdukt = null;
 		
-		blodProdukt = new BlodproduktImpl();
 		annenBlodprodukt = new BlodproduktImpl();
 		transfusjon = new TransfusjonImpl();
 		pasientKomplikasjon = new PasientkomplikasjonImpl();
@@ -62,6 +66,29 @@ public class TransfusjonWebModel extends VigilansModel {
 		
 		
 	}
+	private void makeBlodprodukt(){
+		String[] formFields = getFormNames();
+		String[] antallery = {formFields[33],"a4","a5","a6","a7","a8","a9","a10","a11"};
+		String[] antalltromb = {formFields[34],"a4","a5","a6","a7","a8","a9","a10","a11"};
+		String[] antallplasma = {formFields[36],"a4","a5","a6","a7","a8","a9","a10","a11"};
+		
+		Blodprodukt erocytt = new BlodproduktImpl();
+		erocytt.setBlodprodukt("Erytrocyttkonsentrat");
+		Blodprodukt trombocytt = new BlodproduktImpl();
+		trombocytt.setBlodprodukt("Trombocyttkonsentrat");
+		Blodprodukt plasma = new BlodproduktImpl();
+		plasma.setBlodprodukt("Plasma");
+		String erocyttKey = "p-blod-erytrocytt";
+		String tromboKey = "p-blod-trombocytt";
+		String plasmaKey = "p-blod-plasma";
+		erocytt.setAntallfieldMaps(antallery);
+		trombocytt.setAntallfieldMaps(antalltromb);
+		plasma.setAntallfieldMaps(antallplasma);
+		blodprodukter.put(erocyttKey, erocytt);
+		blodprodukter.put(tromboKey, trombocytt);
+		blodprodukter.put(plasmaKey, plasma);
+	
+	}
 
 
 	/**
@@ -72,15 +99,24 @@ public class TransfusjonWebModel extends VigilansModel {
 	 */
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
+		makeBlodprodukt();
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56],formFields[208],formFields[209]};
 		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a4",formFields[184],formFields[185],formFields[186]};
-		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
-		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
+
+		Iterator blodIterator = blodprodukter.keySet().iterator();
+		while (blodIterator.hasNext()){
+			String key = (String) blodIterator.next();
+			blodProdukt = (Blodprodukt)blodprodukter.get(key);
+			blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
+			blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
+			
+			blodProdukt.setKeyvalues();
+		}
+	
 		produktEgenskap.setEgenskaperfieldMaps(egenskaperFields);
-		blodProdukt.setAntallfieldMaps(antallFields);
-		blodProdukt.setKeyvalues();
+	
 		String[] transfusjonsFields = {formFields[18],formFields[19],formFields[20],formFields[21],formFields[22],formFields[23],formFields[24],formFields[25],formFields[26],
 				formFields[148],formFields[149],formFields[150],formFields[151],formFields[152],formFields[153],formFields[154],formFields[155],formFields[156],formFields[157],
 				formFields[158],formFields[159],formFields[160],formFields[161],formFields[162],formFields[163],formFields[164],formFields[165],formFields[166],
@@ -127,12 +163,26 @@ public class TransfusjonWebModel extends VigilansModel {
 	public void saveValues() {
 		String[] formFields = getFormNames(); // Inneholder navn på input felt i skjermbildet
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
+		for (String key : formFields){
+			String userEntry = userEntries.get(key);
+			if (userEntry != null && !userEntry.equals("")){ // Dersom blodproduktet er valgt, lagre verdiene
+				blodProdukt = (Blodprodukt)blodprodukter.get(key);
+				if (blodProdukt != null){
+					for (String felt : formFields){
+						blodProdukt.saveField(felt, userEntry);
+					}
+					transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
+				}
+			}
+
+			
+		}
 		for (String field : formFields){
 			String userEntry = userEntries.get(field);
 		//	System.out.println("Key: "+ field);
 			if (userEntry != null && !userEntry.equals(""))
 				System.out.println("Key: "+ field + " Innhold = " + userEntry);
-			blodProdukt.saveField(field, userEntry);
+			
 			annenBlodprodukt.saveField(field, userEntry);
 			transfusjon.saveField(field, userEntry);
 			pasientKomplikasjon.saveField(field, userEntry);
@@ -142,7 +192,12 @@ public class TransfusjonWebModel extends VigilansModel {
 			hemoLyse.saveField(field, userEntry);
 			produktEgenskap.saveField(field, userEntry);
 		}
-		blodProdukt.saveToBlodprodukt();
+		Iterator blodIterator = blodprodukter.keySet().iterator();
+		while (blodIterator.hasNext()){
+			String key = (String) blodIterator.next();
+			blodProdukt = (Blodprodukt)blodprodukter.get(key);
+			blodProdukt.saveToBlodprodukt();
+		}
 		annenBlodprodukt.saveToBlodprodukt();
 		blodProdukt.produceProduktegenskaper(produktEgenskap);
 		transfusjon.setHastegrad(null);
@@ -150,7 +205,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.setTransDato(null);
 		transfusjon.setTransfusjonsklokkeslett(null);
 		transfusjon.setTildigerKomplikasjon(null);
-		transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
+		
 		if (annenBlodprodukt.getBlodprodukt() != null && !annenBlodprodukt.getBlodprodukt().equals(""))
 			transfusjon.getBlodProdukter().put(annenBlodprodukt.getBlodprodukt(),annenBlodprodukt );
 		
