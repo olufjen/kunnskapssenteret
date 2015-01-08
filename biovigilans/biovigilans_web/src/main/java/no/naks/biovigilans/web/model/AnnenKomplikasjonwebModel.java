@@ -2,12 +2,17 @@ package no.naks.biovigilans.web.model;
 
 import java.util.Map;
 
+import com.sun.xml.bind.v2.schemagen.episode.Klass;
+
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.AnnenkomplikasjonImpl;
+import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
+import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
 
 public class AnnenKomplikasjonwebModel extends VigilansModel {
 	
 	private Annenkomplikasjon annenKomplikasjon;
+	private Komplikasjonsklassifikasjon komplikasjonsklassifikasjon;
 	protected String[] alvorligHendelse; 
 	protected String[] hovedprosesslist;
 	protected String[] feilelleravvik;
@@ -16,6 +21,7 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 	public AnnenKomplikasjonwebModel(){
 		super();
 		annenKomplikasjon = new AnnenkomplikasjonImpl();
+		komplikasjonsklassifikasjon =  new KomplikasjonsklassifikasjonImpl();
 	}
 	
 	
@@ -57,10 +63,31 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		this.annenKomplikasjon = annenKomplikasjon;
 	}
 	
+	
+	
+	public Komplikasjonsklassifikasjon getKomplikasjonsklassifikasjon() {
+		return komplikasjonsklassifikasjon;
+	}
+
+
+
+
+	public void setKomplikasjonsklassifikasjon(
+			Komplikasjonsklassifikasjon komplikasjonsklassifikasjon) {
+		this.komplikasjonsklassifikasjon = komplikasjonsklassifikasjon;
+	}
+
+
+
+
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
 		String annenFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[11],formFields[12],formFields[13],formFields[14],formFields[15]};
 		annenKomplikasjon.setAnnenkomplicationfieldMaps(annenFields); 
+		
+		String komplikasjonFields[] = {formFields[16]};
+		komplikasjonsklassifikasjon.setkomplikasjonklassifikasjonFieldsMaps(komplikasjonFields);
+
 	}
 
 	public void saveValues(){
@@ -70,10 +97,12 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		for(String field: formFields ){
 			String userEntry = userEntries.get(field);
 			annenKomplikasjon.saveField(field, userEntry);
+			komplikasjonsklassifikasjon.saveField(field, userEntry);
 			
 		}
 		
 		annenKomplikasjon.saveToAnnenKomplikasjon();
+		komplikasjonsklassifikasjon.savetoKomplikasjonklassifikasjon();
 		
 	}
 	
