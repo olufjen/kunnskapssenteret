@@ -161,23 +161,23 @@
 	   <div class="form-group">
 	    
 	     <label>Vekt i kg</label> 
-	      <input type="number"  min="0" name="givervektkg" size="80"  value="" class="form-control"/>
+	      <input type="number"  min="40" name="givervektkg" size="80"  value="" class="form-control"/>
 	   </div>
 	    
 	    <div class="form-group">
 	      <label>Givererfaring:</label>
 	      	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver" onclick="toggleDisplay('type-tapping',0)" />Førstegangsgiver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" value="forsteganggiver" onclick="toggleDisplay('type-tapping',0);toggleDisplay('tab-tidligere',0)" />Førstegangsgiver
 	          </label>
 		    </div>
 		    <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver" onclick="toggleDisplay('type-tapping',this.checked)"   />Etablert giver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver" onclick="toggleDisplay('type-tapping',this.checked);toggleDisplay('tab-tidligere',this.checked)"   />Etablert giver
 	          </label>
 		    </div>
 	     </div>
-	    <div class="form-group">
+	    <div id="tab-tidligere" class="form-group" style="display: none">
 	      <label>Tidligere reaksjoner på tapping:</label>
 	      <div class="radio">
 	          <label>
@@ -501,53 +501,7 @@
 	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div>
 	    </div>
-	    <div class="form-group">
-	    	<h3>Tiltak rettet mot giver</h3>
-		      <label>Strakstiltak:</label>
-		      	<div class="radio">
-		          <label title="Ingen">
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak0"  onclick="toggleDisplay('behandlingselected', 0);" value="Ingen" title="Ingen"/>
-		          	Ingen
-		          </label>
-			    </div>
-		      	<div class="radio">
-		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
-		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
-		          	Behandlet av blodbankpersonale
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
-		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
-		          	Behandlet av blodbanklege
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
-		          		Behandling på sykehus
-		          </label>
-			    </div>
-			    <div class="form-group" id="behandlingselected" style="margin-left: 0.5cm;display: none">
-			    	<div class="radio">
-			          <label >
-			          	<input type="radio" name="tab-behandling" id="tab-behandling1"  onclick="toggleDisplay('innleggelseoption', 0);"  value="Observasjon i akuttmotakk"  />
-			          		Observasjon i akuttmottak
-			          </label>
-			    	</div>
-			    	<div class="radio">
-			          <label >
-			          	<input type="radio" name="tab-behandling" id="tab-behandling2"  onclick="toggleDisplay('innleggelseoption', this.checked);" value="Innleggelse" />
-			          		Innleggelse
-			          </label>
-			    	</div>
-			    	<div style="display: none"  id="innleggelseoption"  name="innleggelseoption">
-				    	<label>Varighet av sykehusinnleggelse</label><br>
-				    	<input  type="text" size="30" id="innleggelsetxt"  name="innleggelsetxt"  value="" /><br>
-			    	</div>
-			    </div>
-		</div>
- 	    <div class="form-group" >
+	    <div class="form-group" >
 			<h3>Alvorlighetsgrad </h3>
 	
 			<div class="radio">
@@ -616,6 +570,52 @@
 		    </div>
 		    
 	    </div>
+	    <div class="form-group">
+	    	<h3>Tiltak rettet mot giver</h3>
+		      <label>Strakstiltak:</label>
+		      	<div class="radio">
+		          <label title="Ingen">
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak0"  onclick="toggleDisplay('behandlingselected', 0);" value="Ingen" title="Ingen"/>
+		          	Ingen
+		          </label>
+			    </div>
+		      	<div class="radio">
+		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
+		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
+		          	Behandlet av blodbankpersonale
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
+		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
+		          	Behandlet av blodbanklege
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
+		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
+		          		Behandling på sykehus
+		          </label>
+			    </div>
+			    <div class="form-group" id="behandlingselected" style="margin-left: 0.5cm;display: none">
+			    	<div class="radio">
+			          <label >
+			          	<input type="radio" name="tab-behandling" id="tab-behandling1"  onclick="toggleDisplay('innleggelseoption', 0);"  value="Observasjon i akuttmotakk"  />
+			          		Observasjon i akuttmottak
+			          </label>
+			    	</div>
+			    	<div class="radio">
+			          <label >
+			          	<input type="radio" name="tab-behandling" id="tab-behandling2"  onclick="toggleDisplay('innleggelseoption', this.checked);" value="Innleggelse" />
+			          		Innleggelse
+			          </label>
+			    	</div>
+			    	<div style="display: none"  id="innleggelseoption"  name="innleggelseoption">
+				    	<label>Varighet av sykehusinnleggelse</label><br>
+				    	<input  type="text" size="30" id="innleggelsetxt"  name="innleggelsetxt"  value="" /><br>
+			    	</div>
+			    </div>
+		</div>
 	   <!--  <div class="form-group" >
 		<h3>Årsakssammenheng</h3>
 			<div class="radio">
@@ -774,12 +774,12 @@
 	     <label>Hvis Ja: </label>
 	    	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-onske" id="tab-onske1" value="Givers Ønske"/>Givers Ønske
+	          	<input type="checkbox" name="tab-onske" id="tab-onske1" value="Givers Ønske"/>Givers Ønske
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-onske" id="tab-onske2" value="Blodbankens Ønske"/>Blodbankens Ønske
+	          	<input type="checkbox" name="tab-onske" id="tab-onske2" value="Blodbankens Ønske"/>Blodbankens Ønske
 	          </label>
 		    </div>
 	    </div>
