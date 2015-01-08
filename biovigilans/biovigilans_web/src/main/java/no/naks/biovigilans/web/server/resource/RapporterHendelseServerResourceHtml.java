@@ -270,7 +270,10 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 		    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
 		    	 //kvittering.setFormNames(sessionParams);
 		     }
-
+	   	     if (melderwebModel == null){
+	   	    	 melderwebModel = new MelderwebModel();
+	   	    	 melderwebModel.setFormNames(sessionParams);
+	   	     }
 	    		for (Parameter entry : form) {
 	    			if (entry.getValue() != null && !(entry.getValue().equals("")))
 	    					System.out.println(entry.getName() + "=" + entry.getValue());
