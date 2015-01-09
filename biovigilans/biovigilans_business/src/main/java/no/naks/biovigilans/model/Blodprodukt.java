@@ -41,6 +41,10 @@ public interface Blodprodukt {
 	public void saveToBlodprodukt();
 	public void produceProduktegenskaper(Produktegenskap egenskap);
 	public void setProduktetsegenskap(String produktetsegenskap);
+	
+	public String[] getProdukter();
+
+	public void setProdukter(String[] produkter);
 
 	public Map<String, Produktegenskap> getProduktEgenskaper();
 
