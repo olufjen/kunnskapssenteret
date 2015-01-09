@@ -52,7 +52,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	public TransfusjonWebModel() {
 		super();
 		blodprodukter = new HashMap();
-		blodProdukt = null;
+		blodProdukt = new BlodproduktImpl();
 		
 		annenBlodprodukt = new BlodproduktImpl();
 		transfusjon = new TransfusjonImpl();
@@ -99,21 +99,16 @@ public class TransfusjonWebModel extends VigilansModel {
 	 */
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
-		makeBlodprodukt();
+//		makeBlodprodukt();
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56],formFields[208],formFields[209]};
 		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a4",formFields[184],formFields[185],formFields[186]};
 
-		Iterator blodIterator = blodprodukter.keySet().iterator();
-		while (blodIterator.hasNext()){
-			String key = (String) blodIterator.next();
-			blodProdukt = (Blodprodukt)blodprodukter.get(key);
-			blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
-			blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
-			
-			blodProdukt.setKeyvalues();
-		}
+		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
+		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
+		blodProdukt.setAntallfieldMaps(antallFields);
+		blodProdukt.setKeyvalues();
 	
 		produktEgenskap.setEgenskaperfieldMaps(egenskaperFields);
 	
@@ -163,20 +158,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	public void saveValues() {
 		String[] formFields = getFormNames(); // Inneholder navn på input felt i skjermbildet
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
-		for (String key : formFields){
-			String userEntry = userEntries.get(key);
-			if (userEntry != null && !userEntry.equals("")){ // Dersom blodproduktet er valgt, lagre verdiene
-				blodProdukt = (Blodprodukt)blodprodukter.get(key);
-				if (blodProdukt != null){
-					for (String felt : formFields){
-						blodProdukt.saveField(felt, userEntry);
-					}
-					transfusjon.getBlodProdukter().put(blodProdukt.getBlodprodukt(), blodProdukt);
-				}
-			}
 
-			
-		}
 		for (String field : formFields){
 			String userEntry = userEntries.get(field);
 		//	System.out.println("Key: "+ field);
@@ -184,6 +166,7 @@ public class TransfusjonWebModel extends VigilansModel {
 				System.out.println("Key: "+ field + " Innhold = " + userEntry);
 			
 			annenBlodprodukt.saveField(field, userEntry);
+			blodProdukt.saveField(field, userEntry);
 			transfusjon.saveField(field, userEntry);
 			pasientKomplikasjon.saveField(field, userEntry);
 			symptomer.saveField(field, userEntry);
@@ -192,23 +175,18 @@ public class TransfusjonWebModel extends VigilansModel {
 			hemoLyse.saveField(field, userEntry);
 			produktEgenskap.saveField(field, userEntry);
 		}
-		Iterator blodIterator = blodprodukter.keySet().iterator();
-		while (blodIterator.hasNext()){
-			String key = (String) blodIterator.next();
-			blodProdukt = (Blodprodukt)blodprodukter.get(key);
-			blodProdukt.saveToBlodprodukt();
-		}
-		annenBlodprodukt.saveToBlodprodukt();
-		blodProdukt.produceProduktegenskaper(produktEgenskap);
+
+//		annenBlodprodukt.saveToBlodprodukt();
+//		blodProdukt.produceProduktegenskaper(produktEgenskap);
 		transfusjon.setHastegrad(null);
 		transfusjon.setIndikasjon(null);
 		transfusjon.setTransDato(null);
 		transfusjon.setTransfusjonsklokkeslett(null);
 		transfusjon.setTildigerKomplikasjon(null);
-		
+/*	
 		if (annenBlodprodukt.getBlodprodukt() != null && !annenBlodprodukt.getBlodprodukt().equals(""))
 			transfusjon.getBlodProdukter().put(annenBlodprodukt.getBlodprodukt(),annenBlodprodukt );
-		
+*/		
 		transfusjon.produceBlodprodukt(blodProdukt);
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);
