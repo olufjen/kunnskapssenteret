@@ -14,12 +14,19 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 
 	private List<String> userFields;
 	private Map<String,Produktegenskap> produktEgenskaper;
+	private String[] plasmaProdukter = {"Octaplas","Plasma fra enkeltgiver patogeninaktivert",
+			"Plasma fra flere givere patogeninaktivert","Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret",
+			"Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)","Ferskfrosset plasma",
+			"Uniplas","Annet plasma"};
 	private String[] produkter = {"blod-erytrocytt","blod-trombocytt","Octaplas","Plasma fra enkeltgiver patogeninaktivert",
 			"Plasma fra flere givere patogeninaktivert","Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret",
 			"Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)","Ferskfrosset plasma",
 			"Uniplas","Annet plasma","p-annenblod-erytrocytt","p-annenblod-trombocytt","p-annenblod-plasma"};
 	private String[] tapping = {"p-blod-aferese","p-blod-fullblod","p-blod-vetikke"};
 	private String[] suspensjonsValg = {"p-blod-giverplasma","p-blod-kunstig","p-blod-sus-vetikke"};
+	private String[] antallKeys = {"p-blod-antallerytrocytt","p-blod-antalltrombocytt","p-blod-antallplasma","p-annenblod-antallerytrocytt",
+			"p-annenblod-antalltrombocytt","p-annenblod-antalltransfusjon"};
+	
 	
 	public BlodproduktImpl() {
 		super();
@@ -80,6 +87,14 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 //		String first = (String) egenskaper.get(0);
 	}
 	
+	public List<String> getUserFields() {
+		return userFields;
+	}
+
+	public void setUserFields(List<String> userFields) {
+		this.userFields = userFields;
+	}
+
 	public String[] getTapping() {
 		return tapping;
 	}
@@ -123,6 +138,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		keys = new String[this.userFields.size()];
 		this.userFields.toArray(keys);
 	}
+
 	/**
 	 * saveField
 	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
@@ -175,6 +191,26 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		}
 	}
 
+	public void setAntallkeyProdukt(){
+		int ct = 0;
+		for (String produktnavn : getProdukter()){
+			boolean flag = false;
+	
+			for (String plasma : plasmaProdukter){
+				if (plasma.equals(getBlodprodukt())){
+					flag = true;
+					ct++;
+					break;
+				}
+			}
+			
+			if (produktnavn.equals(getBlodprodukt()))
+					break;
+			if (!flag)
+				ct++;
+		}
+		antallKey = antallKeys[ct];
+	}
 	public Map<String, Produktegenskap> getProduktEgenskaper() {
 		return produktEgenskaper;
 	}
