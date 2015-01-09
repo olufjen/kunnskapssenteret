@@ -96,6 +96,9 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 		while (blodIterator.hasNext()){
 			String key = (String) blodIterator.next();
 			Blodprodukt lokalBlodprodukt = (Blodprodukt)getBlodProdukter().get(key);
+			lokalBlodprodukt.setAntallFields(blodprodukt.getAntallFields());
+			lokalBlodprodukt.setUserFields(blodprodukt.getUserFields());
+			lokalBlodprodukt.setKeyvalues();
 			if (lokalBlodprodukt.getBlodprodukt().equals("blod-trombocytt")){
 				for (String produkt : blodprodukt.getBlodproduktFields().values() ){
 					if (produkt != null && !produkt.equals("")){
@@ -104,13 +107,18 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 					}
 				}
 			}
-			int ct = 21;
+			int ct = 20;
 			for (String produkt : blodprodukt.getBlodproduktFields().values() ){
 				if (produkt != null && !produkt.equals("")){
+					for (String produktnavn : blodprodukt.getProdukter()){
+						if (produkt.equals(produktnavn)){
+							ct++;
+						}
+					}
 					if (produkt.equals(lokalBlodprodukt.getBlodprodukt())){
 						break;
 					}
-					ct++;
+				
 				}
 			}
 			lokalBlodprodukt.setNamePos(ct);
