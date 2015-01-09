@@ -18,6 +18,9 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 			"Plasma fra flere givere patogeninaktivert","Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret",
 			"Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)","Ferskfrosset plasma",
 			"Uniplas","Annet plasma","p-annenblod-erytrocytt","p-annenblod-trombocytt","p-annenblod-plasma"};
+	private String[] tapping = {"p-blod-aferese","p-blod-fullblod","p-blod-vetikke"};
+	private String[] suspensjonsValg = {"p-blod-giverplasma","p-blod-kunstig","p-blod-sus-vetikke"};
+	
 	public BlodproduktImpl() {
 		super();
 		types = new int[] {Types.VARCHAR,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
@@ -77,6 +80,23 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 //		String first = (String) egenskaper.get(0);
 	}
 	
+	public String[] getTapping() {
+		return tapping;
+	}
+
+	public void setTapping(String[] tapping) {
+		this.tapping = tapping;
+	}
+
+
+	public String[] getSuspensjonsValg() {
+		return suspensjonsValg;
+	}
+
+	public void setSuspensjonsValg(String[] suspensjonsValg) {
+		this.suspensjonsValg = suspensjonsValg;
+	}
+
 	public String[] getProdukter() {
 		return produkter;
 	}
