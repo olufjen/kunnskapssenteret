@@ -67,6 +67,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	protected String[]keys;	
 
 	protected int namePos = 0;
+	protected String antallKey = "";
 	
 	public String getSuspensjon() {
 		return suspensjon;
@@ -121,7 +122,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 		if (antallEnheter == -1){
 			String aProd = null;
 			
-				aProd = antallFields.get(keys[namePos]);
+				aProd = antallFields.get(antallKey);
 				if (aProd != null){
 					antallEnheter = Integer.parseInt(aProd);
 				
