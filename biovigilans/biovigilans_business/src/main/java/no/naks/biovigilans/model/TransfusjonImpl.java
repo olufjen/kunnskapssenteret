@@ -66,24 +66,34 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	public void produceBlodprodukt(Blodprodukt blodprodukt) {
 		Blodprodukt lokalBlodprodukt = null;
 		boolean noTemp = false;
-		Set pKeys = blodprodukt.getBlodproduktFields().keySet();
-		Iterator ppItarator = pKeys.iterator();
-		while(ppItarator.hasNext()){
-		String bKey = (String) ppItarator.next();
-//		System.out.println("Transfusjon Key: "+ bKey );
-		Set keys = blodprodukt.getEgenskaperFields().keySet();
-		Iterator produktIterator = keys.iterator();
-		while(produktIterator.hasNext()){
-			String pKey = (String) produktIterator.next();
-			String egenskap = (String)blodprodukt.getEgenskaperFields().get(pKey);
-			if (egenskap != null && !egenskap.equals("")){
-				lokalBlodprodukt = new BlodproduktImpl();
-				lokalBlodprodukt.distributeValues(pKey,egenskap);
-			}
+		
+		for (String produkt : blodprodukt.getBlodproduktFields().values() ){
+			if (produkt != null && !produkt.equals("")){
+				for (String produktnavn : blodprodukt.getProdukter()){
+					if (produkt.equals(produktnavn)){
+						lokalBlodprodukt = new BlodproduktImpl();
+						lokalBlodprodukt.setBlodprodukt(produkt);
+						noTemp = true;
+						break;
+					}
+				}
+				if (!noTemp && lokalBlodprodukt != null){
+					lokalBlodprodukt.setTappetype(produkt);
 
-		}
+					lokalBlodprodukt.setSuspensjon(produkt);
+				}
+//				lokalBlodprodukt.saveToBlodprodukt();
+				if (lokalBlodprodukt != null)
+					getBlodProdukter().put(lokalBlodprodukt.getBlodprodukt(), lokalBlodprodukt);
+				noTemp= false;
+		
+			}
+			
+			
 		}
 		
+
+	
 	}
 	
 }
