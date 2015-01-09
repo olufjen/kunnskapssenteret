@@ -17,7 +17,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	private String[] produkter = {"blod-erytrocytt","blod-trombocytt","Octaplas","Plasma fra enkeltgiver patogeninaktivert",
 			"Plasma fra flere givere patogeninaktivert","Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret",
 			"Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)","Ferskfrosset plasma",
-			"Uniplas","Annet plasma"};
+			"Uniplas","Annet plasma","p-annenblod-erytrocytt","p-annenblod-trombocytt","p-annenblod-plasma"};
 	public BlodproduktImpl() {
 		super();
 		types = new int[] {Types.VARCHAR,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
