@@ -188,6 +188,7 @@ public class TransfusjonWebModel extends VigilansModel {
 			transfusjon.getBlodProdukter().put(annenBlodprodukt.getBlodprodukt(),annenBlodprodukt );
 */		
 		transfusjon.produceBlodprodukt(blodProdukt);
+		transfusjon.produceBlodprodukt(annenBlodprodukt);
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);
 		pasientKomplikasjon.setArsakssammenheng(null);
