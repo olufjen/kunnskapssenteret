@@ -45,9 +45,17 @@ public interface Blodprodukt {
 	public String[] getProdukter();
 
 	public void setProdukter(String[] produkter);
+	public String[] getTapping();
 
+	public void setTapping(String[] tapping);
+
+
+	public String[] getSuspensjonsValg();
+
+	public void setSuspensjonsValg(String[] suspensjonsValg);
 	public Map<String, Produktegenskap> getProduktEgenskaper();
-
+	public int getNamePos();
+	public void setNamePos(int namePos);
 	public void setProduktEgenskaper(Map<String, Produktegenskap> produktEgenskaper);
 	public void setBlodProduktfieldMaps(String[]userFields);
 	public void saveField(String userField,String userValue);
