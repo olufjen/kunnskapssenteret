@@ -1,6 +1,7 @@
 package no.naks.biovigilans.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
@@ -56,6 +57,10 @@ public interface Blodprodukt {
 	public Map<String, Produktegenskap> getProduktEgenskaper();
 	public int getNamePos();
 	public void setNamePos(int namePos);
+	public void setAntallkeyProdukt();
+	public List<String> getUserFields();
+
+	public void setUserFields(List<String> userFields);
 	public void setProduktEgenskaper(Map<String, Produktegenskap> produktEgenskaper);
 	public void setBlodProduktfieldMaps(String[]userFields);
 	public void saveField(String userField,String userValue);
