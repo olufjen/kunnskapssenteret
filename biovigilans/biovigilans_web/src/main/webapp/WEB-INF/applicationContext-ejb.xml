@@ -107,6 +107,7 @@
   </bean>
   <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
+ 	<property name="updateVigilansmeldingSQL" value="${vigilansmelding.updatemelderid}"></property>
   </bean>
   <bean id="hendelseTablesService" class="no.naks.biovigilans.service.HendelseTablesServiceImpl">
   	<property name="hendelsehemovigilansDAO" ref="hendelsehemovigilansDAO"></property>
