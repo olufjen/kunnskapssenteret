@@ -120,13 +120,13 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	public void setAntallEnheter(int antallEnheter) {
 		if (antallEnheter == -1){
 			String aProd = null;
-			for (int i=21;i<26;i++){
-				aProd = antallFields.get(keys[i]);
+			
+				aProd = antallFields.get(keys[namePos]);
 				if (aProd != null){
 					antallEnheter = Integer.parseInt(aProd);
-					break;
+				
 				}
-			}
+		
 		}
 		this.antallEnheter = antallEnheter;
 	}
@@ -286,6 +286,12 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	}
 	public void setTappetypeFields(Map<String, String> tappetypeFields) {
 		this.tappetypeFields = tappetypeFields;
+	}
+	public int getNamePos() {
+		return namePos;
+	}
+	public void setNamePos(int namePos) {
+		this.namePos = namePos;
 	}
 
 	
