@@ -68,6 +68,7 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 		boolean noTemp = false;
 		
 		for (String produkt : blodprodukt.getBlodproduktFields().values() ){
+			
 			if (produkt != null && !produkt.equals("")){
 				for (String produktnavn : blodprodukt.getProdukter()){
 					if (produkt.equals(produktnavn)){
@@ -76,11 +77,6 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 						noTemp = true;
 						break;
 					}
-				}
-				if (!noTemp && lokalBlodprodukt != null){
-					lokalBlodprodukt.setTappetype(produkt);
-
-					lokalBlodprodukt.setSuspensjon(produkt);
 				}
 //				lokalBlodprodukt.saveToBlodprodukt();
 				if (lokalBlodprodukt != null)
@@ -91,9 +87,49 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 			
 			
 		}
-		
+		SetblodProductValues(blodprodukt);
 
 	
+	}
+	private void SetblodProductValues(Blodprodukt blodprodukt){
+		Iterator blodIterator = getBlodProdukter().keySet().iterator();
+		while (blodIterator.hasNext()){
+			String key = (String) blodIterator.next();
+			Blodprodukt lokalBlodprodukt = (Blodprodukt)getBlodProdukter().get(key);
+			if (lokalBlodprodukt.getBlodprodukt().equals("blod-trombocytt")){
+				for (String produkt : blodprodukt.getBlodproduktFields().values() ){
+					if (produkt != null && !produkt.equals("")){
+						chooseTapping(lokalBlodprodukt, produkt);
+						chooseSuspensjon(lokalBlodprodukt, produkt);
+					}
+				}
+			}
+			int ct = 21;
+			for (String produkt : blodprodukt.getBlodproduktFields().values() ){
+				if (produkt != null && !produkt.equals("")){
+					if (produkt.equals(lokalBlodprodukt.getBlodprodukt())){
+						break;
+					}
+					ct++;
+				}
+			}
+			lokalBlodprodukt.setNamePos(ct);
+			lokalBlodprodukt.setAntallEnheter(-1);
+		}
+	}
+	private void chooseTapping(Blodprodukt blodprodukt,String egenskap){
+		for (String tapping : blodprodukt.getTapping()){
+			if (tapping.equals(egenskap)){
+				blodprodukt.setTappetype(egenskap);
+			}
+		}
+	}
+	private void chooseSuspensjon(Blodprodukt blodprodukt,String suspensjon){
+		for (String susp : blodprodukt.getSuspensjonsValg()){
+			if (susp.equals(suspensjon)){
+				blodprodukt.setSuspensjon(suspensjon);
+			}
+		}
 	}
 	
 }
