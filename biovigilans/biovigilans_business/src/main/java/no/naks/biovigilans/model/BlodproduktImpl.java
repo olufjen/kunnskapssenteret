@@ -14,7 +14,10 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 
 	private List<String> userFields;
 	private Map<String,Produktegenskap> produktEgenskaper;
-	
+	private String[] produkter = {"blod-erytrocytt","blod-trombocytt","Octaplas","Plasma fra enkeltgiver patogeninaktivert",
+			"Plasma fra flere givere patogeninaktivert","Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret",
+			"Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)","Ferskfrosset plasma",
+			"Uniplas","Annet plasma"};
 	public BlodproduktImpl() {
 		super();
 		types = new int[] {Types.VARCHAR,Types.DATE,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
@@ -24,7 +27,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		egenskaperFields = new HashMap<String,String>();
 		produktEgenskaper = new HashMap();
 		userFields = new ArrayList();
-		
+		 
 	}
 
 	public void setParams(){
@@ -73,11 +76,21 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 //		ArrayList egenskaper = (ArrayList) egenskaperFields.values();
 //		String first = (String) egenskaper.get(0);
 	}
+	
+	public String[] getProdukter() {
+		return produkter;
+	}
+
+	public void setProdukter(String[] produkter) {
+		this.produkter = produkter;
+	}
+
 	public void setAntallfieldMaps(String[]userFields){
+		int l = userFields.length;
 		for (String field : userFields){
 			this.userFields.add(field);
 		}
-		for (int i = 0;i<9;i++){
+		for (int i = 0;i<l;i++){
 			antallFields.put(userFields[i],null);
 		}
 	
@@ -113,13 +126,16 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	}
 	public void saveToBlodprodukt(){
 		setAntallEnheter(-1);
-		setBlodprodukt(null);
+		setBlodprodukt(null);// Produktet settes fast!
 		setProduktetsegenskap(null);
 		setTappetype(null);
 		setSuspensjon(null);
 		setAntallenheterpakke(-1);
 		setAntallTromb(-1);
 		setAntallPlasma(-1);
+	}
+	public void saveblodproduktName(int pos){
+		
 	}
 	/**
 	 * produceProduktegeskaper
@@ -129,6 +145,7 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	public void produceProduktegenskaper(Produktegenskap egenskap) {
 		Produktegenskap lokalEgenskap = null;
 		boolean noTemp = false;
+		// Så lenge det finnes produktegenskaper:
 		for (String produkt : egenskap.getProduktegenskapFields().values() ){
 			if (produkt != null && !produkt.equals("")){
 				lokalEgenskap = new ProduktegenskapImpl();
