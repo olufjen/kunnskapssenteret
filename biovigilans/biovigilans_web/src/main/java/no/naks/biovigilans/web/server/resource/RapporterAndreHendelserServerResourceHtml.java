@@ -3,6 +3,7 @@ package no.naks.biovigilans.web.server.resource;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,8 @@ import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
+
+import org.apache.commons.lang.time.FastDateFormat;
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -120,8 +123,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     		
     		sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
     		dataModel.put(andreHendelseId,annenModel);
+    		ClientResource clres2  ;
+
     		Parameter lagre = form.getFirst("lagre3");
-    		
+    		Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
+    		Parameter godkjet = form.getFirst("godkjent");
     		if(lagre != null){
     			giverModel = new GiverKomplikasjonwebModel();
     			//giverModel.getVigilansmelding().saveToVigilansmelding();
@@ -141,22 +147,35 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			giverWebService.saveVigilansmelding(giverModel);
     			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
     			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
+    			String strDato = FastDateFormat.getInstance("dd-MM-yyyy").format(datoforhendelse);
+    			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
     			
     			Long meldeid = annenModel.getAnnenKomplikasjon().getMeldeid();
+    			
     			Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
     			klassifikasjon.setMeldeidannen(meldeid);
     			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
+    			
+    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelserkvittering.html"));
+    			/*
+    			Representation andreHendelser = clres2.get();
+        		invalidateSessionobjects();
+        		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+        				MediaType.TEXT_HTML); */
+        		
+    		}else if(ikkegodkjet != null){
+         		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+    		}else{
+	    		
+        		invalidateSessionobjects();
+	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans"));
     		}
-    		
-    		
-    		String page = getPage();
-    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
-    		Representation pasientkomplikasjonFtl = clres2.get();
-    		invalidateSessionobjects();
-    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+	     	Representation andreHendelser = clres2.get();
+       		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
     				MediaType.TEXT_HTML);
+    		
     	}
     	return templateRep;
       
