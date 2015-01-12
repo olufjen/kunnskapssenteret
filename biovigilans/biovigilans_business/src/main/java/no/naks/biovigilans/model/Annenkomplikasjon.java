@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.util.Date;
 import java.util.Map;
 
 public interface Annenkomplikasjon {
@@ -38,4 +39,7 @@ public interface Annenkomplikasjon {
 	public void saveField(String userField, String userValue);
 	public void saveToAnnenKomplikasjon();
 
+
+	public String getDatoforhendelseKvittering() ;
+	public void setDatoforhendelseKvittering(String datoforhendelseKvittering);
 }

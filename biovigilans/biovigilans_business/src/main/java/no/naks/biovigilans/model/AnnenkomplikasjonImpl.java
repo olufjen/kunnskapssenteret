@@ -1,6 +1,10 @@
 package no.naks.biovigilans.model;
 
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +52,10 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	 * Hvordan ble hendelsen oppdaget
 	 */
 	private String oppdaget;
+	/**
+	 * Dato når komplikasjonen ble oppdaget for kvittering
+	 */
+	private String datoforhendelseKvittering;
 
 	private Long meldeid;
 	private Map<String,String> annenKomplikasjonsFields;
@@ -74,6 +82,14 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			}
 		}
 		this.klassifikasjon = klassifikasjon;
+	}
+	
+	
+	public String getDatoforhendelseKvittering() {
+		return datoforhendelseKvittering;
+	}
+	public void setDatoforhendelseKvittering(String datoforhendelseKvittering) {
+		this.datoforhendelseKvittering = datoforhendelseKvittering;
 	}
 	public String getKlassifikasjonkode() {
 		return Klassifikasjonkode;
