@@ -30,4 +30,6 @@ public interface Produktegenskap {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
+	public String getEgenskapType();
+	public void setEgenskapType(String egenskapType);
 }
