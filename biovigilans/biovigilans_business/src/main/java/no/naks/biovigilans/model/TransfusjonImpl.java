@@ -65,7 +65,7 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 	 */
 	public void produceBlodprodukt(Blodprodukt blodprodukt) {
 		Blodprodukt lokalBlodprodukt = null;
-		boolean noTemp = false;
+		
 		
 		for (String produkt : blodprodukt.getBlodproduktFields().values() ){
 			
@@ -74,15 +74,24 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 					if (produkt.equals(produktnavn)){
 						lokalBlodprodukt = new BlodproduktImpl();
 						lokalBlodprodukt.setBlodprodukt(produkt);
-						noTemp = true;
+					
 						break;
+					}
+				}
+				if (lokalBlodprodukt == null){
+					for (String produktnavn : blodprodukt.getPlasmaProdukter()){
+						if (produkt.equals(produktnavn)){
+							lokalBlodprodukt = new BlodproduktImpl();
+							lokalBlodprodukt.setBlodprodukt(produkt);
+						}
 					}
 				}
 //				lokalBlodprodukt.saveToBlodprodukt();
 				if (lokalBlodprodukt != null)
 					getBlodProdukter().put(lokalBlodprodukt.getBlodprodukt(), lokalBlodprodukt);
-				noTemp= false;
-		
+			
+				lokalBlodprodukt = null;
+				
 			}
 			
 			
@@ -107,22 +116,10 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 					}
 				}
 			}
-			int ct = 20;
-			for (String produkt : blodprodukt.getBlodproduktFields().values() ){
-				if (produkt != null && !produkt.equals("")){
-					for (String produktnavn : blodprodukt.getProdukter()){
-						if (produkt.equals(produktnavn)){
-							ct++;
-						}
-					}
-					if (produkt.equals(lokalBlodprodukt.getBlodprodukt())){
-						break;
-					}
-				
-				}
-			}
-			lokalBlodprodukt.setNamePos(ct);
-			lokalBlodprodukt.setAntallEnheter(-1);
+
+			lokalBlodprodukt.setAntallkeyProdukt();
+			if (lokalBlodprodukt.getAntallEnheter() < 0)
+				lokalBlodprodukt.setAntallEnheter(-1);
 		}
 	}
 	private void chooseTapping(Blodprodukt blodprodukt,String egenskap){
