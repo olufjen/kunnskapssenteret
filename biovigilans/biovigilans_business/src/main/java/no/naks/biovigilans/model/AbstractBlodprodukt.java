@@ -49,7 +49,7 @@ public abstract class AbstractBlodprodukt extends AbstractModel implements Blodp
 	/**
 	 * Antall poser som er benyttet ved transfusjonen.
 	 */
-	private int antallEnheter = 0;
+	private int antallEnheter = -2;
 	private int antallenheterpakke = 0;
 	private int antallTromb; // -- Antall trombocyttkonsentrater
 	private int antallPlasma; //-- Antall plasamaenheter
