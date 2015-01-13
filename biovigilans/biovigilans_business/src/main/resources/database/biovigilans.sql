@@ -285,6 +285,7 @@ CREATE TABLE Annenkomplikasjon
     klassifikasjon       TEXT                NULL,
     -- Klassifikasjonskode
     Klassifikasjonkode   TEXT                NULL,
+	delkode				 TEXT				 NULL,
     -- Beskrivelse av hendelsen
     komplikasjonbeskrivelse TEXT             NULL,
     -- Hva slags hendelse er dette?  
