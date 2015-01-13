@@ -14,18 +14,14 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 
 	private List<String> userFields;
 	private Map<String,Produktegenskap> produktEgenskaper;
-	private String[] plasmaProdukter = {"Octaplas","Plasma fra enkeltgiver patogeninaktivert",
-			"Plasma fra flere givere patogeninaktivert","Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret",
-			"Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)","Ferskfrosset plasma",
-			"Uniplas","Annet plasma"};
-	private String[] produkter = {"blod-erytrocytt","blod-trombocytt","Octaplas","Plasma fra enkeltgiver patogeninaktivert",
-			"Plasma fra flere givere patogeninaktivert","Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret",
-			"Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)","Ferskfrosset plasma",
-			"Uniplas","Annet plasma","p-annenblod-erytrocytt","p-annenblod-trombocytt","p-annenblod-plasma"};
+	private String[] plasmaProdukter = {"Octaplas","Plasma fra enkeltgiver patogeninaktivert","Plasma fra flere givere patogeninaktivert",
+			"Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret","Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)",
+			"Ferskfrosset plasma","Uniplas","Annet plasma"};
+	private String[] produkter = {"blod-erytrocytt","blod-trombocytt","p-blodprodukt-transfusjon","p-annenblod-erytrocytt","p-annenblod-trombocytt","p-annenblod-plasma"};
 	private String[] tapping = {"p-blod-aferese","p-blod-fullblod","p-blod-vetikke"};
 	private String[] suspensjonsValg = {"p-blod-giverplasma","p-blod-kunstig","p-blod-sus-vetikke"};
 	private String[] antallKeys = {"p-blod-antallerytrocytt","p-blod-antalltrombocytt","p-blod-antallplasma","p-annenblod-antallerytrocytt",
-			"p-annenblod-antalltrombocytt","p-annenblod-antalltransfusjon"};
+			"p-annenblod-antalltrombocytt","p-annenblod-antalltransfusjon","p-annenblod-antallplasma"};
 	
 	
 	public BlodproduktImpl() {
@@ -120,6 +116,14 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		this.produkter = produkter;
 	}
 
+	public String[] getPlasmaProdukter() {
+		return plasmaProdukter;
+	}
+
+	public void setPlasmaProdukter(String[] plasmaProdukter) {
+		this.plasmaProdukter = plasmaProdukter;
+	}
+
 	public void setAntallfieldMaps(String[]userFields){
 		int l = userFields.length;
 		for (String field : userFields){
@@ -193,22 +197,23 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 
 	public void setAntallkeyProdukt(){
 		int ct = 0;
+		boolean pFound = false;
 		for (String produktnavn : getProdukter()){
-			boolean flag = false;
-	
-			for (String plasma : plasmaProdukter){
-				if (plasma.equals(getBlodprodukt())){
-					flag = true;
-					ct++;
+			if (produktnavn.equals(getBlodprodukt())){
+				pFound = true;
+				break;
+			}
+			ct++;
+		}
+		if (!pFound){
+			for (String produktnavn : getPlasmaProdukter()){
+				if (produktnavn.equals(getBlodprodukt())){
+					ct = 2;
 					break;
 				}
 			}
-			
-			if (produktnavn.equals(getBlodprodukt()))
-					break;
-			if (!flag)
-				ct++;
 		}
+	
 		antallKey = antallKeys[ct];
 	}
 	public Map<String, Produktegenskap> getProduktEgenskaper() {
