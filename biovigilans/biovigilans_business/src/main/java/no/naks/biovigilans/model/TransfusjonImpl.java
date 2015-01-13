@@ -104,9 +104,39 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 			
 		}
 		SetblodProductValues(blodprodukt);
-
+		
 	
 	}
+	/* 
+	 * produceProduktegenskaper
+	 * Denne rutinen setter alle produktegenskapene til riktig blodprodukt
+	 */
+	public void produceProduktegenskaper(Produktegenskap egenskap){
+		Produktegenskap lokalEgenskap = null;
+		boolean noTemp = false;
+		// Så lenge det finnes produktegenskaper:
+		for (String produkt : egenskap.getProduktegenskapFields().values() ){
+			if (produkt != null && !produkt.equals("")){
+				lokalEgenskap = new ProduktegenskapImpl();
+				lokalEgenskap.distributeValues(produkt);
+	//			produktEgenskaper.put(produkt, lokalEgenskap);
+				Iterator blodIterator = getBlodProdukter().keySet().iterator();
+				while (blodIterator.hasNext()){
+					String key = (String) blodIterator.next();
+					Blodprodukt lokalBlodprodukt = (Blodprodukt)getBlodProdukter().get(key);
+					if (lokalBlodprodukt.getBlodprodukt().equals(egenskap.getEgenskapType())){
+						lokalBlodprodukt.getProduktEgenskaper().put(produkt,lokalEgenskap);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * SetblodProductValues
+	 * @param blodprodukt
+	 * Denne rutinen setter alle verdiene til riktig blodprodukt
+	 */
 	private void SetblodProductValues(Blodprodukt blodprodukt){
 		Iterator blodIterator = getBlodProdukter().keySet().iterator();
 		while (blodIterator.hasNext()){
