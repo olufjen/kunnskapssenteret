@@ -100,8 +100,8 @@ public class TransfusjonWebModel extends VigilansModel {
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
 //		makeBlodprodukt();
-		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],formFields[30],formFields[31],formFields[32],
-				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};
+		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],"pm",formFields[31],formFields[32],
+				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};  // formFields[30] (blod-plasma)  fjernet !!
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56],formFields[208],formFields[209]};
 		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a4",formFields[184],formFields[185],formFields[186]};
 
