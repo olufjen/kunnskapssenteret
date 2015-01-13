@@ -17,11 +17,11 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 	private String[] plasmaProdukter = {"Octaplas","Plasma fra enkeltgiver patogeninaktivert","Plasma fra flere givere patogeninaktivert",
 			"Plasma fra enkeltgiver karantene","Plasma fra enkeltgiver frysetørret","Plasma fra flere givere frysetørret","Plasma fra enkeltgiver ferskt (ikke frosset)",
 			"Ferskfrosset plasma","Uniplas","Annet plasma"};
-	private String[] produkter = {"blod-erytrocytt","blod-trombocytt","p-blodprodukt-transfusjon","p-annenblod-erytrocytt","p-annenblod-trombocytt","p-annenblod-plasma"};
+	private String[] produkter = {"blod-erytrocytt","blod-trombocytt","p-blodprodukt-transfusjon","p-annenblod-erytrocytt","p-annenblod-trombocytt","xx","p-annenblod-plasma"};
 	private String[] tapping = {"p-blod-aferese","p-blod-fullblod","p-blod-vetikke"};
 	private String[] suspensjonsValg = {"p-blod-giverplasma","p-blod-kunstig","p-blod-sus-vetikke"};
 	private String[] antallKeys = {"p-blod-antallerytrocytt","p-blod-antalltrombocytt","p-blod-antallplasma","p-annenblod-antallerytrocytt",
-			"p-annenblod-antalltrombocytt","p-annenblod-antalltransfusjon","p-annenblod-antallplasma"};
+			"p-annenblod-antalltrombocytt","p-annenblod-antalltransfusjon","p-annenblod-antallplasma","p-blod-antallandre","p-blodannet-antallandre"};
 	
 	
 	public BlodproduktImpl() {
@@ -208,10 +208,18 @@ public class BlodproduktImpl extends AbstractBlodprodukt implements Blodprodukt 
 		if (!pFound){
 			for (String produktnavn : getPlasmaProdukter()){
 				if (produktnavn.equals(getBlodprodukt())){
+					pFound = true;
 					ct = 2;
 					break;
 				}
 			}
+		}
+		if (!pFound){
+			ct = 7;
+			antallKey = antallKeys[ct];
+			String ant = antallFields.get(antallKey);
+			if (ant == null)
+				ct = 8;
 		}
 	
 		antallKey = antallKeys[ct];
