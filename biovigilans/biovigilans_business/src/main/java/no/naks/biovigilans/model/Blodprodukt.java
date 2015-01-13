@@ -46,6 +46,10 @@ public interface Blodprodukt {
 	public String[] getProdukter();
 
 	public void setProdukter(String[] produkter);
+
+	public String[] getPlasmaProdukter();
+
+	public void setPlasmaProdukter(String[] plasmaProdukter);
 	public String[] getTapping();
 
 	public void setTapping(String[] tapping);
