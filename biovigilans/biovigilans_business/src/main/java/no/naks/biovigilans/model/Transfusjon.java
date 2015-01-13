@@ -60,7 +60,7 @@ public interface Transfusjon {
 
 	public void setTildigerKomplikasjon(String tildigerKomplikasjon);
 	public String getTransDato();
-
+	public void produceProduktegenskaper(Produktegenskap produktegenskap);
 	public void setTransDato(String transDato);
 
 	public Time getTransklokke();
