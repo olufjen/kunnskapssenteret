@@ -4,7 +4,7 @@ import java.sql.Types;
 import java.util.HashMap;
 
 public class ProduktegenskapImpl extends AbstractProduktegenskap implements Produktegenskap {
-
+	private String egenskapType = ""; // Er av typen erytrocytt, trombocytt eller plasma
 	public ProduktegenskapImpl() {
 		super();
 		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
@@ -13,6 +13,14 @@ public class ProduktegenskapImpl extends AbstractProduktegenskap implements Prod
 	
 		
 	}
+	public ProduktegenskapImpl(String egenskaptype) {
+		super();
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		produktegenskapFields = new HashMap();
+		this.egenskapType = egenskaptype;
+		
+	}	
 	public void setParams(){
 		Long id = getProduktegenskapId();
 		if (id == null){
@@ -50,4 +58,11 @@ public class ProduktegenskapImpl extends AbstractProduktegenskap implements Prod
 
 
 	}
+	public String getEgenskapType() {
+		return egenskapType;
+	}
+	public void setEgenskapType(String egenskapType) {
+		this.egenskapType = egenskapType;
+	}
+	
 }
