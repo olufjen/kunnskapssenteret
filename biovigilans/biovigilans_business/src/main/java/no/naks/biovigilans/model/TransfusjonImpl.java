@@ -86,6 +86,13 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 						}
 					}
 				}
+				if (lokalBlodprodukt == null){
+					String produktvalue = (String) blodprodukt.getBlodproduktFields().get(blodprodukt.getUserFields().get(5)); // Userfield index 5 er annet blodprodukt !!
+					if (produktvalue != null && !produktvalue.equals("")){
+						lokalBlodprodukt = new BlodproduktImpl();
+						lokalBlodprodukt.setBlodprodukt(produktvalue);
+					}
+				}
 //				lokalBlodprodukt.saveToBlodprodukt();
 				if (lokalBlodprodukt != null)
 					getBlodProdukter().put(lokalBlodprodukt.getBlodprodukt(), lokalBlodprodukt);
