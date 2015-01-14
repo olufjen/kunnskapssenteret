@@ -3,10 +3,14 @@ package no.naks.biovigilans.web.server.resource;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.FormParam;
 
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
@@ -71,6 +75,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     dataModel.put(andreHendelseId, annenModel);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	     
+ 	
+	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/pasientkomplikasjon/nymeldingfagprosedyre.html").get();
@@ -95,7 +101,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     	if(form == null){
     		invalidateSessionobjects();
     	}
- 
+    	
+    	
+    	
     	if (form != null){
     		Parameter logout = form.getFirst("avbryt3");
     		Parameter lukk = form.getFirst("lukk3");
@@ -109,16 +117,21 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    				MediaType.TEXT_HTML);
     			return templateRep; // return a new page!!!
     		}
-    		
+    	  List<String> hvagikkgaltList = new ArrayList<String>();	
   		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(getRequest(), andreHendelseId);
   		  if(annenModel == null){
   			  annenModel = new AnnenKomplikasjonwebModel();
   			  annenModel.setFormNames(sessionParams);
   		  }
+  		  
     		for (Parameter entry : form) {
     			if (entry.getValue() != null && !(entry.getValue().equals("")))
     					System.out.println(entry.getName() + "=" + entry.getValue());
-    			annenModel.setValues(entry);
+    			if(entry.getName().equalsIgnoreCase("tab-hvagikkgalt")){
+    				hvagikkgaltList.add(entry.getValue());
+    			}else{
+    				annenModel.setValues(entry);
+    			}
     		}
     		
     		sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
@@ -156,6 +169,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			
     			Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
     			klassifikasjon.setMeldeidannen(meldeid);
+    			klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
     			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
     			
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelserkvittering.html"));
@@ -166,11 +180,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
         				MediaType.TEXT_HTML); */
         		
     		}else if(ikkegodkjet != null){
-         		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
+         		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html?ikkegodkjent=ja"));
     		}else{
 	    		
         		invalidateSessionobjects();
-	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans"));
+	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_hendelse_main.html"));
     		}
 	     	Representation andreHendelser = clres2.get();
        		templateRep = new TemplateRepresentation(andreHendelser, dataModel,

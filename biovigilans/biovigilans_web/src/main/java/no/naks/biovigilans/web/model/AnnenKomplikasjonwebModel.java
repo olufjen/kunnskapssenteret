@@ -18,14 +18,23 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 	protected String[] feilelleravvik;
 	protected String[] hendelsenoppdaget;
 	
+	protected String str = "hi"; //delete it
+	
+	
+	
+	public String getStr() {
+		return str;
+	}
+
+	public void setStr(String str) {
+		this.str = str;
+	}
+
 	public AnnenKomplikasjonwebModel(){
 		super();
 		annenKomplikasjon = new AnnenkomplikasjonImpl();
 		komplikasjonsklassifikasjon =  new KomplikasjonsklassifikasjonImpl();
 	}
-	
-	
-	
 	
 	public String[] getHendelsenoppdaget() {
 		return hendelsenoppdaget;
@@ -82,10 +91,10 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
-		String annenFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[11],formFields[12],formFields[13],formFields[14],formFields[15]};
+		String annenFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[6],formFields[7],formFields[8],formFields[9]};
 		annenKomplikasjon.setAnnenkomplicationfieldMaps(annenFields); 
 		
-		String komplikasjonFields[] = {formFields[16]};
+		String komplikasjonFields[] = {formFields[10]};
 		komplikasjonsklassifikasjon.setkomplikasjonklassifikasjonFieldsMaps(komplikasjonFields);
 
 	}
@@ -102,7 +111,7 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		}
 		
 		annenKomplikasjon.saveToAnnenKomplikasjon();
-		komplikasjonsklassifikasjon.savetoKomplikasjonklassifikasjon();
+	//	komplikasjonsklassifikasjon.savetoKomplikasjonklassifikasjon();
 		
 	}
 	
