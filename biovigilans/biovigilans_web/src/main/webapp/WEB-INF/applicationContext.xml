@@ -330,7 +330,14 @@
                         ${pasientkomplikasjon.tiltakvalg2},${pasientkomplikasjon.tiltakparegnelig},${pasientkomplikasjon.tiltakblodbank},${pasientkomplikasjon.tiltakavdeling},
                         ${pasientkomplikasjon.tiltakprosedyre},${pasientkomplikasjon.tiltakopplaring},${pasientkomplikasjon.tiltakkvalitet},${pasientkomplikasjon.tiltakannet},
                         ${pasientkomplikasjon.tiltaktext},${pasientkomplikasjon.tiltakforebygget},${pasientkomplikasjon.tiltakforebygget1},${pasientkomplikasjon.tiltakforebygget2},
-                        ${pasientkomplikasjon.tiltakforebygget3},${pasientkomplikasjon.tiltakforebyggettext},${pasientkomplikasjon.egenskaptranspakke},${pasientkomplikasjon.egenskapautologt}">
+                        ${pasientkomplikasjon.tiltakforebygget3},${pasientkomplikasjon.tiltakforebyggettext},${pasientkomplikasjon.egenskaptranspakke},${pasientkomplikasjon.egenskapautologt},
+                        ${pasientkomplikasjon.p-forholdpasient},${pasientkomplikasjon.p-forholdutstyr},${pasientkomplikasjon.p-uforlikeligprodukt},${pasientkomplikasjon.p-feilblodtrans},
+                        ${pasientkomplikasjon.p-betillingrekvirering},${pasientkomplikasjon.p-bestilling},${pasientkomplikasjon.p-provetaking},${pasientkomplikasjon.p-feilmerkingror},
+                        ${pasientkomplikasjon.p-forveksling},${pasientkomplikasjon.p-pretransfusjonstesting},${pasientkomplikasjon.p-mangelfullbehandlingblod},
+                        ${pasientkomplikasjon.p-utleveringblodblodbank},${pasientkomplikasjon.p-hentingblodblodbank},${pasientkomplikasjon.p-hentingblodiskap},${pasientkomplikasjon.p-hentingblodrorpost},
+                        ${pasientkomplikasjon.p-identitestkontroll},${pasientkomplikasjon.p-mangelfullkomm},${pasientkomplikasjon.p-intetavvik},${pasientkomplikasjon.p-vetikkegikkgalt},
+                        ${pasientkomplikasjon.p-paregnelig},${pasientkomplikasjon.p-annetskjedde},${pasientkomplikasjon.p-vetikkeskjedde},${pasientkomplikasjon.p-blodkrav1},
+                        ${pasientkomplikasjon.p-blodkrav2},${pasientkomplikasjon.p-blodkrav3},${pasientkomplikasjon.p-blodkrav4}">
                 </property>
         </bean> 
                 
