@@ -473,7 +473,7 @@ function showtext(id,thetext){
     
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-trombocytt" id="p-blod-trombocytt" value="blod-trombocytt" onclick="toggleDisplay('trombocyttantall', this.checked);toggleDisplay('tappingtypetromb', this.checked)"/>Trombocyttkonsentrat
+        <input type="checkbox" name="p-blod-trombocytt" id="p-blod-trombocytt" value="blod-trombocytt" onclick="toggleDisplay('trombocyttantall', this.checked);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapertrombocytt', this.checked)"/>Trombocyttkonsentrat
       </label>
     </div>
    <div id="trombocyttantall" style="display: none" class="form-group">
@@ -520,7 +520,7 @@ function showtext(id,thetext){
  
      <div class="checkbox">
     
-        <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked);toggleDisplay('blod-plasmagruppe', this.checked)"/>Plasma 
+        <input type="checkbox" name="p-blod-plasma" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall', this.checked);toggleDisplay('blod-plasmagruppe', this.checked);toggleDisplay('blod-egenskaperplasma', this.checked)"/>Plasma 
     </div>
     <div id="blod-plasmagruppe" style="display: none" class="form-group">
          <label>Valg av plasma</label>
@@ -566,7 +566,7 @@ function showtext(id,thetext){
       <input type="text"  name="p-blod-antallandre" size="80"  value="" class="form-control"/>
     </div> 
    <div id="blod-egenskapererytrocytt" style="display: none" class="form-group"> 
-    <label>Spesielle egenskaper</label>
+    <label>Spesielle egenskaper Erytrocytt</label>
     <div class="checkbox">
     <label>
       <input name="p-blod-kriseblod" type="checkbox" id="p-blod-kriseblod" value="p-blod-kriseblod"/>Kriseblod
@@ -587,16 +587,7 @@ function showtext(id,thetext){
     	<input name="p-blod-bestralt" type="checkbox" id="p-blod-bestralt" value="p-blod-bestralt"/>Bestrålt 
     </label>
     </div>
-    <div class="checkbox">
-    <label>
-    	<input name="p-blod-hla" type="checkbox" id="p-blod-hla" value="p-blod-hla"/>HLA-forlikelig
-    </label>
-    </div>
-    <div class="checkbox">
-	<label>
-    	<input name="p-blod-patogening" type="checkbox" id="p-blod-patogening" value="p-blod-patogening"/>Patogeninaktivert
-    </label>
-    </div>
+
     <div class="checkbox">
     <label>
     	<input name="p-blod-blodvarmer" type="checkbox" id="p-blod-blodvarmer" value="p-blod-blodvarmer"/>Blodvarmer brukt
@@ -607,12 +598,73 @@ function showtext(id,thetext){
 	    	<input name="p-blod-autologt" type="checkbox" id="p-blod-autologt" value="p-blod-autologt"/>Autologt blodprodukt
 	    </label>
     </div>
+<!--      
     <div class="form-group">
      <label>Annet</label> 
       <input type="text"  name="p-blod-annet" size="80"  value="" class="form-control" />
     </div>
-</div> 
-    <h4>Andre blodprodukter gitt siste 24 timer</h4>
+-->    
+</div>
+<div id="blod-egenskapertrombocytt" style="display: none" class="form-group">
+    <label>Spesielle egenskaper Trombocytt</label>
+    <div class="checkbox">
+    <label>
+      <input name="p-blod-kriseblodtrombo" type="checkbox" id="p-blod-kriseblodt" value="p-blod-kriseblod"/>Kriseblod
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+      <input name="p-blod-transfusjonspakketrombo" type="checkbox" id="p-blod-transfusjonspakket" value="p-blod-transfusjonspakke"/>Gitt som del av akutt transfusjonspakke
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-vaskettrombo" type="checkbox" id="p-blod-vaskett" value="p-blod-vasket"/>Vasket
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-bestralttrombo" type="checkbox" id="p-blod-bestraltt" value="p-blod-bestralt"/>Bestrålt 
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-hlatrombo" type="checkbox" id="p-blod-hlat" value="p-blod-hla"/>HLA-forlikelig
+    </label>
+    </div>
+    <div class="checkbox">
+	<label>
+    	<input name="p-blod-patogeningtrombo" type="checkbox" id="p-blod-patogeningt" value="p-blod-patogening"/>Patogeninaktivert
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-blodvarmertrombo" type="checkbox" id="p-blod-blodvarmert" value="p-blod-blodvarmer"/>Blodvarmer brukt
+    </label>
+    </div>
+</div>
+
+<div id="blod-egenskaperplasma" style="display: none" class="form-group">
+    <label>Spesielle egenskaper Plasma</label>
+    <div class="checkbox">
+    <label>
+      <input name="p-blod-kriseblodplasma" type="checkbox" id="p-blod-kriseblodp" value="p-blod-kriseblod"/>Kriseblod
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+      <input name="p-blod-transfusjonspakkeplasma" type="checkbox" id="p-blod-transfusjonspakkep" value="p-blod-transfusjonspakke"/>Gitt som del av akutt transfusjonspakke
+    </label>
+    </div>
+    <div class="checkbox">
+    <label>
+    	<input name="p-blod-blodvarmerplasma" type="checkbox" id="p-blod-blodvarmerp" value="p-blod-blodvarmer"/>Blodvarmer brukt
+    </label>
+    </div>
+</div>
+
+ 
+<h4>Andre blodprodukter gitt siste 24 timer</h4>
      <div class="radio">
           <label>
             <input type="radio" name="p-annenblod" id="p-annensykdom-ja" value="annenblod-ja" 
@@ -1049,7 +1101,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ingenklinisk" value="ingenklinisk" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Ingen klinisk reaksjon (f.eks. ved feil, men forlikelig blod, skal trolig ikke væremed)
       </label>
     </div>
-  -->   
+   
     <h3>Utredning</h3>
     <h4>Blodtypeserologisk utredning tyder på HTR</h4>
      <div class="radio">
@@ -1067,7 +1119,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         <input type="radio" name="p-utredning" id="p-utredning-3" value="HTRvetikke" onclick="toggleDisplay('antistofftype', 0)"/>Ikke utført
       </label>
     </div>
-
+ --> 
     <div id="antistofftype" style="display: none" class="form-group">
     <label>Type antistoff:</label>
     <div  class="checkbox">
@@ -1109,7 +1161,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-utredning" rows="3"></textarea>
 	</div>
-<!-- *********** -->	
+<!-- ***********	Kommentert ut 13.01.15 ref melding basecamp
      <label>Hemolyseparametere er positive.</label>
      <div class="radio">
       <label>
@@ -1126,7 +1178,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         <input type="radio" name="p-hemolyse" id="p-hemolyse-3" value="Hemposikkeutført" onclick="toggleDisplay('hemolyse-text', 0)"/>Ikke utført 
       </label>
     </div>
-    
+ -->    
   	<label>Hemolyseparametre.</label>
     <div id="hemolyse-text" style="display: none" class="form-group">
       <table>
@@ -1189,6 +1241,8 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-lgatext" rows="3"></textarea>
 	</div>
+	
+<!-- Kommentert ut ref melding basecamp 14.01.15 	
      <h4>Dyrkning fra pose utført</h4>
      <div class="radio">
       <label>
@@ -1200,7 +1254,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         <input type="radio" name="p-dyrkning" id="p-dyrkning-2" value="dyrkingja" onclick="toggleDisplay('dyrkingpositiv', this.checked)"/>Ja 
       </label>
     </div>
-  
+ --> 
    <div id="dyrkingpositiv" class="form-group" style="display: none">
 	<label>Hvis ja</label>    
     <div class="radio">
@@ -1429,7 +1483,7 @@ Vurder om du skal melde denne."/>Utelukket
     </div>
   </div>   
    <div id="blodkrav" class="form-group" style="display: none" >
-     <label></label>
+     <label>Besvar også</label>
      <div class="radio">
       <label>
         <input type="radio" name="p-blodkrav" id="p-blodkrav" value="blodkravikkeoppfylt" />Blodproduktet oppfylte ikke spesifiserte krav
