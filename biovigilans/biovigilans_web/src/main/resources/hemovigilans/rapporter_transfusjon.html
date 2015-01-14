@@ -463,7 +463,7 @@ function showtext(id,thetext){
     <label>Blodprodukt mistenkt som årsak til komplikasjonen</label>
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="p-blod-erytrocytt" id="p-blod-erytrocytt"  value="blod-erytrocytt" onclick="toggleDisplay('erytrocyttantall', this.checked);toggleDisplay('erytrocyttantall', this.checked)"/>Erytrocyttkonsentrat
+        <input type="checkbox" name="p-blod-erytrocytt" id="p-blod-erytrocytt"  value="blod-erytrocytt" onclick="toggleDisplay('erytrocyttantall', this.checked);toggleDisplay('blod-egenskapererytrocytt', this.checked)"/>Erytrocyttkonsentrat
       </label>
   	</div>
     <div id="erytrocyttantall" style="display: none"  class="form-group">
@@ -565,7 +565,7 @@ function showtext(id,thetext){
      <label>Antall</label> 
       <input type="text"  name="p-blod-antallandre" size="80"  value="" class="form-control"/>
     </div> 
-      
+   <div id="blod-egenskapererytrocytt" style="display: none" class="form-group"> 
     <label>Spesielle egenskaper</label>
     <div class="checkbox">
     <label>
@@ -611,7 +611,7 @@ function showtext(id,thetext){
      <label>Annet</label> 
       <input type="text"  name="p-blod-annet" size="80"  value="" class="form-control" />
     </div>
-
+</div> 
     <h4>Andre blodprodukter gitt siste 24 timer</h4>
      <div class="radio">
           <label>
@@ -1331,22 +1331,22 @@ Vurder om du skal melde denne."/>Utelukket
 		<h3>Hvorfor skjedde denne komplikasjonen?</h3>
 	<div class="checkbox">
     <label>
-    	<input name="p-forholdpasient" type="checkbox" id="p-forholdpasient" value="forholdpasient" onclick="toggleDisplay('gikkgalt', 0)"/>Forhold ved pasient (disponerende faktorer)  
+    	<input name="p-forholdpasient" type="checkbox" id="p-forholdpasient" value="forholdpasient" onclick="toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Forhold ved pasient (disponerende faktorer)  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-forholdutstyr" type="checkbox" id="p-forholdutstyr" value="forholdutstyr" onclick="toggleDisplay('gikkgalt', 0)"/>Forhold ved utstyr  
+    	<input name="p-forholdutstyr" type="checkbox" id="p-forholdutstyr" value="forholdutstyr" onclick="toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Forhold ved utstyr  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-uforlikeligprodukt" type="checkbox" id="p-uforlikeligprodukt" value="uforlikeligprodukt" onclick="toggleDisplay('gikkgalt', 0)"/>Uforlikelig blodprodukt  
+    	<input name="p-uforlikeligprodukt" type="checkbox" id="p-uforlikeligprodukt" value="uforlikeligprodukt" onclick="toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Uforlikelig blodprodukt  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-feilblodtrans" type="checkbox" id="p-feilblodtrans" value="feilblodtrans"  onclick="toggleDisplay('gikkgalt', this.checked)"/>Feil blod transfundert   
+    	<input name="p-feilblodtrans" type="checkbox" id="p-feilblodtrans" value="feilblodtrans"  onclick="toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Feil blod transfundert   
     </label>
     </div>
    <div id="gikkgalt" class="form-group" style="display: none">
@@ -1427,10 +1427,8 @@ Vurder om du skal melde denne."/>Utelukket
         <input type="checkbox" name="p-vetikkegikkgalt" id="p-vetikkegikkgalt" value="vetikkegikkgalt" />Vet ikke
       </label>
     </div>
-  
   </div>   
-    
-   <div id="blodkrav" class="form-group" >
+   <div id="blodkrav" class="form-group" style="display: none" >
      <label></label>
      <div class="radio">
       <label>
