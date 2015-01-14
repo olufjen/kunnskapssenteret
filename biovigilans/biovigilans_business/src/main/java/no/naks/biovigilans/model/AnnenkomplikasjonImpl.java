@@ -52,6 +52,8 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	 * Hvordan ble hendelsen oppdaget
 	 */
 	private String oppdaget;
+	private String delkode;
+	
 	/**
 	 * Dato når komplikasjonen ble oppdaget for kvittering
 	 */
@@ -64,8 +66,8 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public AnnenkomplikasjonImpl() {
 		super();
-		types = new int[]  {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
+		types = new int[]  {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
+		utypes = new int[] {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
 		annenKomplikasjonsFields = new HashMap<String,String>();
 	}
 	public String getKlassifikasjon() {
@@ -74,17 +76,26 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setKlassifikasjon(String klassifikasjon) {
 		if(klassifikasjon == null){
 			klassifikasjon = (annenKomplikasjonsFields.get(keys[3])==null ? "" : annenKomplikasjonsFields.get(keys[3])) ;
-			for(int i=9;i<16;i++){
+			/*for(int i=9;i<16;i++){
 				if(annenKomplikasjonsFields.get(keys[i])!=null){
 					klassifikasjon = klassifikasjon +" ; " + annenKomplikasjonsFields.get(keys[i]);
 					i=16;
 				}
-			}
+			}*/
 		}
 		this.klassifikasjon = klassifikasjon;
 	}
 	
+	public String getDelkode() {
+		return delkode;
+	}
 	
+	public void setDelkode(String delkode) {
+		if(delkode == null){
+			delkode = annenKomplikasjonsFields.get(keys[9]);
+		}
+		this.delkode = delkode;
+	}
 	public String getDatoforhendelseKvittering() {
 		return datoforhendelseKvittering;
 	}
@@ -193,9 +204,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{this.getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget()};
+			params = new Object[]{this.getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
 		}else
-			params = new Object[]{this.getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget()};
+			params = new Object[]{this.getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
 		}
 	/**
 	 * setAnnenkomplicationfieldMaps
@@ -235,7 +246,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		setOppdaget(null);
 		setKomplikasjondefinisjon(null);
 		setKommentar(null);
-	
+		setDelkode(null);
 	
 	}
 	
