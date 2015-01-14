@@ -45,6 +45,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Hemolyse hemoLyse;
 	private Produktegenskap produktEgenskap;
 	private Pasient pasient;
+	
 	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
 	private String[] hemolysparams;
 	private Map<String,Blodprodukt> blodprodukter;
@@ -66,29 +67,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		
 		
 	}
-	private void makeBlodprodukt(){
-		String[] formFields = getFormNames();
-		String[] antallery = {formFields[33],"a4","a5","a6","a7","a8","a9","a10","a11"};
-		String[] antalltromb = {formFields[34],"a4","a5","a6","a7","a8","a9","a10","a11"};
-		String[] antallplasma = {formFields[36],"a4","a5","a6","a7","a8","a9","a10","a11"};
-		
-		Blodprodukt erocytt = new BlodproduktImpl();
-		erocytt.setBlodprodukt("Erytrocyttkonsentrat");
-		Blodprodukt trombocytt = new BlodproduktImpl();
-		trombocytt.setBlodprodukt("Trombocyttkonsentrat");
-		Blodprodukt plasma = new BlodproduktImpl();
-		plasma.setBlodprodukt("Plasma");
-		String erocyttKey = "p-blod-erytrocytt";
-		String tromboKey = "p-blod-trombocytt";
-		String plasmaKey = "p-blod-plasma";
-		erocytt.setAntallfieldMaps(antallery);
-		trombocytt.setAntallfieldMaps(antalltromb);
-		plasma.setAntallfieldMaps(antallplasma);
-		blodprodukter.put(erocyttKey, erocytt);
-		blodprodukter.put(tromboKey, trombocytt);
-		blodprodukter.put(plasmaKey, plasma);
-	
-	}
+
 
 
 	/**
@@ -139,10 +118,11 @@ public class TransfusjonWebModel extends VigilansModel {
 				formFields[81],formFields[82],formFields[83],formFields[84],formFields[85],formFields[86],formFields[87],formFields[88],
 				formFields[89],formFields[90],formFields[178],formFields[179]};
 		symptomer.setsymptomerfieldMaps(symptomerFields);
-		String[] klassifikasjonsFields = {formFields[91],formFields[92],formFields[93],formFields[94],formFields[95],formFields[96],
-				formFields[97],formFields[98],formFields[99],formFields[100],formFields[101],formFields[102],formFields[103],formFields[104],
-				formFields[105],formFields[106],formFields[107],formFields[108],formFields[109],formFields[110],formFields[111],formFields[112],formFields[113]};
-		komplikasjonsklassifikasjon.setkomplikasjonklassifikasjonFieldsMaps(formFields);
+		String[] klassifikasjonsFields = {formFields[210],formFields[211],formFields[212],formFields[213],formFields[214],formFields[215],
+				formFields[216],formFields[217],formFields[218],formFields[219],formFields[220],formFields[221],formFields[222],formFields[223],
+				formFields[224],formFields[225],formFields[226],formFields[227],formFields[228],formFields[229],formFields[230],formFields[231],formFields[232],
+				formFields[233],formFields[234],formFields[235]};
+		komplikasjonsklassifikasjon.setkomplikasjonklassifikasjonFieldsMaps(klassifikasjonsFields);
 		String[] utredningFields = {formFields[114],formFields[115],formFields[116],formFields[117],formFields[118],formFields[119],formFields[120],
 				formFields[121],formFields[122],formFields[123],formFields[124],formFields[125],formFields[126],formFields[127],formFields[128]};
 		utredning.setutredningfieldMaps(utredningFields);
