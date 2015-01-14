@@ -44,6 +44,8 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Utredning utredning;
 	private Hemolyse hemoLyse;
 	private Produktegenskap produktEgenskap;
+	private Produktegenskap tromboEgenskap;
+	private Produktegenskap plasmaEgenskap;
 	private Pasient pasient;
 	
 	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
@@ -64,8 +66,8 @@ public class TransfusjonWebModel extends VigilansModel {
 		hemolyseParametre = new ArrayList<String>();
 		hemoLyse = new HemolyseImpl();
 		produktEgenskap = new ProduktegenskapImpl("blod-erytrocytt");
-		
-		
+		tromboEgenskap = new ProduktegenskapImpl("blod-trombocytt");
+		plasmaEgenskap = new ProduktegenskapImpl("p-blod-plasma");
 	}
 
 
@@ -83,14 +85,16 @@ public class TransfusjonWebModel extends VigilansModel {
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};  // formFields[30] (blod-plasma)  fjernet !!
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56],formFields[208],formFields[209]};
 		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],"a4",formFields[37],formFields[184],formFields[185],formFields[186]};
-
+		String[] tromboEgenskaper = {formFields[236],formFields[237],formFields[238],formFields[239],formFields[240],formFields[241],formFields[242]};
+		String[] plasmaEgenskaper = {formFields[243],formFields[244],formFields[245]};
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
 		blodProdukt.setAntallfieldMaps(antallFields);
 		blodProdukt.setKeyvalues();
 	
 		produktEgenskap.setEgenskaperfieldMaps(egenskaperFields);
-	
+		tromboEgenskap.setEgenskaperfieldMaps(tromboEgenskaper);
+		plasmaEgenskap.setEgenskaperfieldMaps(plasmaEgenskaper);
 		String[] transfusjonsFields = {formFields[18],formFields[19],formFields[20],formFields[21],formFields[22],formFields[23],formFields[24],formFields[25],formFields[26],
 				formFields[148],formFields[149],formFields[150],formFields[151],formFields[152],formFields[153],formFields[154],formFields[155],formFields[156],formFields[157],
 				formFields[158],formFields[159],formFields[160],formFields[161],formFields[162],formFields[163],formFields[164],formFields[165],formFields[166],
@@ -154,6 +158,8 @@ public class TransfusjonWebModel extends VigilansModel {
 			utredning.saveField(field, userEntry);
 			hemoLyse.saveField(field, userEntry);
 			produktEgenskap.saveField(field, userEntry);
+			tromboEgenskap.saveField(field, userEntry);
+			plasmaEgenskap.saveField(field, userEntry);
 		}
 
 //		annenBlodprodukt.saveToBlodprodukt();
@@ -169,6 +175,8 @@ public class TransfusjonWebModel extends VigilansModel {
 */		
 		transfusjon.produceBlodprodukt(blodProdukt);
 		transfusjon.produceProduktegenskaper(produktEgenskap);
+		transfusjon.produceProduktegenskaper(tromboEgenskap);
+		transfusjon.produceProduktegenskaper(plasmaEgenskap);
 		transfusjon.produceBlodprodukt(annenBlodprodukt);
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);
