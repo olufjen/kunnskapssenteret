@@ -337,7 +337,10 @@
                         ${pasientkomplikasjon.p-utleveringblodblodbank},${pasientkomplikasjon.p-hentingblodblodbank},${pasientkomplikasjon.p-hentingblodiskap},${pasientkomplikasjon.p-hentingblodrorpost},
                         ${pasientkomplikasjon.p-identitestkontroll},${pasientkomplikasjon.p-mangelfullkomm},${pasientkomplikasjon.p-intetavvik},${pasientkomplikasjon.p-vetikkegikkgalt},
                         ${pasientkomplikasjon.p-paregnelig},${pasientkomplikasjon.p-annetskjedde},${pasientkomplikasjon.p-vetikkeskjedde},${pasientkomplikasjon.p-blodkrav1},
-                        ${pasientkomplikasjon.p-blodkrav2},${pasientkomplikasjon.p-blodkrav3},${pasientkomplikasjon.p-blodkrav4}">
+                        ${pasientkomplikasjon.p-blodkrav2},${pasientkomplikasjon.p-blodkrav3},${pasientkomplikasjon.p-blodkrav4},
+                        ${egenskaper.p-blod-kriseblodtrombo},${egenskaper.p-blod-transfusjonspakketrombo},${egenskaper.p-blod-vaskettrombo},${egenskaper.p-blod-bestralttrombo},
+                        ${egenskaper.p-blod-hlatrombo},${egenskaper.p-blod-patogeningtrombo},${egenskaper.p-blod-blodvarmertrombo},${egenskaper.p-blod-kriseblodplasma},
+                        ${egenskaper.p-blod-transfusjonspakkeplasma},${egenskaper.p-blod-blodvarmerplasma}">
                 </property>
         </bean> 
                 
