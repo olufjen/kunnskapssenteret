@@ -246,7 +246,7 @@
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
-                ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.feilblod},${andreHendelser.smitte},${andreHendelser.intervju},${andreHendelser.giveren},${andreHendelser.utstyr},${andreHendelser.analyser},${andreHendelser.merking},${andreHendelser.hvagikkgalt}">
+                ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.klassifikasjon-sub},${andreHendelser.hvagikkgalt}">
         
         </property>
          
