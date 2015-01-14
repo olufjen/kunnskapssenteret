@@ -1,11 +1,16 @@
 package no.naks.biovigilans.model;
 
+import java.util.List;
 import java.util.Map;
 
 public interface Komplikasjonsklassifikasjon {
 
 	public String getKlassifikasjon();
 	public void setKlassifikasjon(String klassifikasjon);
+	public List<String> getKlassifikasjonList();
+	public void setKlassifikasjonList(List<String> klassifikasjonList) ;
+	//public String getKlassifikasjon();
+	//public void setKlassifikasjon(String klassifikasjon);
 	public String getKlassifikasjonsbeskrivelse();
 	public void setKlassifikasjonsbeskrivelse(String klassifikasjonsbeskrivelse);
 	public Long getKlassifikasjonsid();

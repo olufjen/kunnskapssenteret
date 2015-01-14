@@ -1,5 +1,7 @@
 package no.naks.biovigilans.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -15,7 +17,8 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 	/**
 	 * Klassifikasjon av komplikasjon, hentes fra Sykdom?
 	 */
-	private String klassifikasjon;
+	private String klassifikasjon ;
+	private List<String> klassifikasjonList = new ArrayList<String>();
 	/**
 	 * Beskrivelse av klassifikasjonen til komplikasjonen
 	 */
@@ -28,28 +31,25 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 	protected Map<String,String> komplikasjonklassifikasjonFields;
 	protected String[] keys;
 	
+	
+	
 	public String getKlassifikasjon() {
 		return klassifikasjon;
 	}
-	public void setKlassifikasjon(String klassfikasjon) {
-		if (klassfikasjon == null){
-			String aProd = null;
-			for (int i=0;i<=21;i++){
-				aProd = komplikasjonklassifikasjonFields.get(keys[i]);
-				if (aProd != null){
-					klassfikasjon = aProd;
-					break;
-				}
-			}
-		}
-		
-		this.klassifikasjon = klassfikasjon;
+	public void setKlassifikasjon(String klassifikasjon) {
+		this.klassifikasjon = klassifikasjon;
+	}
+	public List<String> getKlassifikasjonList() {
+		return klassifikasjonList;
+	}
+	public void setKlassifikasjonList(List<String> klassifikasjonList) {
+		this.klassifikasjonList = klassifikasjonList;
 	}
 	public String getKlassifikasjonsbeskrivelse() {
 		return klassifikasjonsbeskrivelse;
 	}
 	public void setKlassifikasjonsbeskrivelse(String klassfikasjonsbeskrivelse) {
-		if (klassfikasjonsbeskrivelse == null){
+		/*if (klassfikasjonsbeskrivelse == null){
 			String aProd = null;
 			for (int i=0;i<=21;i++){
 				aProd = komplikasjonklassifikasjonFields.get(keys[i]);
@@ -58,7 +58,7 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 					break;
 				}
 			}
-		}
+		}*/
 		this.klassifikasjonsbeskrivelse = klassfikasjonsbeskrivelse;
 	}
 	public Long getKlassifikasjonsid() {

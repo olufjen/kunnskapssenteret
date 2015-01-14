@@ -1,5 +1,7 @@
 package no.naks.biovigilans.dao;
 
+import java.util.List;
+
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
@@ -46,19 +48,24 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 	
 
 	public void saveAnnenKomplikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon){
-		komplikasjonsklassifikasjon.setParams();
 		
-		int[] types = komplikasjonsklassifikasjon.getTypes();
-		Object[] params = komplikasjonsklassifikasjon.getParams();
-		String sql = insertKomplikasjonsklassifikasjonSQL;
-		Long id =komplikasjonsklassifikasjon.getKlassifikasjonsid();
-		if(id!=null){
-			sql = updateKomplikasjonsklassifikasjonSQL;
-			types = komplikasjonsklassifikasjon.getUtypes();
-		}
-		tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,types);
-		tablesUpdate.insert(params);
+		List<String> klassifikasjonList =  komplikasjonsklassifikasjon.getKlassifikasjonList();
 		
+		for(String klassifikasjon:klassifikasjonList){
+			komplikasjonsklassifikasjon.setKlassifikasjon(klassifikasjon);
+			komplikasjonsklassifikasjon.setKlassifikasjonsbeskrivelse(klassifikasjon);
+			komplikasjonsklassifikasjon.setParams();
+			int[] types = komplikasjonsklassifikasjon.getTypes();
+			Object[] params = komplikasjonsklassifikasjon.getParams();
+			String sql = insertKomplikasjonsklassifikasjonSQL;
+			Long id =komplikasjonsklassifikasjon.getKlassifikasjonsid();
+			if(id!=null){
+				sql = updateKomplikasjonsklassifikasjonSQL;
+				types = komplikasjonsklassifikasjon.getUtypes();
+			}
+			tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,types);
+			tablesUpdate.insert(params);
+		}	
 	}
 	
 	
