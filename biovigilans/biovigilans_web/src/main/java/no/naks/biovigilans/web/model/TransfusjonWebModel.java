@@ -62,7 +62,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		utredning = new UtredningImpl();
 		hemolyseParametre = new ArrayList<String>();
 		hemoLyse = new HemolyseImpl();
-		produktEgenskap = new ProduktegenskapImpl();
+		produktEgenskap = new ProduktegenskapImpl("blod-erytrocytt");
 		
 		
 	}
@@ -103,7 +103,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		String[] blodProduktFields = {formFields[27],formFields[28],formFields[29],"pm",formFields[31],formFields[32],
 				formFields[57],formFields[58],formFields[59],formFields[60],formFields[61],formFields[62]};  // formFields[30] (blod-plasma)  fjernet !!
 		String[] egenskaperFields = {formFields[50],formFields[51],formFields[52],formFields[53],formFields[54],formFields[55],formFields[56],formFields[208],formFields[209]};
-		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],formFields[37],"a4",formFields[184],formFields[185],formFields[186]};
+		String[] antallFields = {formFields[33],formFields[34],formFields[35],formFields[36],"a4",formFields[37],formFields[184],formFields[185],formFields[186]};
 
 		blodProdukt.setBlodProduktfieldMaps(blodProduktFields);
 		blodProdukt.setEgenskaperfieldMaps(egenskaperFields);
@@ -188,6 +188,7 @@ public class TransfusjonWebModel extends VigilansModel {
 			transfusjon.getBlodProdukter().put(annenBlodprodukt.getBlodprodukt(),annenBlodprodukt );
 */		
 		transfusjon.produceBlodprodukt(blodProdukt);
+		transfusjon.produceProduktegenskaper(produktEgenskap);
 		transfusjon.produceBlodprodukt(annenBlodprodukt);
 		pasientKomplikasjon.setAlvorlighetsgrad(null);
 		pasientKomplikasjon.setKliniskresultat(null);
