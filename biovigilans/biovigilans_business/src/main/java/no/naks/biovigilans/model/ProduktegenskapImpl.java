@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class ProduktegenskapImpl extends AbstractProduktegenskap implements Produktegenskap {
 	private String egenskapType = ""; // Er av typen erytrocytt, trombocytt eller plasma
+	private String[] egenskapTyper;   // Plasma kan være en av flere
 	public ProduktegenskapImpl() {
 		super();
 		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
@@ -20,7 +21,15 @@ public class ProduktegenskapImpl extends AbstractProduktegenskap implements Prod
 		produktegenskapFields = new HashMap();
 		this.egenskapType = egenskaptype;
 		
-	}	
+	}
+	public ProduktegenskapImpl(String[] egenskaptyper) {
+		super();
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		produktegenskapFields = new HashMap();
+		this.egenskapTyper = egenskaptyper;
+		
+	}		
 	public void setParams(){
 		Long id = getProduktegenskapId();
 		if (id == null){
@@ -57,6 +66,13 @@ public class ProduktegenskapImpl extends AbstractProduktegenskap implements Prod
 		setEgenskapKode(egenskap);
 
 
+	}
+	
+	public String[] getEgenskapTyper() {
+		return egenskapTyper;
+	}
+	public void setEgenskapTyper(String[] egenskapTyper) {
+		this.egenskapTyper = egenskapTyper;
 	}
 	public String getEgenskapType() {
 		return egenskapType;
