@@ -165,13 +165,22 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			melderwebModel.saveValues();
     			melderWebService.saveMelder(melderwebModel);
     			Long melderKey = melderwebModel.getMelder().getMelderId();
-    			if (melderId != null && transfusjon != null){
+    			if (melderKey != null && transfusjon != null){
     				if (transfusjon.isLagret()){
     					transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
     					Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
     					hendelseWebService.saveVigilansMelder(melding);
     				}
     			}
+       			if (melderKey != null && giverModel != null){
+    				if (giverModel.isLagret()){
+    					giverModel.getGiverKomplikasjon().setMelderId(melderKey);
+    					transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
+    					Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
+    					hendelseWebService.saveVigilansMelder(melding);
+    				}
+    			}
+    			
     			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
         		String page = getPage();
