@@ -44,7 +44,7 @@ public class KomplikasjonsklassifikasjonImpl extends
 	public void saveField(String userField, String userValue) {
 		if (komplikasjonklassifikasjonFields.containsKey(userField) && userValue != null && !userValue.equals("")){
 			komplikasjonklassifikasjonFields.put(userField,userValue);	
-
+			getKlassifikasjonList().add(userValue);
 		}	
 	}
 	
