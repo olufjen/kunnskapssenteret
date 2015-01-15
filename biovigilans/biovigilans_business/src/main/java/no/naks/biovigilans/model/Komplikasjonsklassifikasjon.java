@@ -18,7 +18,8 @@ public interface Komplikasjonsklassifikasjon {
 	
 	public Long getMeldeidannen();
 	public void setMeldeidannen(Long meldeid);	
-	
+	public Long getMeldeidpasient();
+	public void setMeldeidpasient(Long meldeidpasient);	
 	public Map<String,String> getKomplikasjonklassifikasjonFields();
 	public void setKomplikasjonklassifikasjonFields(
 			Map<String,String> komplikasjonklassifikasjonFields);
