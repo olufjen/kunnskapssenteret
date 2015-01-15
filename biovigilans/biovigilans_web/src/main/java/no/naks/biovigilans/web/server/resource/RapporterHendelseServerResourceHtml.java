@@ -169,6 +169,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	     setTransfusjonsObjects(); // Setter opp alle session objekter
     	 result.setFormNames(sessionParams);
     	 transfusjon.setFormNames(sessionParams);
+    	 transfusjon.setPlasmaEgenskaper(blodProdukt); // Setter plasma produkttyper
 	     if (kvittering == null){
 	    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
 	  //  	 kvittering.setFormNames(sessionParams);
@@ -265,6 +266,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	   	     	if (transfusjon == null){
 		    	 transfusjon = new TransfusjonWebModel();
 		    	 transfusjon.setFormNames(sessionParams);
+		    	 transfusjon.setPlasmaEgenskaper(blodProdukt); // Setter plasma produkttyper
 	   	     	}
 	   	     if (kvittering == null){
 		    	 kvittering = new TransfusjonKvitteringWebModel(sessionParams);
@@ -315,6 +317,10 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			transfusjon.setTransfusjonsFlag(kvittering);
 	    			result.setLagret(true);
 	    			transfusjon.setLagret(true);
+//	    			klassifikasjon.setMeldeidannen(meldeid);
+
+	    			transfusjon.getKomplikasjonsklassifikasjon().setMeldeidpasient(transfusjon.getPasientKomplikasjon().getMeldeid());
+	    			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(transfusjon.getKomplikasjonsklassifikasjon());
 	    			Long melderKey = melderwebModel.getMelder().getMelderId();
 	    			if (melderKey != null){
 	    				transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
