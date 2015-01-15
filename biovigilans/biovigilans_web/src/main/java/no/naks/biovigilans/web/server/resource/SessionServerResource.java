@@ -38,7 +38,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] avdelinger;
 	protected String[] aldergruppe;
 	protected String[] kjonnValg; 
-	protected String[] blodProdukt;
+	protected String[] blodProdukt; // Plasma blodprodukter for nedtrekk - plasma produkttyper
 	protected String[] hemolyseParametre;
 	protected String pasientkomplikasjonId = "pasientkomplikasjon"; 	// Benyttes som nøkkel til HTML-sider
 	protected String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
