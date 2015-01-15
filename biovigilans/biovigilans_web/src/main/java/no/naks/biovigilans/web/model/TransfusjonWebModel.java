@@ -51,6 +51,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
 	private String[] hemolysparams;
 	private Map<String,Blodprodukt> blodprodukter;
+	private String[] plasmaEgenskaper;
 	
 	public TransfusjonWebModel() {
 		super();
@@ -67,7 +68,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		hemoLyse = new HemolyseImpl();
 		produktEgenskap = new ProduktegenskapImpl("blod-erytrocytt");
 		tromboEgenskap = new ProduktegenskapImpl("blod-trombocytt");
-		plasmaEgenskap = new ProduktegenskapImpl("p-blod-plasma");
+		
 	}
 
 
@@ -182,14 +183,27 @@ public class TransfusjonWebModel extends VigilansModel {
 		pasientKomplikasjon.setKliniskresultat(null);
 		pasientKomplikasjon.setArsakssammenheng(null);
 		pasientKomplikasjon.setKlassifikasjon(null);
-//		pasientKomplikasjon.produceClassification(komplikasjonsklassifikasjon); Denne tabellen er ikke i bruk! Kun en klassifikasjon pr komplikasjon
 		pasientKomplikasjon.produceSymptoms(symptomer);
+		pasientKomplikasjon.getKomplikasjonsKlassifikasjoner().put("klassifikasjon",komplikasjonsklassifikasjon);
 		utredning.saveUtredning();
 		utredning.produceHemolyse(hemoLyse);
 		pasientKomplikasjon.setUtredning(utredning);
 		transfusjon.getPasientKomplikasjoner().put(pasientKomplikasjon.getAlvorlighetsgrad(), pasientKomplikasjon);
 		
 	}
+
+
+	public String[] getPlasmaEgenskaper() {
+		return plasmaEgenskaper;
+	}
+
+
+
+	public void setPlasmaEgenskaper(String[] plasmaEgenskaper) {
+		this.plasmaEgenskaper = plasmaEgenskaper;
+		plasmaEgenskap = new ProduktegenskapImpl(plasmaEgenskaper);
+	}
+
 
 
 	public List<String> getHemolyseParametre() {
