@@ -130,9 +130,11 @@ public class TransfusjonImpl extends AbstractTransfusjon implements Transfusjon 
 						lokalBlodprodukt.getProduktEgenskaper().put(produkt,lokalEgenskap);
 					}
 					if (plasma){
-						for (String egenskapType : egenskap.getEgenskapTyper()){
-							if (lokalBlodprodukt.getBlodprodukt().equals(egenskapType)){
-								lokalBlodprodukt.getProduktEgenskaper().put(produkt,lokalEgenskap);
+						if (egenskap.getEgenskapTyper() != null){
+							for (String egenskapType : egenskap.getEgenskapTyper()){
+								if (lokalBlodprodukt.getBlodprodukt().equals(egenskapType)){
+									lokalBlodprodukt.getProduktEgenskaper().put(produkt,lokalEgenskap);
+								}
 							}
 						}
 					}
