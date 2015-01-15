@@ -160,10 +160,12 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 				tempTiltak = ettiltak;
 				lokalTiltak.setBeskrivelse(tempTiltak);
 				for (String forebyggende : forebyggendeTiltak.getForebyggendeTiltakFields().values()){
-					Forebyggendetiltak forebyggendeLokal = new ForebyggendetiltakImpl();
-					forebyggendeLokal.setTiltakvalg(forebyggende);
-					forebyggendeLokal.setTiltakbeskrivelse(forebyggende);
-					lokalTiltak.getAlleforebyggendeTiltak().put(forebyggende, forebyggendeLokal);
+					if (forebyggende != null && !forebyggende.equals("")){
+						Forebyggendetiltak forebyggendeLokal = new ForebyggendetiltakImpl();
+						forebyggendeLokal.setTiltakvalg(forebyggende);
+						forebyggendeLokal.setTiltakbeskrivelse(forebyggende);
+						lokalTiltak.getAlleforebyggendeTiltak().put(forebyggende, forebyggendeLokal);
+					}
 				}
 				this.alleTiltak.put(ettiltak, lokalTiltak);
 			}
