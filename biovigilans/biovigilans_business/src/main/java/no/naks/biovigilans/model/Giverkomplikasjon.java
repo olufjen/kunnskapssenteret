@@ -46,6 +46,10 @@ public interface Giverkomplikasjon {
 	public void saveToGiverkomplikasjon();
 	public Long getMeldeId();
 	public void setMeldeId(Long meldeId);
+	
+	public Long getMelderId();
+	public void setMelderId(Long melderId);
+	
 	public Long getDonasjonid();
 	public void setDonasjonid(Long donasjonid);
 }
