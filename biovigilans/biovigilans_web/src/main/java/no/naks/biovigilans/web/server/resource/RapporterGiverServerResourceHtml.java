@@ -263,6 +263,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     			
     			giverModel.getGiveroppfolging().setMeldeid(meldeId);
     			giverWebService.saveGiveroppfolging(giverModel);
+    			giverModel.setLagret(true);
     		    //lagre i vigiansmelding
     		}
      		ClientResource clres2  ;
@@ -275,10 +276,11 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		if(ikkegodkjet != null){
          		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
     		}else{
-	    		
+	    	/*	
 	    		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
 	    		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
 	    		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
+	    	*/	
 	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giverkvittering.html"));
 	//    		System.out.println("Status = "+giverModel.getStatus());
 	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
