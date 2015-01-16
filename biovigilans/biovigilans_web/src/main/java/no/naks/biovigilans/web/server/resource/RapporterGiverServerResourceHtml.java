@@ -276,7 +276,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		if(ikkegodkjet != null){
          		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
     		}else{
-	    	/*	
+	    	/*	Må vente med dette til Kontaktskjema er fylt ut OLJ 15.01.15
 	    		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
 	    		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
 	    		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
