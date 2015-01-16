@@ -24,6 +24,9 @@ import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
+import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
+import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
+import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 
@@ -125,10 +128,13 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	if(form == null){
     		invalidateSessionobjects();
     	}
- 
+    	GiverKomplikasjonwebModel model = null;
     	if (form != null){
     		melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(getRequest(),melderId);
     		transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(getRequest(),transfusjonId);
+    		giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),giverkomplikasjonId);
+    		annenModel = (AnnenKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),andreHendelseId);
+    		donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(getRequest(),donasjonId);
     		Parameter logout = form.getFirst("avbrytkontakt");
     		Parameter lukk = form.getFirst("lukkkontakt");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -175,7 +181,6 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
        			if (melderKey != null && giverModel != null){
     				if (giverModel.isLagret()){
     					giverModel.getGiverKomplikasjon().setMelderId(melderKey);
-    					transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
     					Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
     					hendelseWebService.saveVigilansMelder(melding);
     				}
