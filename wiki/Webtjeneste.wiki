@@ -1,8 +1,8 @@
-#summary Dette prosjektet inneholder kildekode for webtjenester mot nhn
+#summary Dette prosjektet inneholder kildekode for 3-3 meldeordningen (Webskjema)  og webtjenester mot nhn
 
 = Introduction =
 
-Dette er kildekode for webtjenester mot nhn benyttt i meldeordningen
+Dette prosjektet inneholder kildekode for 3-3 meldeordningen (Webskjema)  og webtjenester mot nhn.
 
 
 = Details =
