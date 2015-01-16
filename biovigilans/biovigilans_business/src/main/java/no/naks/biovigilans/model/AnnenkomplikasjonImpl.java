@@ -59,7 +59,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	 */
 	private String datoforhendelseKvittering;
 
-	private Long meldeid;
+//	private Long meldeid; Meldeid finnes i AbstractVigelansmelding OLJ 16.01.15 !!
 	private Map<String,String> annenKomplikasjonsFields;
 	private String[] keys;
 	
@@ -194,19 +194,14 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setKeys(String[] keys) {
 		this.keys = keys;
 	}
-	public Long getMeldeid() {
-		return meldeid;
-	}
-	public void setMeldeid(Long meldeid) {
-		this.meldeid = meldeid;
-	}
+
 	
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{this.getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
+			params = new Object[]{getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
 		}else
-			params = new Object[]{this.getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
+			params = new Object[]{getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
 		}
 	/**
 	 * setAnnenkomplicationfieldMaps
