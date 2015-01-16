@@ -282,6 +282,10 @@ public class SessionServerResource extends ProsedyreServerResource {
 	
 	
 	
+	/**
+	 * invalidateSessionobjects
+	 * Denne rutinen fjerner alle session objekter
+	 */
 	public void invalidateSessionobjects(){
 		sessionAdmin.getSession(getRequest(),pasientkomplikasjonId).invalidate();
 		sessionAdmin.getSession(getRequest(),transfusjonId).invalidate();
