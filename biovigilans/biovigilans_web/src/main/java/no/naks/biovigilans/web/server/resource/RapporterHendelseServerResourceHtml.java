@@ -314,7 +314,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			result.getPasient().getTransfusjoner().put(transfusjon.getTransfusjon().getTransDato(), transfusjon.getTransfusjon());
 	    			hendelseWebService.saveHendelse(result);
 	    			hendelseWebService.saveTransfusjon(transfusjon,result);
-	    			transfusjon.setTransfusjonsFlag(kvittering);
+	    			transfusjon.setTransfusjonsFlag(kvittering); //Setter opp ulike feltverdier for TransfusjonKvitteringWebModel.
 	    			result.setLagret(true);
 	    			transfusjon.setLagret(true);
 //	    			klassifikasjon.setMeldeidannen(meldeid);
