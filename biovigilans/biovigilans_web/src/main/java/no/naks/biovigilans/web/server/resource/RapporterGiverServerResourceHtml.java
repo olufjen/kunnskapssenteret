@@ -254,7 +254,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		    giverModel.getGiverKomplikasjon().setDonasjonid(donasjonId);
     		    
     		    Long meldeId = giverModel.getVigilansmelding().getMeldeid();
-    			giverModel.getGiverKomplikasjon().setMeldeId(meldeId);
+    			giverModel.getGiverKomplikasjon().setMeldeid(meldeId);
     			giverWebService.saveGiverkomplikasjon(giverModel);
     			
     			komDiagnosegiver.getKomDiagnosegiver().setMeldeId(meldeId);
