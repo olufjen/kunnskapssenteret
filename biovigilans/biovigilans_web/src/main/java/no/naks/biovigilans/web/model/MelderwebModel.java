@@ -36,6 +36,9 @@ public class MelderwebModel extends VigilansModel {
 		}
 		return melderepost;
 	}
+	public String getAnonymEpost(){
+		return melderepost;
+	}
 
 	public void setMelderepost(String melderepost) {
 		this.melderepost = melderepost;
@@ -113,7 +116,9 @@ public class MelderwebModel extends VigilansModel {
 */		
 		
 	}
-	
+	public void saveAnonym(){
+		melder.setMelderepost(melderepost);
+	}
 	public void kontaktValues(List<Map<String, Object>>  rows){
 			for(Map row:rows){
 				Long id = Long.parseLong(row.get("melderid").toString());
