@@ -26,6 +26,8 @@ public interface Annenkomplikasjon {
 	public void setOppdaget(String oppdaget);
 	public Long getMeldeid();
 	public void setMeldeid(Long meldeid);
+	public Long getMelderId();
+	public void setMelderId(Long melderId);
 	public Map<String, String> getAnnenKomplikasjonsFields();
 	public void setAnnenKomplikasjonsFields(
 			Map<String, String> annenKomplikasjonsFields);
