@@ -133,8 +133,17 @@ function formSubmit(){
   <li><a href="rapporter_andrehendelser.html" data-toggle="tab">Andre uønskede hendelser</a></li>
    -->
 </ul>
-
-<div class="tab-pane" id="kontakt1">
+ <div class="radio">
+          <label>
+            <input name="k-anonym" type="radio" id="k-anonym" value="k-anonym" onclick="toggleDisplay('kontakt1',0);toggleDisplay('anonymbutton',this.checked)"/>
+            Ønsker å melde anonymt
+          </label>
+ </div>
+ <div id="anonymbutton" style="display:none" >
+ 	 <button name="lagreanonymt" type="submit" class="btn btn-primary" >Lagre</button>
+</div>
+    
+<div  class="tab-pane" id="kontakt1">
 	<div class="form-group">
         <label for="k-epost">Melders epost:</label>
         <div>
