@@ -43,7 +43,7 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 public class RapporterKontaktServerResourceHtml extends SessionServerResource {
-
+	private String anonymEpost = "meldeordningen@kunnskapssenteret.no";
 	public RapporterKontaktServerResourceHtml() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -166,32 +166,11 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		
     		Parameter formValue = form.getFirst("formValue"); // Fill kontaktform on the base of epost 
     		Parameter lagre = form.getFirst("lagrekontakt");
-    		
-    		if(lagre != null){
+    		Parameter lagreAnonymt = form.getFirst("lagreanonymt"); // Bruker ønsker å melde anonymt
+    		if(lagre != null){								// Lagre kontaktskjema
     			melderwebModel.saveValues();
     			melderWebService.saveMelder(melderwebModel);
-    			Long melderKey = melderwebModel.getMelder().getMelderId();
-    			if (melderKey != null && transfusjon != null){
-    				if (transfusjon.isLagret()){
-    					transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
-    					Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
-    					hendelseWebService.saveVigilansMelder(melding);
-    				}
-    			}
-       			if (melderKey != null && giverModel != null){
-    				if (giverModel.isLagret()){
-    					giverModel.getGiverKomplikasjon().setMelderId(melderKey);
-    					Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
-    					hendelseWebService.saveVigilansMelder(melding);
-    				}
-    			}
-    			if (melderKey != null && annenModel != null){
-    				if (annenModel.isLagret()){
-    					annenModel.getAnnenKomplikasjon().setMelderId(melderKey); 
-    					Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
-    					hendelseWebService.saveVigilansMelder(melding);
-    				}
-    			}   			
+    			SaveSkjema();
     			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
         		String page = getPage();
@@ -207,7 +186,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
 	    		
-    		}else if(formValue != null){
+    		}else if(formValue != null){					// Sjekk epostadresse oppgitt
 				String epost = melderwebModel.getMelderepost();
 				if(!epost.equalsIgnoreCase("")){
 					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
@@ -225,6 +204,37 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 			    				MediaType.TEXT_HTML);
+    		}else if(lagreAnonymt != null){					// Lagre skjema anonymt.
+    			melderwebModel.setMelderepost(anonymEpost);
+    			String epost = melderwebModel.getMelderepost();
+    			if(!epost.equalsIgnoreCase("")){
+					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
+					if(rows.size() > 0){
+						melderwebModel.kontaktValues( rows);
+						melderwebModel.saveValues();
+						
+						//sessionAdmin.getSession(getRequest(),melderId).invalidate();
+			    	}
+				}else{
+					melderwebModel.setMelderepost(anonymEpost);
+					melderwebModel.saveAnonym();
+				}
+    			melderWebService.saveMelder(melderwebModel);
+				SaveSkjema();
+    			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
+        		dataModel.put(melderId, melderwebModel);
+        		String page = getPage();
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+/*
+ * Invalidate session objects kun dersom et meldeskjema er fylt ut	    		
+ */
+	    		if (checkSavedModel()){
+	    			invalidateSessionobjects();
+	    		}
+//	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+	    				MediaType.TEXT_HTML);
     		}else{
 
     			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
@@ -241,7 +251,30 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	return templateRep;
       
     }
-
+    private void SaveSkjema(){
+		Long melderKey = melderwebModel.getMelder().getMelderId();
+		if (melderKey != null && transfusjon != null){
+			if (transfusjon.isLagret()){
+				transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
+				Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
+				hendelseWebService.saveVigilansMelder(melding);
+			}
+		}
+			if (melderKey != null && giverModel != null){
+			if (giverModel.isLagret()){
+				giverModel.getGiverKomplikasjon().setMelderId(melderKey);
+				Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
+				hendelseWebService.saveVigilansMelder(melding);
+			}
+		}
+		if (melderKey != null && annenModel != null){
+			if (annenModel.isLagret()){
+				annenModel.getAnnenKomplikasjon().setMelderId(melderKey); 
+				Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
+				hendelseWebService.saveVigilansMelder(melding);
+			}
+		}  
+    }
 /*
     public void sendEmail(){
     	Properties props = new Properties();
