@@ -95,7 +95,14 @@ function updateOutput(id1,id2,id3){
 	 var num1 =  document.getElementById(id1).value;
 	 var num2 =  document.getElementById(id2).value;
 	 var num3 = num2 - num1;
-	 document.getElementById(id3).value = num3;
+
+//	 (num3).toFixed(2);
+	
+
+//	 var num3 = Math.round(num2 - num1)*100/100;
+//	 parseFloat($(num3.toFixed(2);
+	 document.getElementById(id3).value = (num3).toFixed(2);
+//	 document.getElementById(id3).ToFixed(2);
 	 if (num3 < 2){
 		// document.getElementById(id3).removeAttr("class");
 		 document.getElementById(id3).className = "text-danger";
@@ -758,11 +765,11 @@ function showtext(id,thetext){
     </div>
      <div id="temperaturstigning" class="form-group" style="display: none">
      <label>Temperatur før transfusjonsreaksjonen</label> 
-      <input type="number" step="any" min="0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
+      <input type="number" step="0.01" min="0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
       <label>Temperatur etter transfusjonsreaksjonen</label> 
-      <input type="number" step="any" min="0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
+      <input type="number" step="0.01" min="0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
       <label>Temperaturstigning</label> <!-- en desimal !!!! -->
-      <output name="p-stigning" id="p-stigning"></output>
+      <output type="number" name="p-stigning" id="p-stigning"></output>
     </div>    
     <div class="checkbox">
       <label>
