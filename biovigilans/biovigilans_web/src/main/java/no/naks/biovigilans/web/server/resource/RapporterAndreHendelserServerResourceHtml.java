@@ -171,7 +171,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			klassifikasjon.setMeldeidannen(meldeid);
     			klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
     			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
-    			
+    			annenModel.setLagret(true);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelserkvittering.html"));
     			/*
     			Representation andreHendelser = clres2.get();
