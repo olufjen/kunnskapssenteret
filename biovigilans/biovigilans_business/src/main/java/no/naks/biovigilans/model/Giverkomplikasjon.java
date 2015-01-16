@@ -44,12 +44,11 @@ public interface Giverkomplikasjon {
 	public int[] getUtypes();
 	
 	public void saveToGiverkomplikasjon();
-	public Long getMeldeId();
-	public void setMeldeId(Long meldeId);
-	
+
 	public Long getMelderId();
 	public void setMelderId(Long melderId);
-	
+	public Long getMeldeid();
+	public void setMeldeid(Long meldeid);
 	public Long getDonasjonid();
 	public void setDonasjonid(Long donasjonid);
 }
