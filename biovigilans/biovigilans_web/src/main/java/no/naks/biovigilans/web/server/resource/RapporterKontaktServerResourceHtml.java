@@ -188,7 +188,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			if (melderKey != null && annenModel != null){
     				if (annenModel.isLagret()){
     					annenModel.getAnnenKomplikasjon().setMelderId(melderKey); 
-    					Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
+    					Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
     					hendelseWebService.saveVigilansMelder(melding);
     				}
     			}   			
