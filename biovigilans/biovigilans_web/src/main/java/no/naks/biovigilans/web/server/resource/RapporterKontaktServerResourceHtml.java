@@ -206,6 +206,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			    				MediaType.TEXT_HTML);
     		}else if(lagreAnonymt != null){					// Lagre skjema anonymt.
     			melderwebModel.setMelderepost(anonymEpost);
+    			melderwebModel.setAnonymEpost(anonymEpost);
     			String epost = melderwebModel.getMelderepost();
     			if(!epost.equalsIgnoreCase("")){
 					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
@@ -214,7 +215,11 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 						melderwebModel.saveValues();
 						
 						//sessionAdmin.getSession(getRequest(),melderId).invalidate();
-			    	}
+			    	}else{
+						melderwebModel.setMelderepost(anonymEpost);
+						melderwebModel.saveAnonym();
+					}
+			    		
 				}else{
 					melderwebModel.setMelderepost(anonymEpost);
 					melderwebModel.saveAnonym();
@@ -251,6 +256,11 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	return templateRep;
       
     }
+    /**
+     * Save Skjema
+     * DEnne rutinen sørger for å lagre melderid til vigilansmelding
+     * 
+     */
     private void SaveSkjema(){
 		Long melderKey = melderwebModel.getMelder().getMelderId();
 		if (melderKey != null && transfusjon != null){
