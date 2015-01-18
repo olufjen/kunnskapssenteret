@@ -16,7 +16,7 @@ public class MelderwebModel extends VigilansModel {
 	private String helseregion ="";
 	private String helseforetak ="";
 	private String sykehus="";
-	
+	private String anonymEpost = "";
 	
 	
 	public String getMeldernavn() {
@@ -31,13 +31,20 @@ public class MelderwebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "k-epost";
 		melderepost = userEntries.get(field);
-		if (melderepost == null){
+		if (melderepost == null && anonymEpost.equals("")){
 			melderepost = "";
+		}else if (!anonymEpost.equals("")) {
+			melderepost = anonymEpost;
 		}
 		return melderepost;
 	}
 	public String getAnonymEpost(){
-		return melderepost;
+		return anonymEpost;
+	}
+	
+
+	public void setAnonymEpost(String anonymEpost) {
+		this.anonymEpost = anonymEpost;
 	}
 
 	public void setMelderepost(String melderepost) {
@@ -118,6 +125,11 @@ public class MelderwebModel extends VigilansModel {
 	}
 	public void saveAnonym(){
 		melder.setMelderepost(melderepost);
+		melder.setMeldernavn("nn");
+		melder.setMeldertlf("11");
+		melder.setHelseforetak("nn");
+		melder.setHelseregion("nn");
+		melder.setSykehus("nn");
 	}
 	public void kontaktValues(List<Map<String, Object>>  rows){
 			for(Map row:rows){
