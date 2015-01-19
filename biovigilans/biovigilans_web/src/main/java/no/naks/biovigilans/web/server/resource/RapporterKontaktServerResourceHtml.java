@@ -204,7 +204,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 			    				MediaType.TEXT_HTML);
-    		}else if(lagreAnonymt != null){					// Lagre skjema anonymt.
+    		}else if(lagreAnonymt != null){					// Bruker velger å lagre skjema anonymt.
     			melderwebModel.setMelderepost(anonymEpost);
     			melderwebModel.setAnonymEpost(anonymEpost);
     			String epost = melderwebModel.getMelderepost();
@@ -212,7 +212,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 					List<Map<String, Object>> rows = melderWebService.selectMelder(epost);
 					if(rows.size() > 0){
 						melderwebModel.kontaktValues( rows);
-						melderwebModel.saveValues();
+						melderwebModel.saveAnonym();
+					//	melderwebModel.saveValues();
 						
 						//sessionAdmin.getSession(getRequest(),melderId).invalidate();
 			    	}else{
