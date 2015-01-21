@@ -66,6 +66,7 @@ var foo;
 function toggleDisplay(id, displayvalue)
 {    
 	// alert("step 1 "+displayvalue);
+	
     if ( displayvalue == 1 ) {
          document.getElementById(id).style.display = 'block';
     //     alert("step 2");
@@ -75,7 +76,51 @@ function toggleDisplay(id, displayvalue)
     }
  //   alert("step 4");
 }
-
+function toggleDisplayarsak(id,l,displayValue)
+{
+	for (ct = 0;ct<l;ct++){
+		var element = id + ct.toString();
+		toggleDisplay(element,displayValue);
+	}
+}
+function displayNone()
+{
+	var id = "ahtr-valg";
+	toggleDisplayarsak(id,6,0);
+	id = "ahtr1-valg";
+	toggleDisplayarsak(id,8,0);
+	id = "dhtr1-valg";
+	toggleDisplayarsak(id,8,0);
+	id = "fhtr1-valg";
+	toggleDisplayarsak(id,5,0);
+	id = "ihtr1-valg";
+	toggleDisplayarsak(id,8,0);
+	id = "alhtr1-valg";
+	toggleDisplayarsak(id,4,0);
+	id = "khtr1-valg";
+	toggleDisplayarsak(id,2,0);
+	id = "phtr1-valg";
+	toggleDisplayarsak(id,4,0);
+	id = "trhtr1-valg";
+	toggleDisplayarsak(id,10,0);
+	id = "tadhtr1-valg";
+	toggleDisplayarsak(id,5,0);
+	id = "tachtr1-valg";
+	toggleDisplayarsak(id,5,0);
+	id = "bakhtr1-valg";
+	toggleDisplayarsak(id,4,0);
+	id = "virhtr1-valg";
+	toggleDisplayarsak(id,3,0);
+	id = "asmhtr1-valg";
+	toggleDisplayarsak(id,3,0);
+	id = "aihtr-valg";
+	toggleDisplayarsak(id,8,0);
+	id = "hemhtr1-valg0";
+	toggleDisplay(id,0);
+	id = "hyphtr1-valg0";
+	toggleDisplay(id,0);
+	
+}
 function initialize()
 {
     var SpinnerValue_Changed = function() {
@@ -391,11 +436,6 @@ function showtext(id,thetext){
 	      </label>
 	  </div>
 
-
-
-    
-    
-    
     <label>Inneliggende/poliklinisk</label>
     <div class="radio">
       <label>
@@ -900,19 +940,252 @@ function showtext(id,thetext){
     <label>Hvis annet, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-komp-annettext" rows="3"></textarea>
     </div>
-      <h4>Mistenkt årsak til transfusjonsreaksjon </h4>
+    
+    <!-- Mistenkt årsak og underkategorier -->
+    
+    <h4>Mistenkt årsak til transfusjonsreaksjon </h4>
     <div class="radio">
       <label title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse.">
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-1" value="ahtr-1"  title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse." onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-1" value="ahtr-1"  title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse."
+         onclick="displayNone();toggleDisplayarsak('ahtr-valg',6,this.checked)"/>
         Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
       </label>
     </div>
+    <div id="ahtr-valg0" class="form-group" style="display: none">
+     <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" required="required" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="ahtr-valg1" class="form-group" style="display: none">
+     <label>Nedsatt haptoglobin</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="ahtr-valg2" class="form-group" style="display: none">
+     <label>Økt bilirubin </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="ahtr-valg3" class="form-group" style="display: none">
+     <label>Økt laktat dehydrogenase (LD) </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+<div id="ahtr-valg4" class="form-group" style="display: none">
+     <label>Positiv DAT </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>     
+	<div id="ahtr-valg5" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2"></textarea>
+  </div>    
+  
     <div class="radio">
       <label title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse.">
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-2" value="ahtr-2" title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse." onclick="toggleDisplay('antistofftype', this.checked);toggleDisplay('lga-valg', 0)"/>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-2" value="ahtr-2" title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse."
+         onclick="displayNone();toggleDisplayarsak('ahtr1-valg',8,this.checked)"/>
         Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
       </label>
     </div>
+    <div id="ahtr1-valg0" class="form-group" style="display: none">
+     <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="ahtr1-valg1" class="form-group" style="display: none">
+     <label>Nedsatt haptoglobin</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="ahtr1-valg2" class="form-group" style="display: none">
+     <label>Økt bilirubin </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="ahtr1-valg3" class="form-group" style="display: none">
+     <label>Økt laktat dehydrogenase (LD) </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+<div id="ahtr1-valg4" class="form-group" style="display: none">
+     <label>Positiv DAT </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div> 
+ <div id="ahtr1-valg5" class="form-group" style="display: none">
+     <label>Positiv blodtypeantistoffscreening </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>      
+<div id="ahtr1-valg6" class="form-group" style="display: none">
+     <label>Identifisert antistoff  </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>   
+      
+  <div id="ahtr1-valg7" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>    
+  
+
  
     <div class="radio">
       <label title="En DHTR oppstår vanligvis mellom 24 timer og 28 dager etter en transfusjon. 
@@ -923,27 +1196,370 @@ function showtext(id,thetext){
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-dhtr" value="dhtr" title="En DHTR oppstår vanligvis mellom 24 timer og 28 dager etter en transfusjon. 
         Kliniske og/eller laboratoriemessige tegn til hemolyse er til stede. 
         Disse likner på funnene ved AHTR, men de er som oftest mindre alvorlige. DHTR kan av og til opptre som manglende økning eller uforklarlig fall i hemoglobin etter en transfusjon.
-        Blodtypeserologisk utredning viser vanligvis unormale resultater" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Blodtypeserologisk utredning viser vanligvis unormale resultater" 
+        onclick="displayNone();toggleDisplayarsak('dhtr1-valg',8,this.checked)"/>
         Forsinket hemolytisk transfusjonsreaksjon (DHTR)
       </label>
     </div>
+       <div id="dhtr1-valg0" class="form-group" style="display: none">
+     <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="dhtr1-valg1" class="form-group" style="display: none">
+     <label>Nedsatt haptoglobin</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="dhtr1-valg2" class="form-group" style="display: none">
+     <label>Økt bilirubin </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="dhtr1-valg3" class="form-group" style="display: none">
+     <label>Økt laktat dehydrogenase (LD) </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+<div id="dhtr1-valg4" class="form-group" style="display: none">
+     <label>Positiv DAT </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div> 
+ <div id="dhtr1-valg5" class="form-group" style="display: none">
+     <label>Positiv blodtypeantistoffscreening </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>      
+<div id="dhtr1-valg6" class="form-group" style="display: none">
+     <label>Identifisert antistoff  </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>   
+      
+  <div id="dhtr1-valg7" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>   
+    
     <div class="radio">
       <label title="Kun alvorlige FNHTR meldes: Feber (≥ 39 oC, målt i munnen eller tilsvarende, eller temperaturstigning på ≥ 2 oC i forhold til temperaturen før blodtransfusjonen) og frysninger/skjelvinger. 
 FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke foreligge annen forklaring på symptomene, som for eksempel hemolytisk transfusjonsreaksjon, bakteriell kontaminering eller tilgrunnliggende sykdom hos pasienten.
       ">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-fnhtr" value="fnhtr" title="Kun alvorlige FNHTR meldes: Feber (≥ 39 oC, målt i munnen eller tilsvarende, eller temperaturstigning på ≥ 2 oC i forhold til temperaturen før blodtransfusjonen) og frysninger/skjelvinger. 
 FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke foreligge annen forklaring på symptomene, som for eksempel hemolytisk transfusjonsreaksjon, bakteriell kontaminering eller tilgrunnliggende sykdom hos pasienten.
-        " onclick="toggleDisplay('antistofftype', 0);;toggleDisplay('lga-valg', 0)"/>Febril non-hemolytisk transfusjonsreaksjon (FNHTR)
+        " onclick="displayNone();toggleDisplayarsak('fhtr1-valg',5,this.checked)"/>Febril non-hemolytisk transfusjonsreaksjon (FNHTR)
       </label>
     </div>
+     <div id="fhtr1-valg0" class="form-group" style="display: none">
+     <label>Økt CRP (i forhold til før transfusjonen)</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="fhtr1-valg1" class="form-group" style="display: none">
+     <label>Positiv dyrkning av rester i blodproduktet</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="fhtr1-valg2" class="form-group" style="display: none">
+     <label>Positiv blodkultur hos blodmottaker </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+  <div id="fhtr1-valg3" class="form-group" style="display: none">
+     <label>Positiv DAT </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div> 
+ <div id="fhtr1-valg4" class="form-group" style="display: none">
+     <label>Positiv blodtypeantistoffscreening, ev. identifisert antistoff.</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>      
+
     <div class="radio">
       <label title="Kliniske og/eller laboratoriemessige tegn på hemolyse uten blodtypeserologiske holdepunkter for immunologisk betinget reaksjon. 
       Kan bl.a. forårsakes av bakterietoksiner, for høy eller for lav temperatur eller mekanisk ødeleggelse av erytrocyttene.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hemolyse" value="hemolyse" title="Kliniske og/eller laboratoriemessige tegn på hemolyse uten blodtypeserologiske holdepunkter for immunologisk betinget reaksjon. 
-        Kan bl.a. forårsakes av bakterietoksiner, for høy eller for lav temperatur eller mekanisk ødeleggelse av erytrocyttene." onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Kan bl.a. forårsakes av bakterietoksiner, for høy eller for lav temperatur eller mekanisk ødeleggelse av erytrocyttene."
+         onclick="displayNone();toggleDisplayarsak('ihtr1-valg',7,this.checked)"/>
         Ikke immunbetinget hemolyse
       </label>
     </div>
+    <div id="ihtr1-valg0" class="form-group" style="display: none">
+     <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="ihtr1-valg1" class="form-group" style="display: none">
+     <label>Nedsatt haptoglobin</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="ihtr1-valg2" class="form-group" style="display: none">
+     <label>Økt bilirubin </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="ihtr1-valg3" class="form-group" style="display: none">
+     <label>Økt laktat dehydrogenase (LD) </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+<div id="ihtr1-valg4" class="form-group" style="display: none">
+     <label>Positiv DAT </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div> 
+ <div id="ihtr1-valg5" class="form-group" style="display: none">
+     <label>Positiv blodtypeantistoffscreening </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>      
+  
+      
+  <div id="ihtr1-valg6" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>   
+    
+    
+    
+    
     <div class="radio">
       <label title="Symptomer som ved en mindre alvorlig allergisk reaksjon (se definisjonene) og i tillegg pustebesvær eller alvorlig blodtrykksfall som krever vasopressor-behandling (eller assosierte symptomer som hypotoni eller synkope). 
       Pasienten kan ha respiratoriske symptomer fra strupen (larynksødem, dysfagi (svelgebesvær), dysfoni (svak, hes stemme), heshet, stridor) eller fra lungene (dyspné, hoste, bronkospasme, hypoksemi). 
@@ -952,9 +1568,68 @@ Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-anafylaktisk" value="anafylaktisk" title="Symptomer som ved en mindre alvorlig allergisk reaksjon (se definisjonene) og i tillegg pustebesvær eller alvorlig blodtrykksfall som krever vasopressor-behandling (eller assosierte symptomer som hypotoni eller synkope). 
         Pasienten kan ha respiratoriske symptomer fra strupen (larynksødem, dysfagi (svelgebesvær), dysfoni (svak, hes stemme), heshet, stridor) eller fra lungene (dyspné, hoste, bronkospasme, hypoksemi). 
 Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon.
-        " onclick="toggleDisplay('antistofftype',0);toggleDisplay('lga-valg',this.checked)"/>Anafylaktisk/alvorlig allergisk reaksjon
+        " onclick="displayNone();toggleDisplayarsak('alhtr1-valg',4,this.checked)"/>Anafylaktisk/alvorlig allergisk reaksjon
       </label>
     </div>
+     <div id="alhtr1-valg0" class="form-group" style="display: none">
+     <label>Økt tryptase</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="alhtr1-valg1" class="form-group" style="display: none">
+     <label>Ikke påvisbart IgA</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="alhtr1-valg2" class="form-group" style="display: none">
+     <label>Anti-IgA </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+   <div id="alhtr1-valg3" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>   
+     
     <div class="radio">
       <label title="En allergisk reaksjon kan mistenkes når ett eller flere av følgende symptomer er til stede: 
 •	Morbilliformt (meslinglignende) utslett med kløe 
@@ -973,7 +1648,7 @@ Allergiske reaksjoner oppstår under eller innen 4 timer etter en transfusjon. D
 •	Kløe, erythem (rødhet) og ødem rundt munnen 
 •	Konjunktivalt ødem (ødem i bindehinnen i øyet)
 Allergiske reaksjoner oppstår under eller innen 4 timer etter en transfusjon. Denne type reaksjon er vanligvis mild og ikke livstruende og pasienten responderer raskt på symptomatisk behandling, med for eksempel antihistaminer eller steroider.
-        " onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Annen allergisk reaksjon (mindre alvorlig)
+        " onclick="displayNone()"/>Annen allergisk reaksjon (mindre alvorlig)
       </label>
     </div>
     <div class="radio">
@@ -982,15 +1657,105 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
       ">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ta-gvhd" value="gvhd" title="TA-GVHD er et klinisk syndrom med feber, utslett, leversvikt, diaré, pancytopeni og karakteristiske histologiske funn ved hudbiopsi, som oppstår 1-6 uker etter en transfusjon uten andre årsaker som kan forklare symptomene. 
 Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
-        " onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsassosiert transplantat-mot-vert-reaksjon (TA-GVHD)
+        " onclick="displayNone();toggleDisplayarsak('khtr1-valg',2,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Transfusjonsassosiert transplantat-mot-vert-reaksjon (TA-GVHD)
+      </label>
+    </div>
+    <div id="khtr1-valg0" class="form-group" style="display: none">
+     <label>Kimerisme ved HLA-typing av mottakeren </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
       </label>
     </div>
     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+   <div id="khtr1-valg1" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>     
+    
+    
+    
+    
+    
+    <div class="radio">
       <label title="PTP karakteriseres av trombocytopeni som oppstår innen 5-12 dager etter transfusjon av cellulære blodkomponenter, når man kan påvise antistoff rettet mot HPA-antigen hos pasienten.">
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ptp" value="ptp" title="PTP karakteriseres av trombocytopeni som oppstår innen 5-12 dager etter transfusjon av cellulære blodkomponenter, når man kan påvise antistoff rettet mot HPA-antigen hos pasienten." onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ptp" value="ptp" title="PTP karakteriseres av trombocytopeni som oppstår innen 5-12 dager etter transfusjon av cellulære blodkomponenter, når man kan påvise antistoff rettet mot HPA-antigen hos pasienten." 
+        onclick="displayNone();toggleDisplayarsak('phtr1-valg',4,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
         Posttransfusjonspurpura (PTP)
       </label>
     </div>
+     <div id="phtr1-valg0" class="form-group" style="display: none">
+     <label>HPA typing av blodgiveren utført</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="phtr1-valg1" class="form-group" style="display: none">
+     <label>HPA typing av blodmottakeren utført </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+    <div id="phtr1-valg2" class="form-group" style="display: none">
+     <label>Anti-HPA hos blodmottakeren påvist </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+   <div id="phtr1-valg3" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>   
+    
+    
+    
     <div class="radio">
       <label title="TRALI bør mistenkes hos pasienter som ikke hadde tegn til akutt lungeskade (ALI) før transfusjonen og hvor man følgende er til stede: 
 •	Akutt debut. 
@@ -1013,15 +1778,254 @@ Se definisjonene for nærmere beskrivelse.
 •	Ingen tegn til venstre atrie hypertensjon (= sirkulatorisk overbelastning) 
 •	Ingen tidsmessig relasjon til andre risikofaktorer for ALI under blodtransfusjonen eller innen 6 timer innen avsluttet transfusjon. 
 Se definisjonene for nærmere beskrivelse.
-        " onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsrelatert akutt lungeskade (TRALI)
+        " onclick="displayNone();toggleDisplayarsak('trhtr1-valg',10,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Transfusjonsrelatert akutt lungeskade (TRALI)
       </label>
     </div>
+   <div id="trhtr1-valg0" class="form-group" style="display: none">
+     <label>Rtg thorax utført</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+
+  </div>
+  <div id="trhtr1-valg1" class="form-group" style="display: none">
+     <label>Oksygenmetning redusert</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="trhtr1-valg2" class="form-group" style="display: none">
+     <label>Blodtrykksendring </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="trhtr1-valg3" class="form-group" style="display: none">
+     <label>BNP eller N-T proBNP forhøyet </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+<div id="trhtr1-valg4" class="form-group" style="display: none">
+     <label>HLA-antistoff hos blodgiver påvist </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div> 
+ <div id="trhtr1-valg5" class="form-group" style="display: none">
+     <label>HLA-antistoff hos blodmottaker påvist </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>      
+<div id="trhtr1-valg6" class="form-group" style="display: none">
+     <label>HLA-typing av blodgiver HLA-typing av blodmottaker  </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>   
+<div id="trhtr1-valg7" class="form-group" style="display: none">
+     <label>HNA-typing av blodgiver og/eller blodmottaker  </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="trhtr1-valg8" class="form-group" style="display: none">
+     <label>HNA-antistoff hos blodgiver og/eller blodmottaker  </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>      
+  <div id="trhtr1-valg9" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>   
+
     <div class="radio">
       <label title="TAD defineres som pustebesvær (respiratory distress) innen 24 timer etter en transfusjon, der kriteriene for TRALI, TACO eller allergisk reaksjon ikke er til stede og der respirasjonssymptomene ikke kan skyldes pasientens underliggende sykdom eller andre årsaker.">
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-tad" value="tad" title="TAD defineres som pustebesvær (respiratory distress) innen 24 timer etter en transfusjon, der kriteriene for TRALI, TACO eller allergisk reaksjon ikke er til stede og der respirasjonssymptomene ikke kan skyldes pasientens underliggende sykdom eller andre årsaker." onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)" />Transfusjonsassosiert dyspne (TAD)
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-tad" value="tad" title="TAD defineres som pustebesvær (respiratory distress) innen 24 timer etter en transfusjon, der kriteriene for TRALI, TACO eller allergisk reaksjon ikke er til stede og der respirasjonssymptomene ikke kan skyldes pasientens underliggende sykdom eller andre årsaker." 
+        onclick="displayNone();toggleDisplayarsak('tadhtr1-valg',5,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)" />
+        Transfusjonsassosiert dyspne (TAD)
+      </label>
+    </div>
+       <div id="tadhtr1-valg0" class="form-group" style="display: none">
+     <label>Rtg thorax utført</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+
+  </div>
+  <div id="tadhtr1-valg1" class="form-group" style="display: none">
+     <label>Oksygenmetning redusert</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
       </label>
     </div>
     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="tadhtr1-valg2" class="form-group" style="display: none">
+     <label>Blodtrykksendring </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="tadhtr1-valg3" class="form-group" style="display: none">
+     <label>BNP eller N-T proBNP forhøyet </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+   <div id="tadhtr1-valg4" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>
+     
+  <div class="radio">
       <label title="TACO karakteriseres av minst 4 av følgende symptomer, som skal oppstå innen 6 timer etter avsluttet transfusjon: 
 •	Akutt pustebesvær (respiratory distress) 
 •	Tachykardi 
@@ -1037,9 +2041,84 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
 •	Akutt lungeødem eller forverring av lungeødem på rtg. thorax. 
 •	Symptomer/funn forenlig med positiv væskebalanse. 
 Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
-        " onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsrelatert overbelastning av kretsløpet (TACO)
+        " onclick="displayNone();toggleDisplayarsak('tachtr1-valg',5,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Transfusjonsrelatert overbelastning av kretsløpet (TACO)
       </label>
     </div>
+   <div id="tachtr1-valg0" class="form-group" style="display: none">
+     <label>Rtg thorax utført</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+
+  </div>
+  <div id="tachtr1-valg1" class="form-group" style="display: none">
+     <label>Oksygenmetning redusert</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="tachtr1-valg2" class="form-group" style="display: none">
+     <label>Blodtrykksendring </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="tachtr1-valg3" class="form-group" style="display: none">
+     <label>BNP eller N-T proBNP forhøyet </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+   <div id="tachtr1-valg4" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>
+         
+    
     <div class="radio">
       <label title="Hyoptensiv TR karakteriseres av fall i systolisk og/eller diastolisk blodtrykk > 30 mmHg, innen 1 time etter avsluttet transfusjon. 
 De fleste reaksjoner oppstår veldig raskt etter transfusjonsstart (innen få minutter). Avbrytelse av transfusjonen og behandling av hypotensjonen gir rask bedring. 
@@ -1050,45 +2129,343 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
 De fleste reaksjoner oppstår veldig raskt etter transfusjonsstart (innen få minutter). Avbrytelse av transfusjonen og behandling av hypotensjonen gir rask bedring. 
 Andre symptomer som ansiktsrødme (flushing), dyspné eller abdominale kramper kan også forekomme, men vanligvis er blodtrykksfall eneste manifestasjon. 
 Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underliggende sykdom hos pasienten som kan gi hypotensjon, må utelukkes.
-        " onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Hypotensiv transfusjonsreaksjon
+        " onclick="displayNone();toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Hypotensiv transfusjonsreaksjon
       </label>
     </div>
     <div class="radio">
       <label title="Transfusjonsassosiert hemosiderose er definert som s-ferritin på ≥ 1000 μg/L, med eller uten organ dysfunksjon hos en pasient som har fått gjentatte erytrocytt-transfusjoner.">
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hemo" value="hemo"  title="Transfusjonsassosiert hemosiderose er definert som s-ferritin på ≥ 1000 μg/L, med eller uten organ dysfunksjon hos en pasient som har fått gjentatte erytrocytt-transfusjoner." onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hemo" value="hemo"  title="Transfusjonsassosiert hemosiderose er definert som s-ferritin på ≥ 1000 μg/L, med eller uten organ dysfunksjon hos en pasient som har fått gjentatte erytrocytt-transfusjoner." 
+        onclick="displayNone();toggleDisplay('hemhtr1-valg0',this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
         Hemosiderose
       </label>
     </div>
-    
-        <div class="radio">
+   <div id="hemhtr1-valg0" class="form-group" style="display: none">
+     <label>Angi ferritinverdi(er) </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>    
+    <div class="radio">
       <label title="Forhøyet s-kalium (> 5 mmol /L eller ≥ 1,5 mmol/L økning) innen en time etter en transfusjon kan klassifiseres som transfusjonsassosiert hyperkalemi.">
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hyper" value="hyper" title="Forhøyet s-kalium (> 5 mmol /L eller ≥ 1,5 mmol/L økning) innen en time etter en transfusjon kan klassifiseres som transfusjonsassosiert hyperkalemi." onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hyper" value="hyper" title="Forhøyet s-kalium (> 5 mmol /L eller ≥ 1,5 mmol/L økning) innen en time etter en transfusjon kan klassifiseres som transfusjonsassosiert hyperkalemi." 
+        onclick="displayNone();toggleDisplay('hyphtr1-valg0',this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
         Hyperkalemi
       </label>
     </div>
+ <div id="hyphtr1-valg0" class="form-group" style="display: none">
+     <label>Angi kaliumverdier </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>       
+    
     <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-bakterie" value="bakterie" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsoverført bakterieinfeksjon
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-bakterie" value="bakterie" 
+        onclick="displayNone();toggleDisplayarsak('bakhtr1-valg',4,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Transfusjonsoverført bakterieinfeksjon
+      </label>
+    </div>
+   <div id="bakhtr1-valg0" class="form-group" style="display: none">
+     <label>Positiv dyrkning av rester i blodproduktet</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+   <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="bakhtr1-valg1" class="form-group" style="display: none">
+     <label>Positiv blodkultur hos blodmottaker</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-virus" value="virus" onclick="toggleDisplay('antistofftype', 0);;toggleDisplay('lga-valg', 0)"/>Transfusjonsoverført virusinfeksjon
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="bakhtr1-valg2" class="form-group" style="display: none">
+     <label>Økt CRP (i forhold til før transfusjonen)</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-smitte" value="smitte" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Annen smitteoverføring
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+   <div id="bakhtr1-valg3" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>
+    
+    
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-virus" value="virus" 
+        onclick="displayNone();toggleDisplayarsak('virhtr1-valg',3,this.checked);toggleDisplay('antistofftype', 0);;toggleDisplay('lga-valg', 0)"/>
+        Transfusjonsoverført virusinfeksjon
+      </label>
+    </div>
+    
+    <div id="virhtr1-valg0" class="form-group" style="display: none">
+     <label>Påvist virus/virusantistoff hos mottaker</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" 
+        onclick=""/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+   <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="virhtr1-valg1" class="form-group" style="display: none">
+     <label>Positiv virus/virusantistoff hos giver</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-aiha" value="aiha" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Transfusjonsutløst autoimmun hemolytisk anemi (AIHA)
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
       </label>
     </div>
-        <div class="radio">
+  </div>
+   
+   <div id="virhtr1-valg2" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>
+    
+    <div class="radio">
       <label>
-        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-manglendeeffekt" value="manglendeeffekt" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Manglende effekt av transfusjon
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-smitte" value="smitte" 
+        onclick="displayNone();toggleDisplayarsak('asmhtr1-valg',3,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Annen smitteoverføring
+      </label>
+    </div>
+    
+   <div id="asmhtr1-valg0" class="form-group" style="display: none">
+     <label>Påvist smittestoff/antistoff hos mottaker</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+   <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="asmhtr1-valg1" class="form-group" style="display: none">
+     <label>Påvist smittestoff/antistoff hos giver</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+   
+   <div id="asmhtr1-valg2" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2" ></textarea>
+  </div>    
+    
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-aiha" value="aiha" 
+        onclick="displayNone();toggleDisplayarsak('aihtr-valg',8,this.checked)"/>
+        Transfusjonsutløst autoimmun hemolytisk anemi (AIHA)
+      </label>
+    </div>
+    <div id="aihtr-valg0" class="form-group" style="display: none">
+     <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" required="required" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="aihtr-valg1" class="form-group" style="display: none">
+     <label>Nedsatt haptoglobin</label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>
+  <div id="aihtr-valg2" class="form-group" style="display: none">
+     <label>Økt bilirubin </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>  
+<div id="aihtr-valg3" class="form-group" style="display: none">
+     <label>Økt laktat dehydrogenase (LD) </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>    
+<div id="aihtr-valg4" class="form-group" style="display: none">
+     <label>Positiv DAT </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div> 
+  <div id="aihtr-valg5" class="form-group" style="display: none">
+     <label>Positiv blodtypeantistoffscreening </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div>     
+   <div id="aihtr-valg6" class="form-group" style="display: none">
+     <label>Identifisert antistoff  </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('lga-text', this.checked)"/>Ja 
+      </label>
+    </div>
+     <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('lga-text', 0)" />Nei
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('lga-text', 0)"/>Ikke utført
+      </label>
+    </div>
+  </div> 
+  <div id="aihtr-valg7" class="form-group" style="display: none">
+     <label>Annet </label>
+  		 <textarea class="form-control" name="p-akutt-hemotext" rows="2"></textarea>
+  </div>
+      
+  <div class="radio">
+      <label>
+        <input type="radio" name="p-komp-klassifikasjon" id="p-komp-manglendeeffekt" value="manglendeeffekt" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        Manglende effekt av transfusjon
       </label>
     </div>
     <div class="radio">
