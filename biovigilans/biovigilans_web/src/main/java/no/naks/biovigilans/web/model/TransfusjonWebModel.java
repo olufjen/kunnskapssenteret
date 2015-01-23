@@ -128,11 +128,15 @@ public class TransfusjonWebModel extends VigilansModel {
 				formFields[224],formFields[225],formFields[226],formFields[227],formFields[228],formFields[229],formFields[230],formFields[231],formFields[232],
 				formFields[233],formFields[234],formFields[235]};
 		komplikasjonsklassifikasjon.setkomplikasjonklassifikasjonFieldsMaps(klassifikasjonsFields);
+	/*	
 		String[] utredningFields = {formFields[114],formFields[115],formFields[116],formFields[117],formFields[118],formFields[119],formFields[120],
 				formFields[121],formFields[122],formFields[123],formFields[124],formFields[125],formFields[126],formFields[127],formFields[128]};
+	*/	
+		String[] utredningFields = {formFields[246],formFields[247],formFields[248],formFields[249],formFields[250],formFields[251],formFields[252],
+				formFields[253],formFields[254],formFields[255]};
 		utredning.setutredningfieldMaps(utredningFields);
 		String[] hemoLysefields = {formFields[187],formFields[188],formFields[189],formFields[190],formFields[191]};
-		utredning.addFields(hemoLysefields);
+//		utredning.addFields(hemoLysefields);
 		hemoLyse.setHemlysefieldMaps(hemoLysefields);
 	}
 
@@ -185,8 +189,8 @@ public class TransfusjonWebModel extends VigilansModel {
 		pasientKomplikasjon.setKlassifikasjon(null);
 		pasientKomplikasjon.produceSymptoms(symptomer);
 		pasientKomplikasjon.getKomplikasjonsKlassifikasjoner().put("klassifikasjon",komplikasjonsklassifikasjon);
-		utredning.saveUtredning();
-		utredning.produceHemolyse(hemoLyse);
+	//	utredning.saveUtredning();			Bruk av utredning er endret etter endring i transfusjonsskjema olj 22.01.15
+	//	utredning.produceHemolyse(hemoLyse);
 		pasientKomplikasjon.setUtredning(utredning);
 		transfusjon.getPasientKomplikasjoner().put(pasientKomplikasjon.getAlvorlighetsgrad(), pasientKomplikasjon);
 		
