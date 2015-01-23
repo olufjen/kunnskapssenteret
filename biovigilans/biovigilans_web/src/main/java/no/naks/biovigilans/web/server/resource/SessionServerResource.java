@@ -44,6 +44,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
 	protected String kvitteringsId = "kvittering";					// Benyttes som nøkkel for kvitteringssiden
 	protected String kvitteringGiverId = "giverKvittering";
+	List<String> hvagikkgaltList = new ArrayList<String>();
 /*
  * Sessiomn objekter for giver	
  */
@@ -280,6 +281,12 @@ public class SessionServerResource extends ProsedyreServerResource {
 		this.melderId = melderId;
 	}
 	
+	public List<String> getHvagikkgaltList() {
+		return hvagikkgaltList;
+	}
+	public void setHvagikkgaltList(List<String> hvagikkgaltList) {
+		this.hvagikkgaltList = hvagikkgaltList;
+	}
 	
 	
 	/**
@@ -388,6 +395,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 annenModel.setHovedprosesslist(hovedprosesslist);
 	    	 annenModel.setFeilelleravvik(feilelleravvik);
 	    	 annenModel.setHendelsenoppdaget(hendelsenoppdaget);
+	    	 annenModel.setHvagikkgaltList(hvagikkgaltList);
 	     }
 	}
 	

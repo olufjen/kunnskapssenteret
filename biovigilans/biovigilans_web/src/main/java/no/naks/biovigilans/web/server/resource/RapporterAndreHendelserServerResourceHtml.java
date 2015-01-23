@@ -10,9 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.FormParam;
-
-import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
@@ -117,7 +114,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    				MediaType.TEXT_HTML);
     			return templateRep; // return a new page!!!
     		}
-    	  List<String> hvagikkgaltList = new ArrayList<String>();	
+    	 	
   		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(getRequest(), andreHendelseId);
   		  if(annenModel == null){
   			  annenModel = new AnnenKomplikasjonwebModel();
@@ -160,7 +157,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			giverWebService.saveVigilansmelding(giverModel);
     			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
     			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
-    			String strDato = FastDateFormat.getInstance("dd-MM-yyyy").format(datoforhendelse);
+    			String strDato = FastDateFormat.getInstance("yyyy-MM-dd").format(datoforhendelse);
     			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
