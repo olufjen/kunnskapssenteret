@@ -1,5 +1,7 @@
 package no.naks.biovigilans.web.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.sun.xml.bind.v2.schemagen.episode.Klass;
@@ -17,23 +19,14 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 	protected String[] hovedprosesslist;
 	protected String[] feilelleravvik;
 	protected String[] hendelsenoppdaget;
-	
-	protected String str = "hi"; //delete it
-	
+	List<String> hvagikkgaltList ;
 	
 	
-	public String getStr() {
-		return str;
-	}
-
-	public void setStr(String str) {
-		this.str = str;
-	}
-
 	public AnnenKomplikasjonwebModel(){
 		super();
 		annenKomplikasjon = new AnnenkomplikasjonImpl();
 		komplikasjonsklassifikasjon =  new KomplikasjonsklassifikasjonImpl();
+		//hvagikkgaltList = new ArrayList<String>();
 	}
 	
 	public String[] getHendelsenoppdaget() {
@@ -86,8 +79,13 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		this.komplikasjonsklassifikasjon = komplikasjonsklassifikasjon;
 	}
 
+	public List<String> getHvagikkgaltList() {
+		return hvagikkgaltList;
+	}
 
-
+	public void setHvagikkgaltList(List<String> hvagikkgaltList) {
+		this.hvagikkgaltList = hvagikkgaltList;
+	}
 
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
