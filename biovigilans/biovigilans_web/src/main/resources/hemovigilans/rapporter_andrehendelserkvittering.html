@@ -104,7 +104,12 @@
 				</div>
 			<div class="form-group">
 				<label>HVA GIKK GALT?</label><br>
-					<span > ${andreHendelse.komplikasjonsklassifikasjon.klassifikasjon} </span>
+				<#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
+					<div>
+						<span>${hvagikkgalt}</span>
+					</div>
+				</#list>
+					<!-- <span > ${andreHendelse.komplikasjonsklassifikasjon.klassifikasjon} </span> -->
 				
 						<!-- <div class="checkbox">
 				          <label>

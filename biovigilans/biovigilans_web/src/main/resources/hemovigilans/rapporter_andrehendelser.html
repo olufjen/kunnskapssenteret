@@ -12,7 +12,9 @@
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
 	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
-<body>
+
+<#assign klassifikasjon = andreHendelse.annenKomplikasjon.klassifikasjon>
+<body onload="checkRadiobutton('${klassifikasjon}');">
 <header class="master-header" role="navation">
       <div class="container">
         <!-- synlig header -->
@@ -83,9 +85,24 @@
 						 document.getElementById(j).checked = false;	
 					 }
 				}
+				
+				function checkRadiobutton(val){
+					var radios = document.getElementsByName("tab-klassifikasjon" );
+					var size =  radios.length;
+					for(var j=1; j<size+1;j++){
+						 var radioValue = document.getElementById("k-"+j).value;	
+						 if(val == radioValue){
+							 alert("inside");
+							 document.getElementById("k-"+j).checked = true;
+							 break;
+						 }
+					 }
+					
+				}
 			</script>
 			
-		<form id="rapport" action="?method=PUT" method="post"> 
+			
+		<form id="rapport" action="?method=PUT" method="post"  > 
 			
 			<h1>Rapporter Andre Hendelser</h1>
 			<!-- Nav tabs -->
@@ -97,113 +114,158 @@
 			<div class="tab-pane" id="andrehendelser">
 				<div class="form-group">
 					<label>Dato For hendelsen</label><br>
-					<span > ${andreHendelse.str} </span><br>
-					<input type="date" name="hendelsen-date">
+					<input type="date" name="hendelsen-date" value="${andreHendelse.annenKomplikasjon.datoforhendelseKvittering}"  />
 				</div>
 	
 				<div class="form-group">
 				<label>Beskrivelse av hendelsen</label>
-					<textarea class="form-control"  name="beskrivelse" rows="3" ></textarea>
+					<textarea class="form-control"  name="beskrivelse" rows="3"  >${andreHendelse.annenKomplikasjon.komplikasjonbeskrivelse}</textarea>
 				</div>
 			
 				<div class="form-group">
 					<label>Hvilken hovedprosess gjaldt hendelsen?</label>
-					<select name ="tab-prosess"  id="tab-prosess" class="form-control">
-						<option>--- Select ---</option>
-			       		<#list andreHendelse.hovedprosesslist as hovedprosess>
-			       			<option>${hovedprosess} </option>
-			       		 </#list>
+					<select name ="tab-prosess"  id="tab-prosess" class="form-control" >
+						<option selected="selected" >${andreHendelse.annenKomplikasjon.hovedprosess}</option>
+				       		<#list andreHendelse.hovedprosesslist as hovedprosess>
+				       			<#if hovedprosess != andreHendelse.annenKomplikasjon.hovedprosess>
+				       				<option  >${hovedprosess} </option>
+				       			</#if>
+				       		 </#list>
 	     		   	</select>
 				</div>
 			<div class="form-group">
-				<label>HVA GIKK GALT?</label>
+			   <label>HVA GIKK GALT?</label>
+				   <!-- declare variables for every checkbox -->
+				   <#assign rekvirering="" >
+				   <#assign bestillingg ="" >
+				   <#assign provetaking ="" >
+				   <#assign feilmerking ="" >
+				   <#assign forveksling ="" >
+				   <#assign pretransfusjons ="" >
+				   
+				   <#assign mangelfull ="" >
+				   <#assign utlevering ="" >
+				   <#assign henting ="" >
+				   <#assign hentingiskap ="" >
+				   <#assign hentingved ="" >
+				   <#assign rutiner ="" >
+				   <#assign mangelfullKommunikasjon ="" >
+				   <#assign intet ="" >
+				   <#assign vetIkke ="" >
+				  	<!-- get the hvagikkgalt checkbox list --> 
+				   <#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
+				   
+				   <!-- take the value of checkbox that is checked  -->
+				   <#if hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
+				   <#if  hvagikkgalt=='Bestillingg' ><#assign bestillingg ="checked" > </#if>
+				   <#if  hvagikkgalt=='Prøvetaking' ><#assign provetaking ="checked" > </#if>
+				   <#if  hvagikkgalt=='Feilmerking av prøverør' ><#assign feilmerking ="checked" > </#if>
+				   <#if  hvagikkgalt=='Forveksling av prøver/ resultater' ><#assign forveksling ="checked" > </#if>
+				   <#if  hvagikkgalt=='Pretransfusjonstesting i blodbanken' ><#assign pretransfusjons ="checked" > </#if>
+				   
+				   <#if  hvagikkgalt=='Feil/ mangelfull behandling av blodet i blodbanken' ><#assign mangelfull ="checked" > </#if>
+				   <#if  hvagikkgalt=='Valg/utlevering av blodprodukt (blodbankpersonell)' ><#assign utlevering ="checked" > </#if>
+				   <#if  hvagikkgalt=='Henting av blod i blodbanken (ikke blodbankpersonell)' ><#assign henting ="checked" > </#if>
+				   <#if  hvagikkgalt=='Henting av blod i skap/fryser utenfor blodbank' ><#assign hentingiskap ="checked" > </#if>
+				   <#if  hvagikkgalt=='Henting av blod ved rørpoststasjon' ><#assign hentingved ="checked" > </#if>
+				   <#if  hvagikkgalt=='Rutiner for identitetskontroll ved transfusjon ikke fulgt' ><#assign rutiner ="checked" > </#if>
+				   <#if  hvagikkgalt=='Mangelfull kommunikasjon' ><#assign mangelfullKommunikasjon ="checked" > </#if>
+				   <#if  hvagikkgalt=='Intet avvik' ><#assign intet ="checked" > </#if>
+				   <#if  hvagikkgalt=='Vet ikke' ><#assign vetIkke ="checked" > </#if>
+				           
+				</#list>  	
+				
 						<div class="checkbox">
 				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Indikasjonsstilling/rekvirering"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt" id="rekvirering" value="Indikasjonsstilling/rekvirering"
+				          		${rekvirering} />
+				          		
+				          
 				          		Indikasjonsstilling/rekvirering
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestillingg"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestillingg"
+				          		${bestillingg}/>
 				          		Bestilling
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Prøvetaking"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Prøvetaking" ${provetaking}  />
 				          		Prøvetaking
 				          </label>
 						</div>
 				        <div class="checkbox">				         
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feilmerking av prøverør"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feilmerking av prøverør" ${feilmerking}  />
 				          		Feilmerking av prøverør
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Forveksling av prøver/ resultater"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Forveksling av prøver/ resultater"  ${forveksling} />
 				          		Forveksling av prøver/ resultater
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Pretransfusjonstesting i blodbanken"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Pretransfusjonstesting i blodbanken" ${pretransfusjons}  />
 				          		Pretransfusjonstesting i blodbanken
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feil/ mangelfull behandling av blodet i blodbanken"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feil/ mangelfull behandling av blodet i blodbanken" ${mangelfull}  />
 				          		Feil/ mangelfull behandling av blodet i blodbanken
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Valg/utlevering av blodprodukt (blodbankpersonell)"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Valg/utlevering av blodprodukt (blodbankpersonell)" ${utlevering}  />
 				          		Valg/utlevering av blodprodukt (blodbankpersonell)
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i blodbanken (ikke blodbankpersonell)"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i blodbanken (ikke blodbankpersonell)" ${henting}  />
 				          		Henting av blod i blodbanken (ikke blodbankpersonell)
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i skap/fryser utenfor blodbank"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i skap/fryser utenfor blodbank"  ${hentingiskap} />
 				          		Henting av blod i skap/fryser utenfor blodbank
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod ved rørpoststasjon"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod ved rørpoststasjon" ${hentingved}  />
 				          		Henting av blod ved rørpoststasjon
 				          </label>
 				        </div>
 				        <div class="checkbox">  
 				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Rutiner for identitetskontroll ved transfusjon ikke fulgt"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Rutiner for identitetskontroll ved transfusjon ikke fulgt" ${rutiner}  />
 				          		Rutiner for identitetskontroll ved transfusjon ikke fulgt
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Mangelfull kommunikasjon"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Mangelfull kommunikasjon" ${mangelfullKommunikasjon}  />
 				          		Mangelfull kommunikasjon
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Intet avvik"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Intet avvik" ${intet}  />
 				          		Intet avvik
 				          </label>
 				        </div>
 				        <div class="checkbox">
 				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Vet ikke"   />
+				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Vet ikke"  ${vetIkke} />
 				          		Vet ikke
 				          </label>
 				        </div>
@@ -213,7 +275,7 @@
 				          	<input type="checkbox" name="tab-delprosess"  value="delprosess"   />Delprosess
 				          </label>
 				    </div> -->
-				          
+				        
 				</div>
 
 
@@ -221,9 +283,11 @@
 				<div class="form-group">
 					<label>Primærårsak til feil eller avvik </label>
 					<select name ="tab-kvalitetskrav" id="tab-kvalitetskrav" class="form-control">
-						<option>--- Select ---</option>
+						<option selected="selected" >${andreHendelse.annenKomplikasjon.avvikarsak}</option>
 			       		<#list andreHendelse.feilelleravvik as feilelleravvik>
-			       			<option>${feilelleravvik} </option>
+			       			<#if feilelleravvik != andreHendelse.annenKomplikasjon.avvikarsak >
+			       				<option>${feilelleravvik} </option>
+			       			</#if>
 			       		 </#list>
 	     		   	</select>
 					
@@ -232,7 +296,7 @@
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
 				          <label>
-				          	<input type="radio" name="tab-klassifikasjon"  value="Feil blod transfudert" onclick="toggleDisplay('feilblod'); checkUncheck(); checkUncheck();"  />Feil blod transfundert
+				          	<input type="radio" name="tab-klassifikasjon" id="k-1"   value="Feil blod transfudert"  onclick="toggleDisplay('feilblod'); checkUncheck();"   />Feil blod transfundert
 				          </label>
 				          <div id="feilblod" style="display: none" >
 					          <div class="radio" >
@@ -260,7 +324,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="Smitte ved testing" onclick="toggleDisplay('smitte'); checkUncheck();"  />Smitte påvist ved testing
+			          	<input type="radio" name="tab-klassifikasjon" id="k-2"  value="Smitte ved testing" onclick="toggleDisplay('smitte'); checkUncheck();"  />Smitte påvist ved testing
 			          </label>
 			          <div id="smitte" style="display: none" >
 				           <div class="radio">
@@ -278,7 +342,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  value="Ved intervju fremkommer det informasjon" onclick="toggleDisplay('intervju'); checkUncheck();"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og evt tidligere tappinger
+			          	<input type="radio" name="tab-klassifikasjon" id="k-3"  value="Ved intervju fremkommer det informasjon" onclick="toggleDisplay('intervju'); checkUncheck();"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og evt tidligere tappinger
 			          </label>
 			          <div id="intervju" style="display: none" >
 				          <div class="radio">	 
@@ -325,7 +389,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
+			          	<input type="radio" name="tab-klassifikasjon" id="k-4" onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
 			          </label>
 				  
 				      <div id="giver" style="display: none" >
@@ -348,7 +412,7 @@
 				     </div>
 				     <div class="radio">
 			     	  <label>
-			          	<input type="radio" name="tab-klassifikasjon"   onclick="toggleDisplay('giveren'); checkUncheck();"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
+			          	<input type="radio" name="tab-klassifikasjon" id="k-5"   onclick="toggleDisplay('giveren'); checkUncheck();"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
 			          </label>
 				      <div id="giveren" style="display: none" >    
 				          <div class="radio">	 
@@ -381,7 +445,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('utstyr'); checkUncheck();"  value="Utstyr"  />Utstyr 
+			          	<input type="radio" name="tab-klassifikasjon" id="k-6"  onclick="toggleDisplay('utstyr'); checkUncheck();"  value="Utstyr"  />Utstyr 
 			          </label>
 			          <div id="utstyr" style="display: none" >
 				          <div class="radio">	 
@@ -405,7 +469,7 @@
 			          
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('analyser'); checkUncheck();" value="IKT"  /> IKT (utstyr og programvare)
+			          	<input type="radio" name="tab-klassifikasjon" id="k-7"  onclick="toggleDisplay('analyser'); checkUncheck();" value="IKT"  /> IKT (utstyr og programvare)
 			          </label>
 			          
 			          
@@ -414,7 +478,7 @@
 			        
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('analyser'); checkUncheck();" value="Analyser"  />Analyser
+			          	<input type="radio" name="tab-klassifikasjon" id="k-8"  onclick="toggleDisplay('analyser'); checkUncheck();" value="Analyser"  />Analyser
 			          </label>
 			          <div id="analyser" style="display: none" >
 				          <div class="radio">	 
@@ -477,7 +541,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" onclick="toggleDisplay('transport'); checkUncheck();"  value="Henting og transport"  />Henting og transport
+			          	<input type="radio" name="tab-klassifikasjon" id="k-9" onclick="toggleDisplay('transport'); checkUncheck();"  value="Henting og transport"  />Henting og transport
 			          </label>
 			          <div id="transport" style="display: none" >
 				          <div class="radio">	 
@@ -495,7 +559,7 @@
 				    </div>
 				    <div class="radio">
 		              <label>
-			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('merking'); checkUncheck();"  value="Merking feil"  />Feilmerking
+			          	<input type="radio" name="tab-klassifikasjon" id="k-10"  onclick="toggleDisplay('merking'); checkUncheck();"  value="Merking feil"  />Feilmerking
 			          </label>
 			         	<div id="merking" style="display: none" >
 				          <div class="radio">	 
@@ -517,7 +581,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon"  onclick="toggleDisplay('annet'); checkUncheck();"  value="Annet"  />Annet
+			          	<input type="radio" name="tab-klassifikasjon" id="k-11"  onclick="toggleDisplay('annet'); checkUncheck();"  value="Annet"  />Annet
 			          </label>
 			          <div id="annet" style="display: none" >
 				          <div class="radio">	 
@@ -572,9 +636,11 @@
 				<div class="form-group">
 					<label>Definisjon av alvorlig hendelse</label>
 					 <select name ="tab-hendelse" id="tab-hendelse" class="form-control">
-						<option>--- Select ---</option>
+						<option selected="selected" >${andreHendelse.annenKomplikasjon.komplikasjondefinisjon}</option>
 			       		<#list andreHendelse.alvorligHendelse as alvorlig>
-			       			<option>${alvorlig} </option>
+			       			<#if alvorlig != andreHendelse.annenKomplikasjon.komplikasjondefinisjon>
+			       				<option>${alvorlig} </option>
+			       			</#if>
 			       		 </#list>
 	     		   	</select>
 				</div>
@@ -585,21 +651,23 @@
 				<div class="form-group">
 				<label>Hvordan ble hendelsen oppdaget?</label>
 				 <select name ="hendelseoppdaget" id="hendelseoppdaget" class="form-control">
-						<option>--- Select ---</option>
+						<option selected="selected">${andreHendelse.annenKomplikasjon.oppdaget} </option>
 			       		<#list andreHendelse.hendelsenoppdaget as hendelsenoppdaget>
-			       			<option>${hendelsenoppdaget} </option>
+			       			<#if hendelsenoppdaget != andreHendelse.annenKomplikasjon.oppdaget >
+			       				<option>${hendelsenoppdaget} </option>
+			       			</#if>
 			       		 </#list>
 	     		   	</select>
 				</div>
 	
 				<div class="form-group">
 				<label>Gjennomførte eller planlagte forebyggende tiltak. Beskriv kort.</label>
-					<textarea class="form-control" name="planlagtetiltak" rows="3" ></textarea>
+					<textarea class="form-control" name="planlagtetiltak" rows="3"  >${andreHendelse.annenKomplikasjon.tiltak}</textarea>
 				</div>
 	
 				<div class="form-group">
 				<label>Kommentar</label>
-					<textarea class="form-control" name="hendelsekommentar" rows="3" ></textarea>
+					<textarea class="form-control" name="hendelsekommentar" rows="3" > ${andreHendelse.annenKomplikasjon.kommentar}</textarea>
 				</div>
 				
 				 	<button name="avbryt3" type="submit" class="btn btn-default">Avbryt</button>
