@@ -32,8 +32,8 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 	 * @param userFields En liste over skjermbildefelter
 	 */
 	public void setutredningfieldMaps(String[]userFields){
-		//keys = userFields;
-		for (int i = 0;i<15;i++){
+		keys = userFields;
+		for (int i = 0;i<10;i++){
 			utredningsFields.put(userFields[i],null);
 			keyList.add(userFields[i]);
 		}
@@ -108,5 +108,9 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 	public void setHemolyseAnalyser(Map<String, Hemolyse> hemolyseAnalyser) {
 		this.hemolyseAnalyser = hemolyseAnalyser;
 	}
-	
+	public void distributeValues(String utredningValue){
+		setUtredningbeskrivelse(utredningValue);
+		setUtredningsklassifikasjon(utredningValue);
+		
+	}
 }
