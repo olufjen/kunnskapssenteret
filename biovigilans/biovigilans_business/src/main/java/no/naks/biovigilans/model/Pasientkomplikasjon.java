@@ -35,7 +35,10 @@ public interface Pasientkomplikasjon {
 			Map<String, Komplikasjonsklassifikasjon> komplikasjonsKlassifikasjoner);
 
 	public Map<String, String> getKomplikasjonsFields();
+	
+	public Map<String, Utredning> getUtredninger();
 
+	public void setUtredninger(Map<String, Utredning> utredninger);
 	public void setKomplikasjonsFields(Map<String, String> komplikasjonsFields);
 	public void setPatientkomplicationfieldMaps(String[]userFields);
 	public void saveField(String userField,String userValue);
