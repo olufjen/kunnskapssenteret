@@ -336,28 +336,34 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 			sykdomtablesUpdate.insert(sParams);
 			sykdomtablesUpdate= null;
 		}
-		Utredning utredning = pasientkomplikasjon.getUtredning();
-		utredning.setMeldeId(id);
-		utredning.setParams();
-		int[] utypes = utredning.getTypes();
-		Object[] uparams = utredning.getParams();
-		String usql = insertUtredningSQL;
-		Tablesupdate utredningUpdate = new TablesUpdateImpl(getDataSource(),usql,utypes);
-		utredningUpdate.insert(uparams);
-		utredning.setUtredningId(getPrimaryKey(utredningPrimaryKey,utredningprimarykeyTabledefs));
-		Iterator utredIterator = utredning.getHemolyseAnalyser().keySet().iterator();
-		while (utredIterator.hasNext()){
-			String key = (String)utredIterator.next();
-			Hemolyse hemolyseParam = (Hemolyse)utredning.getHemolyseAnalyser().get(key);
-			hemolyseParam.setUtredningid(utredning.getUtredningId());
-			hemolyseParam.setParams();
-			int[]hTypes = hemolyseParam.getTypes();
-			Object[] hParams = hemolyseParam.getParams();
-			String hSQL = insertHemolyseSQL;
-			Tablesupdate hemoTablesupdate = new TablesUpdateImpl(getDataSource(),hSQL,hTypes);
-			hemoTablesupdate.insert(hParams);
-			hemoTablesupdate = null;
+		Iterator utredningIterator = pasientkomplikasjon.getUtredninger().keySet().iterator();
+		while (utredningIterator.hasNext()){
+			String key = (String)utredningIterator.next();
+			Utredning utredning = (Utredning)pasientkomplikasjon.getUtredninger().get(key);
+			utredning.setMeldeId(id);
+			utredning.setParams();
+			int[] utypes = utredning.getTypes();
+			Object[] uparams = utredning.getParams();
+			String usql = insertUtredningSQL;
+			Tablesupdate utredningUpdate = new TablesUpdateImpl(getDataSource(),usql,utypes);
+			utredningUpdate.insert(uparams);
+			utredning.setUtredningId(getPrimaryKey(utredningPrimaryKey,utredningprimarykeyTabledefs));
+			Iterator utredIterator = utredning.getHemolyseAnalyser().keySet().iterator();
+			while (utredIterator.hasNext()){
+				String hemkey = (String)utredIterator.next();
+				Hemolyse hemolyseParam = (Hemolyse)utredning.getHemolyseAnalyser().get(hemkey);
+				hemolyseParam.setUtredningid(utredning.getUtredningId());
+				hemolyseParam.setParams();
+				int[]hTypes = hemolyseParam.getTypes();
+				Object[] hParams = hemolyseParam.getParams();
+				String hSQL = insertHemolyseSQL;
+				Tablesupdate hemoTablesupdate = new TablesUpdateImpl(getDataSource(),hSQL,hTypes);
+				hemoTablesupdate.insert(hParams);
+				hemoTablesupdate = null;
+			}	
 		}
+//		Utredning utredning = pasientkomplikasjon.getUtredning();
+
 	}
 	
 	/* saveTransfusjon
