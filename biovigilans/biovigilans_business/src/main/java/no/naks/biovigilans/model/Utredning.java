@@ -32,7 +32,7 @@ public interface Utredning {
 	public Object[] getParams();
 	public int[] getUtypes();
 	public void saveUtredning();
-	
+	public void distributeValues(String utredningValue);
 	public Long getMeldeId();
 	public void setMeldeId(Long meldeId);
 	public void produceHemolyse(Hemolyse hemolyse);
