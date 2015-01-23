@@ -41,6 +41,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	 */	
 	private Map<String,Symptomer> symptomer;
 	private Map<String,Komplikasjonsklassifikasjon>  komplikasjonsKlassifikasjoner;
+	private Map<String,Utredning> utredninger;
 	
 	private Map<String,String> komplikasjonsFields;
 	private String[] keys;
@@ -52,7 +53,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	
 		symptomer = new HashMap();
 		komplikasjonsKlassifikasjoner = new HashMap();
-		
+		utredninger = new HashMap();
 		komplikasjonsFields = new HashMap();
 		setMeldingsdato(Calendar.getInstance().getTime());
 		
@@ -329,7 +330,26 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 
 	public void setUtredning(Utredning utredning) {
 		this.utredning = utredning;
+		produceUtredninger();
 	}
 	
+	public Map<String, Utredning> getUtredninger() {
+		return utredninger;
+	}
+
+	public void setUtredninger(Map<String, Utredning> utredninger) {
+		this.utredninger = utredninger;
+	}
+
+	private void produceUtredninger(){
+		Utredning lokalUtredning = null;
+		for (String utredningKey : utredning.getUtredningsFields().values()){
+			if (utredningKey != null && !utredningKey.equals("")){
+				lokalUtredning = new UtredningImpl();
+				lokalUtredning.distributeValues(utredningKey);
+				this.utredninger.put(utredningKey, lokalUtredning);
+			}
+		}
+	}
 	
 }
