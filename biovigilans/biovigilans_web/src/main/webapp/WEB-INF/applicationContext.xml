@@ -340,7 +340,10 @@
                         ${pasientkomplikasjon.p-blodkrav2},${pasientkomplikasjon.p-blodkrav3},${pasientkomplikasjon.p-blodkrav4},
                         ${egenskaper.p-blod-kriseblodtrombo},${egenskaper.p-blod-transfusjonspakketrombo},${egenskaper.p-blod-vaskettrombo},${egenskaper.p-blod-bestralttrombo},
                         ${egenskaper.p-blod-hlatrombo},${egenskaper.p-blod-patogeningtrombo},${egenskaper.p-blod-blodvarmertrombo},${egenskaper.p-blod-kriseblodplasma},
-                        ${egenskaper.p-blod-transfusjonspakkeplasma},${egenskaper.p-blod-blodvarmerplasma}">
+                        ${egenskaper.p-blod-transfusjonspakkeplasma},${egenskaper.p-blod-blodvarmerplasma},${pasientkomplikasjon.arsak.utredning1},
+                        ${pasientkomplikasjon.arsak.utredning2},${pasientkomplikasjon.arsak.utredning3},${pasientkomplikasjon.arsak.utredning4},${pasientkomplikasjon.arsak.utredning5},
+                        ${pasientkomplikasjon.arsak.utredning6},${pasientkomplikasjon.arsak.utredning7},${pasientkomplikasjon.arsak.utredning8},${pasientkomplikasjon.arsak.utredning9},
+                        ${pasientkomplikasjon.arsak.utredning10}">
                 </property>
         </bean> 
                 
