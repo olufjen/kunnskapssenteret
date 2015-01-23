@@ -71,6 +71,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		annenKomplikasjonsFields = new HashMap<String,String>();
 	}
 	public String getKlassifikasjon() {
+		if(klassifikasjon==null){
+			klassifikasjon = "";
+		}
 		return klassifikasjon;
 	}
 	public void setKlassifikasjon(String klassifikasjon) {
@@ -87,6 +90,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 	
 	public String getDelkode() {
+		if(delkode == null){
+			delkode = "";
+		}
 		return delkode;
 	}
 	
@@ -97,12 +103,18 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.delkode = delkode;
 	}
 	public String getDatoforhendelseKvittering() {
+		if(datoforhendelseKvittering == null){
+			datoforhendelseKvittering = "";
+		}
 		return datoforhendelseKvittering;
 	}
 	public void setDatoforhendelseKvittering(String datoforhendelseKvittering) {
 		this.datoforhendelseKvittering = datoforhendelseKvittering;
 	}
 	public String getKlassifikasjonkode() {
+		if(Klassifikasjonkode == null){
+			Klassifikasjonkode = "";
+		}
 		return Klassifikasjonkode;
 	}
 	public void setKlassifikasjonkode(String klassifikasjonkode) {
@@ -110,6 +122,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		Klassifikasjonkode = klassifikasjonkode;
 	}
 	public String getKomplikasjonbeskrivelse() {
+		if(komplikasjonbeskrivelse == null){
+			komplikasjonbeskrivelse="";
+		}
 		return komplikasjonbeskrivelse;
 	}
 	public void setKomplikasjonbeskrivelse(String komplikasjonbeskrivelse) {
@@ -119,6 +134,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.komplikasjonbeskrivelse = komplikasjonbeskrivelse;
 	}
 	public String getKomplikasjondefinisjon() {
+		if(komplikasjondefinisjon == null){
+			komplikasjondefinisjon ="--- Select ---";
+		}
 		return komplikasjondefinisjon;
 	}
 	public void setKomplikasjondefinisjon(String komplikasjondefinisjon) {
@@ -128,6 +146,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.komplikasjondefinisjon = komplikasjondefinisjon;
 	}
 	public String getAvvikarsak() {
+		if(avvikarsak == null){
+			avvikarsak = "--- Select ---";
+		}
 		return avvikarsak;
 	}
 	public void setAvvikarsak(String avvikarsak) {
@@ -140,6 +161,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.avvikarsak = avvikarsak;
 	}
 	public String getHovedprosess() {
+		if(hovedprosess == null){
+			hovedprosess = "--- Select ---";
+		}
 		return hovedprosess;
 	}
 	public void setHovedprosess(String hovedprosess) {
@@ -152,6 +176,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.hovedprosess = hovedprosess;
 	}
 	public String getTiltak() {
+		if(tiltak == null){
+			tiltak ="";
+		}
 		return tiltak;
 	}
 	public void setTiltak(String tiltak) {
@@ -161,6 +188,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.tiltak = tiltak;
 	}
 	public String getKommentar() {
+		if(kommentar == null){
+			kommentar = "";
+		}
 		return kommentar;
 	}
 	public void setKommentar(String kommentar) {
@@ -170,6 +200,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.kommentar = kommentar;
 	}
 	public String getOppdaget() {
+		if(oppdaget == null ){
+			oppdaget = "--- Select ---";
+		}
 		return oppdaget;
 	}
 	public void setOppdaget(String oppdaget) {
