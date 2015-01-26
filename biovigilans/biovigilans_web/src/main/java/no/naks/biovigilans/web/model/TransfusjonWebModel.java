@@ -133,7 +133,17 @@ public class TransfusjonWebModel extends VigilansModel {
 				formFields[121],formFields[122],formFields[123],formFields[124],formFields[125],formFields[126],formFields[127],formFields[128]};
 	*/	
 		String[] utredningFields = {formFields[246],formFields[247],formFields[248],formFields[249],formFields[250],formFields[251],formFields[252],
-				formFields[253],formFields[254],formFields[255]};
+				formFields[253],formFields[254],formFields[255],formFields[256],formFields[257],formFields[258],formFields[259],formFields[260],formFields[261],
+				formFields[262],formFields[263],formFields[264],formFields[265],formFields[266],formFields[267],formFields[268],formFields[269],formFields[270],
+				formFields[271],formFields[272],formFields[273],formFields[274],formFields[275],formFields[276],formFields[277],formFields[278],formFields[279],
+				formFields[280],formFields[281],formFields[282],formFields[283],formFields[284],formFields[285],formFields[286],formFields[287],formFields[288],
+				formFields[289],formFields[290],formFields[291],formFields[292],formFields[293],formFields[294],formFields[295],formFields[296],formFields[297],
+				formFields[298],formFields[299],formFields[300],formFields[301],formFields[302],formFields[303],formFields[304],formFields[305],formFields[306],
+				formFields[307],formFields[308],formFields[309],formFields[310],formFields[311],formFields[312],formFields[313],formFields[314],formFields[315],
+				formFields[316],formFields[317],formFields[318],formFields[319],formFields[320],formFields[321],formFields[322],formFields[323],formFields[324],
+				formFields[325],formFields[326],formFields[327],formFields[328],formFields[329],formFields[330],formFields[331],formFields[332],formFields[333],
+				formFields[334],formFields[335],formFields[336],formFields[337],formFields[338],formFields[339],formFields[340],formFields[341],formFields[342],
+				formFields[343],formFields[344],formFields[345],formFields[346]};
 		utredning.setutredningfieldMaps(utredningFields);
 		String[] hemoLysefields = {formFields[187],formFields[188],formFields[189],formFields[190],formFields[191]};
 //		utredning.addFields(hemoLysefields);
