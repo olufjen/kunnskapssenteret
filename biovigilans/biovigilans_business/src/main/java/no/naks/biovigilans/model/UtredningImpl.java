@@ -33,7 +33,8 @@ public class UtredningImpl extends AbstractUtredning implements Utredning {
 	 */
 	public void setutredningfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0;i<10;i++){
+		int le = keys.length;
+		for (int i = 0;i<le;i++){
 			utredningsFields.put(userFields[i],null);
 			keyList.add(userFields[i]);
 		}
