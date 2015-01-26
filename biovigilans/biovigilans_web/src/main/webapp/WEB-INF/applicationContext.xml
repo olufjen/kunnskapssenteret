@@ -343,7 +343,30 @@
                         ${egenskaper.p-blod-transfusjonspakkeplasma},${egenskaper.p-blod-blodvarmerplasma},${pasientkomplikasjon.arsak.utredning1},
                         ${pasientkomplikasjon.arsak.utredning2},${pasientkomplikasjon.arsak.utredning3},${pasientkomplikasjon.arsak.utredning4},${pasientkomplikasjon.arsak.utredning5},
                         ${pasientkomplikasjon.arsak.utredning6},${pasientkomplikasjon.arsak.utredning7},${pasientkomplikasjon.arsak.utredning8},${pasientkomplikasjon.arsak.utredning9},
-                        ${pasientkomplikasjon.arsak.utredning10}">
+                        ${pasientkomplikasjon.arsak.utredning10},${pasientkomplikasjon.arsak.utredning11},${pasientkomplikasjon.arsak.utredning12},${pasientkomplikasjon.arsak.utredning13},
+                        ${pasientkomplikasjon.arsak.utredning14},${pasientkomplikasjon.arsak.utredning15},${pasientkomplikasjon.arsak.utredning16},${pasientkomplikasjon.arsak.utredning17},
+                        ${pasientkomplikasjon.arsak.utredning18},${pasientkomplikasjon.arsak.utredning19},${pasientkomplikasjon.arsak.utredning20},${pasientkomplikasjon.arsak.utredning21},
+                        ${pasientkomplikasjon.arsak.utredning22},${pasientkomplikasjon.arsak.utredning23},${pasientkomplikasjon.arsak.utredning24},${pasientkomplikasjon.arsak.utredning25},
+                        ${pasientkomplikasjon.arsak.utredning26},${pasientkomplikasjon.arsak.utredning27},${pasientkomplikasjon.arsak.utredning28},${pasientkomplikasjon.arsak.utredning29},
+                        ${pasientkomplikasjon.arsak.utredning30},${pasientkomplikasjon.arsak.utredning31},${pasientkomplikasjon.arsak.utredning32},${pasientkomplikasjon.arsak.utredning33},
+                        ${pasientkomplikasjon.arsak.utredning34},${pasientkomplikasjon.arsak.utredning35},${pasientkomplikasjon.arsak.utredning36},${pasientkomplikasjon.arsak.utredning37},
+                        ${pasientkomplikasjon.arsak.utredning38},${pasientkomplikasjon.arsak.utredning39},${pasientkomplikasjon.arsak.utredning40},${pasientkomplikasjon.arsak.utredning41},
+                        ${pasientkomplikasjon.arsak.utredning42},${pasientkomplikasjon.arsak.utredning43},${pasientkomplikasjon.arsak.utredning44},${pasientkomplikasjon.arsak.utredning45},
+                        ${pasientkomplikasjon.arsak.utredning46},${pasientkomplikasjon.arsak.utredning47},${pasientkomplikasjon.arsak.utredning48},${pasientkomplikasjon.arsak.utredning49},
+                        ${pasientkomplikasjon.arsak.utredning50},${pasientkomplikasjon.arsak.utredning51},${pasientkomplikasjon.arsak.utredning52},${pasientkomplikasjon.arsak.utredning53},
+                        ${pasientkomplikasjon.arsak.utredning54},${pasientkomplikasjon.arsak.utredning55},${pasientkomplikasjon.arsak.utredning56},${pasientkomplikasjon.arsak.utredning57},
+                        ${pasientkomplikasjon.arsak.utredning58},${pasientkomplikasjon.arsak.utredning59},${pasientkomplikasjon.arsak.utredning60},${pasientkomplikasjon.arsak.utredning61},
+                        ${pasientkomplikasjon.arsak.utredning62},${pasientkomplikasjon.arsak.utredning63},${pasientkomplikasjon.arsak.utredning64},${pasientkomplikasjon.arsak.utredning65},
+                        ${pasientkomplikasjon.arsak.utredning66},${pasientkomplikasjon.arsak.utredning67},${pasientkomplikasjon.arsak.utredning68},${pasientkomplikasjon.arsak.utredning69}.
+                        ${pasientkomplikasjon.arsak.utredning70},${pasientkomplikasjon.arsak.utredning71},${pasientkomplikasjon.arsak.utredning72},${pasientkomplikasjon.arsak.utredning73},
+                        ${pasientkomplikasjon.arsak.utredning74},${pasientkomplikasjon.arsak.utredning75},${pasientkomplikasjon.arsak.utredning76},${pasientkomplikasjon.arsak.utredning77},
+                        ${pasientkomplikasjon.arsak.utredning78},${pasientkomplikasjon.arsak.utredning79},${pasientkomplikasjon.arsak.utredning80},${pasientkomplikasjon.arsak.utredning81},
+                        ${pasientkomplikasjon.arsak.utredning82},${pasientkomplikasjon.arsak.utredning83},${pasientkomplikasjon.arsak.utredning84},${pasientkomplikasjon.arsak.utredning85},
+                        ${pasientkomplikasjon.arsak.utredning86},${pasientkomplikasjon.arsak.utredning87},${pasientkomplikasjon.arsak.utredning88},${pasientkomplikasjon.arsak.utredning89},
+                        ${pasientkomplikasjon.arsak.utredning90},${pasientkomplikasjon.arsak.utredning91},${pasientkomplikasjon.arsak.utredning92},${pasientkomplikasjon.arsak.utredning93},
+                        ${pasientkomplikasjon.arsak.utredning94},${pasientkomplikasjon.arsak.utredning95},${pasientkomplikasjon.arsak.utredning96},${pasientkomplikasjon.arsak.utredning97},
+                        ${pasientkomplikasjon.arsak.utredning98},${pasientkomplikasjon.arsak.utredning99},${pasientkomplikasjon.arsak.utredning100},${pasientkomplikasjon.arsak.utredning101},
+                        ${pasientkomplikasjon.arsak.utredning102}">
                 </property>
         </bean> 
                 
