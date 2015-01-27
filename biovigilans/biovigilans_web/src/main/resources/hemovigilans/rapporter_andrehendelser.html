@@ -133,153 +133,6 @@
 				       		 </#list>
 	     		   	</select>
 				</div>
-			<div class="form-group">
-			   <label>HVA GIKK GALT?</label>
-				   <!-- declare variables for every checkbox -->
-				   <#assign rekvirering="" >
-				   <#assign bestillingg ="" >
-				   <#assign provetaking ="" >
-				   <#assign feilmerking ="" >
-				   <#assign forveksling ="" >
-				   <#assign pretransfusjons ="" >
-				   
-				   <#assign mangelfull ="" >
-				   <#assign utlevering ="" >
-				   <#assign henting ="" >
-				   <#assign hentingiskap ="" >
-				   <#assign hentingved ="" >
-				   <#assign rutiner ="" >
-				   <#assign mangelfullKommunikasjon ="" >
-				   <#assign intet ="" >
-				   <#assign vetIkke ="" >
-				  	<!-- get the hvagikkgalt checkbox list --> 
-				   <#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
-				   
-				   <!-- take the value of checkbox that is checked  -->
-				   <#if hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
-				   <#if  hvagikkgalt=='Bestillingg' ><#assign bestillingg ="checked" > </#if>
-				   <#if  hvagikkgalt=='Prøvetaking' ><#assign provetaking ="checked" > </#if>
-				   <#if  hvagikkgalt=='Feilmerking av prøverør' ><#assign feilmerking ="checked" > </#if>
-				   <#if  hvagikkgalt=='Forveksling av prøver/ resultater' ><#assign forveksling ="checked" > </#if>
-				   <#if  hvagikkgalt=='Pretransfusjonstesting i blodbanken' ><#assign pretransfusjons ="checked" > </#if>
-				   
-				   <#if  hvagikkgalt=='Feil/ mangelfull behandling av blodet i blodbanken' ><#assign mangelfull ="checked" > </#if>
-				   <#if  hvagikkgalt=='Valg/utlevering av blodprodukt (blodbankpersonell)' ><#assign utlevering ="checked" > </#if>
-				   <#if  hvagikkgalt=='Henting av blod i blodbanken (ikke blodbankpersonell)' ><#assign henting ="checked" > </#if>
-				   <#if  hvagikkgalt=='Henting av blod i skap/fryser utenfor blodbank' ><#assign hentingiskap ="checked" > </#if>
-				   <#if  hvagikkgalt=='Henting av blod ved rørpoststasjon' ><#assign hentingved ="checked" > </#if>
-				   <#if  hvagikkgalt=='Rutiner for identitetskontroll ved transfusjon ikke fulgt' ><#assign rutiner ="checked" > </#if>
-				   <#if  hvagikkgalt=='Mangelfull kommunikasjon' ><#assign mangelfullKommunikasjon ="checked" > </#if>
-				   <#if  hvagikkgalt=='Intet avvik' ><#assign intet ="checked" > </#if>
-				   <#if  hvagikkgalt=='Vet ikke' ><#assign vetIkke ="checked" > </#if>
-				           
-				</#list>  	
-				
-						<div class="checkbox">
-				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt" id="rekvirering" value="Indikasjonsstilling/rekvirering"
-				          		${rekvirering} />
-				          		
-				          
-				          		Indikasjonsstilling/rekvirering
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestillingg"
-				          		${bestillingg}/>
-				          		Bestilling
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Prøvetaking" ${provetaking}  />
-				          		Prøvetaking
-				          </label>
-						</div>
-				        <div class="checkbox">				         
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feilmerking av prøverør" ${feilmerking}  />
-				          		Feilmerking av prøverør
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Forveksling av prøver/ resultater"  ${forveksling} />
-				          		Forveksling av prøver/ resultater
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Pretransfusjonstesting i blodbanken" ${pretransfusjons}  />
-				          		Pretransfusjonstesting i blodbanken
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feil/ mangelfull behandling av blodet i blodbanken" ${mangelfull}  />
-				          		Feil/ mangelfull behandling av blodet i blodbanken
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Valg/utlevering av blodprodukt (blodbankpersonell)" ${utlevering}  />
-				          		Valg/utlevering av blodprodukt (blodbankpersonell)
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i blodbanken (ikke blodbankpersonell)" ${henting}  />
-				          		Henting av blod i blodbanken (ikke blodbankpersonell)
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i skap/fryser utenfor blodbank"  ${hentingiskap} />
-				          		Henting av blod i skap/fryser utenfor blodbank
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				           <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod ved rørpoststasjon" ${hentingved}  />
-				          		Henting av blod ved rørpoststasjon
-				          </label>
-				        </div>
-				        <div class="checkbox">  
-				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Rutiner for identitetskontroll ved transfusjon ikke fulgt" ${rutiner}  />
-				          		Rutiner for identitetskontroll ved transfusjon ikke fulgt
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Mangelfull kommunikasjon" ${mangelfullKommunikasjon}  />
-				          		Mangelfull kommunikasjon
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Intet avvik" ${intet}  />
-				          		Intet avvik
-				          </label>
-				        </div>
-				        <div class="checkbox">
-				          <label>
-				          	<input type="checkbox" name="tab-hvagikkgalt"  value="Vet ikke"  ${vetIkke} />
-				          		Vet ikke
-				          </label>
-				        </div>
-					<!-- <label>Delprosesser</label>
-					<div class="checkbox">
-				          <label>
-				          	<input type="checkbox" name="tab-delprosess"  value="delprosess"   />Delprosess
-				          </label>
-				    </div> -->
-				        
-				</div>
-
-
-				
 				<div class="form-group">
 					<label>Primærårsak til feil eller avvik </label>
 					<select name ="tab-kvalitetskrav" id="tab-kvalitetskrav" class="form-control">
@@ -299,7 +152,7 @@
 				          	<input type="radio" name="tab-klassifikasjon" id="k-1"   value="Feil blod transfudert"  onclick="toggleDisplay('feilblod'); checkUncheck();"   />Feil blod transfundert
 				          </label>
 				          <div id="feilblod" style="display: none" >
-					          <div class="radio" >
+				              <div class="radio" >
 					          <!-- tab-feilblod -->
 					          	 <label>
 					          		<input type="radio" name="tab-klassifikasjon-sub" id="1"    value="Transfudert blod som ikke fyller krav"  />Blodproduktet oppfylte ikke spesifiserte krav 
@@ -320,6 +173,152 @@
 					          		<input type="radio" name="tab-klassifikasjon-sub" id="4"   value="Annet"  />Blodprodukt gitt på feil indikasjon
 					          	 </label>
 					          </div>
+					          
+					          
+					          <div class="form-group">
+							   <label >HVA GIKK GALT?</label>
+								   <!-- declare variables for every checkbox -->
+								   <#assign rekvirering="" >
+								   <#assign bestillingg ="" >
+								   <#assign provetaking ="" >
+								   <#assign feilmerking ="" >
+								   <#assign forveksling ="" >
+								   <#assign pretransfusjons ="" >
+								   
+								   <#assign mangelfull ="" >
+								   <#assign utlevering ="" >
+								   <#assign henting ="" >
+								   <#assign hentingiskap ="" >
+								   <#assign hentingved ="" >
+								   <#assign rutiner ="" >
+								   <#assign mangelfullKommunikasjon ="" >
+								   <#assign intet ="" >
+								   <#assign vetIkke ="" >
+								  	<!-- get the hvagikkgalt checkbox list --> 
+								   <#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
+								   
+								   <!-- take the value of checkbox that is checked  -->
+								   <#if hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
+								   <#if  hvagikkgalt=='Bestillingg' ><#assign bestillingg ="checked" > </#if>
+								   <#if  hvagikkgalt=='Prøvetaking' ><#assign provetaking ="checked" > </#if>
+								   <#if  hvagikkgalt=='Feilmerking av prøverør' ><#assign feilmerking ="checked" > </#if>
+								   <#if  hvagikkgalt=='Forveksling av prøver/ resultater' ><#assign forveksling ="checked" > </#if>
+								   <#if  hvagikkgalt=='Pretransfusjonstesting i blodbanken' ><#assign pretransfusjons ="checked" > </#if>
+								   
+								   <#if  hvagikkgalt=='Feil/ mangelfull behandling av blodet i blodbanken' ><#assign mangelfull ="checked" > </#if>
+								   <#if  hvagikkgalt=='Valg/utlevering av blodprodukt (blodbankpersonell)' ><#assign utlevering ="checked" > </#if>
+								   <#if  hvagikkgalt=='Henting av blod i blodbanken (ikke blodbankpersonell)' ><#assign henting ="checked" > </#if>
+								   <#if  hvagikkgalt=='Henting av blod i skap/fryser utenfor blodbank' ><#assign hentingiskap ="checked" > </#if>
+								   <#if  hvagikkgalt=='Henting av blod ved rørpoststasjon' ><#assign hentingved ="checked" > </#if>
+								   <#if  hvagikkgalt=='Rutiner for identitetskontroll ved transfusjon ikke fulgt' ><#assign rutiner ="checked" > </#if>
+								   <#if  hvagikkgalt=='Mangelfull kommunikasjon' ><#assign mangelfullKommunikasjon ="checked" > </#if>
+								   <#if  hvagikkgalt=='Intet avvik' ><#assign intet ="checked" > </#if>
+								   <#if  hvagikkgalt=='Vet ikke' ><#assign vetIkke ="checked" > </#if>
+								           
+								</#list>  	
+								
+										<div class="checkbox">
+								          <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt" id="rekvirering" value="Indikasjonsstilling/rekvirering"
+								          		${rekvirering} />
+								          		
+								          
+								          		Indikasjonsstilling/rekvirering
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestillingg"
+								          		${bestillingg}/>
+								          		Bestilling
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Prøvetaking" ${provetaking}  />
+								          		Prøvetaking
+								          </label>
+										</div>
+								        <div class="checkbox">				         
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feilmerking av prøverør" ${feilmerking}  />
+								          		Feilmerking av prøverør
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Forveksling av prøver/ resultater"  ${forveksling} />
+								          		Forveksling av prøver/ resultater
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Pretransfusjonstesting i blodbanken" ${pretransfusjons}  />
+								          		Pretransfusjonstesting i blodbanken
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feil/ mangelfull behandling av blodet i blodbanken" ${mangelfull}  />
+								          		Feil/ mangelfull behandling av blodet i blodbanken
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Valg/utlevering av blodprodukt (blodbankpersonell)" ${utlevering}  />
+								          		Valg/utlevering av blodprodukt (blodbankpersonell)
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i blodbanken (ikke blodbankpersonell)" ${henting}  />
+								          		Henting av blod i blodbanken (ikke blodbankpersonell)
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i skap/fryser utenfor blodbank"  ${hentingiskap} />
+								          		Henting av blod i skap/fryser utenfor blodbank
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								           <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod ved rørpoststasjon" ${hentingved}  />
+								          		Henting av blod ved rørpoststasjon
+								          </label>
+								        </div>
+								        <div class="checkbox">  
+								          <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Rutiner for identitetskontroll ved transfusjon ikke fulgt" ${rutiner}  />
+								          		Rutiner for identitetskontroll ved transfusjon ikke fulgt
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								          <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Mangelfull kommunikasjon" ${mangelfullKommunikasjon}  />
+								          		Mangelfull kommunikasjon
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								          <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Intet avvik" ${intet}  />
+								          		Intet avvik
+								          </label>
+								        </div>
+								        <div class="checkbox">
+								          <label>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Vet ikke"  ${vetIkke} />
+								          		Vet ikke
+								          </label>
+								        </div>
+									<!-- <label>Delprosesser</label>
+									<div class="checkbox">
+								          <label>
+								          	<input type="checkbox" name="tab-delprosess"  value="delprosess"   />Delprosess
+								          </label>
+								    </div> -->
+								        
+								</div>
 					      </div>
 				    </div>
 				    <div class="radio">
