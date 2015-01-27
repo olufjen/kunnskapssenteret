@@ -71,6 +71,9 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 
 	private String meldingsnokkel;
 	
+	private String kladd; // Om denne meldingen er en kladd
+	private String godkjent; // Om denne meldingen er godkjent
+	
 	protected String[]vigilansKeys;	
 	protected Map<String,String>vigilansFields;
 
@@ -90,6 +93,19 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 	public Date getDatoforhendelse() {
 		return datoforhendelse;
+	}
+	
+	public String getKladd() {
+		return kladd;
+	}
+	public void setKladd(String kladd) {
+		this.kladd = kladd;
+	}
+	public String getGodkjent() {
+		return godkjent;
+	}
+	public void setGodkjent(String godkjent) {
+		this.godkjent = godkjent;
 	}
 	public void setDatoforhendelse(Date datoforhendelse) {
 		if(datoforhendelse==null){
