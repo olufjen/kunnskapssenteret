@@ -29,6 +29,11 @@ public interface Vigilansmelding {
 	public void setSupplerendeopplysninger(java.lang.String supplerendeopplysninger);
 	public Date getMeldingsdato();
 	public void setMeldingsdato(Date meldingsdato);
+	public String getKladd();
+	public void setKladd(String kladd);
+	public String getGodkjent();
+	public void setGodkjent(String godkjent);
+	
 	public void setMeldingTypes();
 	public void setMeldingParams();
 	public int[] getTypes();
