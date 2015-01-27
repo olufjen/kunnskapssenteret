@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/page.css"/>
 <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/components.css"/>	
 <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/custom.css"/>
-<!--<link rel="stylesheet" href="css/bootstrap.css">-->
+<!--<link rel="stylesheet" href="css/bootstrap.css"> -->
 
 </head>
 
@@ -84,6 +84,18 @@ function toggleDisplayarsak(id,l,displayValue)
 		toggleDisplay(element,displayValue);
 	}
 	//alert("displayarsak end");
+}
+function removeChoice(){
+	
+	for (ct = 1;ct<10;ct++){
+		var idr = "p-lga"+ct.toString();
+		document.getElementById(idr).checked = false;
+	}
+	var idrt = "annet";
+	document.getElementById(idr).val("");
+	
+	//$idr.prop('checked',false);
+	
 }
 function displayNone()
 {
@@ -977,24 +989,24 @@ function showtext(id,thetext){
     <div class="radio">
       <label title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-1" value="ahtr-1"  title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse."
-         onclick="displayNone();toggleDisplayarsak('ahtr-valg',6,this.checked)"/>
+         onclick="displayNone();toggleDisplayarsak('ahtr-valg',6,this.checked);removeChoice()"/>
         Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. ABO uforlikelighet
       </label>
           <div id="ahtr-valg0" class="form-group" style="display: none">
      <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-hemo" id="p-lga-2" value="nedsatthemoja" required="required" onclick=""/>Ja 
+        <input type="radio" name="ah-hemo" id="p-lga1" value="nedsatthemoja" required="required" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ah-hemo" id="p-lga-1" value="nedsatthemonei" onclick="" />Nei
+        <input type="radio" name="ah-hemo" id="p-lga1" value="nedsatthemonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ah-hemo" id="p-lga1" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1002,17 +1014,17 @@ function showtext(id,thetext){
      <label>Nedsatt haptoglobin</label>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-hapto" id="p-lga-2" value="nedsatthaptoja" onclick=""/>Ja 
+        <input type="radio" name="ah-hapto" id="p-lga2" value="nedsatthaptoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ah-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="" />Nei
+        <input type="radio" name="ah-hapto" id="p-lga2" value="nedsatthaptonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ah-hapto" id="p-lga2" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1020,17 +1032,17 @@ function showtext(id,thetext){
      <label>Økt bilirubin </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-bili" id="p-lga-2" value="bilirubinja" onclick=""/>Ja 
+        <input type="radio" name="ah-bili" id="p-lga3" value="bilirubinja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ah-bili" id="p-lga-1" value="bilirubinnei" onclick="" />Nei
+        <input type="radio" name="ah-bili" id="p-lga3" value="bilirubinnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-bili" id="p-lga-3" value="bilirubinikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ah-bili" id="p-lga3" value="bilirubinikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>  
@@ -1038,17 +1050,17 @@ function showtext(id,thetext){
      <label>Økt laktat dehydrogenase (LD) </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-laktat" id="p-lga-2" value="laktatja" onclick=""/>Ja 
+        <input type="radio" name="ah-laktat" id="p-lga4" value="laktatja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ah-laktat" id="p-lga-1" value="laktatnei" onclick="" />Nei
+        <input type="radio" name="ah-laktat" id="p-lga4" value="laktatnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-laktat" id="p-lga-3" value="laktatikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ah-laktat" id="p-lga4" value="laktatikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
@@ -1056,23 +1068,23 @@ function showtext(id,thetext){
      <label>Positiv DAT </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-DAT" id="p-lga-2" value="PositivDATja" onclick=""/>Ja 
+        <input type="radio" name="ah-DAT" id="p-lga5" value="PositivDATja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ah-DAT" id="p-lga-1" value="PositivDATnei" onclick="" />Nei
+        <input type="radio" name="ah-DAT" id="p-lga5" value="PositivDATnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ah-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ah-DAT" id="p-lga5" value="PositivDATikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>     
 	<div id="ahtr-valg5" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="ah-akutt-hemotext" rows="2"></textarea>
+  		 <textarea class="form-control" name="ah-akutt-hemotext" id="annet" rows="2"></textarea>
   </div>    
   
   </div>
@@ -1080,24 +1092,24 @@ function showtext(id,thetext){
     <div class="radio">
       <label title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ahtr-2" value="ahtr-2" title="En AHTR oppstår innen 24 timer etter en transfusjon. Kliniske og/eller laboratoriemessige tegn på hemolyse er til stede. Se definisjonene for nærmere beskrivelse."
-         onclick="displayNone();toggleDisplayarsak('ahtr1-valg',8,this.checked)"/>
+         onclick="displayNone();toggleDisplayarsak('ahtr1-valg',8,this.checked);removeChoice()"/>
         Akutt hemolytisk transfusjonsreaksjon (AHTR) pga. annet alloantistoff
       </label>
     <div id="ahtr1-valg0" class="form-group" style="display: none">
      <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
     <div class="radio">
       <label>
-        <input type="radio" name="at-hemo" id="p-lga-2" value="nedsatthemoja" onclick=""/>Ja 
+        <input type="radio" name="at-hemo" id="p-lga1" value="nedsatthemoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="at-hemo" id="p-lga-1" value="nedsatthemonei" onclick="" />Nei
+        <input type="radio" name="at-hemo" id="p-lga1" value="nedsatthemonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="at-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="at-hemo" id="p-lga1" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1105,17 +1117,17 @@ function showtext(id,thetext){
      <label>Nedsatt haptoglobin</label>
     <div class="radio">
       <label>
-        <input type="radio" name="at-hapto" id="p-lga-2" value="nedsatthaptoja" onclick=""/>Ja 
+        <input type="radio" name="at-hapto" id="p-lga2" value="nedsatthaptoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="at-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="" />Nei
+        <input type="radio" name="at-hapto" id="p-lga2" value="nedsatthaptonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="at-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="at-hapto" id="p-lga2" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1123,17 +1135,17 @@ function showtext(id,thetext){
      <label>Økt bilirubin </label>
     <div class="radio">
       <label>
-        <input type="radio" name="at-bili" id="p-lga-2" value="bilirubinja" onclick=""/>Ja 
+        <input type="radio" name="at-bili" id="p-lga3" value="bilirubinja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="at-bili" id="p-lga-1" value="bilirubinnei" onclick="" />Nei
+        <input type="radio" name="at-bili" id="p-lga3" value="bilirubinnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="at-bili" id="p-lga-3" value="bilirubinikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="at-bili" id="p-lga3" value="bilirubinikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>  
@@ -1141,17 +1153,17 @@ function showtext(id,thetext){
      <label>Økt laktat dehydrogenase (LD) </label>
     <div class="radio">
       <label>
-        <input type="radio" name="at-laktat" id="p-lga-2" value="laktatja" onclick=""/>Ja 
+        <input type="radio" name="at-laktat" id="p-lga4" value="laktatja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="at-laktat" id="p-lga-1" value="laktatnei" onclick="" />Nei
+        <input type="radio" name="at-laktat" id="p-lga4" value="laktatnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="at-laktat" id="p-lga-3" value="laktatikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="at-laktat" id="p-lga4" value="laktatikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
@@ -1159,17 +1171,17 @@ function showtext(id,thetext){
      <label>Positiv DAT </label>
     <div class="radio">
       <label>
-        <input type="radio" name="at-DAT" id="p-lga-2" value="PositivDATja" onclick=""/>Ja 
+        <input type="radio" name="at-DAT" id="p-lga5" value="PositivDATja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="at-DAT" id="p-lga-1" value="PositivDATnei" onclick="" />Nei
+        <input type="radio" name="at-DAT" id="p-lga5" value="PositivDATnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="at-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="at-DAT" id="p-lga5" value="PositivDATikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div> 
@@ -1177,17 +1189,17 @@ function showtext(id,thetext){
      <label>Positiv blodtypeantistoffscreening </label>
     <div class="radio">
       <label>
-        <input type="radio" name="at-blodtypescreening" id="p-lga-2" value="blodtypescreeningja" onclick=""/>Ja 
+        <input type="radio" name="at-blodtypescreening" id="p-lga6" value="blodtypescreeningja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="at-blodtypescreening" id="p-lga-1" value="blodtypescreeningnei" onclick="" />Nei
+        <input type="radio" name="at-blodtypescreening" id="p-lga6" value="blodtypescreeningnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="at-blodtypescreening" id="p-lga-3" value="blodtypescreeningikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="at-blodtypescreening" id="p-lga6" value="blodtypescreeningikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>      
@@ -1195,29 +1207,29 @@ function showtext(id,thetext){
      <label>Identifisert antistoff  </label>
     <div class="radio">
       <label>
-        <input type="radio" name="at-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('ahtr1-spesifisitet', this.checked)"/>Ja 
+        <input type="radio" name="at-blodtypeantistoff" id="p-lga7" value="blodtypeantistoffja" onclick="toggleDisplay('ahtr1-spesifisitet', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="at-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('ahtr1-spesifisitet', 0)" />Nei
+        <input type="radio" name="at-blodtypeantistoff" id="p-lga7" value="blodtypeantistoffnei" onclick="toggleDisplay('ahtr1-spesifisitet', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="at-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('ahtr1-spesifisitet', 0)"/>Ikke utført
+        <input type="radio" name="at-blodtypeantistoff" id="p-lga7" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('ahtr1-spesifisitet', 0)"/>Ikke utført
       </label>
     </div>
       <div id="ahtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-  		 <textarea class="form-control" name="at-spesifisitet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="at-spesifisitet-text" id="annet" rows="2" ></textarea>
   	</div> 
   </div> 
   
       
   <div id="ahtr1-valg7" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="at-annet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="at-annet-text" id="annet" rows="2" ></textarea>
   </div>    
   </div>
 
@@ -1240,7 +1252,7 @@ function showtext(id,thetext){
      <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-hemo" id="p-lga-2" value="nedsatthemoja" onclick=""/>Ja 
+        <input type="radio" name="dh-hemo" id="p-lga-1" value="nedsatthemoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
@@ -1250,7 +1262,7 @@ function showtext(id,thetext){
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="dh-hemo" id="p-lga-1" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1263,12 +1275,12 @@ function showtext(id,thetext){
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="dh-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="" />Nei
+        <input type="radio" name="dh-hapto" id="p-lga-2" value="nedsatthaptonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="dh-hapto" id="p-lga-2" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1276,12 +1288,12 @@ function showtext(id,thetext){
      <label>Økt bilirubin </label>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-bili" id="p-lga-2" value="bilirubinja" onclick=""/>Ja 
+        <input type="radio" name="dh-bili" id="p-lga-3" value="bilirubinja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="dh-bili" id="p-lga-1" value="bilirubinnei" onclick="" />Nei
+        <input type="radio" name="dh-bili" id="p-lga-3" value="bilirubinnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
@@ -1294,17 +1306,17 @@ function showtext(id,thetext){
      <label>Økt laktat dehydrogenase (LD) </label>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-laktat" id="p-lga-2" value="laktatja" onclick=""/>Ja 
+        <input type="radio" name="dh-laktat" id="p-lga-4" value="laktatja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="dh-laktat" id="p-lga-1" value="laktatnei" onclick="" />Nei
+        <input type="radio" name="dh-laktat" id="p-lga-4" value="laktatnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-laktat" id="p-lga-3" value="laktatikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="dh-laktat" id="p-lga-4" value="laktatikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
@@ -1312,17 +1324,17 @@ function showtext(id,thetext){
      <label>Positiv DAT </label>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-DAT" id="p-lga-2" value="PositivDATja" onclick=""/>Ja 
+        <input type="radio" name="dh-DAT" id="p-lga-5" value="PositivDATja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="dh-DAT" id="p-lga-1" value="PositivDATnei" onclick="" />Nei
+        <input type="radio" name="dh-DAT" id="p-lga-5" value="PositivDATnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="dh-DAT" id="p-lga-5" value="PositivDATikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div> 
@@ -1330,17 +1342,17 @@ function showtext(id,thetext){
      <label>Positiv blodtypeantistoffscreening </label>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-blodtypescreening" id="p-lga-2" value="blodtypescreeningja" onclick=""/>Ja 
+        <input type="radio" name="dh-blodtypescreening" id="p-lga-6" value="blodtypescreeningja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="dh-blodtypescreening" id="p-lga-1" value="blodtypescreeningnei" onclick="" />Nei
+        <input type="radio" name="dh-blodtypescreening" id="p-lga-6" value="blodtypescreeningnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-blodtypescreening" id="p-lga-3" value="blodtypescreeningikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="dh-blodtypescreening" id="p-lga-6" value="blodtypescreeningikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>      
@@ -1348,28 +1360,28 @@ function showtext(id,thetext){
      <label>Identifisert antistoff  </label>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('dhtr1-spesifisitet', this.checked)"/>Ja 
+        <input type="radio" name="dh-blodtypeantistoff" id="p-lga-7" value="blodtypeantistoffja" onclick="toggleDisplay('dhtr1-spesifisitet', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="dh-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('dhtr1-spesifisitet', 0)" />Nei
+        <input type="radio" name="dh-blodtypeantistoff" id="p-lga-7" value="blodtypeantistoffnei" onclick="toggleDisplay('dhtr1-spesifisitet', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="dh-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('dhtr1-spesifisitet', 0)"/>Ikke utført
+        <input type="radio" name="dh-blodtypeantistoff" id="p-lga-7" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('dhtr1-spesifisitet', 0)"/>Ikke utført
       </label>
     </div>
  	<div id="dhtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-  		 <textarea class="form-control" name="dh-spesifisitet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="dh-spesifisitet-text" id="annet" rows="2" ></textarea>
   </div>      
   </div>   
     
   <div id="dhtr1-valg7" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="dh-annet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="dh-annet-text" id="annet" rows="2" ></textarea>
   </div>   
   </div>
 
@@ -1385,7 +1397,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Økt CRP (i forhold til før transfusjonen)</label>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-hemo" id="p-lga-2" value="ØktCRPiforholdtilførtransfusjonenja" onclick=""/>Ja 
+        <input type="radio" name="fh-hemo" id="p-lga-1" value="ØktCRPiforholdtilførtransfusjonenja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
@@ -1395,7 +1407,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-hemo" id="p-lga-3" value="ØktCRPiforholdtilførtransfusjonenikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="fh-hemo" id="p-lga-1" value="ØktCRPiforholdtilførtransfusjonenikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1408,29 +1420,29 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="fh-hapto" id="p-lga-1" value="Positivdyrkningavresteriblodproduktetnei" onclick="toggleDisplay('fhtr1-spesifisert', 0)" />Nei
+        <input type="radio" name="fh-hapto" id="p-lga-2" value="Positivdyrkningavresteriblodproduktetnei" onclick="toggleDisplay('fhtr1-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-hapto" id="p-lga-3" value="Positivdyrkningavresteriblodproduktetikkeutført" onclick="toggleDisplay('fhtr1-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="fh-hapto" id="p-lga-2" value="Positivdyrkningavresteriblodproduktetikkeutført" onclick="toggleDisplay('fhtr1-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
    <div id="fhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="fh-spesifisert-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="fh-spesifisert-text" id="annet" rows="2" ></textarea>
   </div>
   <div id="fhtr1-valg2" class="form-group" style="display: none">
      <label>Positiv blodkultur hos blodmottaker </label>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-bili" id="p-lga-2" value="Positivblodkulturhosblodmottakerja" onclick=""/>Ja 
+        <input type="radio" name="fh-bili" id="p-lga-3" value="Positivblodkulturhosblodmottakerja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="fh-bili" id="p-lga-1" value="Positivblodkulturhosblodmottakernei" onclick="" />Nei
+        <input type="radio" name="fh-bili" id="p-lga-3" value="Positivblodkulturhosblodmottakernei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
@@ -1443,17 +1455,17 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Positiv DAT </label>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-DAT" id="p-lga-2" value="PositivDATja" onclick=""/>Ja 
+        <input type="radio" name="fh-DAT" id="p-lga-4" value="PositivDATja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="fh-DAT" id="p-lga-1" value="PositivDATnei" onclick="" />Nei
+        <input type="radio" name="fh-DAT" id="p-lga-4" value="PositivDATnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="fh-DAT" id="p-lga-4" value="PositivDATikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div> 
@@ -1461,28 +1473,28 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Positiv blodtypeantistoffscreening, ev. identifisert antistoff.</label>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-blodtypescreening" id="p-lga-2" value="blodtypescreeningja" onclick="toggleDisplay('fhtr1-spesifisitet', this.checked)"/>Ja 
+        <input type="radio" name="fh-blodtypescreening" id="p-lga-5" value="blodtypescreeningja" onclick="toggleDisplay('fhtr1-spesifisitet', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="fh-blodtypescreening" id="p-lga-1" value="blodtypescreeningnei" onclick="toggleDisplay('fhtr1-spesifisitet', 0)" />Nei
+        <input type="radio" name="fh-blodtypescreening" id="p-lga-5" value="blodtypescreeningnei" onclick="toggleDisplay('fhtr1-spesifisitet', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="fh-blodtypescreening" id="p-lga-3" value="blodtypescreeningikkeutført" onclick="toggleDisplay('fhtr1-spesifisitet', 0)"/>Ikke utført
+        <input type="radio" name="fh-blodtypescreening" id="p-lga-5" value="blodtypescreeningikkeutført" onclick="toggleDisplay('fhtr1-spesifisitet', 0)"/>Ikke utført
       </label>
     </div>
   </div>      
   <div id="fhtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-  		 <textarea class="form-control" name="fh-spesifisitet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="fh-spesifisitet-text" id="annet" rows="2" ></textarea>
   </div> 
        
   <div id="fhtr1-valg5" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="fh-annet-hemotext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="fh-annet-hemotext" id="annet" rows="2" ></textarea>
   </div>   
   </div>
 
@@ -1499,7 +1511,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-hemo" id="p-lga-2" value="nedsatthemoja" onclick=""/>Ja 
+        <input type="radio" name="ih-hemo" id="p-lga-1" value="nedsatthemoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
@@ -1509,7 +1521,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-hemo" id="p-lga-3" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ih-hemo" id="p-lga-1" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1522,12 +1534,12 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ih-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="" />Nei
+        <input type="radio" name="ih-hapto" id="p-lga-2" value="nedsatthaptonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ih-hapto" id="p-lga-2" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1535,12 +1547,12 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Økt bilirubin </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-bili" id="p-lga-2" value="bilirubinja" onclick=""/>Ja 
+        <input type="radio" name="ih-bili" id="p-lga-3" value="bilirubinja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ih-bili" id="p-lga-1" value="bilirubinnei" onclick="" />Nei
+        <input type="radio" name="ih-bili" id="p-lga-3" value="bilirubinnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
@@ -1553,17 +1565,17 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Økt laktat dehydrogenase (LD) </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-laktat" id="p-lga-2" value="laktatja" onclick=""/>Ja 
+        <input type="radio" name="ih-laktat" id="p-lga-4" value="laktatja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ih-laktat" id="p-lga-1" value="laktatnei" onclick="" />Nei
+        <input type="radio" name="ih-laktat" id="p-lga-4" value="laktatnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-laktat" id="p-lga-3" value="laktatikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ih-laktat" id="p-lga-4" value="laktatikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
@@ -1571,17 +1583,17 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Positiv DAT </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-DAT" id="p-lga-2" value="PositivDATja" onclick=""/>Ja 
+        <input type="radio" name="ih-DAT" id="p-lga-5" value="PositivDATja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ih-DAT" id="p-lga-1" value="PositivDATnei" onclick="" />Nei
+        <input type="radio" name="ih-DAT" id="p-lga-5" value="PositivDATnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ih-DAT" id="p-lga-5" value="PositivDATikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div> 
@@ -1589,17 +1601,17 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
      <label>Positiv blodtypeantistoffscreening </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick=""/>Ja 
+        <input type="radio" name="ih-blodtypeantistoff" id="p-lga-6" value="blodtypeantistoffja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ih-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="" />Nei
+        <input type="radio" name="ih-blodtypeantistoff" id="p-lga-6" value="blodtypeantistoffnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ih-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ih-blodtypeantistoff" id="p-lga-6" value="blodtypeantistoffikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>      
@@ -1607,7 +1619,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
       
   <div id="ihtr1-valg6" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="ih-annet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="ih-annet-text" id="annet" rows="2" ></textarea>
   </div>   
   </div>
 
@@ -1627,17 +1639,17 @@ Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon
      <label>Økt tryptase</label>
     <div class="radio">
       <label>
-        <input type="radio" name="al-hemo" id="allga-2" value="Økttryptaseja" onclick=""/>Ja 
+        <input type="radio" name="al-hemo" id="p-lga-1" value="Økttryptaseja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="al-hemo" id="allga-1" value="Økttryptasenei" onclick="" />Nei
+        <input type="radio" name="al-hemo" id="p-lga-1" value="Økttryptasenei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="al-hemo" id="allga-3" value="Økttryptaseikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="al-hemo" id="p-lga-1" value="Økttryptaseikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1645,17 +1657,17 @@ Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon
      <label>Ikke påvisbart IgA</label>
     <div class="radio">
       <label>
-        <input type="radio" name="al-hapto" id="al-lga-2" value="IkkepåvisbartIgAja" onclick=""/>Ja 
+        <input type="radio" name="al-hapto" id="p-lga-2" value="IkkepåvisbartIgAja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="al-hapto" id="al-lga-1" value="IkkepåvisbartIgAnei" onclick="" />Nei
+        <input type="radio" name="al-hapto" id="p-lga-2" value="IkkepåvisbartIgAnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="al-hapto" id="al-lga-3" value="IkkepåvisbartIgAikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="al-hapto" id="p-lga-2" value="IkkepåvisbartIgAikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1663,23 +1675,23 @@ Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon
      <label>Anti-IgA </label>
     <div class="radio">
       <label>
-        <input type="radio" name="al-bili" id="al-lga-2" value="Anti-IgAja" onclick=""/>Ja 
+        <input type="radio" name="al-bili" id="p-lga-3" value="Anti-IgAja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="al-bili" id="al-lga-1" value="Anti-IgAnei" onclick="" />Nei
+        <input type="radio" name="al-bili" id="p-lga-3" value="Anti-IgAnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="al-bili" id="al-lga-3" value="Anti-IgAikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="al-bili" id="p-lga-3" value="Anti-IgAikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>  
    <div id="alhtr1-valg3" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="al-annet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="al-annet-text" id="annet" rows="2" ></textarea>
   </div>   
   </div>
 
@@ -1717,23 +1729,23 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
      <label>Kimerisme ved HLA-typing av mottakeren </label>
     <div class="radio">
       <label>
-        <input type="radio" name="kh-bili" id="kh-lga-2" value="Kimerismeja" onclick=""/>Ja 
+        <input type="radio" name="kh-bili" id="p-lga-1" value="Kimerismeja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="kh-bili" id="kh-lga-1" value="Kimerismenei" onclick="" />Nei
+        <input type="radio" name="kh-bili" id="p-lga-1" value="Kimerismenei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="kh-bili" id="kh-lga-3" value="Kimerismeikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="kh-bili" id="p-lga-1" value="Kimerismeikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>  
    <div id="khtr1-valg1" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="kh-annet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="kh-annet-text" id="annet" rows="2" ></textarea>
   </div>     
   </div>
 
@@ -1750,7 +1762,7 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
      <label>HPA typing av blodgiveren utført</label>
     <div class="radio">
       <label>
-        <input type="radio" name="ph-hapto" id="p-lga-2" value="HPAtypingavblodgiverenutførtja" onclick="toggleDisplay('phtr1-spesifisitet', this.checked)"/>Ja 
+        <input type="radio" name="ph-hapto" id="p-lga-1" value="HPAtypingavblodgiverenutførtja" onclick="toggleDisplay('phtr1-spesifisitet', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
@@ -1762,7 +1774,7 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
     </div>
    <div id="phtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-  		 <textarea class="form-control" name="p-spesifisitet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisitet-text" id="annet" rows="2" ></textarea>
   </div> 
   <div id="phtr1-valg1" class="form-group" style="display: none">
      <label>HPA typing av blodmottakeren utført </label>
@@ -1773,25 +1785,25 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ph-bili" id="p-lga-1" value="HPA typing av blodmottakerennei" onclick="toggleDisplay('phtr2-spesifisitet', 0)" />Nei
+        <input type="radio" name="ph-bili" id="p-lga-2" value="HPA typing av blodmottakerennei" onclick="toggleDisplay('phtr2-spesifisitet', 0)" />Nei
       </label>
     </div>
     
   </div>
    <div id="phtr2-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-  		 <textarea class="form-control" name="p-spesifisitet-blodmottakertext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisitet-blodmottakertext" id="annet" rows="2" ></textarea>
   </div> 
     <div id="phtr1-valg2" class="form-group" style="display: none">
      <label>Anti-HPA hos blodmottakeren påvist </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ph-antihpa" id="p-lga-2" value="Anti-HPA hos blodmottakeren påvistja" onclick="toggleDisplay('phtr3-spesifisitet', this.checked)"/>Ja 
+        <input type="radio" name="ph-antihpa" id="p-lga-3" value="Anti-HPA hos blodmottakeren påvistja" onclick="toggleDisplay('phtr3-spesifisitet', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ph-antihpa" id="p-lga-1" value="Anti-HPA hos blodmottakeren påvistnei" onclick="toggleDisplay('phtr3-spesifisitet', 0)" />Nei
+        <input type="radio" name="ph-antihpa" id="p-lga-3" value="Anti-HPA hos blodmottakeren påvistnei" onclick="toggleDisplay('phtr3-spesifisitet', 0)" />Nei
       </label>
     </div>
     <div class="radio">
@@ -1802,11 +1814,11 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
   </div> 
    <div id="phtr3-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-  		 <textarea class="form-control" name="ph-spesifisitet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="ph-spesifisitet-text" id="annet" rows="2" ></textarea>
   </div>    
    <div id="phtr1-valg3" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="ph-annet-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="ph-annet-text" id="annet" rows="2" ></textarea>
   </div>   
  </div>
 
@@ -1841,7 +1853,7 @@ Se definisjonene for nærmere beskrivelse.
      <label>Rtg thorax utført</label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-hemo" id="p-lga-2" value="nedsatthemoja" onclick=""/>Ja 
+        <input type="radio" name="p-hemo" id="p-lga-1" value="nedsatthemoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
@@ -1860,12 +1872,12 @@ Se definisjonene for nærmere beskrivelse.
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-hapto" id="p-lga-1" value="nedsatthaptonei" onclick="" />Nei
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-hapto" id="p-lga-3" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="p-hapto" id="p-lga-2" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -1873,12 +1885,12 @@ Se definisjonene for nærmere beskrivelse.
      <label>Blodtrykksendring </label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-bili" id="p-lga-2" value="bilirubinja" onclick="toggleDisplay('trhtr1-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinja" onclick="toggleDisplay('trhtr1-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-bili" id="p-lga-1" value="bilirubinnei" onclick="toggleDisplay('trhtr1-spesifisert', 0)" />Nei
+        <input type="radio" name="p-bili" id="p-lga-3" value="bilirubinnei" onclick="toggleDisplay('trhtr1-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
@@ -1889,23 +1901,23 @@ Se definisjonene for nærmere beskrivelse.
   </div>  
   <div id="trhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="p-spesifisert-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisert-text" id="annet" rows="2" ></textarea>
   </div>
 <div id="trhtr1-valg3" class="form-group" style="display: none">
      <label>BNP eller N-T proBNP forhøyet </label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-laktat" id="p-lga-2" value="laktatja" onclick=""/>Ja 
+        <input type="radio" name="p-laktat" id="p-lga-4" value="laktatja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-laktat" id="p-lga-1" value="laktatnei" onclick="" />Nei
+        <input type="radio" name="p-laktat" id="p-lga-4" value="laktatnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-laktat" id="p-lga-3" value="laktatikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="p-laktat" id="p-lga-4" value="laktatikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
@@ -1913,115 +1925,115 @@ Se definisjonene for nærmere beskrivelse.
      <label>HLA-antistoff hos blodgiver påvist </label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-DAT" id="p-lga-2" value="PositivDATja" onclick="toggleDisplay('trhtr11-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="p-DAT" id="p-lga-5" value="PositivDATja" onclick="toggleDisplay('trhtr11-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-DAT" id="p-lga-1" value="PositivDATnei" onclick="toggleDisplay('trhtr11-spesifisert', 0)" />Nei
+        <input type="radio" name="p-DAT" id="p-lga-5" value="PositivDATnei" onclick="toggleDisplay('trhtr11-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-DAT" id="p-lga-3" value="PositivDATikkeutført" onclick="toggleDisplay('trhtr11-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="p-DAT" id="p-lga-5" value="PositivDATikkeutført" onclick="toggleDisplay('trhtr11-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div> 
    <div id="trhtr11-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="p-spesifisert-HLAantitext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisert-HLAantitext" id="annet" rows="2" ></textarea>
   </div>
  <div id="trhtr1-valg5" class="form-group" style="display: none">
      <label>HLA-antistoff hos blodmottaker påvist </label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoff" id="p-lga-2" value="blodtypeantistoffja" onclick="toggleDisplay('trhtr12-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-6" value="blodtypeantistoffja" onclick="toggleDisplay('trhtr12-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoff" id="p-lga-1" value="blodtypeantistoffnei" onclick="toggleDisplay('trhtr12-spesifisert', 0)" />Nei
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-6" value="blodtypeantistoffnei" onclick="toggleDisplay('trhtr12-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoff" id="p-lga-3" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('trhtr12-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="p-blodtypeantistoff" id="p-lga-6" value="blodtypeantistoffikkeutført" onclick="toggleDisplay('trhtr12-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>  
    <div id="trhtr12-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="p-spesifisert-antitext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisert-antitext" id="annet" rows="2" ></textarea>
   </div>    
 <div id="trhtr1-valg6" class="form-group" style="display: none">
      <label>HLA-typing av blodgiver HLA-typing av blodmottaker  </label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-2" value="blodtypeantistoffgiverja" onclick="toggleDisplay('trhtr13-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-7" value="blodtypeantistoffgiverja" onclick="toggleDisplay('trhtr13-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-1" value="blodtypeantistoffgivernei" onclick="toggleDisplay('trhtr13-spesifisert', 0)" />Nei
+        <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-7" value="blodtypeantistoffgivernei" onclick="toggleDisplay('trhtr13-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-3" value="blodtypeantistoffgiverikkeutført" onclick="toggleDisplay('trhtr13-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-7" value="blodtypeantistoffgiverikkeutført" onclick="toggleDisplay('trhtr13-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div> 
     <div id="trhtr13-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="p-spesifisert-antigivertext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisert-antigivertext" id="annet" rows="2" ></textarea>
   </div>   
 <div id="trhtr1-valg7" class="form-group" style="display: none">
      <label>HNA-typing av blodgiver og/eller blodmottaker  </label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeHNA" id="p-lga-2" value="blodtypeHNAja" onclick="toggleDisplay('trhtr14-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="p-blodtypeHNA" id="p-lga-8" value="blodtypeHNAja" onclick="toggleDisplay('trhtr14-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeHNA" id="p-lga-1" value="blodtypeHNAnei" onclick="toggleDisplay('trhtr14-spesifisert', 0)" />Nei
+        <input type="radio" name="p-blodtypeHNA" id="p-lga-8" value="blodtypeHNAnei" onclick="toggleDisplay('trhtr14-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeHNA" id="p-lga-3" value="blodtypeHNAikkeutført" onclick="toggleDisplay('trhtr14-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="p-blodtypeHNA" id="p-lga-8" value="blodtypeHNAikkeutført" onclick="toggleDisplay('trhtr14-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
    <div id="trhtr14-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="p-spesifisert-HNAtext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisert-HNAtext" id="annet" rows="2" ></textarea>
   </div> 
   <div id="trhtr1-valg8" class="form-group" style="display: none">
      <label>HNA-antistoff hos blodgiver og/eller blodmottaker  </label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoffHNA" id="p-lga-2" value="blodtypeantistoffHNAja" onclick="toggleDisplay('trhtr15-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="p-blodtypeantistoffHNA" id="p-lga-9" value="blodtypeantistoffHNAja" onclick="toggleDisplay('trhtr15-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoffHNA" id="p-lga-1" value="blodtypeantistoffHNAnei" onclick="toggleDisplay('trhtr15-spesifisert', 0)" />Nei
+        <input type="radio" name="p-blodtypeantistoffHNA" id="p-lga-9" value="blodtypeantistoffHNAnei" onclick="toggleDisplay('trhtr15-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blodtypeantistoffHNA" id="p-lga-3" value="blodtypeantistoffHNAikkeutført" onclick="toggleDisplay('trhtr15-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="p-blodtypeantistoffHNA" id="p-lga-9" value="blodtypeantistoffHNAikkeutført" onclick="toggleDisplay('trhtr15-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>    
    <div id="trhtr15-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="p-spesifisert-antistoffHNAtext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-spesifisert-antistoffHNAtext" id="annet" rows="2" ></textarea>
   </div>  
   <div id="trhtr1-valg9" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="p-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="p-akutt-text" id="annet" rows="2" ></textarea>
   </div>         
  </div>
 
@@ -2036,12 +2048,12 @@ Se definisjonene for nærmere beskrivelse.
      <label>Rtg thorax utført</label>
     <div class="radio">
       <label>
-        <input type="radio" name="tad-hemo" id="tad-lga-2" value="nedsatthemoja" onclick=""/>Ja 
+        <input type="radio" name="tad-hemo" id="p-lga-1" value="nedsatthemoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tad-hemo" id="tad-lga-1" value="nedsatthemonei" onclick="" />Nei
+        <input type="radio" name="tad-hemo" id="p-lga-1" value="nedsatthemonei" onclick="" />Nei
       </label>
     </div>
 
@@ -2050,17 +2062,17 @@ Se definisjonene for nærmere beskrivelse.
      <label>Oksygenmetning redusert</label>
     <div class="radio">
       <label>
-        <input type="radio" name="tad-hapto" id="tad-lga-2" value="nedsatthaptoja" onclick=""/>Ja 
+        <input type="radio" name="tad-hapto" id="p-lga-2" value="nedsatthaptoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tad-hapto" id="tad-lga-1" value="nedsatthaptonei" onclick="" />Nei
+        <input type="radio" name="tad-hapto" id="p-lga-2" value="nedsatthaptonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="tad-hapto" id="tad-lga-3" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="tad-hapto" id="p-lga-2" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -2068,45 +2080,45 @@ Se definisjonene for nærmere beskrivelse.
      <label>Blodtrykksendring </label>
     <div class="radio">
       <label>
-        <input type="radio" name="tad-bili" id="tad-lga-2" value="bilirubinja" onclick="toggleDisplay('tadhtr1-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="tad-bili" id="p-lga-3" value="bilirubinja" onclick="toggleDisplay('tadhtr1-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tad-bili" id="tad-lga-1" value="bilirubinnei" onclick="toggleDisplay('tadhtr1-spesifisert', 0)" />Nei
+        <input type="radio" name="tad-bili" id="p-lga-3" value="bilirubinnei" onclick="toggleDisplay('tadhtr1-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="tad-bili" id="tad-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('tadhtr1-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="tad-bili" id="p-lga-3" value="bilirubinikkeutført" onclick="toggleDisplay('tadhtr1-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>  
    <div id="tadhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="tad-spesifisert-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="tad-spesifisert-text" id="annet" rows="2" ></textarea>
   </div>  
 <div id="tadhtr1-valg3" class="form-group" style="display: none">
      <label>BNP eller N-T proBNP forhøyet </label>
     <div class="radio">
       <label>
-        <input type="radio" name="tad-laktat" id="tad-lga-2" value="laktatja" onclick=""/>Ja 
+        <input type="radio" name="tad-laktat" id="p-lga-4" value="laktatja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tad-laktat" id="tad-lga-1" value="laktatnei" onclick="" />Nei
+        <input type="radio" name="tad-laktat" id="p-lga-4" value="laktatnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="tad-laktat" id="tad-lga-3" value="laktatikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="tad-laktat" id="p-lga-4" value="laktatikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
    <div id="tadhtr1-valg4" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="tad-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="tad-akutt-text" id="annet" rows="2" ></textarea>
   </div>
   </div>
 
@@ -2133,12 +2145,12 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
      <label>Rtg thorax utført</label>
     <div class="radio">
       <label>
-        <input type="radio" name="tac-hemo" id="tac-lga-2" value="trgthoraxja" onclick=""/>Ja 
+        <input type="radio" name="tac-hemo" id="p-lga-1" value="trgthoraxja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tac-hemo" id="tac-lga-1" value="trgthoraxnei" onclick="" />Nei
+        <input type="radio" name="tac-hemo" id="p-lga-1" value="trgthoraxnei" onclick="" />Nei
       </label>
     </div>
 
@@ -2147,17 +2159,17 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
      <label>Oksygenmetning redusert</label>
     <div class="radio">
       <label>
-        <input type="radio" name="tac-hapto" id="tac-lga-2" value="Oksygenmetningredusertja" onclick=""/>Ja 
+        <input type="radio" name="tac-hapto" id="p-lga-2" value="Oksygenmetningredusertja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tac-hapto" id="tac-lga-1" value="Oksygenmetningredusertnei" onclick="" />Nei
+        <input type="radio" name="tac-hapto" id="p-lga-2" value="Oksygenmetningredusertnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="tac-hapto" id="tac-lga-3" value="Oksygenmetningredusertikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="tac-hapto" id="p-lga-2" value="Oksygenmetningredusertikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -2165,17 +2177,17 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
      <label>Blodtrykksendring </label>
     <div class="radio">
       <label>
-        <input type="radio" name="tac-bili" id="tac-lga-2" value="Blodtrykksendringja" onclick="toggleDisplay('tachtr1-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="tac-bili" id="p-lga-3" value="Blodtrykksendringja" onclick="toggleDisplay('tachtr1-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tac-bili" id="tac-lga-1" value="Blodtrykksendringnei" onclick="toggleDisplay('tachtr1-spesifisert', 0)" />Nei
+        <input type="radio" name="tac-bili" id="p-lga-3" value="Blodtrykksendringnei" onclick="toggleDisplay('tachtr1-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="tac-bili" id="tac-lga-3" value="Blodtrykksendringikkeutført" onclick="toggleDisplay('tachtr1-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="tac-bili" id="p-lga-3" value="Blodtrykksendringikkeutført" onclick="toggleDisplay('tachtr1-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>  
@@ -2187,23 +2199,23 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
      <label>BNP eller N-T proBNP forhøyet </label>
     <div class="radio">
       <label>
-        <input type="radio" name="tac-laktat" id="tac-lga-2" value="BNPellerN-TproBNPforhøyetja" onclick=""/>Ja 
+        <input type="radio" name="tac-laktat" id="p-lga-4" value="BNPellerN-TproBNPforhøyetja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="tac-laktat" id="tac-lga-1" value="BNPellerN-TproBNPforhøyetnei" onclick="" />Nei
+        <input type="radio" name="tac-laktat" id="p-lga-4" value="BNPellerN-TproBNPforhøyetnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="tac-laktat" id="tac-lga-3" value="BNPellerN-TproBNPforhøyetikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="tac-laktat" id="p-lga-4" value="BNPellerN-TproBNPforhøyetikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
    <div id="tachtr1-valg4" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="tac-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="tac-akutt-text" id="annet" rows="2" ></textarea>
   </div>
   </div>
 
@@ -2230,7 +2242,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
       </label>
   	<div id="hemhtr1-valg0" class="form-group" style="display: none">
      <label>Angi ferritinverdi(er) </label>
-  		 <textarea class="form-control" name="hem-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="hem-akutt-text" id="annet" rows="2" ></textarea>
   	</div>         
   </div>
   
@@ -2242,7 +2254,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
       </label>
       <div id="hyphtr1-valg0" class="form-group" style="display: none">
      <label>Angi kaliumverdier </label>
-  		 <textarea class="form-control" name="hyp-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="hyp-akutt-text" id="annet" rows="2" ></textarea>
   	</div>    
     </div>
     
@@ -2257,17 +2269,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Positiv dyrkning av rester i blodproduktet</label>
     <div class="radio">
       <label>
-        <input type="radio" name="bak-hemo" id="bak-lga-2" value="Positivdyrkningresteriblodproduktetja" onclick="toggleDisplay('bakhtr1-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="bak-hemo" id="p-lga-1" value="Positivdyrkningresteriblodproduktetja" onclick="toggleDisplay('bakhtr1-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="bak-hemo" id="bak-lga-1" value="Positivdyrkningresteriblodproduktetnei" onclick="toggleDisplay('bakhtr1-spesifisert', 0)" />Nei
+        <input type="radio" name="bak-hemo" id="p-lga-1" value="Positivdyrkningresteriblodproduktetnei" onclick="toggleDisplay('bakhtr1-spesifisert', 0)" />Nei
       </label>
     </div>
    <div class="radio">
       <label>
-        <input type="radio" name="bak-hemo" id="bak-lga-3" value="Positivdyrkningresteriblodproduktetikkeutført" onclick="toggleDisplay('bakhtr1-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="bak-hemo" id="p-lga-1" value="Positivdyrkningresteriblodproduktetikkeutført" onclick="toggleDisplay('bakhtr1-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
@@ -2279,17 +2291,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Positiv blodkultur hos blodmottaker</label>
     <div class="radio">
       <label>
-        <input type="radio" name="bak-hapto" id="bak-lga-2" value="Positivblodkulturhosblodmottakerja" onclick="toggleDisplay('bakhtr11-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="bak-hapto" id="p-lga-2" value="Positivblodkulturhosblodmottakerja" onclick="toggleDisplay('bakhtr11-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="bak-hapto" id="bak-lga-1" value="Positivblodkulturhosblodmottakernei" onclick="toggleDisplay('bakhtr11-spesifisert', 0)" />Nei
+        <input type="radio" name="bak-hapto" id="p-lga-2" value="Positivblodkulturhosblodmottakernei" onclick="toggleDisplay('bakhtr11-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="bak-hapto" id="bak-lga-3" value="Positivblodkulturhosblodmottakerikkeutført" onclick="toggleDisplay('bakhtr11-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="bak-hapto" id="p-lga-2" value="Positivblodkulturhosblodmottakerikkeutført" onclick="toggleDisplay('bakhtr11-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
@@ -2301,23 +2313,23 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Økt CRP (i forhold til før transfusjonen)</label>
     <div class="radio">
       <label>
-        <input type="radio" name="bak-laktat" id="bak-lga-2" value="ØktCRPiforholdtilførtransfusjonenja" onclick=""/>Ja 
+        <input type="radio" name="bak-laktat" id="p-lga-3" value="ØktCRPiforholdtilførtransfusjonenja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="bak-laktat" id="bak-lga-1" value="ØktCRPiforholdtilførtransfusjonennei" onclick="" />Nei
+        <input type="radio" name="bak-laktat" id="p-lga-3" value="ØktCRPiforholdtilførtransfusjonennei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="bak-laktat" id="bak-lga-3" value="ØktCRPiforholdtilførtransfusjonenikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="bak-laktat" id="p-lga-3" value="ØktCRPiforholdtilførtransfusjonenikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
    <div id="bakhtr1-valg3" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="bak-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="bak-akutt-text" id="annet" rows="2" ></textarea>
   </div>
  </div>
 
@@ -2333,51 +2345,51 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Påvist virus/virusantistoff hos mottaker</label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-hemo" id="p-lga-2" value="Påvistvirus/virusantistoffhosmottakerja" 
+        <input type="radio" name="p-hemo" id="p-lga-1" value="Påvistvirus/virusantistoffhosmottakerja" 
         onclick="toggleDisplay('virhtr1-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="vir-hemo" id="vir-lga-1" value="Påvistvirus/virusantistoffhosmottakernei" onclick="toggleDisplay('virhtr1-spesifisert', 0)" />Nei
+        <input type="radio" name="vir-hemo" id="p-lga-1" value="Påvistvirus/virusantistoffhosmottakernei" onclick="toggleDisplay('virhtr1-spesifisert', 0)" />Nei
       </label>
     </div>
    <div class="radio">
       <label>
-        <input type="radio" name="vir-hemo" id="vir-lga-3" value="Påvistvirus/virusantistoffhosmottakerikkeutført" onclick="toggleDisplay('virhtr1-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="vir-hemo" id="p-lga-1" value="Påvistvirus/virusantistoffhosmottakerikkeutført" onclick="toggleDisplay('virhtr1-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
    <div id="virhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="vir-spesifisert-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="vir-spesifisert-text" id="annet" rows="2" ></textarea>
   </div>
   <div id="virhtr1-valg1" class="form-group" style="display: none">
      <label>Positiv virus/virusantistoff hos giver</label>
     <div class="radio">
       <label>
-        <input type="radio" name="vir-hapto" id="vir-lga-2" value="Positivvirus/virusantistoffhosgiverja" onclick="toggleDisplay('virhtr11-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="vir-hapto" id="p-lga-2" value="Positivvirus/virusantistoffhosgiverja" onclick="toggleDisplay('virhtr11-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="vir-hapto" id="vir-lga-1" value="Positivvirus/virusantistoffhosgivernei" onclick="toggleDisplay('virhtr11-spesifisert', 0)" />Nei
+        <input type="radio" name="vir-hapto" id="p-lga-2" value="Positivvirus/virusantistoffhosgivernei" onclick="toggleDisplay('virhtr11-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="vir-hapto" id="vir-lga-3" value="Positivvirus/virusantistoffhosgiverikkeutført" onclick="toggleDisplay('virhtr11-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="vir-hapto" id="p-lga-2" value="Positivvirus/virusantistoffhosgiverikkeutført" onclick="toggleDisplay('virhtr11-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
    <div id="virhtr11-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="vir-spesifisert-givertext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="vir-spesifisert-givertext" id="annet" rows="2" ></textarea>
   </div>
    
    <div id="virhtr1-valg2" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="vir-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="vir-akutt-text" id="annet" rows="2" ></textarea>
   </div>      
   </div>
     
@@ -2393,50 +2405,50 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Påvist smittestoff/antistoff hos mottaker</label>
     <div class="radio">
       <label>
-        <input type="radio" name="asm-hemo" id="asm-lga-2" value="Påvistsmittestoff/antistoffhosmottakerja" onclick="toggleDisplay('asmhtr1-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="asm-hemo" id="p-lga-1" value="Påvistsmittestoff/antistoffhosmottakerja" onclick="toggleDisplay('asmhtr1-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="asm-hemo" id="asm-lga-1" value="Påvistsmittestoff/antistoffhosmottakernei" onclick="toggleDisplay('asmhtr1-spesifisert', 0)" />Nei
+        <input type="radio" name="asm-hemo" id="p-lga-1" value="Påvistsmittestoff/antistoffhosmottakernei" onclick="toggleDisplay('asmhtr1-spesifisert', 0)" />Nei
       </label>
     </div>
    <div class="radio">
       <label>
-        <input type="radio" name="asm-hemo" id="asm-lga-3" value="Påvistsmittestoff/antistoffhosmottakerikkeutført" onclick="toggleDisplay('asmhtr1-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="asm-hemo" id="p-lga-1" value="Påvistsmittestoff/antistoffhosmottakerikkeutført" onclick="toggleDisplay('asmhtr1-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
     <div id="asmhtr1-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="asm-spesifisert-hemotext" rows="2" ></textarea>
+  		 <textarea class="form-control" name="asm-spesifisert-hemotext" id="annet" rows="2" ></textarea>
   </div>
   <div id="asmhtr1-valg1" class="form-group" style="display: none">
      <label>Påvist smittestoff/antistoff hos giver</label>
     <div class="radio">
       <label>
-        <input type="radio" name="asm-hapto" id="asm-lga-2" value="Påvistsmittestoff/antistoffhosgiverja" onclick="toggleDisplay('asmhtr11-spesifisert', this.checked)"/>Ja 
+        <input type="radio" name="asm-hapto" id="p-lga-2" value="Påvistsmittestoff/antistoffhosgiverja" onclick="toggleDisplay('asmhtr11-spesifisert', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="asm-hapto" id="asm-lga-1" value="Påvistsmittestoff/antistoffhosgivernei" onclick="toggleDisplay('asmhtr11-spesifisert', 0)" />Nei
+        <input type="radio" name="asm-hapto" id="p-lga-2" value="Påvistsmittestoff/antistoffhosgivernei" onclick="toggleDisplay('asmhtr11-spesifisert', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="asm-hapto" id="asm-lga-3" value="Påvistsmittestoff/antistoffhosgiverikkeutført" onclick="toggleDisplay('asmhtr11-spesifisert', 0)"/>Ikke utført
+        <input type="radio" name="asm-hapto" id="p-lga-2" value="Påvistsmittestoff/antistoffhosgiverikkeutført" onclick="toggleDisplay('asmhtr11-spesifisert', 0)"/>Ikke utført
       </label>
     </div>
   </div>
   <div id="asmhtr11-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
-  		 <textarea class="form-control" name="asm-spesifisert-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="asm-spesifisert-text" id="annet" rows="2" ></textarea>
   </div>
    
    <div id="asmhtr1-valg2" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="asm-akutt-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="asm-akutt-text" id="annet" rows="2" ></textarea>
   </div>    
       
   </div>
@@ -2451,17 +2463,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Nedsatt hemoglobin (i forhold til før transfusjonen)</label>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-hemo" id="ai-lga-2" value="nedsatthemoja" required="required" onclick=""/>Ja 
+        <input type="radio" name="ai-hemo" id="p-lga-1" value="nedsatthemoja" required="required" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ai-hemo" id="ai-lga-1" value="nedsatthemonei" onclick="" />Nei
+        <input type="radio" name="ai-hemo" id="p-lga-1" value="nedsatthemonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-hemo" id="ai-lga-3" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ai-hemo" id="p-lga-1" value="nedsatthemoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -2469,17 +2481,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Nedsatt haptoglobin</label>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-hapto" id="ai-lga-2" value="nedsatthaptoja" onclick=""/>Ja 
+        <input type="radio" name="ai-hapto" id="p-lga-2" value="nedsatthaptoja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ai-hapto" id="ai-lga-1" value="nedsatthaptonei" onclick="" />Nei
+        <input type="radio" name="ai-hapto" id="p-lga-2" value="nedsatthaptonei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-hapto" id="ai-lga-3" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ai-hapto" id="p-lga-2" value="nedsatthaptoikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>
@@ -2487,17 +2499,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Økt bilirubin </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-bili" id="ai-lga-2" value="bilirubinja" onclick=""/>Ja 
+        <input type="radio" name="ai-bili" id="p-lga-3" value="bilirubinja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ai-bili" id="ai-lga-1" value="bilirubinnei" onclick="" />Nei
+        <input type="radio" name="ai-bili" id="p-lga-3" value="bilirubinnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-bili" id="ai-lga-3" value="bilirubinikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ai-bili" id="p-lga-3" value="bilirubinikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>  
@@ -2505,17 +2517,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Økt laktat dehydrogenase (LD) </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-laktat" id="ai-lga-2" value="laktatja" onclick=""/>Ja 
+        <input type="radio" name="ai-laktat" id="p-lga-4" value="laktatja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ai-laktat" id="ai-lga-1" value="laktatnei" onclick="" />Nei
+        <input type="radio" name="ai-laktat" id="p-lga-4" value="laktatnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-laktat" id="ai-lga-3" value="laktatikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ai-laktat" id="p-lga-4" value="laktatikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>    
@@ -2523,17 +2535,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Positiv DAT </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-DAT" id="ai-lga-2" value="PositivDATja" onclick=""/>Ja 
+        <input type="radio" name="ai-DAT" id="p-lga-5" value="PositivDATja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ai-DAT" id="ai-lga-1" value="PositivDATnei" onclick="" />Nei
+        <input type="radio" name="ai-DAT" id="p-lga-5" value="PositivDATnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-DAT" id="ai-lga-3" value="PositivDATikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ai-DAT" id="p-lga-5" value="PositivDATikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div> 
@@ -2541,17 +2553,17 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Positiv blodtypeantistoffscreening </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-blodtypeanti" id="ai-lga-2" value="Positivblodtypeantistoffscreeningja" onclick=""/>Ja 
+        <input type="radio" name="ai-blodtypeanti" id="p-lga-6" value="Positivblodtypeantistoffscreeningja" onclick=""/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ai-blodtypeanti" id="ai-lga-1" value="Positivblodtypeantistoffscreeningnei" onclick="" />Nei
+        <input type="radio" name="ai-blodtypeanti" id="p-lga-6" value="Positivblodtypeantistoffscreeningnei" onclick="" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-blodtypeanti" id="ai-lga-3" value="Positivblodtypeantistoffscreeningikkeutført" onclick=""/>Ikke utført
+        <input type="radio" name="ai-blodtypeanti" id="p-lga-6" value="Positivblodtypeantistoffscreeningikkeutført" onclick=""/>Ikke utført
       </label>
     </div>
   </div>     
@@ -2559,27 +2571,27 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Identifisert antistoff  </label>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-anti" id="ai-lga-2" value="Identifisertantistoffja" onclick="toggleDisplay('aihtr1-spesifisitet', this.checked)"/>Ja 
+        <input type="radio" name="ai-anti" id="p-lga-7" value="Identifisertantistoffja" onclick="toggleDisplay('aihtr1-spesifisitet', this.checked)"/>Ja 
       </label>
     </div>
      <div class="radio">
       <label>
-        <input type="radio" name="ai-anti" id="ai-lga-1" value="Identifisertantistoffnei" onclick="toggleDisplay('aihtr1-spesifisitet', 0)" />Nei
+        <input type="radio" name="ai-anti" id="p-lga-7" value="Identifisertantistoffnei" onclick="toggleDisplay('aihtr1-spesifisitet', 0)" />Nei
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="ai-anti" id="ai-lga-3" value="Identifisertantistoffikkeutført" onclick="toggleDisplay('aihtr1-spesifisitet', 0)"/>Ikke utført
+        <input type="radio" name="ai-anti" id="p-lga-7" value="Identifisertantistoffikkeutført" onclick="toggleDisplay('aihtr1-spesifisitet', 0)"/>Ikke utført
       </label>
     </div>
   </div> 
    <div id="aihtr1-spesifisitet" class="form-group" style="display: none">
      <label>Spesifisitet </label>
-  		 <textarea class="form-control" name="ai-spesifisert-text" rows="2" ></textarea>
+  		 <textarea class="form-control" name="ai-spesifisert-text"  id="annet" rows="2" ></textarea>
   </div>
   <div id="aihtr-valg7" class="form-group" style="display: none">
      <label>Annet </label>
-  		 <textarea class="form-control" name="ai-akutt-text" rows="2"></textarea>
+  		 <textarea class="form-control" name="ai-akutt-text" id="annet" rows="2"></textarea>
   </div>     
   </div>
 
