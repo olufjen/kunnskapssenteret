@@ -315,11 +315,8 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 		
 		for (String classification : klassifikasjon.getKomplikasjonklassifikasjonFields().values()){
 			if (classification != null && !classification.equals("")){
-//				Komplikasjonsklassifikasjon lokalKlassifikasjon = new KomplikasjonsklassifikasjonImpl();
-//				lokalKlassifikasjon.setKlassifikasjon(classification);
-//				lokalKlassifikasjon.setKlassifikasjonsbeskrivelse(classification);
-//				this.komplikasjonsKlassifikasjoner.put(classification,lokalKlassifikasjon);
-				
+				if (!klassifikasjon.getKlassifikasjonList().contains(classification));
+					klassifikasjon.getKlassifikasjonList().add(classification);
 			}
 		}
 	}
