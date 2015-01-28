@@ -1245,7 +1245,7 @@ function showtext(id,thetext){
         Kliniske og/eller laboratoriemessige tegn til hemolyse er til stede. 
         Disse likner på funnene ved AHTR, men de er som oftest mindre alvorlige. DHTR kan av og til opptre som manglende økning eller uforklarlig fall i hemoglobin etter en transfusjon.
         Blodtypeserologisk utredning viser vanligvis unormale resultater" 
-        onclick="displayNone();toggleDisplayarsak('dhtr1-valg',8,this.checked)"/>
+        onclick="displayNone();toggleDisplayarsak('dhtr1-valg',8,this.checked);removeChoice()"/>
         Forsinket hemolytisk transfusjonsreaksjon (DHTR)
       </label>
        <div id="dhtr1-valg0" class="form-group" style="display: none">
@@ -1391,7 +1391,8 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
       ">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-fnhtr" value="fnhtr" title="Kun alvorlige FNHTR meldes: Feber (≥ 39 oC, målt i munnen eller tilsvarende, eller temperaturstigning på ≥ 2 oC i forhold til temperaturen før blodtransfusjonen) og frysninger/skjelvinger. 
 FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke foreligge annen forklaring på symptomene, som for eksempel hemolytisk transfusjonsreaksjon, bakteriell kontaminering eller tilgrunnliggende sykdom hos pasienten.
-        " onclick="displayNone();toggleDisplayarsak('fhtr1-valg',6,this.checked)"/>Febril non-hemolytisk transfusjonsreaksjon (FNHTR)
+        " onclick="displayNone();toggleDisplayarsak('fhtr1-valg',6,this.checked);removeChoice()"/>
+        Febril non-hemolytisk transfusjonsreaksjon (FNHTR)
       </label>
      <div id="fhtr1-valg0" class="form-group" style="display: none">
      <label>Økt CRP (i forhold til før transfusjonen)</label>
@@ -1504,7 +1505,7 @@ FNHTR oppstår under eller innen 4 timer etter en transfusjon og det skal ikke f
       Kan bl.a. forårsakes av bakterietoksiner, for høy eller for lav temperatur eller mekanisk ødeleggelse av erytrocyttene.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hemolyse" value="hemolyse" title="Kliniske og/eller laboratoriemessige tegn på hemolyse uten blodtypeserologiske holdepunkter for immunologisk betinget reaksjon. 
         Kan bl.a. forårsakes av bakterietoksiner, for høy eller for lav temperatur eller mekanisk ødeleggelse av erytrocyttene."
-         onclick="displayNone();toggleDisplayarsak('ihtr1-valg',7,this.checked)"/>
+         onclick="displayNone();toggleDisplayarsak('ihtr1-valg',7,this.checked);removeChoice()"/>
         Ikke immunbetinget hemolyse
       </label>
     <div id="ihtr1-valg0" class="form-group" style="display: none">
@@ -1633,7 +1634,7 @@ Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-anafylaktisk" value="anafylaktisk" title="Symptomer som ved en mindre alvorlig allergisk reaksjon (se definisjonene) og i tillegg pustebesvær eller alvorlig blodtrykksfall som krever vasopressor-behandling (eller assosierte symptomer som hypotoni eller synkope). 
         Pasienten kan ha respiratoriske symptomer fra strupen (larynksødem, dysfagi (svelgebesvær), dysfoni (svak, hes stemme), heshet, stridor) eller fra lungene (dyspné, hoste, bronkospasme, hypoksemi). 
 Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon.
-        " onclick="displayNone();toggleDisplayarsak('alhtr1-valg',4,this.checked)"/>Anafylaktisk/alvorlig allergisk reaksjon
+        " onclick="displayNone();toggleDisplayarsak('alhtr1-valg',4,this.checked);removeChoice()"/>Anafylaktisk/alvorlig allergisk reaksjon
       </label>
      <div id="alhtr1-valg0" class="form-group" style="display: none">
      <label>Økt tryptase</label>
@@ -1713,7 +1714,7 @@ Allergiske reaksjoner oppstår under eller innen 4 timer etter en transfusjon. D
 •	Kløe, erythem (rødhet) og ødem rundt munnen 
 •	Konjunktivalt ødem (ødem i bindehinnen i øyet)
 Allergiske reaksjoner oppstår under eller innen 4 timer etter en transfusjon. Denne type reaksjon er vanligvis mild og ikke livstruende og pasienten responderer raskt på symptomatisk behandling, med for eksempel antihistaminer eller steroider.
-        " onclick="displayNone()"/>Annen allergisk reaksjon (mindre alvorlig)
+        " onclick="displayNone();removeChoice()"/>Annen allergisk reaksjon (mindre alvorlig)
       </label>
     </div>
     <div class="radio">
@@ -1722,7 +1723,7 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
       ">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ta-gvhd" value="gvhd" title="TA-GVHD er et klinisk syndrom med feber, utslett, leversvikt, diaré, pancytopeni og karakteristiske histologiske funn ved hudbiopsi, som oppstår 1-6 uker etter en transfusjon uten andre årsaker som kan forklare symptomene. 
 Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
-        " onclick="displayNone();toggleDisplayarsak('khtr1-valg',2,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        " onclick="displayNone();toggleDisplayarsak('khtr1-valg',2,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice()"/>
         Transfusjonsassosiert transplantat-mot-vert-reaksjon (TA-GVHD)
       </label>
     <div id="khtr1-valg0" class="form-group" style="display: none">
@@ -1755,7 +1756,7 @@ Funn av kimerisme ved HLA-typing av mottakeren støtter diagnosen TA-GVHD.
     <div class="radio">
       <label title="PTP karakteriseres av trombocytopeni som oppstår innen 5-12 dager etter transfusjon av cellulære blodkomponenter, når man kan påvise antistoff rettet mot HPA-antigen hos pasienten.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ptp" value="ptp" title="PTP karakteriseres av trombocytopeni som oppstår innen 5-12 dager etter transfusjon av cellulære blodkomponenter, når man kan påvise antistoff rettet mot HPA-antigen hos pasienten." 
-        onclick="displayNone();toggleDisplayarsak('phtr1-valg',4,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        onclick="displayNone();toggleDisplayarsak('phtr1-valg',4,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice()"/>
         Posttransfusjonspurpura (PTP)
       </label>
       <div id="phtr1-valg0" class="form-group" style="display: none">
@@ -1846,7 +1847,7 @@ Se definisjonene for nærmere beskrivelse.
 •	Ingen tegn til venstre atrie hypertensjon (= sirkulatorisk overbelastning) 
 •	Ingen tidsmessig relasjon til andre risikofaktorer for ALI under blodtransfusjonen eller innen 6 timer innen avsluttet transfusjon. 
 Se definisjonene for nærmere beskrivelse.
-        " onclick="displayNone();toggleDisplayarsak('trhtr1-valg',10,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        " onclick="displayNone();toggleDisplayarsak('trhtr1-valg',10,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice()"/>
         Transfusjonsrelatert akutt lungeskade (TRALI)
       </label>
    <div id="trhtr1-valg0" class="form-group" style="display: none">
@@ -2041,7 +2042,7 @@ Se definisjonene for nærmere beskrivelse.
     <div class="radio">
       <label title="TAD defineres som pustebesvær (respiratory distress) innen 24 timer etter en transfusjon, der kriteriene for TRALI, TACO eller allergisk reaksjon ikke er til stede og der respirasjonssymptomene ikke kan skyldes pasientens underliggende sykdom eller andre årsaker.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-tad" value="tad" title="TAD defineres som pustebesvær (respiratory distress) innen 24 timer etter en transfusjon, der kriteriene for TRALI, TACO eller allergisk reaksjon ikke er til stede og der respirasjonssymptomene ikke kan skyldes pasientens underliggende sykdom eller andre årsaker." 
-        onclick="displayNone();toggleDisplayarsak('tadhtr1-valg',5,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)" />
+        onclick="displayNone();toggleDisplayarsak('tadhtr1-valg',5,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice()" />
         Transfusjonsassosiert dyspne (TAD)
       </label>
         <div id="tadhtr1-valg0" class="form-group" style="display: none">
@@ -2138,7 +2139,7 @@ Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
 •	Akutt lungeødem eller forverring av lungeødem på rtg. thorax. 
 •	Symptomer/funn forenlig med positiv væskebalanse. 
 Forhøyet B-type natriuretisk peptid (BNP) støtter mistanken om TACO.
-        " onclick="displayNone();toggleDisplayarsak('tachtr1-valg',5,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        " onclick="displayNone();toggleDisplayarsak('tachtr1-valg',5,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice()"/>
         Transfusjonsrelatert overbelastning av kretsløpet (TACO)
       </label>
    <div id="tachtr1-valg0" class="form-group" style="display: none">
@@ -2237,7 +2238,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <div class="radio">
       <label title="Transfusjonsassosiert hemosiderose er definert som s-ferritin på ≥ 1000 μg/L, med eller uten organ dysfunksjon hos en pasient som har fått gjentatte erytrocytt-transfusjoner.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hemo" value="hemo"  title="Transfusjonsassosiert hemosiderose er definert som s-ferritin på ≥ 1000 μg/L, med eller uten organ dysfunksjon hos en pasient som har fått gjentatte erytrocytt-transfusjoner." 
-        onclick="displayNone();toggleDisplay('hemhtr1-valg0',this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        onclick="displayNone();toggleDisplay('hemhtr1-valg0',this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice()"/>
         Hemosiderose
       </label>
   	<div id="hemhtr1-valg0" class="form-group" style="display: none">
@@ -2249,7 +2250,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <div class="radio">
       <label title="Forhøyet s-kalium (> 5 mmol /L eller ≥ 1,5 mmol/L økning) innen en time etter en transfusjon kan klassifiseres som transfusjonsassosiert hyperkalemi.">
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-hyper" value="hyper" title="Forhøyet s-kalium (> 5 mmol /L eller ≥ 1,5 mmol/L økning) innen en time etter en transfusjon kan klassifiseres som transfusjonsassosiert hyperkalemi." 
-        onclick="displayNone();toggleDisplay('hyphtr1-valg0',this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        onclick="displayNone();toggleDisplay('hyphtr1-valg0',this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice();removeChoice()"/>
         Hyperkalemi
       </label>
       <div id="hyphtr1-valg0" class="form-group" style="display: none">
@@ -2262,7 +2263,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <div class="radio">
       <label>
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-bakterie" value="bakterie" 
-        onclick="displayNone();toggleDisplayarsak('bakhtr1-valg',4,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>
+        onclick="displayNone();toggleDisplayarsak('bakhtr1-valg',4,this.checked);toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0);removeChoice()"/>
         Transfusjonsoverført bakterieinfeksjon
       </label>
          <div id="bakhtr1-valg0" class="form-group" style="display: none">
@@ -2338,7 +2339,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <div class="radio">
       <label>
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-virus" value="virus" 
-        onclick="displayNone();toggleDisplayarsak('virhtr1-valg',3,this.checked);toggleDisplay('antistofftype', 0);;toggleDisplay('lga-valg', 0)"/>
+        onclick="displayNone();toggleDisplayarsak('virhtr1-valg',3,this.checked);toggleDisplay('antistofftype', 0);;toggleDisplay('lga-valg', 0);removeChoice()"/>
         Transfusjonsoverført virusinfeksjon
       </label>
     <div id="virhtr1-valg0" class="form-group" style="display: none">
@@ -2456,7 +2457,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <div class="radio">
       <label>
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-aiha" value="aiha" 
-        onclick="displayNone();toggleDisplayarsak('aihtr-valg',8,this.checked)"/>
+        onclick="displayNone();toggleDisplayarsak('aihtr-valg',8,this.checked);removeChoice()"/>
         Transfusjonsutløst autoimmun hemolytisk anemi (AIHA)
       </label>
      <div id="aihtr-valg0" class="form-group" style="display: none">
