@@ -10,11 +10,13 @@
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
 
 <#assign klassifikasjon = andreHendelse.annenKomplikasjon.klassifikasjon>
-<body onload="checkRadiobutton('${klassifikasjon}');">
+<#assign delkode = andreHendelse.annenKomplikasjon.delkode>
+<body onload="checkRadiobutton('${klassifikasjon}','${delkode}');">
 <header class="master-header" role="navation">
       <div class="container">
         <!-- synlig header -->
@@ -78,32 +80,42 @@
 				    
 				}
 				
+				/** this funciton unceked all sub radio and checkbox buttons before to select new one */
 				function checkUncheck() {
-					 var radios = document.getElementsByName("tab-klassifikasjon-sub" );
-					 var size =  radios.length;
-					 for(var j=1; j<size+1;j++){
-						 document.getElementById(j).checked = false;	
-					 }
+					$("input:radio[name='tab-klassifikasjon-sub']").each(function(i) {
+					       this.checked = false;
+					});
+					/* $("input:checkbox[name='tab-hvagikkgalt']").each(function(i) {
+					       this.checked = false;
+					}); */
 				}
 				
-				function checkRadiobutton(val){
-					var radios = document.getElementsByName("tab-klassifikasjon" );
-					var size =  radios.length;
+				/** when form is not godkjent and comeback to this form
+				    this function click the radio buttons of klassifikasjon and delkode   */
+				function checkRadiobutton(klassifikasjon,delkode){
+					var radiosKlassifikasjon = document.getElementsByName("tab-klassifikasjon" );
+					var size =  radiosKlassifikasjon.length;
 					for(var j=1; j<size+1;j++){
-						 var radioValue = document.getElementById("k-"+j).value;	
-						 if(val == radioValue){
-							 alert("inside");
-							 document.getElementById("k-"+j).checked = true;
+						var radioValue =$("#k-"+j).val();
+						 if(klassifikasjon == radioValue){
+							 $("#k-"+j).prop( "checked", true );
+							 $("#k-"+j).trigger("click");
 							 break;
 						 }
 					 }
+					var radioDelkode = document.getElementsByName("tab-klassifikasjon-sub" );
+					var sizeDelkode = radioDelkode.length;
+					for(var i=1; i<sizeDelkode; i++){
+						var radioValue =$("#"+i).val();
+						if(delkode == radioValue){
+							 $("#"+i).prop("checked", true );
+							 break;
+						 }
+					}
 					
 				}
 			</script>
-			
-			
 		<form id="rapport" action="?method=PUT" method="post"  > 
-			
 			<h1>Rapporter Andre Hendelser</h1>
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs">
@@ -114,7 +126,7 @@
 			<div class="tab-pane" id="andrehendelser">
 				<div class="form-group">
 					<label>Dato For hendelsen</label><br>
-					<input type="date" name="hendelsen-date" value="${andreHendelse.annenKomplikasjon.datoforhendelseKvittering}"  />
+					<input type="date" name="hendelsen-date"  value="${andreHendelse.annenKomplikasjon.datoforhendelseKvittering}"  />
 				</div>
 	
 				<div class="form-group">
@@ -143,13 +155,12 @@
 			       			</#if>
 			       		 </#list>
 	     		   	</select>
-					
 				</div>
 				<div class="form-group">
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
 				          <label>
-				          	<input type="radio" name="tab-klassifikasjon" id="k-1"   value="Feil blod transfudert"  onclick="toggleDisplay('feilblod'); checkUncheck();"   />Feil blod transfundert
+				          	<input type="radio" name="tab-klassifikasjon" id="k-1"    value="Feil blod transfudert"  onclick="toggleDisplay('feilblod'); checkUncheck();"   />Feil blod transfundert
 				          </label>
 				          <div id="feilblod" style="display: none" >
 				              <div class="radio" >
@@ -197,25 +208,24 @@
 								  	<!-- get the hvagikkgalt checkbox list --> 
 								   <#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
 								   
-								   <!-- take the value of checkbox that is checked  -->
-								   <#if hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
-								   <#if  hvagikkgalt=='Bestillingg' ><#assign bestillingg ="checked" > </#if>
-								   <#if  hvagikkgalt=='Prøvetaking' ><#assign provetaking ="checked" > </#if>
-								   <#if  hvagikkgalt=='Feilmerking av prøverør' ><#assign feilmerking ="checked" > </#if>
-								   <#if  hvagikkgalt=='Forveksling av prøver/ resultater' ><#assign forveksling ="checked" > </#if>
-								   <#if  hvagikkgalt=='Pretransfusjonstesting i blodbanken' ><#assign pretransfusjons ="checked" > </#if>
-								   
-								   <#if  hvagikkgalt=='Feil/ mangelfull behandling av blodet i blodbanken' ><#assign mangelfull ="checked" > </#if>
-								   <#if  hvagikkgalt=='Valg/utlevering av blodprodukt (blodbankpersonell)' ><#assign utlevering ="checked" > </#if>
-								   <#if  hvagikkgalt=='Henting av blod i blodbanken (ikke blodbankpersonell)' ><#assign henting ="checked" > </#if>
-								   <#if  hvagikkgalt=='Henting av blod i skap/fryser utenfor blodbank' ><#assign hentingiskap ="checked" > </#if>
-								   <#if  hvagikkgalt=='Henting av blod ved rørpoststasjon' ><#assign hentingved ="checked" > </#if>
-								   <#if  hvagikkgalt=='Rutiner for identitetskontroll ved transfusjon ikke fulgt' ><#assign rutiner ="checked" > </#if>
-								   <#if  hvagikkgalt=='Mangelfull kommunikasjon' ><#assign mangelfullKommunikasjon ="checked" > </#if>
-								   <#if  hvagikkgalt=='Intet avvik' ><#assign intet ="checked" > </#if>
-								   <#if  hvagikkgalt=='Vet ikke' ><#assign vetIkke ="checked" > </#if>
-								           
-								</#list>  	
+									   <!-- take the value of checkbox that is checked  -->
+									   <#if hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
+									   <#if  hvagikkgalt=='Bestillingg' ><#assign bestillingg ="checked" > </#if>
+									   <#if  hvagikkgalt=='Prøvetaking' ><#assign provetaking ="checked" > </#if>
+									   <#if  hvagikkgalt=='Feilmerking av prøverør' ><#assign feilmerking ="checked" > </#if>
+									   <#if  hvagikkgalt=='Forveksling av prøver/ resultater' ><#assign forveksling ="checked" > </#if>
+									   <#if  hvagikkgalt=='Pretransfusjonstesting i blodbanken' ><#assign pretransfusjons ="checked" > </#if>
+									   
+									   <#if  hvagikkgalt=='Feil/ mangelfull behandling av blodet i blodbanken' ><#assign mangelfull ="checked" > </#if>
+									   <#if  hvagikkgalt=='Valg/utlevering av blodprodukt (blodbankpersonell)' ><#assign utlevering ="checked" > </#if>
+									   <#if  hvagikkgalt=='Henting av blod i blodbanken (ikke blodbankpersonell)' ><#assign henting ="checked" > </#if>
+									   <#if  hvagikkgalt=='Henting av blod i skap/fryser utenfor blodbank' ><#assign hentingiskap ="checked" > </#if>
+									   <#if  hvagikkgalt=='Henting av blod ved rørpoststasjon' ><#assign hentingved ="checked" > </#if>
+									   <#if  hvagikkgalt=='Rutiner for identitetskontroll ved transfusjon ikke fulgt' ><#assign rutiner ="checked" > </#if>
+									   <#if  hvagikkgalt=='Mangelfull kommunikasjon' ><#assign mangelfullKommunikasjon ="checked" > </#if>
+									   <#if  hvagikkgalt=='Intet avvik' ><#assign intet ="checked" > </#if>
+									   <#if  hvagikkgalt=='Vet ikke' ><#assign vetIkke ="checked" > </#if>
+								  </#list>  	
 								
 										<div class="checkbox">
 								          <label>
@@ -643,10 +653,6 @@
 			       		 </#list>
 	     		   	</select>
 				</div>
-				
-				<h3>
-					
-				</h3>
 				<div class="form-group">
 				<label>Hvordan ble hendelsen oppdaget?</label>
 				 <select name ="hendelseoppdaget" id="hendelseoppdaget" class="form-control">

@@ -497,9 +497,15 @@
 	      
 	   	<div class="form-group">
 		    <label>Varighet av komplikasjon/bivirkning/skade:</label>
-	        <div>
+		      <select name ="tab-varighet" id="tab-varighet" class="form-control">
+		      <option>--- Select ---</option>
+	       		<#list giverkomplikasjon.varighetSkadegruppe as varighetSkade>
+	       		<option>${varighetSkade} </option>
+	     		   </#list>
+	     	  </select>
+	        <!-- <div>
 	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
-	        </div>
+	        </div> -->
 	    </div>
 	    <div class="form-group" >
 			<h3>Alvorlighetsgrad </h3>
@@ -651,25 +657,8 @@
 		      
 	  		<br/>
 	  	</div>
-	  	 <div class="form-group">
-		      <label>Var komplikasjonen/hendelsen forebyggbar?</label>
-		      	<div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar1" value="forebyggbar-ja"/>Ja
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei"/>Nei
-		          </label>
-			    </div>
-			    <div class="radio">
-		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke"/>Vet ikke
-		          </label>
-			    </div>
-	    	</div>	
-	     <div class="form-group" >
+	  	
+	  	 <div class="form-group" >
 	       <label>Videre behandling/oppfølging </label>
 	       	  <div class="radio">
 		          <label >
@@ -730,6 +719,26 @@
 		          </label>
 			  </div>
 	    </div>
+	  	
+	  	<div class="form-group">
+		      <label>Var komplikasjonen/hendelsen forebyggbar?</label>
+		      	<div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar1" value="forebyggbar-ja"/>Ja
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei"/>Nei
+		          </label>
+			    </div>
+			    <div class="radio">
+		          <label>
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke"/>Vet ikke
+		          </label>
+			    </div>
+	    </div>	
+	    
 	 <!-- 
 	 <div id="videreBehandling-ja" style="display: none">   
 	     <div class="form-group">

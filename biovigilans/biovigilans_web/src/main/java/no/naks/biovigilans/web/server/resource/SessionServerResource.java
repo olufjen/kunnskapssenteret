@@ -64,6 +64,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String[] systemiskgruppe;
 	protected String[] skadeiarmen;
 	protected String[] sykemeldinggruppe;
+	protected String[] varighetSkadegruppe;
 	
 	//Rapporter AndreHendelse
 	protected AnnenKomplikasjonwebModel annenModel =  null;
@@ -82,6 +83,12 @@ public class SessionServerResource extends ProsedyreServerResource {
 	
 	
 	
+	public String[] getVarighetSkadegruppe() {
+		return varighetSkadegruppe;
+	}
+	public void setVarighetSkadegruppe(String[] varighetSkadegruppe) {
+		this.varighetSkadegruppe = varighetSkadegruppe;
+	}
 	public String[] getSykemeldinggruppe() {
 		return sykemeldinggruppe;
 	}
@@ -365,6 +372,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 giverModel.setSkadeiarmen(skadeiarmen);
 	    	 giverModel.setSystemiskgruppe(systemiskgruppe);
 	    	 giverModel.setSykemeldinggruppe(sykemeldinggruppe);
+	    	 giverModel.setVarighetSkadegruppe(varighetSkadegruppe);
 	     }
 	     if(donasjon==null){
 	    	 donasjon = new DonasjonwebModel();
