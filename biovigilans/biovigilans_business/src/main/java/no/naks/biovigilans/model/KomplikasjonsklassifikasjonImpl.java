@@ -47,11 +47,24 @@ public class KomplikasjonsklassifikasjonImpl extends
 			getKlassifikasjonList().add(userValue);
 		}	
 	}
+	/**
+	 * savetoField
+	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
+	 * @param userField
+	 * @param userValue
+	 */
+	public void savetoField(String userField, String userValue) {
+		if (komplikasjonklassifikasjonFields.containsKey(userField) && userValue != null && !userValue.equals("")){
+			komplikasjonklassifikasjonFields.put(userField,userValue);	
+			
+		}	
+	}	
 	
 	public void savetoKomplikasjonklassifikasjon(){
 		
 		setKlassifikasjon(null);
 		setKlassifikasjonsbeskrivelse(null);
+		getKlassifikasjonList().add(getKlassifikasjon());
 	}
 
 }
