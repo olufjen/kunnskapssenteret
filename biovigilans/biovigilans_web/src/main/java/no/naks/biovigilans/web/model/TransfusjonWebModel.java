@@ -169,7 +169,7 @@ public class TransfusjonWebModel extends VigilansModel {
 			transfusjon.saveField(field, userEntry);
 			pasientKomplikasjon.saveField(field, userEntry);
 			symptomer.saveField(field, userEntry);
-			komplikasjonsklassifikasjon.saveField(field, userEntry);
+			komplikasjonsklassifikasjon.savetoField(field, userEntry);
 			utredning.saveField(field, userEntry);
 			hemoLyse.saveField(field, userEntry);
 			produktEgenskap.saveField(field, userEntry);
@@ -199,6 +199,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		pasientKomplikasjon.setKlassifikasjon(null);
 		pasientKomplikasjon.produceSymptoms(symptomer);
 		pasientKomplikasjon.getKomplikasjonsKlassifikasjoner().put("klassifikasjon",komplikasjonsklassifikasjon);
+		pasientKomplikasjon.produceClassification(komplikasjonsklassifikasjon);
 	//	utredning.saveUtredning();			Bruk av utredning er endret etter endring i transfusjonsskjema olj 22.01.15
 	//	utredning.produceHemolyse(hemoLyse);
 		pasientKomplikasjon.setUtredning(utredning);
