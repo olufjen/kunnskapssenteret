@@ -2617,7 +2617,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
          Kan ikke konkludere (les definisjonene før du velger dette)
       </label>
     </div>
-    <!-- 
+    <!--  IKKE i BRUK !!!! OLJ 29.01.15 ======================================================================== 
     <div class="radio">
       <label>
         <input type="radio" name="p-komp-klassifikasjon" id="p-komp-ingenklinisk" value="ingenklinisk" onclick="toggleDisplay('antistofftype', 0);toggleDisplay('lga-valg', 0)"/>Ingen klinisk reaksjon (f.eks. ved feil, men forlikelig blod, skal trolig ikke væremed)
@@ -2641,7 +2641,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         <input type="radio" name="p-utredning" id="p-utredning-3" value="HTRvetikke" onclick="toggleDisplay('antistofftype', 0)"/>Ikke utført
       </label>
     </div>
- --> 
+
     <div id="antistofftype" style="display: none" class="form-group">
     <label>Type antistoff:</label>
     <div  class="checkbox">
@@ -2677,7 +2677,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
      <label>Annet antistoff</label> 
       <input type="text"  name="p-antistoffannet" size="80"  value="" class="form-control"/>
     </div>
-    </div>    
+    </div>   -->   
 <!-- Ikke i bruk olj 28.09.14    
     <div id="utredningannet-text" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
@@ -2702,19 +2702,19 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     </div>
    
   	<label>Hemolyseparametre.</label>
- -->   	
+    	
     <div id="hemolyse-text" style="display: none" class="form-group">
       <table>
       	<tr>
       	<td>
-   <!--      <label>Hemolyseparametre</label>  --> 
+   <!--      <label>Hemolyseparametre</label>  
             	<input name ="p-hemolysetext"  id="hemolyseparamvalg" list="hemproduktvalg" >
         		<datalist id="hemproduktvalg">
       	       <#list pasientkomplikasjon.hemolyseParametre as hemolyse>
         			<option >${hemolyse}</option>
 			    </#list>  
-        		</datalist> 
-    <!--      		<button name="p_hemolyseleggtil" type="submit" onclick="addRow()" class="btn btn-primary">Legg til</button>  --> 
+        		</datalist> --> 
+    <!--      		<button name="p_hemolyseleggtil" type="submit" onclick="addRow()" class="btn btn-primary">Legg til</button>   
       		<input type="button" id="hemolyseadd" value="Legg til" onclick="addRow()"  class="btn btn-primary"> 
         </td>		
         </tr>		
@@ -2731,16 +2731,16 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         	<label for="p_scnts" title="HEMO">Hemolyseparametre valgt</label><input type="text" id="p_scnt" size="20" name="p_scnt" value="" placeholder="Valgt" />
     		</p>
 		</div>	
- -->		
+		
     </div>
- 	
+--> 	
     
-<!-- Ikke i bruk olj 28.09.14 -->      
+<!-- Ikke i bruk olj 28.09.14       
     <div id="hemolyse-textxxxx" class="form-group" style="display: none">
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-hemolysetextxxxx" rows="3"></textarea>
-	</div> 
-<!-- *********** -->		
+	</div> -->
+<!-- *********** 		
 
  <div id="lga-valg" class="form-group" style="display: none">
      <label>lgA-mangel/anti-lgA</label>
@@ -2764,7 +2764,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <label>Hvis ja, beskriv nærmere i fritekst:</label>
 	 <textarea class="form-control" name="p-lgatext" rows="3"></textarea>
 	</div>
-	
+-->	
 <!-- Kommentert ut ref melding basecamp 14.01.15 	
      <h4>Dyrkning fra pose utført</h4>
      <div class="radio">
@@ -2777,7 +2777,7 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
         <input type="radio" name="p-dyrkning" id="p-dyrkning-2" value="dyrkingja" onclick="toggleDisplay('dyrkingpositiv', this.checked)"/>Ja 
       </label>
     </div>
- --> 
+
    <div id="dyrkingpositiv" class="form-group" style="display: none">
 	<label>Hvis ja</label>    
     <div class="radio">
@@ -2795,6 +2795,10 @@ Alle andre transfusjonsreaksjoner der hypotensjon kan være et symptom og underl
     <label>Hvis ja, beskriv funn i fritekst:</label>
 	 <textarea class="form-control" name="p-dyrkingpostext" rows="3"></textarea>
 	</div> 
+	IKKE I BRUK SLUTT =======================================================================================	
+ --> 	
+	
+	
     <div class="form-group" >
 		<h3>Alvorlighetsgrad</h3>
 
@@ -2925,8 +2929,7 @@ Vurder om du skal melde denne."/>Utelukket
     <label>
     	<input name="p-feilblodtrans" type="checkbox" id="p-feilblodtrans" value="feilblodtrans"  onclick="toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Feil blod transfundert   
     </label>
-    </div>
-   <div id="gikkgalt" class="form-group" style="display: none">
+    <div id="gikkgalt" class="form-group" style="display: none">
      <label>Hva gikk galt?</label>
      <div class="checkbox">
       <label>
@@ -3004,7 +3007,8 @@ Vurder om du skal melde denne."/>Utelukket
         <input type="checkbox" name="p-vetikkegikkgalt" id="p-vetikkegikkgalt" value="vetikkegikkgalt" />Vet ikke
       </label>
     </div>
-  </div>   
+  </div>    
+    
    <div id="blodkrav" class="form-group" style="display: none" >
      <label>Besvar også</label>
      <div class="radio">
@@ -3027,8 +3031,11 @@ Vurder om du skal melde denne."/>Utelukket
         <input type="radio" name="p-blodkrav" id="p-feilindikasjon" value="blodproduktgittfeilindikasjon"  />Blodprodukt gitt på feil indikasjon
       </label>
     </div>
+  </div>  
+ 
+
   </div>
-	<div class="checkbox">
+ 	<div class="checkbox">
     <label>
     	<input name="p-paregnelig" type="checkbox" id="g" value="paregnelig" onclick="toggleDisplay('gikkgalt', 0)"/>Påregnelig risiko  
     </label>
@@ -3042,9 +3049,9 @@ Vurder om du skal melde denne."/>Utelukket
     <label>
     	<input name="p-vetikkeskjedde" type="checkbox" id="p-vetikkeskjedde" value="vetikkeskjedde" onclick="toggleDisplay('gikkgalt', 0)"/>Vet ikke  
     </label>
-    </div>    
-                		
+    </div>      
 </div>
+
 <div class="form-group" >
 	<h3>Kunne transfusjonskomplikasjonen ha vært forebygget?</h3>
 	<div class="radio">
