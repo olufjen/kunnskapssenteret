@@ -308,6 +308,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
 		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
 		sessionAdmin.getSession(getRequest(), andreHendelseId).invalidate();
+		sessionAdmin.getSession(getRequest(), vigilansmeldingId).invalidate();
 	}
 	/**
 	 * setTransfusjonsObjects

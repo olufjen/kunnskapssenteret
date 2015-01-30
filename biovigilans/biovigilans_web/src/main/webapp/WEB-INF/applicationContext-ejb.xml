@@ -95,6 +95,7 @@
   <bean id="annenkomplikasjonDAO" class="no.naks.biovigilans.dao.AnnenkomplikasjonDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
   	<property name="insertAnnenKomplikasjonSQL" value="${annenkomplikasjon.insert}"></property>
+  	<property name="updateAnnenKomplikasjonSQL" value="${annenkomplikasjon.update}"></property>
  	<property name="annenKomplikasjonPrimaryKey" value="${primarykey.annenkomplikasjon}"></property>
   	<property name="annenKomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   </bean>
@@ -103,7 +104,7 @@
   	<property name="insertKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.insert}"></property>
   	<property name="komplikasjonsklassifikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   	<property name="komplikasjonsklassifikasjonPrimaryKey" value="${primarykey.komplikasjonsklassifikasjon}" ></property>
-  	<property name="updateKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.update}"></property>
+  	<property name="deleteKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.delete}"></property>
   </bean>
   <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>

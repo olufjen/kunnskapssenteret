@@ -17,7 +17,7 @@ public class KomplikasjonsklassifikasjonWebServiceImpl implements Komplikasjonsk
 	}
 	
 	public void saveKomplikasjonsklassifikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon){
-		komplikasjonsklassifikasjonTableService.saveAnnenKomplikasjon(komplikasjonsklassifikasjon);
+		komplikasjonsklassifikasjonTableService.saveKomplikasjonsklassifikasjon(komplikasjonsklassifikasjon);
 	}
 	
 }

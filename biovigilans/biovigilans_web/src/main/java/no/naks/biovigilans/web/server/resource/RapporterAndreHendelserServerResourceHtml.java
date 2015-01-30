@@ -42,7 +42,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	@Get
 	public Representation getHemovigilans() {
 
-
+		invalidateSessionobjects();
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	
 	     Request request = getRequest();
@@ -72,7 +72,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     dataModel.put(andreHendelseId, annenModel);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	     
- 	
+	     
+	     giverModel = new GiverKomplikasjonwebModel();	
+    	 sessionAdmin.setSessionObject(getRequest(), giverModel,vigilansmeldingId);
 	     
 	        // Load the FreeMarker template
 //	        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -139,7 +141,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     		Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
     		Parameter godkjet = form.getFirst("godkjent");
     		if(lagre != null){
-    			giverModel = new GiverKomplikasjonwebModel();
+    			
     			//giverModel.getVigilansmelding().saveToVigilansmelding();
     			String strDate = form.getValues("hendelsen-date");
     			Date datoforhendelse = null;
@@ -152,23 +154,29 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	
 					}
     			}
+    			
+    			giverModel = (GiverKomplikasjonwebModel)sessionAdmin.getSessionObject(getRequest(), vigilansmeldingId);
+    			if(giverModel == null){
+    				giverModel = new GiverKomplikasjonwebModel();
+    			}
+    			
     			giverModel.getVigilansmelding().setDatoforhendelse(datoforhendelse);
     			giverModel.getVigilansmelding().setMeldingsdato(null);
     			giverWebService.saveVigilansmelding(giverModel);
+    			
     			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
     			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
     			String strDato = FastDateFormat.getInstance("yyyy-MM-dd").format(datoforhendelse);
     			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
-    			
-    			Long meldeid = annenModel.getAnnenKomplikasjon().getMeldeid();
+    			annenModel.getAnnenKomplikasjon().setUpdat(true);
     			
     			Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
-    			klassifikasjon.setMeldeidannen(meldeid);
+    			klassifikasjon.setMeldeidannen(meldeId);
     			klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
     			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
-    			annenModel.setLagret(true);
+    			
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelserkvittering.html"));
     			/*
     			Representation andreHendelser = clres2.get();
@@ -179,8 +187,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     		}else if(ikkegodkjet != null){
          		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html?ikkegodkjent=ja"));
     		}else{
-	    		
-        		invalidateSessionobjects();
+	    		//invalidateSessionobjects();
 	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_hendelse_main.html"));
     		}
 	     	Representation andreHendelser = clres2.get();

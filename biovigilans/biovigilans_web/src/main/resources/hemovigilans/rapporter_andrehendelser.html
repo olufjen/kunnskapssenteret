@@ -77,6 +77,13 @@
 					document.getElementById('annet').style.display = 'none';
 					
 					document.getElementById(id).style.display = 'block';
+					
+					if(id !='feilblod'){
+						alert(id);
+						$("input:checkbox[name='tab-hvagikkgalt']").each(function(i) {
+						       this.checked = false;
+						});
+					}
 				    
 				}
 				
@@ -209,7 +216,7 @@
 								   <#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
 								   
 									   <!-- take the value of checkbox that is checked  -->
-									   <#if hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
+									   <#if  hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
 									   <#if  hvagikkgalt=='Bestillingg' ><#assign bestillingg ="checked" > </#if>
 									   <#if  hvagikkgalt=='Prøvetaking' ><#assign provetaking ="checked" > </#if>
 									   <#if  hvagikkgalt=='Feilmerking av prøverør' ><#assign feilmerking ="checked" > </#if>
