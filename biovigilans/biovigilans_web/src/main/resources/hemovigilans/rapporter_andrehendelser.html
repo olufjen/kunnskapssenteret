@@ -79,7 +79,6 @@
 					document.getElementById(id).style.display = 'block';
 					
 					if(id !='feilblod'){
-						alert(id);
 						$("input:checkbox[name='tab-hvagikkgalt']").each(function(i) {
 						       this.checked = false;
 						});
@@ -92,9 +91,6 @@
 					$("input:radio[name='tab-klassifikasjon-sub']").each(function(i) {
 					       this.checked = false;
 					});
-					/* $("input:checkbox[name='tab-hvagikkgalt']").each(function(i) {
-					       this.checked = false;
-					}); */
 				}
 				
 				/** when form is not godkjent and comeback to this form
