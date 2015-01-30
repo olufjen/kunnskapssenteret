@@ -1,6 +1,9 @@
 package no.naks.biovigilans.dao;
 
+import java.sql.Types;
 import java.util.List;
+
+import com.hp.hpl.jena.sparql.engine.http.Params;
 
 import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
@@ -13,7 +16,7 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 	private String insertKomplikasjonsklassifikasjonSQL;
 	private String[] komplikasjonsklassifikasjonprimarykeyTableDefs;
 	private String komplikasjonsklassifikasjonPrimaryKey;
-	private String updateKomplikasjonsklassifikasjonSQL;
+	private String deleteKomplikasjonsklassifikasjonSQL;
 	private Tablesupdate tablesUpdate = null;
 	
 	public String getInsertKomplikasjonsklassifikasjonSQL() {
@@ -37,17 +40,21 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 			String komplikasjonsklassifikasjonPrimaryKey) {
 		this.komplikasjonsklassifikasjonPrimaryKey = komplikasjonsklassifikasjonPrimaryKey;
 	}
-	public String getUpdateKomplikasjonsklassifikasjonSQL() {
-		return updateKomplikasjonsklassifikasjonSQL;
-	}
-	public void setUpdateKomplikasjonsklassifikasjonSQL(
-			String updateKomplikasjonsklassifikasjonSQL) {
-		this.updateKomplikasjonsklassifikasjonSQL = updateKomplikasjonsklassifikasjonSQL;
-	}
 	
-	
-
-	public void saveAnnenKomplikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon){
+	public String getDeleteKomplikasjonsklassifikasjonSQL() {
+		return deleteKomplikasjonsklassifikasjonSQL;
+	}
+	public void setDeleteKomplikasjonsklassifikasjonSQL(
+			String deleteKomplikasjonsklassifikasjonSQL) {
+		this.deleteKomplikasjonsklassifikasjonSQL = deleteKomplikasjonsklassifikasjonSQL;
+	}
+	public void saveKomplikasjonsklassifikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon){
+		String sql =deleteKomplikasjonsklassifikasjonSQL;
+		Long meldeAnnenId = komplikasjonsklassifikasjon.getMeldeidannen();
+		int[] deleteType = new int[]{Types.INTEGER};
+		tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,deleteType);
+		Object[] deleteParams = new Object[]{meldeAnnenId};
+		tablesUpdate.insert(deleteParams);
 		
 		List<String> klassifikasjonList =  komplikasjonsklassifikasjon.getKlassifikasjonList();
 		
@@ -57,12 +64,7 @@ public class KomplikasjonsklassifikasjonDAOImpl extends AbstractAdmintablesDAO i
 			komplikasjonsklassifikasjon.setParams();
 			int[] types = komplikasjonsklassifikasjon.getTypes();
 			Object[] params = komplikasjonsklassifikasjon.getParams();
-			String sql = insertKomplikasjonsklassifikasjonSQL;
-			Long id =komplikasjonsklassifikasjon.getKlassifikasjonsid();
-			if(id!=null){
-				sql = updateKomplikasjonsklassifikasjonSQL;
-				types = komplikasjonsklassifikasjon.getUtypes();
-			}
+			sql = insertKomplikasjonsklassifikasjonSQL;
 			tablesUpdate = new TablesUpdateImpl(getDataSource(),sql,types);
 			tablesUpdate.insert(params);
 		}	

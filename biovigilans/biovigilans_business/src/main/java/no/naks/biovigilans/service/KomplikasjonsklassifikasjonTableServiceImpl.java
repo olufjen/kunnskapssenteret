@@ -17,7 +17,7 @@ public class KomplikasjonsklassifikasjonTableServiceImpl implements
 		this.komplikasjonsklassifikasjonDAO = komplikasjonsklassifikasjonDAO;
 	}
 	
-	public void saveAnnenKomplikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon){
-		komplikasjonsklassifikasjonDAO.saveAnnenKomplikasjon(komplikasjonsklassifikasjon);
+	public void saveKomplikasjonsklassifikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon){
+		komplikasjonsklassifikasjonDAO.saveKomplikasjonsklassifikasjon(komplikasjonsklassifikasjon);
 	}
 }

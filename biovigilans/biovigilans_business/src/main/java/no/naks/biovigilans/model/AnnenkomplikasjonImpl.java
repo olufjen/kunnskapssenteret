@@ -55,6 +55,11 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	private String delkode;
 	
 	/**
+	 * check update the database table or insert
+	 */
+	private boolean isUpdat =false;
+	
+	/**
 	 * Dato når komplikasjonen ble oppdaget for kvittering
 	 */
 	private String datoforhendelseKvittering;
@@ -66,8 +71,8 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public AnnenkomplikasjonImpl() {
 		super();
-		types = new int[]  {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
-		utypes = new int[] {Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR};
+		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		annenKomplikasjonsFields = new HashMap<String,String>();
 	}
 	public String getKlassifikasjon() {
@@ -89,6 +94,13 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.klassifikasjon = klassifikasjon;
 	}
 	
+	
+	public boolean isUpdat() {
+		return isUpdat;
+	}
+	public void setUpdat(boolean isUpdat) {
+		this.isUpdat = isUpdat;
+	}
 	public String getDelkode() {
 		if(delkode == null){
 			delkode = "";
@@ -232,9 +244,9 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
 		}else
-			params = new Object[]{getMeldeid(),getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode()};
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
 		}
 	/**
 	 * setAnnenkomplicationfieldMaps

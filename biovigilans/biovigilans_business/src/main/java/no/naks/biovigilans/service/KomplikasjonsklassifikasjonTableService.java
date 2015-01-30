@@ -4,5 +4,5 @@ import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 
 public interface KomplikasjonsklassifikasjonTableService {
 
-	public void saveAnnenKomplikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon);
+	public void saveKomplikasjonsklassifikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon);
 }

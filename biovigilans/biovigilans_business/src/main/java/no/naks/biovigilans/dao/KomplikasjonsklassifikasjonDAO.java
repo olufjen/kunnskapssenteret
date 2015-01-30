@@ -13,8 +13,8 @@ public interface KomplikasjonsklassifikasjonDAO {
 	public String getKomplikasjonsklassifikasjonPrimaryKey() ;
 	public void setKomplikasjonsklassifikasjonPrimaryKey(
 			String komplikasjonsklassifikasjonPrimaryKey);
-	public String getUpdateKomplikasjonsklassifikasjonSQL() ;
-	public void setUpdateKomplikasjonsklassifikasjonSQL(
-			String updateKomplikasjonsklassifikasjonSQL) ;
-	public void saveAnnenKomplikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon);
+	public String getDeleteKomplikasjonsklassifikasjonSQL() ;
+	public void setDeleteKomplikasjonsklassifikasjonSQL(
+			String deleteKomplikasjonsklassifikasjonSQL) ;
+	public void saveKomplikasjonsklassifikasjon(Komplikasjonsklassifikasjon komplikasjonsklassifikasjon);
 }

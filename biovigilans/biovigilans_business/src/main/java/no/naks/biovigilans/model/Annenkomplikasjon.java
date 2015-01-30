@@ -44,4 +44,7 @@ public interface Annenkomplikasjon {
 
 	public String getDatoforhendelseKvittering() ;
 	public void setDatoforhendelseKvittering(String datoforhendelseKvittering);
+
+	public boolean isUpdat();
+	public void setUpdat(boolean isUpdat);
 }
