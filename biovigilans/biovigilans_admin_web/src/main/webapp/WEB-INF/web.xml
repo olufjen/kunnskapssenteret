@@ -29,7 +29,7 @@
  </servlet>
  <!-- Restlet Servlet -->
  <servlet>
-    <servlet-name>SpringBiovigilansRESTApi</servlet-name>
+    <servlet-name>SpringBiovigilansadminRESTApi</servlet-name>
     <servlet-class>org.restlet.ext.spring.SpringServerServlet</servlet-class>
      <init-param>
             <param-name>org.restlet.component</param-name>
@@ -50,7 +50,7 @@
 </servlet-mapping>
  -->
 	<servlet-mapping>
-		<servlet-name>SpringBiovigilansRESTApi</servlet-name>
+		<servlet-name>SpringBiovigilansadminRESTApi</servlet-name>
 		<url-pattern>/restapi/*</url-pattern>
 	</servlet-mapping>
   <!-- Restlet Servlet end -->
