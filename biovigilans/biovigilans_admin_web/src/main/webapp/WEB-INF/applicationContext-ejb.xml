@@ -98,13 +98,7 @@
  	<property name="annenKomplikasjonPrimaryKey" value="${primarykey.annenkomplikasjon}"></property>
   	<property name="annenKomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
   </bean>
-  <bean id="komplikasjonsklassifikasjonDAO" class="no.naks.biovigilans.dao.KomplikasjonsklassifikasjonDAOImpl">
-  	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
-  	<property name="insertKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.insert}"></property>
-  	<property name="komplikasjonsklassifikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
-  	<property name="komplikasjonsklassifikasjonPrimaryKey" value="${primarykey.komplikasjonsklassifikasjon}" ></property>
-  	<property name="updateKomplikasjonsklassifikasjonSQL" value="${komplikasjonsklassifikasjon.update}"></property>
-  </bean>
+ 
   <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
  	<property name="updateVigilansmeldingSQL" value="${vigilansmelding.updatemelderid}"></property>
@@ -131,79 +125,9 @@
   <bean id="annenKomplikasjonTableService" class="no.naks.biovigilans.service.AnnenKomplikasjonTableServiceImpl" >
   	<property name="annenKomplikasjonDAO" ref="annenkomplikasjonDAO"></property>
   </bean>
-  <bean id="komplikasjonsklassifikasjonTableService" class="no.naks.biovigilans.service.KomplikasjonsklassifikasjonTableServiceImpl" >
-  	<property name="komplikasjonsklassifikasjonDAO" ref="komplikasjonsklassifikasjonDAO"></property>
-  </bean>
-  <!-- /usr/local/tomcat6/xml/ -->
-  <!-- c:\\temp\\c:\\temp\\ -->
-  <bean id="meldingService" class="no.naks.nhn.service.MelderServiceImpl" >
-  		<property name="marshaller" ref="castorMarshaller"></property>
-   		<property name="catalog" value="c:\\temp\\"></property>
-  		<property name="FILE_NAME" value="basismelding"></property>
-  		<property name="opSys" value="DOS"></property>
-  		<property name="sysCommand" value="ls"></property>
-    	<property name="production" value="false"></property>
-  </bean>
-  <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller">
-  
-  </bean>
 
 
-	<bean id="nhnClient" class="no.naks.nhn.service.NHNServiceClientImpl">
-		<property name="authenticatorUser" value="webservice"></property>
-		<property name="authenticatorPassword" value=""></property>
-		<property name="production" value="false"></property>
-		<property name="maxAdr" value="3"></property>
-		<property name="prodUrl" value="https://ws.nhn.no/Basic/v1/AR"></property>
-	</bean>
-<!-- 
-	<bean id="hiveService" class="no.naks.semweb.control.HiveServiceImpl">
-		<property name="hivePath" value="C:\\svnroot2\\nokc\\semantiskweb\\trunk\\semantiskweb_web\\src\\main\\webapp\\config\\app-config\"></property>
-		<property name="treeElements">
-			<list><value>Anatomi</value>
-			<value>Organisme</value>
-			<value>Sykdommer</value>
-			<value>Kjemikalier og medisiner</value>
-			<value>Analyse, diagnoser og terapeutiske teknikker og utstyr</value>
-			<value>Psykiatri og Psykologi</value>
-			<value>Antropologi Utdanning og sosiologi</value>
-			<value>Teknologi, Industri, Jordbruk</value>
-			<value>Humanoria</value>
-			<value>Informasjonsvitenskap</value>
-			<value>Navngitte grupper</value>
-			<value>Helsevesenet</value>
-			<value>Publikasjonkarakteristiska</value>
-			<value>Geografi</value>
-			</list>
-		</property>
-		<property name="anatomi">
-			<list>
-				<value>Body Regions</value>
-				<value>Musculoskeletal System</value>
-				<value>Digestive System</value>
-				<value>Respiratory System</value>
-				<value>Urogenital System</value>
-				<value>Endocrine System</value>
-				<value>Cardiovascular System</value>
-				<value>Nervous System</value>
-				<value>Sense Organs</value>
-				<value>Tissues</value>
-				<value>Cells</value>
-				<value>Fluids and Secretions</value>
-				<value>Animal Structure</value>
-				<value>Stomatognathic System</value>
-				<value>Hemic and Immune Systems</value>
-				<value>Embryonic Structures</value>
-				<value>Integumentary System</value>
-				<value>Plant Structure</value>
-				<value>Fungal Structure</value>
-				<value>Bacterial Structure</value>
-				<value>Viral Structure</value>
-			
-			</list>
-		</property>
-	</bean>
- -->		
+		
 
 </beans>
 
