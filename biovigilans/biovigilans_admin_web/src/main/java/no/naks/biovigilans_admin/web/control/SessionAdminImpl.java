@@ -16,7 +16,7 @@ public class SessionAdminImpl implements SessionAdmin {
 	
 	public SessionAdminImpl() {
 		super();
-		  System.out.println("SessionAdmin started");
+		  System.out.println("SessionAdmin admin started");
 	}
 
 	@Override
