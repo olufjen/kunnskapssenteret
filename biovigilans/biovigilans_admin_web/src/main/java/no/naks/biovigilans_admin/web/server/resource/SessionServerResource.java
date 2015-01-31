@@ -272,7 +272,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 
 	
 	public String getPage(){
-		String page = "/hemovigilans/hemovigilans.html";
+		String page = "/hemovigilans/hemovigilansadmin.html";
 		return page;
 	}
 	/**
