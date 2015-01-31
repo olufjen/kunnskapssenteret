@@ -41,7 +41,7 @@ public class ICD10WebServiceImpl implements ICD10WebService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
-		 System.out.println("ICD10 webservice created");
+		 System.out.println("ICD10 admin webservice created");
 	}
 
 	public Unmarshaller getJaxbUnmarshaller() {
