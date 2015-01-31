@@ -93,7 +93,11 @@
         <property name="sessionAdmin" ref="sessionAdmin"></property>
 
         </bean>
- 
+        <bean name="/hemovigilans/analyse_admin_main.html" id="analyseServerResourceHTML" autowire="byName" scope="prototype"
+            class="no.naks.biovigilans_admin.web.server.resource.RapporterAnalyseServerResourceHtml">
+        <property name="sessionAdmin" ref="sessionAdmin"></property>
+
+        </bean> 
      
         <bean id="sessionAdmin" class="no.naks.biovigilans_admin.web.control.SessionAdminImpl">
         
