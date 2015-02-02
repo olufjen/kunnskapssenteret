@@ -160,12 +160,27 @@ function initialize()
 		  <b>Er dette en giverrelatert hendelse?</b>
 		  <div class="radio">
 	          <label>
-	            <input type="radio" name="p-giverrelatert" id="p-giverrelatert-ja" value="giverrelatert-ja" onclick="document.location='rapporter_giver.html';" />Ja
+	            <input type="radio" name="p-giverrelatert" id="p-giverrelatert-ja" value="giverrelatert-ja" onclick="toggleDisplay('giverrelatert-ja', this.checked);" />Ja
 	          </label>
 	      </div>
 	      <div class="radio">
 	          <label>
 	            <input type="radio" name="p-giverrelatert" id="p-giverrelatert-nei" value="giverrelatert-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
+	          </label>
+	      </div>
+	  	</div>	  	
+ 	</div>
+ 	<div id="giverrelatert-ja" style="display: none">
+	 	<div id="symptomer"  class="form-group">
+		  <b>Hadde giveren symptomer?</b>
+		  <div class="radio">
+	          <label>
+	            <input type="radio" name="p-symptomer" id="p-symptomer-ja" value="symptomer-ja" onclick="document.location='rapporter_giver.html';" />Ja
+	          </label>
+	      </div>
+	      <div class="radio">
+	          <label>
+	            <input type="radio" name="p-symptomer" id="p-symptomer-nei" value="symptomer-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
 	          </label>
 	      </div>
 	  	</div>	  	
