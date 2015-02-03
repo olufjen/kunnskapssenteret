@@ -44,12 +44,386 @@ import org.restlet.resource.Post;
 
 public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	private String anonymEpost = "meldeordningen@kunnskapssenteret.no";
+	private String[] helseRegioner;
+	private String[] hfeneNord;
+	private String[]hfeneMidt;
+	private String[]hfeneVest;
+	private String[]hfeneSor;
+
+	private String[]sykehusHFfinnmark;
+	private String[]sykehusHFNord;
+	private String[]sykehusHFnordland;
+	private String[]sykehusHFHelgeland;
+	private String[]sykehusHFNtrond;
+	private String[]sykehusHFOlav;
+	private String[]sykehusHFMRoms;
+	private String[]sykehusHFForde;
+	private String[]sykehusHFbergen;
+	private String[]sykehusHFFonna;
+	private String[]sykehusHFstav;
+	private String[]sykehusHFVpriv;
+	private String[]sykehusHFsorland;
+	private String[]sykehusHFtele;
+	private String[]sykehusHFvestf;
+	private String[]sykehusHFvviken;
+	private String[]sykehusHFostf;
+	private String[]sykehusHFoslo;
+	private String[]sykehusHFahus;
+	private String[]sykehusHFinnl;
+	private String[]sykehusHFOpriv;
+	
 	public RapporterKontaktServerResourceHtml() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+
 	
+	
+	public String[] getSykehusHFfinnmark() {
+		return sykehusHFfinnmark;
+	}
+
+
+
+
+	public void setSykehusHFfinnmark(String[] sykehusHFfinnmark) {
+		this.sykehusHFfinnmark = sykehusHFfinnmark;
+	}
+
+
+
+
+	public String[] getSykehusHFNord() {
+		return sykehusHFNord;
+	}
+
+
+
+
+	public void setSykehusHFNord(String[] sykehusHFNord) {
+		this.sykehusHFNord = sykehusHFNord;
+	}
+
+
+
+
+	public String[] getSykehusHFnordland() {
+		return sykehusHFnordland;
+	}
+
+
+
+
+	public void setSykehusHFnordland(String[] sykehusHFnordland) {
+		this.sykehusHFnordland = sykehusHFnordland;
+	}
+
+
+
+
+	public String[] getSykehusHFHelgeland() {
+		return sykehusHFHelgeland;
+	}
+
+
+
+
+	public void setSykehusHFHelgeland(String[] sykehusHFHelgeland) {
+		this.sykehusHFHelgeland = sykehusHFHelgeland;
+	}
+
+
+
+
+	public String[] getSykehusHFNtrond() {
+		return sykehusHFNtrond;
+	}
+
+
+
+
+	public void setSykehusHFNtrond(String[] sykehusHFNtrond) {
+		this.sykehusHFNtrond = sykehusHFNtrond;
+	}
+
+
+
+
+	public String[] getSykehusHFOlav() {
+		return sykehusHFOlav;
+	}
+
+
+
+
+	public void setSykehusHFOlav(String[] sykehusHFOlav) {
+		this.sykehusHFOlav = sykehusHFOlav;
+	}
+
+
+
+
+	public String[] getSykehusHFMRoms() {
+		return sykehusHFMRoms;
+	}
+
+
+
+
+	public void setSykehusHFMRoms(String[] sykehusHFMRoms) {
+		this.sykehusHFMRoms = sykehusHFMRoms;
+	}
+
+
+
+
+	public String[] getSykehusHFForde() {
+		return sykehusHFForde;
+	}
+
+
+
+
+	public void setSykehusHFForde(String[] sykehusHFForde) {
+		this.sykehusHFForde = sykehusHFForde;
+	}
+
+
+
+
+	public String[] getSykehusHFbergen() {
+		return sykehusHFbergen;
+	}
+
+
+
+
+	public void setSykehusHFbergen(String[] sykehusHFbergen) {
+		this.sykehusHFbergen = sykehusHFbergen;
+	}
+
+
+
+
+	public String[] getSykehusHFFonna() {
+		return sykehusHFFonna;
+	}
+
+
+
+
+	public void setSykehusHFFonna(String[] sykehusHFFonna) {
+		this.sykehusHFFonna = sykehusHFFonna;
+	}
+
+
+
+
+	public String[] getSykehusHFstav() {
+		return sykehusHFstav;
+	}
+
+
+
+
+	public void setSykehusHFstav(String[] sykehusHFstav) {
+		this.sykehusHFstav = sykehusHFstav;
+	}
+
+
+
+
+	public String[] getSykehusHFVpriv() {
+		return sykehusHFVpriv;
+	}
+
+
+
+
+	public void setSykehusHFVpriv(String[] sykehusHFVpriv) {
+		this.sykehusHFVpriv = sykehusHFVpriv;
+	}
+
+
+
+
+	public String[] getSykehusHFsorland() {
+		return sykehusHFsorland;
+	}
+
+
+
+
+	public void setSykehusHFsorland(String[] sykehusHFsorland) {
+		this.sykehusHFsorland = sykehusHFsorland;
+	}
+
+
+
+
+	public String[] getSykehusHFtele() {
+		return sykehusHFtele;
+	}
+
+
+
+
+	public void setSykehusHFtele(String[] sykehusHFtele) {
+		this.sykehusHFtele = sykehusHFtele;
+	}
+
+
+
+
+	public String[] getSykehusHFvestf() {
+		return sykehusHFvestf;
+	}
+
+
+
+
+	public void setSykehusHFvestf(String[] sykehusHFvestf) {
+		this.sykehusHFvestf = sykehusHFvestf;
+	}
+
+
+
+
+	public String[] getSykehusHFvviken() {
+		return sykehusHFvviken;
+	}
+
+
+
+
+	public void setSykehusHFvviken(String[] sykehusHFvviken) {
+		this.sykehusHFvviken = sykehusHFvviken;
+	}
+
+
+
+
+	public String[] getSykehusHFostf() {
+		return sykehusHFostf;
+	}
+
+
+
+
+	public void setSykehusHFostf(String[] sykehusHFostf) {
+		this.sykehusHFostf = sykehusHFostf;
+	}
+
+
+
+
+	public String[] getSykehusHFoslo() {
+		return sykehusHFoslo;
+	}
+
+
+
+
+	public void setSykehusHFoslo(String[] sykehusHFoslo) {
+		this.sykehusHFoslo = sykehusHFoslo;
+	}
+
+
+
+
+	public String[] getSykehusHFahus() {
+		return sykehusHFahus;
+	}
+
+
+
+
+	public void setSykehusHFahus(String[] sykehusHFahus) {
+		this.sykehusHFahus = sykehusHFahus;
+	}
+
+
+
+
+	public String[] getSykehusHFinnl() {
+		return sykehusHFinnl;
+	}
+
+
+
+
+	public void setSykehusHFinnl(String[] sykehusHFinnl) {
+		this.sykehusHFinnl = sykehusHFinnl;
+	}
+
+
+
+
+	public String[] getSykehusHFOpriv() {
+		return sykehusHFOpriv;
+	}
+
+
+
+
+	public void setSykehusHFOpriv(String[] sykehusHFOpriv) {
+		this.sykehusHFOpriv = sykehusHFOpriv;
+	}
+
+
+
+
+	public String[] getHelseRegioner() {
+		return helseRegioner;
+	}
+
+
+	public void setHelseRegioner(String[] helseRegioner) {
+		this.helseRegioner = helseRegioner;
+	}
+
+
+	public String[] getHfeneNord() {
+		return hfeneNord;
+	}
+
+
+	public void setHfeneNord(String[] hfeneNord) {
+		this.hfeneNord = hfeneNord;
+	}
+
+
+	public String[] getHfeneMidt() {
+		return hfeneMidt;
+	}
+
+
+	public void setHfeneMidt(String[] hfeneMidt) {
+		this.hfeneMidt = hfeneMidt;
+	}
+
+
+	public String[] getHfeneVest() {
+		return hfeneVest;
+	}
+
+
+	public void setHfeneVest(String[] hfeneVest) {
+		this.hfeneVest = hfeneVest;
+	}
+
+
+	public String[] getHfeneSor() {
+		return hfeneSor;
+	}
+
+
+	public void setHfeneSor(String[] hfeneSor) {
+		this.hfeneSor = hfeneSor;
+	}
+
+
 	/**
 	 * getInnmelding
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
@@ -66,6 +440,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 
 	     setTransfusjonsObjects();
     	 melderwebModel.setFormNames(sessionParams);
+    	 setMelderparams();
     	 melderwebModel.distributeTerms();
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
@@ -152,6 +527,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		 if(melderwebModel == null){
     	    	 melderwebModel = new MelderwebModel();
     	    	 melderwebModel.setFormNames(sessionParams);
+    	    	 setMelderparams();
     	    	 melderwebModel.distributeTerms();
     	     }
  
@@ -167,6 +543,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		Parameter formValue = form.getFirst("formValue"); // Fill kontaktform on the base of epost 
     		Parameter lagre = form.getFirst("lagrekontakt");
     		Parameter lagreAnonymt = form.getFirst("lagreanonymt"); // Bruker ønsker å melde anonymt
+    		Parameter valgtRegion = form.getFirst("regionValue");
     		if(lagre != null){								// Lagre kontaktskjema
     			melderwebModel.saveValues();
     			melderWebService.saveMelder(melderwebModel);
@@ -204,6 +581,16 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 			    				MediaType.TEXT_HTML);
+    		}else if(valgtRegion != null){   // Bruker har valgt en helseregion
+    			melderwebModel.saveValues();
+    			melderwebModel.setValgtregion();
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+			    				MediaType.TEXT_HTML);    			
+    	
     		}else if(lagreAnonymt != null){					// Bruker velger å lagre skjema anonymt.
     			melderwebModel.setMelderepost(anonymEpost);
     			melderwebModel.setAnonymEpost(anonymEpost);
@@ -291,6 +678,36 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 				hendelseWebService.saveVigilansMelder(melding);
 			}
 		}  
+    }
+    private void setMelderparams(){
+     	 melderwebModel.setHelseRegioner(helseRegioner);
+    	 melderwebModel.setHfeneNord(hfeneNord);
+    	 melderwebModel.setHfeneMidt(hfeneMidt);
+    	 melderwebModel.setHfeneVest(hfeneVest);
+    	 melderwebModel.setHfeneSor(hfeneSor);
+    	 melderwebModel.setSykehusHFahus(sykehusHFahus);
+    	 melderwebModel.setSykehusHFbergen(sykehusHFbergen);
+    	 melderwebModel.setSykehusHFfinnmark(sykehusHFfinnmark);
+    	 melderwebModel.setSykehusHFFonna(sykehusHFFonna);
+    	 melderwebModel.setSykehusHFForde(sykehusHFForde);
+    	 melderwebModel.setSykehusHFHelgeland(sykehusHFHelgeland);
+    	 melderwebModel.setSykehusHFinnl(sykehusHFinnl);
+    	 melderwebModel.setSykehusHFMRoms(sykehusHFMRoms);
+    	 melderwebModel.setSykehusHFNord(sykehusHFNord);
+    	 melderwebModel.setSykehusHFnordland(sykehusHFnordland);
+    	 melderwebModel.setSykehusHFNtrond(sykehusHFNtrond);
+    	 melderwebModel.setSykehusHFOlav(sykehusHFOlav);
+    	 melderwebModel.setSykehusHFOpriv(sykehusHFOpriv);
+    	 melderwebModel.setSykehusHFoslo(sykehusHFoslo);
+    	 melderwebModel.setSykehusHFostf(sykehusHFostf);
+    	 melderwebModel.setSykehusHFsorland(sykehusHFsorland);
+    	 melderwebModel.setSykehusHFstav(sykehusHFstav);
+    	 melderwebModel.setSykehusHFtele(sykehusHFtele);
+    	 melderwebModel.setSykehusHFvestf(sykehusHFvestf);
+    	 melderwebModel.setSykehusHFVpriv(sykehusHFVpriv);
+    	 melderwebModel.setSykehusHFvviken(sykehusHFvviken);
+    	
+    	 
     }
 /*
     public void sendEmail(){
