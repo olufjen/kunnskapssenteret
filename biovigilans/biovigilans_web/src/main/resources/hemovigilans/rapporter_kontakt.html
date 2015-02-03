@@ -117,7 +117,9 @@ function formSubmit(){
          $('#btnClk').text(responseText);         
      }); */
 	}
-
+function regionValgt(){
+	$("#btnRegion").click();
+}
 
 //window.onload=initialize();
 </script>
@@ -160,19 +162,43 @@ function formSubmit(){
       <div class="form-group">
         <label for="k-helseregion">Helseregion:</label>
         <div>
+        	<select name ="k-helseregion" id="k-helseregion" class="form-control" onblur="regionValgt()">
+						<option selected="selected" >${melder.helseregion}</option>
+			       		<#list melder.helseRegionene as helseregion>
+			       				<option>${helseregion} </option>
+			       		 </#list>
+	     		   	</select>
+<!--  
           <input name="k-helseregion" type="text" value="${melder.helseregion}" class="form-control" id="k-helseregion" placeholder="Helseregion">
+-->          
         </div>
       </div>
       <div class="form-group">
         <label for="k-helseforetak">Helseforetak:</label>
         <div>
-          <input name="k-helseforetak" type="text" value="${melder.helseforetak}" class="form-control" id="k-helseforetak" placeholder="Helseforetak">
+        <select name ="k-helseforetak" id="k-helseforetak" class="form-control">
+						<option selected="selected" >${melder.helseforetak}</option>
+			       		<#list melder.valgtRegion as region>
+			       				<option>${region} </option>
+			       		 </#list>
+	     		   	</select>
+<!--  	     		   	
+           <input name="k-helseforetak" type="text" value="${melder.helseforetak}" class="form-control" id="k-helseforetak" placeholder="Helseforetak">
+-->
         </div>
       </div>
       <div class="form-group">
         <label for="k-sykehus">Institusjon/sykehus:</label>
         <div>
+           <select name ="k-sykehus" id="k-sykehus" class="form-control">
+						<option selected="selected" >${melder.sykehus}</option>
+			       		<#list melder.valgtSykehus as sykehus>
+			       				<option>${sykehus} </option>
+			       		 </#list>
+	     		   	</select>   
+<!--        
           <input name="k-sykehus" type="text" value="${melder.sykehus}" class="form-control" id="k-sykehus" placeholder="Institusjon/sykehus">
+ -->
         </div>
       </div>
       <div class="form-group">
@@ -204,6 +230,7 @@ function formSubmit(){
           <button name="lukkkontakt" type="submit" class="btn btn-default">Lukk</button>
           <button name="lagrekontakt" type="submit" class="btn btn-primary" >Lagre</button>
 		  <button type="submit" id="btnKontak" value="kontakValue"  name="formValue" class="btn btn-primary" style="display: none" > getValue </button>
+		  <button type="submit" id="btnRegion" value="regionValue"  name="regionValue" class="btn btn-primary" style="display: none" > getValue </button>
 </div> <!--slutt på Kontaktinformasjon-->
 </form>
 </div>
