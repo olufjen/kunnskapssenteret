@@ -104,8 +104,8 @@
         <bean id="ICD10WebService" class="no.naks.biovigilans.web.control.ICD10WebServiceImpl">
 <!--  C:\\biovigilans\\temp\\ICD10CM.xml  C:\biovigilans\temp     -->
  <!--        <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>   -->   
-				<property name="xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml" ></property> 
-<!--				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>   -->
+				<property name="xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml" ></property>  
+<!--				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
         </bean> 
 
@@ -213,7 +213,34 @@
                         ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktferskplasma},${blodproduktuniplas},${blodproduktannen}"></property>
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
-        <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property>  
+        <property name="sessionParams" value="${kontakt.helseregion},${kontakt.helseforetak},${kontakt.sykehus},${kontakt.navn},${kontakt.epost},${kontakt.tlf}"></property> 
+        <property name="helseRegioner" value="${helseregionnord},${helseregionmidt},${helseregionvest},${helseregionsorost}" ></property> 
+        <property name="hfeneNord" value="${helsenordf1},${helsenordf2},${helsenordf3},${helsenordf4}"></property>
+        <property name="hfeneMidt" value="${helsemidtf1},${helsemidtf2},${helsemidtf3}"></property>
+        <property name="hfeneVest" value="${helsevestf1},${helsevestf2},${helsevestf3},${helsevestf4},${helsevestf5}"></property>
+        <property name="hfeneSor" value="${helsesorostf1},${helsesorostf2},${helsesorostf3},${helsesorostf4},${helsesorostf5},${helsesorostf6},
+        ${helsesorostf7},${helsesorostf8},${helsesorostf9}"></property>
+        <property name="sykehusHFfinnmark" value="${helsefinnmarkhf1},${helsefinnmarkhf2}"></property>
+        <property name="sykehusHFNord" value="${helsenordnhf1},${helsenordnhf2},${helsenordnhf3},${helsenordnhf4}"></property>
+        <property name="sykehusHFnordland" value="${helsenordlhf1},${helsenordlhf2},${helsenordlhf3}"></property>
+        <property name="sykehusHFHelgeland" value="${helsenordhelghf1},${helsenordhelghf2},${helsenordhelghf3}"></property>
+        <property name="sykehusHFNtrond" value="${helsentrondhf1},${helsentrondhf2}"></property>
+        <property name="sykehusHFOlav" value="${helsentrondsthf1},${helsentrondsthf2},${helsentrondsthf3}"></property>
+        <property name="sykehusHFMRoms" value="${helsemorromhf1},${helsemorromhf2},${helsemorromhf3},${helsemorromhf4}"></property>
+        <property name="sykehusHFForde" value="${helsefordehf1},${helsefordehf2},${helsefordehf3}"></property>
+        <property name="sykehusHFbergen" value="${helseberghf1},${helseberghf2},${helseberghf3}"></property>
+        <property name="sykehusHFFonna" value="${helsefonnahf1},${helsefonnahf2},${helsefonnahf3}"></property>
+        <property name="sykehusHFstav" value="${helsestavhf1}"></property>
+        <property name="sykehusHFVpriv" value="${helesprivvesthf1}"></property>
+        <property name="sykehusHFsorland" value="${helsesorhf1},${helsesorhf2},${helsesorhf3}"></property>
+        <property name="sykehusHFtele" value="${helsetelhf1},${helsetelhf2},${helsetelhf3}"></property>
+        <property name="sykehusHFvestf" value="${helsevestfhf1},${helsevestfhf2},${helsevestfhf3}"></property>
+        <property name="sykehusHFvviken" value="${helsevvikenhf1},${helsevvikenhf2},${helsevvikenhf3},${helsevvikenhf4}"></property>
+        <property name="sykehusHFostf" value="${helseostfhf1},${helseostfhf2},${helseostfhf3},${helseostfhf4},${helseostfhf5},${helseostfhf6}"></property>
+        <property name="sykehusHFoslo" value="${helseoslhf1},${helseoslhf2},${helseoslhf3},${helseoslhf4}"></property>
+        <property name="sykehusHFahus" value="${helseakerhf1},${helseakerhf2}"></property>
+        <property name="sykehusHFinnl" value="${helseinnlhf1},${helseinnlhf2},${helseinnlhf3},${helseinnlhf4},${helseinnlhf5},${helseinnlhf6}"></property>
+        <property name="sykehusHFOpriv" value="${helseprivsorhf1},${helseprivsorhf2},${helseprivsorhf3},${helseprivsorhf4}"></property>
   </bean>       
   <bean name="/hemovigilans/rapporter_giver.html" id="rapportergiverServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterGiverServerResourceHtml">
