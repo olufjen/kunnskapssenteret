@@ -25,6 +25,7 @@ import no.naks.biovigilans.model.Transfusjon;
 import no.naks.biovigilans.model.TransfusjonImpl;
 import no.naks.biovigilans.model.Utredning;
 import no.naks.biovigilans.model.UtredningImpl;
+import no.naks.biovigilans.model.Vigilansmelding;
 
 /**
  * @author olj
@@ -116,7 +117,7 @@ public class TransfusjonWebModel extends VigilansModel {
 				formFields[91],formFields[92],formFields[93],formFields[94],formFields[95],formFields[96],
 				formFields[97],formFields[98],formFields[99],formFields[100],formFields[101],formFields[102],formFields[103],formFields[104],
 				formFields[105],formFields[106],formFields[107],formFields[108],formFields[109],formFields[110],formFields[111],formFields[112],formFields[113],
-				formFields[180],formFields[181],formFields[182],formFields[183]};
+				formFields[180],formFields[181],formFields[182],formFields[183],formFields[347]};
 		pasientKomplikasjon.setPatientkomplicationfieldMaps(pasientKomplikasjonsfields);
 		String[] symptomerFields = {formFields[65],formFields[66],formFields[67],formFields[68],formFields[69],formFields[70],formFields[71],
 				formFields[72],formFields[73],formFields[74],formFields[75],formFields[76],formFields[77],formFields[78],formFields[79],formFields[80],
@@ -197,6 +198,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		pasientKomplikasjon.setKliniskresultat(null);
 		pasientKomplikasjon.setArsakssammenheng(null);
 		pasientKomplikasjon.setKlassifikasjon(null);
+		pasientKomplikasjon.setKladd(null);
 		pasientKomplikasjon.produceSymptoms(symptomer);
 		pasientKomplikasjon.getKomplikasjonsKlassifikasjoner().put("klassifikasjon",komplikasjonsklassifikasjon);
 		pasientKomplikasjon.produceClassification(komplikasjonsklassifikasjon);
