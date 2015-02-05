@@ -188,7 +188,7 @@ function updateOutput(id1,id2,id3){
 
 //	 var num3 = Math.round(num2 - num1)*100/100;
 //	 parseFloat($(num3.toFixed(2);
-	 document.getElementById(id3).value = (num3).toFixed(2);
+	 document.getElementById(id3).value = (num3).toFixed(1);
 //	 document.getElementById(id3).ToFixed(2);
 	 if (num3 < 2){
 		// document.getElementById(id3).removeAttr("class");
@@ -271,7 +271,7 @@ function showtext(id,thetext){
 <div class="tab-pane" id="pasientkomplikasjoner">
     <h3>Pasient </h3>
       <div class="form-group">
-        <label>Kjønn:</label>
+        <label>Kjønn</label>
     	<div class="radio">
           <label>
           	<input type="radio" name="pas-kjonn" id="pas-kjonn-1" value="${pasientkomplikasjon.mann}"/>Mann
@@ -282,26 +282,22 @@ function showtext(id,thetext){
           	<input type="radio" name="pas-kjonn" id="pas-kjonn-2" value="${pasientkomplikasjon.kvinne}"/>Kvinne
           </label>
 	    </div>
-    </div>
+ 
  <!--  
      
  -->  
     
     <div class="form-group">
-   <table>
-      	<tr>
-      	<td>  
-      <label>Alder:</label>
-      <input type="text" name ="pas-alder" id="aldervalg" list="pasalder" class="form-control">
+  
+      <label>Alder</label>
+      <input type="text" name ="pas-alder" id="aldervalg" list="pasalder" size="20" class="form-control">
       <datalist id="pasalder">
 		<#list pasientkomplikasjon.aldergruppe as alder>
      		<option>${alder} </option>
      		   </#list>   
     
      </datalist>
-       </td>		
-        </tr>		
-     </table>
+  
     </div>
 
     <br/><br/>
@@ -506,11 +502,13 @@ function showtext(id,thetext){
         		</datalist>
   	</div>
  	<br/> 
- 		
+    </div> <!-- End div pasient -->	
 	<!-- Transfusjon  -->
 	<h3>Transfusjon </h3>
+	<div class="form-group"> <!-- Start div Transfusjon -->
+	
 	<br/> 
-	<label>Klokkeslett velges fra meny.</label>
+	<label>Klokkeslett </label>
 	<div class="form-group">
 		<input type="time" name="transfusjon-time">
 	</div>
@@ -544,11 +542,13 @@ function showtext(id,thetext){
 			    </#list>  
         		</datalist> 
     </div>   	
-	  
+</div> <!-- end div Transfusjon -->	  
 <!--  <button id="btnShow">Show</button> -->
 <!--  <button id="btnHide">Hide</button>   -->
 
     <h3>Blodprodukt </h3>
+    <div class="form-group"> <!-- start div Blodprodukt -->	
+  	
     <label>Blodprodukt mistenkt som årsak til komplikasjonen</label>
     <div class="checkbox">
       <label>
@@ -836,9 +836,11 @@ function showtext(id,thetext){
       </select>
 -->      
       
- 
+   </div> <!-- end div Blodprodukt -->
     
     <h3>Komplikasjon</h3>
+    <div class="checkbox">  <!-- start div Komplikasjon -->
+  
     <h4>Symptomer</h4>
     <div class="checkbox">
       <label>
@@ -847,9 +849,9 @@ function showtext(id,thetext){
     </div>
      <div id="temperaturstigning" class="form-group" style="display: none">
      <label>Temperatur før transfusjonsreaksjonen</label> 
-      <input type="number" step="0.01" min="0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
+      <input type="number" step="0.1" min="25.0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
       <label>Temperatur etter transfusjonsreaksjonen</label> 
-      <input type="number" step="0.01" min="0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
+      <input type="number" step="0.1" min="45.0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
       <label>Temperaturstigning</label> <!-- en desimal !!!! -->
       <output type="number" name="p-stigning" id="p-stigning"></output>
     </div>    
@@ -2838,7 +2840,7 @@ eller
 		
 		<div class="radio">
 			<label title="Døde etter en komplikasjon.">
-				<input type="radio" name="alvor-mang" id="grad4" value="dod" title="Døde etter en komplikasjon."/>Dødsfall
+				<input type="radio" name="alvor-mang" id="grad4" value="grad 4 dødsfall" title="Døde etter en komplikasjon."/>Grad 4 Dødsfall
 			</label>
 		</div>
 	</div>
@@ -3050,18 +3052,18 @@ Vurder om du skal melde denne."/>Utelukket
     	<input name="p-vetikkeskjedde" type="checkbox" id="p-vetikkeskjedde" value="vetikkeskjedde" onclick="toggleDisplay('gikkgalt', 0)"/>Vet ikke  
     </label>
     </div>      
-</div>
-
-<div class="form-group" >
+	</div>
+  </div>  <!-- end div Komplikasjon -->
+<div class="form-group" > <!-- Start forebygget -->
 	<h3>Kunne transfusjonskomplikasjonen ha vært forebygget?</h3>
 	<div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg" value="ja" onclick="toggleDisplay('transfusjonforebyggtext', this.checked)" />Ja
+        <input type="radio" name="p-forebygg" id="p-forebygg" value="ja" onclick="toggleDisplay('transfusjonforebyggtext', 0)" />Ja
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg-2" value="ja" onclick="toggleDisplay('transfusjonforebyggtext', this.checked)"/>Ja,delvis 
+        <input type="radio" name="p-forebygg" id="p-forebygg-2" value="ja" onclick="toggleDisplay('transfusjonforebyggtext', 0)"/>Ja,delvis 
       </label>
     </div>
     <div class="radio">
@@ -3079,11 +3081,11 @@ Vurder om du skal melde denne."/>Utelukket
 	 <textarea class="form-control" name="p-transfusjonforebygg" rows="3"></textarea>
   </div> 		
 		
-</div>		
+
 
 <div class="form-group" >
 		<h3>Er forebyggende tiltak anbefalt, planlagt eller gjennomført?</h3>
-		<div class="radio">
+	<div class="radio">
       <label>
         <input type="radio" name="p-forebyggtitak" id="p-forebygg" value="ja" onclick="toggleDisplay('forebyggtiltak', this.checked)" />Ja
       </label>
@@ -3141,12 +3143,25 @@ Vurder om du skal melde denne."/>Utelukket
 	  
 </div>	
 </div>		
-		
+</div>		<!-- end forebygget -->		
+<div class="form-group">
+<label>Ytterligere opplysninger følger</label>
+	<div class="radio">
+      <label>
+        <input type="radio" name="p-ytterligereopp" id="p-ytterligere" value="ytterligereoppja"  />Ja
+      </label>
+    </div>
+      <div class="radio">
+      <label>
+        <input type="radio" name="p-ytterligereopp" id="p-ytterligere" value="ytterligereoppnei" />Nei
+      </label>
+    </div>	
+</div>
 <!--   </div>  -->
     <br/>
        <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
-      <button name="lukk4" type="submit" class="btn btn-default">Lukk</button>
-      <button name="lagre4" type="submit" class="btn btn-primary">Lagre</button>
+    
+      <button name="lagre4" type="submit" class="btn btn-primary">Send inn</button>
     
 </div><!--slutt pasientkomplikasjon-->
  </form>
