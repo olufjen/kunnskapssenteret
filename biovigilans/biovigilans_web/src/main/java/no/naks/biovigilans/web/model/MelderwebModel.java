@@ -59,11 +59,30 @@ public class MelderwebModel extends VigilansModel {
 	private List<String> hfNordsykehus;
 	private List<String> hfNordlandsykehus;
 	private List<String> hfHelgelandsykehus;
+	private List<String> hfNtrondsykehus;
+	private List<String> hfOlavsykehus;
+	private List<String> hfMRomssykehus;
+	private List<String> hfFordesykehus;
+	private List<String> hfBergensykehus;
+	private List<String> hfFonnasykehus;
+	private List<String> hfStavsykehus;
+	private List<String> hfVprivsykehus;
+	private List<String> hfSortlandsykehus;
+	private List<String> hfTelesykehus;
+	private List<String> hfVestfsykehus;
+	private List<String> hfVvikensykehus;
+	private List<String> hfOstfsykehus;
+	private List<String> hfOslosykehus;
+	private List<String> hfAhussykehus;
+	private List<String> hfInnlsykehus;
+	private List<String> hfOprivsykehus;
 	
 	
-	private Map<String,List> regioner;
-	private List valgtRegion;				// Inneholder Liste over HF i Valgt region
-	private List valgtHF;					// Inneholder liste over sykehus i valgt HF
+	
+	private Map<String,List> regioner;				// Inneholder HF for en gitt region
+	private Map<String,List> sykehusene;			// Inneholder liste over sykehus til et gitt HF
+	private List<String> valgtRegion;				// Inneholder Liste over HF i Valgt region
+	private List<String> valgtHFsykehus;			// Inneholder liste over sykehus i valgt HF
 	private List<Map<String, Object>> melderInfo = null;
 
 	public MelderwebModel(){
@@ -75,8 +94,9 @@ public class MelderwebModel extends VigilansModel {
 		helseforetakVest = new ArrayList<String>();
 		helseforetakSorost = new ArrayList<String>();
 		valgtRegion = new ArrayList<String>();
-		valgtHF = new ArrayList<String>();
+		valgtHFsykehus = new ArrayList<String>();
 		regioner = new HashMap<String,List>(); 
+		sykehusene = new HashMap<String,List>();
 	}
 
 	
@@ -87,6 +107,13 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFfinnmark(String[] sykehusHFfinnmark) {
 		this.sykehusHFfinnmark = sykehusHFfinnmark;
+		if (this.hfFinnmarksykehus == null)
+			this.hfFinnmarksykehus = new ArrayList<String>();
+		for (String hus : sykehusHFfinnmark){
+			this.hfFinnmarksykehus.add(hus);
+		}
+		sykehusene.put(helseforetakNord.get(0), this.hfFinnmarksykehus);
+		
 	}
 
 
@@ -97,6 +124,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFNord(String[] sykehusHFNord) {
 		this.sykehusHFNord = sykehusHFNord;
+		if (this.hfNordsykehus == null)
+			this.hfNordsykehus = new ArrayList<String>();
+		for (String hus : sykehusHFNord){
+			this.hfNordsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakNord.get(1), this.hfNordsykehus);
 	}
 
 
@@ -107,6 +140,13 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFnordland(String[] sykehusHFnordland) {
 		this.sykehusHFnordland = sykehusHFnordland;
+		if (this.hfNordlandsykehus == null)
+			this.hfNordlandsykehus = new ArrayList<String>();
+		for (String hus : sykehusHFnordland){
+			this.hfNordlandsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakNord.get(2), this.hfNordlandsykehus);
+		
 	}
 
 
@@ -117,6 +157,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFHelgeland(String[] sykehusHFHelgeland) {
 		this.sykehusHFHelgeland = sykehusHFHelgeland;
+		if (this.hfHelgelandsykehus == null)
+			this.hfHelgelandsykehus = new ArrayList<String>();
+		for (String hus : sykehusHFHelgeland){
+			this.hfHelgelandsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakNord.get(3), this.hfHelgelandsykehus);
 	}
 
 
@@ -127,6 +173,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFNtrond(String[] sykehusHFNtrond) {
 		this.sykehusHFNtrond = sykehusHFNtrond;
+		if (this.hfNtrondsykehus == null)
+			this.hfNtrondsykehus = new ArrayList<String>();
+		for (String hus : sykehusHFNtrond){
+			this.hfNtrondsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakMidt.get(0), this.hfNtrondsykehus);
 	}
 
 
@@ -137,6 +189,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFOlav(String[] sykehusHFOlav) {
 		this.sykehusHFOlav = sykehusHFOlav;
+		if (this.hfOlavsykehus == null)
+			this.hfOlavsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFOlav){
+			this.hfOlavsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakMidt.get(1), this.hfOlavsykehus);
 	}
 
 
@@ -147,6 +205,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFMRoms(String[] sykehusHFMRoms) {
 		this.sykehusHFMRoms = sykehusHFMRoms;
+		if (this.hfMRomssykehus == null)
+			this.hfMRomssykehus = new ArrayList<String>();
+		for (String hus :sykehusHFMRoms){
+			this.hfMRomssykehus.add(hus);
+		}
+		sykehusene.put(helseforetakMidt.get(2), this.hfMRomssykehus);
 	}
 
 
@@ -157,6 +221,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFForde(String[] sykehusHFForde) {
 		this.sykehusHFForde = sykehusHFForde;
+		if (this.hfFordesykehus == null)
+			this.hfFordesykehus = new ArrayList<String>();
+		for (String hus :sykehusHFForde){
+			this.hfFordesykehus.add(hus);
+		}
+		sykehusene.put(helseforetakVest.get(0), this.hfFordesykehus);
 	}
 
 
@@ -167,6 +237,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFbergen(String[] sykehusHFbergen) {
 		this.sykehusHFbergen = sykehusHFbergen;
+		if (this.hfBergensykehus == null)
+			this.hfBergensykehus = new ArrayList<String>();
+		for (String hus :sykehusHFbergen){
+			this.hfBergensykehus.add(hus);
+		}
+		sykehusene.put(helseforetakVest.get(1), this.hfBergensykehus);
 	}
 
 
@@ -177,6 +253,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFFonna(String[] sykehusHFFonna) {
 		this.sykehusHFFonna = sykehusHFFonna;
+		if (this.hfFonnasykehus == null)
+			this.hfFonnasykehus = new ArrayList<String>();
+		for (String hus :sykehusHFFonna){
+			this.hfFonnasykehus.add(hus);
+		}
+		sykehusene.put(helseforetakVest.get(2), this.hfFonnasykehus);
 	}
 
 
@@ -187,6 +269,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFstav(String[] sykehusHFstav) {
 		this.sykehusHFstav = sykehusHFstav;
+		if (this.hfStavsykehus == null)
+			this.hfStavsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFstav){
+			this.hfStavsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakVest.get(3), this.hfStavsykehus);
 	}
 
 
@@ -197,6 +285,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFVpriv(String[] sykehusHFVpriv) {
 		this.sykehusHFVpriv = sykehusHFVpriv;
+		if (this.hfVprivsykehus == null)
+			this.hfVprivsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFVpriv){
+			this.hfVprivsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakVest.get(4), this.hfVprivsykehus);
 	}
 
 
@@ -207,6 +301,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFsorland(String[] sykehusHFsorland) {
 		this.sykehusHFsorland = sykehusHFsorland;
+		if (this.hfSortlandsykehus == null)
+			this.hfSortlandsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFsorland){
+			this.hfSortlandsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(0), this.hfSortlandsykehus);
 	}
 
 
@@ -217,6 +317,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFtele(String[] sykehusHFtele) {
 		this.sykehusHFtele = sykehusHFtele;
+		if (this.hfTelesykehus == null)
+			this.hfTelesykehus = new ArrayList<String>();
+		for (String hus :sykehusHFtele){
+			this.hfTelesykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(1), this.hfTelesykehus);
 	}
 
 
@@ -227,6 +333,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFvestf(String[] sykehusHFvestf) {
 		this.sykehusHFvestf = sykehusHFvestf;
+		if (this.hfVestfsykehus == null)
+			this.hfVestfsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFvestf){
+			this.hfVestfsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(2), this.hfVestfsykehus);
 	}
 
 
@@ -237,6 +349,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFvviken(String[] sykehusHFvviken) {
 		this.sykehusHFvviken = sykehusHFvviken;
+		if (this.hfVvikensykehus == null)
+			this.hfVvikensykehus = new ArrayList<String>();
+		for (String hus :sykehusHFvviken){
+			this.hfVvikensykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(3), this.hfVvikensykehus);
 	}
 
 
@@ -247,6 +365,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFostf(String[] sykehusHFostf) {
 		this.sykehusHFostf = sykehusHFostf;
+		if (this.hfOstfsykehus == null)
+			this.hfOstfsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFostf){
+			this.hfOstfsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(4), this.hfOstfsykehus);
 	}
 
 
@@ -257,6 +381,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFoslo(String[] sykehusHFoslo) {
 		this.sykehusHFoslo = sykehusHFoslo;
+		if (this.hfOslosykehus == null)
+			this.hfOslosykehus = new ArrayList<String>();
+		for (String hus :sykehusHFoslo){
+			this.hfOslosykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(5), this.hfOslosykehus);
 	}
 
 
@@ -267,6 +397,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFahus(String[] sykehusHFahus) {
 		this.sykehusHFahus = sykehusHFahus;
+		if (this.hfAhussykehus == null)
+			this.hfAhussykehus = new ArrayList<String>();
+		for (String hus :sykehusHFahus){
+			this.hfAhussykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(6), this.hfAhussykehus);
 	}
 
 
@@ -277,6 +413,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFinnl(String[] sykehusHFinnl) {
 		this.sykehusHFinnl = sykehusHFinnl;
+		if (this.hfInnlsykehus == null)
+			this.hfInnlsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFinnl){
+			this.hfInnlsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(7), this.hfInnlsykehus);
 	}
 
 
@@ -287,6 +429,12 @@ public class MelderwebModel extends VigilansModel {
 
 	public void setSykehusHFOpriv(String[] sykehusHFOpriv) {
 		this.sykehusHFOpriv = sykehusHFOpriv;
+		if (this.hfOprivsykehus == null)
+			this.hfOprivsykehus = new ArrayList<String>();
+		for (String hus :sykehusHFOpriv){
+			this.hfOprivsykehus.add(hus);
+		}
+		sykehusene.put(helseforetakSorost.get(8), this.hfOprivsykehus);
 	}
 
 
@@ -301,6 +449,16 @@ public class MelderwebModel extends VigilansModel {
 			this.helseRegionene.add(reg);
 		
 		}
+	}
+
+
+	public List<String> getValgtHFsykehus() {
+		return valgtHFsykehus;
+	}
+
+
+	public void setValgtHFsykehus(List<String> valgtHFsykehus) {
+		this.valgtHFsykehus = valgtHFsykehus;
 	}
 
 
@@ -567,8 +725,8 @@ public class MelderwebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "k-helseforetak";
 		melderSykehus = userEntries.get(field);
-		valgtHF = null;
-		
+		valgtHFsykehus = null;
+		valgtHFsykehus = sykehusene.get(melderSykehus);
 		
 	}
 	private void setKontaktinfo(){
