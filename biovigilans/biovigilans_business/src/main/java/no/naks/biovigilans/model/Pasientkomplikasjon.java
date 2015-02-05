@@ -42,7 +42,7 @@ public interface Pasientkomplikasjon {
 	public void setKomplikasjonsFields(Map<String, String> komplikasjonsFields);
 	public void setPatientkomplicationfieldMaps(String[]userFields);
 	public void saveField(String userField,String userValue);
-
+	public void setKladd(String kladd);
 	public String[] getKeys();
 
 	public void setKeys(String[] keys);
