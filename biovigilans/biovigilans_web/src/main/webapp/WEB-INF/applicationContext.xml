@@ -395,7 +395,7 @@
                         ${pasientkomplikasjon.arsak.utredning90},${pasientkomplikasjon.arsak.utredning91},${pasientkomplikasjon.arsak.utredning92},${pasientkomplikasjon.arsak.utredning93},
                         ${pasientkomplikasjon.arsak.utredning94},${pasientkomplikasjon.arsak.utredning95},${pasientkomplikasjon.arsak.utredning96},${pasientkomplikasjon.arsak.utredning97},
                         ${pasientkomplikasjon.arsak.utredning98},${pasientkomplikasjon.arsak.utredning99},${pasientkomplikasjon.arsak.utredning100},${pasientkomplikasjon.arsak.utredning101},
-                        ${pasientkomplikasjon.arsak.utredning102}">
+                        ${pasientkomplikasjon.arsak.utredning102},${pasientkompolikasjon.ytterligere}">
                 </property>
         </bean> 
                 
