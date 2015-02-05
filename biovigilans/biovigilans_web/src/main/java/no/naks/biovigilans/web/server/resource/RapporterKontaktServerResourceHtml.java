@@ -543,7 +543,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		Parameter formValue = form.getFirst("formValue"); // Fill kontaktform on the base of epost 
     		Parameter lagre = form.getFirst("lagrekontakt");
     		Parameter lagreAnonymt = form.getFirst("lagreanonymt"); // Bruker ønsker å melde anonymt
-    		Parameter valgtRegion = form.getFirst("regionValue");
+    		Parameter valgtRegion = form.getFirst("regionValue");   //Bruker har valgt region
+    		Parameter valgtForetak = form.getFirst("foretakValue"); //Bruker har valgt HF
     		if(lagre != null){								// Lagre kontaktskjema
     			melderwebModel.saveValues();
     			melderWebService.saveMelder(melderwebModel);
@@ -591,7 +592,17 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 			    				MediaType.TEXT_HTML);    			
     	
-    		}else if(lagreAnonymt != null){					// Bruker velger å lagre skjema anonymt.
+       		}else if(valgtForetak != null){   // Bruker har valgt et HF
+    			melderwebModel.saveValues();
+    			melderwebModel.setValgtsykehus();
+	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+			    				MediaType.TEXT_HTML);    			
+    	
+    	 	}else if(lagreAnonymt != null){					// Bruker velger å lagre skjema anonymt.
     			melderwebModel.setMelderepost(anonymEpost);
     			melderwebModel.setAnonymEpost(anonymEpost);
     			String epost = melderwebModel.getMelderepost();
