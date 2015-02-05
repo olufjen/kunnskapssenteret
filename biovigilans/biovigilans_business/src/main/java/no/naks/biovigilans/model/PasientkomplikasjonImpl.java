@@ -135,13 +135,21 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 	 */
 	public void setPatientkomplicationfieldMaps(String[]userFields){
 		keys = userFields;
-		for (int i = 0; i<40;i++){
+		int l = userFields.length;
+		for (int i = 0; i<l;i++){
 			komplikasjonsFields.put(userFields[i],null);
 		}
 	
 		
 	}
 
+	public void setKladd(String kladd) {
+		if (kladd == null){
+			int l = keys.length - 1;
+			kladd = komplikasjonsFields.get(keys[l]);
+		}
+		super.setKladd(kladd);
+	}
 	public String getKlassifikasjon() {
 		return klassifikasjon;
 	}
