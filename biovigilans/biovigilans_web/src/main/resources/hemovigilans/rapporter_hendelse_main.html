@@ -131,17 +131,17 @@ function initialize()
 		 
 		    <div class="radio">
 		          <label>
-		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-ja" value="pasient-ja" onclick="toggleDisplay('feilblod', 0); document.location='rapporter_transfusjon.html';"/>Ja
+		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-ja" value="pasient-ja" onclick="document.location='rapporter_transfusjon.html';"/>Ja
 		          </label>
 		      </div>
 		      <div class="radio">
 		          <label>
-		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-nei" value="pasient-nei" onclick="toggleDisplay('feilblod', this.checked)"/>Nei
+		            <input type="radio" name="p-pasientsymptom" id="p-pasientsymptom-nei" value="pasient-nei" onclick="document.location='rapporter_andrehendelser.html';"/>Nei
 		          </label>
 		      </div>     
 		</div>
 		
-		<div id="feilblod" style="display: none" class="form-group">
+		<!-- <div id="feilblod" style="display: none" class="form-group">
 		  <b>Er dette Feil Blod transfudert?</b>
 		  <div class="radio">
 	          <label>
@@ -153,7 +153,7 @@ function initialize()
 	            <input type="radio" name="p-feilblod" id="p-feilblod-nei" value="feilblod-nei" onclick="document.location='rapporter_andrehendelser.html';" />Nei
 	          </label>
 	      </div>     
-		</div>
+		</div> -->
  	</div>
  	<div id="pasient-nei" style="display: none">
 	 	<div id="giverrelatert"  class="form-group">
