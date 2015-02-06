@@ -34,8 +34,8 @@ public class GiverKvitteringWebModel extends VigilansModel {
 	private String forebyggbar;
 	private String annenreak;
 	private String avreg;
-	
-	
+	private String typeAferese;
+	private static final String FIRSTSELECTVALUE ="--- Select ---";
 	
 	public String getAvreg() {
 		Map<String,String> userEntries = getFormMap();
@@ -86,6 +86,19 @@ public class GiverKvitteringWebModel extends VigilansModel {
 	}
 	public void setForbedringstiltak(String forbedringstiltak) {
 		this.forbedringstiltak = forbedringstiltak;
+	}
+	
+	public String getTypeAferese() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "type-aferese";
+		typeAferese = userEntries.get(field);
+		if (typeAferese == null){
+			typeAferese = "-";
+		}
+		return typeAferese;
+	}
+	public void setTypeAferese(String typeAferese) {
+		this.typeAferese = typeAferese;
 	}
 	public String getStrakstiltak() {
 		Map<String,String> userEntries = getFormMap();
@@ -155,7 +168,9 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-tabskadearm";
 		tabskadearm = userEntries.get(field);
 		if (tabskadearm == null){
-			tabskadearm = "";
+			tabskadearm = FIRSTSELECTVALUE;
+		}else if (tabskadearm == FIRSTSELECTVALUE){
+			tabskadearm ="-";
 		}
 		return tabskadearm;
 	}
@@ -167,8 +182,8 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-arm";
 		tabArm = userEntries.get(field);
-		if (tabArm == null || tabArm.equalsIgnoreCase("Lokal-Ja")){
-			tabArm = "";
+		if (tabArm == null ){
+			tabArm = "-";
 		}
 		return tabArm;
 	}
@@ -228,11 +243,14 @@ public class GiverKvitteringWebModel extends VigilansModel {
 	}
 	
 	public String getUtenForBlodbanken() {
+		
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-utenForBlodbanken";
 		utenForBlodbanken = userEntries.get(field);
-		if (utenForBlodbanken == null || utenForBlodbanken.equalsIgnoreCase("--- Select ---")){
-			utenForBlodbanken = "";
+		if(utenForBlodbanken == null){
+			utenForBlodbanken = FIRSTSELECTVALUE;
+		}else if (utenForBlodbanken.equalsIgnoreCase(FIRSTSELECTVALUE)){
+			utenForBlodbanken = "-";
 		}
 		return utenForBlodbanken;
 	}
@@ -256,7 +274,9 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-hvor";
 		tabHvor = userEntries.get(field);
-		if (tabHvor == null || tabHvor.equalsIgnoreCase("--- Select ---")){
+		if(tabHvor==null){
+			tabHvor = FIRSTSELECTVALUE;
+		}else if (tabHvor.equalsIgnoreCase(FIRSTSELECTVALUE)){
 			tabHvor = "-";
 		}
 		return tabHvor;
@@ -403,13 +423,16 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-alder";
 		alder = userEntries.get(field);
 		if (alder == null){
-			alder = "-";
-		}	
+			alder = FIRSTSELECTVALUE;
+		}else if(alder.equalsIgnoreCase(FIRSTSELECTVALUE)){
+			alder="-";
+		}
 		return alder;
 	}
 	
-	
-	
+	public void setAlder(String alder) {
+		this.alder = alder;
+	}
 
 	public String getGivervektkg() {
 		Map<String,String> userEntries = getFormMap();
@@ -417,7 +440,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		givervektkg = userEntries.get(field);
 		if (givervektkg == null){
 			givervektkg = "-";
-		}	
+		}
 		return givervektkg;
 	}
 
@@ -446,13 +469,6 @@ public class GiverKvitteringWebModel extends VigilansModel {
 
 	public void setGivererfaring(String givererfaring) {
 		this.givererfaring = givererfaring;
-	}
-
-
-
-
-	public void setAlder(String alder) {
-		this.alder = alder;
 	}
 
 	public String getKjonn() {
