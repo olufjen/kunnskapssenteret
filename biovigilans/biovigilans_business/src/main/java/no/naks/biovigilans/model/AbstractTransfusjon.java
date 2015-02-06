@@ -162,7 +162,8 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 		if (hastegrad == null){
 			String aProd = null;
 			for (int i=5;i<8;i++){
-				if ( keys[i] != null)
+				String vt = keys[i];
+				if ( vt != null)
 						aProd = transfusjonsFields.get(keys[i]);
 				if (aProd != null){
 					hastegrad = aProd;
