@@ -667,7 +667,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 				transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
 				Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 				melding.setGodkjent("Ja");
-				melding.setKladd("");
+				//melding.setKladd("");
 				hendelseWebService.saveVigilansMelder(melding);
 			}
 		}
@@ -676,7 +676,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 				giverModel.getGiverKomplikasjon().setMelderId(melderKey);
 				Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
 				melding.setGodkjent("Ja");
-				melding.setKladd("");
+				//melding.setKladd("");
 				hendelseWebService.saveVigilansMelder(melding);
 			}
 		}
@@ -685,7 +685,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 				annenModel.getAnnenKomplikasjon().setMelderId(melderKey); 
 				Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
 				melding.setGodkjent("Ja");
-				melding.setKladd("");
+				//melding.setKladd("");
 				hendelseWebService.saveVigilansMelder(melding);
 			}
 		}  
