@@ -166,7 +166,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			
     			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
     			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
-    			String strDato = FastDateFormat.getInstance("yyyy-MM-dd").format(datoforhendelse);
+    			String strDato = "";
+    			if (datoforhendelse != null)
+    			  strDato = FastDateFormat.getInstance("yyyy-MM-dd").format(datoforhendelse);
     			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
