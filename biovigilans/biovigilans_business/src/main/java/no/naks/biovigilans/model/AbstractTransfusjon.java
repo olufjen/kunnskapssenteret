@@ -118,7 +118,8 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 		if (tildigKomplikasjon == null){
 			String aProd = null;
 			for (int i = 9;i<36;i++){
-				aProd = transfusjonsFields.get(keys[i]);
+				if ( keys[i] != null)
+					aProd = transfusjonsFields.get(keys[i]);
 				if (aProd != null){
 					tildigKomplikasjon = aProd;
 					break;
@@ -131,7 +132,7 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	public void setTransfusjonsklokkeslett(String transfusjonsklokkeslett) {
 		if (transfusjonsklokkeslett == null){
 			String aProd = null;
-	
+			if ( keys[3] != null)
 				aProd = transfusjonsFields.get(keys[3]);
 				if (aProd != null){
 					transfusjonsklokkeslett = aProd;
@@ -161,7 +162,8 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 		if (hastegrad == null){
 			String aProd = null;
 			for (int i=5;i<8;i++){
-				aProd = transfusjonsFields.get(keys[i]);
+				if ( keys[i] != null)
+						aProd = transfusjonsFields.get(keys[i]);
 				if (aProd != null){
 					hastegrad = aProd;
 					break;
@@ -186,7 +188,7 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	public void setIndikasjon(String indikasjon) {
 		if (indikasjon == null){
 			String aProd = null;
-	
+			if ( keys[8] != null)
 				aProd = transfusjonsFields.get(keys[8]);
 				if (aProd != null){
 					indikasjon = aProd;
@@ -212,7 +214,7 @@ public abstract class AbstractTransfusjon extends AbstractModel implements Trans
 	public void setTransDato(String transDato) {
 		if (transDato == null){
 			String aProd = null;
-	
+			if ( keys[4] != null)
 				aProd = transfusjonsFields.get(keys[4]);
 				if (aProd != null){
 					transDato = aProd;
