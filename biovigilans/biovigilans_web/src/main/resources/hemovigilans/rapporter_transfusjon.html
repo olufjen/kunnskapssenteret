@@ -508,10 +508,12 @@ function showtext(id,thetext){
 	<div class="form-group"> <!-- Start div Transfusjon -->
 	
 	<br/> 
+<!-- Klokkeslett fjernes olj 08.02.15	
 	<label>Klokkeslett </label>
 	<div class="form-group">
 		<input type="time" name="transfusjon-time">
 	</div>
+	-->
 	<label>Transfusjondato </label>
 	<div class="form-group">
 		<input type="date" name="transfusjon-date">
@@ -534,7 +536,7 @@ function showtext(id,thetext){
     </div>
   
   <div class="form-group">
-         <label>Indikasjon for transfusjonen (diagnose)</label>
+         <label>Indikasjon for transfusjonen </label>
             	<input name ="p-antistoff-transfusjon" list="icd10gruppetrans" class="form-control">
         		<datalist id="icd10gruppetrans">
       	       <#list pasientkomplikasjon.mainTerms as mainTerms>
@@ -1675,7 +1677,7 @@ Slike reaksjoner oppstår vanligvis under eller umiddelbart etter en transfusjon
     </div>
   </div>
   <div id="alhtr1-valg2" class="form-group" style="display: none">
-     <label>Anti-IgA </label>
+     <label>Anti-IgA påvist</label>
     <div class="radio">
       <label>
         <input type="radio" name="al-bili" id="p-lga-3" value="Anti-IgAja" onclick=""/>Ja 
@@ -1969,7 +1971,7 @@ Se definisjonene for nærmere beskrivelse.
   		 <textarea class="form-control" name="p-spesifisert-antitext" id="annet" rows="2" ></textarea>
   </div>    
 <div id="trhtr1-valg6" class="form-group" style="display: none">
-     <label>HLA-typing av blodgiver HLA-typing av blodmottaker  </label>
+     <label>HLA-typing av blodgiver/HLA-typing av blodmottaker utført </label>
     <div class="radio">
       <label>
         <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-7" value="blodtypeantistoffgiverja" onclick="toggleDisplay('trhtr13-spesifisert', this.checked)"/>Ja 
@@ -1980,18 +1982,14 @@ Se definisjonene for nærmere beskrivelse.
         <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-7" value="blodtypeantistoffgivernei" onclick="toggleDisplay('trhtr13-spesifisert', 0)" />Nei
       </label>
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-blodtypeantistoffgiver" id="p-lga-7" value="blodtypeantistoffgiverikkeutført" onclick="toggleDisplay('trhtr13-spesifisert', 0)"/>Ikke utført
-      </label>
-    </div>
+
   </div> 
     <div id="trhtr13-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
   		 <textarea class="form-control" name="p-spesifisert-antigivertext" id="annet" rows="2" ></textarea>
   </div>   
 <div id="trhtr1-valg7" class="form-group" style="display: none">
-     <label>HNA-typing av blodgiver og/eller blodmottaker  </label>
+     <label>HNA-typing av blodgiver /HNA-typing av blodmottaker utført </label>
     <div class="radio">
       <label>
         <input type="radio" name="p-blodtypeHNA" id="p-lga-8" value="blodtypeHNAja" onclick="toggleDisplay('trhtr14-spesifisert', this.checked)"/>Ja 
@@ -2002,18 +2000,14 @@ Se definisjonene for nærmere beskrivelse.
         <input type="radio" name="p-blodtypeHNA" id="p-lga-8" value="blodtypeHNAnei" onclick="toggleDisplay('trhtr14-spesifisert', 0)" />Nei
       </label>
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="p-blodtypeHNA" id="p-lga-8" value="blodtypeHNAikkeutført" onclick="toggleDisplay('trhtr14-spesifisert', 0)"/>Ikke utført
-      </label>
-    </div>
+ 
   </div>
    <div id="trhtr14-spesifisert" class="form-group" style="display: none">
      <label>Spesifiser </label>
   		 <textarea class="form-control" name="p-spesifisert-HNAtext" id="annet" rows="2" ></textarea>
   </div> 
   <div id="trhtr1-valg8" class="form-group" style="display: none">
-     <label>HNA-antistoff hos blodgiver og/eller blodmottaker  </label>
+     <label>HNA-antistoff hos blodgiver og/eller blodmottaker påvist </label>
     <div class="radio">
       <label>
         <input type="radio" name="p-blodtypeantistoffHNA" id="p-lga-9" value="blodtypeantistoffHNAja" onclick="toggleDisplay('trhtr15-spesifisert', this.checked)"/>Ja 
@@ -2827,7 +2821,6 @@ eller
 				<input type="radio" name="alvor-mang" id="grad4" value="Grad 2 Alvorlig" title="Behov for innleggelse på sykehus eller forlenget sykehusopphold som følge av komplikasjonen;
 og/eller
 -  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming;
-eller
 - behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.
 				"/>Grad 2 Alvorlig
 			</label>
@@ -3055,10 +3048,10 @@ Vurder om du skal melde denne."/>Utelukket
 	</div>
   </div>  <!-- end div Komplikasjon -->
 <div class="form-group" > <!-- Start forebygget -->
-	<h3>Kunne transfusjonskomplikasjonen ha vært forebygget?</h3>
+	<h3>Kunne komplikasjonen ha vært forebygget?</h3>
 	<div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg" value="ja" onclick="toggleDisplay('transfusjonforebygg', this.checked)" />Ja
+        <input type="radio" name="p-forebygg" id="p-forebygg" value="ja" onclick="toggleDisplay('transfusjonforebygg',this.checked)" />Ja
       </label>
     </div>
     <div class="radio">
@@ -3138,7 +3131,7 @@ Vurder om du skal melde denne."/>Utelukket
     	<input name="p-tiltakannet" type="checkbox" id="p-tiltakannet" value="tiltakannet" />Annet  
     </label>
     </div>    
-	 <label>Hvis ja, beskriv forebyggende tiltak i fritekst:</label>
+	 <label>Beskriv ev. forebyggende tiltak</label>
 	 <textarea class="form-control" name="p-tiltaktext" rows="3"></textarea> 	  
 	  
 </div>	
