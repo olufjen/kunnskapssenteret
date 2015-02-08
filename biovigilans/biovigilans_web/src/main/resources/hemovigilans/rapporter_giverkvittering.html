@@ -225,7 +225,12 @@
 		    <h3>Tiltak rettet mot giver</h3>
 		    <div class="form-group">
 		      <label>Strakstiltak:</label><br>
-		      <span id="tab-strakstiltak">${giverKvittering.strakstiltak}</span>
+		      <span id="tab-strakstiltak">${giverKvittering.strakstiltak}</span><br>
+		      <label>Behandling på syskehus</label>
+		      <span id="tab-strakstiltak">${giverKvittering.behandlingSykehus}</span><br>
+		      <label>Varighet av sykehusinnleggelse</label>
+		      <span id="tab-strakstiltak">${giverKvittering.innleggelsetxt}</span><br>
+		      
 	    </div>
 	       
 	    <div class="form-group">
@@ -239,7 +244,11 @@
 	     </div>	
 	     <div class="form-group">
 	      <label>Videre behandling/oppfølging nødvendig?</label><br>
-	      <span id="tab-annenreak" >${giverKvittering.annenreak}</span>
+	      <span id="tab-annenreak" >${giverKvittering.behandling}</span><br>
+	      <label>annenreak</label><br>
+	      <#list giverKvittering.annenreakList as annenreak >
+	      	<span id="tab-annenreak" >${annenreak}</span><br>
+	      </#list>
 	    </div>
 	    <div class="form-group">
 	      <label>Giver er avregistrert (p.g.a komplikasjonen)</label><br>

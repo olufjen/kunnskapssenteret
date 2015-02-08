@@ -228,6 +228,9 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     			donasjon.setValues(entry);
     			komDiagnosegiver.setValues(entry);
     			giverKvittering.setValues(entry);
+    			if(entry.getName().equalsIgnoreCase("tab-annenreak")){
+    				giverKvittering.annenreakList.add(entry.getValue()) ;
+    			}
     		}
     		
     		sessionAdmin.setSessionObject(getRequest(), giverModel,giverkomplikasjonId);

@@ -499,9 +499,9 @@
 		      <!-- <input name ="tab-tabskadearm" list="tabskadearm" class="form-control"> -->
 		    </div>
 		    
-		    <div id="armenBilde" <#if tabskadearm !="Utenfor blodbanken" > style="display: none" </#if>   >
+		    <div id="armenBilde" <#if tabskadearm !="Nerveirritasjon" > style="display: none" </#if>   >
 				<h4>Lokalisasjon venepunksjon</h4><br>  
-				<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" value="" readonly /><br>
+				<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" value="${giverKvittering.imgArea}" readonly /><br>
 			    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
 			  	<map name="armenmap">
 				 <area shape="rect" title="H. Cephalic dx" coords="222,9,302,202" alt="V. Cephalic dx" href="javascript: return false;"  onclick="setImageValue('H. Cephalic dx');">
@@ -515,26 +515,30 @@
 			</div>
 		    
 		    <div class="form-group">
+		    <#assign tabBivirk=giverKvittering.tabBivirk >
 		      <label>Systemisk</label>
 		      <div class="radio">
 		          <label>
-		          	<input type="radio" name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
+		          	<input type="radio" <#if tabBivirk=="Systemisk-Ja">checked</#if> name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
 		          </label>
 			    </div>
 		        <div class="radio">
 		          <label>
-		          	<input type="radio" name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
+		          	<input type="radio" <#if tabBivirk=="Systemisk-Nei">checked</#if> name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
 		          </label>
 			    </div>
 		    </div>
-		    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
+		    <div id="systemiskbivirkning-ja" <#if tabBivirk !="Systemisk-Ja">style="display: none"</#if>  class="form-group">
 		      <label>Hvis Ja</label>
 		      
 		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control">
-	       		<option> --- Select --- </option>
+	       		<#assign systemiskbivirkning= giverKvittering.systemiskbivirkning >
+	       		<option selected="selected" > ${systemiskbivirkning} </option>
 	       		<#list giverkomplikasjon.systemiskgruppe as systemisk>
-	       		<option>${systemisk} </option>
-	     		   </#list>
+	       			<#if systemiskbivirkning !=systemisk >	
+	       				<option>${systemisk} </option>
+	       			</#if>
+	     		</#list>
 	     	  </select>
 		      
 		     <!--  <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
@@ -566,48 +570,51 @@
 	    
 	      
 	   	<div class="form-group">
+	   		<#assign tabVarighet = giverKvittering.tabVarighet >
 		    <label>Varighet av komplikasjon/bivirkning/skade</label>
 		      <select name ="tab-varighet" id="tab-varighet" class="form-control">
-		      <option>--- Select ---</option>
+		      <option selected="selected">${tabVarighet}</option>
 	       		<#list giverkomplikasjon.varighetSkadegruppe as varighetSkade>
-	       		<option>${varighetSkade} </option>
-	     		   </#list>
+	       			<#if tabVarighet != varighetSkade >
+	       				<option>${varighetSkade} </option>
+	       			</#if>
+	     		</#list>
 	     	  </select>
 	        <!-- <div>
 	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div> -->
 	    </div>
 	    <div class="form-group" >
+			<#assign alvorMang = giverKvittering.alvorMang>
 			<h3>Alvorlighetsgrad </h3>
-	
 			<div class="radio">
 				<label title="Forbigående skade/ negativ helseeffekt som ikke krevde omfattende behandling.">
-					<input type="radio" name="alvor-mang" id="grad1" value="Grad 1 Mindre alvorlig 1a Ubetydelig"/>
+					<input type="radio" <#if alvorMang="Grad 1 Mindre alvorlig 1a Ubetydelig"> checked</#if> name="alvor-mang" id="grad1" value="Grad 1 Mindre alvorlig 1a Ubetydelig"/>
 					Grad 1 Mindre alvorlig 1a Ubetydelig
 				</label>
 			</div>
 			<div class="radio">
 				<label title="Behov for medisinsk behandling (for eksempel symptomatisk behandling), men mangel på slik ville ikke ha ført til varige skader eller redusert funksjon.">
-					<input type="radio" name="alvor-mang" id="grad2" value="Grad 1 Mindre alvorlig 1b Moderat" />
+					<input type="radio" <#if alvorMang="Grad 1 Mindre alvorlig 1b Moderat"> checked</#if> name="alvor-mang" id="grad2" value="Grad 1 Mindre alvorlig 1b Moderat" />
 					Grad 1 Mindre alvorlig 1b Moderat
 				</label>
 			</div>
 			<div class="radio">
 				<label title="Behov for innleggelse på sykehus eller forlenget sykehusopphold som følge av komplikasjonen; og/eller -  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming; eller - behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.">
-					<input type="radio" name="alvor-mang" id="grad3" value="Grad 2 Alvorlig" />
+					<input type="radio" <#if alvorMang="Grad 2 Alvorlig"> checked</#if> name="alvor-mang" id="grad3" value="Grad 2 Alvorlig" />
 					Grad 2 Alvorlig 
 				</label>
 			</div>
 			<div class="radio">
 				<label title="Behov for omfattende medisinsk intervensjon etter komplikasjonen (vasopressor-behandling, intubering, overflytting til intensivavdeling) for å redde livet.">
-					<input type="radio" name="alvor-mang" id="grad4" value="Grad 3 Livstruende "/>
+					<input type="radio" <#if alvorMang="Grad 3 Livstruende"> checked</#if> name="alvor-mang" id="grad4" value="Grad 3 Livstruende"/>
 					Grad 3 Livstruende 
 				</label>
 			</div>
 			
 			<div class="radio">
 				<label title="Døde etter en komplikasjon.">
-					<input type="radio" name="alvor-mang" id="grad4" value="Grad 4 Dødsfall"/>
+					<input type="radio" <#if alvorMang="Grad 4 Dødsfall"> checked</#if> name="alvor-mang" id="grad4" value="Grad 4 Dødsfall"/>
 					Grad 4 Dødsfall 
 				</label>
 			</div>
@@ -615,78 +622,81 @@
 		</div>
 	    
 	    <div class="form-group">
+	    <#assign tabKlinisk = giverKvittering.tabKlinisk >
 	      <label>Endelig utfall av skaden</label>
 	      <div class="radio">
 	          <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
-	          	<input type="radio" name="tab-klinisk" id="tab-helbredelse" value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
+	          	<input type="radio" <#if tabKlinisk == "ingen-sekvele">checked</#if> name="tab-klinisk" id="tab-helbredelse" value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
 	          	Ingen sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
+	          	<input type="radio" <#if tabKlinisk == "mindrealvorlig-sekvele">checked</#if> name="tab-klinisk" id="tab-sekvele" value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
 	          	Mindre alvorlig sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet">
-	          	<input type="radio" name="tab-klinisk" id="tab-sykemelding" value="alvorlig-sekvele" title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet"/>
+	          	<input type="radio" <#if tabKlinisk == "alvorlig-sekvele">checked</#if> name="tab-klinisk" id="tab-sykemelding" value="alvorlig-sekvele" title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet"/>
 	          	Alvorlig sekvele
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label title="Død som følge av skaden.">
-	          	<input type="radio" name="tab-klinisk" id="tab-uforetrydg" value="død" title="Død som følge av skaden."/>Død
+	          	<input type="radio" <#if tabKlinisk == "død">checked</#if> name="tab-klinisk" id="tab-uforetrydg" value="død" title="Død som følge av skaden."/>Død
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label >
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="vet-ikke"/>Vet Ikke
+	          	<input type="radio" <#if tabKlinisk == "vet-ikke">checked</#if> name="tab-klinisk" id="tab-sekvele" value="vet-ikke"/>Vet Ikke
 	          </label>
 		    </div>
 		    
 	    </div>
 	    <div class="form-group">
 	    	<h3>Tiltak rettet mot giver</h3>
+	    	  <#assign strakstiltak = giverKvittering.strakstiltak >
 		      <label>Strakstiltak:</label>
 		      	<div class="radio">
 		          <label title="Ingen">
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak0"  onclick="toggleDisplay('behandlingselected', 0);" value="Ingen" title="Ingen"/>
+		          	<input type="radio" <#if strakstiltak == "Ingen">checked</#if> name="tab-strakstiltak" id="tab-strakstiltak0"  onclick="toggleDisplay('behandlingselected', 0);" value="Ingen" title="Ingen"/>
 		          	Ingen
 		          </label>
 			    </div>
 		      	<div class="radio">
 		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
-		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
+		          	<input type="radio" <#if strakstiltak == "Behandlet av blodbankpersonale">checked</#if> name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
 		          	Behandlet av blodbankpersonale
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
-		          	<input type="radio" name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
+		          	<input type="radio" <#if strakstiltak == "Behandlet av blodbanklege">checked</#if> name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
 		          	Behandlet av blodbanklege
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
-		          	<input type="radio" name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
+		          	<input type="radio" <#if strakstiltak == "Behandling på sykehus">checked</#if> name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
 		          		Behandling på sykehus
 		          </label>
 			    </div>
-			    <div class="form-group" id="behandlingselected" style="margin-left: 0.5cm;display: none">
+			    <div class="form-group" id="behandlingselected" <#if strakstiltak != "Behandling på sykehus" > style="margin-left: 0.5cm;display: none" </#if>>
+			    	<#assign behandlingSykehus= giverKvittering.behandlingSykehus>
 			    	<div class="radio">
 			          <label >
-			          	<input type="radio" name="tab-behandling" id="tab-behandling1"  onclick="toggleDisplay('innleggelseoption', 0);"  value="Observasjon i akuttmotakk"  />
+			          	<input type="radio" <#if behandlingSykehus == "Observasjon i akuttmotakk">checked</#if> name="tab-behandling-sykehus" id="tab-behandling1"  onclick="toggleDisplay('innleggelseoption', 0);"  value="Observasjon i akuttmotakk"  />
 			          		Observasjon i akuttmottak
 			          </label>
 			    	</div>
 			    	<div class="radio">
 			          <label >
-			          	<input type="radio" name="tab-behandling" id="tab-behandling2"  onclick="toggleDisplay('innleggelseoption', this.checked);" value="Innleggelse" />
+			          	<input type="radio" <#if behandlingSykehus == "Innleggelse">checked</#if> name="tab-behandling-sykehus" id="tab-behandling2"  onclick="toggleDisplay('innleggelseoption', this.checked);" value="Innleggelse" />
 			          		Innleggelse
 			          </label>
 			    	</div>
-			    	<div style="display: none"  id="innleggelseoption"  name="innleggelseoption">
+			    	<div  <#if behandlingSykehus == "Innleggelse">style="display: none"</#if>   id="innleggelseoption"  name="innleggelseoption">
 				    	<label>Varighet av sykehusinnleggelse</label><br>
 				    	<input  type="text" size="30" id="innleggelsetxt"  name="innleggelsetxt"  value="" /><br>
 			    	</div>
@@ -723,88 +733,102 @@
 			       
 	    <div class="form-group">
 		 <label>Planlagte eller gjennomførte forbedringstiltak</label>
-		  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"></textarea>   
+		  <textarea class="form-control" name="tab-forbedringstiltak" rows="3"  >${giverKvittering.forbedringstiltak}</textarea>   
 		      
 	  		<br/>
 	  	</div>
 	  	
 	  	 <div class="form-group" >
+	  	 	<#assign behandling= giverKvittering.behandling >
 	       <label>Videre behandling/oppfølging </label>
 	       	  <div class="radio">
 		          <label >
-		          	<input type="radio" name="tab-behandling" id="tab-behandling-ja" onclick="toggleDisplay('behandlingJa', this.checked);" value="Videre Behandling Ja"  />
+		          	<input type="radio" <#if behandling=="Videre Behandling Ja" >checked</#if> name="tab-behandling" id="tab-behandling-ja" onclick="toggleDisplay('behandlingJa', this.checked);" value="Videre Behandling Ja"  />
 		          		Ja
 		          </label>
-		          
-		         <div id="behandlingJa" style="margin-left: 0.5cm;display: none" >
+		         <#assign annenreak1=""  >
+	      		 <#assign annenreak2=""  >
+	      		 <#assign annenreak3=""  >
+	      		 <#assign annenreak4=""  >
+		         <#list giverKvittering.annenreakList as annenreak >
+	      			<#if annenreak== "Henvist til egen lege/spesialist"><#assign annenreak1="checked"></#if>
+	      			<#if annenreak== "Oppsøkt egen lege"><#assign annenreak2="checked"></#if>
+	      			<#if annenreak== "Sykemelding"><#assign annenreak3="checked"></#if>
+	      			<#if annenreak== "Uføretrygd"><#assign annenreak4="checked"></#if>
+	     		 </#list>
+		         <div id="behandlingJa" <#if behandling != "Videre Behandling Ja" > style="margin-left: 0.5cm;display: none" </#if>  >
 			         <div class="radio">
 			          <label title="Giver ble henvist til egen lege eller spesialist. ">
-			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak" onclick="toggleDisplay('spesialist-txt',this.checked);" value="Henvist til egen lege/spesialist" title="Giver ble henvist til egen lege eller spesialist. "  />
+			          	<input type="checkbox" ${annenreak1} name="tab-annenreak" id="tab-annenreak" onclick="toggleDisplay('spesialist-txt',this.checked);" value="Henvist til egen lege/spesialist" title="Giver ble henvist til egen lege eller spesialist. "  />
 			          		Henvist til egen lege/spesialist
 			          </label>
-			          <div id="spesialist-txt" style="margin-left: 0.5cm;display: none" >
+			          <div id="spesialist-txt" <#if annenreak1 !="checked"> style="margin-left: 0.5cm;display: none" </#if> >
 			          	<label>Spesifiser</label><br>
-			          	<input type="text">
+			          	<input type="text" name="legeSpesifiser" value="${giverKvittering.legeSpesifiser}" >
 			          </div>
 			        </div>
 			        <div class="radio">
 			          <label title="Giver oppsøkte selv egen lege.">
-			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak"   value="Oppsøkt egen lege" title="Giver oppsøkte selv egen lege." />
+			          	<input type="checkbox" ${annenreak2} name="tab-annenreak" id="tab-annenreak"   value="Oppsøkt egen lege" title="Giver oppsøkte selv egen lege." />
 			          	Oppsøkt egen lege
 			          </label>
 				    </div>
 			 		<div class="radio">
 			          <label title="Giver ble sykemeldt pga. komplikasjonen.">
-			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('sykemelding',this.checked);" value="Sykemelding" title="Giver ble sykemeldt pga. komplikasjonen." />Sykemelding
+			          	<input type="checkbox" ${annenreak3} name="tab-annenreak" id="tab-annenreak"  onclick="toggleDisplay('sykemelding',this.checked);" value="Sykemelding" title="Giver ble sykemeldt pga. komplikasjonen." />Sykemelding
 			          </label>
 			          
-			          <div id="sykemelding" style="margin-left: 0.5cm;display: none">
+			          <div id="sykemelding" <#if annenreak3 !="checked"> style="margin-left: 0.5cm;display: none" </#if>>
 			          <label>Varighet:</label>
+					       <#assign sykemeldinggruppe = giverKvittering.sykemeldinggruppe>
 					       <select name ="tab-sykemeldinggruppe" id="sykemeldinggruppe" class="form-control">
-				       		<option>--- Select ---</option>
+				       		<option selected="selected">${sykemeldinggruppe}</option>
 				       		<#list giverkomplikasjon.sykemeldinggruppe as sykemelding>
-				       		<option>${sykemelding} </option>
-				     		   </#list>
+				       			<#if sykemeldinggruppe != sykemelding >	
+				       				<option>${sykemelding} </option>
+				       			</#if>
+				     		</#list>
 				     	  </select>
 					  </div>
 			          
 				    </div>
 				    <div class="radio">
 			          <label title="Giver ble uføretrygdet pga. komplikasjonen. ">
-			          	<input type="checkbox" name="tab-annenreak" id="tab-annenreak"   value="Uføretrygd" title="Giver ble uføretrygdet pga. komplikasjonen. " />Uføretrygd
+			          	<input type="checkbox" ${annenreak4} name="tab-annenreak" id="tab-annenreak"   value="Uføretrygd" title="Giver ble uføretrygdet pga. komplikasjonen. " />Uføretrygd
 			          </label>
 				    </div>
 			 	</div>
 			  </div>
 			  <div class="radio">
 		          <label >
-		          	<input type="radio" name="tab-behandling" id="tab-behandling-nei" onclick="toggleDisplay('behandlingJa', 0);" value="Videre Behandling Nei"  />
+		          	<input type="radio" <#if behandling="Videre Behandling Nei" >checked</#if> name="tab-behandling" id="tab-behandling-nei" onclick="toggleDisplay('behandlingJa', 0);" value="Videre Behandling Nei"  />
 		          		Nei
 		          </label>
 			  </div>
 			  <div class="radio">
 		          <label >
-		          	<input type="radio" name="tab-behandling" id="tab-behandling-vetIkke" onclick="toggleDisplay('behandlingJa',0);toggleDisplay('sykemelding',0);" value="Videre Behandling Vet ikke"  />
+		          	<input type="radio" <#if behandling="Videre Behandling Vet ikke" >checked</#if> name="tab-behandling" id="tab-behandling-vetIkke" onclick="toggleDisplay('behandlingJa',0);toggleDisplay('sykemelding',0);" value="Videre Behandling Vet ikke"  />
 		          		Vet Ikke
 		          </label>
 			  </div>
 	    </div>
 	  	
 	  	<div class="form-group">
+	  		<#assign forebyggbar = giverKvittering.forebyggbar>
 		      <label>Var komplikasjonen/hendelsen forebyggbar?</label>
 		      	<div class="radio">
 		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar1" value="forebyggbar-ja"/>Ja
+		          	<input type="radio" <#if forebyggbar =="forebyggbar-ja" >checked</#if> name="tab-forebyggbar" id="tab-forebyggbar1" value="forebyggbar-ja"/>Ja
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei"/>Nei
+		          	<input type="radio" <#if forebyggbar =="forebyggbar-nei" >checked</#if> name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei"/>Nei
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke"/>Vet ikke
+		          	<input type="radio" <#if forebyggbar =="forebyggbar-vetIkke" >checked</#if> name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke"/>Vet ikke
 		          </label>
 			    </div>
 	    </div>	
@@ -832,33 +856,35 @@
 	</div>
 	 -->
 	    <div class="form-group">
+	      <#assign avreg = giverKvittering.avreg>
 	      <label>Giver er avregistrert (p.g.a komplikasjonen)</label>
 	      	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Ja" onclick="toggleDisplay('tab-avregistrert-ja', this.checked);"/>Ja
+	          	<input type="radio" <#if avreg=="avregistrert-Ja">checked</#if> name="tab-avreg" id="tab-avreg" value="avregistrert-Ja" onclick="toggleDisplay('tab-avregistrert-ja', this.checked);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Nei" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Nei
+	          	<input type="radio" <#if avreg=="avregistrert-Nei">checked</#if> name="tab-avreg" id="tab-avreg" value="avregistrert-Nei" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-avreg" id="tab-avreg" value="avregistrert-Vet-Ikke" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Vet ikke
+	          	<input type="radio" <#if avreg=="avregistrert-Vet-Ikke">checked</#if> name="tab-avreg" id="tab-avreg" value="avregistrert-Vet-Ikke" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Vet ikke
 	          </label>
 		    </div>
 	    </div>
-	    <div class="form-group" id="tab-avregistrert-ja" style="display: none">
+	    <div class="form-group" id="tab-avregistrert-ja" <#if avreg!="avregistrert-Ja">style="display: none"</#if> >
+	     <#assign onske = giverKvittering.onske >
 	     <label>Hvis Ja</label>
 	    	<div class="radio">
 	          <label>
-	          	<input type="checkbox" name="tab-onske" id="tab-onske1" value="Givers Ønske"/>Givers Ønske
+	          	<input type="checkbox" <#if onske=="Givers Ønske"> checked </#if> name="tab-onske" id="tab-onske1" value="Givers Ønske"/>Givers Ønske
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="checkbox" name="tab-onske" id="tab-onske2" value="Blodbankens Ønske"/>Blodbankens Ønske
+	          	<input type="checkbox" <#if onske=="Blodbankens Ønske"> checked </#if>  name="tab-onske" id="tab-onske2" value="Blodbankens Ønske"/>Blodbankens Ønske
 	          </label>
 		    </div>
 	    </div>
