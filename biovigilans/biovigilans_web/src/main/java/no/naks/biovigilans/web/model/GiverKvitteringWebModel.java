@@ -1,6 +1,10 @@
 package no.naks.biovigilans.web.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import org.restlet.data.Parameter;
 
 public class GiverKvitteringWebModel extends VigilansModel {
 	
@@ -32,9 +36,17 @@ public class GiverKvitteringWebModel extends VigilansModel {
 	private String strakstiltak;
 	private String forbedringstiltak;
 	private String forebyggbar;
-	private String annenreak;
+	public List<String> annenreakList = new ArrayList<String>();
 	private String avreg;
 	private String typeAferese;
+	private String imgArea;
+	private String behandlingSykehus;
+	private String innleggelsetxt;
+	private String behandling;
+	private String onske;
+	private String legeSpesifiser;
+	private String sykemeldinggruppe;
+	
 	private static final String FIRSTSELECTVALUE ="--- Select ---";
 	
 	public String getAvreg() {
@@ -50,19 +62,66 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		this.avreg = avreg;
 	}
 	
-	public String getAnnenreak() {
+	
+	
+	public String getInnleggelsetxt() {
 		Map<String,String> userEntries = getFormMap();
-		String field = "tab-annenreak";
-		annenreak = userEntries.get(field);
-		if (annenreak == null){
-			annenreak = "-";
+		String field = "innleggelsetxt";
+		innleggelsetxt = userEntries.get(field);
+		if (innleggelsetxt == null){
+			innleggelsetxt = "-";
 		}
-		return annenreak;
+		return innleggelsetxt;
 	}
-	public void setAnnenreak(String annenreak) {
-		this.annenreak = annenreak;
+	public void setInnleggelsetxt(String innleggelsetxt) {
+		this.innleggelsetxt = innleggelsetxt;
 	}
 	
+	
+	
+	public String getLegeSpesifiser() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "legeSpesifiser";
+		legeSpesifiser = userEntries.get(field);
+		if (legeSpesifiser == null){
+			legeSpesifiser = "";
+		}
+		return legeSpesifiser;
+	}
+	public void setLegeSpesifiser(String legeSpesifiser) {
+		this.legeSpesifiser = legeSpesifiser;
+	}
+	public String getOnske() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "tab-onske";
+		onske = userEntries.get(field);
+		if (onske == null){
+			onske = "-";
+		}
+		return onske;
+	}
+	public void setOnske(String onske) {
+		this.onske = onske;
+	}
+	public List<String> getAnnenreakList() {
+		return annenreakList;
+	}
+	public void setAnnenreakList(List<String> annenreakList) {
+		this.annenreakList = annenreakList;
+	}
+	
+	public String getBehandling() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "tab-behandling";
+		behandling = userEntries.get(field);
+		if (behandling == null){
+			behandling = "-";
+		}
+		return behandling;
+	}
+	public void setBehandling(String behandling) {
+		this.behandling = behandling;
+	}
 	public String getForebyggbar() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-forebyggbar";
@@ -80,7 +139,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-forbedringstiltak";
 		forbedringstiltak = userEntries.get(field);
 		if (forbedringstiltak == null){
-			forbedringstiltak = "-";
+			forbedringstiltak = "";
 		}
 		return forbedringstiltak;
 	}
@@ -88,6 +147,18 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		this.forbedringstiltak = forbedringstiltak;
 	}
 	
+	public String getBehandlingSykehus() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "tab-behandling-sykehus";
+		behandlingSykehus = userEntries.get(field);
+		if (behandlingSykehus == null){
+			behandlingSykehus = "-";
+		}
+		return behandlingSykehus;
+	}
+	public void setBehandlingSykehus(String behandlingSykehus) {
+		this.behandlingSykehus = behandlingSykehus;
+	}
 	public String getTypeAferese() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "type-aferese";
@@ -138,12 +209,28 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		this.annenreaksjon = annenreaksjon;
 	}
 	
+	public String getSykemeldinggruppe() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "tab-sykemeldinggruppe";
+		sykemeldinggruppe = userEntries.get(field);
+		if (sykemeldinggruppe == null){
+			sykemeldinggruppe = FIRSTSELECTVALUE;
+		}else if(sykemeldinggruppe.equalsIgnoreCase(FIRSTSELECTVALUE)){
+			sykemeldinggruppe = "-";
+		}
+		return sykemeldinggruppe;
+	}
+	public void setSykemeldinggruppe(String sykemeldinggruppe) {
+		this.sykemeldinggruppe = sykemeldinggruppe;
+	}
 	public String getSystemiskbivirkning() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-systemiskbivirkning";
 		systemiskbivirkning = userEntries.get(field);
 		if (systemiskbivirkning == null){
-			systemiskbivirkning = "";
+			systemiskbivirkning = FIRSTSELECTVALUE;
+		}else if(systemiskbivirkning.equalsIgnoreCase(FIRSTSELECTVALUE)){
+			systemiskbivirkning = "-";
 		}
 		return systemiskbivirkning;
 	}
@@ -154,7 +241,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-bivirk";
 		tabBivirk = userEntries.get(field);
-		if (tabBivirk == null || tabBivirk.equalsIgnoreCase("Systemisk-Ja")){
+		if (tabBivirk == null ){
 			tabBivirk = "";
 		}
 		return tabBivirk;
@@ -221,7 +308,9 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		String field = "tab-varighet";
 		tabVarighet = userEntries.get(field);
 		if (tabVarighet == null){
-			tabVarighet = "-";
+			tabVarighet = FIRSTSELECTVALUE;
+		}else if(tabVarighet.equalsIgnoreCase(FIRSTSELECTVALUE)){
+			tabVarighet="-";
 		}
 		return tabVarighet;
 	}
@@ -296,6 +385,19 @@ public class GiverKvitteringWebModel extends VigilansModel {
 	public void setFormControl(String formControl) {
 		this.formControl = formControl;
 	}
+	
+	public String getImgArea() {
+		Map<String,String> userEntries = getFormMap();
+		imgArea = userEntries.get("tab-imgarea");
+		if(imgArea==null){
+			imgArea="";
+		}
+		return imgArea;
+	}
+	public void setImgArea(String imgArea) {
+		this.imgArea = imgArea;
+	}
+	
 	public String getTabVene() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-vene";
