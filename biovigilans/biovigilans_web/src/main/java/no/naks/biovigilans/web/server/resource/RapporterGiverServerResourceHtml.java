@@ -50,7 +50,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	@Get
 	public Representation getHemovigilans() {
 
-
+		//invalidateSessionobjects();
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	
 	     Request request = getRequest();
@@ -239,7 +239,9 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     	    sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
     		dataModel.put(giverkomplikasjonId, giverModel);
     		dataModel.put(kvitteringGiverId, giverKvittering);
-    		
+    		ClientResource clres2  ;
+      		
+    		Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
     		Parameter lagre = form.getFirst("lagre4");
     		if(lagre!=null){
     			giverModel.saveValues();
@@ -267,31 +269,14 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     			giverModel.getGiveroppfolging().setMeldeid(meldeId);
     			giverWebService.saveGiveroppfolging(giverModel);
     			giverModel.setLagret(true);
+    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giverkvittering.html"));
     		    //lagre i vigiansmelding
-    		}
-     		ClientResource clres2  ;
-  		
-    		Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
-    		/*if(godkjent!= null){
-         		// clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-
-    		}else */
-    		if(ikkegodkjet != null){
+    		}else if(ikkegodkjet != null){
          		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
     		}else{
-	    	/*	Må vente med dette til Kontaktskjema er fylt ut OLJ 15.01.15
-	    		sessionAdmin.getSession(getRequest(),giverkomplikasjonId).invalidate();
-	    		sessionAdmin.getSession(getRequest(), donasjonId).invalidate();
-	    		sessionAdmin.getSession(getRequest(), komDiagnosegiverId).invalidate();
-	    	*/	
-	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giverkvittering.html"));
-	//    		System.out.println("Status = "+giverModel.getStatus());
-	    		// Denne client resource forholder seg til src/main/resource katalogen !!!	
-	   // 		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-    		}
+	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_hendelse_main.html"));
+			}
 	     	Representation pasientkomplikasjonFtl = clres2.get();
-    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
-    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     				MediaType.TEXT_HTML);
     	}
