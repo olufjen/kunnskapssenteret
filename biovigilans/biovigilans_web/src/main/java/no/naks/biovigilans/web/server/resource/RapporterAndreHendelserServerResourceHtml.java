@@ -173,7 +173,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
     			annenModel.getAnnenKomplikasjon().setUpdat(true);
-    			
+    			annenModel.setLagret(true);
     			Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
     			klassifikasjon.setMeldeidannen(meldeId);
     			klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
