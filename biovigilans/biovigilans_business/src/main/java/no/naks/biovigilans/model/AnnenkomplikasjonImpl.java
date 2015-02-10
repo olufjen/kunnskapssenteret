@@ -239,8 +239,13 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setKeys(String[] keys) {
 		this.keys = keys;
 	}
-
-	
+	public void setKladd(String kladd) {
+		if (kladd == null){
+			int l = keys.length - 1;
+			kladd = annenKomplikasjonsFields.get(keys[l]);
+		}
+		super.setKladd(kladd);
+	}
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
@@ -287,6 +292,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		setKomplikasjondefinisjon(null);
 		setKommentar(null);
 		setDelkode(null);
+		setKladd(null);
 	
 	}
 	
