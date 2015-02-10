@@ -196,7 +196,13 @@
         <property name="annenKomplikasjonWebService" ref="annenKomplikasjonWebService"></property>
         <property name="komplikasjonsklassifikasjonWebService" ref="komplikasjonsklassifikasjonWebService"></property>
          
-  </bean>       
+  </bean>  
+<!-- 
+  <bean name="/hemovigilans/leveranse.html" id="rapporterleveranseServerResource" autowire="byName" scope="prototype"
+            class="no.naks.biovigilans.web.server.resource.RapporterLeveranseServerResourceHtml">
+  
+  </bean>  
+  -->      
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
@@ -275,7 +281,7 @@
             class="no.naks.biovigilans.web.server.resource.RapporterAndreHendelserServerResourceHtml">
         <property name="sessionParams" value="${andreHendelser.dato},${andreHendelser.beskrivelse},${andreHendelser.hendelse},${andreHendelser.klassifikasjon},
                 ${andreHendelser.kvalitetskrav},${andreHendelser.prosess},${andreHendelser.oppdaget},
-                ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.klassifikasjon-sub},${andreHendelser.hvagikkgalt}">
+                ${andreHendelser.planlagte},${andreHendelser.kommentar},${andreHendelser.klassifikasjon-sub},${andreHendelser.hvagikkgalt},${andrehendelser.ytterligereopplysninger}">
         
         </property>
          
