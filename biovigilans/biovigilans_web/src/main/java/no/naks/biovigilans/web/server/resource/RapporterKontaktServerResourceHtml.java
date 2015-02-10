@@ -425,7 +425,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 
 
 	/**
-	 * getInnmelding
+	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
 	 * en rapportert hendelse
 	 * @return
@@ -627,7 +627,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 				SaveSkjema();
     			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
-        		String page = getPage();
+        		String page = getPage(); //Hent neste side 
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 /*
@@ -690,6 +690,10 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			}
 		}  
     }
+    /**
+     * setMelderparams
+     * Denne rutinen setter opp alle helseregioner og HF etc for kontaktperson
+     */
     private void setMelderparams(){
      	 melderwebModel.setHelseRegioner(helseRegioner);
     	 melderwebModel.setHfeneNord(hfeneNord);
