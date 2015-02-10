@@ -89,7 +89,8 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 
 	public void distributeTerms(){
 		String[] formFields = getFormNames();
-		String annenFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[6],formFields[7],formFields[8],formFields[9]};
+		String annenFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[6],formFields[7],formFields[8],formFields[9],
+				formFields[11]};
 		annenKomplikasjon.setAnnenkomplicationfieldMaps(annenFields); 
 		
 		String komplikasjonFields[] = {formFields[10]};
