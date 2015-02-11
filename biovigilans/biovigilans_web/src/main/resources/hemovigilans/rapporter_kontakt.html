@@ -124,6 +124,12 @@ function foretakValgt(){
 	// alert("Helseforetak valgt");
 	$("#btnForetak").click();
 }
+function leveranseValgt(){
+	$("#btnleveranse").click();
+//	 alert("Leveranse valgt");
+	//document.location("leveranse.html");
+	$("#btnleveranseb").click();
+}
 //window.onload=initialize();
 </script>
 
@@ -229,12 +235,14 @@ function foretakValgt(){
         </div>
       </div>
 		<br/>
-          <button name="avbrytkontakt" type="submit" class="btn btn-default">Avbryt</button>
-          <button name="lukkkontakt" type="submit" class="btn btn-default">Lukk</button>
-          <button name="lagrekontakt" type="submit" class="btn btn-primary" >Lagre</button>
+          <button name="avbrytkontakt" type="button" class="btn btn-default"  onclick="document.location='hemovigilans.html';">Avbryt</button>
+      
+          <button name="lagrekontakta" type="button" onclick="leveranseValgt()" class="btn btn-primary" >Lagre</button>
 		  <button type="submit" id="btnKontak" value="kontakValue"  name="formValue" class="btn btn-primary" style="display: none" > getValue </button>
 		  <button type="submit" id="btnRegion" value="regionValue"  name="regionValue" class="btn btn-primary" style="display: none" > getValue </button>
 		  <button type="submit" id="btnForetak" value="foretakValue"  name="foretakValue" class="btn btn-primary" style="display: none" > getValue </button>
+		  <button name="lagrekontakt" id="btnleveranse" type="submit"  class="btn btn-primary" style="display: none" >getValue</button>
+		  <button name="lagrekontaktb" id="btnleveranseb" type="button" onclick="document.location='leveranse.html';" style="display: none" class="btn btn-primary" >getValue</button>
 </div> <!--slutt på Kontaktinformasjon-->
 </form>
 </div>
