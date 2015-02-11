@@ -10,10 +10,12 @@ import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.AnnenkomplikasjonImpl;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.model.KomplikasjonsklassifikasjonImpl;
+import no.naks.biovigilans.model.Vigilansmelding;
 
 public class AnnenKomplikasjonwebModel extends VigilansModel {
 	
 	private Annenkomplikasjon annenKomplikasjon;
+	private Vigilansmelding vigilansmelding;
 	private Komplikasjonsklassifikasjon komplikasjonsklassifikasjon;
 	protected String[] alvorligHendelse; 
 	protected String[] hovedprosesslist;
@@ -29,6 +31,14 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		//hvagikkgaltList = new ArrayList<String>();
 	}
 	
+	public Vigilansmelding getVigilansmelding() {
+		return vigilansmelding;
+	}
+
+	public void setVigilansmelding(Vigilansmelding vigilansmelding) {
+		this.vigilansmelding = vigilansmelding;
+	}
+
 	public String[] getHendelsenoppdaget() {
 		return hendelsenoppdaget;
 	}
