@@ -207,6 +207,10 @@
         <property name="tablewebservice" ref="tableWebService"></property>
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property>
+          <property name="giverWebService" ref="giverWebService"></property>
+        <property name="donasjonWebService" ref="donasjonWebService"></property>
+        <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
+        <property name="melderWebService" ref="melderWebService"></property>
   </bean>  
     
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
