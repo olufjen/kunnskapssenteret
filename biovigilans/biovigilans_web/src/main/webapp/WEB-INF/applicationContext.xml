@@ -197,12 +197,18 @@
         <property name="komplikasjonsklassifikasjonWebService" ref="komplikasjonsklassifikasjonWebService"></property>
          
   </bean>  
-<!-- 
+
   <bean name="/hemovigilans/leveranse.html" id="rapporterleveranseServerResource" autowire="byName" scope="prototype"
-            class="no.naks.biovigilans.web.server.resource.RapporterLeveranseServerResourceHtml">
-  
+            class="no.naks.biovigilans.web.server.resource.RapporterLeveranseServerResourceHTML">
+        <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
+        <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
+                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
+        <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="tablewebservice" ref="tableWebService"></property>
+        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+        <property name="icd10WebService" ref="ICD10WebService"></property>
   </bean>  
-  -->      
+    
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
