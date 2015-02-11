@@ -6,6 +6,7 @@ import java.util.List;
 import org.restlet.Request;
 import org.restlet.data.Reference;
 
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
@@ -15,6 +16,7 @@ import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
+import no.naks.biovigilans.web.model.VigilansModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 
@@ -44,6 +46,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String transfusjonId = "transfusjon";					// Benyttes som nøkkel til HTML-sider
 	protected String kvitteringsId = "kvittering";					// Benyttes som nøkkel for kvitteringssiden
 	protected String kvitteringGiverId = "giverKvittering";
+	protected String messageType = "none";
 	List<String> hvagikkgaltList = new ArrayList<String>();
 /*
  * Sessiomn objekter for giver	
@@ -409,8 +412,36 @@ public class SessionServerResource extends ProsedyreServerResource {
 	     }
 	}
 	
+	/**
+	 * checkMessageType
+	 * Denne rutinen sjekker type melding som er sendt inn
+	 * Brukes av leveransesiden for å vise riktig informasjon
+	 * @return
+	 */
+	public VigilansModel checkMessageType(){
+		  Request request = getRequest();
+		  VigilansModel melding = null;
+		  transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
+		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
+		  giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
+		  messageType = "none";
+		  if (transfusjon != null){
+			  messageType = "transfusjon";
+			  melding = (VigilansModel)transfusjon;
+			  
+		  }
+		  if (giverModel != null){
+			  messageType = "giver";
+			  melding = (VigilansModel)giverModel;
+		  }
+		  if (annenModel != null){
+			  messageType = "annen";
+			  melding = (VigilansModel)annenModel;
+		  }
+		return melding;
+	}
 	public String getPage(){
-		String page = "/hemovigilans/hemovigilans.html";
+		String page = "/hemovigilans/leveranse.html";
 		return page;
 	}
 	/**
