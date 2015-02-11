@@ -656,41 +656,6 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
       
     }
     /**
-     * Save Skjema
-     * DEnne rutinen sørger for å lagre melderid til vigilansmelding
-     * 
-     */
-    private void SaveSkjema(){
-		Long melderKey = melderwebModel.getMelder().getMelderId();
-		if (melderKey != null && transfusjon != null){
-			if (transfusjon.isLagret()){
-				transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
-				Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
-				melding.setGodkjent("Ja");
-				//melding.setKladd("");
-				hendelseWebService.saveVigilansMelder(melding);
-			}
-		}
-			if (melderKey != null && giverModel != null){
-			if (giverModel.isLagret()){
-				giverModel.getGiverKomplikasjon().setMelderId(melderKey);
-				Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
-				melding.setGodkjent("Ja");
-				//melding.setKladd("");
-				hendelseWebService.saveVigilansMelder(melding);
-			}
-		}
-		if (melderKey != null && annenModel != null){
-			if (annenModel.isLagret()){
-				annenModel.getAnnenKomplikasjon().setMelderId(melderKey); 
-				Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
-				melding.setGodkjent("Ja");
-				//melding.setKladd("");
-				hendelseWebService.saveVigilansMelder(melding);
-			}
-		}  
-    }
-    /**
      * setMelderparams
      * Denne rutinen setter opp alle helseregioner og HF etc for kontaktperson
      */
@@ -724,6 +689,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	
     	 
     }
+
 /*
     public void sendEmail(){
     	Properties props = new Properties();
