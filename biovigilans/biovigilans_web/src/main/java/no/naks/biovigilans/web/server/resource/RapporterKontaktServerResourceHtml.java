@@ -628,7 +628,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
         		dataModel.put(melderId, melderwebModel);
         		String page = getPage(); //Hent neste side 
-    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 /*
  * Invalidate session objects kun dersom et meldeskjema er fylt ut	    		
