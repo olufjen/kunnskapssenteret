@@ -98,6 +98,10 @@
   	<property name="updateAnnenKomplikasjonSQL" value="${annenkomplikasjon.update}"></property>
  	<property name="annenKomplikasjonPrimaryKey" value="${primarykey.annenkomplikasjon}"></property>
   	<property name="annenKomplikasjonprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+   	<property name="meldingPrimaryKey" value="${primarykey.melding}"></property>
+    <property name="meldingprimarykeyTableDefs" value="${primarykey.primarykey}"></property>
+   	<property name="insertMeldingSQL" value="${vigilansmelding.insertvigilansmelding}"></property>
+  	<property name="updateMeldingSQL" value="${vigilansmelding.updatevigilansmelding}"></property>
   </bean>
   <bean id="komplikasjonsklassifikasjonDAO" class="no.naks.biovigilans.dao.KomplikasjonsklassifikasjonDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
