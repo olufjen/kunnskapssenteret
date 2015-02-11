@@ -429,7 +429,7 @@ public class TransfusjonDAOImpl extends AbstractAdmintablesDAO implements
 			String key = (String)komplikasjoner.next();
 			Pasientkomplikasjon komplikasjon = (Pasientkomplikasjon)transfusjon.getPasientKomplikasjoner().get(key);
 			Vigilansmelding melding = (Vigilansmelding)komplikasjon;
-			melding.setKlokkesletthendelse(tidForkompl);
+	//		melding.setKlokkesletthendelse(tidForkompl); Klokkeslett brukes ikke olj 11.02.15
 			savePasientkomplikasjon(id, komplikasjon);
 		}
 		
