@@ -183,7 +183,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		transfusjon.setHastegrad(null);
 		transfusjon.setIndikasjon(null);
 		transfusjon.setTransDato(null);
-		transfusjon.setTransfusjonsklokkeslett(null);
+//		transfusjon.setTransfusjonsklokkeslett(null); Fjernet fra skjema olj 10.02.15
 		transfusjon.setTildigerKomplikasjon(null);
 /*	
 		if (annenBlodprodukt.getBlodprodukt() != null && !annenBlodprodukt.getBlodprodukt().equals(""))
