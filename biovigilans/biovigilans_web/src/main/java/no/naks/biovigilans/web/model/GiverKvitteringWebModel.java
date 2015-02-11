@@ -46,6 +46,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 	private String onske;
 	private String legeSpesifiser;
 	private String sykemeldinggruppe;
+	private String readonlyFlag="false";
 	
 	private static final String FIRSTSELECTVALUE ="--- Select ---";
 	
@@ -62,8 +63,12 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		this.avreg = avreg;
 	}
 	
-	
-	
+	public String getReadonlyFlag() {
+		return readonlyFlag;
+	}
+	public void setReadonlyFlag(String readonlyFlag) {
+		this.readonlyFlag = readonlyFlag;
+	}
 	public String getInnleggelsetxt() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "innleggelsetxt";

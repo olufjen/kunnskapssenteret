@@ -26,6 +26,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	protected String[] sykemeldinggruppe;
 	protected String[] varighetSkadegruppe;
 	
+	
 	public GiverKomplikasjonwebModel() {
 		super();
 		giver = new GiverImpl();
@@ -36,8 +37,6 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		
 	}
 	
-	
-
 	public String[] getVarighetSkadegruppe() {
 		return varighetSkadegruppe;
 	}
