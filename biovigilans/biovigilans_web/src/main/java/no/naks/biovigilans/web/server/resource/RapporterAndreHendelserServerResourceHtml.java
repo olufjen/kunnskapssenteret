@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
 
@@ -154,28 +155,29 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	
 					}
     			}
-    			
+ /*   			
     			giverModel = (GiverKomplikasjonwebModel)sessionAdmin.getSessionObject(getRequest(), vigilansmeldingId);
     			if(giverModel == null){
     				giverModel = new GiverKomplikasjonwebModel();
     			}
-    			
     			giverModel.getVigilansmelding().setDatoforhendelse(datoforhendelse);
     			giverModel.getVigilansmelding().setMeldingsdato(null);
     			giverWebService.saveVigilansmelding(giverModel);
-    			
     			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
-    			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
+     			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
+ */    			
     			String strDato = "";
     			if (datoforhendelse != null)
     			  strDato = FastDateFormat.getInstance("yyyy-MM-dd").format(datoforhendelse);
     			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);
+    			Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
+    			melding.setDatoforhendelse(datoforhendelse);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
     			annenModel.getAnnenKomplikasjon().setUpdat(true);
     			annenModel.setLagret(true);
     			Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
-    			klassifikasjon.setMeldeidannen(meldeId);
+   // 			klassifikasjon.setMeldeidannen(meldeId);
     			klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
     			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
     			
