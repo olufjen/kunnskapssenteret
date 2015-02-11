@@ -83,6 +83,16 @@ public class VigilansModel {
 	public void setAccountRef(String accountRef) {
 		this.accountRef = accountRef;
 	}
+
+
+	public Vigilansmelding getVigilans() {
+		return vigilans;
+	}
+
+
+	public void setVigilans(Vigilansmelding vigilans) {
+		this.vigilans = vigilans;
+	}
 	
 	/*public void distributeTerms(){
 		String[] formFields = getFormNames();
