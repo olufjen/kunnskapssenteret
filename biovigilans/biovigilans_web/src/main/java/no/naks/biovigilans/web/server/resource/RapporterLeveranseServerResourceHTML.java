@@ -1,11 +1,14 @@
 package no.naks.biovigilans.web.server.resource;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
+import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
+import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.model.VigilansModel;
 
@@ -29,8 +32,19 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 
 	private String meldingsId = "melding";
 	private Date dato = null;
+	private String datoStr = "";
 	
 	
+	public String getDatoStr() {
+		return datoStr;
+	}
+
+
+	public void setDatoStr(String datoStr) {
+		this.datoStr = datoStr;
+	}
+
+
 	public String getMeldingsId() {
 		return meldingsId;
 	}
@@ -68,30 +82,41 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
  * Hent alle session objekter
  */
 	//     String messageType = checkMessageType();
+	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(getRequest(),melderId);
+		 transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(getRequest(),transfusjonId);
+    	 giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),giverkomplikasjonId);
+    	 annenModel = (AnnenKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),andreHendelseId);
+    	 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(getRequest(),donasjonId);
+	     if (melderwebModel != null){
+	    	 melderwebModel.saveValues();
+	    	 melderWebService.saveMelder(melderwebModel);
+	    	 SaveSkjema();
+	    	 sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
+	    	 dataModel.put(melderId, melderwebModel);
+	     }
 	     VigilansModel melding = checkMessageType();
-	     TransfusjonWebModel transfusjon = null;
-	     GiverKomplikasjonwebModel giver = null;
-	     AnnenKomplikasjonwebModel annen = null;
+
 	     
 //	     setTransfusjonsObjects();
 //	     setAndreHendelser();
-	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	
 //    	 melderwebModel.setFormNames(sessionParams);
 //    	 melderwebModel.distributeTerms();
     	 if (messageType.equals("transfusjon")){
-    		 transfusjon = (TransfusjonWebModel)melding;
     		 dataModel.put(meldingsId, transfusjon);
     	 }
     	 if (messageType.equals("giver")){
-    		 giver = (GiverKomplikasjonwebModel)melding;
-    		 dataModel.put(meldingsId, giver);
+    		 dataModel.put(meldingsId, giverModel);
     	 }
     	 if (messageType.equals("annen")){
-    		 annen = (AnnenKomplikasjonwebModel)melding;
-    		 dataModel.put(meldingsId, annen);
+    		
+    		 dataModel.put(meldingsId, annenModel);
     	 }
-    	 dato = melding.getVigilans().getDatoforhendelse();
-     
+//    	 dato = melding.getVigilans().getDatoforhendelse();
+    	 dato = new Date();
+    	 SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+    	 datoStr = sdf.format(dato);
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/leveranse.html"));
 	     Representation pasientkomplikasjonFtl = clres2.get();
 	     TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
