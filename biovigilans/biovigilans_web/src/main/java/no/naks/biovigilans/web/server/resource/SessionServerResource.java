@@ -54,7 +54,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected GiverKomplikasjonwebModel giverModel = null;
 	protected DonasjonwebModel donasjon = null;
 	protected KomDiagnosegiverwebModel komDiagnosegiver = null;
-	protected GiverKvitteringWebModel giverKvittering = null;
+//	protected GiverKvitteringWebModel giverKvittering = null;
 
 	protected String[] reaksjonengruppe;
 	protected String[] utenforBlodbankengruppe;
@@ -272,12 +272,12 @@ public class SessionServerResource extends ProsedyreServerResource {
 	public void setVigilansmeldingId(String vigilansmeldingId) {
 		this.vigilansmeldingId = vigilansmeldingId;
 	}
-	public GiverKvitteringWebModel getGiverKvittering() {
+	/*public GiverKvitteringWebModel getGiverKvittering() {
 		return giverKvittering;
 	}
 	public void setGiverKvittering(GiverKvitteringWebModel giverKvittering) {
 		this.giverKvittering = giverKvittering;
-	}
+	}*/
 	public MelderwebModel getMelderwebModel() {
 		return melderwebModel;
 	}
@@ -366,7 +366,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	     giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
 		 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request, donasjonId);  
 		 komDiagnosegiver =(KomDiagnosegiverwebModel) sessionAdmin.getSessionObject(request,komDiagnosegiverId );
-		 giverKvittering = (GiverKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringGiverId);
+	//	 giverKvittering = (GiverKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringGiverId);
 	     if(giverModel==null){
 	    	 giverModel = new GiverKomplikasjonwebModel();
 	 
@@ -388,10 +388,10 @@ public class SessionServerResource extends ProsedyreServerResource {
 	   
 	     }
 	     
-	     if (giverKvittering == null){
+	   /*  if (giverKvittering == null){
 	    	 giverKvittering = new GiverKvitteringWebModel();
 	    
-	     }
+	     }*/
 	
 	}
 
