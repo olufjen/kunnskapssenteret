@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -21,6 +22,8 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 public class AbstractVigilansmelding extends AbstractModel implements Vigilansmelding{
 
+	protected Map formMap; // Inneholder brukers input verdier fra skjermbildet
+	
 	/**
 	 * Id til meldingen
 	 */
@@ -77,6 +80,20 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	protected String[]vigilansKeys;	
 	protected Map<String,String>vigilansFields;
 
+	
+	
+	public AbstractVigilansmelding() {
+		formMap = new HashMap<String,String>();
+	}
+	
+	
+	public Map getFormMap() {
+		return formMap;
+	}
+
+	public void setFormMap(Map formMap) {
+		this.formMap = formMap;
+	}
 
 	public Long getMeldeid() {
 		return meldeid;
@@ -91,10 +108,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	public void setMelderId(Long melderId) {
 		this.melderId = melderId;
 	}
-	public Date getDatoforhendelse() {
-		return datoforhendelse;
-	}
-	
+
 	public String getKladd() {
 		return kladd;
 	}
@@ -107,7 +121,8 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	public void setGodkjent(String godkjent) {
 		this.godkjent = godkjent;
 	}
-	public void setDatoforhendelse(Date datoforhendelse) {
+	
+	public Date getDatoforhendelse() {
 		if(datoforhendelse==null){
 			DateFormat dateFormat = 
 			            new SimpleDateFormat("yyyy-MM-dd");
@@ -119,13 +134,15 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 				System.out.println("date format problem: " + e.toString());
 			}
 		}
+		return datoforhendelse;
+	}
+	
+	public void setDatoforhendelse(Date datoforhendelse) {
+		
 		this.datoforhendelse = datoforhendelse;
 	}
 	
 	public Time getKlokkesletthendelse() {
-		return klokkesletthendelse;
-	}
-	public void setKlokkesletthendelse(Time klokkesletthendelse) {
 		if(klokkesletthendelse==null){
 			DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
 			Date date = new Date();
@@ -138,12 +155,12 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 				System.out.println("date format problem: " + e.toString());
 			}
 		}
+		return klokkesletthendelse;
+	}
+	public void setKlokkesletthendelse(Time klokkesletthendelse) {
 		this.klokkesletthendelse = klokkesletthendelse;
 	}
 	public Date getDatooppdaget() {
-		return datooppdaget;
-	}
-	public void setDatooppdaget(Date datooppdaget) {
 		if(datooppdaget==null){
 			DateFormat dateFormat = 
 			            new SimpleDateFormat("yyyy/MM/dd");
@@ -155,12 +172,13 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 				System.out.println("date format problem: " + e.toString());
 			}
 		}
+		return datooppdaget;
+	}
+	public void setDatooppdaget(Date datooppdaget) {
+		
 		this.datooppdaget = datooppdaget;
 	}
 	public Date getDonasjonoverforing() {
-		return donasjonoverforing;
-	}
-	public void setDonasjonoverforing(Date donasjonoverforing) {
 		if(donasjonoverforing==null){
 			DateFormat dateFormat = 
 			            new SimpleDateFormat("yyyy/MM/dd");
@@ -172,6 +190,9 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 				System.out.println("date format problem: " + e.toString());
 			}
 		}
+		return donasjonoverforing;
+	}
+	public void setDonasjonoverforing(Date donasjonoverforing) {
 		this.donasjonoverforing = donasjonoverforing;
 	}
 	public String getSjekklistesaksbehandling() {
@@ -187,14 +208,8 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	public void setSupplerendeopplysninger(String supplerendeopplysninger) {
 		this.supplerendeopplysninger = supplerendeopplysninger;
 	}
-	public Date getMeldingsdato() {
-		return meldingsdato;
-	}
 	
 	public String getMeldingsnokkel() {
-		return meldingsnokkel;
-	}
-	public void setMeldingsnokkel(String meldingsnokkel) {
 		if(meldingsnokkel == null){
 			 Calendar cal = Calendar.getInstance();
 			    cal.setTime(getMeldingsdato());
@@ -207,10 +222,9 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 			
 			meldingsnokkel = "Hem" + getMeldeid() + date ;
 		}
-		this.meldingsnokkel = meldingsnokkel;
+		return meldingsnokkel;
 	}
-
-	public void setMeldingsdato(Date meldingsdato) {
+	public Date getMeldingsdato() {
 		if(meldingsdato==null){
 			 SimpleDateFormat dateFormat = 
 			            new SimpleDateFormat("yyyy/MM/dd");
@@ -223,6 +237,15 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 				System.out.println("date format problem: " + e.toString());
 			}
 		}
+		return meldingsdato;
+	}
+	
+	public void setMeldingsnokkel(String meldingsnokkel) {
+		this.meldingsnokkel = meldingsnokkel;
+	}
+
+	public void setMeldingsdato(Date meldingsdato) {
+		
 		this.meldingsdato = meldingsdato;
 	}
 	

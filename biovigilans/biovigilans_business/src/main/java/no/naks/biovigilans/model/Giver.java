@@ -11,8 +11,8 @@ public interface Giver {
 	public void setKjonn(String kjonn);
 	public String getAlder();
 	public void setAlder(String alder);
-	public String getVekt();
-	public void setVekt(String vekt);
+	public Long getVekt();
+	public void setVekt(Long vekt);
 	public String getGivererfaring();
 	public void setGivererfaring(String givererfaring);
 	public String getTidligerekomlikasjonjanei();
@@ -33,5 +33,7 @@ public interface Giver {
 	public Object[] getParams();
 	public int[] getUtypes();
 	public void saveToGiver();
+	public Map getFormMap() ;
+	public void setFormMap(Map formMap);
 	
 }

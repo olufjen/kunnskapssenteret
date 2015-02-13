@@ -32,7 +32,7 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 	private Long meldeid;
 	protected Map<String,String> giveroppfolgingFields;
 	protected String[]keys;
-	
+	protected Map formMap; // Inneholder brukers input verdier fra skjermbildet
 	
 	
 	public Long getGiveroppfolgingId() {
@@ -49,20 +49,40 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 		this.meldeid = meldeid;
 	}
 	public String getKlassifikasjongiveroppfolging() {
+		Map<String,String> userEntries = getFormMap();
+		String field = "tab-annenreaksjon";
+		klassifikasjongiveroppfolging = userEntries.get(field);
+		if (klassifikasjongiveroppfolging == null){
+			klassifikasjongiveroppfolging = "";
+		}
 		return klassifikasjongiveroppfolging;
 	}
 	public void setKlassifikasjongiveroppfolging(
 			String klassifikasjongiveroppfolging) {
-		if(klassifikasjongiveroppfolging == null){
+		/*if(klassifikasjongiveroppfolging == null){
 			klassifikasjongiveroppfolging = giveroppfolgingFields.get(keys[0]);
-		}
+		}*/
 		this.klassifikasjongiveroppfolging = klassifikasjongiveroppfolging;
 	}
 	public String getGiveroppfolgingbeskrivelse() {
+		
+		Map<String,String> userEntries = getFormMap();
+		String field1 = "tab-alvorlighetgrad";
+		String field2="tab-forbedringstiltak";
+		String alvorlighetgrad = userEntries.get(field1);
+		String forbedringstiltak = userEntries.get(field2);
+		if(alvorlighetgrad == null){
+			giveroppfolgingbeskrivelse="";
+		}else{
+			giveroppfolgingbeskrivelse = alvorlighetgrad + "; ";
+		}
+		if(forbedringstiltak!=null){
+			giveroppfolgingbeskrivelse = giveroppfolgingbeskrivelse + forbedringstiltak;
+		}
 		return giveroppfolgingbeskrivelse;
 	}
 	public void setGiveroppfolgingbeskrivelse(String giveroppfolgingbeskrivelse) {
-		if(giveroppfolgingbeskrivelse == null){
+		/*if(giveroppfolgingbeskrivelse == null){
 			String value="";
 			if(giveroppfolgingFields.get(keys[1])!=null){
 				value = giveroppfolgingFields.get(keys[1]) + " ";
@@ -71,19 +91,33 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 				value= value + giveroppfolgingFields.get(keys[2]);
 			}
 			giveroppfolgingbeskrivelse = value;
-		}
+		}*/
 		this.giveroppfolgingbeskrivelse = giveroppfolgingbeskrivelse;
 	}
 	public String getAvregistering() {
+		Map<String,String> userEntries = getFormMap();
+		String field1 = "tab-avreg";
+		String field2 ="tab-onske";
+		String avreg = userEntries.get(field1);
+		String onske = userEntries.get(field2);
+		if(avreg != null){
+			avregistering = avreg;
+		}else{
+			avregistering = "";
+		}
+		
+		if (onske != null && avregistering.equalsIgnoreCase("avregistrert-Ja") ){
+			avregistering = avregistering +"; " + onske;
+		}
 		return avregistering;
 	}
 	public void setAvregistering(String avregistering) {
-		if(avregistering == null){
+		/*if(avregistering == null){
 			avregistering  = giveroppfolgingFields.get(keys[3]);
 			if(giveroppfolgingFields.get(keys[4])!= null && avregistering.equalsIgnoreCase("avregistrert-Ja")){
 				avregistering = avregistering +"; " + giveroppfolgingFields.get(keys[4]);
 			}
-		}
+		}*/
 		this.avregistering = avregistering;
 	}
 	public Map<String, String> getGiveroppfolgingFields() {
@@ -97,6 +131,12 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 	}
 	public void setKeys(String[] keys) {
 		this.keys = keys;
+	}
+	public Map getFormMap() {
+		return formMap;
+	}
+	public void setFormMap(Map formMap) {
+		this.formMap = formMap;
 	}
 	
 	

@@ -11,17 +11,16 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		giverFields = new HashMap<String,String>();
+		formMap = new HashMap<String,String>();
 	}
 
 	public void setParams(){
 		Long id = getGiverid();
-		int vekt=0;
-		if(getVekt()!= null)
-			vekt = Integer.parseInt(getVekt());
+		
 		if (id == null){
-			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),vekt};
+			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),getVekt()};
 		}else
-			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),vekt,getGiverid()};
+			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),getVekt(),getGiverid()};
 		
 	}
 

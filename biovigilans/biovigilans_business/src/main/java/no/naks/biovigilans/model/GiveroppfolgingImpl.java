@@ -10,6 +10,7 @@ public class GiveroppfolgingImpl extends AbstractGiveroppfolging implements Give
 		types= new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER};
 		utypes= new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.INTEGER};
 		giveroppfolgingFields = new HashMap();
+		formMap = new HashMap<String,String>();
 	}
 	
 	public void setParams() {

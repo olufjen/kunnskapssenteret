@@ -51,4 +51,6 @@ public interface Giverkomplikasjon {
 	public void setMeldeid(Long meldeid);
 	public Long getDonasjonid();
 	public void setDonasjonid(Long donasjonid);
+	public Map getFormMap() ;
+	public void setFormMap(Map formMap);
 }

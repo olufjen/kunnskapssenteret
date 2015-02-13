@@ -45,5 +45,6 @@ public interface Vigilansmelding {
 	public void saveToVigilansmelding();
 	public String getMeldingsnokkel();
 	public void setMeldingsnokkel(String meldingsnokkel) ;
-
+	public Map getFormMap() ;
+	public void setFormMap(Map formMap);
 }
