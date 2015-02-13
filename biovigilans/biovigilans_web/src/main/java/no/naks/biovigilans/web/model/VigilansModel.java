@@ -49,7 +49,7 @@ public class VigilansModel {
 	public void setValues(Parameter entry){
 		String name = entry.getName();
 		String value = entry.getValue();
-		boolean finnes = formMap.containsKey(name);
+		//boolean finnes = formMap.containsKey(name);
 		formMap.put(name, value);
 	
 	}

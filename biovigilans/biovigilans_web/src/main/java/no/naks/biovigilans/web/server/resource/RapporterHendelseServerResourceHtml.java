@@ -331,6 +331,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 		    		Representation pasientkomplikasjonFtl = clres2.get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+		    		
 		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 		    				MediaType.TEXT_HTML);
 	    		}else{

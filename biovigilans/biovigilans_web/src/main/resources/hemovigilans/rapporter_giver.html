@@ -141,6 +141,11 @@
 				$("#btnSendinn").val('godkjent');
 				return false;
 			}else if(btnValue == "godkjent"){
+				$("input[type=radio]").attr('disabled', false);
+				$("input[type=checkbox]").attr('disabled', false);
+				$('div').find('input, textarea, select').attr('readonly', false);
+				$('div').find('select').attr('disabled', false);
+				
 				$( "#rapportgiver" ).submit();
 			}
 		}else if(val=="avbryt"){

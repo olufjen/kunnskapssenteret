@@ -1,37 +1,22 @@
 package no.naks.biovigilans.web.server.resource;
 
-import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import no.naks.biovigilans.model.DonasjonImpl;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
-import no.naks.biovigilans.web.model.GiverKvitteringWebModel;
 import no.naks.biovigilans.web.model.KomDiagnosegiverwebModel;
 import no.naks.biovigilans.web.model.MelderwebModel;
-import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
-import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
-import no.naks.biovigilans.web.model.TransfusjonWebModel;
-import no.naks.biovigilans.web.xml.Letter;
-import no.naks.biovigilans.web.xml.MainTerm;
 
-import org.restlet.Request;
-import org.restlet.Restlet;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
 import org.restlet.data.MediaType;
 import org.restlet.data.Parameter;
-import org.restlet.data.Reference;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
-import org.restlet.resource.Directory;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
-import org.restlet.routing.Router;
 
 public class RapporterGiverServerResourceHtml extends SessionServerResource {
 
@@ -51,12 +36,8 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	public Representation getHemovigilans() {
 
 		//invalidateSessionobjects();
-	     Reference reference = new Reference(getReference(),"..").getTargetRef();
+	    // Reference reference = new Reference(getReference(),"..").getTargetRef();
 	
-	     Request request = getRequest();
-
-
-	    
 
 /*
  * En Hashmap benyttes dersom en html side henter data fra flere javaklasser.	
@@ -65,23 +46,23 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 */	     
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
-	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
+	    /* LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
 	     LocalReference localUri = new LocalReference(reference);
-	
+	*/
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
 	    
 	     setTransfusjonsObjects(); // Setter opp alle session objekter
-	   	 giverModel.setFormNames(sessionParams);
+	//   	 giverModel.setFormNames(sessionParams);
     	 donasjon.setFormNames(sessionParams);
      	 komDiagnosegiver.setFormNames(sessionParams);
     //	 giverKvittering.setFormNames(sessionParams);
          
-	     giverModel.distributeTerms();
-	     giverModel.giverKomplikasjonDistribute();
-	     giverModel.giveroppfolgingDistribute();
+	 //    giverModel.distributeTerms();
+	 //    giverModel.giverKomplikasjonDistribute();
+	 //    giverModel.giveroppfolgingDistribute();
 	     donasjon.distributeTerms();
 	     komDiagnosegiver.distributeTerms();
 	     
@@ -203,7 +184,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     		
     		if (giverModel == null){
     			giverModel = new GiverKomplikasjonwebModel();
-    			 giverModel.setFormNames(sessionParams);
+    			// giverModel.setFormNames(sessionParams);
     		}
  
     		if(donasjon==null){
@@ -241,7 +222,6 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     	//	dataModel.put(kvitteringGiverId, giverKvittering);
     		ClientResource clres2  ;
       		
-    		Parameter ikkegodkjet = form.getFirst("btnAvbryt");
     		Parameter lagre = form.getFirst("btnSendinn");
     		if(lagre!=null){
     			giverModel.saveValues();
@@ -270,12 +250,15 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     			giverWebService.saveGiveroppfolging(giverModel);
     			giverModel.setLagret(true);
     	//		giverKvittering.setReadonlyFlag("true");
+    			
+    			//lagre i vigiansmelding
+    			dataModel.put(melderId, melderwebModel);
     			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-    		    //lagre i vigiansmelding
+
     		}else{
 	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
 			}
-	     	Representation pasientkomplikasjonFtl = clres2.get();
+    		Representation pasientkomplikasjonFtl = clres2.get();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     				MediaType.TEXT_HTML);
     	}
