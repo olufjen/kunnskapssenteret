@@ -36,6 +36,7 @@ public interface Annenkomplikasjon {
 	public void setAnnenkomplicationfieldMaps(String[]userFields);
 	public void setParams();
 	public int[] getTypes();
+	public void setannenKomplikasjonstypes();
 	public Object[] getParams();
 	public int[] getUtypes();	
 	public void saveField(String userField, String userValue);
