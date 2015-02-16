@@ -253,6 +253,11 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		}else
 			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
 		}
+	public void setannenKomplikasjonstypes(){
+		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+
+	}
 	/**
 	 * setAnnenkomplicationfieldMaps
 	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
