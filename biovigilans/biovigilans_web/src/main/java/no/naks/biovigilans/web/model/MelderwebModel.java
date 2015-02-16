@@ -691,15 +691,25 @@ public class MelderwebModel extends VigilansModel {
 			for(Map row:rows){
 				Long id = Long.parseLong(row.get("melderid").toString());
 				melder.setMelderId(id);
-				String name = row.get("meldernavn").toString();
+				String name = "";
+				if (row.get("meldernavn") != null)
+					name = row.get("meldernavn").toString();
+				String tlf = "";
 				this.setMeldernavn(name);
-				String tlf = row.get("meldertlf").toString();
+				if (row.get("meldertlf") != null)
+					tlf = row.get("meldertlf").toString();
 				this.setMeldertlf(tlf);
-				String helseregion = row.get("helseregion").toString();
+				String helseregion = "";
+				if (row.get("helseregion") != null)
+					helseregion = row.get("helseregion").toString();
 				this.setHelseregion(helseregion);
-				String helseforetak = row.get("helseforetak").toString();
+				String helseforetak = "";
+				if (row.get("helseforetak") != null)
+					helseforetak = row.get("helseforetak").toString();
 				this.setHelseforetak(helseforetak);
-				String sykehus = row.get("sykehus").toString();
+				String sykehus = "";
+				if (row.get("sykehus") != null)
+					sykehus = row.get("sykehus").toString();
 				this.setSykehus(sykehus);
 			}
 	}
@@ -734,16 +744,28 @@ public class MelderwebModel extends VigilansModel {
 			for(Map row:melderInfo){
 				Long id = Long.parseLong(row.get("melderid").toString());
 				melder.setMelderId(id);
-				String name = row.get("meldernavn").toString();
+				String name = "";
+				if (row.get("meldernavn") != null)
+					name = row.get("meldernavn").toString();
+				String tlf = "";
 				this.setMeldernavn(name);
-				String tlf = row.get("meldertlf").toString();
+				if (row.get("meldertlf") != null)
+					tlf = row.get("meldertlf").toString();
 				this.setMeldertlf(tlf);
-				String helseregion = row.get("helseregion").toString();
+				String helseregion = "";
+				if (row.get("helseregion") != null)
+					helseregion = row.get("helseregion").toString();
 				this.setHelseregion(helseregion);
-				String helseforetak = row.get("helseforetak").toString();
+				String helseforetak = "";
+				if (row.get("helseforetak") != null)
+					helseforetak = row.get("helseforetak").toString();
 				this.setHelseforetak(helseforetak);
-				String sykehus = row.get("sykehus").toString();
+				String sykehus = "";
+				if (row.get("sykehus") != null)
+					sykehus = row.get("sykehus").toString();
 				this.setSykehus(sykehus);
+				
+
 			}
 		}
 		if (melderInfo == null){
