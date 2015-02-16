@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
@@ -104,19 +105,25 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 //    	 melderwebModel.setFormNames(sessionParams);
 //    	 melderwebModel.distributeTerms();
     	 if (messageType.equals("transfusjon")){
+    		 Vigilansmelding vigilansmelding = (Vigilansmelding) transfusjon.getPasientKomplikasjon();
+    		 transfusjon.setMeldingLevert(vigilansmelding.getMeldingsdato());
+    		 transfusjon.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 dataModel.put(meldingsId, transfusjon);
     	 }
     	 if (messageType.equals("giver")){
+    		 Vigilansmelding vigilansmelding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
+    		 giverModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
+    		 giverModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 dataModel.put(meldingsId, giverModel);
     	 }
     	 if (messageType.equals("annen")){
-    		
+    		 Vigilansmelding vigilansmelding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
+    		 annenModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
+    		 annenModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 dataModel.put(meldingsId, annenModel);
     	 }
 //    	 dato = melding.getVigilans().getDatoforhendelse();
-    	 dato = new Date();
-    	 SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-    	 datoStr = sdf.format(dato);
+    	invalidateSessionobjects();
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/leveranse.html"));
 	     Representation pasientkomplikasjonFtl = clres2.get();
 	     TemplateRepresentation  templatemapRep = new TemplateRepresentation(pasientkomplikasjonFtl,dataModel,
