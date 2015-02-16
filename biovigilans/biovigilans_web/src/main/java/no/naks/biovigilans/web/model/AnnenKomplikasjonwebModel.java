@@ -1,6 +1,7 @@
 package no.naks.biovigilans.web.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +29,10 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		super();
 		annenKomplikasjon = new AnnenkomplikasjonImpl();
 		komplikasjonsklassifikasjon =  new KomplikasjonsklassifikasjonImpl();
+		vigilansmelding = (Vigilansmelding) annenKomplikasjon;
 		//hvagikkgaltList = new ArrayList<String>();
 	}
-	
+
 	public Vigilansmelding getVigilansmelding() {
 		return vigilansmelding;
 	}
