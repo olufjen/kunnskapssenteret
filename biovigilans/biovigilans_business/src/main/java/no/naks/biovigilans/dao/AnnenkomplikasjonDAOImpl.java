@@ -103,6 +103,7 @@ public class AnnenkomplikasjonDAOImpl extends AbstractAdmintablesDAO implements 
 		tablesUpdate = null;
 
 		annenKomplikasjon.setParams();
+		annenKomplikasjon.setannenKomplikasjonstypes();
 		int[] atypes = annenKomplikasjon.getTypes();
 		Object[] aparams = annenKomplikasjon.getParams();
 		boolean isUpdate = annenKomplikasjon.isUpdat();
