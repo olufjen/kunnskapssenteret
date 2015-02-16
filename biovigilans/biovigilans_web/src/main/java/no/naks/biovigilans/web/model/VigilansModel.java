@@ -1,6 +1,7 @@
 package no.naks.biovigilans.web.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,8 @@ public class VigilansModel {
 	private String[] formNames; // Inneholder navn på input felt i skjermbildet
 	private String accountRef;
 	private Vigilansmelding vigilans;
-	
+	private Date meldingLevert;
+	private String meldingsNokkel;
 
 	
 	public VigilansModel() {
@@ -39,6 +41,30 @@ public class VigilansModel {
 	public void setLagret(boolean lagret) {
 		this.lagret = lagret;
 	}
+
+
+
+
+
+	public Date getMeldingLevert() {
+		return meldingLevert;
+	}
+
+
+	public void setMeldingLevert(Date meldingLevert) {
+		this.meldingLevert = meldingLevert;
+	}
+
+
+	public String getMeldingsNokkel() {
+		return meldingsNokkel;
+	}
+
+
+	public void setMeldingsNokkel(String meldingsNokkel) {
+		this.meldingsNokkel = meldingsNokkel;
+	}
+
 
 	/**
 	 * setValues
