@@ -1,5 +1,6 @@
 package no.naks.biovigilans.web.model;
 
+import java.util.Date;
 import java.util.Map;
 
 import no.naks.biovigilans.model.AbstractVigilansmelding;
@@ -37,6 +38,7 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		
 	}
 	
+
 	public String[] getVarighetSkadegruppe() {
 		return varighetSkadegruppe;
 	}
