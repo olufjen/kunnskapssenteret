@@ -28,7 +28,7 @@
           </div>
           <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
             <div class="bottom">
-				<button type="button" class="btn btn-default">Tilbake</button>
+				<button type="button" onclick="document.location='hemovigilans.html';" class="btn btn-default">Tilbake</button>
 			</div>
           </div>
         </div>
@@ -37,16 +37,23 @@
 
 <div class="container">
 
-<h1>Meldingsleveranse</h1>
- <div class="form-group">
-        <label>Levert dato</label>
+<h1>Meldingsleveranse - Kvittering </h1>
+ <div id="levert" class="form-group">
+        <label>Levert dato: </label>
        <label>
-       ${melding.datoStr}
+       ${melding.meldingLevert?date}
        </label>
- 
- 		
  </div>
-
+  <div id="nokkel" class="form-group">
+        <label>Meldingsnøkkel: </label>
+       <label>
+       ${melding.meldingsNokkel}
+       </label>
+ </div>
+  <div id="ml" class="form-group">
+        <label>Vennligst oppgi meldingsnøkkel ved senere korrespondanse</label>
+   
+ </div>
 </div>
 <div class="panel-group" id="accordion">
 
