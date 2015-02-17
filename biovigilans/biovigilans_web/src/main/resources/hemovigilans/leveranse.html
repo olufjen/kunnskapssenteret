@@ -28,7 +28,7 @@
           </div>
           <div class="col-xs-3 col-sm-pull-9 col-vertical-bottom-sm">
             <div class="bottom">
-				<button type="button" onclick="document.location='hemovigilans.html';" class="btn btn-default">Tilbake</button>
+				<button type="button" onclick="homePage()" class="btn btn-default">Tilbake</button>
 			</div>
           </div>
         </div>
@@ -36,6 +36,18 @@
     </header>
 
 <div class="container">
+<form action="?method=PUT" method="post">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+function homePage(){
+	var curAddr = document.location.href;
+//	 alert(curAddr);
+	var newAddr = curAddr.replace("leveranse.html","");
+//	alert(newAddr);
+	document.location = newAddr;
+
+}
+</script>
 
 <h1>Meldingsleveranse - Kvittering </h1>
  <div id="levert" class="form-group">
@@ -62,6 +74,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <!--<script src="js/bootstrap.min.js"></script>-->
+</form>
 </div> <!--slutt container-->
 </body>
 </html>
