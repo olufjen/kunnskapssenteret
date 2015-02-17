@@ -258,7 +258,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 			    				MediaType.TEXT_HTML);
-        		
+	    		redirectPermanent("../hemovigilans/rapporter_kontakt.html");
     		}else{
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
     			Representation pasientkomplikasjonFtl = clres2.get();
@@ -267,7 +267,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 			}
     		
     	}
-    	redirectPermanent("../hemovigilans/rapporter_kontakt.html");
+    
     	return templateRep;
       
     }
