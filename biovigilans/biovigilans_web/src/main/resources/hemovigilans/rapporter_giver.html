@@ -101,7 +101,7 @@
 	function initialize()
 	{
 	    var SpinnerValue_Changed = function() {
-	       alert("event captured");
+	       
 	    };
 	   
 	    Spinner1 = document.getElementById("p-blod-erytrocytt");
@@ -119,13 +119,13 @@
 			document.getElementById("tab-imgarea").setAttribute('value',val);
 	}
 	
-	
+	/* 
 	function selectRadio(name,val){
 		alert('radio value ' + val + " name:" + name);
 		var selected_Id = $("input[type=radio][name="+ name +"][value="+ val +"]").attr('id');
 		alert(selected_Id)
 	}
-	
+	 */
 	function sendInn(val){
 		if(val=="sendinn"){
 			var btnValue = $("#btnSendinn").val();
@@ -145,8 +145,8 @@
 				$("input[type=checkbox]").attr('disabled', false);
 				$('div').find('input, textarea, select').attr('readonly', false);
 				$('div').find('select').attr('disabled', false);
-				
-				$( "#rapportgiver" ).submit();
+					
+				return true;
 			}
 		}else if(val=="avbryt"){
 			var btnValue = $("#btnAvbryt").val();
@@ -169,9 +169,10 @@
 			}
 		}
 	}
+	
 	</script>
 
-	<form id="rapportgiver" action="?method=PUT" method="post">
+	<form id="rapportgiver" action="?method=PUT" method="post"  >
 	<h1>Rapporter hendelse–Hemovigilans</h1>
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs">

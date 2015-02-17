@@ -220,8 +220,7 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     	    sessionAdmin.setSessionObject(getRequest(), melderwebModel,melderId);
     		dataModel.put(giverkomplikasjonId, giverModel);
     	//	dataModel.put(kvitteringGiverId, giverKvittering);
-    		ClientResource clres2  ;
-      		
+    		
     		Parameter lagre = form.getFirst("btnSendinn");
     		if(lagre!=null){
     			giverModel.saveValues();
@@ -253,15 +252,22 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     			
     			//lagre i vigiansmelding
     			dataModel.put(melderId, melderwebModel);
-    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		Representation pasientkomplikasjonFtl = clres2.get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
+	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
+	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+			    				MediaType.TEXT_HTML);
+        		
     		}else{
-	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));
+    			Representation pasientkomplikasjonFtl = clres2.get();
+        		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+        				MediaType.TEXT_HTML);
 			}
-    		Representation pasientkomplikasjonFtl = clres2.get();
-    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
-    				MediaType.TEXT_HTML);
+    		
     	}
+    	redirectPermanent("../hemovigilans/rapporter_kontakt.html");
     	return templateRep;
       
     }
