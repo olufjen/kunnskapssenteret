@@ -130,6 +130,14 @@ function leveranseValgt(){
 	//document.location("leveranse.html");
 	$("#btnleveranseb").click();
 }
+function homePage(){
+	var curAddr = document.location.href;
+//	 alert(curAddr);
+	var newAddr = curAddr.replace("rapporter_kontakt.html","");
+//	alert(newAddr);
+	document.location = newAddr;
+
+}
 //window.onload=initialize();
 </script>
 
@@ -151,6 +159,10 @@ function leveranseValgt(){
           </label>
  </div>
  <div id="anonymbutton" style="display:none" >
+   <label>
+            <input name="k-anonym" type="radio" id="k-ikkeanonym" value="k-ikkeanonym" onclick="toggleDisplay('kontakt1',this.checked);toggleDisplay('anonymbutton',0)"/>
+            Ønsker å melde normalt
+   </label><br>
  	 <button name="lagreanonymt" type="submit" class="btn btn-primary" >Lagre</button>
 </div>
     
@@ -235,7 +247,7 @@ function leveranseValgt(){
         </div>
       </div>
 		<br/>
-          <button name="avbrytkontakt" type="button" class="btn btn-default"  onclick="document.location='hemovigilans.html';">Avbryt</button>
+          <button name="avbrytkontakt" type="button" class="btn btn-default"  onclick="homePage()">Avbryt</button>
       
           <button name="lagrekontakt" type="button" onclick="document.location='leveranse.html';" class="btn btn-primary" >Lagre</button>
 		  <button type="submit" id="btnKontak" value="kontakValue"  name="formValue" class="btn btn-primary" style="display: none" > getValue </button>
