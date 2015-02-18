@@ -8,4 +8,5 @@ public interface MelderWebService {
 
 	public void saveMelder(MelderwebModel melderwebModel);
 	public List selectMelder(String epost);
+	public List selectMeldinger(String meldingsNokkel);
 }
