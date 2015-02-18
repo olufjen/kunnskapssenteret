@@ -50,12 +50,16 @@ function homePage(){
 </script>
 
 <h1>Meldingsleveranse - Kvittering </h1>
+  
  <div id="levert" class="form-group">
         <label>Levert dato: </label>
        <label>
-       ${melding.meldingLevert?date}
+       <#if melding.meldLevert??>
+       ${melding.meldLevert}
+       </#if>
        </label>
  </div>
+
   <div id="nokkel" class="form-group">
         <label>Meldingsnøkkel: </label>
        <label>
