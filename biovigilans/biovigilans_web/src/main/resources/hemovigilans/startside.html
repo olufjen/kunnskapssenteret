@@ -60,6 +60,7 @@ function toggleDisplay(id, displayvalue)
  //   alert("step 4");
 }
 function meldingsnokkel(){
+	
 	$("#btnnokkel").click();
 }
 </script>
@@ -79,8 +80,9 @@ function meldingsnokkel(){
         <div class="form-group" id="passord-div" style="display:none">
         <label for="k-passord">Meldingsnøkkel  er:</label>
         <div>
-          <input name="k-passord" type="text" class="form-control" id="k-passord" placeholder="Passord" onblur="meldingsnokkel();">
-        </div>
+          <input name="k-meldingsnokkel" type="text" class="form-control" id="k-meldingsnokkel" placeholder="Meldingsnøkkel" onblur="meldingsnokkel();">
+        </div><br />
+       
       </div>
       </div>
        <div class="radio">
@@ -89,9 +91,10 @@ function meldingsnokkel(){
              Nei, det er en ny melding
           </label>
       </div>
-  
-
-
+     <div class="form-group" id="ingennokkel" >
+     	<label>${melding}</label>
+     </div>
+ 
 </div>
 <div class="panel-group" id="accordion">
 
