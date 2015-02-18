@@ -9,5 +9,5 @@ public interface MelderTableService {
 	
 	public void saveMelder(Melder melder);
 	public List selectMelder(String epost);
-
+	public List selectMeldinger(String meldingsNokkel);
 }
