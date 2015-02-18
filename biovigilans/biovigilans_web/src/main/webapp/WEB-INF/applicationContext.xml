@@ -211,7 +211,25 @@
         <property name="donasjonWebService" ref="donasjonWebService"></property>
         <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
         <property name="melderWebService" ref="melderWebService"></property>
+  </bean>
+    
+   <bean name="/hemovigilans/startside.html" id="rapporterstartServerResource" autowire="byName" scope="prototype"
+            class="no.naks.biovigilans.web.server.resource.RapporterStartServerResourceHTML">
+        <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
+        <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
+                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
+        <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="tablewebservice" ref="tableWebService"></property>
+        <property name="innmeldingWebService" ref="hendelseWebService"></property>
+        <property name="icd10WebService" ref="ICD10WebService"></property>
+          <property name="giverWebService" ref="giverWebService"></property>
+        <property name="donasjonWebService" ref="donasjonWebService"></property>
+        <property name="komDiagnosegiverWebService" ref="komDiagnosegiverWebService"></property>
+        <property name="melderWebService" ref="melderWebService"></property>
   </bean>  
+ 
+ 
+ 
     
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
