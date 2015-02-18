@@ -563,6 +563,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
+	    		redirectPermanent("../hemovigilans/leveranse.html");
 	    		
     		}else if(formValue != null){					// Sjekk epostadresse oppgitt
 				String epost = melderwebModel.getMelderepost();
@@ -611,7 +612,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 					if(rows.size() > 0){
 						melderwebModel.kontaktValues( rows);
 						melderwebModel.saveAnonym();
-					//	melderwebModel.saveValues();
+						melderwebModel.saveValues();
 						
 						//sessionAdmin.getSession(getRequest(),melderId).invalidate();
 			    	}else{
