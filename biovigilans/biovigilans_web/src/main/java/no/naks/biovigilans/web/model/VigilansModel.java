@@ -1,5 +1,8 @@
 package no.naks.biovigilans.web.model;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,7 +26,8 @@ public class VigilansModel {
 	private Vigilansmelding vigilans;
 	private Date meldingLevert;
 	private String meldingsNokkel;
-
+	private String meldLevert;
+	
 	
 	public VigilansModel() {
 		super();
@@ -51,8 +55,15 @@ public class VigilansModel {
 	}
 
 
-	public void setMeldingLevert(Date meldingLevert) {
+	public void setMeldingLevert(Date meldingLevert) throws ParseException {
 		this.meldingLevert = meldingLevert;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			meldLevert = dateFormat.format(meldingLevert);
+			Date datoLevert =   dateFormat.parse(meldLevert);
+		} catch (ParseException e) {
+			System.out.println("date format problem: " + e.toString());
+		}
 	}
 
 
@@ -63,6 +74,16 @@ public class VigilansModel {
 
 	public void setMeldingsNokkel(String meldingsNokkel) {
 		this.meldingsNokkel = meldingsNokkel;
+	}
+
+
+	public String getMeldLevert() {
+		return meldLevert;
+	}
+
+
+	public void setMeldLevert(String meldLevert) {
+		this.meldLevert = meldLevert;
 	}
 
 
