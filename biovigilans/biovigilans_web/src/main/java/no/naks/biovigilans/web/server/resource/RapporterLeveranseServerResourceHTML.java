@@ -1,5 +1,6 @@
 package no.naks.biovigilans.web.server.resource;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -109,25 +110,47 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 //    	 melderwebModel.distributeTerms();
     	 if (messageType.equals("transfusjon")){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) transfusjon.getPasientKomplikasjon();
-    		 transfusjon.setMeldingLevert(vigilansmelding.getMeldingsdato());
+    		 try {
+				transfusjon.setMeldingLevert(vigilansmelding.getMeldingsdato());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		 transfusjon.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 dataModel.put(meldingsId, transfusjon);
     	 }
     	 if (messageType.equals("giver")){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
-    		 giverModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
+  
+				try {
+					giverModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	
     		 giverModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 dataModel.put(meldingsId, giverModel);
     	 }
     	 if (messageType.equals("annen")){
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
-    		 annenModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
+    		 try {
+				annenModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		 annenModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
     		 dataModel.put(meldingsId, annenModel);
     	 }
     	 if (messageType.equals("none")){
     		 annenModel = new AnnenKomplikasjonwebModel();
-    		 annenModel.setMeldingLevert(new Date());
+    		 try {
+				annenModel.setMeldingLevert(new Date());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		 annenModel.setMeldingsNokkel("Ingen melding levert");
     		 dataModel.put(meldingsId, annenModel);
     	 }
