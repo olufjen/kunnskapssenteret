@@ -18,5 +18,9 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 	public String getUpdateMelderSQL() ;
 	public void setUpdateMelderSQL(String updateMelderSQL);
 	public List selectMelder(String epost);
-	
+	public List selectMeldinger (String meldingsNokkel);
+	public String[] getVigilandsMeldingTableDefs();
+	public void setVigilandsMeldingTableDefs(String[] vigilandsMeldingTableDefs);
+	public String getSelectvigilansMeldingSQL();
+	public void setSelectvigilansMeldingSQL(String selectvigilansMeldingSQL);
 }
