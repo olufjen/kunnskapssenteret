@@ -1,7 +1,10 @@
 package no.naks.biovigilans.dao;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.model.Melder;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
@@ -15,7 +18,25 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private String selectMeldingSQL;
 	private String melderPrimaryKey;
 	private String[] melderprimarykeyTableDefs;
+	private String[] vigilandsMeldingTableDefs;
+	private String selectvigilansMeldingSQL;
+	
 	private Tablesupdate tablesUpdate = null;
+	private VigilansSelect vigilansSelect = null;
+	
+	public String[] getVigilandsMeldingTableDefs() {
+		return vigilandsMeldingTableDefs;
+	}
+	public void setVigilandsMeldingTableDefs(String[] vigilandsMeldingTableDefs) {
+		this.vigilandsMeldingTableDefs = vigilandsMeldingTableDefs;
+	}
+	public String getSelectvigilansMeldingSQL() {
+		return selectvigilansMeldingSQL;
+	}
+	public void setSelectvigilansMeldingSQL(String selectvigilansMeldingSQL) {
+		this.selectvigilansMeldingSQL = selectvigilansMeldingSQL;
+	}
+	
 	public String getInsertMelderSQL() {
 		return insertMelderSQL;
 	}
@@ -79,5 +100,18 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql,epost);
 		return rows;
 	}
+	/**
+	 * selectMeldinger
+	 * Denne rutinen henter alle meldinger til en melder basert på en meldingsnøkkel
+	 * @param meldingsNokkel
+	 * @return
+	 */
+	public List selectMeldinger (String meldingsNokkel){
+		int type = Types.VARCHAR;
+		vigilansSelect = new VigilansSelect(getDataSource(),selectvigilansMeldingSQL,vigilandsMeldingTableDefs);
+		vigilansSelect.declareParameter(new SqlParameter(type));
+		List meldinger = vigilansSelect.execute(meldingsNokkel);
+		return meldinger;
+	}
 	
-}
+}	
