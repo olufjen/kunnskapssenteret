@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.naks.biovigilans.model.AnnenkomplikasjonImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
@@ -89,6 +90,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	 giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),giverkomplikasjonId);
     	 annenModel = (AnnenKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),andreHendelseId);
     	 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(getRequest(),donasjonId);
+/*    	 
 	     if (melderwebModel != null){
 	    	 melderwebModel.saveValues();
 	    	 melderWebService.saveMelder(melderwebModel);
@@ -96,6 +98,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 	    	 sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
 	    	 dataModel.put(melderId, melderwebModel);
 	     }
+*/	     
 	     VigilansModel melding = checkMessageType();
 
 	     
@@ -120,6 +123,12 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
     		 annenModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
     		 annenModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
+    		 dataModel.put(meldingsId, annenModel);
+    	 }
+    	 if (messageType.equals("none")){
+    		 annenModel = new AnnenKomplikasjonwebModel();
+    		 annenModel.setMeldingLevert(new Date());
+    		 annenModel.setMeldingsNokkel("Ingen melding levert");
     		 dataModel.put(meldingsId, annenModel);
     	 }
 //    	 dato = melding.getVigilans().getDatoforhendelse();
