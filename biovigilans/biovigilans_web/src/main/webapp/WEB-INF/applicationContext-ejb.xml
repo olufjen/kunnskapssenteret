@@ -67,6 +67,10 @@
   	${vigilans.sjekklistesaksbehandling},${vigilans.supplerendeopplysninger},${vigilans.meldingsdato},${vigilans.meldingsnokkel},${vigilans.melderid},
   	${vigilans.kladd},${vigilans.godkjent},${vigilans.endringsdato}"></property>
   	<property name="selectvigilansMeldingSQL" value="${vigilansmelding.select}"></property>
+  	<property name="selectannenKomplikasjonSQL" value="${annenMeldingSelect}"></property>
+  	<property name="annenkomplikasjonTableDefs" value="${annenkomplikasjon.meldeid},${annenkomplikasjon.klassifikasjon},${annenkomplikasjon.klassifikasjonkode},
+  	${annenkomplikasjon.delkode},${annenkomplikasjon.komplikasjonbeskrivelse},${annenkomplikasjon.komplikasjondefinisjon},${annenkomplikasjon.avvikarsak},
+  	${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget}"></property>
   </bean>
   <bean id="komplikasjonsdiagnosegiverDAO" class="no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
