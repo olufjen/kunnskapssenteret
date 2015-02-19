@@ -1,7 +1,7 @@
 package no.naks.biovigilans.dao;
 
 import java.util.List;
-
+import java.util.Map;
 import no.naks.biovigilans.model.Melder;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
@@ -18,9 +18,13 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 	public String getUpdateMelderSQL() ;
 	public void setUpdateMelderSQL(String updateMelderSQL);
 	public List selectMelder(String epost);
-	public List selectMeldinger (String meldingsNokkel);
+	public Map<String,List> selectMeldinger (String meldingsNokkel);
 	public String[] getVigilandsMeldingTableDefs();
 	public void setVigilandsMeldingTableDefs(String[] vigilandsMeldingTableDefs);
 	public String getSelectvigilansMeldingSQL();
 	public void setSelectvigilansMeldingSQL(String selectvigilansMeldingSQL);
+	public String getSelectannenKomplikasjonSQL();
+	public void setSelectannenKomplikasjonSQL(String selectannenKomplikasjonSQL);
+	public String[] getAnnenkomplikasjonTableDefs();
+	public void setAnnenkomplikasjonTableDefs(String[] annenkomplikasjonTableDefs);
 }
