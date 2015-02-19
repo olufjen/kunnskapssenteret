@@ -24,6 +24,8 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 
+import freemarker.template.SimpleScalar;
+
 /**
  * RapporterLeveranseServerResourceHTML
  * @author olj
@@ -34,6 +36,8 @@ import org.restlet.resource.Get;
 public class RapporterLeveranseServerResourceHTML extends SessionServerResource {
 
 	private String meldingsId = "melding";
+	private String nokkelId = "nokkel";
+	private String datoId = "dato";
 	private Date dato = null;
 	private String datoStr = "";
 	
@@ -80,7 +84,8 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     Request request = getRequest();
-
+	     String meldingsNokkel = null;
+	     String datoLevert = null;
 /*
  * Hent alle session objekter
  */
@@ -102,7 +107,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 */	     
 	     VigilansModel melding = checkMessageType();
 
-	     
+	 
 //	     setTransfusjonsObjects();
 //	     setAndreHendelser();
 	
@@ -117,6 +122,8 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 				e.printStackTrace();
 			}
     		 transfusjon.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
+    		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
+    		 datoLevert = transfusjon.getMeldLevert();
     		 dataModel.put(meldingsId, transfusjon);
     	 }
     	 if (messageType.equals("giver")){
@@ -130,6 +137,8 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 				}
 	
     		 giverModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
+    		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
+    		 datoLevert = giverModel.getMeldLevert();
     		 dataModel.put(meldingsId, giverModel);
     	 }
     	 if (messageType.equals("annen")){
@@ -141,6 +150,8 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 				e.printStackTrace();
 			}
     		 annenModel.setMeldingsNokkel(vigilansmelding.getMeldingsnokkel());
+    		 meldingsNokkel = vigilansmelding.getMeldingsnokkel();
+    		 datoLevert = annenModel.getMeldLevert();
     		 dataModel.put(meldingsId, annenModel);
     	 }
     	 if (messageType.equals("none")){
@@ -152,8 +163,14 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 				e.printStackTrace();
 			}
     		 annenModel.setMeldingsNokkel("Ingen melding levert");
+    		 meldingsNokkel = "Ingen melding levert";
+    		 datoLevert = annenModel.getMeldLevert();
     		 dataModel.put(meldingsId, annenModel);
     	 }
+    	    SimpleScalar simple = new SimpleScalar(meldingsNokkel);
+    	    dataModel.put(nokkelId,simple);
+    	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
+    	    dataModel.put(datoId, datoSimple);
 //    	 dato = melding.getVigilans().getDatoforhendelse();
     	invalidateSessionobjects();
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/leveranse.html"));
