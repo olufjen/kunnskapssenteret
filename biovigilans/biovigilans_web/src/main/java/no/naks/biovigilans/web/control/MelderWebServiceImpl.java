@@ -30,7 +30,7 @@ public class MelderWebServiceImpl implements MelderWebService {
 	public List selectMelder(String epost){
 		return melderTableService.selectMelder(epost);
 	}
-	public List selectMeldinger(String meldingsNokkel){
+	public Map<String,List> selectMeldinger(String meldingsNokkel){
 		return melderTableService.selectMeldinger(meldingsNokkel);
 	}
 
