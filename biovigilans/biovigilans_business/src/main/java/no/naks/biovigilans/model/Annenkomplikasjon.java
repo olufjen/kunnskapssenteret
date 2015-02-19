@@ -20,6 +20,8 @@ public interface Annenkomplikasjon {
 	public void setHovedprosess(String hovedprosess);
 	public String getTiltak();
 	public void setTiltak(String tiltak);
+	public void setDelkode(String delkode);
+	public String getDelkode();
 	public String getKommentar();
 	public void setKommentar(String kommentar);
 	public String getOppdaget();
