@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Annenkomplikasjon;
+import no.naks.biovigilans.model.Vigilansmelding;
+
 import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
@@ -20,14 +23,60 @@ import freemarker.template.SimpleScalar;
 
 public class RapporterStartServerResourceHTML extends SessionServerResource {
 
-	private String meldingsId = "melding";
+	private String meldingsId = "meldinger";
+	private String delMelding = "delmelding";
+	private String meldeTxtId = "melding";
+	private String andreKey = "annenKomp"; 		// Nøkkel dersom melding er av type annenkomplikasjon
+	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
+	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
 	
+	
+	public String getDelMelding() {
+		return delMelding;
+	}
+
+	public void setDelMelding(String delMelding) {
+		this.delMelding = delMelding;
+	}
+
 	public String getMeldingsId() {
 		return meldingsId;
 	}
 
 	public void setMeldingsId(String meldingsId) {
 		this.meldingsId = meldingsId;
+	}
+
+	public String getMeldeTxtId() {
+		return meldeTxtId;
+	}
+
+	public void setMeldeTxtId(String meldeTxtId) {
+		this.meldeTxtId = meldeTxtId;
+	}
+
+	public String getAndreKey() {
+		return andreKey;
+	}
+
+	public void setAndreKey(String andreKey) {
+		this.andreKey = andreKey;
+	}
+
+	public String getPasientKey() {
+		return pasientKey;
+	}
+
+	public void setPasientKey(String pasientKey) {
+		this.pasientKey = pasientKey;
+	}
+
+	public String getGiverKey() {
+		return giverKey;
+	}
+
+	public void setGiverKey(String giverKey) {
+		this.giverKey = giverKey;
 	}
 
 	/**
@@ -45,7 +94,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	     String meldingsText = " ";
 	     SimpleScalar simple = new SimpleScalar(meldingsText);
-		    dataModel.put(meldingsId,simple );
+		    dataModel.put(meldeTxtId,simple );
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
@@ -73,8 +122,11 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     	TemplateRepresentation  templateRep = null;
  	    Map<String, Object> dataModel = new HashMap<String, Object>();
  	    String meldingsText = "Meldingsnøkkel finnes ikke, prøv igjen";
-	    dataModel.put(meldingsId, meldingsText);
+	    dataModel.put( meldeTxtId, meldingsText);
+	    Request request = getRequest();
+	    Map<String,List> alleMeldinger = new HashMap<String,List>();
  	    List meldinger = null;
+ 	    List delMeldinger = null;
     	if(form == null){
     		invalidateSessionobjects();
     	}
@@ -90,8 +142,15 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     	}
 		Parameter formValue = form.getFirst("formValue"); // Bruker oppgir meldingsnøkkel
     	if (formValue != null && meldingsNokkel != null){
-    		meldinger = melderWebService.selectMeldinger(meldingsNokkel);
+    		alleMeldinger = melderWebService.selectMeldinger(meldingsNokkel);
+    		meldinger = alleMeldinger.get(meldingsNokkel);
+    		delMeldinger = alleMeldinger.get(andreKey);
+    		if (!delMeldinger.isEmpty()){
+    			Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)delMeldinger.get(0);
+    			sessionAdmin.setSessionObject(request, annenKomplikasjon,andreKey);
+    		}
     	}
+    	
     	if (meldinger.isEmpty()){
     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
@@ -100,7 +159,8 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     	}
     	
     	if (!meldinger.isEmpty()){
-    		
+    		Vigilansmelding melding = (Vigilansmelding) meldinger.get(0);
+    		sessionAdmin.setSessionObject(request, melding, meldingsId);
     		redirectPermanent("../hemovigilans/rapportert_melding.html");
     	}
 
