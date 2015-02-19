@@ -1,12 +1,14 @@
 package no.naks.biovigilans.dao;
 
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.jdbc.core.SqlParameter;
 
 import no.naks.biovigilans.model.Melder;
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
@@ -20,10 +22,31 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private String[] melderprimarykeyTableDefs;
 	private String[] vigilandsMeldingTableDefs;
 	private String selectvigilansMeldingSQL;
+	private String selectannenKomplikasjonSQL;
+	private String[] annenkomplikasjonTableDefs;
+	
+	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
+	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
+	private String andreKey = "annenKomp";
 	
 	private Tablesupdate tablesUpdate = null;
 	private VigilansSelect vigilansSelect = null;
+	private AnnenkomplikasjonSelect annenmeldingSelect = null;
+
 	
+	public String[] getAnnenkomplikasjonTableDefs() {
+		return annenkomplikasjonTableDefs;
+	}
+	public void setAnnenkomplikasjonTableDefs(String[] annenkomplikasjonTableDefs) {
+		this.annenkomplikasjonTableDefs = annenkomplikasjonTableDefs;
+	}
+	public String getSelectannenKomplikasjonSQL() {
+		return selectannenKomplikasjonSQL;
+	}
+	public void setSelectannenKomplikasjonSQL(String selectannenKomplikasjonSQL) {
+		this.selectannenKomplikasjonSQL = selectannenKomplikasjonSQL;
+	}
+
 	public String[] getVigilandsMeldingTableDefs() {
 		return vigilandsMeldingTableDefs;
 	}
@@ -106,12 +129,25 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	 * @param meldingsNokkel
 	 * @return
 	 */
-	public List selectMeldinger (String meldingsNokkel){
+	public Map<String,List> selectMeldinger (String meldingsNokkel){
 		int type = Types.VARCHAR;
+		Map alleMeldinger = new HashMap<String,List>();
 		vigilansSelect = new VigilansSelect(getDataSource(),selectvigilansMeldingSQL,vigilandsMeldingTableDefs);
 		vigilansSelect.declareParameter(new SqlParameter(type));
 		List meldinger = vigilansSelect.execute(meldingsNokkel);
-		return meldinger;
+		alleMeldinger.put(meldingsNokkel, meldinger);
+		if (!meldinger.isEmpty()){
+			Vigilansmelding melding = (Vigilansmelding)meldinger.get(0);
+			Long mId = melding.getMeldeid();
+			int nType = Types.INTEGER;
+			annenmeldingSelect = new AnnenkomplikasjonSelect(getDataSource(),selectannenKomplikasjonSQL, annenkomplikasjonTableDefs);
+			annenmeldingSelect.declareParameter(new SqlParameter(nType));
+			List andreMeldinger = annenmeldingSelect.execute(mId);
+			if (!andreMeldinger.isEmpty()){
+				alleMeldinger.put(andreKey, andreMeldinger);
+			}
+		}
+		return alleMeldinger;
 	}
 	
 }	
