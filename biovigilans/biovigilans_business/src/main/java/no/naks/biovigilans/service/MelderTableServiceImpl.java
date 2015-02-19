@@ -29,7 +29,7 @@ public class MelderTableServiceImpl implements MelderTableService {
 	public List selectMelder(String epost){
 		return melderDAO.selectMelder(epost);
 	}
-	public List selectMeldinger(String meldingsNokkel){
+	public Map<String,List> selectMeldinger(String meldingsNokkel){
 		return melderDAO.selectMeldinger(meldingsNokkel);
 	}
 }
