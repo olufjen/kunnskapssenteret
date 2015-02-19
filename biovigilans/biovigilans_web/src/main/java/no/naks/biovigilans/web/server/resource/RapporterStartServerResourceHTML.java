@@ -92,13 +92,14 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     	if (formValue != null && meldingsNokkel != null){
     		meldinger = melderWebService.selectMeldinger(meldingsNokkel);
     	}
-    	if (meldinger == null){
+    	if (meldinger.isEmpty()){
     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     				MediaType.TEXT_HTML);	
     	}
-    	if (meldinger != null){
+    	
+    	if (!meldinger.isEmpty()){
     		
     		redirectPermanent("../hemovigilans/rapportert_melding.html");
     	}
