@@ -229,7 +229,7 @@
   </bean>  
     
    <bean name="/hemovigilans/rapportert_melding.html" id="rapportertemeldingerServerResource" autowire="byName" scope="prototype"
-            class="no.naks.biovigilans.web.server.resource.RapporterteMeldingertServerResourceHTML">
+            class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
                         ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
