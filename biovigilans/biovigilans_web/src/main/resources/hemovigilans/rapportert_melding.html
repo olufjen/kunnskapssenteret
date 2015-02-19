@@ -65,14 +65,43 @@ function meldingsnokkel(){
 </script>
 
 <h2>Hemovigilans Rapporterte meldinger </h2>
-  
+<div  class="tab-pane" id="rapportertmelding">  
  <div id="levert" class="form-group">
-        <label>Meldingsnøkkel </label>
+        <label>Meldingsnøkkel: </label>
+        <div>
+ 		<label>${meldinger.meldingsnokkel}</label>
+ 		</div>
+ </div>		
+ <div id="datolevert" class="form-group">
+ 	 <label>Dato levert: </label>
+     <div>
+ 		<label>${meldinger.meldingsdato?date}</label>
+ 	</div>
+ </div>	
+ <div id="datohendelse" class="form-group">
+ 	 <label>Dato for hendelse: </label>
+     <div>
+ 		<label>${meldinger.datoforhendelse?date}</label>
+ 	</div>	
+ </div>
+ <div id="kladd" class="form-group">
+ 	 <label>Flere opplysninger følger: </label>
+     <div>
+ 		<label>${meldinger.kladd}</label>
+ 	</div>	
+ </div>
+ 
+   <button name="hentopplysninger" type="submit"  class="btn btn-primary" >Vis ytterligere detaljer</button>
  
  </div>
 
-<div class="panel-group" id="accordion">
-
+<div class="panel-group" id="accordion" style="display: ${display}">
+      <div id="klassifikasjon" class="form-group">
+       <label>Klassifikasjon: </label>
+       <div>
+ 		<label>${annenKomp.klassifikasjon}</label>
+ 		</div>	
+      </div>
 </div>
 		  <button type="submit" id="btnnokkel" value="nokkel"  name="formValue" class="btn btn-primary" style="display: none" > getValue </button>
 
