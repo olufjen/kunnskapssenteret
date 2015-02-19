@@ -11,7 +11,6 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		giverFields = new HashMap<String,String>();
-		formMap = new HashMap<String,String>();
 	}
 
 	public void setParams(){
@@ -19,6 +18,7 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		
 		if (id == null){
 			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),getVekt()};
+			
 		}else
 			params = new Object[]{getKjonn(),getAlder(),getGivererfaring(),getTidligerekomlikasjonjanei(),getTidligerekomplikasjonforklaring(),getGivererfaringaferese(),getVekt(),getGiverid()};
 		
@@ -29,7 +29,7 @@ public class GiverImpl extends AbstractGiver implements Giver {
 	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
 	 * @param userFields En liste over skjermbildefelter
 	 */
-	public void setGiverfieldMaps(String[]userFields){
+	/*public void setGiverfieldMaps(String[]userFields){
 		keys = userFields;
 		//int size =userFields.length;
 		for (int i = 0;i<7;i++){
@@ -37,22 +37,22 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		}
 
 		
-	}
+	}*/
 	/**
 	 * saveField
 	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
 	 * @param userField
 	 * @param userValue
 	 */
-	public void saveField(String userField, String userValue) {
+	/*public void saveField(String userField, String userValue) {
 		if (giverFields.containsKey(userField) && userValue != null && !userValue.equals("")){
 			giverFields.put(userField,userValue);	
 	
 		}
 		
-	}
+	}*/
 	
-	public void saveToGiver(){
+	/*public void saveToGiver(){
 		setKjonn(null);
 		setAlder(null);
 		setVekt(null);
@@ -61,6 +61,6 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		setTidligerekomplikasjonforklaring(null);
 		setGivererfaringaferese(null);
 		
-	}
+	}*/
 	
 }

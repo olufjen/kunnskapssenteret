@@ -23,9 +23,13 @@ public interface Giveroppfolging {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
-	public void setGiveroppfolgingfieldMaps(String[]userFields);
-	public void saveField(String userField, String userValue);
-	public void saveToField();
-	public Map<String, String> getFormMap() ;
-	public void setFormMap(Map<String, String> formMap);
+	//public void setGiveroppfolgingfieldMaps(String[]userFields);
+	//public void saveField(String userField, String userValue);
+	//public void saveToField();
+	//public Map<String, String> getFormMap() ;
+	//public void setFormMap(Map<String, String> formMap);
+	public String getStrakstiltak();
+	public void setStrakstiltak(String strakstiltak) ;
+	public String getVidereoppfolging();
+	public void setVidereoppfolging(String videreoppfolging) ;
 }

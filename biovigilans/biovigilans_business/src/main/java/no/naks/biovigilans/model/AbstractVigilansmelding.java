@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -22,8 +23,6 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 
 public class AbstractVigilansmelding extends AbstractModel implements Vigilansmelding{
 
-	protected Map formMap; // Inneholder brukers input verdier fra skjermbildet
-	
 	/**
 	 * Id til meldingen
 	 */
@@ -81,20 +80,6 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	protected Map<String,String>vigilansFields;
 
 	
-	
-	public AbstractVigilansmelding() {
-		formMap = new HashMap<String,String>();
-	}
-	
-	
-	public Map getFormMap() {
-		return formMap;
-	}
-
-	public void setFormMap(Map formMap) {
-		this.formMap = formMap;
-	}
-
 	public Long getMeldeid() {
 		return meldeid;
 	}
@@ -110,6 +95,12 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 
 	public String getKladd() {
+		Map<String,String> userEntries = getVigilansFields();
+		String field = "p-ytterligereopp";
+		kladd = userEntries.get(field);
+		if (kladd == null ||  kladd.isEmpty()){
+			kladd = "";
+		}
 		return kladd;
 	}
 	public void setKladd(String kladd) {
@@ -163,7 +154,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	public Date getDatooppdaget() {
 		if(datooppdaget==null){
 			DateFormat dateFormat = 
-			            new SimpleDateFormat("yyyy/MM/dd");
+			            new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			Date date = new Date();
 			try {
 				String strDate = dateFormat.format(date);
@@ -179,17 +170,22 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		this.datooppdaget = datooppdaget;
 	}
 	public Date getDonasjonoverforing() {
-		if(donasjonoverforing==null){
+		
+		Map<String,String> userEntries = getVigilansFields();
+		String field = "dato-donasjon";
+		String strDate = userEntries.get(field);
+		if (strDate == null || strDate.isEmpty()){
+			donasjonoverforing = null;
+		}else{
 			DateFormat dateFormat = 
-			            new SimpleDateFormat("yyyy/MM/dd");
-			Date date = new Date();
+		            new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 			try {
-				String strDate = dateFormat.format(date);
-				donasjonoverforing =   dateFormat.parse(strDate);
-			} catch (ParseException e) {
+			donasjonoverforing =   dateFormat.parse(strDate);
+			}catch (ParseException e) {
 				System.out.println("date format problem: " + e.toString());
 			}
 		}
+		
 		return donasjonoverforing;
 	}
 	public void setDonasjonoverforing(Date donasjonoverforing) {
@@ -207,6 +203,13 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 	public void setSupplerendeopplysninger(String supplerendeopplysninger) {
 		this.supplerendeopplysninger = supplerendeopplysninger;
+	}
+		
+	public Map<String, String> getVigilansFields() {
+		return vigilansFields;
+	}
+	public void setVigilansFields(Map<String, String> vigilansFields) {
+		this.vigilansFields = vigilansFields;
 	}
 	
 	public String getMeldingsnokkel() {
@@ -280,13 +283,13 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
 	 * @param userFields En liste over skjermbildefelter
 	 */
-	public void setVigilansmeldingfieldMaps(String[]userFields){
+	/*public void setVigilansmeldingfieldMaps(String[]userFields){
 		keys = userFields;
 		int size =userFields.length;
 		for (int i = 0;i<size;i++){
 			vigilansFields.put(userFields[i],null);
 		}
-	}
+	}*/
 	
 	/**
 	 * saveField
@@ -294,7 +297,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	 * @param userField
 	 * @param userValue
 	 */
-	public void saveField(String userField, String userValue) {
+	/*public void saveField(String userField, String userValue) {
 		if (vigilansFields.containsKey(userField) && userValue != null && !userValue.equals("")){
 			vigilansFields.put(userField,userValue);	
 	
@@ -308,7 +311,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		setDatooppdaget(null);
 		setDonasjonoverforing(null);
 		setMeldingsdato(null);
-	}
+	}*/
 
 	
 }

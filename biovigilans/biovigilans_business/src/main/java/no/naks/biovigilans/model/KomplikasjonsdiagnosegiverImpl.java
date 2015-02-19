@@ -19,9 +19,9 @@ public class KomplikasjonsdiagnosegiverImpl extends
 	public void setParams(){
 		Long id = getKomlikasjonsdiagnoseId();
 		if (id == null){
-			params = new Object[]{getLokalskadearm(),getLokalskadebeskrivelse(),getSystemiskbivirkning(),getBivirkningbeskrivelse(),getAnnenreaksjon(),getAnnenreaksjonbeskrivelse(),getMeldeId()};
+			params = new Object[]{getLokalskadearm(),getSystemiskbivirkning(),getAnnenreaksjon(),getLokalskadebeskrivelse(),getBivirkningbeskrivelse(),getAnnenreaksjonbeskrivelse(),getMeldeId()};
 		}else
-			params = new Object[]{getLokalskadearm(),getLokalskadebeskrivelse(),getSystemiskbivirkning(),getBivirkningbeskrivelse(),getAnnenreaksjon(),getAnnenreaksjonbeskrivelse(),getMeldeId(),getKomlikasjonsdiagnoseId()};
+			params = new Object[]{getLokalskadearm(),getSystemiskbivirkning(),getAnnenreaksjon(),getLokalskadebeskrivelse(),getBivirkningbeskrivelse(),getAnnenreaksjonbeskrivelse(),getMeldeId(),getKomlikasjonsdiagnoseId()};
 	}	
 
 	/**

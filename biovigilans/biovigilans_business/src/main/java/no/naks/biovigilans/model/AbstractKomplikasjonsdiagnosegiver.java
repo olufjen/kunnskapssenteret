@@ -51,21 +51,41 @@ public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel i
 		this.komlikasjonsdiagnoseId = komlikasjonsdiagnoseId;
 	}
 	public String getLokalskadearm() {
+		Map<String,String> userEntries = getKomplikasjonGiverFields();
+		String field = "tab-arm";
+		lokalskadearm = userEntries.get(field);
+		if (lokalskadearm == null ||  lokalskadearm.trim().equalsIgnoreCase("--- Select ---")){
+			lokalskadearm = "";
+		}
+		
 		return lokalskadearm;
 	}
 	public void setLokalskadearm(String lokalskadearm) {
-		if(lokalskadearm == null){
+		/*if(lokalskadearm == null){
 			lokalskadearm = komplikasjonGiverFields.get(keys[0]);
-		}
+		}*/
 		this.lokalskadearm = lokalskadearm;
 	}
 	public String getSystemiskbivirkning() {
+		Map<String,String> userEntries = getKomplikasjonGiverFields();
+		String field = "tab-bivirk";
+		systemiskbivirkning = userEntries.get(field);
+		if (systemiskbivirkning == null ){
+			systemiskbivirkning = "";
+		}else{
+			if(systemiskbivirkning.trim().equalsIgnoreCase("Systemisk-Ja")){
+				String systemValue = userEntries.get("tab-systemiskbivirkning");
+				if(systemValue != null || ! systemValue.trim().equalsIgnoreCase("--- Select ---") ){
+					systemiskbivirkning = systemiskbivirkning + ";" + systemValue;
+				}
+			}
+		}
 		return systemiskbivirkning;
 	}
 	public void setSystemiskbivirkning(String systemiskbivirkning) {
-		if(systemiskbivirkning ==  null){
+		/*if(systemiskbivirkning ==  null){
 			systemiskbivirkning = komplikasjonGiverFields.get(keys[2]);
-		}
+		}*/
 		this.systemiskbivirkning = systemiskbivirkning;
 	}
 	public String getAnnenreaksjon() {
@@ -78,30 +98,45 @@ public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel i
 		this.annenreaksjon = annenreaksjon;
 	}
 	public String getLokalskadebeskrivelse() {
+		Map<String,String> userEntries = getKomplikasjonGiverFields();
+		String field = "tab-tabskadearm";
+		lokalskadebeskrivelse = userEntries.get(field);
+		if (lokalskadebeskrivelse == null ||  lokalskadebeskrivelse.trim().equalsIgnoreCase("--- Select ---")){
+			lokalskadebeskrivelse = "";
+		}else{
+			
+			if(lokalskadebeskrivelse.trim().equalsIgnoreCase("Nerveirritasjon")){
+				String imgValue = userEntries.get("tab-imgarea");
+				if(imgValue != null){
+					lokalskadebeskrivelse = lokalskadebeskrivelse +";"+imgValue;
+				}
+			}
+		}
+		
 		return lokalskadebeskrivelse;
 	}
 	public void setLokalskadebeskrivelse(String lokalskadebeskrivelse) {
-		if(lokalskadebeskrivelse == null){
+		/*if(lokalskadebeskrivelse == null){
 			lokalskadebeskrivelse = komplikasjonGiverFields.get(keys[1]);
-		}
+		}*/
 		this.lokalskadebeskrivelse = lokalskadebeskrivelse;
 	}
 	public String getBivirkningbeskrivelse() {
 		return bivirkningbeskrivelse;
 	}
 	public void setBivirkningbeskrivelse(String bivirkningbeskrivelse) {
-		if(bivirkningbeskrivelse == null){
+		/*if(bivirkningbeskrivelse == null){
 			bivirkningbeskrivelse = komplikasjonGiverFields.get(keys[3]);
-		}
+		}*/
 		this.bivirkningbeskrivelse = bivirkningbeskrivelse;
 	}
 	public String getAnnenreaksjonbeskrivelse() {
 		return annenreaksjonbeskrivelse;
 	}
 	public void setAnnenreaksjonbeskrivelse(String annenreaksjonbeskrivelse) {
-		if(annenreaksjonbeskrivelse == null){
+		/*if(annenreaksjonbeskrivelse == null){
 			annenreaksjonbeskrivelse = komplikasjonGiverFields.get(keys[5]);
-		}
+		}*/
 		this.annenreaksjonbeskrivelse = annenreaksjonbeskrivelse;
 	}
 	public String getKommentar() {

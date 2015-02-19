@@ -41,10 +41,11 @@ public interface Vigilansmelding {
 	public int[] getUtypes();
 	public void setMelderTypes();
 	public void setMelderParams();
-	public void setVigilansmeldingfieldMaps(String[]userFields);
-	public void saveToVigilansmelding();
+	//public void setVigilansmeldingfieldMaps(String[]userFields);
+	//public void saveToVigilansmelding();
 	public String getMeldingsnokkel();
 	public void setMeldingsnokkel(String meldingsnokkel) ;
-	public Map getFormMap() ;
-	public void setFormMap(Map formMap);
+	public Map<String, String> getVigilansFields() ;
+	public void setVigilansFields(Map<String, String> vigilansFields) ;
+
 }

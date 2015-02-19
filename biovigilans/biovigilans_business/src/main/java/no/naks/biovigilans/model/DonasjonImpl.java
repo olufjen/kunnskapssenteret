@@ -9,8 +9,8 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 
 	public DonasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER,Types.INTEGER};
 		donasjonsFields = new HashMap();
 		
 	}
@@ -18,9 +18,9 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	public void setParams(){
 		Long id = getDonasjonsId();
 		if (id == null){
-			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getLokalisasjonvenepunksjon(),getGiveId()};
+			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getLokalisasjonvenepunksjon(),getDonasjonsdato(),getGiveId()};
 		}else
-			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getLokalisasjonvenepunksjon(),getGiveId(),getDonasjonsId()};
+			params = new Object[]{getDonasjonssted(),getKomplisertvenepunksjon(),getTappetype(),getTappevarighet(),getMaltidfortapping(),getLokalisasjonvenepunksjon(),getDonasjonsdato(),getGiveId(),getDonasjonsId()};
 		
 	}	
 
@@ -29,31 +29,31 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
 	 * @param userFields En liste over skjermbildefelter
 	 */
-	public void setDonasjonsfieldMaps(String[]userFields){
+	/*public void setDonasjonsfieldMaps(String[]userFields){
 		keys = userFields;
 		for (int i = 0;i<keys.length ;i++){
 			donasjonsFields.put(userFields[i],null);
 		}
-	}
+	}*/
 	/**
 	 * saveField
 	 * Denne rutinen lagrer skjermbildefelter til riktig databasefelt
 	 * @param userField
 	 * @param userValue
 	 */
-	public void saveField(String userField, String userValue) {
+	/*public void saveField(String userField, String userValue) {
 		if (donasjonsFields.containsKey(userField) && userValue != null && !userValue.equals("")){
 			donasjonsFields.put(userField,userValue);	
 		}
 		
-	}
+	}*/
 
-	public void saveToField(){
+	/*public void saveToField(){
 		setDonasjonssted(null);
 		setMaltidfortapping(null);
 		setKomplisertvenepunksjon(null);
 		setTappetype(null);
 		setTappevarighet(null);
 		setLokalisasjonvenepunksjon(null);
-	}
+	}*/
 }

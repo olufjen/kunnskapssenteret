@@ -26,14 +26,13 @@ public interface Giver {
 	public void setKeys(String[] keys);
 	public Map<String, String> getGiverFields();
 	public void setGiverFields(Map<String, String> giverFields);
-	public void setGiverfieldMaps(String[]userFields);
-	public void saveField(String userField, String userValue);
+	//public void setGiverfieldMaps(String[]userFields);
+	//public void saveField(String userField, String userValue);
 	public void setParams();
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
-	public void saveToGiver();
-	public Map getFormMap() ;
-	public void setFormMap(Map formMap);
+	//public void saveToGiver();
+	
 	
 }

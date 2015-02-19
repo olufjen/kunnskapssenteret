@@ -23,14 +23,14 @@ public interface Donasjon {
 	public void setDonasjonsFields(Map<String, String> donasjonsFields);
 	public String[] getKeys();
 	public void setKeys(String[] keys);
-	public void setDonasjonsfieldMaps(String[]userFields);
-	public void saveField(String userField, String userValue);
+	//public void setDonasjonsfieldMaps(String[]userFields);
+	//public void saveField(String userField, String userValue);
 	public void setParams();
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
 	public int getGiveId();
 	public void setGiveId(int giveId);
-	public void saveToField();
+	//public void saveToField();
 	
 }

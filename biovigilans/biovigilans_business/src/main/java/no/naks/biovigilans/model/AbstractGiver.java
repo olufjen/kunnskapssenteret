@@ -14,7 +14,6 @@ import no.naks.rammeverk.kildelag.model.AbstractModel;
 public abstract class AbstractGiver extends AbstractModel implements Giver{
 
 	protected Long giverid;
-	protected Map formMap; // Inneholder brukers input verdier fra skjermbildet
 	
 	protected String kjonn;
 	protected String alder;
@@ -53,7 +52,7 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.giverid = giverid;
 	}
 	public String getKjonn() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getGiverFields();
 		String field = "tab-kjonn";
 		kjonn = userEntries.get(field);
 		if (kjonn == null){
@@ -68,7 +67,7 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.kjonn = kjonn;
 	}
 	public String getAlder() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getGiverFields();
 		String field = "tab-alder";
 		alder = userEntries.get(field);
 		if (alder == null){
@@ -84,13 +83,14 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.alder = alder;
 	}
 	public Long getVekt() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getGiverFields();
 		String field = "givervektkg";
 		String val = userEntries.get(field);
-		if(val != null){
-			vekt = Long.parseLong(val);
-		}else{
+		if(val == null ||  val.isEmpty()){
 			vekt = (long) 0;
+			
+		}else{
+			vekt = Long.parseLong(val);
 		}
 		return vekt;
 	}
@@ -100,11 +100,11 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.vekt = vekt;
 	}
 	public String getGivererfaring() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getGiverFields();
 		String field = "tab-givererfaring";
 		givererfaring = userEntries.get(field);
 		if (givererfaring == null){
-			givererfaring = "-";
+			givererfaring ="";
 		}	
 		return givererfaring;
 	}
@@ -114,7 +114,7 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.givererfaring = givererfaring;
 	}
 	public String getTidligerekomlikasjonjanei() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getGiverFields();
 		String field = "tab-tidl-tapp";
 		tidligerekomlikasjonjanei = userEntries.get(field);
 		if (tidligerekomlikasjonjanei == null){
@@ -128,7 +128,7 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.tidligerekomlikasjonjanei = tidligerekomlikasjonjanei;
 	}
 	public String getTidligerekomplikasjonforklaring() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getGiverFields();
 		String field = "tab-reaksjon-beskriv";
 		tidligerekomplikasjonforklaring = userEntries.get(field);
 		if (tidligerekomplikasjonforklaring == null){
@@ -144,11 +144,15 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.tidligerekomplikasjonforklaring = tidligerekomplikasjonforklaring;
 	}
 	public String getGivererfaringaferese() {
-		Map<String,String> userEntries = getFormMap();
-		String field = "tab-sted";
+		Map<String,String> userEntries = getGiverFields();
+		String field = "aferese-options";
 		givererfaringaferese = userEntries.get(field);
-		if (givererfaringaferese == null || givererfaringaferese.equalsIgnoreCase("--- Select ---")){
-			givererfaringaferese = "";
+		if (givererfaringaferese == null ){
+			field = "fullblod";
+			givererfaringaferese = userEntries.get(field);
+			if (givererfaringaferese == null ){
+				givererfaringaferese="";
+			}
 		}
 		return givererfaringaferese;
 	}
@@ -169,12 +173,5 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 	public void setGiverFields(Map<String, String> giverFields) {
 		this.giverFields = giverFields;
 	}
-	public Map getFormMap() {
-		return formMap;
-	}
-	public void setFormMap(Map formMap) {
-		this.formMap = formMap;
-	}
-
 	
 }

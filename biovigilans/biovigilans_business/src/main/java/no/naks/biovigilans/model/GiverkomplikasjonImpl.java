@@ -1,7 +1,13 @@
 package no.naks.biovigilans.model;
 
+
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -27,6 +33,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	private String tilleggsopplysninger;
 	private String alvorlighetsgrad;
 	private String kliniskresultat;
+	private Date datosymptomer;
 //	private Long meldeId; Meldeid finnes i AbstractVigelansmelding !! Olj 16.01.15
 	private Long donasjonid;
 	/**
@@ -39,17 +46,17 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public GiverkomplikasjonImpl() {
 		super();
-		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER, Types.INTEGER};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER, Types.INTEGER};
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER, Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER, Types.INTEGER};
 		komplikasjonsFields = new HashMap();
 	}
 	
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),getMeldeid(), getDonasjonid()};
+			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),getDatosymptomer(),getMeldeid(), getDonasjonid()};
 		}else
-			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),getMeldeid(), getDonasjonid()};
+			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),getDatosymptomer(),getMeldeid(), getDonasjonid()};
 	}
 	/**
 	 * setGiverkomplicationfieldMaps
@@ -89,7 +96,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 
 	public String getStedforkomplikasjon() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getKomplikasjonsFields();
 		String field = "tab-hvor";
 		stedforkomplikasjon = userEntries.get(field);
 		if (stedforkomplikasjon == null){
@@ -106,7 +113,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public String getTidfratappingtilkompliasjon() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getKomplikasjonsFields();
 		String field = "tab-tapp-reak";
 		tidfratappingtilkompliasjon = userEntries.get(field);
 		if (tidfratappingtilkompliasjon == null){
@@ -131,12 +138,17 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public String getTilleggsopplysninger() {
-		Map<String,String> userEntries = getFormMap();
-		String field = "tab-forebyggbar";
-		tilleggsopplysninger = userEntries.get(field);
-		if (tilleggsopplysninger == null){
-			tilleggsopplysninger = "";
+		Map<String,String> userEntries = getKomplikasjonsFields();
+		String field = "tab-forbedringstiltak";
+		String forbedrings = userEntries.get(field);
+		String avreg = userEntries.get("tab-avreg");
+		if (forbedrings == null || forbedrings.isEmpty()){
+			forbedrings = "";
 		}
+		if(avreg == null || avreg.isEmpty()){
+			avreg="";
+		}
+		tilleggsopplysninger = avreg + ";" + forbedrings ;
 		return tilleggsopplysninger;
 	}
 
@@ -159,10 +171,10 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public String getAlvorlighetsgrad() {
-		Map<String,String> userEntries = getFormMap();
-		String field = "tab-alvorlighetgrad";
+		Map<String,String> userEntries = getKomplikasjonsFields();
+		String field = "alvor-mang";
 		alvorlighetsgrad = userEntries.get(field);
-		if (alvorlighetsgrad == null){
+		if (alvorlighetsgrad == null || alvorlighetsgrad.isEmpty()){
 			alvorlighetsgrad = "";
 		}
 		
@@ -177,7 +189,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public String getKliniskresultat() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getKomplikasjonsFields();
 		String field = "tab-klinisk";
 		kliniskresultat = userEntries.get(field);
 		if (kliniskresultat == null){
@@ -193,8 +205,34 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.kliniskresultat = kliniskresultat;
 	}
 
+	
+	
+	public Date getDatosymptomer() {
+		
+		Map<String,String> userEntries = getKomplikasjonsFields();
+		String field = "dato-hendelse";
+		String strDate = userEntries.get(field);
+		if (strDate == null || strDate.isEmpty()){
+			datosymptomer = null;
+		}else{
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			try {
+				datosymptomer =   dateFormat.parse(strDate);
+			}catch (ParseException e) {
+				System.out.println("date format problem: " + e.toString());
+			}
+		}
+		
+		return datosymptomer;
+	}
+
+	public void setDatosymptomer(Date datosymptomer) {
+		this.datosymptomer = datosymptomer;
+	}
+
 	public String getVarighetkomplikasjon() {
-		Map<String,String> userEntries = getFormMap();
+		Map<String,String> userEntries = getKomplikasjonsFields();
 		String field = "tab-varighet";
 		varighetkomplikasjon = userEntries.get(field);
 		if (varighetkomplikasjon == null){
