@@ -22,22 +22,24 @@ public class KomDiagnosegiverwebModel extends VigilansModel {
 		this.komDiagnosegiver = komDiagnosegiver;
 	}
 	
-	public void distributeTerms(){
+	/*public void distributeTerms(){
 		String[] formFields = getFormNames();
 		String fields[] = {formFields[18],formFields[19],formFields[20],formFields[21],formFields[22],formFields[23]};
 		komDiagnosegiver.setKomplikasjonsdiagnoseMaps(fields);
 	}
-	
+	*/
 	public void saveValues(){
 		String[] formFields = getFormNames();
 		Map<String,String> userEntries = getFormMap(); 
+		komDiagnosegiver.setKomplikasjonGiverFields(userEntries);
 		
-		for(String field: formFields ){
+		
+		/*for(String field: formFields ){
 			String userEntry = userEntries.get(field);
 			komDiagnosegiver.saveField(field, userEntry);
 		}
 		
-		komDiagnosegiver.saveToField();
+		komDiagnosegiver.saveToField();*/
 		
 	}	
 

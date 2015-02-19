@@ -56,15 +56,15 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	    
 	     setTransfusjonsObjects(); // Setter opp alle session objekter
 	//   	 giverModel.setFormNames(sessionParams);
-    	 donasjon.setFormNames(sessionParams);
-     	 komDiagnosegiver.setFormNames(sessionParams);
+    //	 donasjon.setFormNames(sessionParams);
+    // 	 komDiagnosegiver.setFormNames(sessionParams);
     //	 giverKvittering.setFormNames(sessionParams);
          
 	 //    giverModel.distributeTerms();
 	 //    giverModel.giverKomplikasjonDistribute();
 	 //    giverModel.giveroppfolgingDistribute();
-	     donasjon.distributeTerms();
-	     komDiagnosegiver.distributeTerms();
+	 //    donasjon.distributeTerms();
+	//     komDiagnosegiver.distributeTerms();
 	     
 	     dataModel.put(giverkomplikasjonId, giverModel);
 	     dataModel.put(donasjonId, donasjon);

@@ -25,22 +25,23 @@ public class DonasjonwebModel extends VigilansModel {
 		this.donasjon = donasjon;
 	}
 	
-	public void distributeTerms(){
+/*	public void distributeTerms(){
 		String[] formFields = getFormNames();
 		String donasjonFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[11],formFields[12],formFields[25],formFields[36]};
 		donasjon.setDonasjonsfieldMaps(donasjonFields);
-	}
+	}*/
 	
 	public void saveValues(){
 		String[] formFields = getFormNames();
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
 		
-		for(String field: formFields ){
+		donasjon.setDonasjonsFields(userEntries); 
+		/*for(String field: formFields ){
 			String userEntry = userEntries.get(field);
 			donasjon.saveField(field, userEntry);
 		}
 		
-		donasjon.saveToField();
+		donasjon.saveToField();*/
 		
 	}	
 

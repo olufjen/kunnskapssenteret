@@ -20,7 +20,7 @@ import org.restlet.data.Parameter;
 public class VigilansModel {
 
 	protected boolean lagret = false; // Satt true dersom session objects er lagret
-	private Map formMap; // Inneholder brukers input verdier fra skjermbildet
+	private Map<String,String> formMap; // Inneholder brukers input verdier fra skjermbildet
 	private String[] formNames; // Inneholder navn på input felt i skjermbildet
 	private String accountRef;
 	private Vigilansmelding vigilans;
@@ -96,7 +96,12 @@ public class VigilansModel {
 	public void setValues(Parameter entry){
 		String name = entry.getName();
 		String value = entry.getValue();
-		//boolean finnes = formMap.containsKey(name);
+		
+		boolean finnes = formMap.containsKey(name);
+		if(finnes){
+			String val =  formMap.get(name);
+			value = val + "-" + value; 
+		}
 		formMap.put(name, value);
 	
 	}

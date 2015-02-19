@@ -141,12 +141,12 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 
 
 
-	public void distributeTerms(){
+/*	public void distributeTerms(){
 			String[] formFields = getFormNames();
 			String giverFields[] = {formFields[0],formFields[1],formFields[2],formFields[3],formFields[4],formFields[5],formFields[11]};
 			giver.setGiverfieldMaps(giverFields);
 	}
-	
+	*/
 	public void saveValues(){
 		String[] formFields = getFormNames();
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
@@ -157,25 +157,25 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 			giverKomplikasjon.saveField(field, userEntry);
 			giveroppfolging.saveField(field, userEntry);
 		}*/
-		giver.setFormMap(userEntries);
+		giver.setGiverFields(userEntries);
 //		giver.saveToGiver();
 		
-		vigilansmelding.setFormMap(userEntries);
+		vigilansmelding.setVigilansFields(userEntries);
 //		vigilansmelding.saveToVigilansmelding();
-		giverKomplikasjon.setFormMap(userEntries);
+		giverKomplikasjon.setKomplikasjonsFields(userEntries);
 //		giverKomplikasjon.saveToGiverkomplikasjon();
-		giveroppfolging.setFormMap(userEntries);
+		giveroppfolging.setGiveroppfolgingFields(userEntries);
 //		giveroppfolging.saveToField();
 		
 	}
 	
 	
-	public void meldingDistributeTerms(){
-		/*
+	/*public void meldingDistributeTerms(){
+		
 		String[] formFields = getFormNames();
 		String meldingFields[] = {formFields[6],formFields[7],formFields[8],formFields[9],formFields[10],formFields[12],formFields[13]};
 		vigilansmelding.setVigilansmeldingfieldMaps(meldingFields);
-		*/
+		
 	}
 	
 	public void giverKomplikasjonDistribute(){
@@ -188,6 +188,6 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		String[] formFields = getFormNames();
 		String giveroppfolgingFields[]={formFields[22],formFields[16],formFields[32],formFields[31],formFields[37]};
 		giveroppfolging.setGiveroppfolgingfieldMaps(giveroppfolgingFields);
-	}
+	}*/
 	
 }
