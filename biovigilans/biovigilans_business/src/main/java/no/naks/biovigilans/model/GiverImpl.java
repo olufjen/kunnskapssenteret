@@ -52,7 +52,7 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		
 	}*/
 	
-	/*public void saveToGiver(){
+	public void saveToGiver(){
 		setKjonn(null);
 		setAlder(null);
 		setVekt(null);
@@ -61,6 +61,6 @@ public class GiverImpl extends AbstractGiver implements Giver {
 		setTidligerekomplikasjonforklaring(null);
 		setGivererfaringaferese(null);
 		
-	}*/
+	}
 	
 }

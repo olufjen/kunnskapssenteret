@@ -12,7 +12,7 @@ public class MelderImpl extends AbstractMelder implements Melder {
 		super();
 		types = new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		utypes = new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.INTEGER};
-		melderFields = new HashMap();
+		melderFields = new HashMap<String,String>();
 	}
 	
 	public void setParams(){

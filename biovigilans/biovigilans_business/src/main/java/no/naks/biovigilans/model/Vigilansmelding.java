@@ -42,7 +42,7 @@ public interface Vigilansmelding {
 	public void setMelderTypes();
 	public void setMelderParams();
 	//public void setVigilansmeldingfieldMaps(String[]userFields);
-	//public void saveToVigilansmelding();
+	public void saveToVigilansmelding();
 	public String getMeldingsnokkel();
 	public void setMeldingsnokkel(String meldingsnokkel) ;
 	public Map<String, String> getVigilansFields() ;

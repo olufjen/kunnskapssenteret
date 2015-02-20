@@ -53,113 +53,119 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.giverid = giverid;
 	}
 	public String getKjonn() {
-		Map<String,String> userEntries = getGiverFields();
-		String field = "tab-kjonn";
-		kjonn = userEntries.get(field);
-		if (kjonn == null){
-			kjonn = "";
-		}
 		return kjonn;
 	}
 	public void setKjonn(String kjonn) {
-		/*if(kjonn==null){
-			kjonn =(giverFields.get(keys[0])==null ? "" : giverFields.get(keys[0])) ;
-		}*/
+		if(kjonn==null){
+			Map<String,String> userEntries = getGiverFields();
+			String field = "tab-kjonn";
+			kjonn = userEntries.get(field);
+			if (kjonn == null){
+				kjonn = "";
+			}
+		}
 		this.kjonn = kjonn;
 	}
 	public String getAlder() {
-		Map<String,String> userEntries = getGiverFields();
-		String field = "tab-alder";
-		alder = userEntries.get(field);
-		if (alder == null){
-			alder = "";
-		}
+		
 		return alder;
 	}
 	public void setAlder(String alder) {
-		/*if(alder==null)
-			alder = (giverFields.get(keys[1])==null ? "" : giverFields.get(keys[1])) ;
-		if(alder.equalsIgnoreCase("--- Select ---"))
-			alder ="";*/
+		if(alder==null){
+			Map<String,String> userEntries = getGiverFields();
+			String field = "tab-alder";
+			alder = userEntries.get(field);
+			if (alder == null){
+				alder = "";
+			}
+		}
+			
 		this.alder = alder;
 	}
 	public Long getVekt() {
-		Map<String,String> userEntries = getGiverFields();
-		String field = "givervektkg";
-		String val = userEntries.get(field);
-		if(val == null ||  val.isEmpty()){
-			vekt = (long) 0;
-			
-		}else{
-			vekt = Long.parseLong(val);
-		}
+		
 		return vekt;
 	}
 	public void setVekt(Long vekt) {
-		/*if(vekt== null)
-			vekt = giverFields.get(keys[2]);*/
+		if(vekt== null){
+			Map<String,String> userEntries = getGiverFields();
+			String field = "givervektkg";
+			String val = userEntries.get(field);
+			if(val == null ||  val.isEmpty()){
+				vekt = (long) 0;
+				
+			}else{
+				vekt = Long.parseLong(val);
+			}
+		}
+			
 		this.vekt = vekt;
 	}
 	public String getGivererfaring() {
-		Map<String,String> userEntries = getGiverFields();
-		String field = "tab-givererfaring";
-		givererfaring = userEntries.get(field);
-		if (givererfaring == null){
-			givererfaring ="";
-		}	
 		return givererfaring;
 	}
 	public void setGivererfaring(String givererfaring) {
-		/*if(givererfaring==null)
-			givererfaring  = giverFields.get(keys[3]);*/
+		if(givererfaring==null){
+			Map<String,String> userEntries = getGiverFields();
+			String field = "tab-givererfaring";
+			givererfaring = userEntries.get(field);
+			if (givererfaring == null){
+				givererfaring ="";
+			}	
+		}
+			
 		this.givererfaring = givererfaring;
 	}
 	public String getTidligerekomlikasjonjanei() {
-		Map<String,String> userEntries = getGiverFields();
-		String field = "tab-tidl-tapp";
-		tidligerekomlikasjonjanei = userEntries.get(field);
-		if (tidligerekomlikasjonjanei == null){
-			tidligerekomlikasjonjanei = "";
-		}
+		
 		return tidligerekomlikasjonjanei;
 	}
 	public void setTidligerekomlikasjonjanei(String tidligerekomlikasjonjanei) {
-		/*if(tidligerekomlikasjonjanei==null)
-			tidligerekomlikasjonjanei = giverFields.get(keys[4]);*/
+		if(tidligerekomlikasjonjanei==null){
+			Map<String,String> userEntries = getGiverFields();
+			String field = "tab-tidl-tapp";
+			tidligerekomlikasjonjanei = userEntries.get(field);
+			if (tidligerekomlikasjonjanei == null){
+				tidligerekomlikasjonjanei = "";
+			}
+		}
+			
 		this.tidligerekomlikasjonjanei = tidligerekomlikasjonjanei;
 	}
 	public String getTidligerekomplikasjonforklaring() {
-		Map<String,String> userEntries = getGiverFields();
-		String field = "tab-reaksjon-beskriv";
-		tidligerekomplikasjonforklaring = userEntries.get(field);
-		if (tidligerekomplikasjonforklaring == null){
-			tidligerekomplikasjonforklaring = "";
-		}
 		return tidligerekomplikasjonforklaring;
 	}
 	public void setTidligerekomplikasjonforklaring(
 			String tidligerekomplikasjonforklaring) {
 		
-		/*if(tidligerekomplikasjonforklaring==null)
-			tidligerekomplikasjonforklaring = giverFields.get(keys[5]);*/
+		if(tidligerekomplikasjonforklaring==null){
+			Map<String,String> userEntries = getGiverFields();
+			String field = "tab-reaksjon-beskriv";
+			tidligerekomplikasjonforklaring = userEntries.get(field);
+			if (tidligerekomplikasjonforklaring == null){
+				tidligerekomplikasjonforklaring = "";
+			}
+		}
+		
 		this.tidligerekomplikasjonforklaring = tidligerekomplikasjonforklaring;
 	}
 	public String getGivererfaringaferese() {
-		Map<String,String> userEntries = getGiverFields();
-		String field = "aferese-options";
-		givererfaringaferese = userEntries.get(field);
-		if (givererfaringaferese == null ){
-			field = "fullblod";
-			givererfaringaferese = userEntries.get(field);
-			if (givererfaringaferese == null ){
-				givererfaringaferese="";
-			}
-		}
 		return givererfaringaferese;
 	}
 	public void setGivererfaringaferese(String givererfaringaferese) {
-		/*if(givererfaringaferese==null)
-			 givererfaringaferese=giverFields.get(keys[6]);  */
+		if(givererfaringaferese==null){
+			Map<String,String> userEntries = getGiverFields();
+			String field = "aferese-options";
+			givererfaringaferese = userEntries.get(field);
+			if (givererfaringaferese == null ){
+				field = "fullblod";
+				givererfaringaferese = userEntries.get(field);
+				if (givererfaringaferese == null ){
+					givererfaringaferese="";
+				}
+			}
+		}
+		
  		this.givererfaringaferese = givererfaringaferese;
 	}
 	public String[] getKeys() {

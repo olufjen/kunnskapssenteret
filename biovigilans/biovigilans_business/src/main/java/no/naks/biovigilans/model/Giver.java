@@ -32,7 +32,7 @@ public interface Giver {
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
-	//public void saveToGiver();
+	public void saveToGiver();
 	
 	
 }

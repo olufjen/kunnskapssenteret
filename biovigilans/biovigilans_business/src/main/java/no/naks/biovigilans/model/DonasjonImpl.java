@@ -48,12 +48,13 @@ public class DonasjonImpl extends AbstractDonasjon implements Donasjon {
 		
 	}*/
 
-	/*public void saveToField(){
+	public void saveToField(){
 		setDonasjonssted(null);
-		setMaltidfortapping(null);
 		setKomplisertvenepunksjon(null);
 		setTappetype(null);
 		setTappevarighet(null);
+		setMaltidfortapping(null);
 		setLokalisasjonvenepunksjon(null);
-	}*/
+		setDonasjonsdato(null);
+	}
 }

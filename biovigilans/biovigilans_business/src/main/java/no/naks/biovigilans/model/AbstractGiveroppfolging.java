@@ -52,144 +52,137 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 		this.meldeid = meldeid;
 	}
 	public String getKlassifikasjongiveroppfolging() {
-		Map<String,String> userEntries = getGiveroppfolgingFields();
-		String field = "tab-annenreaksjon";
-		klassifikasjongiveroppfolging = userEntries.get(field);
-		if (klassifikasjongiveroppfolging == null){
-			klassifikasjongiveroppfolging = "";
-		}
+		
 		return klassifikasjongiveroppfolging;
 	}
 	public void setKlassifikasjongiveroppfolging(
 			String klassifikasjongiveroppfolging) {
-		/*if(klassifikasjongiveroppfolging == null){
-			klassifikasjongiveroppfolging = giveroppfolgingFields.get(keys[0]);
-		}*/
+		if(klassifikasjongiveroppfolging == null){
+			Map<String,String> userEntries = getGiveroppfolgingFields();
+			String field = "tab-annenreaksjon";
+			klassifikasjongiveroppfolging = userEntries.get(field);
+			if (klassifikasjongiveroppfolging == null){
+				klassifikasjongiveroppfolging = "";
+			}
+		}
 		this.klassifikasjongiveroppfolging = klassifikasjongiveroppfolging;
 	}
 	public String getGiveroppfolgingbeskrivelse() {
 		
-		Map<String,String> userEntries = getGiveroppfolgingFields();
-		String field1 = "tab-alvorlighetgrad";
-		String field2="tab-forbedringstiltak";
-		String alvorlighetgrad = userEntries.get(field1);
-		String forbedringstiltak = userEntries.get(field2);
-		if(alvorlighetgrad == null){
-			giveroppfolgingbeskrivelse="";
-		}else{
-			giveroppfolgingbeskrivelse = alvorlighetgrad + "; ";
-		}
-		if(forbedringstiltak!=null){
-			giveroppfolgingbeskrivelse = giveroppfolgingbeskrivelse + forbedringstiltak;
-		}
 		return giveroppfolgingbeskrivelse;
 	}
 	public void setGiveroppfolgingbeskrivelse(String giveroppfolgingbeskrivelse) {
-		/*if(giveroppfolgingbeskrivelse == null){
-			String value="";
-			if(giveroppfolgingFields.get(keys[1])!=null){
-				value = giveroppfolgingFields.get(keys[1]) + " ";
+		if(giveroppfolgingbeskrivelse == null){
+
+			Map<String,String> userEntries = getGiveroppfolgingFields();
+			String field1 = "tab-alvorlighetgrad";
+			String field2="tab-forbedringstiltak";
+			String alvorlighetgrad = userEntries.get(field1);
+			String forbedringstiltak = userEntries.get(field2);
+			if(alvorlighetgrad == null){
+				giveroppfolgingbeskrivelse="";
+			}else{
+				giveroppfolgingbeskrivelse = alvorlighetgrad + "; ";
 			}
-			if(giveroppfolgingFields.get(keys[2]) != null){
-				value= value + giveroppfolgingFields.get(keys[2]);
+			if(forbedringstiltak!=null){
+				giveroppfolgingbeskrivelse = giveroppfolgingbeskrivelse + forbedringstiltak;
 			}
-			giveroppfolgingbeskrivelse = value;
-		}*/
+		}
 		this.giveroppfolgingbeskrivelse = giveroppfolgingbeskrivelse;
 	}
 	public String getAvregistering() {
-		Map<String,String> userEntries = getGiveroppfolgingFields();
-		String field1 = "tab-avreg";
-		String field2 ="tab-onske";
-		String avreg = userEntries.get(field1);
-		String onske = userEntries.get(field2);
-		if(avreg != null){
-			avregistering = avreg;
-		}else{
-			avregistering = "";
-		}
 		
-		if (onske != null && avregistering.trim().equalsIgnoreCase("avregistrert-Ja") ){
-			avregistering = avregistering +"; " + onske;
-		}
 		return avregistering;
 	}
 	public void setAvregistering(String avregistering) {
-		/*if(avregistering == null){
-			avregistering  = giveroppfolgingFields.get(keys[3]);
-			if(giveroppfolgingFields.get(keys[4])!= null && avregistering.equalsIgnoreCase("avregistrert-Ja")){
-				avregistering = avregistering +"; " + giveroppfolgingFields.get(keys[4]);
+		if(avregistering == null){
+			Map<String,String> userEntries = getGiveroppfolgingFields();
+			String field1 = "tab-avreg";
+			String field2 ="tab-onske";
+			String avreg = userEntries.get(field1);
+			String onske = userEntries.get(field2);
+			if(avreg != null){
+				avregistering = avreg;
+			}else{
+				avregistering = "";
 			}
-		}*/
+			
+			if (onske != null && avregistering.trim().equalsIgnoreCase("avregistrert-Ja") ){
+				avregistering = avregistering +"; " + onske;
+			}
+		}
 		this.avregistering = avregistering;
 	}
 	
 	public String getStrakstiltak() {
-		Map<String,String> userEntries = getGiveroppfolgingFields();
-		String field1 = "tab-strakstiltak";
-		String field2="behandlingTxt";
-		String field3 = "tab-behandling-sykehus";
-		
-		String strakst = userEntries.get(field1);
-		String behandlingTxt = userEntries.get(field2);
-		String behandlingSykehus = userEntries.get(field3);
-		
-		if(strakst == null || strakst.isEmpty()){
-			strakst ="";
-		}else{
-			if(strakst.trim().equalsIgnoreCase("Behandlet av blodbankpersonale")){
-				if(behandlingTxt != null && !behandlingTxt.isEmpty()){
-					strakst = strakst +";"+behandlingTxt;
-				}
-			}
-			if(strakst.trim().equalsIgnoreCase("Behandling på sykehus")){
-				if(behandlingSykehus != null && !behandlingSykehus.isEmpty()){
-					strakst = strakst +";"+behandlingSykehus;
-					String innleggelsetxt = userEntries.get("innleggelsetxt");
-					if(innleggelsetxt != null && behandlingSykehus.trim().equalsIgnoreCase("Innleggelse") ){
-						strakst = strakst + ";" + innleggelsetxt;
-					}
-					
-				}
-			}
-		}
-		strakstiltak = strakst;
-		
 		return strakstiltak;
 	}
 	public void setStrakstiltak(String strakstiltak) {
+		if(strakstiltak == null){
+			Map<String,String> userEntries = getGiveroppfolgingFields();
+			String field1 = "tab-strakstiltak";
+			String field2="behandlingTxt";
+			String field3 = "tab-behandling-sykehus";
+			
+			String strakst = userEntries.get(field1);
+			String behandlingTxt = userEntries.get(field2);
+			String behandlingSykehus = userEntries.get(field3);
+			
+			if(strakst == null || strakst.isEmpty()){
+				strakst ="";
+			}else{
+				if(strakst.trim().equalsIgnoreCase("Behandlet av blodbankpersonale")){
+					if(behandlingTxt != null && !behandlingTxt.isEmpty()){
+						strakst = strakst +";"+behandlingTxt;
+					}
+				}
+				if(strakst.trim().equalsIgnoreCase("Behandling på sykehus")){
+					if(behandlingSykehus != null && !behandlingSykehus.isEmpty()){
+						strakst = strakst +";"+behandlingSykehus;
+						String innleggelsetxt = userEntries.get("innleggelsetxt");
+						if(innleggelsetxt != null && behandlingSykehus.trim().equalsIgnoreCase("Innleggelse") ){
+							strakst = strakst + ";" + innleggelsetxt;
+						}
+						
+					}
+				}
+			}
+			strakstiltak = strakst;
+		}
 		this.strakstiltak = strakstiltak;
 	}
 	public String getVidereoppfolging() {
-		
-		Map<String,String> userEntries = getGiveroppfolgingFields();
-		String field1 = "tab-behandling";
-		String field2="tab-annenreak";
-		
-		String behandling = userEntries.get(field1);
-		String annenreak = userEntries.get(field2);
-		
-		if(behandling == null || behandling.isEmpty()){
-			behandling ="";
-		}else{
-			if(annenreak != null && !annenreak.isEmpty()){
-				behandling = behandling +";"+annenreak;
-				
-				String legeSpesifiser = userEntries.get("legeSpesifiser");
-				String sykemeldinggruppe = userEntries.get("tab-sykemeldinggruppe");
-				if(legeSpesifiser != null && ! legeSpesifiser.isEmpty()){
-					behandling = behandling + ";" + legeSpesifiser;
-				}
-				if(sykemeldinggruppe != null && ! sykemeldinggruppe.trim().equalsIgnoreCase("--- Select ---")){
-					behandling = behandling + ";" + sykemeldinggruppe;
-				}
-			}
-			
-		}
-		videreoppfolging = behandling;
 		return videreoppfolging;
 	}
 	public void setVidereoppfolging(String videreoppfolging) {
+		if(videreoppfolging == null){
+
+			Map<String,String> userEntries = getGiveroppfolgingFields();
+			String field1 = "tab-behandling";
+			String field2="tab-annenreak";
+			
+			String behandling = userEntries.get(field1);
+			String annenreak = userEntries.get(field2);
+			
+			if(behandling == null || behandling.isEmpty()){
+				behandling ="";
+			}else{
+				if(annenreak != null && !annenreak.isEmpty()){
+					behandling = behandling +";"+annenreak;
+					
+					String legeSpesifiser = userEntries.get("legeSpesifiser");
+					String sykemeldinggruppe = userEntries.get("tab-sykemeldinggruppe");
+					if(legeSpesifiser != null && ! legeSpesifiser.isEmpty()){
+						behandling = behandling + ";" + legeSpesifiser;
+					}
+					if(sykemeldinggruppe != null && ! sykemeldinggruppe.trim().equalsIgnoreCase("--- Select ---")){
+						behandling = behandling + ";" + sykemeldinggruppe;
+					}
+				}
+				
+			}
+			videreoppfolging = behandling;
+		}
 		this.videreoppfolging = videreoppfolging;
 	}
 	public Map<String, String> getGiveroppfolgingFields() {

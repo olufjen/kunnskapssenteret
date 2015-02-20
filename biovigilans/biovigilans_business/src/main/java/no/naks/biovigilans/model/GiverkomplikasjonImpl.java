@@ -73,11 +73,13 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public void saveToGiverkomplikasjon(){
 		setStedforkomplikasjon(null);
+		setBehandlingssted(null);
 		setTidfratappingtilkompliasjon(null);
-		setVarighetkomplikasjon(null);
-		setAlvorlighetsgrad(null);
 		setTilleggsopplysninger(null);
+		setAlvorlighetsgrad(null);
 		setKliniskresultat(null);
+		setVarighetkomplikasjon(null);
+		setDatosymptomer(null);
 	}
 	
 	/**
@@ -96,36 +98,34 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 
 	public String getStedforkomplikasjon() {
-		Map<String,String> userEntries = getKomplikasjonsFields();
-		String field = "tab-hvor";
-		stedforkomplikasjon = userEntries.get(field);
-		if (stedforkomplikasjon == null){
-			stedforkomplikasjon = "";
-		}
 		return stedforkomplikasjon;
 	}
 
 	public void setStedforkomplikasjon(String stedforkomplikasjon) {
-		/*if(stedforkomplikasjon == null){
-			stedforkomplikasjon = komplikasjonsFields.get(keys[0]);
-		}*/
+		if(stedforkomplikasjon == null){
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "tab-hvor";
+			stedforkomplikasjon = userEntries.get(field);
+			if (stedforkomplikasjon == null){
+				stedforkomplikasjon = "";
+			}
+		}
 		this.stedforkomplikasjon = stedforkomplikasjon;
 	}
 
 	public String getTidfratappingtilkompliasjon() {
-		Map<String,String> userEntries = getKomplikasjonsFields();
-		String field = "tab-tapp-reak";
-		tidfratappingtilkompliasjon = userEntries.get(field);
-		if (tidfratappingtilkompliasjon == null){
-			tidfratappingtilkompliasjon = "";
-		}
+		
 		return tidfratappingtilkompliasjon;
 	}
 
 	public void setTidfratappingtilkompliasjon(String tidfratappingtilkompliasjon) {
-		/*if(tidfratappingtilkompliasjon==null){
-			tidfratappingtilkompliasjon = komplikasjonsFields.get(keys[1]);
-		}*/
+		if(tidfratappingtilkompliasjon==null){
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "tab-tapp-reak";
+			tidfratappingtilkompliasjon = userEntries.get(field);
+			if (tidfratappingtilkompliasjon == null){
+				tidfratappingtilkompliasjon = "";
+			}		}
 		this.tidfratappingtilkompliasjon = tidfratappingtilkompliasjon;
 	}
 
@@ -134,74 +134,66 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 
 	public void setBehandlingssted(String behandlingssted) {
+		if(behandlingssted == null){
+			behandlingssted="";
+		}
 		this.behandlingssted = behandlingssted;
 	}
 
 	public String getTilleggsopplysninger() {
-		Map<String,String> userEntries = getKomplikasjonsFields();
-		String field = "tab-forbedringstiltak";
-		String forbedrings = userEntries.get(field);
-		String avreg = userEntries.get("tab-avreg");
-		if (forbedrings == null || forbedrings.isEmpty()){
-			forbedrings = "";
-		}
-		if(avreg == null || avreg.isEmpty()){
-			avreg="";
-		}
-		tilleggsopplysninger = avreg + ";" + forbedrings ;
 		return tilleggsopplysninger;
 	}
 
 	public void setTilleggsopplysninger(String tilleggsopplysninger) {
-		/*if(tilleggsopplysninger == null){
-			tilleggsopplysninger =  komplikasjonsFields.get(keys[10]);
-			
-			
-			
-			String value="";
-			for(int i=4; i<9; i++){
-				if(komplikasjonsFields.get(keys[i]) != null){
-					value=value + komplikasjonsFields.get(keys[i]) + " ";
-				}
+		if(tilleggsopplysninger == null){
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "tab-forbedringstiltak";
+			String forbedrings = userEntries.get(field);
+			String avreg = userEntries.get("tab-avreg");
+			if (forbedrings == null || forbedrings.isEmpty()){
+				forbedrings = "";
 			}
-			tilleggsopplysninger = value;
+			if(avreg == null || avreg.isEmpty()){
+				avreg="";
+			}
+			tilleggsopplysninger = avreg + ";" + forbedrings ;
 			
-		}*/
+		}
 		this.tilleggsopplysninger = tilleggsopplysninger;
 	}
 
 	public String getAlvorlighetsgrad() {
-		Map<String,String> userEntries = getKomplikasjonsFields();
-		String field = "alvor-mang";
-		alvorlighetsgrad = userEntries.get(field);
-		if (alvorlighetsgrad == null || alvorlighetsgrad.isEmpty()){
-			alvorlighetsgrad = "";
-		}
-		
+	
 		return alvorlighetsgrad;
 	}
 
 	public void setAlvorlighetsgrad(String alvorlighetsgrad) {
-		/*if(alvorlighetsgrad==null){
-			alvorlighetsgrad = komplikasjonsFields.get(keys[3]);
-		}*/
+		if(alvorlighetsgrad==null){
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "alvor-mang";
+			alvorlighetsgrad = userEntries.get(field);
+			if (alvorlighetsgrad == null || alvorlighetsgrad.isEmpty()){
+				alvorlighetsgrad = "";
+			}
+			
+		}
 		this.alvorlighetsgrad = alvorlighetsgrad;
 	}
 
 	public String getKliniskresultat() {
-		Map<String,String> userEntries = getKomplikasjonsFields();
-		String field = "tab-klinisk";
-		kliniskresultat = userEntries.get(field);
-		if (kliniskresultat == null){
-			kliniskresultat = "";
-		}
+		
 		return kliniskresultat;
 	}
 
 	public void setKliniskresultat(String kliniskresultat) {
-		/*if(kliniskresultat == null){
-			kliniskresultat = komplikasjonsFields.get(keys[4]) ;
-		}*/
+		if(kliniskresultat == null){
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "tab-klinisk";
+			kliniskresultat = userEntries.get(field);
+			if (kliniskresultat == null){
+				kliniskresultat = "";
+			}
+		}
 		this.kliniskresultat = kliniskresultat;
 	}
 
@@ -209,42 +201,42 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public Date getDatosymptomer() {
 		
-		Map<String,String> userEntries = getKomplikasjonsFields();
-		String field = "dato-hendelse";
-		String strDate = userEntries.get(field);
-		if (strDate == null || strDate.isEmpty()){
-			datosymptomer = null;
-		}else{
-			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-			try {
-				datosymptomer =   dateFormat.parse(strDate);
-			}catch (ParseException e) {
-				System.out.println("date format problem: " + e.toString());
-			}
-		}
-		
 		return datosymptomer;
 	}
 
 	public void setDatosymptomer(Date datosymptomer) {
+		if(datosymptomer == null){
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "dato-hendelse";
+			String strDate = userEntries.get(field);
+			if (strDate == null || strDate.isEmpty()){
+				datosymptomer = null;
+			}else{
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+				try {
+					datosymptomer =   dateFormat.parse(strDate);
+				}catch (ParseException e) {
+					System.out.println("date format problem: " + e.toString());
+				}
+			}
+		}
 		this.datosymptomer = datosymptomer;
 	}
 
 	public String getVarighetkomplikasjon() {
-		Map<String,String> userEntries = getKomplikasjonsFields();
-		String field = "tab-varighet";
-		varighetkomplikasjon = userEntries.get(field);
-		if (varighetkomplikasjon == null){
-			varighetkomplikasjon = "";
-		}
 		return varighetkomplikasjon;
 	}
 
 	public void setVarighetkomplikasjon(String varighetkomplikasjon) {
-		/*if(varighetkomplikasjon==null){
-			varighetkomplikasjon = komplikasjonsFields.get(keys[2]);
-		}*/
+		if(varighetkomplikasjon==null){
+			Map<String,String> userEntries = getKomplikasjonsFields();
+			String field = "tab-varighet";
+			varighetkomplikasjon = userEntries.get(field);
+			if (varighetkomplikasjon == null){
+				varighetkomplikasjon = "";
+			}
+		}
 		this.varighetkomplikasjon = varighetkomplikasjon;
 	}
 

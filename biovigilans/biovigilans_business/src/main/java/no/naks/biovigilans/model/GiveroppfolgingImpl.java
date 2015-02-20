@@ -51,10 +51,12 @@ public class GiveroppfolgingImpl extends AbstractGiveroppfolging implements Give
 		
 	}*/
 	
-	/*public void saveToField(){
+	public void saveToField(){
 		setKlassifikasjongiveroppfolging(null);
 		setGiveroppfolgingbeskrivelse(null);
 		setAvregistering(null);
+		setStrakstiltak(null);
+		setVidereoppfolging(null);
 	}
-*/
+
 }

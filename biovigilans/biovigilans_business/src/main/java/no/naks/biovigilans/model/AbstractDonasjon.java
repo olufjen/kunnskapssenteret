@@ -57,114 +57,110 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 	}
 	
 	public String getDonasjonssted() {
-		Map<String,String> userEntries = getDonasjonsFields();
-		String field = "tab-sted";
-		donasjonssted = userEntries.get(field);
-		if (donasjonssted == null || donasjonssted.trim().equalsIgnoreCase("--- Select ---") ){
-			donasjonssted = "";
-		}
+		
 		return donasjonssted;
 	}
 	public void setDonasjonssted(String donasjonssted) {
-		/*if(donasjonssted == null)
-			donasjonssted = donasjonsFields.get(keys[0]);*/
+		if(donasjonssted == null){
+			Map<String,String> userEntries = getDonasjonsFields();
+			String field = "tab-sted";
+			donasjonssted = userEntries.get(field);
+			if (donasjonssted == null || donasjonssted.trim().equalsIgnoreCase("--- Select ---") ){
+				donasjonssted = "";
+			}
+		}
 		this.donasjonssted = donasjonssted;
 	}
 	public String getKomplisertvenepunksjon() {
-		Map<String,String> userEntries = getDonasjonsFields();
-		String field = "tab-vene";
-		komplisertvenepunksjon = userEntries.get(field);
-		if (komplisertvenepunksjon == null || komplisertvenepunksjon.isEmpty() ){
-			komplisertvenepunksjon = "";
-		}
+		
 		return komplisertvenepunksjon;
 	}
 	public void setKomplisertvenepunksjon(String komplisertvenepunksjon) {
-		/*if(komplisertvenepunksjon==null){
-			komplisertvenepunksjon = donasjonsFields.get(keys[2]);
-		}*/
+		if(komplisertvenepunksjon==null){
+			Map<String,String> userEntries = getDonasjonsFields();
+			String field = "tab-vene";
+			komplisertvenepunksjon = userEntries.get(field);
+			if (komplisertvenepunksjon == null || komplisertvenepunksjon.isEmpty() ){
+				komplisertvenepunksjon = "";
+			}
+		}
 		this.komplisertvenepunksjon = komplisertvenepunksjon;
 	}
 	public String getTappetype() {
-		Map<String,String> userEntries = getDonasjonsFields();
-		String field = "type-tapping";
-		tappetype = userEntries.get(field);
-		if (tappetype == null || tappetype.isEmpty() ){
-			tappetype = "";
-		}else{
-			if(tappetype.trim().equalsIgnoreCase("aferese")){
-				String typeAferese = userEntries.get("type-aferese");
-				if(typeAferese != null ){
-					tappetype = tappetype + ";" + typeAferese;
-				}
-			}
-		}
+		
 		return tappetype;
 	}
 	public void setTappetype(String tappetype) {
-		/*if(tappetype==null){
-			tappetype = donasjonsFields.get(keys[3]);
-			if(tappetype != null && tappetype.equalsIgnoreCase("fullblod")){
-				tappetype = donasjonsFields.get(keys[4]);
+		if(tappetype==null){
+			Map<String,String> userEntries = getDonasjonsFields();
+			String field = "type-tapping";
+			tappetype = userEntries.get(field);
+			if (tappetype == null || tappetype.isEmpty() ){
+				tappetype = "";
 			}else{
-				if(donasjonsFields.get(keys[5])!= null && donasjonsFields.get(keys[5]).equalsIgnoreCase("aferese-ja")){
-					tappetype = donasjonsFields.get(keys[5]) + " " + donasjonsFields.get(keys[6]);
-				}else{
-					tappetype = donasjonsFields.get(keys[5]);
+				if(tappetype.trim().equalsIgnoreCase("aferese")){
+					String typeAferese = userEntries.get("type-aferese");
+					if(typeAferese != null ){
+						tappetype = tappetype + ";" + typeAferese;
+					}
 				}
 			}
-		}*/
+		}
 		this.tappetype = tappetype;
 	}
 	public String getTappevarighet() {
 		return tappevarighet;
 	}
 	public void setTappevarighet(String tappevarighet) {
+		if(tappevarighet == null){
+			tappevarighet ="";
+		}
 		this.tappevarighet = tappevarighet;
 	}
 	public String getLokalisasjonvenepunksjon() {
 		return lokalisasjonvenepunksjon;
 	}
 	public void setLokalisasjonvenepunksjon(String lokalisasjonvenepunksjon) {
-		/*if(lokalisasjonvenepunksjon == null){
-			lokalisasjonvenepunksjon = donasjonsFields.get(keys[8]);
-		}*/
+		if(lokalisasjonvenepunksjon == null){
+			lokalisasjonvenepunksjon = "";
+		}
 		this.lokalisasjonvenepunksjon = lokalisasjonvenepunksjon;
 	}
 	public String getMaltidfortapping() {
-		Map<String,String> userEntries = getDonasjonsFields();
-		String field = "tab-maltid";
-		maltidfortapping = userEntries.get(field);
-		if (maltidfortapping == null || maltidfortapping.isEmpty() ){
-			maltidfortapping = "";
-		}
 		return maltidfortapping;
 	}
 	public void setMaltidfortapping(String maltidfortapping) {
-		/*if(maltidfortapping==null)
-			maltidfortapping = donasjonsFields.get(keys[1]);*/
+		if(maltidfortapping==null){
+			Map<String,String> userEntries = getDonasjonsFields();
+			String field = "tab-maltid";
+			maltidfortapping = userEntries.get(field);
+			if (maltidfortapping == null || maltidfortapping.isEmpty() ){
+				maltidfortapping = "";
+			}
+		}
 		this.maltidfortapping = maltidfortapping;
 	}
 	
 	public Date getDonasjonsdato() {
-
-		Map<String,String> userEntries = getDonasjonsFields();
-		String field = "dato-donasjon";
-		String strDate = userEntries.get(field);
-		if (strDate == null || strDate.isEmpty()){
-			donasjonsdato = null;
-		}else{
-			DateFormat dateFormat = 
-		            new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-			try {
-				donasjonsdato =   dateFormat.parse(strDate);
-			}catch (ParseException e) {
-				System.out.println("date format problem: " + e.toString());
-			}
-		}
 		return donasjonsdato;
 	}
 	public void setDonasjonsdato(Date donasjonsdato) {
+		if(donasjonsdato == null){
+			Map<String,String> userEntries = getDonasjonsFields();
+			String field = "dato-donasjon";
+			String strDate = userEntries.get(field);
+			if (strDate == null || strDate.isEmpty()){
+				donasjonsdato = null;
+			}else{
+				DateFormat dateFormat = 
+			            new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+				try {
+					donasjonsdato =   dateFormat.parse(strDate);
+				}catch (ParseException e) {
+					System.out.println("date format problem: " + e.toString());
+				}
+			}
+		}
 		this.donasjonsdato = donasjonsdato;
 	}
 	public Map<String, String> getDonasjonsFields() {

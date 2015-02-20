@@ -31,6 +31,6 @@ public interface Donasjon {
 	public int[] getUtypes();
 	public int getGiveId();
 	public void setGiveId(int giveId);
-	//public void saveToField();
+	public void saveToField();
 	
 }

@@ -34,93 +34,87 @@ public abstract class AbstractMelder extends AbstractModel implements Melder{
 		this.melderId = melderId;
 	}
 	public String getMeldernavn() {
-		Map<String,String> userEntries = getMelderFields();
-		String field = "k-navn";
-		meldernavn = userEntries.get(field);
-		if (meldernavn == null){
-			meldernavn = "";
-		}
 		return meldernavn;
 	}
 	public void setMeldernavn(String meldernavn) {
-	/*	if(meldernavn ==  null){
-			meldernavn = melderFields.get(keys[3]);
-		}*/
+		if(meldernavn ==  null){
+			Map<String,String> userEntries = getMelderFields();
+			String field = "k-navn";
+			meldernavn = userEntries.get(field);
+			if (meldernavn == null){
+				meldernavn = "";
+			}
+		}
 		this.meldernavn = meldernavn;
 	}
 	public String getMelderepost() {
-		Map<String,String> userEntries = getMelderFields();
-		String field = "k-epost";
-		melderepost = userEntries.get(field);
-		if (melderepost == null){
-			melderepost = "";
-		}
 		return melderepost;
 	}
 	public void setMelderepost(String melderepost) {
-		/*if(melderepost == null){
-			melderepost = melderFields.get(keys[4]) ;
-		}*/
+		if(melderepost == null){
+			Map<String,String> userEntries = getMelderFields();
+			String field = "k-epost";
+			melderepost = userEntries.get(field);
+			if (melderepost == null){
+				melderepost = "";
+			}
+		}
 		this.melderepost = melderepost;
 	}
 	public String getMeldertlf() {
-		Map<String,String> userEntries = getMelderFields();
-		String field = "k-tlf";
-		meldertlf = userEntries.get(field);
-		if (meldertlf == null){
-			meldertlf = "";
-		}
 		return meldertlf;
 	}
 	public void setMeldertlf(String meldertlf) {
-		/*if(meldertlf == null){
-			meldertlf = melderFields.get(keys[5]);
-		}*/
+		if(meldertlf == null){
+			Map<String,String> userEntries = getMelderFields();
+			String field = "k-tlf";
+			meldertlf = userEntries.get(field);
+			if (meldertlf == null){
+				meldertlf = "";
+			}
+		}
 		this.meldertlf = meldertlf;
 	}
 	public String getHelseregion() {
-		Map<String,String> userEntries = getMelderFields();
-		String field = "k-helseregion";
-		helseregion = userEntries.get(field);
-		if (helseregion == null){
-			helseregion = "";
-		}
 		return helseregion;
 	}
 	public void setHelseregion(String helseregion) {
-		/*if(helseregion == null){
-			helseregion = melderFields.get(keys[0]);
-		}*/
+		if(helseregion == null){
+			Map<String,String> userEntries = getMelderFields();
+			String field = "k-helseregion";
+			helseregion = userEntries.get(field);
+			if (helseregion == null){
+				helseregion = "";
+			}
+		}
 		this.helseregion = helseregion;
 	}
 	public String getHelseforetak() {
-		Map<String,String> userEntries = getMelderFields();
-		String field = "k-helseforetak";
-		helseforetak = userEntries.get(field);
-		if (helseforetak == null){
-			helseforetak = "";
-		}
 		return helseforetak;
 	}
 	public void setHelseforetak(String helseforetak) {
-		/*if(helseforetak == null) {
-			helseforetak = melderFields.get(keys[1]);
-		}*/
+		if(helseforetak == null) {
+			Map<String,String> userEntries = getMelderFields();
+			String field = "k-helseforetak";
+			helseforetak = userEntries.get(field);
+			if (helseforetak == null){
+				helseforetak = "";
+			}
+		}
 		this.helseforetak = helseforetak;
 	}
 	public String getSykehus() {
-		Map<String,String> userEntries = getMelderFields();
-		String field = "k-sykehus";
-		sykehus = userEntries.get(field);
-		if (sykehus == null){
-			sykehus = "";
-		}
 		return sykehus;
 	}
 	public void setSykehus(String sykehus) {
-		/*if(sykehus == null){
-			sykehus = melderFields.get(keys[2]);
-		}*/
+		if(sykehus == null){
+			Map<String,String> userEntries = getMelderFields();
+			String field = "k-sykehus";
+			sykehus = userEntries.get(field);
+			if (sykehus == null){
+				sykehus = "";
+			}
+		}
 		this.sykehus = sykehus;
 	}
 	public Map<String, String> getMelderFields() {
