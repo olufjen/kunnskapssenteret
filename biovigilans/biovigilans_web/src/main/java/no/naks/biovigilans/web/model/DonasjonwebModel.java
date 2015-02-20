@@ -40,8 +40,8 @@ public class DonasjonwebModel extends VigilansModel {
 			String userEntry = userEntries.get(field);
 			donasjon.saveField(field, userEntry);
 		}
-		
-		donasjon.saveToField();*/
+		*/
+		donasjon.saveToField();
 		
 	}	
 

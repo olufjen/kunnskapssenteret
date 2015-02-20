@@ -158,14 +158,13 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 			giveroppfolging.saveField(field, userEntry);
 		}*/
 		giver.setGiverFields(userEntries);
-//		giver.saveToGiver();
-		
+		giver.saveToGiver();
 		vigilansmelding.setVigilansFields(userEntries);
-//		vigilansmelding.saveToVigilansmelding();
+		vigilansmelding.saveToVigilansmelding();
 		giverKomplikasjon.setKomplikasjonsFields(userEntries);
-//		giverKomplikasjon.saveToGiverkomplikasjon();
+		giverKomplikasjon.saveToGiverkomplikasjon();
 		giveroppfolging.setGiveroppfolgingFields(userEntries);
-//		giveroppfolging.saveToField();
+		giveroppfolging.saveToField();
 		
 	}
 	

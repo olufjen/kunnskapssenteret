@@ -667,8 +667,8 @@ public class MelderwebModel extends VigilansModel {
 			String userEntry = userEntries.get(field);
 			melder.saveField(field, userEntry);
 		}
-		
-		melder.saveToMelder();*/
+		*/
+		melder.saveToMelder();
 /*
  * 
  */
