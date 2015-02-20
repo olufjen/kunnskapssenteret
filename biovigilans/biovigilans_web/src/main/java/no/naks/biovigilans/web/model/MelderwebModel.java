@@ -661,12 +661,14 @@ public class MelderwebModel extends VigilansModel {
 		String[] formFields = getFormNames();
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
 		
-		for(String field: formFields ){
+		melder.setMelderFields(userEntries);
+		
+		/*for(String field: formFields ){
 			String userEntry = userEntries.get(field);
 			melder.saveField(field, userEntry);
 		}
 		
-		melder.saveToMelder();
+		melder.saveToMelder();*/
 /*
  * 
  */

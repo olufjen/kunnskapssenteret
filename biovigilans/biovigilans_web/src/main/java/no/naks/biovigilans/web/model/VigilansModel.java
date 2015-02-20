@@ -96,12 +96,12 @@ public class VigilansModel {
 	public void setValues(Parameter entry){
 		String name = entry.getName();
 		String value = entry.getValue();
-		
+		/*
 		boolean finnes = formMap.containsKey(name);
 		if(finnes){
 			String val =  formMap.get(name);
 			value = val + "-" + value; 
-		}
+		}*/
 		formMap.put(name, value);
 	
 	}
