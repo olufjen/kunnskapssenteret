@@ -118,11 +118,22 @@ function formSubmit(){
      }); */
 	}
 function regionValgt(){
+	var region = document.getElementById("k-helseregion").value;
+//	alert("Region valgt: "+region);
 	$("#btnRegion").click();
 }
 function foretakValgt(){
-	// alert("Helseforetak valgt");
-	$("#btnForetak").click();
+	var foretak = document.getElementById("k-helseforetak").value;
+//	 alert("Helseforetak valgt:"+foretak);
+	 if (foretak == ''){
+//		 alert("foretak er tomt");
+	 }
+
+	 if (foretak != ''){
+//		 alert("foretak er ikke tomt ");
+		 $("#btnForetak").click();
+	 }
+	
 }
 function leveranseValgt(){
 	$("#btnleveranse").click();
