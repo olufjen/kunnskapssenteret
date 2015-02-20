@@ -206,6 +206,9 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 		
 	public Map<String, String> getVigilansFields() {
+		if(vigilansFields == null){
+			vigilansFields= new HashMap<String, String>();
+		}
 		return vigilansFields;
 	}
 	public void setVigilansFields(Map<String, String> vigilansFields) {

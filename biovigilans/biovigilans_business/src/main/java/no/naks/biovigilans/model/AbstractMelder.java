@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -33,60 +34,99 @@ public abstract class AbstractMelder extends AbstractModel implements Melder{
 		this.melderId = melderId;
 	}
 	public String getMeldernavn() {
+		Map<String,String> userEntries = getMelderFields();
+		String field = "k-navn";
+		meldernavn = userEntries.get(field);
+		if (meldernavn == null){
+			meldernavn = "";
+		}
 		return meldernavn;
 	}
 	public void setMeldernavn(String meldernavn) {
-		if(meldernavn ==  null){
+	/*	if(meldernavn ==  null){
 			meldernavn = melderFields.get(keys[3]);
-		}
+		}*/
 		this.meldernavn = meldernavn;
 	}
 	public String getMelderepost() {
+		Map<String,String> userEntries = getMelderFields();
+		String field = "k-epost";
+		melderepost = userEntries.get(field);
+		if (melderepost == null){
+			melderepost = "";
+		}
 		return melderepost;
 	}
 	public void setMelderepost(String melderepost) {
-		if(melderepost == null){
+		/*if(melderepost == null){
 			melderepost = melderFields.get(keys[4]) ;
-		}
+		}*/
 		this.melderepost = melderepost;
 	}
 	public String getMeldertlf() {
+		Map<String,String> userEntries = getMelderFields();
+		String field = "k-tlf";
+		meldertlf = userEntries.get(field);
+		if (meldertlf == null){
+			meldertlf = "";
+		}
 		return meldertlf;
 	}
 	public void setMeldertlf(String meldertlf) {
-		if(meldertlf == null){
+		/*if(meldertlf == null){
 			meldertlf = melderFields.get(keys[5]);
-		}
+		}*/
 		this.meldertlf = meldertlf;
 	}
 	public String getHelseregion() {
+		Map<String,String> userEntries = getMelderFields();
+		String field = "k-helseregion";
+		helseregion = userEntries.get(field);
+		if (helseregion == null){
+			helseregion = "";
+		}
 		return helseregion;
 	}
 	public void setHelseregion(String helseregion) {
-		if(helseregion == null){
+		/*if(helseregion == null){
 			helseregion = melderFields.get(keys[0]);
-		}
+		}*/
 		this.helseregion = helseregion;
 	}
 	public String getHelseforetak() {
+		Map<String,String> userEntries = getMelderFields();
+		String field = "k-helseforetak";
+		helseforetak = userEntries.get(field);
+		if (helseforetak == null){
+			helseforetak = "";
+		}
 		return helseforetak;
 	}
 	public void setHelseforetak(String helseforetak) {
-		if(helseforetak == null) {
+		/*if(helseforetak == null) {
 			helseforetak = melderFields.get(keys[1]);
-		}
+		}*/
 		this.helseforetak = helseforetak;
 	}
 	public String getSykehus() {
+		Map<String,String> userEntries = getMelderFields();
+		String field = "k-sykehus";
+		sykehus = userEntries.get(field);
+		if (sykehus == null){
+			sykehus = "";
+		}
 		return sykehus;
 	}
 	public void setSykehus(String sykehus) {
-		if(sykehus == null){
+		/*if(sykehus == null){
 			sykehus = melderFields.get(keys[2]);
-		}
+		}*/
 		this.sykehus = sykehus;
 	}
 	public Map<String, String> getMelderFields() {
+		if(melderFields == null){
+			melderFields = new HashMap<String,String>();
+		}
 		return melderFields;
 	}
 	public void setMelderFields(Map<String, String> melderFields) {

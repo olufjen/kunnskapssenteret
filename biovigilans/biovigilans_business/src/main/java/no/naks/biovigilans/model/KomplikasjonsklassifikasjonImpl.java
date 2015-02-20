@@ -10,7 +10,7 @@ public class KomplikasjonsklassifikasjonImpl extends
 		super();
 		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.INTEGER,Types.INTEGER};
-		komplikasjonklassifikasjonFields = new HashMap();
+		komplikasjonklassifikasjonFields = new HashMap<String,String>();
 	}
 
 	public void setParams(){

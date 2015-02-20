@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -192,6 +193,9 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 		this.videreoppfolging = videreoppfolging;
 	}
 	public Map<String, String> getGiveroppfolgingFields() {
+		if(giveroppfolgingFields == null){
+			giveroppfolgingFields = new HashMap<String, String>() ;
+		}
 		return giveroppfolgingFields;
 	}
 	public void setGiveroppfolgingFields(Map<String, String> giveroppfolgingFields) {

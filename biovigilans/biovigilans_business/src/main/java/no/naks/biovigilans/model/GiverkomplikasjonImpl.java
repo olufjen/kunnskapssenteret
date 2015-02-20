@@ -48,7 +48,7 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		super();
 		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER, Types.INTEGER};
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER, Types.INTEGER};
-		komplikasjonsFields = new HashMap();
+		komplikasjonsFields = new HashMap<String, String>();
 	}
 	
 	public void setParams(){

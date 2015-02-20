@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -153,6 +154,9 @@ public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel i
 		this.meldeId = meldeId;
 	}
 	public Map<String, String> getKomplikasjonGiverFields() {
+		if(komplikasjonGiverFields == null){
+			komplikasjonGiverFields = new HashMap<String, String>();
+		}
 		return komplikasjonGiverFields;
 	}
 	public void setKomplikasjonGiverFields(

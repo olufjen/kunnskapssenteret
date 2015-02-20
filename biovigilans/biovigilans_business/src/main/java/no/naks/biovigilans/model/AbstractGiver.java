@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import no.naks.rammeverk.kildelag.model.AbstractModel;
@@ -168,6 +169,9 @@ public abstract class AbstractGiver extends AbstractModel implements Giver{
 		this.keys = keys;
 	}
 	public Map<String, String> getGiverFields() {
+		if(giverFields == null){
+			giverFields = new HashMap<String, String>();
+		}
 		return giverFields;
 	}
 	public void setGiverFields(Map<String, String> giverFields) {

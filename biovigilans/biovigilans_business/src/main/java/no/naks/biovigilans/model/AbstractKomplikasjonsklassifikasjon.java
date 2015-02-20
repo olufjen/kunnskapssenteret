@@ -1,6 +1,7 @@
 package no.naks.biovigilans.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,6 +84,9 @@ public abstract class AbstractKomplikasjonsklassifikasjon extends AbstractModel 
 		this.meldeidpasient = meldeidpasient;
 	}
 	public Map<String,String> getKomplikasjonklassifikasjonFields() {
+		if(komplikasjonklassifikasjonFields == null){
+			komplikasjonklassifikasjonFields = new HashMap<String, String>();
+		}
 		return komplikasjonklassifikasjonFields;
 	}
 
