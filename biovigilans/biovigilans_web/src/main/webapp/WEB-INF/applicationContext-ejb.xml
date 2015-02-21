@@ -71,6 +71,9 @@
   	<property name="annenkomplikasjonTableDefs" value="${annenkomplikasjon.meldeid},${annenkomplikasjon.klassifikasjon},${annenkomplikasjon.klassifikasjonkode},
   	${annenkomplikasjon.delkode},${annenkomplikasjon.komplikasjonbeskrivelse},${annenkomplikasjon.komplikasjondefinisjon},${annenkomplikasjon.avvikarsak},
   	${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget}"></property>
+  	<property name="pasientkomplikasjonTableDefs" value="${pasientkomplikasjon.meldeid},${pasientkomplikasjon.transfusjonsid},${pasientkomplikasjon.klassifikasjon},
+  	${pasientkomplikasjon.tidfrapabegynttransfusjontilkomplikasjon},${pasientkomplikasjon.alvorlighetsgrad},${pasientkomplikasjon.kliniskresultat},${pasientkomplikasjon.arsakssammenheng}"></property>
+  	<property name="selectpasientKomplikasjonSQL" value="asientkomplikasjon.Select"></property>
   </bean>
   <bean id="komplikasjonsdiagnosegiverDAO" class="no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
