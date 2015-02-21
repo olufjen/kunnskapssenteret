@@ -12,6 +12,7 @@ import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.data.Reference;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
@@ -32,7 +33,26 @@ public class RapporterteMeldingerServerResourceHTML extends
 	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
 	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
 	
-			
+	private String detaljer = "Vis ytterligere detaljer";
+	private String detaljerId = "detaljer";
+	
+	
+	public String getDetaljerId() {
+		return detaljerId;
+	}
+
+	public void setDetaljerId(String detaljerId) {
+		this.detaljerId = detaljerId;
+	}
+
+	public String getDetaljer() {
+		return detaljer;
+	}
+
+	public void setDetaljer(String detaljer) {
+		this.detaljer = detaljer;
+	}
+	
 	
 	public String getPasientKey() {
 		return pasientKey;
@@ -140,6 +160,8 @@ public class RapporterteMeldingerServerResourceHTML extends
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	     SimpleScalar simple = new SimpleScalar(displayPart);
+		 SimpleScalar detaljButton = new SimpleScalar(detaljer);
+		 dataModel.put(detaljerId,detaljButton);
 	     LocalReference localUri = new LocalReference(reference);
 	     dataModel.put(meldingsId, melding);
 	     dataModel.put(displayKey, simple);
@@ -175,11 +197,30 @@ public class RapporterteMeldingerServerResourceHTML extends
 	
 	     LocalReference localUri = new LocalReference(reference);
 	     dataModel.put(meldingsId, melding);
-	
+	    	String infoButton = null;
+	    	for (Parameter entry : form) {
+				if (entry.getValue() != null && !(entry.getValue().equals(""))){
+						System.out.println(entry.getName() + "=" + entry.getValue());
+						if (entry.getName().equals("hentopplysninger")){
+							infoButton = entry.getValue();
+							if (infoButton.equals("Skjul detaljer")){
+								detaljer = "Vis ytterligere detaljer";
+								 displayPart = "none";
+							}else{
+								 detaljer = "Skjul detaljer";
+								 displayPart = "block";
+							}
+						}
+				}
+				
+	    	}
 	     if (annenKomplikasjon != null){
 	    	 dataModel.put(andreKey,annenKomplikasjon);
-	    	 displayPart = "block";
+//	    	 displayPart = "block";
+//	    	 detaljer = "Skjul detaljer";
 	   	     SimpleScalar simple = new SimpleScalar(displayPart);
+			 SimpleScalar detaljButton = new SimpleScalar(detaljer);
+			 dataModel.put(detaljerId,detaljButton);
 	   	     dataModel.put(displayKey, simple);
 	     }
  	    ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportert_melding.html"));
