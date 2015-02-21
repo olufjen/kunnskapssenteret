@@ -2,6 +2,7 @@ package no.naks.biovigilans.dao;
 
 import java.util.List;
 import java.util.Map;
+
 import no.naks.biovigilans.model.Melder;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 
@@ -27,4 +28,9 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 	public void setSelectannenKomplikasjonSQL(String selectannenKomplikasjonSQL);
 	public String[] getAnnenkomplikasjonTableDefs();
 	public void setAnnenkomplikasjonTableDefs(String[] annenkomplikasjonTableDefs);
+	public String getSelectpasientKomplikasjonSQL();
+	public void setSelectpasientKomplikasjonSQL(String selectpasientKomplikasjonSQL);
+	public String[] getPasientkomplikasjonTableDefs();
+	public void setPasientkomplikasjonTableDefs(
+			String[] pasientkomplikasjonTableDefs);
 }
