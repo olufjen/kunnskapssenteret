@@ -24,16 +24,33 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private String selectvigilansMeldingSQL;
 	private String selectannenKomplikasjonSQL;
 	private String[] annenkomplikasjonTableDefs;
+	private String selectpasientKomplikasjonSQL;
+	private String[] pasientkomplikasjonTableDefs;
+	
 	
 	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
 	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
 	private String andreKey = "annenKomp";
+	private String delMeldingKey = null;
 	
 	private Tablesupdate tablesUpdate = null;
 	private VigilansSelect vigilansSelect = null;
 	private AnnenkomplikasjonSelect annenmeldingSelect = null;
-
+	private PasientkomplikasjonSelect pasientmeldingSelect = null;
 	
+	public String getSelectpasientKomplikasjonSQL() {
+		return selectpasientKomplikasjonSQL;
+	}
+	public void setSelectpasientKomplikasjonSQL(String selectpasientKomplikasjonSQL) {
+		this.selectpasientKomplikasjonSQL = selectpasientKomplikasjonSQL;
+	}
+	public String[] getPasientkomplikasjonTableDefs() {
+		return pasientkomplikasjonTableDefs;
+	}
+	public void setPasientkomplikasjonTableDefs(
+			String[] pasientkomplikasjonTableDefs) {
+		this.pasientkomplikasjonTableDefs = pasientkomplikasjonTableDefs;
+	}
 	public String[] getAnnenkomplikasjonTableDefs() {
 		return annenkomplikasjonTableDefs;
 	}
@@ -140,14 +157,33 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 			Vigilansmelding melding = (Vigilansmelding)meldinger.get(0);
 			Long mId = melding.getMeldeid();
 			int nType = Types.INTEGER;
-			annenmeldingSelect = new AnnenkomplikasjonSelect(getDataSource(),selectannenKomplikasjonSQL, annenkomplikasjonTableDefs);
-			annenmeldingSelect.declareParameter(new SqlParameter(nType));
-			List andreMeldinger = annenmeldingSelect.execute(mId);
-			if (!andreMeldinger.isEmpty()){
-				alleMeldinger.put(andreKey, andreMeldinger);
-			}
+			List delMelding = velgMeldinger(mId,nType);
+			alleMeldinger.put(delMeldingKey, delMelding);
 		}
 		return alleMeldinger;
 	}
-	
+	/**
+	 * velgMeldinger
+	 * Denne rutinen henter en delmelding til en vigilansmelding basert på meldingsid.
+	 * En delmelding er enten av type annenkomplikasjon,pasientkomplikasjon eller giverkomplikasjon
+	 * @param mId  meldingsid
+	 * @param nType
+	 * @return
+	 */
+	private List velgMeldinger(Long mId,int nType){
+		annenmeldingSelect = new AnnenkomplikasjonSelect(getDataSource(),selectannenKomplikasjonSQL, annenkomplikasjonTableDefs);
+		annenmeldingSelect.declareParameter(new SqlParameter(nType));
+		List delMeldinger = annenmeldingSelect.execute(mId);
+		delMeldingKey = andreKey;
+		if (delMeldinger.isEmpty()){
+			annenmeldingSelect = null;
+			delMeldingKey = pasientKey;
+			pasientmeldingSelect = new PasientkomplikasjonSelect(getDataSource(),selectpasientKomplikasjonSQL,pasientkomplikasjonTableDefs);
+			pasientmeldingSelect.declareParameter(new SqlParameter(nType));
+			delMeldinger = pasientmeldingSelect.execute(mId);
+		}
+		
+		return delMeldinger;
+		
+	}
 }	
