@@ -29,8 +29,8 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	private String andreKey = "annenKomp"; 		// Nøkkel dersom melding er av type annenkomplikasjon
 	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
 	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
-	
-	
+
+
 	public String getDelMelding() {
 		return delMelding;
 	}
@@ -94,7 +94,8 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	     String meldingsText = " ";
 	     SimpleScalar simple = new SimpleScalar(meldingsText);
-		    dataModel.put(meldeTxtId,simple );
+		 dataModel.put(meldeTxtId,simple );
+
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	    
@@ -145,24 +146,34 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     		alleMeldinger = melderWebService.selectMeldinger(meldingsNokkel);
     		meldinger = alleMeldinger.get(meldingsNokkel);
     		delMeldinger = alleMeldinger.get(andreKey);
-    		if (!delMeldinger.isEmpty()){
-    			Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)delMeldinger.get(0);
-    			sessionAdmin.setSessionObject(request, annenKomplikasjon,andreKey);
+    		if (delMeldinger != null){
+    			if (!delMeldinger.isEmpty()){
+        			Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)delMeldinger.get(0);
+        			sessionAdmin.setSessionObject(request, annenKomplikasjon,andreKey);
+        		} 			
     		}
-    	}
     	
-    	if (meldinger.isEmpty()){
-    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+    	}
+    	if (meldinger != null){
+        	if (meldinger.isEmpty()){
+        		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
+        		Representation pasientkomplikasjonFtl = clres2.get();
+        		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
+        				MediaType.TEXT_HTML);	
+        	}
+        	
+        	if (!meldinger.isEmpty()){
+        		Vigilansmelding melding = (Vigilansmelding) meldinger.get(0);
+        		sessionAdmin.setSessionObject(request, melding, meldingsId);
+        		redirectPermanent("../hemovigilans/rapportert_melding.html");
+        	}    		
+    	}else{
+     		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
     		Representation pasientkomplikasjonFtl = clres2.get();
     		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
     				MediaType.TEXT_HTML);	
     	}
-    	
-    	if (!meldinger.isEmpty()){
-    		Vigilansmelding melding = (Vigilansmelding) meldinger.get(0);
-    		sessionAdmin.setSessionObject(request, melding, meldingsId);
-    		redirectPermanent("../hemovigilans/rapportert_melding.html");
-    	}
+
 
     	return templateRep;
     }
