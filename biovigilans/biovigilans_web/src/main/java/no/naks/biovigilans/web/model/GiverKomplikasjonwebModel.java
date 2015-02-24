@@ -31,8 +31,9 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	public GiverKomplikasjonwebModel() {
 		super();
 		giver = new GiverImpl();
-		vigilansmelding = new AbstractVigilansmelding();
+//		vigilansmelding = new AbstractVigilansmelding();
 		giverKomplikasjon = new GiverkomplikasjonImpl();
+		vigilansmelding = (Vigilansmelding) giverKomplikasjon;
 		giveroppfolging = new GiveroppfolgingImpl();
 	//	giver.setGiverfieldMaps(userFields);
 		
@@ -69,18 +70,23 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 	public void setSkadeiarmen(String[] skadeiarmen) {
 		this.skadeiarmen = skadeiarmen;
 	}
-	public Vigilansmelding getVigilansmelding() {
-		return vigilansmelding;
-	}
-	public void setVigilansmelding(Vigilansmelding vigilansmelding) {
-		this.vigilansmelding = vigilansmelding;
-	}
+
 	public Giver getGiver() {
 		return giver;
 	}
 	public void setGiver(Giver giver) {
 		this.giver = giver;
 	}
+
+	public Vigilansmelding getVigilansmelding() {
+		return vigilansmelding;
+	}
+
+
+	public void setVigilansmelding(Vigilansmelding vigilansmelding) {
+		this.vigilansmelding = vigilansmelding;
+	}
+
 
 	public Giverkomplikasjon getGiverKomplikasjon() {
 		return giverKomplikasjon;
@@ -162,6 +168,8 @@ public class GiverKomplikasjonwebModel extends VigilansModel {
 		vigilansmelding.setVigilansFields(userEntries);
 		vigilansmelding.saveToVigilansmelding();
 		giverKomplikasjon.setKomplikasjonsFields(userEntries);
+	
+		
 		giverKomplikasjon.saveToGiverkomplikasjon();
 		giveroppfolging.setGiveroppfolgingFields(userEntries);
 		giveroppfolging.saveToField();
