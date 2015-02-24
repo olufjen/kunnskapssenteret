@@ -186,6 +186,7 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 	public void saveGiverkomplikasjon(Giverkomplikasjon giverKomplikasjon){
 	
 		giverKomplikasjon.setParams();
+		giverKomplikasjon.setGiverkompTypes();
 		int[] types = giverKomplikasjon.getTypes();
 		Object[] params = giverKomplikasjon.getParams();
 		String sql = insertGiverkomplikasjonSQL;
