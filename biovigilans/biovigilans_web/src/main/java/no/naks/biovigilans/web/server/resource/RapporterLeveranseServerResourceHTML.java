@@ -130,7 +130,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     		 Vigilansmelding vigilansmelding = (Vigilansmelding) giverModel.getGiverKomplikasjon();
   
 				try {
-					giverModel.setMeldingLevert(vigilansmelding.getMeldingsdato());
+					giverModel.setMeldingLevert(vigilansmelding.getMeldingsdato()); // OBS nullpointer !!
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
