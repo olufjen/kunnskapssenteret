@@ -62,7 +62,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	/**
 	 * Dato når komplikasjonen ble oppdaget for kvittering
 	 */
-	private String datoforhendelseKvittering;
+	//private String datoforhendelseKvittering;
 
 //	private Long meldeid; Meldeid finnes i AbstractVigelansmelding OLJ 16.01.15 !!
 	private Map<String,String> annenKomplikasjonsFields;
@@ -75,15 +75,27 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		annenKomplikasjonsFields = new HashMap<String,String>();
 	}
+	
+	public void setParams(){
+		Long id = getMeldeid();
+		if (id == null){
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
+		}else
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
+	}
+	
 	public String getKlassifikasjon() {
-		if(klassifikasjon==null){
-			klassifikasjon = "";
-		}
 		return klassifikasjon;
 	}
 	public void setKlassifikasjon(String klassifikasjon) {
 		if(klassifikasjon == null){
-			klassifikasjon = (annenKomplikasjonsFields.get(keys[3])==null ? "" : annenKomplikasjonsFields.get(keys[3])) ;
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "tab-klassifikasjon";
+			klassifikasjon = userEntries.get(field);
+			if (klassifikasjon == null){
+				klassifikasjon = "";
+			}
+			//klassifikasjon = (annenKomplikasjonsFields.get(keys[3])==null ? "" : annenKomplikasjonsFields.get(keys[3])) ;
 			/*for(int i=9;i<16;i++){
 				if(annenKomplikasjonsFields.get(keys[i])!=null){
 					klassifikasjon = klassifikasjon +" ; " + annenKomplikasjonsFields.get(keys[i]);
@@ -102,19 +114,22 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		this.isUpdat = isUpdat;
 	}
 	public String getDelkode() {
-		if(delkode == null){
-			delkode = "";
-		}
 		return delkode;
 	}
 	
 	public void setDelkode(String delkode) {
 		if(delkode == null){
-			delkode = annenKomplikasjonsFields.get(keys[9]);
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "tab-klassifikasjon-sub";
+			delkode = userEntries.get(field);
+			if (delkode == null || delkode.trim().equalsIgnoreCase("--- Select ---")){
+				delkode = "";
+			}
+			//delkode = annenKomplikasjonsFields.get(keys[9]);
 		}
 		this.delkode = delkode;
 	}
-	public String getDatoforhendelseKvittering() {
+	/*public String getDatoforhendelseKvittering() {
 		if(datoforhendelseKvittering == null){
 			datoforhendelseKvittering = "";
 		}
@@ -122,107 +137,132 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 	public void setDatoforhendelseKvittering(String datoforhendelseKvittering) {
 		this.datoforhendelseKvittering = datoforhendelseKvittering;
-	}
+	}*/
 	public String getKlassifikasjonkode() {
-		if(Klassifikasjonkode == null){
-			Klassifikasjonkode = "";
-		}
 		return Klassifikasjonkode;
 	}
 	public void setKlassifikasjonkode(String klassifikasjonkode) {
-		
+		if(klassifikasjonkode==null){
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "planlagtetiltak";
+			Klassifikasjonkode = userEntries.get(field);
+			if (Klassifikasjonkode == null){
+				Klassifikasjonkode = "";
+			}
+		}
 		Klassifikasjonkode = klassifikasjonkode;
 	}
 	public String getKomplikasjonbeskrivelse() {
-		if(komplikasjonbeskrivelse == null){
-			komplikasjonbeskrivelse="";
-		}
 		return komplikasjonbeskrivelse;
 	}
 	public void setKomplikasjonbeskrivelse(String komplikasjonbeskrivelse) {
 		if(komplikasjonbeskrivelse == null){
-			komplikasjonbeskrivelse = (annenKomplikasjonsFields.get(keys[1])==null ? "" : annenKomplikasjonsFields.get(keys[1])) ;
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "beskrivelse";
+			komplikasjonbeskrivelse = userEntries.get(field);
+			if (komplikasjonbeskrivelse == null){
+				komplikasjonbeskrivelse = "";
+			}
+			
+			//komplikasjonbeskrivelse = (annenKomplikasjonsFields.get(keys[1])==null ? "" : annenKomplikasjonsFields.get(keys[1])) ;
 		}
 		this.komplikasjonbeskrivelse = komplikasjonbeskrivelse;
 	}
 	public String getKomplikasjondefinisjon() {
-		if(komplikasjondefinisjon == null){
-			komplikasjondefinisjon ="--- Select ---";
-		}
 		return komplikasjondefinisjon;
 	}
 	public void setKomplikasjondefinisjon(String komplikasjondefinisjon) {
 		if(komplikasjondefinisjon == null){
-			komplikasjondefinisjon = (annenKomplikasjonsFields.get(keys[2])==null ? "" : annenKomplikasjonsFields.get(keys[2])) ;
+			
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "tab-hendelse";
+			komplikasjondefinisjon = userEntries.get(field);
+			if (komplikasjondefinisjon == null || komplikasjondefinisjon.trim().equalsIgnoreCase("--- Select ---")){
+				komplikasjondefinisjon = "";
+			}
+			//komplikasjondefinisjon = (annenKomplikasjonsFields.get(keys[2])==null ? "" : annenKomplikasjonsFields.get(keys[2])) ;
 		}
 		this.komplikasjondefinisjon = komplikasjondefinisjon;
 	}
 	public String getAvvikarsak() {
-		if(avvikarsak == null){
-			avvikarsak = "--- Select ---";
-		}
 		return avvikarsak;
 	}
 	public void setAvvikarsak(String avvikarsak) {
 		if(avvikarsak == null){
-			avvikarsak = (annenKomplikasjonsFields.get(keys[4])==null ? "" : annenKomplikasjonsFields.get(keys[4])) ;
-			if(avvikarsak.equalsIgnoreCase("--- Select ---")){
-				avvikarsak=null;
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "planlagtetiltak";
+			avvikarsak = userEntries.get(field);
+			if (avvikarsak == null || avvikarsak.trim().equalsIgnoreCase("--- Select ---")){
+				avvikarsak = "";
 			}
+			//avvikarsak = (annenKomplikasjonsFields.get(keys[4])==null ? "" : annenKomplikasjonsFields.get(keys[4])) ;
 		}
 		this.avvikarsak = avvikarsak;
 	}
 	public String getHovedprosess() {
-		if(hovedprosess == null){
-			hovedprosess = "--- Select ---";
-		}
 		return hovedprosess;
 	}
 	public void setHovedprosess(String hovedprosess) {
 		if(hovedprosess == null){
-			hovedprosess = (annenKomplikasjonsFields.get(keys[5])==null ? "" : annenKomplikasjonsFields.get(keys[5])) ;
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "tab-prosess";
+			hovedprosess = userEntries.get(field);
+			if (hovedprosess == null || hovedprosess.trim().equalsIgnoreCase("--- Select ---")){
+				hovedprosess = "";
+			}
+		/*	hovedprosess = (annenKomplikasjonsFields.get(keys[5])==null ? "" : annenKomplikasjonsFields.get(keys[5])) ;
 			if(hovedprosess.equalsIgnoreCase("--- Select ---")){
 				hovedprosess=null;
-			}
+			}*/
 		}
 		this.hovedprosess = hovedprosess;
 	}
 	public String getTiltak() {
-		if(tiltak == null){
-			tiltak ="";
-		}
 		return tiltak;
 	}
 	public void setTiltak(String tiltak) {
 		if(tiltak == null){
-			tiltak = (annenKomplikasjonsFields.get(keys[7])==null ? "" : annenKomplikasjonsFields.get(keys[7])) ;
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "tab-prosess";
+			tiltak = userEntries.get(field);
+			if (tiltak == null || tiltak.trim().equalsIgnoreCase("--- Select ---")){
+				tiltak = "";
+			}
+			
+			//tiltak = (annenKomplikasjonsFields.get(keys[7])==null ? "" : annenKomplikasjonsFields.get(keys[7])) ;
 		}
 		this.tiltak = tiltak;
 	}
 	public String getKommentar() {
-		if(kommentar == null){
-			kommentar = "";
-		}
 		return kommentar;
 	}
 	public void setKommentar(String kommentar) {
 		if(kommentar == null){
-			kommentar = (annenKomplikasjonsFields.get(keys[8])==null ? "" : annenKomplikasjonsFields.get(keys[8])) ;
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "hendelsekommentar";
+			kommentar = userEntries.get(field);
+			if (kommentar == null ){
+				kommentar = "";
+			}
+			//kommentar = (annenKomplikasjonsFields.get(keys[8])==null ? "" : annenKomplikasjonsFields.get(keys[8])) ;
 		}
 		this.kommentar = kommentar;
 	}
 	public String getOppdaget() {
-		if(oppdaget == null ){
-			oppdaget = "--- Select ---";
-		}
 		return oppdaget;
 	}
 	public void setOppdaget(String oppdaget) {
 		if(oppdaget == null){
-			oppdaget = (annenKomplikasjonsFields.get(keys[6])==null ? "" : annenKomplikasjonsFields.get(keys[6])) ;
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "hendelseoppdaget";
+			oppdaget = userEntries.get(field);
+			if (oppdaget == null || oppdaget.trim().equalsIgnoreCase("--- Select ---")){
+				oppdaget = "";
+			}
+			/*oppdaget = (annenKomplikasjonsFields.get(keys[6])==null ? "" : annenKomplikasjonsFields.get(keys[6])) ;
 			if(oppdaget.equalsIgnoreCase("--- Select ---")){
 				oppdaget=null;
-			}
+			}*/
 		}
 		this.oppdaget = oppdaget;
 	}
@@ -239,20 +279,14 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setKeys(String[] keys) {
 		this.keys = keys;
 	}
-	public void setKladd(String kladd) {
+	/*public void setKladd(String kladd) {
 		if (kladd == null){
 			int l = keys.length - 1;
 			kladd = annenKomplikasjonsFields.get(keys[l]);
 		}
 		super.setKladd(kladd);
-	}
-	public void setParams(){
-		Long id = getMeldeid();
-		if (id == null){
-			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
-		}else
-			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
-		}
+	}*/
+	
 	public void setannenKomplikasjonstypes(){
 		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};

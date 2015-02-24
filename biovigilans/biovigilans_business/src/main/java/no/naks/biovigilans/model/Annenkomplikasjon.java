@@ -45,8 +45,8 @@ public interface Annenkomplikasjon {
 	public void saveToAnnenKomplikasjon();
 
 
-	public String getDatoforhendelseKvittering() ;
-	public void setDatoforhendelseKvittering(String datoforhendelseKvittering);
+	//public String getDatoforhendelseKvittering() ;
+	//public void setDatoforhendelseKvittering(String datoforhendelseKvittering);
 
 	public boolean isUpdat();
 	public void setUpdat(boolean isUpdat);
