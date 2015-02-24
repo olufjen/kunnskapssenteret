@@ -33,4 +33,8 @@ import no.naks.rammeverk.kildelag.dao.Tablesupdate;
 	public String[] getPasientkomplikasjonTableDefs();
 	public void setPasientkomplikasjonTableDefs(
 			String[] pasientkomplikasjonTableDefs);
+	public String getSelectgiverKomplikasjonSQL();
+	public void setSelectgiverKomplikasjonSQL(String selectgiverKomplikasjonSQL);
+	public String[] getGiverkomplikasjonTableDefs();
+	public void setGiverkomplikasjonTableDefs(String[] giverkomplikasjonTableDefs);
 }
