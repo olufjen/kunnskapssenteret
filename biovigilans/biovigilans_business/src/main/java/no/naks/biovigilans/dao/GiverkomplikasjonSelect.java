@@ -2,6 +2,7 @@ package no.naks.biovigilans.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.sql.DataSource;
 
@@ -25,8 +26,28 @@ public class GiverkomplikasjonSelect extends AbstractSelect {
 		String stedforkomplikasjon =  rs.getString(tableDefs[2]);
 		if (stedforkomplikasjon != null)
 			melding.setStedforkomplikasjon(stedforkomplikasjon);
-		
-		return null;
+		String tidfraRapp =  rs.getString(tableDefs[3]);
+		if (tidfraRapp != null)
+			melding.setTidfratappingtilkompliasjon(tidfraRapp);
+		String behandlingssted =  rs.getString(tableDefs[4]);
+		if (behandlingssted != null)
+			melding.setBehandlingssted(behandlingssted);
+		String tilleggsopplysninger =  rs.getString(tableDefs[5]);
+		if (tilleggsopplysninger != null )
+			melding.setTilleggsopplysninger(tilleggsopplysninger);
+		String alvorlighetsgrad =  rs.getString(tableDefs[6]);
+		if (alvorlighetsgrad != null)
+			melding.setAlvorlighetsgrad(alvorlighetsgrad);
+		String kliniskresultat =  rs.getString(tableDefs[7]);
+		if (kliniskresultat != null)
+			melding.setKliniskresultat(kliniskresultat);
+		String varighetkomplikasjon =  rs.getString(tableDefs[8]);
+		if (varighetkomplikasjon != null)
+			melding.setVarighetkomplikasjon(varighetkomplikasjon);
+		Date datosymptomer = rs.getDate(tableDefs[9]);
+		if (datosymptomer != null)
+			melding.setDatosymptomer(datosymptomer);
+		return melding;
 	}
 
 }
