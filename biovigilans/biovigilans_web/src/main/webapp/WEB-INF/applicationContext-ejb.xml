@@ -73,7 +73,11 @@
   	${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget}"></property>
   	<property name="pasientkomplikasjonTableDefs" value="${pasientkomplikasjon.meldeid},${pasientkomplikasjon.transfusjonsid},${pasientkomplikasjon.klassifikasjon},
   	${pasientkomplikasjon.tidfrapabegynttransfusjontilkomplikasjon},${pasientkomplikasjon.alvorlighetsgrad},${pasientkomplikasjon.kliniskresultat},${pasientkomplikasjon.arsakssammenheng}"></property>
-  	<property name="selectpasientKomplikasjonSQL" value="asientkomplikasjon.Select"></property>
+  	<property name="selectpasientKomplikasjonSQL" value="${pasientkomplikasjon.Select}"></property>
+  	<property name="selectgiverKomplikasjonSQL" value="${giverkomplikasjon.select}"></property>
+  	<property name="giverkomplikasjonTableDefs" value="${giverkomplikasjon.meldeid},${giverkomplikasjon.donasjonsid},${giverkomplikasjon.stedforkomplikasjon},${giverkomplikasjon.tidfrarapporteringtilkomplikasjon},
+  	${giverkomplikasjon.behandlingssted},${giverkomplikasjon.tilleggsopplysninger},${giverkomplikasjon.alvorlighetsgrad},${giverkomplikasjon.kliniskresultat},
+  	${giverkomplikasjon.varighetkomplikasjon},${giverkomplikasjon.datosymptomer}"></property>
   </bean>
   <bean id="komplikasjonsdiagnosegiverDAO" class="no.naks.biovigilans.dao.KomplikasjonsdiagnosegiverDAOImpl" >
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
