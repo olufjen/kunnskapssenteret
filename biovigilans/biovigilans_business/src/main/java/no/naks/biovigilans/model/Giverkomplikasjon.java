@@ -39,6 +39,7 @@ public interface Giverkomplikasjon {
 	public void setGiverkomplicationfieldMaps(String[]userFields);
 	public void saveField(String userField, String userValue); 
 	public void setParams();
+	public void setGiverkompTypes();
 	public int[] getTypes();
 	public Object[] getParams();
 	public int[] getUtypes();
