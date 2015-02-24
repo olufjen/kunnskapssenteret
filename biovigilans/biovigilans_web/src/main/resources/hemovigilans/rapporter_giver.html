@@ -135,8 +135,8 @@
 				$('div').find('input, textarea, select').attr('readonly', true);
 				$('div').find('select').attr('disabled', true);	
 				
-				$("#sendinnTxt").html('Godkjent');
-				$("#avbrytTxt").html('Ikke Godkjent');
+				$("#sendinnTxt").html('Godkjenn og gå til kontaktopplysninger');
+				$("#avbrytTxt").html('Ikke godkjent');
 				$("#btnAvbryt").val('ikkeGodkjent');
 				$("#btnSendinn").val('godkjent');
 				return false;
@@ -865,7 +865,7 @@
 			    </div>	
 		  </div>
 	      <button type="submit" name="btnAvbryt" id="btnAvbryt" value="avbryt" class="btn btn-default" onclick="return sendInn('avbryt');"><span id="avbrytTxt">Avbryt</span> </button>
-	      <button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"  onclick="return sendInn('sendinn');" > <span id="sendinnTxt">Send inn</span></button>
+	      <button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"  onclick="return sendInn('sendinn');" > <span id="sendinnTxt">Kontroll før innsending</span></button>
 	</div> <!--slutt Tapping av blodgivere-->
 </form>
 </div>	  
