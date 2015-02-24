@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import no.naks.biovigilans.model.Annenkomplikasjon;
+import no.naks.biovigilans.model.Giverkomplikasjon;
+import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Vigilansmelding;
 
 import org.restlet.Request;
@@ -126,8 +128,12 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	    dataModel.put( meldeTxtId, meldingsText);
 	    Request request = getRequest();
 	    Map<String,List> alleMeldinger = new HashMap<String,List>();
- 	    List meldinger = null;
- 	    List delMeldinger = null;
+ 	    List<Vigilansmelding> meldinger = null;
+ //	    List delMeldinger = null;
+ 	    List<Vigilansmelding> andreMeldinger = null;
+ 	    List<Vigilansmelding> pasientMeldinger = null;
+ 	    List<Vigilansmelding> giverMeldinger = null;
+ 	    
     	if(form == null){
     		invalidateSessionobjects();
     	}
@@ -145,14 +151,30 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     	if (formValue != null && meldingsNokkel != null){
     		alleMeldinger = melderWebService.selectMeldinger(meldingsNokkel);
     		meldinger = alleMeldinger.get(meldingsNokkel);
-    		delMeldinger = alleMeldinger.get(andreKey);
-    		if (delMeldinger != null){
-    			if (!delMeldinger.isEmpty()){
-        			Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)delMeldinger.get(0);
+    		andreMeldinger = alleMeldinger.get(andreKey);
+    		pasientMeldinger = alleMeldinger.get(pasientKey);
+    		giverMeldinger = alleMeldinger.get(giverKey);
+    		    		
+    		if (andreMeldinger != null){
+    			if (!andreMeldinger.isEmpty()){
+        			Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)andreMeldinger.get(0);
         			sessionAdmin.setSessionObject(request, annenKomplikasjon,andreKey);
         		} 			
     		}
-    	
+      		if (pasientMeldinger != null){
+    			if (!pasientMeldinger.isEmpty()){
+        			Pasientkomplikasjon pasientKomplikasjon = (Pasientkomplikasjon)pasientMeldinger.get(0);
+        			sessionAdmin.setSessionObject(request, pasientKomplikasjon,pasientKey);
+        		} 			
+    		}
+ 
+      		if (giverMeldinger != null){
+    			if (!giverMeldinger.isEmpty()){
+        			Giverkomplikasjon annenKomplikasjon = (Giverkomplikasjon)giverMeldinger.get(0);
+        			sessionAdmin.setSessionObject(request, annenKomplikasjon,giverKey);
+        		} 			
+    		}
+    	      		
     	}
     	if (meldinger != null){
         	if (meldinger.isEmpty()){
