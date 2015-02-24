@@ -26,6 +26,8 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private String[] annenkomplikasjonTableDefs;
 	private String selectpasientKomplikasjonSQL;
 	private String[] pasientkomplikasjonTableDefs;
+	private String selectgiverKomplikasjonSQL;
+	private String[] giverkomplikasjonTableDefs;
 	
 	
 	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
@@ -37,7 +39,22 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private VigilansSelect vigilansSelect = null;
 	private AnnenkomplikasjonSelect annenmeldingSelect = null;
 	private PasientkomplikasjonSelect pasientmeldingSelect = null;
+	private GiverkomplikasjonSelect givermeldingSelect = null;
 	
+
+	
+	public String getSelectgiverKomplikasjonSQL() {
+		return selectgiverKomplikasjonSQL;
+	}
+	public void setSelectgiverKomplikasjonSQL(String selectgiverKomplikasjonSQL) {
+		this.selectgiverKomplikasjonSQL = selectgiverKomplikasjonSQL;
+	}
+	public String[] getGiverkomplikasjonTableDefs() {
+		return giverkomplikasjonTableDefs;
+	}
+	public void setGiverkomplikasjonTableDefs(String[] giverkomplikasjonTableDefs) {
+		this.giverkomplikasjonTableDefs = giverkomplikasjonTableDefs;
+	}
 	public String getSelectpasientKomplikasjonSQL() {
 		return selectpasientKomplikasjonSQL;
 	}
@@ -173,7 +190,7 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 	private List velgMeldinger(Long mId,int nType){
 		annenmeldingSelect = new AnnenkomplikasjonSelect(getDataSource(),selectannenKomplikasjonSQL, annenkomplikasjonTableDefs);
 		annenmeldingSelect.declareParameter(new SqlParameter(nType));
-		List delMeldinger = annenmeldingSelect.execute(mId);
+		List<Vigilansmelding> delMeldinger = annenmeldingSelect.execute(mId);
 		delMeldingKey = andreKey;
 		if (delMeldinger.isEmpty()){
 			annenmeldingSelect = null;
@@ -182,7 +199,13 @@ public class MelderDAOImpl extends AbstractAdmintablesDAO  implements MelderDAO 
 			pasientmeldingSelect.declareParameter(new SqlParameter(nType));
 			delMeldinger = pasientmeldingSelect.execute(mId);
 		}
-		
+		if (delMeldinger.isEmpty()){
+			pasientmeldingSelect = null;
+			delMeldingKey = giverKey;
+			givermeldingSelect = new GiverkomplikasjonSelect(getDataSource(),selectgiverKomplikasjonSQL,giverkomplikasjonTableDefs);
+			givermeldingSelect.declareParameter(new SqlParameter(nType));
+			delMeldinger = givermeldingSelect.execute(mId);
+		}
 		return delMeldinger;
 		
 	}
