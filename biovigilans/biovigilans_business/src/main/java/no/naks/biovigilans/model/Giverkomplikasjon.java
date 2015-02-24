@@ -1,5 +1,6 @@
 package no.naks.biovigilans.model;
 
+import java.util.Date;
 import java.util.Map;
 
 public interface Giverkomplikasjon {
@@ -52,5 +53,7 @@ public interface Giverkomplikasjon {
 	public void setMeldeid(Long meldeid);
 	public Long getDonasjonid();
 	public void setDonasjonid(Long donasjonid);
+	public Date getDatosymptomer();
+	public void setDatosymptomer(Date datosymptomer);
 	
 }
