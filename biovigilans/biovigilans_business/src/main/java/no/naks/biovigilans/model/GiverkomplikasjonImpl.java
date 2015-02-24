@@ -58,6 +58,11 @@ public class GiverkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		}else
 			params = new Object[]{getStedforkomplikasjon(),getBehandlingssted(),getTidfratappingtilkompliasjon(),getTilleggsopplysninger(),getAlvorlighetsgrad(),getKliniskresultat(),getVarighetkomplikasjon(),getDatosymptomer(),getMeldeid(), getDonasjonid()};
 	}
+	public void setGiverkompTypes(){
+		types = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER, Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE,Types.INTEGER, Types.INTEGER};
+
+	}
 	/**
 	 * setGiverkomplicationfieldMaps
 	 * Denne rutinen setter opp hvilke skjermbildefelter som hører til hvilke databasefelter
