@@ -310,8 +310,11 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 
 	    		if (lagre != null){
 	    			result.saveValues();
+	    		
 	    			transfusjon.saveValues();
 	    			result.getPasient().getTransfusjoner().put(transfusjon.getTransfusjon().getTransDato(), transfusjon.getTransfusjon());
+	    			Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
+	    			melding.setDatoforhendelse(transfusjon.getTransfusjon().getTransfusionDate());
 	    			hendelseWebService.saveHendelse(result);
 	    			hendelseWebService.saveTransfusjon(transfusjon,result);
 	    			transfusjon.setTransfusjonsFlag(kvittering); //Setter opp ulike feltverdier for TransfusjonKvitteringWebModel.
@@ -324,7 +327,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    			Long melderKey = melderwebModel.getMelder().getMelderId();
 	    			if (melderKey != null){
 	    				transfusjon.getPasientKomplikasjon().setMelderId(melderKey);
-	    				Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
+	    				melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 	    				hendelseWebService.saveVigilansMelder(melding);
 	    			}
 	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
