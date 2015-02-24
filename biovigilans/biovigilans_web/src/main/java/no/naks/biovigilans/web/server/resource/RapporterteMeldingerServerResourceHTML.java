@@ -214,6 +214,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 				}
 				
 	    	}
+	    	String page = "/hemovigilans/rapportert_melding.html";
 	     if (annenKomplikasjon != null){
 	    	 dataModel.put(andreKey,annenKomplikasjon);
 //	    	 displayPart = "block";
@@ -223,7 +224,27 @@ public class RapporterteMeldingerServerResourceHTML extends
 			 dataModel.put(detaljerId,detaljButton);
 	   	     dataModel.put(displayKey, simple);
 	     }
- 	    ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportert_melding.html"));
+	     if (pasientKomplikasjon != null){
+	    	 dataModel.put(pasientKey,pasientKomplikasjon);
+//	    	 displayPart = "block";
+//	    	 detaljer = "Skjul detaljer";
+	   	     SimpleScalar simple = new SimpleScalar(displayPart);
+			 SimpleScalar detaljButton = new SimpleScalar(detaljer);
+			 dataModel.put(detaljerId,detaljButton);
+	   	     dataModel.put(displayKey, simple);
+	   	     page =  "/hemovigilans/rapportert_pasient.html";
+	     }
+	     if (giverKomplikasjon != null){
+	    	 dataModel.put(giverKey,giverKomplikasjon);
+//	    	 displayPart = "block";
+//	    	 detaljer = "Skjul detaljer";
+	   	     SimpleScalar simple = new SimpleScalar(displayPart);
+			 SimpleScalar detaljButton = new SimpleScalar(detaljer);
+			 dataModel.put(detaljerId,detaljButton);
+	   	     dataModel.put(displayKey, simple);
+	   	     page =  "/hemovigilans/rapportert_giver.html";
+	     }
+ 	    ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 
 	        Representation pasientkomplikasjonFtl = clres2.get();
 
