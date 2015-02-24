@@ -458,6 +458,10 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
 	     melderwebModel =(MelderwebModel) sessionAdmin.getSessionObject(request,melderId);
 	     
+			transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(getRequest(),transfusjonId);
+    		giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),giverkomplikasjonId);
+    		annenModel = (AnnenKomplikasjonwebModel) sessionAdmin.getSessionObject(getRequest(),andreHendelseId);
+    		donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(getRequest(),donasjonId);
 /*
  * 	     
  */
@@ -555,11 +559,13 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 /*
- * Invalidate session objects kun dersom et meldeskjema er fylt ut	    		
- */
+ * Invalidate session objects kun dersom et meldeskjema er fylt ut	 
+ * Dette er nå irrelevant Dette skjer i leveranseskjema olj 23.02.15   		
+ 
 	    		if (checkSavedModel()){
 	    			invalidateSessionobjects();
 	    		}
+*/	    		
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
