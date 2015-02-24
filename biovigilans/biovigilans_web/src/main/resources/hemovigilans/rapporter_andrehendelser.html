@@ -14,9 +14,7 @@
 	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
 
-<#assign klassifikasjon = andreHendelse.annenKomplikasjon.klassifikasjon>
-<#assign delkode = andreHendelse.annenKomplikasjon.delkode>
-<body onload="checkRadiobutton('${klassifikasjon}','${delkode}');">
+<body >
 <header class="master-header" role="navation">
       <div class="container">
         <!-- synlig header -->
@@ -95,7 +93,7 @@
 				
 				/** when form is not godkjent and comeback to this form
 				    this function click the radio buttons of klassifikasjon and delkode   */
-				function checkRadiobutton(klassifikasjon,delkode){
+				/* function checkRadiobutton(klassifikasjon,delkode){
 					var radiosKlassifikasjon = document.getElementsByName("tab-klassifikasjon" );
 					var size =  radiosKlassifikasjon.length;
 					for(var j=1; j<size+1;j++){
@@ -115,7 +113,50 @@
 							 break;
 						 }
 					}
-					
+				}	 */
+				
+				function sendInn(val){
+					if(val=="sendinn"){
+						var btnValue = $("#btnSendinn").val();
+						if(btnValue=="sendinn"){
+							$("input[type=radio]").attr('disabled', true);
+							$("input[type=checkbox]").attr('disabled', true);
+							$('div').find('input, textarea, select').attr('readonly', true);
+							$('div').find('select').attr('disabled', true);	
+							
+							$("#sendinnTxt").html('Godkjenn og gå til kontaktopplysninger');
+							$("#avbrytTxt").html('Ikke godkjent');
+							$("#btnAvbryt").val('ikkeGodkjent');
+							$("#btnSendinn").val('godkjent');
+							return false;
+						}else if(btnValue == "godkjent"){
+							$("input[type=radio]").attr('disabled', false);
+							$("input[type=checkbox]").attr('disabled', false);
+							$('div').find('input, textarea, select').attr('readonly', false);
+							$('div').find('select').attr('disabled', false);
+								
+							return true;
+						}
+					}else if(val=="avbryt"){
+						var btnValue = $("#btnAvbryt").val();
+						if( btnValue=="ikkeGodkjent" ){
+							$("input[type=radio]").attr('disabled', false);
+							$("input[type=checkbox]").attr('disabled', false);
+							$('div').find('input, textarea, select').attr('readonly', false);
+							$('div').find('select').attr('disabled', false);
+							
+							$("#sendinnTxt").html('Send inn');
+							$("#avbrytTxt").html('Avbryt');
+							$("#btnAvbryt").val('avbryt');
+							$("#btnSendinn").val('sendinn');
+							
+							return false;
+						}else{
+							var url = "rapporter_hendelse_main.html";
+							$(location).attr('href',url);
+							return false;
+						}
+					}
 				}
 			</script>
 		<form id="rapport" action="?method=PUT" method="post"  > 
@@ -129,34 +170,30 @@
 			<div class="tab-pane" id="andrehendelser">
 				<div class="form-group">
 					<label>Dato For hendelsen</label><br>
-					<input type="date" name="hendelsen-date"  value="${andreHendelse.annenKomplikasjon.datoforhendelseKvittering}"  />
+					<input type="date" name="hendelsen-date"   />
 				</div>
 	
 				<div class="form-group">
 				<label>Beskrivelse av hendelsen</label>
-					<textarea class="form-control"  name="beskrivelse" rows="3"  >${andreHendelse.annenKomplikasjon.komplikasjonbeskrivelse}</textarea>
+					<textarea class="form-control"  name="beskrivelse" rows="3"  ></textarea>
 				</div>
 			
 				<div class="form-group">
 					<label>Hvilken hovedprosess gjaldt hendelsen?</label>
 					<select name ="tab-prosess"  id="tab-prosess" class="form-control" >
-						<option selected="selected" >${andreHendelse.annenKomplikasjon.hovedprosess}</option>
+						<option selected="selected" >--- Select ---</option>
 				       		<#list andreHendelse.hovedprosesslist as hovedprosess>
-				       			<#if hovedprosess != andreHendelse.annenKomplikasjon.hovedprosess>
-				       				<option  >${hovedprosess} </option>
-				       			</#if>
+				       			<option>${hovedprosess} </option>
 				       		 </#list>
 	     		   	</select>
 				</div>
 				<div class="form-group">
 					<label>Primærårsak til feil eller avvik </label>
 					<select name ="tab-kvalitetskrav" id="tab-kvalitetskrav" class="form-control">
-						<option selected="selected" >${andreHendelse.annenKomplikasjon.avvikarsak}</option>
+						<option selected="selected" >--- Select ---</option>
 			       		<#list andreHendelse.feilelleravvik as feilelleravvik>
-			       			<#if feilelleravvik != andreHendelse.annenKomplikasjon.avvikarsak >
-			       				<option>${feilelleravvik} </option>
-			       			</#if>
-			       		 </#list>
+			       			<option>${feilelleravvik} </option>
+			       		</#list>
 	     		   	</select>
 				</div>
 				<div class="form-group">
@@ -191,49 +228,9 @@
 					          
 					          <div class="form-group">
 							   <label >HVA GIKK GALT?</label>
-								   <!-- declare variables for every checkbox -->
-								   <#assign rekvirering="" >
-								   <#assign bestillingg ="" >
-								   <#assign provetaking ="" >
-								   <#assign feilmerking ="" >
-								   <#assign forveksling ="" >
-								   <#assign pretransfusjons ="" >
-								   
-								   <#assign mangelfull ="" >
-								   <#assign utlevering ="" >
-								   <#assign henting ="" >
-								   <#assign hentingiskap ="" >
-								   <#assign hentingved ="" >
-								   <#assign rutiner ="" >
-								   <#assign mangelfullKommunikasjon ="" >
-								   <#assign intet ="" >
-								   <#assign vetIkke ="" >
-								  	<!-- get the hvagikkgalt checkbox list --> 
-								   <#list andreHendelse.komplikasjonsklassifikasjon.klassifikasjonList as hvagikkgalt>
-								   
-									   <!-- take the value of checkbox that is checked  -->
-									   <#if  hvagikkgalt=='Indikasjonsstilling/rekvirering'> <#assign rekvirering="checked" > </#if>
-									   <#if  hvagikkgalt=='Bestillingg' ><#assign bestillingg ="checked" > </#if>
-									   <#if  hvagikkgalt=='Prøvetaking' ><#assign provetaking ="checked" > </#if>
-									   <#if  hvagikkgalt=='Feilmerking av prøverør' ><#assign feilmerking ="checked" > </#if>
-									   <#if  hvagikkgalt=='Forveksling av prøver/ resultater' ><#assign forveksling ="checked" > </#if>
-									   <#if  hvagikkgalt=='Pretransfusjonstesting i blodbanken' ><#assign pretransfusjons ="checked" > </#if>
-									   
-									   <#if  hvagikkgalt=='Feil/ mangelfull behandling av blodet i blodbanken' ><#assign mangelfull ="checked" > </#if>
-									   <#if  hvagikkgalt=='Valg/utlevering av blodprodukt (blodbankpersonell)' ><#assign utlevering ="checked" > </#if>
-									   <#if  hvagikkgalt=='Henting av blod i blodbanken (ikke blodbankpersonell)' ><#assign henting ="checked" > </#if>
-									   <#if  hvagikkgalt=='Henting av blod i skap/fryser utenfor blodbank' ><#assign hentingiskap ="checked" > </#if>
-									   <#if  hvagikkgalt=='Henting av blod ved rørpoststasjon' ><#assign hentingved ="checked" > </#if>
-									   <#if  hvagikkgalt=='Rutiner for identitetskontroll ved transfusjon ikke fulgt' ><#assign rutiner ="checked" > </#if>
-									   <#if  hvagikkgalt=='Mangelfull kommunikasjon' ><#assign mangelfullKommunikasjon ="checked" > </#if>
-									   <#if  hvagikkgalt=='Intet avvik' ><#assign intet ="checked" > </#if>
-									   <#if  hvagikkgalt=='Vet ikke' ><#assign vetIkke ="checked" > </#if>
-								  </#list>  	
-								
-										<div class="checkbox">
+								  	<div class="checkbox">
 								          <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt" id="rekvirering" value="Indikasjonsstilling/rekvirering"
-								          		${rekvirering} />
+								          	<input type="checkbox" name="tab-hvagikkgalt" id="rekvirering" value="Indikasjonsstilling/rekvirering" />
 								          		
 								          
 								          		Indikasjonsstilling/rekvirering
@@ -241,86 +238,85 @@
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestillingg"
-								          		${bestillingg}/>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestillingg"/>
 								          		Bestilling
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Prøvetaking" ${provetaking}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Prøvetaking"  />
 								          		Prøvetaking
 								          </label>
 										</div>
 								        <div class="checkbox">				         
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feilmerking av prøverør" ${feilmerking}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feilmerking av prøverør"  />
 								          		Feilmerking av prøverør
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Forveksling av prøver/ resultater"  ${forveksling} />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Forveksling av prøver/ resultater"  />
 								          		Forveksling av prøver/ resultater
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Pretransfusjonstesting i blodbanken" ${pretransfusjons}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Pretransfusjonstesting i blodbanken"  />
 								          		Pretransfusjonstesting i blodbanken
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feil/ mangelfull behandling av blodet i blodbanken" ${mangelfull}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Feil/ mangelfull behandling av blodet i blodbanken"   />
 								          		Feil/ mangelfull behandling av blodet i blodbanken
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Valg/utlevering av blodprodukt (blodbankpersonell)" ${utlevering}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Valg/utlevering av blodprodukt (blodbankpersonell)"  />
 								          		Valg/utlevering av blodprodukt (blodbankpersonell)
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i blodbanken (ikke blodbankpersonell)" ${henting}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i blodbanken (ikke blodbankpersonell)"  />
 								          		Henting av blod i blodbanken (ikke blodbankpersonell)
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i skap/fryser utenfor blodbank"  ${hentingiskap} />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod i skap/fryser utenfor blodbank"  />
 								          		Henting av blod i skap/fryser utenfor blodbank
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod ved rørpoststasjon" ${hentingved}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Henting av blod ved rørpoststasjon" />
 								          		Henting av blod ved rørpoststasjon
 								          </label>
 								        </div>
 								        <div class="checkbox">  
 								          <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Rutiner for identitetskontroll ved transfusjon ikke fulgt" ${rutiner}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Rutiner for identitetskontroll ved transfusjon ikke fulgt"  />
 								          		Rutiner for identitetskontroll ved transfusjon ikke fulgt
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								          <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Mangelfull kommunikasjon" ${mangelfullKommunikasjon}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Mangelfull kommunikasjon"  />
 								          		Mangelfull kommunikasjon
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								          <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Intet avvik" ${intet}  />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Intet avvik"  />
 								          		Intet avvik
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								          <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Vet ikke"  ${vetIkke} />
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Vet ikke"  />
 								          		Vet ikke
 								          </label>
 								        </div>
@@ -648,34 +644,30 @@
 				<div class="form-group">
 					<label>Definisjon av alvorlig hendelse</label>
 					 <select name ="tab-hendelse" id="tab-hendelse" class="form-control">
-						<option selected="selected" >${andreHendelse.annenKomplikasjon.komplikasjondefinisjon}</option>
+						<option selected="selected" >--- Select ---</option>
 			       		<#list andreHendelse.alvorligHendelse as alvorlig>
-			       			<#if alvorlig != andreHendelse.annenKomplikasjon.komplikasjondefinisjon>
-			       				<option>${alvorlig} </option>
-			       			</#if>
+			       			<option>${alvorlig} </option>
 			       		 </#list>
 	     		   	</select>
 				</div>
 				<div class="form-group">
 				<label>Hvordan ble hendelsen oppdaget?</label>
 				 <select name ="hendelseoppdaget" id="hendelseoppdaget" class="form-control">
-						<option selected="selected">${andreHendelse.annenKomplikasjon.oppdaget} </option>
+						<option selected="selected">--- Select ---</option>
 			       		<#list andreHendelse.hendelsenoppdaget as hendelsenoppdaget>
-			       			<#if hendelsenoppdaget != andreHendelse.annenKomplikasjon.oppdaget >
-			       				<option>${hendelsenoppdaget} </option>
-			       			</#if>
+			       			<option>${hendelsenoppdaget} </option>
 			       		 </#list>
 	     		   	</select>
 				</div>
 	
 				<div class="form-group">
 				<label>Gjennomførte eller planlagte forebyggende tiltak. Beskriv kort.</label>
-					<textarea class="form-control" name="planlagtetiltak" rows="3"  >${andreHendelse.annenKomplikasjon.tiltak}</textarea>
+					<textarea class="form-control" name="planlagtetiltak" rows="3"  ></textarea>
 				</div>
 	
 				<div class="form-group">
 				<label>Kommentar</label>
-					<textarea class="form-control" name="hendelsekommentar" rows="3" > ${andreHendelse.annenKomplikasjon.kommentar}</textarea>
+					<textarea class="form-control" name="hendelsekommentar" rows="3" ></textarea>
 				</div>
 			<div class="form-group">
 			<label>Ytterligere opplysninger følger</label>
@@ -691,8 +683,8 @@
 			    </div>	
 			</div>
 				
-				 	<button name="avbryt3" type="submit" class="btn btn-default">Avbryt</button>
-			      	<button name="lagre3" type="submit" class="btn btn-primary">Send inn</button>
+				<button type="submit" name="btnAvbryt" id="btnAvbryt" value="avbryt" class="btn btn-default" onclick="return sendInn('avbryt');"><span id="avbrytTxt">Avbryt</span> </button>
+	      		<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"  onclick="return sendInn('sendinn');" > <span id="sendinnTxt">Kontroll før innsending</span></button>
 			</div>
 		</form>
 	</div>	

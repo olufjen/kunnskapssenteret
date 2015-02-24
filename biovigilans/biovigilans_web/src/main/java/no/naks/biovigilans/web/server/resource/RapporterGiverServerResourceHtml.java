@@ -251,13 +251,12 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
     	//		giverKvittering.setReadonlyFlag("true");
     			
     			//lagre i vigiansmelding
-    			dataModel.put(melderId, melderwebModel);
-    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
-	    		Representation pasientkomplikasjonFtl = clres2.get();
+    			//dataModel.put(melderId, melderwebModel);
+    			//ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+	    		//Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
-	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
-			    				MediaType.TEXT_HTML);
+	    		//templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,MediaType.TEXT_HTML);
 	    		redirectPermanent("../hemovigilans/rapporter_kontakt.html");
     		}else{
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_giver.html"));

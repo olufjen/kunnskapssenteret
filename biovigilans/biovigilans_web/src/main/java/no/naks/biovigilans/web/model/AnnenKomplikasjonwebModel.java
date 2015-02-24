@@ -113,13 +113,14 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 	public void saveValues(){
 		String[] formFields = getFormNames();
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
+		annenKomplikasjon.setAnnenKomplikasjonsFields(userEntries);
 		
-		for(String field: formFields ){
+		/*for(String field: formFields ){
 			String userEntry = userEntries.get(field);
 			annenKomplikasjon.saveField(field, userEntry);
 			komplikasjonsklassifikasjon.saveField(field, userEntry);
 			
-		}
+		}*/
 		
 		annenKomplikasjon.saveToAnnenKomplikasjon();
 	//	komplikasjonsklassifikasjon.savetoKomplikasjonklassifikasjon();

@@ -67,8 +67,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
 	     setAndreHendelser(); // Setter opp andreHendelser session objekter
 	    // setTransfusjonsObjects(); 
-	     annenModel.setFormNames(sessionParams);
-	     annenModel.distributeTerms();
+	  //   annenModel.setFormNames(sessionParams);
+	   //  annenModel.distributeTerms();
 	     
 	     dataModel.put(andreHendelseId, annenModel);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
@@ -105,10 +105,11 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     	
     	
     	if (form != null){
+    		Map<String, Object> dataModel = new HashMap<String, Object>();
+    		/*
     		Parameter logout = form.getFirst("avbryt3");
     		Parameter lukk = form.getFirst("lukk3");
-    	     Map<String, Object> dataModel = new HashMap<String, Object>();
-
+    	    
     		if (logout != null || lukk != null){
  
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemivigilans/Logout.html"));
@@ -116,7 +117,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
     			return templateRep; // return a new page!!!
-    		}
+    		}*/
     	 	
   		  annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(getRequest(), andreHendelseId);
   		  if(annenModel == null){
@@ -138,9 +139,9 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     		dataModel.put(andreHendelseId,annenModel);
     		ClientResource clres2  ;
 
-    		Parameter lagre = form.getFirst("lagre3");
-    		Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
-    		Parameter godkjet = form.getFirst("godkjent");
+    		Parameter lagre = form.getFirst("btnSendinn");
+    		//Parameter ikkegodkjet = form.getFirst("ikkegodkjent");
+    		//Parameter godkjet = form.getFirst("godkjent");
     		if(lagre != null){
     			
     			//giverModel.getVigilansmelding().saveToVigilansmelding();
@@ -166,39 +167,40 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			Long meldeId = giverModel.getVigilansmelding().getMeldeid();
      			annenModel.getAnnenKomplikasjon().setMeldeid(meldeId);
  */    			
+    			/*
     			String strDato = "";
     			if (datoforhendelse != null)
     			  strDato = FastDateFormat.getInstance("yyyy-MM-dd").format(datoforhendelse);
-    			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);
+    			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);*/
     			Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
     			melding.setDatoforhendelse(datoforhendelse);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
+    			Long meldeId = annenModel.getVigilansmelding().getMeldeid();
     			annenModel.getAnnenKomplikasjon().setUpdat(true);
     			annenModel.setLagret(true);
     			Komplikasjonsklassifikasjon klassifikasjon = annenModel.getKomplikasjonsklassifikasjon();
-   // 			klassifikasjon.setMeldeidannen(meldeId);
+    			klassifikasjon.setMeldeidannen(meldeId);
     			klassifikasjon.setKlassifikasjonList(hvagikkgaltList);
     			komplikasjonsklassifikasjonWebService.saveKomplikasjonsklassifikasjon(klassifikasjon);
-    			
-    			clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelserkvittering.html"));
+    		//	dataModel.put(melderId, melderwebModel);
+    		//	clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
+    			redirectPermanent("../hemovigilans/rapporter_kontakt.html");
     			/*
     			Representation andreHendelser = clres2.get();
         		invalidateSessionobjects();
         		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
         				MediaType.TEXT_HTML); */
         		
-    		}else if(ikkegodkjet != null){
-         		 clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html?ikkegodkjent=ja"));
     		}else{
 	    		//invalidateSessionobjects();
 	    		clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_hendelse_main.html"));
+	    		Representation andreHendelser = clres2.get();
+	       		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
+	    				MediaType.TEXT_HTML);
+	    		
     		}
-	     	Representation andreHendelser = clres2.get();
-       		templateRep = new TemplateRepresentation(andreHendelser, dataModel,
-    				MediaType.TEXT_HTML);
-    		
-    	}
+	    }
     	return templateRep;
       
     }
