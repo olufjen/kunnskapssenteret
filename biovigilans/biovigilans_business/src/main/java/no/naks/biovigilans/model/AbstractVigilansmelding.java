@@ -323,10 +323,11 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 */
 	public void saveToVigilansmelding(){
-		setDatoforhendelse(null);
+		
 		setKlokkesletthendelse(null);
 		setDatooppdaget(null);
 		setDonasjonoverforing(null);
+		setDatoforhendelse(donasjonoverforing); // OBS OLJ 24.02.15
 		setMeldingsdato(null);
 		setKladd(null);
 	}
