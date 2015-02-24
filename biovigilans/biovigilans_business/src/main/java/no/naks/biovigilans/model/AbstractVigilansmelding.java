@@ -95,16 +95,29 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 	}
 
 	public String getKladd() {
+/*		
 		Map<String,String> userEntries = getVigilansFields();
 		String field = "p-ytterligereopp";
 		kladd = userEntries.get(field);
 		if (kladd == null ||  kladd.isEmpty()){
 			kladd = "";
 		}
+*/		
 		return kladd;
 	}
 	public void setKladd(String kladd) {
-		this.kladd = kladd;
+		if (kladd == null){
+			Map<String,String> userEntries = getVigilansFields();
+			String field = "p-ytterligereopp";
+			String lkladd = userEntries.get(field);
+			kladd = lkladd;
+			if (kladd == null ||  kladd.isEmpty()){
+				kladd = "";
+			}
+			
+		}
+	
+		this.kladd = kladd; // p-ytterligereopp
 	}
 	public String getGodkjent() {
 		return godkjent;
@@ -315,6 +328,7 @@ public class AbstractVigilansmelding extends AbstractModel implements Vigilansme
 		setDatooppdaget(null);
 		setDonasjonoverforing(null);
 		setMeldingsdato(null);
+		setKladd(null);
 	}
 
 	
