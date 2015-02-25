@@ -272,6 +272,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setAnnenKomplikasjonsFields(
 			Map<String, String> annenKomplikasjonsFields) {
 		this.annenKomplikasjonsFields = annenKomplikasjonsFields;
+		setVigilansFields(annenKomplikasjonsFields);
 	}
 	public String[] getKeys() {
 		return keys;
