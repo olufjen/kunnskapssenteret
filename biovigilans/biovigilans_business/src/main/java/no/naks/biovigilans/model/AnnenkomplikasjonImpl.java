@@ -223,7 +223,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setTiltak(String tiltak) {
 		if(tiltak == null){
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
-			String field = "tab-prosess";
+			String field = "planlagtetiltak";
 			tiltak = userEntries.get(field);
 			if (tiltak == null || tiltak.trim().equalsIgnoreCase("--- Select ---")){
 				tiltak = "";
