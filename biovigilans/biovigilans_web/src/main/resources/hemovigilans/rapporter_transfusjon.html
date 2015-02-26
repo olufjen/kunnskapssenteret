@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/page.css"/>
 <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/components.css"/>	
 <link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.6/css/custom.css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!--<link rel="stylesheet" href="css/bootstrap.css"> -->
 
 </head>
@@ -59,7 +60,7 @@
     </header>
 
 <div class="container">
-<form id="rapport" novalidate="novalidate" action="?method=PUT" method="post" > 
+
 <script type="text/javascript">
 var Spinner1;
 var foo;
@@ -253,8 +254,56 @@ function showtext(id,thetext){
 //	highlighting=setInterval("gradualfade(textcontainerobj)",50)
 }
 //window.onload=initialize();
+
+
+	function sendInn(val){
+		if(val=="sendinn"){
+				var btnValue = $("#btnSendinn").val();
+				if(btnValue=="sendinn"){
+					$("input[type=radio]").attr('disabled', true);
+					$("input[type=checkbox]").attr('disabled', true);
+					$('div').find('input, textarea, select').attr('readonly', true);
+					$('div').find('select').attr('disabled', true);	
+					
+					$("#sendinnTxt").html('Godkjenn og gå til kontaktopplysninger');
+					$("#avbrytTxt").html('Ikke godkjent');
+					$("#btnAvbryt").val('ikkeGodkjent');
+					$("#btnSendinn").val('godkjent');
+					return false;
+				}else if(btnValue == "godkjent"){
+					$("input[type=radio]").attr('disabled', false);
+					$("input[type=checkbox]").attr('disabled', false);
+					$('div').find('input, textarea, select').attr('readonly', false);
+					$('div').find('select').attr('disabled', false);
+						
+					return true;
+				}
+			}else if(val=="avbryt"){
+				var btnValue = $("#btnAvbryt").val();
+				if( btnValue=="ikkeGodkjent" ){
+					$("input[type=radio]").attr('disabled', false);
+					$("input[type=checkbox]").attr('disabled', false);
+					$('div').find('input, textarea, select').attr('readonly', false);
+					$('div').find('select').attr('disabled', false);
+					
+					$("#sendinnTxt").html('Send inn');
+					$("#avbrytTxt").html('Avbryt');
+					$("#btnAvbryt").val('avbryt');
+					$("#btnSendinn").val('sendinn');
+					
+					return false;
+				}else{
+					var url = "rapporter_hendelse_main.html";
+					$(location).attr('href',url);
+					return false;
+				}
+			}
+		}
+
 </script>
 
+
+<form id="rapport" novalidate="novalidate" action="?method=PUT" method="post" > 
 <h1>Rapporter hendelse–Hemovigilans</h1>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
@@ -3073,8 +3122,6 @@ Vurder om du skal melde denne."/>Utelukket
     <label>Hvis ja, beskriv tiltak i fritekst:</label>
 	 <textarea class="form-control" name="p-transfusjonforebygg" rows="3"></textarea>
   </div> 		
-		
-
 
 <div id="transfusjonforebygg" class="form-group" style="display: none" >
 		<h3>Er forebyggende tiltak anbefalt, planlagt eller gjennomført?</h3>
@@ -3152,10 +3199,8 @@ Vurder om du skal melde denne."/>Utelukket
 </div>
 <!--   </div>  -->
     <br/>
-       <button name="avbryt4" type="submit" class="btn btn-default">Avbryt</button>
-    
-      <button name="lagre4" type="submit" class="btn btn-primary">Send inn</button>
-    
+	<button type="submit" name="btnAvbryt" id="btnAvbryt" value="avbryt" class="btn btn-default" onclick="return sendInn('avbryt');"><span id="avbrytTxt">Avbryt</span> </button>
+	<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"  onclick="return sendInn('sendinn');" > <span id="sendinnTxt">Kontroll før innsending</span></button>
 </div><!--slutt pasientkomplikasjon-->
  </form>
  </div><!--slutt container -->
