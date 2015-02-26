@@ -36,8 +36,7 @@ import freemarker.template.SimpleScalar;
 public class RapporterLeveranseServerResourceHTML extends SessionServerResource {
 
 	private String meldingsId = "melding";
-	private String nokkelId = "nokkel";
-	private String datoId = "dato";
+
 	private Date dato = null;
 	private String datoStr = "";
 	
