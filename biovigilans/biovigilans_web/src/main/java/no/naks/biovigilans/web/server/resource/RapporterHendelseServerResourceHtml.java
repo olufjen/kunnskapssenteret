@@ -306,8 +306,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	        return  templatemapRep;
 	    	    }
 */	    	    
-	    		Parameter lagre = form.getFirst("lagre4");
-
+	    		Parameter lagre = form.getFirst("btnSendinn");
 	    		if (lagre != null){
 	    			result.saveValues();
 	    		
@@ -330,13 +329,13 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    				melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 	    				hendelseWebService.saveVigilansMelder(melding);
 	    			}
-	    			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
-		    		Representation pasientkomplikasjonFtl = clres2.get();
+	    			///ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_transfusjonkvittering.html"));
+		    		///Representation pasientkomplikasjonFtl = clres2.get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
 		    		//        Representation pasientkomplikasjonFtl = new ClientResource("http:///no/naks/server/resource"+"/pasientkomplikasjon.ftl").get();
 		    		
-		    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
-		    				MediaType.TEXT_HTML);
+		    		///templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,MediaType.TEXT_HTML);
+	    			redirectPermanent("../hemovigilans/rapporter_kontakt.html");
 	    		}else{
 	    		
 
