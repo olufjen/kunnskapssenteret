@@ -28,9 +28,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	private String meldingsId = "meldinger";
 	private String delMelding = "delmelding";
 	private String meldeTxtId = "melding";
-	private String andreKey = "annenKomp"; 		// Nøkkel dersom melding er av type annenkomplikasjon
-	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
-	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
+
 
 
 	public String getDelMelding() {
@@ -84,7 +82,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
-	 * en rapportert hendelse
+	 * en meldingsnøkkel til en oppfølgingsmelding
 	 * @return
 	 */
 	@Get
@@ -116,7 +114,8 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 	
     /**
      * storeHemovigilans
-     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
+     * Denne rutinen tar imot meldingsnøkkel og henter frem riktig meldingsinformasjon fra
+     * databasen basert på meldingsnøkkel
      * @param form
      * @return
      */
