@@ -91,16 +91,26 @@ function meldingsnokkel(){
  	</div>	
  </div>
  
-   <button name="hentopplysninger" type="submit" value="${detaljer}" class="btn btn-primary" >${detaljer}</button>
- 
+   <button name="hentopplysninger" type="submit" value="${detaljer}" class="btn btn-default" >${detaljer}</button>
+ 	<button name="pdf" type="submit" value="pdf" class="btn btn-default">Til PDF</button>
+ 	<button name="oppfolgingandre" type="submit" value="oppfolgingandre" class="btn btn-primary">Registrer oppfølging</button>
  </div>
 
 <div class="panel-group" id="accordion" style="display: ${display}">
-      <div id="klassifikasjon" class="form-group">
-       <label>Klassifikasjon: </label>
+      <div id="detaljer" class="form-group">
+      <label>Beskrivelse:  </label>
+      <label>${annenKomp.komplikasjonbeskrivelse}   </label>
+       <label>Hovedprosess:  </label>
+       <label>${annenKomp.hovedprosess}</label>
+      
        <div>
- 		<label>${annenKomp.klassifikasjon}</label>
- 		</div>	
+        <label>Klassifikasjon: </label>
+ 		<label>${annenKomp.klassifikasjon}   </label>
+ 	
+ 		<label>Tiltak:</label>	
+ 	
+ 		<label>${annenKomp.tiltak}</label>
+ 		</div>
       </div>
 </div>
 		  <button type="submit" id="btnnokkel" value="nokkel"  name="formValue" class="btn btn-primary" style="display: none" > getValue </button>
