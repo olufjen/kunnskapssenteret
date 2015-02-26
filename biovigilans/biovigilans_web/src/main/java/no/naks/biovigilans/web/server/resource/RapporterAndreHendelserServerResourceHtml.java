@@ -43,7 +43,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	@Get
 	public Representation getHemovigilans() {
 
-		invalidateSessionobjects();
+	//	invalidateSessionobjects();
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	
 	     Request request = getRequest();
@@ -67,8 +67,8 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_andrehendelser.html"));
 	     setAndreHendelser(); // Setter opp andreHendelser session objekter
 	    // setTransfusjonsObjects(); 
-	  //   annenModel.setFormNames(sessionParams);
-	   //  annenModel.distributeTerms();
+	     annenModel.setFormNames(sessionParams);
+	     annenModel.distributeTerms();
 	     
 	     dataModel.put(andreHendelseId, annenModel);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
