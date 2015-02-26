@@ -389,7 +389,7 @@
                         ${pasientkomplikasjon.sykdombehandling},${pasientkomplikasjon.p-annensykdom-ja},${pasientkomplikasjon.p-annensykdom-nei},${pasientkomplikasjon.p-annensykdom-vetikke},
                         ${pasientkomplikasjon.p-annen-sykdom},${pasientkomplikasjon.p-tidligeretransfusjon-ja},${pasientkomplikasjon.p-tidligeretransfusjon-nei},
                         ${pasientkomplikasjon.p-tidligeretransfusjon-vetikke},${pasientkomplikasjon.p-sykdom-tidligeretransfusjon},${pasientkomplikasjon.p-transfusjon-inneliggende},
-                        ${pasientkomplikasjon.p-transfusjon-poliklinisk},{pasientkomplikasjon.p-transfusjon-vetikke},${pasientkomplikasjon.p-transfusjon-klokkeslett},
+                        ${pasientkomplikasjon.p-transfusjon-poliklinisk},${pasientkomplikasjon.p-transfusjon-vetikke},${pasientkomplikasjon.p-transfusjon-klokkeslett},
                         ${pasientkomplikasjon.p-transfusjon-dato},${pasientkomplikasjon.transfusjon-hg-1},
                         ${pasientkomplikasjon.transfusjon-hg-2},${pasientkomplikasjon.transfusjon-hg-3},${pasientkomplikasjon.transfusjon},
                         ${pasientkomplikasjon.blod-erytrocytt},${pasientkomplikasjon.blod-trombocytt},${pasientkomplikasjon.blod-trauma},${pasientkomplikasjon.blod-plasma},
