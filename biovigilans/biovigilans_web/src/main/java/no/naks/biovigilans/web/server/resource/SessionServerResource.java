@@ -6,6 +6,9 @@ import java.util.List;
 import org.restlet.Request;
 import org.restlet.data.Reference;
 
+import no.naks.biovigilans.model.Annenkomplikasjon;
+import no.naks.biovigilans.model.Giverkomplikasjon;
+import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
@@ -35,7 +38,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected PasientKomplikasjonWebModel result = null;
 	protected TransfusjonWebModel transfusjon = null;
 	protected TransfusjonKvitteringWebModel kvittering = null;
-
+	protected String andreKey = "annenKomp"; 		// Nøkkel dersom melding er av type annenkomplikasjon
+	protected String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
+	protected String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
 	
 	protected String[] avdelinger;
 	protected String[] aldergruppe;
@@ -83,8 +88,49 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected MelderwebModel melderwebModel;
 	protected String melderId = "melder";
 	
+	protected String nokkelId = "nokkel"; // Til bruk leveranseside
+	protected String datoId = "dato";		//Til bruk leveranseside
 	
-	
+/*
+ * Disse objektene inneholder tidligere rapporterte meldinger
+ * Benyttes når bruker har angitt oppfølgingsmelding	
+ */
+	protected Annenkomplikasjon annenKomplikasjon = null;
+    protected Pasientkomplikasjon pasientKomplikasjon = null;
+    protected Giverkomplikasjon giverKomplikasjon = null;
+    
+	public String getPasientKey() {
+		return pasientKey;
+	}
+
+
+
+	public void setPasientKey(String pasientKey) {
+		this.pasientKey = pasientKey;
+	}
+
+
+
+	public String getGiverKey() {
+		return giverKey;
+	}
+
+
+
+	public void setGiverKey(String giverKey) {
+		this.giverKey = giverKey;
+	}
+
+	public String getAndreKey() {
+		return andreKey;
+	}
+
+
+
+	public void setAndreKey(String andreKey) {
+		this.andreKey = andreKey;
+	}
+
 	
 	public String[] getVarighetSkadegruppe() {
 		return varighetSkadegruppe;
@@ -496,4 +542,5 @@ public class SessionServerResource extends ProsedyreServerResource {
 			}
 		}  
     }
+
 }
