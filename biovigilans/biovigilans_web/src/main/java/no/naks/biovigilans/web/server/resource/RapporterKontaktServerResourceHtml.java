@@ -42,6 +42,8 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
+import freemarker.template.SimpleScalar;
+
 public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	private String anonymEpost = "meldeordningen@kunnskapssenteret.no";
 	private String[] helseRegioner;
@@ -503,7 +505,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     @Post
     public Representation storeHemovigilans(Form form) {
     	TemplateRepresentation  templateRep = null;
-    	
+        String meldingsNokkel = null;
+	     String datoLevert = null;
     	if(form == null){
     		invalidateSessionobjects();
     	}
@@ -567,6 +570,11 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		}
 */	    		
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
+	     	    SimpleScalar simple = new SimpleScalar(meldingsNokkel);
+	    	    dataModel.put(nokkelId,simple);
+	    	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
+	    	    dataModel.put(datoId, datoSimple);
+	    		
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
 	    		redirectPermanent("../hemovigilans/leveranse.html");
