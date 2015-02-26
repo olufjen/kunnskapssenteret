@@ -22,17 +22,24 @@ import org.restlet.resource.Post;
 
 import freemarker.template.SimpleScalar;
 
+/**
+ * RapporterteMeldingerServerResourceHTML
+ * Dette er resource for raporterte meldinger.
+ * Den aktiveres når bruker velger oppfølgingsmelding og har angitt en meldingsnøkkel.
+ * En oppfølgingsmelding identifiseres med bruk av en meldingsnøkkel.
+ * 
+ * @author olj
+ *
+ */
 public class RapporterteMeldingerServerResourceHTML extends
 		SessionServerResource {
 
 	private String meldingsId = "meldinger";
 	private String delMelding = "delmelding";
-	private String andreKey = "annenKomp"; 
+
 	private String displayPart = "none";
 	private String displayKey = "display";
-	private String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
-	private String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
-	
+
 	private String detaljer = "Vis ytterligere detaljer";
 	private String detaljerId = "detaljer";
 	
@@ -54,27 +61,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 	}
 	
 	
-	public String getPasientKey() {
-		return pasientKey;
-	}
 
-
-
-	public void setPasientKey(String pasientKey) {
-		this.pasientKey = pasientKey;
-	}
-
-
-
-	public String getGiverKey() {
-		return giverKey;
-	}
-
-
-
-	public void setGiverKey(String giverKey) {
-		this.giverKey = giverKey;
-	}
 
 
 
@@ -101,16 +88,6 @@ public class RapporterteMeldingerServerResourceHTML extends
 	}
 
 
-
-	public String getAndreKey() {
-		return andreKey;
-	}
-
-
-
-	public void setAndreKey(String andreKey) {
-		this.andreKey = andreKey;
-	}
 
 
 
@@ -140,8 +117,8 @@ public class RapporterteMeldingerServerResourceHTML extends
 
 	/**
 	 * getHemovigilans
-	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
-	 * en rapportert hendelse
+	 * Denne rutinen henter inn nødvendige session objekter og  
+	 * henter frem siden for oppfølgingsmeldinger
 	 * @return
 	 */
 	@Get
@@ -152,9 +129,9 @@ public class RapporterteMeldingerServerResourceHTML extends
 	     Request request = getRequest();
 	     Vigilansmelding melding = (Vigilansmelding) sessionAdmin.getSessionObject(request, meldingsId);
 	     
-	     Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, andreKey);
-	     Pasientkomplikasjon pasientKomplikasjon = (Pasientkomplikasjon)sessionAdmin.getSessionObject(request, pasientKey);
-	     Giverkomplikasjon giverKomplikasjon = (Giverkomplikasjon)sessionAdmin.getSessionObject(request,  giverKey);
+	    annenKomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, andreKey);
+	    pasientKomplikasjon = (Pasientkomplikasjon)sessionAdmin.getSessionObject(request, pasientKey);
+	    giverKomplikasjon = (Giverkomplikasjon)sessionAdmin.getSessionObject(request,  giverKey);
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
@@ -180,7 +157,8 @@ public class RapporterteMeldingerServerResourceHTML extends
 	}
 	  /**
      * storeHemovigilans
-     * Denne rutinen tar imot alle ny informasjon fra bruker om den rapporterte hendelsen
+     * Denne rutinen tar imot meldingsnøkkel fra bruker og henter frem meidngsinformasjon basert på 
+     * oppgitt meldingsnøkkel
      * @param form
      * @return
      */
@@ -191,30 +169,35 @@ public class RapporterteMeldingerServerResourceHTML extends
  	    Reference reference = new Reference(getReference(),"..").getTargetRef();
 	    Request request = getRequest();
 	    Vigilansmelding melding = (Vigilansmelding) sessionAdmin.getSessionObject(request, meldingsId);
-	    Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, andreKey);
-	     Pasientkomplikasjon pasientKomplikasjon = (Pasientkomplikasjon)sessionAdmin.getSessionObject(request, pasientKey);
-	     Giverkomplikasjon giverKomplikasjon = (Giverkomplikasjon)sessionAdmin.getSessionObject(request,  giverKey);
+	    annenKomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, andreKey);
+	    pasientKomplikasjon = (Pasientkomplikasjon)sessionAdmin.getSessionObject(request, pasientKey);
+	    giverKomplikasjon = (Giverkomplikasjon)sessionAdmin.getSessionObject(request,  giverKey);
 	
 	     LocalReference localUri = new LocalReference(reference);
 	     dataModel.put(meldingsId, melding);
-	    	String infoButton = null;
-	    	for (Parameter entry : form) {
-				if (entry.getValue() != null && !(entry.getValue().equals(""))){
-						System.out.println(entry.getName() + "=" + entry.getValue());
-						if (entry.getName().equals("hentopplysninger")){
-							infoButton = entry.getValue();
-							if (infoButton.equals("Skjul detaljer")){
-								detaljer = "Vis ytterligere detaljer";
-								 displayPart = "none";
-							}else{
-								 detaljer = "Skjul detaljer";
-								 displayPart = "block";
-							}
-						}
-				}
-				
-	    	}
-	    	String page = "/hemovigilans/rapportert_melding.html";
+	     String infoButton = null;
+	   	 String page = "/hemovigilans/rapportert_melding.html";
+	     for (Parameter entry : form) {
+	    	 if (entry.getValue() != null && !(entry.getValue().equals(""))){
+	    		 System.out.println(entry.getName() + "=" + entry.getValue());
+	    		 if (entry.getName().equals("hentopplysninger")){
+	    			 infoButton = entry.getValue();
+	    			 if (infoButton.equals("Skjul detaljer")){
+	    				 detaljer = "Vis ytterligere detaljer";
+	    				 displayPart = "none";
+	    			 }else{
+	    				 detaljer = "Skjul detaljer";
+	    				 displayPart = "block";
+	    			 }
+	    		 }
+	    		 if (entry.getName().equals("oppfolgingandre")){
+	    			  page =  "../hemovigilans/rapporter_andrehendelser.html";
+	    			  redirectPermanent(page);
+	    		 }
+	    	 }
+
+	     }
+	  
 	     if (annenKomplikasjon != null){
 	    	 dataModel.put(andreKey,annenKomplikasjon);
 //	    	 displayPart = "block";
