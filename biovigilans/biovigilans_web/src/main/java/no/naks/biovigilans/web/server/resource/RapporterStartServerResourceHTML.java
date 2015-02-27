@@ -25,7 +25,7 @@ import freemarker.template.SimpleScalar;
 
 public class RapporterStartServerResourceHTML extends SessionServerResource {
 
-	private String meldingsId = "meldinger";
+	
 	private String delMelding = "delmelding";
 	private String meldeTxtId = "melding";
 
@@ -39,13 +39,6 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 		this.delMelding = delMelding;
 	}
 
-	public String getMeldingsId() {
-		return meldingsId;
-	}
-
-	public void setMeldingsId(String meldingsId) {
-		this.meldingsId = meldingsId;
-	}
 
 	public String getMeldeTxtId() {
 		return meldeTxtId;
