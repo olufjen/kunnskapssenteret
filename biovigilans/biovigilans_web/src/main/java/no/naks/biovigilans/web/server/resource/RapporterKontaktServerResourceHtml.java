@@ -570,6 +570,11 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		}
 */	    		
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
+/*
+ */
+/*
+ * Disse verdiene må settes opp for å unngå feilemelding i kvitteringsskjema !!	    		
+ */
 	     	    SimpleScalar simple = new SimpleScalar(meldingsNokkel);
 	    	    dataModel.put(nokkelId,simple);
 	    	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
