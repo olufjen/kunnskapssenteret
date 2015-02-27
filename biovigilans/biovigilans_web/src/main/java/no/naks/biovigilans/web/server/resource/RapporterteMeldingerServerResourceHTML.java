@@ -34,7 +34,6 @@ import freemarker.template.SimpleScalar;
 public class RapporterteMeldingerServerResourceHTML extends
 		SessionServerResource {
 
-	private String meldingsId = "meldinger";
 	private String delMelding = "delmelding";
 
 	private String displayPart = "none";
@@ -75,39 +74,17 @@ public class RapporterteMeldingerServerResourceHTML extends
 		this.displayPart = displayPart;
 	}
 
-
-
 	public String getDisplayKey() {
 		return displayKey;
 	}
-
-
 
 	public void setDisplayKey(String displayKey) {
 		this.displayKey = displayKey;
 	}
 
-
-
-
-
-	public String getMeldingsId() {
-		return meldingsId;
-	}
-
-
-
-	public void setMeldingsId(String meldingsId) {
-		this.meldingsId = meldingsId;
-	}
-
-
-
 	public String getDelMelding() {
 		return delMelding;
 	}
-
-
 
 	public void setDelMelding(String delMelding) {
 		this.delMelding = delMelding;
@@ -192,6 +169,18 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    		 }
 	    		 if (entry.getName().equals("oppfolgingandre")){
 	    			  page =  "../hemovigilans/rapporter_andrehendelser.html";
+	  //  			  setAndreHendelser(); // Setter opp andreHendelser session objekter
+	    				    // setTransfusjonsObjects(); 
+	  //  			  annenModel.setFormNames(sessionParams);
+	  //  		      sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
+	    			     setAndreHendelser(); // Setter opp andreHendelser session objekter
+	    				    // setTransfusjonsObjects(); 
+	    				 annenModel.setFormNames(sessionParams);
+	    				 annenModel.distributeTerms();
+	    				 annenModel.setAnnenKomplikasjon(annenKomplikasjon);     
+	    				 dataModel.put(andreHendelseId, annenModel);
+	    				 sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);	    			  
+   			 	
 	    			  redirectPermanent(page);
 	    		 }
 	    	 }
@@ -206,6 +195,8 @@ public class RapporterteMeldingerServerResourceHTML extends
 			 SimpleScalar detaljButton = new SimpleScalar(detaljer);
 			 dataModel.put(detaljerId,detaljButton);
 	   	     dataModel.put(displayKey, simple);
+
+			     
 	     }
 	     if (pasientKomplikasjon != null){
 	    	 dataModel.put(pasientKey,pasientKomplikasjon);
