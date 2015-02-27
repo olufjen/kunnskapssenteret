@@ -28,12 +28,32 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
+import freemarker.template.SimpleScalar;
+
 public class RapporterAndreHendelserServerResourceHtml extends SessionServerResource {
+	private String displayKey = "display";
+	private String displayPart = "none";
 	
 	public RapporterAndreHendelserServerResourceHtml (){
 		super();
 	}
 	
+	public String getDisplayPart() {
+		return displayPart;
+	}
+
+	public void setDisplayPart(String displayPart) {
+		this.displayPart = displayPart;
+	}
+
+	public String getDisplayKey() {
+		return displayKey;
+	}
+
+	public void setDisplayKey(String displayKey) {
+		this.displayKey = displayKey;
+	}
+
 	/**
 	 * getInnmelding
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
@@ -70,6 +90,13 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     annenModel.setFormNames(sessionParams);
 	     annenModel.distributeTerms();
 	     
+	     if (annenModel.getAnnenKomplikasjon() != null){
+	    	 displayPart = "block";
+	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
+	    	 annenModel.setHendelseDato(melding.getMeldingsdato());
+	    	 SimpleScalar simple = new SimpleScalar(displayPart);
+	    	 dataModel.put(displayKey, simple);
+	     }
 	     dataModel.put(andreHendelseId, annenModel);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	     
