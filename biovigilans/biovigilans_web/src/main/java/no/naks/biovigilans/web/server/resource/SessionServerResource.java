@@ -41,7 +41,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String andreKey = "annenKomp"; 		// Nøkkel dersom melding er av type annenkomplikasjon
 	protected String pasientKey = "pasientKomp"; // Nøkkel dersom melding er av type pasientkomplikasjon
 	protected String giverKey = "giverkomp"; 	// Nøkkel dersom melding er at type giverkomplikasjon
-	
+	protected String meldingsId = "meldinger";
 	protected String[] avdelinger;
 	protected String[] aldergruppe;
 	protected String[] kjonnValg; 
@@ -98,13 +98,17 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected Annenkomplikasjon annenKomplikasjon = null;
     protected Pasientkomplikasjon pasientKomplikasjon = null;
     protected Giverkomplikasjon giverKomplikasjon = null;
-    
+ 
+	public String getMeldingsId() {
+		return meldingsId;
+	}
+
+	public void setMeldingsId(String meldingsId) {
+		this.meldingsId = meldingsId;
+	}
 	public String getPasientKey() {
 		return pasientKey;
 	}
-
-
-
 	public void setPasientKey(String pasientKey) {
 		this.pasientKey = pasientKey;
 	}
