@@ -253,6 +253,7 @@ public class PasientkomplikasjonImpl extends AbstractVigilansmelding implements 
 
 	public void setKomplikasjonsFields(Map<String, String> komplikasjonsFields) {
 		this.komplikasjonsFields = komplikasjonsFields;
+		setVigilansFields(komplikasjonsFields);
 	}
 
 	public String[] getKeys() {
