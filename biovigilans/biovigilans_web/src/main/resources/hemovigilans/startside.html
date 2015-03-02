@@ -39,6 +39,7 @@
 <form action="?method=PUT" method="post">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+var blurCount = 0;
 function homePage(){
 	var curAddr = document.location.href;
 //	 alert(curAddr);
@@ -59,9 +60,14 @@ function toggleDisplay(id, displayvalue)
     }
  //   alert("step 4");
 }
+
 function meldingsnokkel(){
 //	alert("nøkkel");
-	$("#btnnokkel").click();
+    blurCount = blurCount + 1;
+    if (blurCount == 1){
+    	$("#btnnokkel").click();
+    } 
+	
 }
 </script>
 
@@ -96,7 +102,7 @@ function meldingsnokkel(){
      	<label>${melding}</label>
      </div>
  
-</div>
+
 <div class="panel-group" id="accordion">
 
 </div>
