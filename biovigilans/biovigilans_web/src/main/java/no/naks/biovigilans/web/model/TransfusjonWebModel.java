@@ -158,7 +158,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	public void saveValues() {
 		String[] formFields = getFormNames(); // Inneholder navn på input felt i skjermbildet
 		Map<String,String> userEntries = getFormMap(); // formMap inneholder verdier angitt av bruker
-
+		pasientKomplikasjon.setKomplikasjonsFields(userEntries);
 		for (String field : formFields){
 			String userEntry = userEntries.get(field);
 		//	System.out.println("Key: "+ field);
