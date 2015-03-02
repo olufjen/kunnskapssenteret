@@ -3100,22 +3100,22 @@ Vurder om du skal melde denne."/>Utelukket
 	<h3>Kunne komplikasjonen ha vært forebygget?</h3>
 	<div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg" value="ja" onclick="toggleDisplay('transfusjonforebygg',this.checked)" />Ja
+        <input type="radio" name="p-forebygg" id="p-forebygg" value="ja" onclick="toggleDisplay('transfusjonforebygg',this.checked);toggleDisplay('transfusjonforebyggtext',this.checked)" />Ja
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg-2" value="ja" onclick="toggleDisplay('transfusjonforebygg', this.checked)"/>Ja,delvis 
+        <input type="radio" name="p-forebygg" id="p-forebygg-2" value="ja" onclick="toggleDisplay('transfusjonforebygg', this.checked);toggleDisplay('transfusjonforebyggtext',this.checked)"/>Ja,delvis 
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg-3" value="forebyggetnei" onclick="toggleDisplay('transfusjonforebygg', 0)"/>Nei
+        <input type="radio" name="p-forebygg" id="p-forebygg-3" value="forebyggetnei" onclick="toggleDisplay('transfusjonforebygg', 0);toggleDisplay('transfusjonforebyggtext',0)"/>Nei
       </label>
     </div>	
 	  <div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg-4" value="forebyggetvetikke" onclick="toggleDisplay('transfusjonforebygg', 0)"/>Vet ikke
+        <input type="radio" name="p-forebygg" id="p-forebygg-4" value="forebyggetvetikke" onclick="toggleDisplay('transfusjonforebygg', 0);toggleDisplay('transfusjonforebyggtext',0)"/>Vet ikke
       </label>
     </div>	
   <div id="transfusjonforebyggtext" class="form-group" style="display: none">
@@ -3188,12 +3188,12 @@ Vurder om du skal melde denne."/>Utelukket
 <label>Ytterligere opplysninger følger</label>
 	<div class="radio">
       <label>
-        <input type="radio" name="p-ytterligereopp" id="p-ytterligere" value="ja"  />Ja
+        <input type="radio" name="p-ytterligereopp" id="p-ytterligereopp" value="ja"  />Ja
       </label>
     </div>
       <div class="radio">
       <label>
-        <input type="radio" name="p-ytterligereopp" id="p-ytterligere" value="nei" />Nei
+        <input type="radio" name="p-ytterligereopp" id="p-ytterligereopp" value="nei" />Nei
       </label>
     </div>	
 </div>
