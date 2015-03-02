@@ -374,7 +374,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		String transFields[] = {formFields[13]};
 		String annenSykdomFields[] = {formFields[13]};
 		String antistoffFields[] = {formFields[5],formFields[6],formFields[7],formFields[8],formFields[143],formFields[144],formFields[145]};
-		String tiltakFields[] = {formFields[207]}; // formFields[203],formFields[204],formFields[205],formFields[206] (Ja/nei felt
+		String tiltakFields[] = {formFields[207]}; // formFields[203],formFields[204],formFields[205],formFields[206] (Ja/nei felt 
 		String forebyggendeTiltakFields[] = {formFields[195],
 				formFields[196],formFields[197],formFields[198],formFields[199],formFields[200],formFields[201],formFields[202]}; //formFields[192],formFields[193],formFields[194] (Ja/nei felt)
 		
