@@ -148,8 +148,9 @@ public class PasientImpl extends AbstractPasient implements Pasient {
 		
 	}
 	/* produceTiltak
-	 * DEnne rutinen lager riktig antall tiltak registrert til pasient
-	 */public void produceTiltak(Tiltak tiltak, Forebyggendetiltak forebyggendeTiltak){
+	 * Denne rutinen lager riktig antall tiltak registrert til pasient
+	 */
+	public void produceTiltak(Tiltak tiltak, Forebyggendetiltak forebyggendeTiltak){
 		for (String ettiltak : tiltak.getTiltakFields().values()){
 			Tiltak lokalTiltak = new TiltakImpl();
 			String tempTiltak = "";
