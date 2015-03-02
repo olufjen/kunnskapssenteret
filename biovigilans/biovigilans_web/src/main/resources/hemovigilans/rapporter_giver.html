@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="scripts/hendelser.js"></script>
 	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
 <body>
@@ -59,6 +60,16 @@
      <div class="container">
 
 	<script type="text/javascript">
+	
+	 $( document ).ready(function(){ 
+		 	var now = new Date();
+		 	var day = ("0" + now.getDate()).slice(-2);
+	        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+	        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+	        $('#dato-donasjon').attr('max', today);
+	        $('#dato-hendelse').attr('max', today);
+	});
+	 
 	
 	var Spinner1;
 	var foo;
@@ -169,6 +180,11 @@
 			}
 		}
 	}
+	 
+	 function dateValidation(){
+	   var dateDonasjon = $("#dato-donasjon").val();
+	   $('#dato-hendelse').attr('max', dateDonasjon);
+	 }
 	
 	</script>
 
@@ -214,7 +230,7 @@
 	   <div class="form-group">
 	    
 	     <label>Vekt i kg</label> 
-	      <input type="number"  min="40" name="givervektkg" size="80"  class="form-control"/>
+	      <input type="number"  min="45" max="110" name="givervektkg" size="80" oninput="test();"  class="form-control"/>
 	   </div>
 	    
 	    <div class="form-group">
@@ -256,7 +272,7 @@
 	    <h3>Donasjon</h3>
 	    <div class="form-group">
 	    	<label>Donasjonsdato</label><br>
-	    	<input type="date" name="dato-donasjon" />
+	    	<input type="date" name="dato-donasjon" id="dato-donasjon" onchange="dateValidation();"  />
 	    </div>
 	    <div class="form-group">
 	      <label>Donasjonssted</label>
@@ -404,7 +420,7 @@
 	    
 	    <div class="form-group"  style="display: none"  id="hendelseDato">
 	    	<label>Når oppstod symptomene?</label><br>
-	    	<input type="date" name="dato-hendelse"  />
+	    	<input type="date" name="dato-hendelse" id="dato-hendelse"  />
 	    </div>
 
 		<div id="utenfor" style="display: none"  class="form-group">

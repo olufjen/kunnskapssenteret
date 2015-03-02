@@ -59,7 +59,15 @@
     </header>
 	<div class="container">
 		<script type="text/javascript">
-
+		
+		 $( document ).ready(function(){ 
+			 	var now = new Date();
+			 	var day = ("0" + now.getDate()).slice(-2);
+		        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+		        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+		        $('#hendelsen-date').attr('max', today);
+		});
+		
 				function toggleDisplay(id)
 				{    
 					document.getElementById('smitte').style.display = 'none';
@@ -170,12 +178,9 @@
 			<div class="tab-pane" id="andrehendelser">
 				<div class="form-group">
 					<label>Dato For hendelsen</label><br>
-					<input type="date" name="hendelsen-date" />
+					<input type="date" name="hendelsen-date" id="hendelsen-date" />
 				</div>
-				<div class="form-group"  style="display: ${display}">
-					<label>Dato For hendelsen</label><br>
-					<input type="date" name="hendelsen-date" value="${andreHendelse.hendelseDato?date}"/>
-				</div>	
+				
 				<div class="form-group" >
 				<label>Beskrivelse av hendelsen</label>
 					<textarea class="form-control"  name="beskrivelse" rows="3"  ></textarea>

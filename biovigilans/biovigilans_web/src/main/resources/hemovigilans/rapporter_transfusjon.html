@@ -62,6 +62,16 @@
 <div class="container">
 
 <script type="text/javascript">
+
+$( document ).ready(function(){ 
+ 	var now = new Date();
+ 	var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $('#transfusjon-date').attr('max', today);
+});
+
+
 var Spinner1;
 var foo;
 function toggleDisplay(id, displayvalue)
@@ -565,7 +575,7 @@ function showtext(id,thetext){
 	-->
 	<label>Transfusjondato </label>
 	<div class="form-group">
-		<input type="date" name="transfusjon-date">
+		<input type="date" name="transfusjon-date" id="transfusjon-date">
 	</div>
     <label>Hastegrad</label>
     <div class="radio">
