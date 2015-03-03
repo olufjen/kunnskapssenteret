@@ -723,12 +723,13 @@ public class MelderwebModel extends VigilansModel {
 	 * Denne rutinen kjøres når bruker har valgt en helseregion. Da lages det en korrekt liste av HF til regionen
 	 */
 	public void setValgtregion(){
-		setKontaktinfo();
+	//	setKontaktinfo();
 		Map<String,String> userEntries = getFormMap();
 		String field = "k-helseregion";
 		melderRegion = userEntries.get(field);
 		valgtRegion = null;
 		valgtRegion = regioner.get(melderRegion);
+		helseregion = melderRegion;  
 	}
 	
 	/**
@@ -736,13 +737,13 @@ public class MelderwebModel extends VigilansModel {
 	 * Denne rutinen kjøres når bruker har valgt et HF og skal ha liste over tilgjengelige sykehus for dette HF 
 	 */
 	public void setValgtsykehus(){
-		setKontaktinfo();
+	//	setKontaktinfo();
 		Map<String,String> userEntries = getFormMap();
 		String field = "k-helseforetak";
 		melderSykehus = userEntries.get(field);
 		valgtHFsykehus = null;
 		valgtHFsykehus = sykehusene.get(melderSykehus);
-		
+		helseforetak = melderSykehus;
 	}
 	private void setKontaktinfo(){
 		if (melderInfo != null){
