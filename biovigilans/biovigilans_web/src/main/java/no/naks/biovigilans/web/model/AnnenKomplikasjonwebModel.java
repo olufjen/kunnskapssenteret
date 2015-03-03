@@ -24,7 +24,7 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 	protected String[] hendelsenoppdaget;
 	List<String> hvagikkgaltList ;
 	protected Date hendelseDato = null; // Dato settes dersom dette er en oppfølgingsmelding
-	
+
 	public AnnenKomplikasjonwebModel(){
 		super();
 		annenKomplikasjon = new AnnenkomplikasjonImpl();
@@ -32,6 +32,7 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		vigilansmelding = (Vigilansmelding) annenKomplikasjon;
 		//hvagikkgaltList = new ArrayList<String>();
 	}
+
 
 
 	public Date getHendelseDato() {
