@@ -175,7 +175,17 @@
 			  <li><a href="rapporter_kontakt.html" data-toggle="tab">Kontaktinformasjon</a></li>
 			  <li class="active"><a href="#andrehendelser" data-toggle="tab">Rapporter Andre-hendelser</a></li>
 			</ul>
-			<div class="tab-pane" id="andrehendelser">
+		<div class="tab-pane" id="andrehendelser"> <!-- Start div andre hendelser -->
+				<div class="form-group" style="display: ${display}">
+				<label>Meldingsnøkkel </label>
+					<div>
+ 					<label>${andreHendelse.meldingsNokkel}</label>
+ 					</div>
+				<label>Dato for hendelsen </label>
+     				<div>
+ 					<label>${andreHendelse.hendelseDato?date}</label>
+ 					</div>
+				</div>
 				<div class="form-group">
 					<label>Dato For hendelsen</label><br>
 					<input type="date" name="hendelsen-date" id="hendelsen-date" />
@@ -693,7 +703,7 @@
 				
 				<button type="submit" name="btnAvbryt" id="btnAvbryt" value="avbryt" class="btn btn-default" onclick="return sendInn('avbryt');"><span id="avbrytTxt">Avbryt</span> </button>
 	      		<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"  onclick="return sendInn('sendinn');" > <span id="sendinnTxt">Kontroll før innsending</span></button>
-			</div>
+			</div> <!-- End div andre hendelser -->
 		</form>
 	</div>	
 </body>
