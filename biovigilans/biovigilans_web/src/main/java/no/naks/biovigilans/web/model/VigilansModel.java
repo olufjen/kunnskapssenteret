@@ -25,7 +25,7 @@ public class VigilansModel {
 	private String accountRef;
 	private Vigilansmelding vigilans;
 	private Date meldingLevert;
-	private String meldingsNokkel;
+	private String meldingsNokkel = "";
 	private String meldLevert;
 	
 	
