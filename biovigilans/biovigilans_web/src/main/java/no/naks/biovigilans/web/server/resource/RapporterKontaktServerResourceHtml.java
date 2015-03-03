@@ -603,8 +603,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 			    				MediaType.TEXT_HTML);
     		}else if(valgtRegion != null){   // Bruker har valgt en helseregion
-    			melderwebModel.saveValues();
     			melderwebModel.setValgtregion();
+    			melderwebModel.saveValues();
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
@@ -613,8 +613,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			    				MediaType.TEXT_HTML);    			
     	
        		}else if(valgtForetak != null){   // Bruker har valgt et HF
-    			melderwebModel.saveValues();
-    			melderwebModel.setValgtsykehus();
+       			melderwebModel.setValgtsykehus();
+       			melderwebModel.saveValues();
 	    		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 	    		//        Representation pasientkomplikasjonFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())+ "/html/nymeldingfagprosedyre.html").get();
