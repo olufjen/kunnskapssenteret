@@ -94,6 +94,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    	 displayPart = "block";
 	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
 	    	 annenModel.setHendelseDato(melding.getMeldingsdato());
+	    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
 	    	 SimpleScalar simple = new SimpleScalar(displayPart);
 	    	 dataModel.put(displayKey, simple);
 	     }
