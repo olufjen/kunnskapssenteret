@@ -1,6 +1,7 @@
 package no.naks.biovigilans.web.server.resource;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.restlet.Request;
@@ -52,6 +53,16 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected String kvitteringsId = "kvittering";					// Benyttes som nøkkel for kvitteringssiden
 	protected String kvitteringGiverId = "giverKvittering";
 	protected String messageType = "none";
+	
+/*
+ * Til bruk for oppfølgingsmeldinger	
+ */
+	protected String displayKey = "display";						
+	protected String displayPart = "none";
+	protected String displaydateKey = "displaydate";
+	protected String datePart = "block";
+	
+	
 	List<String> hvagikkgaltList = new ArrayList<String>();
 /*
  * Sessiomn objekter for giver	
@@ -98,7 +109,41 @@ public class SessionServerResource extends ProsedyreServerResource {
 	protected Annenkomplikasjon annenKomplikasjon = null;
     protected Pasientkomplikasjon pasientKomplikasjon = null;
     protected Giverkomplikasjon giverKomplikasjon = null;
- 
+
+    
+    
+	public String getDisplayKey() {
+		return displayKey;
+	}
+
+	public void setDisplayKey(String displayKey) {
+		this.displayKey = displayKey;
+	}
+
+	public String getDisplayPart() {
+		return displayPart;
+	}
+
+	public void setDisplayPart(String displayPart) {
+		this.displayPart = displayPart;
+	}
+
+	public String getDisplaydateKey() {
+		return displaydateKey;
+	}
+
+	public void setDisplaydateKey(String displaydateKey) {
+		this.displaydateKey = displaydateKey;
+	}
+
+	public String getDatePart() {
+		return datePart;
+	}
+
+	public void setDatePart(String datePart) {
+		this.datePart = datePart;
+	}
+
 	public String getMeldingsId() {
 		return meldingsId;
 	}
@@ -459,6 +504,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 annenModel.setFeilelleravvik(feilelleravvik);
 	    	 annenModel.setHendelsenoppdaget(hendelsenoppdaget);
 	    	 annenModel.setHvagikkgaltList(hvagikkgaltList);
+	    	 annenModel.setMeldingsNokkel("xx");
+	    	 annenModel.setHendelseDato(new Date());
+	    	 
 	     }
 	}
 	
