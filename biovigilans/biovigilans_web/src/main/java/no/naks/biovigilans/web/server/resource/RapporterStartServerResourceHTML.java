@@ -72,6 +72,20 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 		this.giverKey = giverKey;
 	}
 
+	private void setMeldingsValues(Vigilansmelding lokalMelding,Vigilansmelding melding){
+			lokalMelding.setMeldingsnokkel(melding.getMeldingsnokkel());
+			lokalMelding.setDatoforhendelse(melding.getDatoforhendelse());
+	//		lokalMelding.setMeldeid(melding.getMeldeid());
+			lokalMelding.setMelderId(melding.getMelderId());
+			lokalMelding.setDatooppdaget(melding.getDatooppdaget());
+			lokalMelding.setDonasjonoverforing(melding.getDonasjonoverforing());
+			lokalMelding.setSjekklistesaksbehandling(melding.getSjekklistesaksbehandling());
+			lokalMelding.setSupplerendeopplysninger(melding.getSupplerendeopplysninger());
+			lokalMelding.setMeldingsdato(melding.getMeldingsdato());
+			lokalMelding.setKladd(melding.getKladd());
+			lokalMelding.setGodkjent(melding.getGodkjent());
+			lokalMelding.setMeldeid(null);
+	}
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  setter opp nettsiden for å ta i mot
@@ -146,11 +160,19 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     		andreMeldinger = alleMeldinger.get(andreKey);
     		pasientMeldinger = alleMeldinger.get(pasientKey);
     		giverMeldinger = alleMeldinger.get(giverKey);
-    		    		
+   
+    		Vigilansmelding melding = null;
+    		if (!meldinger.isEmpty())
+    			melding = meldinger.get(0);  
+    		
     		if (andreMeldinger != null){
     			if (!andreMeldinger.isEmpty()){
         			Annenkomplikasjon annenKomplikasjon = (Annenkomplikasjon)andreMeldinger.get(0);
+        			Vigilansmelding lokalMelding = (Vigilansmelding) annenKomplikasjon;
+        			setMeldingsValues(lokalMelding, melding);
+        		
         			sessionAdmin.setSessionObject(request, annenKomplikasjon,andreKey);
+        			sessionAdmin.setSessionObject(request, lokalMelding, meldingsId);
         		} 			
     		}
       		if (pasientMeldinger != null){
