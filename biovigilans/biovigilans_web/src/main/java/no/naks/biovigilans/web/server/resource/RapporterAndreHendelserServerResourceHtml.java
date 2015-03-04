@@ -31,28 +31,14 @@ import org.restlet.resource.Post;
 import freemarker.template.SimpleScalar;
 
 public class RapporterAndreHendelserServerResourceHtml extends SessionServerResource {
-	private String displayKey = "display";
-	private String displayPart = "none";
+
+			
 	
 	public RapporterAndreHendelserServerResourceHtml (){
 		super();
 	}
 	
-	public String getDisplayPart() {
-		return displayPart;
-	}
 
-	public void setDisplayPart(String displayPart) {
-		this.displayPart = displayPart;
-	}
-
-	public String getDisplayKey() {
-		return displayKey;
-	}
-
-	public void setDisplayKey(String displayKey) {
-		this.displayKey = displayKey;
-	}
 
 	/**
 	 * getInnmelding
@@ -89,15 +75,20 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	    // setTransfusjonsObjects(); 
 	     annenModel.setFormNames(sessionParams);
 	     annenModel.distributeTerms();
-	     
-	     if (annenModel.getAnnenKomplikasjon() != null){
+
+
+	     if (annenModel.getVigilansmelding().getMeldingsnokkel() != null){
 	    	 displayPart = "block";
+	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
-	    	 annenModel.setHendelseDato(melding.getMeldingsdato());
+	    	 annenModel.setHendelseDato(melding.getDatoforhendelse());
 	    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
-	    	 SimpleScalar simple = new SimpleScalar(displayPart);
-	    	 dataModel.put(displayKey, simple);
+	
 	     }
+    	 SimpleScalar simple = new SimpleScalar(displayPart);
+    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+    	 dataModel.put(displayKey, simple);
+    	 dataModel.put(displaydateKey, hendelseDate);
 	     dataModel.put(andreHendelseId, annenModel);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	     
@@ -174,8 +165,10 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			
     			//giverModel.getVigilansmelding().saveToVigilansmelding();
     			String strDate = form.getValues("hendelsen-date");
-    			Date datoforhendelse = null;
-    			if(strDate != null){
+    			
+    			Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
+    			Date datoforhendelse =  melding.getDatoforhendelse();
+    			if(strDate != null && melding.getDatoforhendelse() == null){
 					try {
 						DateFormat dateFormat =  new SimpleDateFormat("yyyy-MM-dd");
 						datoforhendelse = dateFormat.parse(strDate);
@@ -200,7 +193,7 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
     			if (datoforhendelse != null)
     			  strDato = FastDateFormat.getInstance("yyyy-MM-dd").format(datoforhendelse);
     			annenModel.getAnnenKomplikasjon().setDatoforhendelseKvittering(strDato);*/
-    			Vigilansmelding melding = (Vigilansmelding) annenModel.getAnnenKomplikasjon();
+    		
     			melding.setDatoforhendelse(datoforhendelse);
     			annenModel.saveValues();
     			annenKomplikasjonWebService.saveAnnenKomplikasjon(annenModel);
