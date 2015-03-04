@@ -177,7 +177,12 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    				    // setTransfusjonsObjects(); 
 	    				 annenModel.setFormNames(sessionParams);
 	    				 annenModel.distributeTerms();
-	    				 annenModel.setAnnenKomplikasjon(annenKomplikasjon);     
+	    				 annenModel.setAnnenKomplikasjon(annenKomplikasjon); 
+	    				 annenModel.setVigilansmelding(melding);
+	    			   	 annenModel.setHendelseDato(melding.getMeldingsdato());
+	    		    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
+	    		    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+	    		    	 dataModel.put(displaydateKey, hendelseDate);
 	    				 dataModel.put(andreHendelseId, annenModel);
 	    				 sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);	    			  
    			 	
