@@ -154,13 +154,14 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
 			
     	}
 		Parameter formValue = form.getFirst("formValue"); // Bruker oppgir meldingsnøkkel
+	    String page = "../hemovigilans/rapportert_melding.html"; 
     	if (formValue != null && meldingsNokkel != null){
     		alleMeldinger = melderWebService.selectMeldinger(meldingsNokkel);
     		meldinger = alleMeldinger.get(meldingsNokkel);
     		andreMeldinger = alleMeldinger.get(andreKey);
     		pasientMeldinger = alleMeldinger.get(pasientKey);
     		giverMeldinger = alleMeldinger.get(giverKey);
-   
+     
     		Vigilansmelding melding = null;
     		if (!meldinger.isEmpty())
     			melding = meldinger.get(0);  
@@ -177,6 +178,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     		}
       		if (pasientMeldinger != null){
     			if (!pasientMeldinger.isEmpty()){
+  //  			   page = "../hemovigilans/rapportert_pasient.html";
         			Pasientkomplikasjon pasientKomplikasjon = (Pasientkomplikasjon)pasientMeldinger.get(0);
         			Vigilansmelding lokalMelding = (Vigilansmelding) pasientKomplikasjon;
         			setMeldingsValues(lokalMelding, melding);
@@ -187,6 +189,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
  
       		if (giverMeldinger != null){
     			if (!giverMeldinger.isEmpty()){
+  //  				 page = "../hemovigilans/rapportert_giver.html";
         			Giverkomplikasjon giverKomplikasjon = (Giverkomplikasjon)giverMeldinger.get(0);
         			Vigilansmelding lokalMelding = (Vigilansmelding) giverKomplikasjon;
         			setMeldingsValues(lokalMelding, melding);
@@ -207,7 +210,7 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
         	if (!meldinger.isEmpty()){
         	//	Vigilansmelding melding = (Vigilansmelding) meldinger.get(0);
         	//	sessionAdmin.setSessionObject(request, melding, meldingsId);
-        		redirectPermanent("../hemovigilans/rapportert_melding.html");
+        		redirectPermanent(page);
         	}    		
     	}else{
      		ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/startside.html"));
