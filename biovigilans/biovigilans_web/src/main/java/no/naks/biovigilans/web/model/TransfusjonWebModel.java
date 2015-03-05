@@ -48,6 +48,7 @@ public class TransfusjonWebModel extends VigilansModel {
 	private Produktegenskap tromboEgenskap;
 	private Produktegenskap plasmaEgenskap;
 	private Pasient pasient;
+	private Vigilansmelding vigilansmelding;
 	
 	private List<String>hemolyseParametre; // Nedtrekk Hemolyseparametre når hemelyseparametre er positive
 	private String[] hemolysparams;
@@ -62,6 +63,7 @@ public class TransfusjonWebModel extends VigilansModel {
 		annenBlodprodukt = new BlodproduktImpl();
 		transfusjon = new TransfusjonImpl();
 		pasientKomplikasjon = new PasientkomplikasjonImpl();
+		vigilansmelding = (Vigilansmelding) pasientKomplikasjon;
 		symptomer = new SymptomerImpl();
 		komplikasjonsklassifikasjon = new KomplikasjonsklassifikasjonImpl();
 		utredning = new UtredningImpl();
@@ -70,6 +72,18 @@ public class TransfusjonWebModel extends VigilansModel {
 		produktEgenskap = new ProduktegenskapImpl("blod-erytrocytt");
 		tromboEgenskap = new ProduktegenskapImpl("blod-trombocytt");
 		
+	}
+
+
+
+	public Vigilansmelding getVigilansmelding() {
+		return vigilansmelding;
+	}
+
+
+
+	public void setVigilansmelding(Vigilansmelding vigilansmelding) {
+		this.vigilansmelding = vigilansmelding;
 	}
 
 
