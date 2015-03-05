@@ -175,6 +175,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 	    	 transfusjon.setHendelseDato(melding.getDatoforhendelse());
+	    	 result.setHendelseDato(melding.getDatoforhendelse());
 	    	 transfusjon.setMeldingsNokkel(melding.getMeldingsnokkel());
 	
 	     }
