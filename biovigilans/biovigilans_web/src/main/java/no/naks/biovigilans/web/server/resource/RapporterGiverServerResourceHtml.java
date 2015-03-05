@@ -3,6 +3,7 @@ package no.naks.biovigilans.web.server.resource;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.KomDiagnosegiverwebModel;
@@ -17,6 +18,8 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
+
+import freemarker.template.SimpleScalar;
 
 public class RapporterGiverServerResourceHtml extends SessionServerResource {
 
@@ -65,7 +68,19 @@ public class RapporterGiverServerResourceHtml extends SessionServerResource {
 	 //    giverModel.giveroppfolgingDistribute();
 	 //    donasjon.distributeTerms();
 	//     komDiagnosegiver.distributeTerms();
-	     
+
+	     if (giverModel.getVigilansmelding().getMeldingsnokkel() != null){
+	    	 displayPart = "block";
+	    	 datePart = "none";
+	    	 Vigilansmelding melding = (Vigilansmelding)giverModel.getGiverKomplikasjon();
+	    	 giverModel.setHendelseDato(melding.getDatoforhendelse());
+	    	 giverModel.setMeldingsNokkel(melding.getMeldingsnokkel());
+	
+	     }
+    	 SimpleScalar simple = new SimpleScalar(displayPart);
+    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+    	 dataModel.put(displayKey, simple);
+    	 dataModel.put(displaydateKey, hendelseDate);
 	     dataModel.put(giverkomplikasjonId, giverModel);
 	     dataModel.put(donasjonId, donasjon);
 	     dataModel.put(komDiagnosegiverId, komDiagnosegiver);
