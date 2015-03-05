@@ -369,7 +369,9 @@
             class="no.naks.biovigilans.web.server.resource.RapporterteMeldingerServerResourceHTML">
         <property name="kjonnValg" value="${kjonnkvinne},${kjonnmann}"></property>
         <property name="blodProdukt" value="${blodproduktplasmaoctaplas},${blodproduktpatogeninaktivert},${blodproduktflerepatogeninaktivert},${blodproduktkarantene},
-                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}"></property>
+                        ${blodproduktfrysetørret},${blodproduktflerefrysetørret},${blodproduktferkst},${blodproduktuniplas},${blodproduktannen}">
+         </property>
+             <property name="hemolyseParametre" value="${hemolyseparam1},${hemolyseparam2},${hemolyseparam3},${hemolyseparam4},${hemolyseparam5}"></property>
                <property name="sessionParams" value="${pasientkomplikasjon.kjonnmann},${pasientkomplikasjon.kjonnkvinne},${pasientkomplikasjon.alder},${pasientkomplikasjon.antistoffja},${pasientkomplikasjon.antistoffnei},
                         ${pasientkomplikasjon.antistoff-erytrocytt},${pasientkomplikasjon.antistoff-hla},${pasientkomplikasjon.antistoff-trombocytt},${pasientkomplikasjon.antistoff-leukocytt},
                         ${pasientkomplikasjon.sykdombehandling},${pasientkomplikasjon.p-annensykdom-ja},${pasientkomplikasjon.p-annensykdom-nei},${pasientkomplikasjon.p-annensykdom-vetikke},
