@@ -173,7 +173,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	     if (transfusjon.getVigilansmelding().getMeldingsnokkel() != null){
 	    	 displayPart = "block";
 	    	 datePart = "none";
-	    	 Vigilansmelding melding = (Vigilansmelding)transfusjon.getTransfusjon();
+	    	 Vigilansmelding melding = (Vigilansmelding)transfusjon.getPasientKomplikasjon();
 	    	 transfusjon.setHendelseDato(melding.getDatoforhendelse());
 	    	 transfusjon.setMeldingsNokkel(melding.getMeldingsnokkel());
 	
