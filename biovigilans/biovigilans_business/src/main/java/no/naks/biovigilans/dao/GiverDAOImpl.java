@@ -171,7 +171,9 @@ public class GiverDAOImpl extends AbstractAdmintablesDAO implements GiverDAO {
 		if(id==null){
 			melding.setMeldeid(getPrimaryKey(meldingPrimaryKey, meldingprimarykeyTableDefs));
 			/** update table vigilansmelding with meldingnokkel   */
-			melding.setMeldingsnokkel(null);
+			String nokkel = melding.getMeldingsnokkel();
+			if (nokkel == null)						// For å håndtere oppfølgingsmeldinger
+				melding.setMeldingsnokkel(null);
 			melding.setMeldingParams();
 			melding.setMeldingTypes();
 			meldeSQL = updateMeldingSQL;
