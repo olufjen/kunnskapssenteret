@@ -24,7 +24,7 @@ import freemarker.template.SimpleScalar;
 
 /**
  * RapporterteMeldingerServerResourceHTML
- * Dette er resource for raporterte meldinger.
+ * Dette er resource for rapporterte meldinger.
  * Den aktiveres når bruker velger oppfølgingsmelding og har angitt en meldingsnøkkel.
  * En oppfølgingsmelding identifiseres med bruk av en meldingsnøkkel.
  * 
@@ -41,9 +41,18 @@ public class RapporterteMeldingerServerResourceHTML extends
 
 	private String detaljer = "Vis ytterligere detaljer";
 	private String detaljerId = "detaljer";
-	private String[] aldergruppePasient;
+	private String[] aldergruppePasient;	// Dette er aldersgrupper for pasienter (transfusjonsskjema)
+	private String[] pasientSessionParams; // Dette er session parametre for pasient/transfusjonsskjema 
+
 	
-	
+	public String[] getPasientSessionParams() {
+		return pasientSessionParams;
+	}
+
+	public void setPasientSessionParams(String[] pasientSessionParams) {
+		this.pasientSessionParams = pasientSessionParams;
+	}
+
 	public String[] getAldergruppePasient() {
 		return aldergruppePasient;
 	}
@@ -229,13 +238,14 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    		 if (entry.getName().equals("oppfolgingpasient")){
 	    			  page =  "../hemovigilans/rapporter_transfusjon.html";
 	    			  setTransfusjon(); // Setter opp pasientHendelser session objekter
-	    			     transfusjon.distributeTerms();
-	    		    	 transfusjon.setFormNames(sessionParams);
+	    			  	 setSessionParams(pasientSessionParams); // Setter opp riktige sessionparametre for pasient/transfusjon
 	    		    	 transfusjon.setPlasmaEgenskaper(blodProdukt); // Setter plasma produkttyper
+	    		    	 transfusjon.setFormNames(sessionParams);
+	    			     transfusjon.distributeTerms();
 	    		    	 transfusjon.setVigilansmelding(melding);
 	    				 result.setFormNames(sessionParams);
 	    				 result.distributeTerms();
-	    				 result.setAldergruppe(aldergruppePasient);
+	    				 result.setAldergruppe(aldergruppePasient); // Setter opp riktig aldersgruppe for pasienter
 	    			//	 giverModel.setGiverKomplikasjon(giverKomplikasjon);
 	    				 result.setVigilansmelding(melding);	    				 
 	    			   	 result.setHendelseDato(melding.getMeldingsdato());
