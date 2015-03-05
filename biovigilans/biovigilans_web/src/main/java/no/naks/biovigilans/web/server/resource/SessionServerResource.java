@@ -417,7 +417,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	public void setTransfusjonsObjects(){
 		
 /*
- * Trasfusjonsession		
+ * Transfusjonsession		
  */
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     Request request = getRequest();
@@ -439,13 +439,13 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 result.setblodProducts(blodProdukt);
 	    	 result.setHemolyseparams(hemolyseParametre);
 	    	 result.setAvdelinger(avdelinger);
-	
+	    	 result.setHendelseDato(new Date());
 	    
 	     }
 	     result.setTerms(terms);
 	     if (transfusjon == null){
 	    	 transfusjon = new TransfusjonWebModel();
-
+	    	 transfusjon.setHendelseDato(new Date());
 	  //  	 transfusjon.setHemolyseParametre(hemolyseParametre);
 	     }
 
@@ -473,6 +473,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 giverModel.setSystemiskgruppe(systemiskgruppe);
 	    	 giverModel.setSykemeldinggruppe(sykemeldinggruppe);
 	    	 giverModel.setVarighetSkadegruppe(varighetSkadegruppe);
+	    	 giverModel.setHendelseDato(new Date());
 	     }
 	     if(donasjon==null){
 	    	 donasjon = new DonasjonwebModel();
@@ -509,7 +510,61 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 
 	     }
 	}
+	public void setGiverhendelser(){
+		 Request request = getRequest();
+	     giverModel = (GiverKomplikasjonwebModel) sessionAdmin.getSessionObject(request,giverkomplikasjonId);
+		 donasjon = (DonasjonwebModel) sessionAdmin.getSessionObject(request, donasjonId);  
+		 komDiagnosegiver =(KomDiagnosegiverwebModel) sessionAdmin.getSessionObject(request,komDiagnosegiverId );
+	//	 giverKvittering = (GiverKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringGiverId);
+	     if(giverModel==null){
+	    	 giverModel = new GiverKomplikasjonwebModel();
+	 
+	    	 giverModel.setAldergruppe(aldergruppe);
+	    	 giverModel.setReaksjonengruppe(reaksjonengruppe);
+	    	 giverModel.setUtenforBlodbankengruppe(utenforBlodbankengruppe);  
+	    	 giverModel.setDonasjonsstedgruppe(donasjonsstedgruppe);
+	    	 giverModel.setSkadeiarmen(skadeiarmen);
+	    	 giverModel.setSystemiskgruppe(systemiskgruppe);
+	    	 giverModel.setSykemeldinggruppe(sykemeldinggruppe);
+	    	 giverModel.setVarighetSkadegruppe(varighetSkadegruppe);
+	    	 giverModel.setHendelseDato(new Date());
+	     }
+	     if(donasjon==null){
+	    	 donasjon = new DonasjonwebModel();
 	
+	     }
+	     if(komDiagnosegiver == null){
+	    	 komDiagnosegiver = new KomDiagnosegiverwebModel();
+	   
+	     }
+	}
+	public void setTransfusjon(){
+		 Request request = getRequest();
+	     result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(request,pasientkomplikasjonId);
+	     transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
+	     icd10WebService.readXml();
+	     List<Letter> letters = icd10WebService.getLetters();
+	     List<MainTerm> terms = new ArrayList();
+	     for (Letter letter : letters){
+	    	 terms.addAll(letter.getMainTerm());
+	     }
+	     if (result == null){
+	    	 result = new PasientKomplikasjonWebModel();
+	
+//	    	 result.setAldergruppe(aldergruppe);
+	    	 result.setKjonnValg(kjonnValg);
+	    	 result.setblodProducts(blodProdukt);
+	    	 result.setHemolyseparams(hemolyseParametre);
+	    	 result.setAvdelinger(avdelinger);
+	    	 result.setHendelseDato(new Date());
+	    
+	     }
+	     result.setTerms(terms);
+	     if (transfusjon == null){
+	    	 transfusjon = new TransfusjonWebModel();
+	    	 transfusjon.setHendelseDato(new Date());
+	     }
+	}
 	/**
 	 * checkMessageType
 	 * Denne rutinen sjekker type melding som er sendt inn
