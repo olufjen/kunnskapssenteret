@@ -27,7 +27,7 @@ public class VigilansModel {
 	private Date meldingLevert;
 	private String meldingsNokkel = "";
 	private String meldLevert;
-	
+	protected Date hendelseDato = null; // Dato settes dersom dette er en oppfølgingsmelding
 	
 	public VigilansModel() {
 		super();
@@ -66,6 +66,15 @@ public class VigilansModel {
 		}
 	}
 
+
+	public Date getHendelseDato() {
+		return hendelseDato;
+	}
+
+
+	public void setHendelseDato(Date hendelseDato) {
+		this.hendelseDato = hendelseDato;
+	}
 
 	public String getMeldingsNokkel() {
 		return meldingsNokkel;
