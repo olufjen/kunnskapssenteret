@@ -41,8 +41,17 @@ public class RapporterteMeldingerServerResourceHTML extends
 
 	private String detaljer = "Vis ytterligere detaljer";
 	private String detaljerId = "detaljer";
+	private String[] aldergruppePasient;
 	
 	
+	public String[] getAldergruppePasient() {
+		return aldergruppePasient;
+	}
+
+	public void setAldergruppePasient(String[] aldergruppePasient) {
+		this.aldergruppePasient = aldergruppePasient;
+	}
+
 	public String getDetaljerId() {
 		return detaljerId;
 	}
@@ -113,6 +122,8 @@ public class RapporterteMeldingerServerResourceHTML extends
 
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
+	     
+	   	 String page = "/hemovigilans/rapportert_melding.html";
 	     SimpleScalar simple = new SimpleScalar(displayPart);
 		 SimpleScalar detaljButton = new SimpleScalar(detaljer);
 		 dataModel.put(detaljerId,detaljButton);
@@ -122,8 +133,17 @@ public class RapporterteMeldingerServerResourceHTML extends
 	     if (annenKomplikasjon != null){
 	    	 dataModel.put(andreKey,annenKomplikasjon);
 	     }
+	     if (giverKomplikasjon != null){
+	    	 dataModel.put(giverKey,giverKomplikasjon);
+	    	 page = "/hemovigilans/rapportert_giver.html";
+	     }
+	     if (pasientKomplikasjon != null){
+	    	 dataModel.put(pasientKey,pasientKomplikasjon);
+	    	 page = "/hemovigilans/rapportert_pasient.html";
+	    	 
+	     }
 // Denne client resource forholder seg til src/main/resource katalogen !!!	
-	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapportert_melding.html"));
+	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,page));
 
 	        Representation pasientkomplikasjonFtl = clres2.get();
 
@@ -188,6 +208,46 @@ public class RapporterteMeldingerServerResourceHTML extends
    			 	
 	    			  redirectPermanent(page);
 	    		 }
+	    		
+	    		 if (entry.getName().equals("oppfolginggiver")){
+	    			  page =  "../hemovigilans/rapporter_giver.html";
+	    			  setGiverhendelser(); // Setter opp giverHendelser session objekter
+	    				
+	    				 giverModel.setFormNames(sessionParams);
+	    			
+	    				 giverModel.setGiverKomplikasjon(giverKomplikasjon);
+	    				 giverModel.setVigilansmelding(melding);
+	    			   	 giverModel.setHendelseDato(melding.getMeldingsdato());
+	    		    	 giverModel.setMeldingsNokkel(melding.getMeldingsnokkel());
+	    		    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+	    		    	 dataModel.put(displaydateKey, hendelseDate);
+	    				 dataModel.put(andreHendelseId, annenModel);
+	    				 sessionAdmin.setSessionObject(getRequest(), giverModel,giverkomplikasjonId);	    			  
+  			 	
+	    			  redirectPermanent(page);
+	    		 }
+	    		 if (entry.getName().equals("oppfolgingpasient")){
+	    			  page =  "../hemovigilans/rapporter_transfusjon.html";
+	    			  setTransfusjon(); // Setter opp pasientHendelser session objekter
+	    			     transfusjon.distributeTerms();
+	    		    	 transfusjon.setFormNames(sessionParams);
+	    		    	 transfusjon.setPlasmaEgenskaper(blodProdukt); // Setter plasma produkttyper
+	    		    	 transfusjon.setVigilansmelding(melding);
+	    				 result.setFormNames(sessionParams);
+	    				 result.distributeTerms();
+	    				 result.setAldergruppe(aldergruppePasient);
+	    			//	 giverModel.setGiverKomplikasjon(giverKomplikasjon);
+	    				 result.setVigilansmelding(melding);	    				 
+	    			   	 result.setHendelseDato(melding.getMeldingsdato());
+	    		    	 result.setMeldingsNokkel(melding.getMeldingsnokkel());
+	    		    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+	    		    	 dataModel.put(displaydateKey, hendelseDate);
+	    				 dataModel.put(andreHendelseId, annenModel);
+	    				 sessionAdmin.setSessionObject(getRequest(), result,pasientkomplikasjonId);	    			  
+	    				 sessionAdmin.setSessionObject(getRequest(), transfusjon,transfusjonId);
+	    			  redirectPermanent(page);
+	    		 }
+	    		 
 	    	 }
 
 	     }
