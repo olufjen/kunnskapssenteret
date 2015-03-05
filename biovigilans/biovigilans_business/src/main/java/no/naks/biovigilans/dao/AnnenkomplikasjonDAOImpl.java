@@ -91,7 +91,7 @@ public class AnnenkomplikasjonDAOImpl extends AbstractAdmintablesDAO implements 
 		if (id == null){
 			melding.setMeldeid(getPrimaryKey(meldingPrimaryKey,meldingprimarykeyTableDefs));
 			String nokkel = melding.getMeldingsnokkel();
-			if (nokkel == null)						// For å håndtere oppfølgingsmewldinger
+			if (nokkel == null)						// For å håndtere oppfølgingsmeldinger
 				melding.setMeldingsnokkel(null);
 			melding.setMeldingParams();
 			melding.setMeldingTypes();
