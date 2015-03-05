@@ -178,14 +178,20 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
       		if (pasientMeldinger != null){
     			if (!pasientMeldinger.isEmpty()){
         			Pasientkomplikasjon pasientKomplikasjon = (Pasientkomplikasjon)pasientMeldinger.get(0);
+        			Vigilansmelding lokalMelding = (Vigilansmelding) pasientKomplikasjon;
+        			setMeldingsValues(lokalMelding, melding);
+        			sessionAdmin.setSessionObject(request, lokalMelding, meldingsId);       			
         			sessionAdmin.setSessionObject(request, pasientKomplikasjon,pasientKey);
         		} 			
     		}
  
       		if (giverMeldinger != null){
     			if (!giverMeldinger.isEmpty()){
-        			Giverkomplikasjon annenKomplikasjon = (Giverkomplikasjon)giverMeldinger.get(0);
-        			sessionAdmin.setSessionObject(request, annenKomplikasjon,giverKey);
+        			Giverkomplikasjon giverKomplikasjon = (Giverkomplikasjon)giverMeldinger.get(0);
+        			Vigilansmelding lokalMelding = (Vigilansmelding) giverKomplikasjon;
+        			setMeldingsValues(lokalMelding, melding);
+        			sessionAdmin.setSessionObject(request, giverKomplikasjon,giverKey);
+        			sessionAdmin.setSessionObject(request, lokalMelding, meldingsId);
         		} 			
     		}
     	      		
@@ -199,8 +205,8 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
         	}
         	
         	if (!meldinger.isEmpty()){
-        		Vigilansmelding melding = (Vigilansmelding) meldinger.get(0);
-        		sessionAdmin.setSessionObject(request, melding, meldingsId);
+        	//	Vigilansmelding melding = (Vigilansmelding) meldinger.get(0);
+        	//	sessionAdmin.setSessionObject(request, melding, meldingsId);
         		redirectPermanent("../hemovigilans/rapportert_melding.html");
         	}    		
     	}else{
