@@ -41,6 +41,8 @@ import org.restlet.data.Parameter;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
+import freemarker.template.SimpleScalar;
+
 //import edu.unc.ils.mrc.hive2.api.HiveConcept;
 
 /**
@@ -167,6 +169,22 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	     FileInputStream adrFile = null;
   
 	     setTransfusjonsObjects(); // Setter opp alle session objekter
+	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	     if (transfusjon.getVigilansmelding().getMeldingsnokkel() != null){
+	    	 displayPart = "block";
+	    	 datePart = "none";
+	    	 Vigilansmelding melding = (Vigilansmelding)transfusjon.getTransfusjon();
+	    	 transfusjon.setHendelseDato(melding.getDatoforhendelse());
+	    	 transfusjon.setMeldingsNokkel(melding.getMeldingsnokkel());
+	
+	     }
+    	 SimpleScalar simple = new SimpleScalar(displayPart);
+    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
+    	 dataModel.put(displayKey, simple);
+    	 dataModel.put(displaydateKey, hendelseDate);
+
+	     
+	     
     	 result.setFormNames(sessionParams);
     	 transfusjon.setFormNames(sessionParams);
     	 transfusjon.setPlasmaEgenskaper(blodProdukt); // Setter plasma produkttyper
@@ -186,7 +204,7 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
  * Hver javaklasse får en id (ex pasientkomplikasjonId) som er tilgjengelig for html
  *      
 */	     
-	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	
 	     dataModel.put(pasientkomplikasjonId, result);
 	     dataModel.put(transfusjonId,transfusjon);
 	     dataModel.put(kvitteringsId,kvittering);
