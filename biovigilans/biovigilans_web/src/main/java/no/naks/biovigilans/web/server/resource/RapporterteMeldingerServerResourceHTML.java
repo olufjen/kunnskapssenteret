@@ -242,13 +242,16 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    		    	 transfusjon.setPlasmaEgenskaper(blodProdukt); // Setter plasma produkttyper
 	    		    	 transfusjon.setFormNames(sessionParams);
 	    			     transfusjon.distributeTerms();
+	    			   	 transfusjon.setHendelseDato(melding.getMeldingsdato());
+	    		    	 transfusjon.setMeldingsNokkel(melding.getMeldingsnokkel());
 	    		    	 transfusjon.setVigilansmelding(melding);
+	    		    	 transfusjon.setPasientKomplikasjon(pasientKomplikasjon);
 	    				 result.setFormNames(sessionParams);
 	    				 result.distributeTerms();
 	    				 result.setAldergruppe(aldergruppePasient); // Setter opp riktig aldersgruppe for pasienter
 	    			//	 giverModel.setGiverKomplikasjon(giverKomplikasjon);
-	    				 result.setVigilansmelding(melding);	    				 
-	    			   	 result.setHendelseDato(melding.getMeldingsdato());
+	    				 result.setVigilansmelding(melding);
+	    				 result.setHendelseDato(melding.getMeldingsdato());
 	    		    	 result.setMeldingsNokkel(melding.getMeldingsnokkel());
 	    		    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
 	    		    	 dataModel.put(displaydateKey, hendelseDate);
