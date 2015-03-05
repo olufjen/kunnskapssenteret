@@ -329,6 +329,16 @@ function showtext(id,thetext){
   
 <div class="tab-pane" id="pasientkomplikasjoner">
     <h3>Pasient </h3>
+    		<div class="form-group" style="display: ${display}">
+				<label>Meldingsnøkkel </label>
+					<div>
+ 					<label>${transfusjon.meldingsNokkel}</label>
+ 					</div>
+				<label>Dato for hendelsen </label>
+     				<div>
+ 					<label>${transfusjon.hendelseDato?date}</label>
+ 					</div>
+			</div>
       <div class="form-group">
         <label>Kjønn</label>
     	<div class="radio">
