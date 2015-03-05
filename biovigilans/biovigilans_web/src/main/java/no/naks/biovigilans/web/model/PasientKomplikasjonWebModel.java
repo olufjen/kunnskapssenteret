@@ -21,6 +21,7 @@ import java.util.Map;
 
 
 
+
 import no.naks.biovigilans.model.Antistoff;
 import no.naks.biovigilans.model.AntistoffImpl;
 import no.naks.biovigilans.model.Forebyggendetiltak;
@@ -31,6 +32,7 @@ import no.naks.biovigilans.model.Sykdom;
 import no.naks.biovigilans.model.SykdomImpl;
 import no.naks.biovigilans.model.Tiltak;
 import no.naks.biovigilans.model.TiltakImpl;
+import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 import no.naks.biovigilans.web.xml.Term;
@@ -57,6 +59,7 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	private Antistoff antistoff;
 	private Forebyggendetiltak forebyggendeTiltak;
 	private Tiltak tiltak;
+	private Vigilansmelding vigilansmelding;
 	
 	private String[] avdelinger; 	// Inneholder navn på avdelinger tilgjengelig for brukerrvalg
 	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
@@ -113,6 +116,14 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Vigilansmelding getVigilansmelding() {
+		return vigilansmelding;
+	}
+
+	public void setVigilansmelding(Vigilansmelding vigilansmelding) {
+		this.vigilansmelding = vigilansmelding;
+	}
+
 	public String getAlder() {
 		Map<String,String> userEntries = getFormMap();
 		String field = "pas-alder";
