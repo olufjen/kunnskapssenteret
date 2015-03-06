@@ -11,7 +11,9 @@
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
-	
+
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all">
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
 	<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
@@ -69,25 +71,33 @@
 <script>
 
 	/**
-		These  functions set the calender for date to the browsers those doesn't support html5 input type date.
+		This  function set the calender for date to the browsers those doesn't support html5 input type date.
 		
 	*/
+	
 	var initDatepicker = function() {
-	    $('input[type=date]').each(function() {
+		  $('input[type=date]').each(function() {
 	        var $input = $(this);
-	        $input.datepicker({
-	            minDate: $input.attr('min'),
-	            maxDate: $input.attr('max'),
-	            dateFormat: 'yy-mm-dd'
+	        var id = $(this).attr('id')
+	      	var min="";
+	        
+	        if(id=="dato-hendelse"){
+	        	min = $("#dato-donasjon").val();
+	        	$("#dato-hendelse").datepicker('option', 'minDate', min);
+	        }
+	        $(this).datepicker({
+	            minDate: "",
+	            maxDate: "0",
 	        });
 	    });
 	};
 	
 	if(!Modernizr.inputtypes.date){
-			$(document).ready(initDatepicker);
+		$(document).ready(initDatepicker);
 	};
-	 $( document ).ready(function(){ 
-		
+	
+	$( document ).ready(function(){ 
+			
 		 	var now = new Date();
 		 	var day = ("0" + now.getDate()).slice(-2);
 	        var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -234,7 +244,10 @@
 	 
 	 function dateValidation(){
 	   var dateDonasjon = $("#dato-donasjon").val();
-	   $('#dato-hendelse').attr('max', dateDonasjon);
+	   if(!Modernizr.inputtypes.date){
+		 	$(document).ready(initDatepicker);
+		};
+	   $('#dato-hendelse').attr('min', dateDonasjon);
 	 }
 	
 	</script>
@@ -279,7 +292,6 @@
 	          </label>
 		    </div>
 	    </div>
-	    
 	    <div class="form-group">
 	      <label>Alder</label>
 <!-- 	      <input name ="tab-alder" list="giveralder" class="form-control"> -->

@@ -10,7 +10,13 @@
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/page.css"/>
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/components.css"/>	
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
 	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
 
@@ -59,6 +65,23 @@
     </header>
 	<div class="container">
 		<script type="text/javascript">
+		
+			/**
+			This  function set the calender for date to the browsers those doesn't support html5 input type date.
+			
+			*/
+			var initDatepicker = function() {
+				  $('input[type=date]').each(function() {
+			        var $input = $(this);
+			        $input.datepicker({
+			        	 maxDate: "0",
+			        });
+			    });
+			};
+			if(!Modernizr.inputtypes.date){
+				$(document).ready(initDatepicker);
+			};
+		
 		
 		 $( document ).ready(function(){ 
 			 	var now = new Date();
