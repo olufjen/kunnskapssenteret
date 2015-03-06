@@ -182,6 +182,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 	     LocalReference localUri = new LocalReference(reference);
 	     dataModel.put(meldingsId, melding);
 	     String infoButton = null;
+	     String melder = null;
 	   	 String page = "/hemovigilans/rapportert_melding.html";
 	     for (Parameter entry : form) {
 	    	 if (entry.getValue() != null && !(entry.getValue().equals(""))){
@@ -196,6 +197,11 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    				 displayPart = "block";
 	    			 }
 	    		 }
+				if (entry.getName().equals("k-melder")){
+						melder = entry.getValue();
+						page =  "../hemovigilans/melder_rapport.html";
+						redirectPermanent(page);
+				}
 	    		 if (entry.getName().equals("oppfolgingandre")){
 	    			  page =  "../hemovigilans/rapporter_andrehendelser.html";
 	  //  			  setAndreHendelser(); // Setter opp andreHendelser session objekter
