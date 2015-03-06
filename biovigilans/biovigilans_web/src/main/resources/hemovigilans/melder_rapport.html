@@ -79,8 +79,13 @@ function meldingsnokkel(){
  </div>
 
    
-     <div class="form-group" id="ingennokkel" >
-     	<label>Meldinger fra melder</label>
+     <div class="form-group" id="tabeller" >
+     	<table border=1>
+  		<tr><th>Meldingsnøkkel<th>Dato for hendelse
+  			<#list meldinger as melding>
+  			<tr><td>${melding.meldingsnokkel}<td>${melding.datoforhendelse?date} 
+  			</#list>
+		</table>  
      </div>
  
 
