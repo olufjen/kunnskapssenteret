@@ -33,7 +33,10 @@ public class HendelseTablesServiceImpl implements HendelseTablesService {
 		hendelsehemovigilansDAO.updateVigilansMelding(melding);
 	}
 
-
+	public List<Vigilansmelding> collectMeldinger(Long melderId){
+		return hendelsehemovigilansDAO.collectMeldinger(melderId);
+		
+	}
 	
 	
 
