@@ -22,7 +22,7 @@ import org.restlet.resource.Post;
 
 public class MelderRapportServerResourceHTML extends SessionServerResource {
 
-	
+	private String meldeKey = "meldinger";
 	/**
 	 * getHemovigilans
 	 * Denne rutinen henter inn nødvendige session objekter og  
@@ -31,8 +31,8 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	 */
 	@Get
 	public Representation getHemovigilans() {
-
-
+		
+		 List<Vigilansmelding> meldinger = null;
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     Request request = getRequest();
 	     Vigilansmelding melding = (Vigilansmelding) sessionAdmin.getSessionObject(request, meldingsId);
@@ -43,11 +43,19 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     Map<String, Object> dataModel = new HashMap<String, Object>();
 	     if (annenKomplikasjon != null){
 	    	 Long melderId = annenKomplikasjon.getMelderId();
-	    	 List<Vigilansmelding> meldinger = hendelseWebService.collectMeldinger(melderId);
+	    	 meldinger = hendelseWebService.collectMeldinger(melderId);
 	    	 
 	     }
 	     
-
+	     Vigilansmelding[] meldingene = new Vigilansmelding[meldinger.size()];
+	     int index = 0;
+		 for (Vigilansmelding lokalmelding : meldinger){
+			 meldingene[index] = lokalmelding;
+			 index++;
+		 }
+	   
+	     dataModel.put(meldeKey,meldinger);
+//	     meldingene = (Vigilansmelding) meldinger.toArray();
 	     LocalReference pakke = LocalReference.createClapReference(LocalReference.CLAP_CLASS,
                  "/hemovigilans");
 	     LocalReference localUri = new LocalReference(reference);
