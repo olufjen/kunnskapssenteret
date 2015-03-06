@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.SqlParameter;
 
 
 
+
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.rammeverk.kildelag.dao.TablesUpdateImpl;
 import no.naks.rammeverk.kildelag.dao.Tablesupdate;
@@ -29,5 +30,5 @@ public interface HendelsehemovigilansDAO {
 	public void setUpdateVigilansmeldingSQL(String updateVigilansmeldingSQL);
 	
 	public void updateVigilansMelding(Vigilansmelding melding);	
-
+	public List<Vigilansmelding> collectMeldinger(Long melderId);
 }
