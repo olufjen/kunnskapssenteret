@@ -128,6 +128,10 @@
   <bean id="hendelsehemovigilansDAO" class="no.naks.biovigilans.dao.HendelsehemovigilansDAOImpl">
   	<property name="jdbcTemplate" ref="jdbcTemplatebiovigilans"></property>
  	<property name="updateVigilansmeldingSQL" value="${vigilansmelding.updatemelderid}"></property>
+ 	<property name="selectvigilansMeldingSQL" value="${vigilansmeldingmelder.select}"></property>
+ 	<property name="vigilandsMeldingTableDefs" value="${vigilans.meldeid},${vigilans.datoforhendelse},${vigilans.datooppdaget},${vigilans.donasjonsoverforing},
+  	${vigilans.sjekklistesaksbehandling},${vigilans.supplerendeopplysninger},${vigilans.meldingsdato},${vigilans.meldingsnokkel},${vigilans.melderid},
+  	${vigilans.kladd},${vigilans.godkjent},${vigilans.endringsdato}"></property>
   </bean>
   <bean id="hendelseTablesService" class="no.naks.biovigilans.service.HendelseTablesServiceImpl">
   	<property name="hendelsehemovigilansDAO" ref="hendelsehemovigilansDAO"></property>
