@@ -1,5 +1,7 @@
 package no.naks.biovigilans.web.control;
 
+import java.util.List;
+
 import no.naks.biovigilans.model.PasientGruppeImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.service.HendelseTablesService;
@@ -8,6 +10,13 @@ import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.framework.web.control.MasterWebServiceImpl;
 
+/**
+ * HendelsesWebService
+ * Denne tjenesten sørger for lagring av pasienthendelser
+ * Den benyttes også til å hente ut alle meldinger knyttet til en gitt melder
+ * @author olj
+ *
+ */
 public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 		HendelseWebService{
 
@@ -62,6 +71,9 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 		hendelseTablesService.saveVigilansmelding(melding);
 	}
 
-
+	public List<Vigilansmelding> collectMeldinger(Long meldeid){
+		
+		return null;
+	}
 
 }
