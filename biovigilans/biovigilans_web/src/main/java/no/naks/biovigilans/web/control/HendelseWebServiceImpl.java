@@ -73,7 +73,7 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 
 	public List<Vigilansmelding> collectMeldinger(Long meldeid){
 		
-		return null;
+		return hendelseTablesService.collectMeldinger(meldeid);
 	}
 
 }
