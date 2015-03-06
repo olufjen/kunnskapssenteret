@@ -144,12 +144,14 @@ public class RapporterStartServerResourceHTML extends SessionServerResource {
     		invalidateSessionobjects();
     	}
     	String meldingsNokkel = null;
+ 
     	for (Parameter entry : form) {
 			if (entry.getValue() != null && !(entry.getValue().equals(""))){
 					System.out.println(entry.getName() + "=" + entry.getValue());
 					if (entry.getName().equals("k-meldingsnokkel")){
 						meldingsNokkel = entry.getValue();
 					}
+
 			}
 			
     	}
