@@ -23,4 +23,5 @@ public interface HendelseTablesService {
 			HendelsehemovigilansDAO hendelsehemovigilansDAO);
 
 	public void saveVigilansmelding(Vigilansmelding melding);
+	public List<Vigilansmelding> collectMeldinger(Long melderId);
 }
