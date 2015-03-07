@@ -40,7 +40,7 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     annenKomplikasjon = (Annenkomplikasjon)sessionAdmin.getSessionObject(request, andreKey);
 	     pasientKomplikasjon = (Pasientkomplikasjon)sessionAdmin.getSessionObject(request, pasientKey);
 	     giverKomplikasjon = (Giverkomplikasjon)sessionAdmin.getSessionObject(request,  giverKey);
-	     Map<String, Object> dataModel = new HashMap<String, Object>();
+	     Map<String, List> dataModel = new HashMap<String, List>();
 	     if (annenKomplikasjon != null){
 	    	 Long melderId = annenKomplikasjon.getMelderId();
 	    	 meldinger = hendelseWebService.collectMeldinger(melderId);
