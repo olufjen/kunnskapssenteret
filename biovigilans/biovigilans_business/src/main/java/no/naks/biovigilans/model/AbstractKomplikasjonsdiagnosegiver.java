@@ -90,11 +90,23 @@ public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel i
 		this.systemiskbivirkning = systemiskbivirkning;
 	}
 	public String getAnnenreaksjon() {
+		// OLJ 9.03.15
+		Map<String,String> userEntries = getKomplikasjonGiverFields();
+		String field = "tab-kortbeskr";
+		if (annenreaksjon == null) // Dersom verdien er hentet fra db så skal den ikke være null!?
+			annenreaksjon = userEntries.get(field);
+		if (annenreaksjon == null){
+			annenreaksjon = "";
+		}
+		
 		return annenreaksjon;
 	}
 	public void setAnnenreaksjon(String annenreaksjon) {
-		if(annenreaksjon ==  null){
-			annenreaksjon = komplikasjonGiverFields.get(keys[4]);
+		if(annenreaksjon ==  null){ // OLJ 9.03.15
+			Map<String,String> userEntries = getKomplikasjonGiverFields();
+			String field = "tab-kortbeskr";
+			annenreaksjon = userEntries.get(field);
+		
 		}
 		this.annenreaksjon = annenreaksjon;
 	}
