@@ -385,25 +385,25 @@ function showtext(id,thetext){
     <div class="form-group">
   
       <label>Alder</label>
-      <input type="text" name ="pas-alder" id="aldervalg" list="pasalder" size="20" class="form-control">
-      <datalist id="pasalder">
+ <!--     <input type="text" name ="pas-alder" id="aldervalg" list="pasalder" size="20" class="form-control">  --> 
+      <select name ="pas-alder" id="pasalder">
 		<#list pasientkomplikasjon.aldergruppe as alder>
      		<option>${alder} </option>
      		   </#list>   
     
-     </datalist>
+     </select>
   
     </div>
 
     <br/><br/>
    	<div class="form-group">
       <label>Sykdom pasienten behandles for (diagnose)</label>
-         <input name ="p-antistoff-behandling" list="icd10pasientsykdom"  class="form-control">
-      		<datalist id="icd10pasientsykdom">
+ <!--    -->      <input name ="p-antistoff-behandling" list="icd10pasientsykdom"  class="form-control"> 
+      		<datalist  id="icd10pasientsykdom">
    	       		<#list pasientkomplikasjon.mainTerms as mainTerms>
         			<option >${mainTerms}</option>
 			    </#list>  
-        		</datalist>
+        	</datalist>
    
 	
     
@@ -676,7 +676,7 @@ function showtext(id,thetext){
   	</div>
   	  <div class="radio">
       <label>
-        <input type="radio" name="p-blod-tapping" id="p-blod-fullblod" onclick="toggleDisplay('blod-suspensjon', 0)" value="p-blod-fullblod"/>Fullblod
+        <input type="radio" name="p-blod-tapping" id="p-blod-fullblod" onclick="toggleDisplay('blod-suspensjon', this.checked)" value="p-blod-fullblod"/>Fullblod
       </label>
   	</div>
   	  <div class="radio">
@@ -3164,10 +3164,7 @@ Vurder om du skal melde denne."/>Utelukket
         <input type="radio" name="p-forebygg" id="p-forebygg-4" value="forebyggetvetikke" onclick="toggleDisplay('transfusjonforebygg', 0);toggleDisplay('transfusjonforebyggtext',0)"/>Vet ikke
       </label>
     </div>	
-  <div id="transfusjonforebyggtext" class="form-group" style="display: none">
-    <label>Hvis ja, beskriv tiltak i fritekst:</label>
-	 <textarea class="form-control" name="p-transfusjonforebygg" rows="3"></textarea>
-  </div> 		
+ 		
 
 <div id="transfusjonforebygg" class="form-group" style="display: none" >
 		<h3>Er forebyggende tiltak anbefalt, planlagt eller gjennomført?</h3>
@@ -3228,7 +3225,12 @@ Vurder om du skal melde denne."/>Utelukket
 	 <textarea class="form-control" name="p-tiltaktext" rows="3"></textarea> 	  
 	  
 </div>	
-</div>		
+</div>	
+ <div id="transfusjonforebyggtext" class="form-group" style="display: none">
+    <label>Hvis ja, beskriv tiltak i fritekst:</label>
+	 <textarea class="form-control" name="p-transfusjonforebygg" rows="3"></textarea>
+  </div> 
+	
 </div>		<!-- end forebygget -->		
 <div class="form-group">
 <label>Ytterligere opplysninger følger</label>
