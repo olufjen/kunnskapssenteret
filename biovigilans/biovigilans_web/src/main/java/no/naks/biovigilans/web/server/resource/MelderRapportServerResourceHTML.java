@@ -41,18 +41,28 @@ public class MelderRapportServerResourceHTML extends SessionServerResource {
 	     pasientKomplikasjon = (Pasientkomplikasjon)sessionAdmin.getSessionObject(request, pasientKey);
 	     giverKomplikasjon = (Giverkomplikasjon)sessionAdmin.getSessionObject(request,  giverKey);
 	     Map<String, List> dataModel = new HashMap<String, List>();
+	     Long melderId = null;
 	     if (annenKomplikasjon != null){
-	    	 Long melderId = annenKomplikasjon.getMelderId();
-	    	 meldinger = hendelseWebService.collectMeldinger(melderId);
+	    	melderId = annenKomplikasjon.getMelderId();
 	    	 
 	     }
-	     
-	     Vigilansmelding[] meldingene = new Vigilansmelding[meldinger.size()];
-	     int index = 0;
-		 for (Vigilansmelding lokalmelding : meldinger){
-			 meldingene[index] = lokalmelding;
-			 index++;
-		 }
+	     if (giverKomplikasjon != null){
+	    	melderId = giverKomplikasjon.getMelderId();
+	     }
+	     if (pasientKomplikasjon != null){
+	    	 melderId = pasientKomplikasjon.getMelderId();
+	     }
+	     if (melderId != null){
+	    	 meldinger = hendelseWebService.collectMeldinger(melderId);
+	    	 
+		     Vigilansmelding[] meldingene = new Vigilansmelding[meldinger.size()];
+		     int index = 0;
+			 for (Vigilansmelding lokalmelding : meldinger){
+				 meldingene[index] = lokalmelding;
+				 index++;
+			 }
+	     }
+
 	   
 	     dataModel.put(meldeKey,meldinger);
 //	     meldingene = (Vigilansmelding) meldinger.toArray();
