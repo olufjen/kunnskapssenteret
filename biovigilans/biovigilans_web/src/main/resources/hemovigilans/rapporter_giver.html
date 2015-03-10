@@ -140,7 +140,14 @@
 			document.getElementById('armenBilde').style.display = 'none';
 		}
 	}
-	
+	function showbeskriv(){
+		var selectedValue = document.getElementById("systemiskbivirkning").value;
+		if(selectedValue=="Annen systemisk bivirkning"){
+			document.getElementById('beskriv-komplikasjon').style.display = 'block';
+		}else{
+			document.getElementById('beskriv-komplikasjon').style.display = 'none';
+		}
+	}
 	function initialize()
 	{
 	    var SpinnerValue_Changed = function() {
@@ -470,7 +477,7 @@
 	    <label>Komplisert venepunksjon</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon', this.checked);"/>Ja
+	          	<input type="radio"  name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon',0);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
@@ -611,15 +618,19 @@
 		    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
 		      <label>Hvis Ja</label>
 		      
-		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control">
+		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control" onchange="showbeskriv();">
 	       		<option > --- Select --- </option>
 	       		<#list giverkomplikasjon.systemiskgruppe as systemisk>
 	       				<option>${systemisk} </option>
 	       		</#list>
 	     	  </select>
-		      
+
 		     <!--  <input name ="tab-systemiskbivirkning" list="systemiskbivirkning" class="form-control"> -->
 		    </div>
+		    <div class="form-group" id="beskriv-komplikasjon" style="display: none" >
+					<label>Spesifiser</label>
+				  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
+			</div>
 			<!-- <div class="form-group">
 		      <label>Annen reaksjon(spesifiser):</label>
 		      <div class="radio">
@@ -632,10 +643,7 @@
 		          	<input type="radio" name="tab-annenreaksjon" id="tab-annenreaksjon" value="Annen-Reaksjon-Nei" onclick="toggleDisplay('annenreaksjon-ja',0 );" />Nei
 		          </label>
 			    </div>
-		    	 <div class="form-group" id="beskriv-komplikasjon" style="display: none" >
-					<label>Beskriv komplikasjonen med egne ord:</label>
-				  	<textarea class="form-control" name="tab-kortbeskr" rows="3"></textarea>
-				</div>
+		    
 	   		</div>
 	    
 		    <div id="annenreaksjon-ja" style="display: none" class="form-group">
@@ -872,21 +880,21 @@
 	  		<h3>Kunne komplikasjonen ha vært forebygget?</h3>
 		      	<div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar1" value="forebyggbar-ja"/>Ja
+		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar1"  value="forebyggbar-ja" onclick="toggleDisplay('forbedringtiltak',this.checked);"/>Ja
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei"/>Nei
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei" onclick="toggleDisplay('forbedringtiltak',0);"/>Nei
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke"/>Vet ikke
+		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke" onclick="toggleDisplay('forbedringtiltak',0);"/>Vet ikke
 		          </label>
 			    </div>
 	    </div>
-	    <div class="form-group">
+	    <div id="forbedringtiltak" class="form-group" style = "display: none">
 		 	<label>Planlagte eller gjennomførte forbedringstiltak</label>
 		  	<textarea class="form-control" name="tab-forbedringstiltak" rows="3"  ></textarea>   
 		  	<br/>
