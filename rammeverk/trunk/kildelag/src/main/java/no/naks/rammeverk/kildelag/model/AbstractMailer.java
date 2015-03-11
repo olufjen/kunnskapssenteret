@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import no.naks.rammeverk.kildelag.dao.AbstractAdmintablesDAO;
+import no.naks.rammeverk.mailer.Mailer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,7 +23,7 @@ public abstract class AbstractMailer extends AbstractModel implements Serializab
 	private String mailText;
 	private String mailSalutation;
 	private String mailBottom;
-	private String mailSenderaddress;
+	protected String mailSenderaddress;
 	protected MailReceiver message; // Aktuell melding som skal sendes
 	
 	protected List<MailReceiver> selection; // Mail receivers
@@ -30,6 +31,9 @@ public abstract class AbstractMailer extends AbstractModel implements Serializab
 	protected String mailerType;
 	protected String reminderFlag; // Bestemmer hvor ofte reminder epost skal sjekkes
 	protected static Log log = LogFactory.getLog(AbstractMailer.class);
+	
+	
+	
 	public AbstractMailer() {
 		super();
 //		mailSenderaddress = "oluf.jensen@nokc.no";
@@ -53,6 +57,7 @@ public abstract class AbstractMailer extends AbstractModel implements Serializab
 		}
 	}
 
+	
 	public String getReminderFlag() {
 		return reminderFlag;
 	}

@@ -1,4 +1,4 @@
-package no.naks.rammeverk.kildelag.model;
+package no.naks.rammeverk.mailer;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -6,16 +6,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.quartz.SchedulerException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import javax.mail.MessagingException;
-import no.naks.rammeverk.kildelag.dao.CallSchedulerJob;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+
+import no.naks.rammeverk.kildelag.dao.CallSchedulerJob;
 import no.naks.rammeverk.kildelag.dao.MailCollector;
+import no.naks.rammeverk.kildelag.model.AbstractMailer;
+import no.naks.rammeverk.kildelag.model.MailReceiver;
 
 /**
  * MailsenderImpl
@@ -41,6 +50,16 @@ public class MailerImpl extends AbstractMailer implements Mailer,
 	CallSchedulerJob callSchedulerJob = new CallSchedulerJob();
 	private MailCollector mailCollector ;
 	private Mailer mailSender;
+	
+	//Authentication Sender email address
+	private String mailAuthenticatorUser;
+	//Authentication sender email password 
+	private String mailAuthenticatorPwd;
+	private String mailTo;
+	private String mailFrom;
+	private String host ;
+    private String port ;
+     
 	public MailerImpl() {
 		super();
 		setMailSenderaddress("pasopp@kunnskapssenteret.no");
@@ -53,6 +72,8 @@ public class MailerImpl extends AbstractMailer implements Mailer,
 		this.javaMailSender = javaMailSender;
 		setMailSenderaddress("pasopp@kunnskapssenteret.no");
 		setMessage(null);
+		host = "smtp.office365.com";
+		port ="587";
 	}
 
 	/* (non-Javadoc)
@@ -65,6 +86,54 @@ public class MailerImpl extends AbstractMailer implements Mailer,
 	}
 	
 
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
+	public String getMailAuthenticatorUser() {
+		return mailAuthenticatorUser;
+	}
+
+	public void setMailAuthenticatorUser(String mailAuthenticatorUser) {
+		this.mailAuthenticatorUser = mailAuthenticatorUser;
+	}
+
+	public String getMailAuthenticatorPwd() {
+		return mailAuthenticatorPwd;
+	}
+
+	public void setMailAuthenticatorPwd(String mailAuthenticatorPwd) {
+		this.mailAuthenticatorPwd = mailAuthenticatorPwd;
+	}
+
+	public String getMailTo() {
+		return mailTo;
+	}
+
+	public void setMailTo(String mailTo) {
+		this.mailTo = mailTo;
+	}
+
+	public String getMailFrom() {
+		return mailFrom;
+	}
+
+	public void setMailFrom(String mailFrom) {
+		this.mailFrom = mailFrom;
+	}
 
 	@Override
 	public List<MailReceiver> getReminderReceivers(Date entryDate) {
@@ -128,6 +197,9 @@ public class MailerImpl extends AbstractMailer implements Mailer,
 		
 		
 	}
+
+	
+	
 
 	public String getSchedule() {
 		return schedule;
@@ -299,5 +371,53 @@ public class MailerImpl extends AbstractMailer implements Mailer,
 		}
 		
 	}
+	
+	
+	
+	public  void sendEmail(){
+	   
+	      // Assuming you are sending email from smtp office 365
+	        Properties props = new Properties();
+	        // Setup mail server
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.starttls.enable", "true");
+	        props.setProperty("mail.smtp.host", host);
+	        props.setProperty("mail.smtp.port", port);
+	      
+	      // Get the  Session object.
+	        Session session = Session.getInstance(props,
+	        		new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication(mailAuthenticatorUser,mailAuthenticatorPwd);
+	            }
+	    });
+	        
+	        try{
+	            // Create a default MimeMessage object.
+	            MimeMessage message = new MimeMessage(session);
+
+	            // Set From: header field of the header.
+	            message.setFrom(new InternetAddress(mailFrom));
+
+	            // Set To: header field of the header.
+	            message.addRecipient(Message.RecipientType.TO,
+	                                     new InternetAddress(mailTo));
+
+	            // Set Subject: header field
+	            message.setSubject(getMailSubject());
+
+	            // Now set the actual message
+	            message.setText(getMailText());
+
+	            // Send message
+	            Transport.send(message);
+	            System.out.println("Sent message successfully....");
+	         }catch (Exception mex) {
+	            mex.printStackTrace();
+	         }
+	}
+	
+	
+	
 		
 }
