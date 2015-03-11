@@ -5,7 +5,7 @@ package no.naks.rammeverk.kildelag.dao;
 
 import java.util.Date;
 
-import no.naks.rammeverk.kildelag.model.Mailer;
+import no.naks.rammeverk.mailer.Mailer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

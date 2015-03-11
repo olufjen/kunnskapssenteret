@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import no.naks.rammeverk.kildelag.model.MailReceiver;
-import no.naks.rammeverk.kildelag.model.Mailer;
+import no.naks.rammeverk.mailer.Mailer;
 
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
@@ -18,7 +18,6 @@ import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.CronTriggerBean;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
