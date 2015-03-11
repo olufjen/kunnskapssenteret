@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import no.naks.biovigilans.model.Vigilansmelding;
+import no.naks.biovigilans.web.control.EmailWebService;
+import no.naks.biovigilans.web.control.EmailWebServiceImpl;
 import no.naks.biovigilans.web.model.MelderwebModel;
 import no.naks.biovigilans.web.model.PasientKomplikasjonWebModel;
 import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
@@ -672,6 +674,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			    				MediaType.TEXT_HTML);
     		}
     	}
+    	emailWebService.sendEmail();
+    	
     	return templateRep;
       
     }
@@ -710,40 +714,60 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	 
     }
 
-/*
+    
     public void sendEmail(){
-    	Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.socketFactory.port", "465");
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
- 
-		Session session = Session.getDefaultInstance(props,
-			new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("qadeeralvi@gmail.com","XXXX");
-				}
-			});
- 
-		try {
- 
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("qadeeralvi@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("qadeeralvi@yahoo.com"));
-			message.setSubject("Testing Subject");
-			message.setText("Dear Mail Crawler," +
-					"\n\n No spam to my email, please!");
- 
-			Transport.send(message);
- 
-			System.out.println("Done");
- 
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
+    	
+    	// Recipient's email ID needs to be mentioned.
+        String to = "qadeeralvi@gmail.com";
+
+        // Sender's email ID needs to be mentioned
+        String from = "qadeer.ahmad.alvi@kunnskapssenteret.no";
+        final String user = "qadeer.ahmad.alvi@kunnskapssenteret.no";
+        final String pwd ="osl#1689";
+
+        // Assuming you are sending email from smtp office 365
+        String host = "smtp.office365.com";
+        String port ="587";
+        Properties props = new Properties();
+        // Setup mail server
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.host", host);
+        props.setProperty("mail.smtp.port", port);
+       
+
+        // Get the  Session object.
+        Session session = Session.getInstance(props,
+        		new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user,pwd);
+            }
+    });
+
+        try{
+           // Create a default MimeMessage object.
+           MimeMessage message = new MimeMessage(session);
+
+           // Set From: header field of the header.
+           message.setFrom(new InternetAddress(from));
+
+           // Set To: header field of the header.
+           message.addRecipient(Message.RecipientType.TO,
+                                    new InternetAddress(to));
+
+           // Set Subject: header field
+           message.setSubject("This is the Subject Line!");
+
+           // Now set the actual message
+           message.setText("This is actual message");
+
+           // Send message
+           Transport.send(message);
+           System.out.println("Sent message successfully....");
+        }catch (Exception mex) {
+           mex.printStackTrace();
+        }
+    	
+    	
     }
-    */
 }

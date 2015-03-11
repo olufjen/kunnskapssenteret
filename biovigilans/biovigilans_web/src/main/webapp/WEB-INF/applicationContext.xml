@@ -86,6 +86,7 @@
                        			<value>/config/app-config/kontakt.properties</value>
                                 <value>/config/app-config/andreHendelser.properties</value>
                                 <value>/config/app-config/dbtable.properties</value>
+                                <value>/config/app-config/email.properties</value>
                         </list>
                 </property>
          </bean>
@@ -519,6 +520,7 @@
   <bean name="/hemovigilans/rapporter_kontakt.html" id="rapporterkontaktServerResource" autowire="byName" scope="prototype"
             class="no.naks.biovigilans.web.server.resource.RapporterKontaktServerResourceHtml">
                 <property name="sessionAdmin" ref="sessionAdmin"></property>
+        <property name="emailWebService" ref="emailWebService"></property>
         <property name="tablewebservice" ref="tableWebService"></property>
         <property name="innmeldingWebService" ref="hendelseWebService"></property>
         <property name="icd10WebService" ref="ICD10WebService"></property>
@@ -733,8 +735,18 @@
         </bean>
  
      
-        <bean id="sessionAdmin" class="no.naks.biovigilans.web.control.SessionAdminImpl">
+        <bean id="emailWebService" class="no.naks.biovigilans.web.control.EmailWebServiceImpl">
+        	<property name="mailer" ref="mailer" ></property>
+        	<property name="mailAuthenticatorUser" value="${authenticatorUser}"></property>
+        	<property name="mailAuthenticatorPwd" value="${authenticatorPwd}"></property>
+        	<property name="host" value="${host}"></property>
+        	<property name="port" value="${port}"></property>
+        	<property name="emailText" value="${emailText}"></property>
+        	<property name="subject" value="${subject}"></property>
+        </bean>
+        <bean id="mailer" class="no.naks.rammeverk.mailer.MailerImpl" ></bean>
         
+        <bean id="sessionAdmin" class="no.naks.biovigilans.web.control.SessionAdminImpl">
         </bean>
 
 

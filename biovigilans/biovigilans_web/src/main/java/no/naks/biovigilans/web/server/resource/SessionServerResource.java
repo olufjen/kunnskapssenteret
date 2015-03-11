@@ -11,6 +11,7 @@ import no.naks.biovigilans.model.Annenkomplikasjon;
 import no.naks.biovigilans.model.Giverkomplikasjon;
 import no.naks.biovigilans.model.Pasientkomplikasjon;
 import no.naks.biovigilans.model.Vigilansmelding;
+import no.naks.biovigilans.web.control.EmailWebService;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
 import no.naks.biovigilans.web.model.DonasjonwebModel;
 import no.naks.biovigilans.web.model.GiverKomplikasjonwebModel;
@@ -110,8 +111,18 @@ public class SessionServerResource extends ProsedyreServerResource {
     protected Pasientkomplikasjon pasientKomplikasjon = null;
     protected Giverkomplikasjon giverKomplikasjon = null;
 
+    protected EmailWebService emailWebService;
     
     
+    
+	public EmailWebService getEmailWebService() {
+		return emailWebService;
+	}
+
+	public void setEmailWebService(EmailWebService emailWebService) {
+		this.emailWebService = emailWebService;
+	}
+
 	public String getDisplayKey() {
 		return displayKey;
 	}
