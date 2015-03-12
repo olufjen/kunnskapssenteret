@@ -22,6 +22,8 @@ import java.util.Map;
 
 
 
+
+
 import no.naks.biovigilans.model.Antistoff;
 import no.naks.biovigilans.model.AntistoffImpl;
 import no.naks.biovigilans.model.Forebyggendetiltak;
@@ -37,6 +39,8 @@ import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
 import no.naks.biovigilans.web.xml.Term;
 import no.naks.biovigilans.web.xml.Title;
+import no.naks.biovigilans.web.xml.no.KodeNivaa1;
+import no.naks.biovigilans.web.xml.no.TematiskGruppeNivaa2;
 
 import javax.xml.bind.JAXBElement;
 
@@ -75,6 +79,8 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	
 	private String alder = "-";
 	
+	private List<TematiskGruppeNivaa2> nivaa2;
+	private List<KodeNivaa1> koder;
 	private List<MainTerm> terms;
 	private List<MainTerm> icd10Elements;
 	private List<Title> titles;
@@ -320,6 +326,25 @@ public class PasientKomplikasjonWebModel extends VigilansModel{
 	public void setMapComponent(Map<String, Object> mapComponent) {
 		this.mapComponent = mapComponent;
 	}
+	
+	/**
+	 * setnoTerms
+	 * Denne rutinen setter opp norske ICD10 koder
+	 * @param terms
+	 */
+	public void setnoTerms( List<KodeNivaa1> koder) {
+		this.koder = koder;
+	//	 icd10Elements.addAll(nivaa2);
+		 String kode = "";
+		 String tittel = "";
+	     for (KodeNivaa1 term : koder){
+	    	kode = term.getKode();
+	    	tittel = term.getTittel();
+	        mainTerms.add(tittel+";"+kode);
+	     }
+	     
+
+	}	
 	/**
 	 * setTerms
 	 * Denne rutinen setter opp ICD10 koder
