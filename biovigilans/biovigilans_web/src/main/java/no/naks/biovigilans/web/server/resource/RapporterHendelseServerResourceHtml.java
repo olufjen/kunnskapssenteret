@@ -23,6 +23,9 @@ import no.naks.biovigilans.web.model.TransfusjonKvitteringWebModel;
 import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
+import no.naks.biovigilans.web.xml.no.KodeNivaa1;
+import no.naks.biovigilans.web.xml.no.TematiskGruppeNivaa1;
+import no.naks.biovigilans.web.xml.no.TematiskGruppeNivaa2;
 
 import org.restlet.Request;
 import org.restlet.data.Form;
@@ -266,6 +269,20 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    		List<MainTerm> terms = new ArrayList();	
 	    		if (result == null){
 	    		     icd10WebService.readXml();
+	    		     
+	    		     List<TematiskGruppeNivaa1> nivaa1 = icd10WebService.getNivaa1();
+	    		     List<TematiskGruppeNivaa2> nivaa2 = new ArrayList();
+	    		     List<KodeNivaa1> koder = new ArrayList();
+	    		     for (TematiskGruppeNivaa1 nivaa : nivaa1){
+	    		    	 nivaa2.addAll(nivaa.getTematiskGruppeNivaa2()) ;
+	    		     }
+	    		     for (TematiskGruppeNivaa2 niva : nivaa2){
+	    		    	 koder.addAll(niva.getKodeNivaa1());
+	    		     }	     
+	    		     	    		     
+/*
+ * Engelsk icd10	    		     
+ */
 	    		     List<Letter> letters = icd10WebService.getLetters();
 	    		     for (Letter letter : letters){
 	    		    	 terms.addAll(letter.getMainTerm());
@@ -277,7 +294,8 @@ public class RapporterHendelseServerResourceHtml extends SessionServerResource {
 	    	    	 result.setblodProducts(blodProdukt);
 	    	    	 result.setHemolyseparams(hemolyseParametre);
 	    	    	 result.setAvdelinger(avdelinger);
-	    		     result.setTerms(terms);
+	    		     result.setnoTerms(koder);
+	    		//     result.setTerms(terms);
 	    			 result.distributeTerms();
 	    		   
 	    	
