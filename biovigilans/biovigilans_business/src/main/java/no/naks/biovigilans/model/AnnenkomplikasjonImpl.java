@@ -53,7 +53,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	 */
 	private String oppdaget;
 	private String delkode;
-	
+	private String pasientopplysninger; // Pasientopplysninger ved feil blod transfundert OLJ 15.03.15
 	/**
 	 * check update the database table or insert
 	 */
@@ -71,17 +71,17 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	
 	public AnnenkomplikasjonImpl() {
 		super();
-		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		annenKomplikasjonsFields = new HashMap<String,String>();
 	}
 	
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
-			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getPasientopplysninger(),getMeldeid()};
 		}else
-			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getMeldeid()};
+			params = new Object[]{getKlassifikasjon(),getKlassifikasjonkode(),getKomplikasjonbeskrivelse(),getKomplikasjondefinisjon(),getAvvikarsak(),getHovedprosess(),getTiltak(),getKommentar(),getOppdaget(),getDelkode(),getPasientopplysninger(),getMeldeid()};
 	}
 	
 	public String getKlassifikasjon() {
@@ -107,6 +107,21 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}
 	
 	
+	public String getPasientopplysninger() {
+		return pasientopplysninger;
+	}
+
+	public void setPasientopplysninger(String pasientopplysninger) {
+		if(pasientopplysninger == null){
+			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
+			String field = "pasientopplysninger";
+			pasientopplysninger = userEntries.get(field);
+			if(pasientopplysninger == null)
+				pasientopplysninger = "";
+		}
+		this.pasientopplysninger = pasientopplysninger;
+	}
+
 	public boolean isUpdat() {
 		return isUpdat;
 	}
