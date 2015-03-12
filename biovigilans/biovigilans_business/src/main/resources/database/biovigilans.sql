@@ -300,6 +300,8 @@ CREATE TABLE Annenkomplikasjon
     kommentar            TEXT                NULL,
     -- Hvordan ble hendelsen oppdaget
     oppdaget             TEXT                NULL,
+    -- pasientopplysninger ved feil blod transfundert
+    pasientopplysninger  TEXT                NULL,
     PRIMARY KEY ( meldeid )
 );
   
