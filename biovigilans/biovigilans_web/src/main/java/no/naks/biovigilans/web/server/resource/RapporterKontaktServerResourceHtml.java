@@ -661,6 +661,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
+	    		redirectPermanent("../hemovigilans/leveranse.html");
     		}else{
 
     			sessionAdmin.setSessionObject(getRequest(), melderwebModel, melderId);
