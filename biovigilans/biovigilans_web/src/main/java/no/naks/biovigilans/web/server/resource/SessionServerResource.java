@@ -24,6 +24,9 @@ import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.model.VigilansModel;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
+import no.naks.biovigilans.web.xml.no.KodeNivaa1;
+import no.naks.biovigilans.web.xml.no.TematiskGruppeNivaa1;
+import no.naks.biovigilans.web.xml.no.TematiskGruppeNivaa2;
 
 /**
  * SessionServerResource
@@ -433,11 +436,23 @@ public class SessionServerResource extends ProsedyreServerResource {
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     Request request = getRequest();
 	     icd10WebService.readXml();
+	     
+	     List<TematiskGruppeNivaa1> nivaa1 = icd10WebService.getNivaa1();
+	     List<TematiskGruppeNivaa2> nivaa2 = new ArrayList();
+	     List<KodeNivaa1> koder = new ArrayList();
+	     for (TematiskGruppeNivaa1 nivaa : nivaa1){
+	    	 nivaa2.addAll(nivaa.getTematiskGruppeNivaa2()) ;
+	     }
+	     for (TematiskGruppeNivaa2 niva : nivaa2){
+	    	 koder.addAll(niva.getKodeNivaa1());
+	     }
+/*	      Engelsk ICD10
 	     List<Letter> letters = icd10WebService.getLetters();
 	     List<MainTerm> terms = new ArrayList();
 	     for (Letter letter : letters){
 	    	 terms.addAll(letter.getMainTerm());
 	     }
+*/	     
 	     result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(request,pasientkomplikasjonId);
 	     transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
 	     kvittering = (TransfusjonKvitteringWebModel)sessionAdmin.getSessionObject(request,kvitteringsId);
@@ -453,7 +468,8 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 result.setHendelseDato(new Date());
 	    
 	     }
-	     result.setTerms(terms);
+//	     result.setTerms(terms);
+	     result.setnoTerms(koder);
 	     if (transfusjon == null){
 	    	 transfusjon = new TransfusjonWebModel();
 	    	 transfusjon.setHendelseDato(new Date());
@@ -554,6 +570,20 @@ public class SessionServerResource extends ProsedyreServerResource {
 	     result = (PasientKomplikasjonWebModel) sessionAdmin.getSessionObject(request,pasientkomplikasjonId);
 	     transfusjon = (TransfusjonWebModel) sessionAdmin.getSessionObject(request,transfusjonId);
 	     icd10WebService.readXml();
+	     
+	     List<TematiskGruppeNivaa1> nivaa1 = icd10WebService.getNivaa1();
+	     List<TematiskGruppeNivaa2> nivaa2 = new ArrayList();
+	     List<KodeNivaa1> koder = new ArrayList();
+	     for (TematiskGruppeNivaa1 nivaa : nivaa1){
+	    	 nivaa2.addAll(nivaa.getTematiskGruppeNivaa2()) ;
+	     }
+	     for (TematiskGruppeNivaa2 niva : nivaa2){
+	    	 koder.addAll(niva.getKodeNivaa1());
+	     }	     
+	     
+/*
+ * Engelsk icd10	     
+ */
 	     List<Letter> letters = icd10WebService.getLetters();
 	     List<MainTerm> terms = new ArrayList();
 	     for (Letter letter : letters){
@@ -570,7 +600,8 @@ public class SessionServerResource extends ProsedyreServerResource {
 	    	 result.setHendelseDato(new Date());
 	    
 	     }
-	     result.setTerms(terms);
+	     result.setnoTerms(koder);
+//	     result.setTerms(terms);
 	     if (transfusjon == null){
 	    	 transfusjon = new TransfusjonWebModel();
 	    	 transfusjon.setHendelseDato(new Date());
