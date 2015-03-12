@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;/complexType> 
  * </pre>
  * 
  * 

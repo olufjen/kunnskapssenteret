@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{}tittel"/>
  *         &lt;element ref="{}kode_nivaa_2" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/restriction> 
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>

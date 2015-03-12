@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{}tematisk_gruppe_nivaa_1" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
- *   &lt;/complexContent>
+ *   &lt;/complexContent> 
  * &lt;/complexType>
  * </pre>
  * 

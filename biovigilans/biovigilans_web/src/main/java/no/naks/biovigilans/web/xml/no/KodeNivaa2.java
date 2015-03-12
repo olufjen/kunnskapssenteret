@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{}tittel"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
- *   &lt;/complexContent>
+ *   &lt;/complexContent> 
  * &lt;/complexType>
  * </pre>
  * 
