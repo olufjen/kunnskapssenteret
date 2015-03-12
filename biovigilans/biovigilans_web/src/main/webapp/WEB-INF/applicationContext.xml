@@ -739,6 +739,7 @@
         	<property name="mailer" ref="mailer" ></property>
         	<property name="mailAuthenticatorUser" value="${authenticatorUser}"></property>
         	<property name="mailAuthenticatorPwd" value="${authenticatorPwd}"></property>
+        	<property name="mailFrom" value="${mailFrom}"></property>
         	<property name="host" value="${host}"></property>
         	<property name="port" value="${port}"></property>
         	<property name="emailText" value="${emailText}"></property>

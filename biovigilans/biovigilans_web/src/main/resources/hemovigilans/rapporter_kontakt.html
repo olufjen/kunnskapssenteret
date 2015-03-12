@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body onload="setSelectListValue();">
  <header class="master-header" role="navation">
       <div class="container">
         <!-- synlig header -->
@@ -68,16 +68,31 @@ var Spinner1;
 var foo;
 function toggleDisplay(id, displayvalue)
 {    
-//	 alert("step 1 "+displayvalue);
-    if ( displayvalue == 1 ) {
-         document.getElementById(id).style.display = 'block';
-//         alert("step 2");
-    } else if (displayvalue == 0) {
+	 if ( displayvalue == 1 ) {
+    	    document.getElementById(id).style.display = 'block';
+     } else if (displayvalue == 0) {
          document.getElementById(id).style.display = 'none';
     //     alert("step 3");
     }
  //   alert("step 4");
 }
+
+/**
+ * set and display the helseforetak and sykehus list value
+ */
+function setSelectListValue(){
+	//alert("status");
+	var region = document.getElementById("k-helseregion").value;
+	if(region != ''){
+		 document.getElementById("helseforetak").style.display = 'block';
+	}
+	var foretak = document.getElementById("k-helseforetak").value;
+	if(foretak != ''){
+		 document.getElementById("helseforetak").style.display = 'block';
+		document.getElementById("sykehus").style.display = 'block';
+	}
+}
+
 function initialize()
 {
     var SpinnerValue_Changed = function() {
@@ -86,10 +101,10 @@ function initialize()
    
     Spinner1 = document.getElementById("p-blod-erytrocytt");
     foo = document.getElementById("foo");
-    alert("step 1");
+   // alert("step 1");
     foo.hidden ="false";
   //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
-    alert("step 2");
+ //  alert("step 2");
 }
 
 function GetLoginInfo()
@@ -119,14 +134,15 @@ function formSubmit(){
 	}
 function regionValgt(){
 	var region = document.getElementById("k-helseregion").value;
-//	alert("Region valgt: "+region);
-	$("#btnRegion").click();
+	if(region != ''){
+		$("#btnRegion").click();
+	}
+	
 }
 function foretakValgt(){
 	var foretak = document.getElementById("k-helseforetak").value;
-//	 alert("Helseforetak valgt:"+foretak);
 	 if (foretak == ''){
-//		 alert("foretak er tomt");
+		 alert("foretak er tomt");
 	 }
 
 	 if (foretak != ''){
@@ -149,6 +165,7 @@ function homePage(){
 	document.location = newAddr;
 
 }
+
 //window.onload=initialize();
 </script>
 
@@ -194,7 +211,7 @@ function homePage(){
       <div class="form-group">
         <label for="k-helseregion">Helseregion:</label>
         <div>
-        	<select name ="k-helseregion" id="k-helseregion" class="form-control" onblur="regionValgt()">
+        	<select name ="k-helseregion" id="k-helseregion" class="form-control" onchange="regionValgt();" >
 						<option selected="selected" >${melder.helseregion}</option>
 			       		<#list melder.helseRegionene as helseregion>
 			       				<option>${helseregion} </option>
@@ -205,10 +222,10 @@ function homePage(){
 -->          
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" id="helseforetak" style="display: none">
         <label for="k-helseforetak">Helseforetak:</label>
         <div>
-        <select name ="k-helseforetak" id="k-helseforetak" class="form-control"  onblur="foretakValgt()">
+        <select name ="k-helseforetak" id="k-helseforetak" class="form-control" onchange="foretakValgt();"  >
 						<option selected="selected" >${melder.helseforetak}</option>
 			       		<#list melder.valgtRegion as region>
 			       				<option>${region} </option>
@@ -219,7 +236,7 @@ function homePage(){
 -->
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" id="sykehus" style="display: none">
         <label for="k-sykehus">Institusjon/sykehus:</label>
         <div>
            <select name ="k-sykehus" id="k-sykehus" class="form-control">

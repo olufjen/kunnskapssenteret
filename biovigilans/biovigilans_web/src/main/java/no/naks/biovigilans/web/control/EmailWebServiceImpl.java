@@ -10,7 +10,7 @@ public class EmailWebServiceImpl implements EmailWebService {
 		//Authentication sender email password 
 		private String mailAuthenticatorPwd;
 		private String mailTo ="qadeeralvi@gmail.com";
-		private String mailFrom ="qadeer.ahmad.alvi@kunnskapssenteret.no";
+		private String mailFrom ;
 		private String host ;
 	    private String port ;
 	    private String subject;
@@ -77,6 +77,8 @@ public class EmailWebServiceImpl implements EmailWebService {
 	    	mailer.setMailAuthenticatorPwd(mailAuthenticatorPwd);
 	    	mailer.setHost(host);
 	    	mailer.setPort(port);
+	    	if(mailFrom == null || mailFrom.isEmpty() )
+	    		mailFrom = mailAuthenticatorUser;
 	    	mailer.setMailFrom(mailFrom);
 	    	mailer.setMailTo(mailTo);
 	    	mailer.setMailSubject(subject);

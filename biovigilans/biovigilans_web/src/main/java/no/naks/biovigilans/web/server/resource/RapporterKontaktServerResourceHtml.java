@@ -582,6 +582,13 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
 	    	    dataModel.put(datoId, datoSimple);
 	    		
+	    	    String melderEpost = melderwebModel.getMelder().getMelderepost();
+	    	    if(melderEpost != null || !melderEpost.equals("")){
+	    	    	 emailWebService.setMailTo(melderEpost);
+	    	    	 emailWebService.sendEmail();
+	    	    }
+	    	   
+	    	    
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
 	    		redirectPermanent("../hemovigilans/leveranse.html");
@@ -665,7 +672,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    	    dataModel.put(nokkelId,simple);
 	    	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
 	    	    dataModel.put(datoId, datoSimple);
-	    		
+	    	    	    	    
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
@@ -683,7 +690,6 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			    				MediaType.TEXT_HTML);
     		}
     	}
-    	emailWebService.sendEmail();
     	
     	return templateRep;
       
@@ -719,64 +725,5 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     	 melderwebModel.setSykehusHFvestf(sykehusHFvestf);
     	 melderwebModel.setSykehusHFVpriv(sykehusHFVpriv);
     	 melderwebModel.setSykehusHFvviken(sykehusHFvviken);
-    	
-    	 
-    }
-
-    
-    public void sendEmail(){
-    	
-    	// Recipient's email ID needs to be mentioned.
-        String to = "qadeeralvi@gmail.com";
-
-        // Sender's email ID needs to be mentioned
-        String from = "qadeer.ahmad.alvi@kunnskapssenteret.no";
-        final String user = "oluf.jensen@kunnskapssenteret.no";
-        final String pwd ="Ojnedb66";
-
-        // Assuming you are sending email from smtp office 365
-        String host = "smtp.office365.com";
-        String port ="587";
-        Properties props = new Properties();
-        // Setup mail server
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.setProperty("mail.smtp.host", host);
-        props.setProperty("mail.smtp.port", port);
-       
-
-        // Get the  Session object.
-        Session session = Session.getInstance(props,
-        		new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(user,pwd);
-            }
-    });
-
-        try{
-           // Create a default MimeMessage object.
-           MimeMessage message = new MimeMessage(session);
-
-           // Set From: header field of the header.
-           message.setFrom(new InternetAddress(from));
-
-           // Set To: header field of the header.
-           message.addRecipient(Message.RecipientType.TO,
-                                    new InternetAddress(to));
-
-           // Set Subject: header field
-           message.setSubject("This is the Subject Line!");
-
-           // Now set the actual message
-           message.setText("This is actual message");
-
-           // Send message
-           Transport.send(message);
-           System.out.println("Sent message successfully....");
-        }catch (Exception mex) {
-           mex.printStackTrace();
-        }
-    	
-    	
     }
 }
