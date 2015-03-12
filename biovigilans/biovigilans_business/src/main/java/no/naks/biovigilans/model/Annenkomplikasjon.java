@@ -43,7 +43,10 @@ public interface Annenkomplikasjon {
 	public int[] getUtypes();	
 	public void saveField(String userField, String userValue);
 	public void saveToAnnenKomplikasjon();
+	
+	public String getPasientopplysninger();
 
+	public void setPasientopplysninger(String pasientopplysninger);
 
 	//public String getDatoforhendelseKvittering() ;
 	//public void setDatoforhendelseKvittering(String datoforhendelseKvittering);
