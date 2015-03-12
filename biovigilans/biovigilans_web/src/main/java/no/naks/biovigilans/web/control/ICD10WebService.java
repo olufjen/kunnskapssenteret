@@ -8,6 +8,11 @@ import javax.xml.bind.Unmarshaller;
 import no.naks.biovigilans.web.xml.ICD10CMIndex;
 import no.naks.biovigilans.web.xml.Letter;
 import no.naks.biovigilans.web.xml.MainTerm;
+import no.naks.biovigilans.web.xml.no.ICD10;
+import no.naks.biovigilans.web.xml.no.KodeNivaa1;
+import no.naks.biovigilans.web.xml.no.KodeNivaa2;
+import no.naks.biovigilans.web.xml.no.TematiskGruppeNivaa1;
+import no.naks.biovigilans.web.xml.no.TematiskGruppeNivaa2;
 
 public interface ICD10WebService {
 	public Unmarshaller getJaxbUnmarshaller();
@@ -36,5 +41,25 @@ public interface ICD10WebService {
 
 	public void setIcd10Index(ICD10CMIndex icd10Index);
 
+
+	public ICD10 getNoICD10();
+
+	public void setNoICD10(ICD10 noICD10);
+
+	public List<TematiskGruppeNivaa1> getNivaa1();
+
+	public void setNivaa1(List<TematiskGruppeNivaa1> nivaa1);
+
+	public List<TematiskGruppeNivaa2> getNivaa2();
+
+	public void setNivaa2(List<TematiskGruppeNivaa2> nivaa2);
+
+	public List<KodeNivaa1> getKodeNivaa1();
+
+	public void setKodeNivaa1(List<KodeNivaa1> kodeNivaa1);
+
+	public List<KodeNivaa2> getKodeNivaa2();
+
+	public void setKodeNivaa2(List<KodeNivaa2> kodeNivaa2);
 
 }
