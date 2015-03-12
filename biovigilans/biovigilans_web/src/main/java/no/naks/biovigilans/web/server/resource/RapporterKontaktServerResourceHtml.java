@@ -653,11 +653,19 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     			ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/rapporter_kontakt.html"));
 	    		Representation pasientkomplikasjonFtl = clres2.get();
 /*
- * Invalidate session objects kun dersom et meldeskjema er fylt ut	    		
- */
+ * Invalidate session objects kun dersom et meldeskjema er fylt ut	
+ * For å Ta melding ut til PDF i kvitteringsskjema så kan vi ikke nullstille session !! OLJ 12.03.15    		
+
 	    		if (checkSavedModel()){
 	    			invalidateSessionobjects();
 	    		}
+	    		
+ */	  
+	     	    SimpleScalar simple = new SimpleScalar(meldingsNokkel);
+	    	    dataModel.put(nokkelId,simple);
+	    	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
+	    	    dataModel.put(datoId, datoSimple);
+	    		
 //	    		sessionAdmin.getSession(getRequest(),melderId).invalidate();
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
@@ -723,8 +731,8 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 
         // Sender's email ID needs to be mentioned
         String from = "qadeer.ahmad.alvi@kunnskapssenteret.no";
-        final String user = "qadeer.ahmad.alvi@kunnskapssenteret.no";
-        final String pwd ="osl#1689";
+        final String user = "oluf.jensen@kunnskapssenteret.no";
+        final String pwd ="Ojnedb66";
 
         // Assuming you are sending email from smtp office 365
         String host = "smtp.office365.com";
