@@ -522,7 +522,13 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
     		Parameter logout = form.getFirst("avbrytkontakt");
     		Parameter lukk = form.getFirst("lukkkontakt");
     	     Map<String, Object> dataModel = new HashMap<String, Object>();
-
+    	     String nokkel = "";
+    	     if (annenModel != null)
+    	    	 nokkel = annenModel.getMeldingsNokkel();
+    	     if (giverModel != null)
+    	    	 nokkel = giverModel.getMeldingsNokkel();
+    	     if (transfusjon != null)
+    	    	 nokkel = transfusjon.getMeldingsNokkel();
     		if (logout != null || lukk != null){
     			invalidateSessionobjects();
     			
@@ -581,14 +587,14 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 	    	    dataModel.put(nokkelId,simple);
 	    	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
 	    	    dataModel.put(datoId, datoSimple);
-	    		
+/*	    FLYTTET TIL Leveranse !!! OLJ 13.03.15		
 	    	    String melderEpost = melderwebModel.getMelder().getMelderepost();
 	    	    if(melderEpost != null || !melderEpost.equals("")){
 	    	    	 emailWebService.setMailTo(melderEpost);
-	    	    	 emailWebService.sendEmail();
+	    	    	 emailWebService.sendEmail(nokkel);
 	    	    }
 	    	   
-	    	    
+*/	    	    
 	    		templateRep = new TemplateRepresentation(pasientkomplikasjonFtl, dataModel,
 	    				MediaType.TEXT_HTML);
 	    		redirectPermanent("../hemovigilans/leveranse.html");
