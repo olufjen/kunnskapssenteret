@@ -52,6 +52,9 @@ public class AnnenkomplikasjonSelect extends AbstractSelect {
 		String oppdaget =  rs.getString(tableDefs[10]);
 		if (oppdaget != null)
 			melding.setOppdaget(oppdaget);
+		String pasientopplysninger =  rs.getString(tableDefs[11]);
+		if (pasientopplysninger != null)
+			melding.setPasientopplysninger(pasientopplysninger);
 		return melding;
 	}
 
