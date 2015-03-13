@@ -23,7 +23,7 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
-public class RapporterMainServerResourceHtml extends ProsedyreServerResource {
+public class RapporterMainServerResourceHtml extends SessionServerResource {
 
 	public RapporterMainServerResourceHtml() {
 		super();
