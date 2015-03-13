@@ -8,6 +8,8 @@ import org.restlet.data.Reference;
 
 
 
+
+
 import no.naks.biovigilans_admin.web.xml.Letter;
 import no.naks.biovigilans_admin.web.xml.MainTerm;
 
@@ -255,6 +257,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 	     Reference reference = new Reference(getReference(),"..").getTargetRef();
 	     Request request = getRequest();
 	     icd10WebService.readXml();
+	
+//	     List<TematiskGruppeNivaa1> nivaa1 = icd10WebService.get
+	     
 	     List<Letter> letters = icd10WebService.getLetters();
 	     List<MainTerm> terms = new ArrayList();
 	     for (Letter letter : letters){
