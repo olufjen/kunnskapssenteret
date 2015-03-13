@@ -416,3 +416,38 @@ ALTER TABLE Forebyggendetiltak
 ALTER TABLE Tiltak
     ADD CONSTRAINT pasientertiltak FOREIGN KEY ( pasient_id ) REFERENCES Pasient ( pasient_id );
 
+
+CREATE TABLE Sak
+(
+    datosak              timestamptz            NULL,
+    sakopplysninger      TEXT                NULL,
+    sakkommentar         TEXT                NULL,
+    -- Denne sjekklisten omfatter følgende definisjoner:  Skal meldes videre til HDIR  Skal diskuteres på neste møte  Egnet som eksempler i rapport  Egnet som oppgave på seminar  Trenger ytterligere opplysninger  Trenger å følges opp  Ferdig behandlet  
+    sakstatus            TEXT                NULL,
+    saksid               serial             NOT NULL,
+    sakbehandlerid       INTEGER             NOT NULL,
+    diskusjonid          INTEGER             NOT NULL,
+    PRIMARY KEY ( saksid )
+);
+
+
+
+CREATE TABLE Saksbehandler
+(
+    behandernavn         TEXT                NULL,
+    behandlerepost       TEXT                NULL,
+    behandlertlf         TEXT                NULL,
+    sakbehandlerid       serial             NOT NULL,
+    behandlerpassord     TEXT                NULL,
+    PRIMARY KEY ( sakbehandlerid )
+);
+
+
+
+ALTER TABLE Sak
+    ADD CONSTRAINT diskusjonsak FOREIGN KEY ( diskusjonid ) REFERENCES Diskusjon ( diskusjonid );
+
+ALTER TABLE Sak
+    ADD CONSTRAINT saksbehandlersak FOREIGN KEY ( sakbehandlerid ) REFERENCES Saksbehandler ( sakbehandlerid );
+
+
