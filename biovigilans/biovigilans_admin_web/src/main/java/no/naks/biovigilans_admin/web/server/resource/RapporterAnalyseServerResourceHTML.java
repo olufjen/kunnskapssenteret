@@ -18,7 +18,7 @@ import org.restlet.resource.Get;
  * Denne klassen er Resource for Analysesidene
  * 
  */
-public class RapporterAnalyseServerResourceHTML extends ProsedyreServerResource {
+public class RapporterAnalyseServerResourceHTML extends SessionServerResource {
 	@Get
 	public Representation getHemovigilans() {
 
