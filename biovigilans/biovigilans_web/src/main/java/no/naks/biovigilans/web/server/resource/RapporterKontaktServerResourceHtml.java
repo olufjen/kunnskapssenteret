@@ -690,6 +690,7 @@ public class RapporterKontaktServerResourceHtml extends SessionServerResource {
 			    				MediaType.TEXT_HTML);
     		}
     	}
+    	//emailWebService.sendEmail();
     	
     	return templateRep;
       
