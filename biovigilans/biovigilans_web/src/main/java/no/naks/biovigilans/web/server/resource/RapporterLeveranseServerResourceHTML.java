@@ -173,7 +173,7 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    String melderEpost = melderwebModel.getMelder().getMelderepost();
     	    if(melderEpost != null || !melderEpost.equals("")){
     	    	 emailWebService.setMailTo(melderEpost);
-    	    	 emailWebService.sendEmail(meldingsNokkel);
+    	    	 emailWebService.sendEmail(meldingsNokkel); //Kommentert bort til stage !!
     	    }
     	   
 //    	 dato = melding.getVigilans().getDatoforhendelse();
