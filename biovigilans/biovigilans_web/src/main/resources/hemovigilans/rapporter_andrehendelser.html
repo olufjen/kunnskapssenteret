@@ -242,7 +242,7 @@
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
 				          <label>
-				          	<input type="radio" name="tab-klassifikasjon" id="k-1"    value="Feil blod transfudert"  onclick="toggleDisplay('feilblod'); checkUncheck();"   />Feil blod transfundert
+				          	<input type="radio" name="tab-klassifikasjon" id="k-1"    value="Feil blod transfundert"  onclick="toggleDisplay('feilblod'); checkUncheck();"   />Feil blod transfundert
 				          </label>
 				          <div id="feilblod" style="display: none" >
 				              <div class="radio" >
@@ -273,14 +273,12 @@
 								  	<div class="checkbox">
 								          <label>
 								          	<input type="checkbox" name="tab-hvagikkgalt" id="rekvirering" value="Indikasjonsstilling/rekvirering" />
-								          		
-								          
 								          		Indikasjonsstilling/rekvirering
 								          </label>
 								        </div>
 								        <div class="checkbox">
 								           <label>
-								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestillingg"/>
+								          	<input type="checkbox" name="tab-hvagikkgalt"  value="Bestilling"/>
 								          		Bestilling
 								          </label>
 								        </div>
@@ -370,7 +368,11 @@
 								    </div> -->
 								        
 								</div>
-					      </div>
+								    <div class="form-group">
+							   			<label >Opplysninger om pasienten(e) som skulle hatt/fikk blod</label>
+							   			<textarea class="form-control"  name="pasientopplysninger" rows="3"  ></textarea>
+							   		</div>
+					      </div> <!-- End feilblod -->
 				    </div>
 				    <div class="radio">
 			          <label>
