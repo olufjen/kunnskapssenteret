@@ -205,7 +205,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setAvvikarsak(String avvikarsak) {
 		if(avvikarsak == null){
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
-			String field = "planlagtetiltak";
+			String field = "tab-kvalitetskrav";
 			avvikarsak = userEntries.get(field);
 			if (avvikarsak == null || avvikarsak.trim().equalsIgnoreCase("--- Select ---")){
 				avvikarsak = "";
@@ -304,8 +304,8 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	}*/
 	
 	public void setannenKomplikasjonstypes(){
-		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
-		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 
 	}
 	/**
@@ -348,7 +348,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		setKommentar(null);
 		setDelkode(null);
 		setKladd(null);
-	
+		setPasientopplysninger(null);
 	}
 	
 }
