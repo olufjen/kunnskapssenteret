@@ -70,7 +70,7 @@
   	<property name="selectannenKomplikasjonSQL" value="${annenMeldingSelect}"></property>
   	<property name="annenkomplikasjonTableDefs" value="${annenkomplikasjon.meldeid},${annenkomplikasjon.klassifikasjon},${annenkomplikasjon.klassifikasjonkode},
   	${annenkomplikasjon.delkode},${annenkomplikasjon.komplikasjonbeskrivelse},${annenkomplikasjon.komplikasjondefinisjon},${annenkomplikasjon.avvikarsak},
-  	${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget}"></property>
+  	${annenkomplikasjon.hovedprosess},${annenkomplikasjon.tiltak},${annenkomplikasjon.kommentar},${annenkomplikasjon.oppdaget},${annenkomplikasjon.pasientopplysninger}"></property>
   	<property name="pasientkomplikasjonTableDefs" value="${pasientkomplikasjon.meldeid},${pasientkomplikasjon.transfusjonsid},${pasientkomplikasjon.klassifikasjon},
   	${pasientkomplikasjon.tidfrapabegynttransfusjontilkomplikasjon},${pasientkomplikasjon.alvorlighetsgrad},${pasientkomplikasjon.kliniskresultat},${pasientkomplikasjon.arsakssammenheng}"></property>
   	<property name="selectpasientKomplikasjonSQL" value="${pasientkomplikasjon.Select}"></property>
