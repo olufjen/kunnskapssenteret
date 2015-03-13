@@ -170,6 +170,12 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
     	    dataModel.put(nokkelId,simple);
     	    SimpleScalar datoSimple = new SimpleScalar(datoLevert);
     	    dataModel.put(datoId, datoSimple);
+    	    String melderEpost = melderwebModel.getMelder().getMelderepost();
+    	    if(melderEpost != null || !melderEpost.equals("")){
+    	    	 emailWebService.setMailTo(melderEpost);
+    	    	 emailWebService.sendEmail(meldingsNokkel);
+    	    }
+    	   
 //    	 dato = melding.getVigilans().getDatoforhendelse();
     	invalidateSessionobjects();
 	     ClientResource clres2 = new ClientResource(LocalReference.createClapReference(LocalReference.CLAP_CLASS,"/hemovigilans/leveranse.html"));
