@@ -72,7 +72,7 @@ public class EmailWebServiceImpl implements EmailWebService {
 			this.mailer = mailer;
 		}
 	    
-	    public void sendEmail(){
+	    public void sendEmail(String mailInfo){
 	    	mailer.setMailAuthenticatorUser(mailAuthenticatorUser);
 	    	mailer.setMailAuthenticatorPwd(mailAuthenticatorPwd);
 	    	mailer.setHost(host);
@@ -82,7 +82,7 @@ public class EmailWebServiceImpl implements EmailWebService {
 	    	mailer.setMailFrom(mailFrom);
 	    	mailer.setMailTo(mailTo);
 	    	mailer.setMailSubject(subject);
-	    	mailer.setMailText(emailText);
+	    	mailer.setMailText(emailText+mailInfo);
 	    	mailer.sendEmail();
 	    }
 	    
