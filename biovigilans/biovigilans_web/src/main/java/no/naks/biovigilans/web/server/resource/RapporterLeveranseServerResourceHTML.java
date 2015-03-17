@@ -1,10 +1,23 @@
 package no.naks.biovigilans.web.server.resource;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import no.naks.biovigilans.model.AnnenkomplikasjonImpl;
 import no.naks.biovigilans.model.Vigilansmelding;
@@ -16,13 +29,23 @@ import no.naks.biovigilans.web.model.TransfusjonWebModel;
 import no.naks.biovigilans.web.model.VigilansModel;
 
 import org.restlet.Request;
+import org.restlet.data.Disposition;
+import org.restlet.data.Form;
 import org.restlet.data.LocalReference;
 import org.restlet.data.MediaType;
 import org.restlet.data.Reference;
 import org.restlet.ext.freemarker.TemplateRepresentation;
+import org.restlet.representation.OutputRepresentation;
 import org.restlet.representation.Representation;
+import org.restlet.representation.Variant;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
+import org.restlet.resource.Post;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import freemarker.template.SimpleScalar;
 
@@ -34,6 +57,10 @@ import freemarker.template.SimpleScalar;
  * Det er den endelige kvitteringssiden for en melding til Hemovigilans
  */
 public class RapporterLeveranseServerResourceHTML extends SessionServerResource {
+
+	private static final int ALIGN_RIGHT = 0;
+
+	private static final String PARAM_ORDER_TYPE = null;
 
 	private String meldingsId = "melding";
 
@@ -184,4 +211,46 @@ public class RapporterLeveranseServerResourceHTML extends SessionServerResource 
 	                MediaType.TEXT_HTML);
     	 return templatemapRep;
 	}
-}
+	
+	@Post
+	 public Representation generatePDF(Form form) throws DocumentException, IOException {
+	
+		final String sourceFile ="c:\\ITextTest.pdf";
+		Representation response =
+				new OutputRepresentation(MediaType.APPLICATION_PDF) {
+				@Override
+				public void write(OutputStream outputStream) {
+					
+					try {
+						Document doc = new Document();
+						PdfWriter.getInstance(doc, new FileOutputStream(sourceFile)); 
+						doc.open(); 
+						doc.add(new Paragraph("Welcome to Page 1.")); 
+						Paragraph paraRight = new Paragraph();
+						paraRight.setAlignment(ALIGN_RIGHT);
+						paraRight.add("The para is aligned to right side");
+						doc.add(paraRight); 
+						doc.setMargins(70, 70, 175, 175); 
+						doc.newPage(); 
+						doc.add(new Paragraph("Portrait page having larger margins")); 
+						doc.close();
+						File file = new File(sourceFile);
+						byte[] bytes = new byte[(int) file.length()];
+						outputStream.write(bytes);
+						System.out.print(doc);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				};
+				
+				/*Disposition attachment = new Disposition(Disposition.TYPE_ATTACHMENT); 
+				attachment.setFilename(sourceFile); 
+				response.setDisposition(attachment);*/ 
+		
+	    // TemplateRepresentation  templatemapRep = (TemplateRepresentation) getHemovigilans();
+   	 return  response;
+		
+	}
+} 
