@@ -20,6 +20,11 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
+/**
+ * Denne resource henter frem alle meldinger knyttet til en melder
+ * @author olj
+ *
+ */
 public class MelderRapportServerResourceHTML extends SessionServerResource {
 
 	private String meldeKey = "meldinger";
