@@ -100,8 +100,8 @@
         </bean> 
         <bean name="/hemovigilans/saksbehandling.html" id="sakServerResourceHTML" autowire="byName" scope="prototype"
             class="no.naks.biovigilans_admin.web.server.resource.SaksbehandlingServerResourceHTML">
-        <property name="sessionAdmin" ref="sessionAdmin"></property>
-
+        	<property name="sessionAdmin" ref="sessionAdmin"></property>
+			<property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
         </bean>      
         <bean id="sessionAdmin" class="no.naks.biovigilans_admin.web.control.SessionAdminImpl">
         
@@ -111,7 +111,10 @@
         <bean id="propertiesHolder" class="no.naks.web.properties.PropertiesHolder">
                 <property name="imagePath" value="${image.archive.path}" />
         </bean>
-
+		<bean id="saksBehandlerWebService" class="no.naks.biovigilans_admin.web.control.SaksbehandlingWebServiceImpl">
+			<property name="saksbehandlingService" ref="saksbehandlingService"></property>
+			<property name="melderTableService" ref="melderTableService"></property>
+		</bean>
 	
 <!-- Exception handling -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
