@@ -214,12 +214,22 @@
 					<label>Dato For hendelsen</label><br>
 					<input type="date" name="hendelsen-date" id="hendelsen-date" />
 				</div>
-				
+			<div class="form-group" style="display: ${display}">
+				<label>Tidligere beskrivelse av hendelsen </label>
+					<div>
+ 					<label>${annenHendelse.komplikasjonbeskrivelse}</label>
+ 					</div>
+			</div>				
 				<div class="form-group" >
 				<label>Beskrivelse av hendelsen</label>
 					<textarea class="form-control"  name="beskrivelse" rows="3"  ></textarea>
 				</div>
-			
+			<div class="form-group" style="display: ${display}">
+				<label>Tidligere oppgitt hovedprosess </label>
+					<div>
+ 					<label>${annenHendelse.hovedprosess}</label>
+ 					</div>
+			</div>					
 				<div class="form-group">
 					<label>Hvilken hovedprosess gjaldt hendelsen?</label>
 					<select name ="tab-prosess"  id="tab-prosess" class="form-control" >
@@ -229,6 +239,12 @@
 				       		 </#list>
 	     		   	</select>
 				</div>
+			<div class="form-group" style="display: ${display}">
+				<label>Tidligere oppgitt primærårsak </label>
+					<div>
+ 					<label>${annenHendelse.avvikarsak}</label>
+ 					</div>
+			</div>		
 				<div class="form-group">
 					<label>Primærårsak til feil eller avvik </label>
 					<select name ="tab-kvalitetskrav" id="tab-kvalitetskrav" class="form-control">
@@ -237,7 +253,16 @@
 			       			<option>${feilelleravvik} </option>
 			       		</#list>
 	     		   	</select>
-				</div>
+			</div>
+			<div class="form-group" style="display: ${display}">
+				<label>Tidligere oppgitt klassifikasjon </label>
+					<div>
+ 					<label>${annenHendelse.klassifikasjon}</label>
+ 					<label>${annenHendelse.delkode}</label>
+ 					</div>
+			</div>		
+				
+				
 				<div class="form-group">
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
@@ -368,6 +393,13 @@
 								    </div> -->
 								        
 								</div>
+						 	 
+								<div class="form-group" style="display: ${display}">
+									<label>Tidligere oppgitt opplysninger om pasienten </label>
+									<div>
+ 									<label>${annenHendelse.pasientopplysninger}</label>
+ 									</div> 
+								</div>	
 								    <div class="form-group">
 							   			<label >Opplysninger om pasienten(e) som skulle hatt/fikk blod</label>
 							   			<textarea class="form-control"  name="pasientopplysninger" rows="3"  ></textarea>
@@ -685,6 +717,12 @@
 				   
 					
 				</div>
+		<div class="form-group" style="display: ${display}">
+				<label>Tidligere oppgitt Definisjon alvorlig hendelse</label>
+					<div>
+ 					<label>${annenHendelse.komplikasjondefinisjon}</label>
+ 					</div>
+			</div>	
 				<div class="form-group">
 					<label>Definisjon av alvorlig hendelse</label>
 					 <select name ="tab-hendelse" id="tab-hendelse" class="form-control">
@@ -694,6 +732,12 @@
 			       		 </#list>
 	     		   	</select>
 				</div>
+				<div class="form-group" style="display: ${display}">
+				<label>Tidligere oppgitt hvordan hendelsen ble oppdaget </label>
+					<div>
+ 					<label>${annenHendelse.oppdaget}</label>
+ 					</div>
+			</div>	
 				<div class="form-group">
 				<label>Hvordan ble hendelsen oppdaget?</label>
 				 <select name ="hendelseoppdaget" id="hendelseoppdaget" class="form-control">
@@ -703,17 +747,35 @@
 			       		 </#list>
 	     		   	</select>
 				</div>
-	
+			<div class="form-group" style="display: ${display}">
+				<label>Tidligere oppgitt tiltak </label>
+					<div>
+ 					<label>${annenHendelse.tiltak}</label>
+ 					</div>
+			</div>		
 				<div class="form-group">
 				<label>Gjennomførte eller planlagte forebyggende tiltak. Beskriv kort.</label>
 					<textarea class="form-control" name="planlagtetiltak" rows="3"  ></textarea>
 				</div>
-	
+			<div class="form-group" style="display: ${display}">
+				<label>Tidligere oppgitt kommentar </label>
+					<div>
+ 					<label>${annenHendelse.kommentar}</label>
+ 					</div>
+			</div>		
 				<div class="form-group">
 				<label>Kommentar</label>
 					<textarea class="form-control" name="hendelsekommentar" rows="3" ></textarea>
 				</div>
+				
+			<div class="form-group" style="display: ${display}">
+									<label>Tidligere oppgitt ytterligere opplysninger </label>
+									<div>
+ 									<label>${annenHendelse.kladd}</label>
+ 									</div> 
+			</div>			
 			<div class="form-group">
+			
 			<label>Ytterligere opplysninger følger</label>
 				<div class="radio">
 			      <label>
