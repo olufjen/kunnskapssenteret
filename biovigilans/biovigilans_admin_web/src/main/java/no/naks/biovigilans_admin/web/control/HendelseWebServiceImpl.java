@@ -15,7 +15,7 @@ public class HendelseWebServiceImpl extends MasterWebServiceImpl implements
 	
 	public HendelseWebServiceImpl() {
 		super();
-		 System.out.println("Hendelsewebservice created");
+		 System.out.println("Hendelsewebservice admin created");
 	}
 
 	
