@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import no.naks.biovigilans.model.Annenkomplikasjon;
+import no.naks.biovigilans.model.AnnenkomplikasjonImpl;
 import no.naks.biovigilans.model.Komplikasjonsklassifikasjon;
 import no.naks.biovigilans.model.Vigilansmelding;
 import no.naks.biovigilans.web.model.AnnenKomplikasjonwebModel;
@@ -76,20 +78,26 @@ public class RapporterAndreHendelserServerResourceHtml extends SessionServerReso
 	     annenModel.setFormNames(sessionParams);
 	     annenModel.distributeTerms();
 
-
+	     Annenkomplikasjon annenKomplikasjon = null;
 	     if (annenModel.getVigilansmelding().getMeldingsnokkel() != null){
 	    	 displayPart = "block";
 	    	 datePart = "none";
 	    	 Vigilansmelding melding = (Vigilansmelding)annenModel.getAnnenKomplikasjon();
+	    	 annenKomplikasjon = annenModel.getAnnenKomplikasjon();
 	    	 annenModel.setHendelseDato(melding.getDatoforhendelse());
 	    	 annenModel.setMeldingsNokkel(melding.getMeldingsnokkel());
 	
+	     }
+	     if (annenKomplikasjon == null){
+	    	 annenKomplikasjon = new AnnenkomplikasjonImpl("");
+	  
 	     }
     	 SimpleScalar simple = new SimpleScalar(displayPart);
     	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
     	 dataModel.put(displayKey, simple);
     	 dataModel.put(displaydateKey, hendelseDate);
 	     dataModel.put(andreHendelseId, annenModel);
+	     dataModel.put(annenHendelseId, annenKomplikasjon);
 	     sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);
 	     
 	     
