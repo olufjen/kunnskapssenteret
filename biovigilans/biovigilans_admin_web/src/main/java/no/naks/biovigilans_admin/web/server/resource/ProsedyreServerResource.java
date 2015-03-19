@@ -1,22 +1,33 @@
 package no.naks.biovigilans_admin.web.server.resource;
 
-
-import no.naks.biovigilans_admin.web.control.HendelseWebService;
+//import no.naks.biovigilans_admin.web.control.AnnenKomplikasjonWebService;
+//import no.naks.biovigilans_admin.web.control.DonasjonWebService;
+//import no.naks.biovigilans.web.control.GiverWebService;
 import no.naks.biovigilans_admin.web.control.ICD10WebService;
+import no.naks.biovigilans_admin.web.control.HendelseWebService;
+import no.naks.biovigilans_admin.web.control.SaksbehandlingWebService;
 import no.naks.biovigilans_admin.web.control.SessionAdmin;
+//import no.naks.biovigilans.web.control.TableWebService;
+
 
 import org.restlet.resource.ServerResource;
 
 public class ProsedyreServerResource extends ServerResource {
 
 	protected SessionAdmin sessionAdmin = null;
-
+//	protected TableWebService tablewebservice;
 	protected HendelseWebService hendelseWebService;
 	protected ICD10WebService icd10WebService;
-
+//	protected GiverWebService giverWebService; 
+//	protected DonasjonWebService donasjonWebService;
+//	protected MelderWebService melderWebService;
+//	protected KomDiagnosegiverWebService komDiagnosegiverWebService;
+//	protected AnnenKomplikasjonWebService annenKomplikasjonWebService;
+//	protected KomplikasjonsklassifikasjonWebService komplikasjonsklassifikasjonWebService;
+	
+	protected SaksbehandlingWebService saksbehandlingWebservice;
 	
 	protected String[]sessionParams;
-	
 	
 	
 	
@@ -47,5 +58,7 @@ public class ProsedyreServerResource extends ServerResource {
 		this.icd10WebService = icd10WebService;
 	}
 
+	
+	
 
 }
