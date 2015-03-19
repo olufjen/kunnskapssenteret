@@ -68,26 +68,24 @@ function toggleDisplay(id, displayvalue)
     }
  //   alert("step 4");
 }
-function initialize()
-{
-    var SpinnerValue_Changed = function() {
-       alert("event captured");
-    };
-   
-    Spinner1 = document.getElementById("p-blod-erytrocytt");
-    foo = document.getElementById("foo");
-    alert("step 1");
-    foo.hidden ="false";
-  //  Spinner1.addEventListener("change", SpinnerValue_Changed, false);
-    alert("step 2");
-}
+
+function formSubmit(){
+	
+//	var nokkel = document.getElementById("nokkel").value;
+//	var nokkelr = document.getElementById("nokkelr").value;
+	alert("Før clicked");
+//	$("#valgt").click();
+	$("#btnleveranse").click();
+	alert("clicked");
+
+	}
 //window.onload=initialize();
 </script>
 
 <h1>Saksbehandling</h1>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#meldfra" data-toggle="tab">Meld fra om</a></li>
+  <li class="active"><a href="#meldfra" data-toggle="tab">Oversikt meldinger</a></li>
  
   <!-- 
   <li><a href="rapporter_giver.html" data-toggle="tab">Komplikasjoner ved tapping av blodgivere</a></li>
@@ -104,12 +102,22 @@ function initialize()
 
 <div class="tab-pane active" id="sak">
     <div class="form-group">
-      <label>Saksbehandling</label>
+      <label>Saksbehandling oversikt meldinger</label>
     </div>
  
-      <button name="avbryt1" type="submit" class="btn btn-default">Avbryt</button>
-      <button name="lukk1" type="submit" class="btn btn-default">Lukk</button>
-      <button name="lagre1" type="submit" class="btn btn-primary">Lagre</button>
+   
+     <div class="form-group" id="tabeller" >
+     	<table border=1 >
+  		<tr><th>Detaljer<th>Meldingsnøkkel</th><th>Dato for hendelse</th><th>Meldingsdato</th><th>Status</th>
+  			<#list meldinger as melding>
+  			<tr id="nokkelr"> <td><button type="submit" id="btnleveranse" name="lukk1" value="${melding.meldingsnokkel}"  class="btn btn-default">Velg</button></td><td id="nokkel">${melding.meldingsnokkel}</td><td>${melding.datoforhendelse?date}</td><td>${melding.meldingsdato?date}</td><td>${melding.sjekklistesaksbehandling}</td> 
+  			</#list>
+		</table>  
+     </div>
+ 
+  
+      <button type="submit" id="btnleveranse" name="lukk1" value="lukk"  class="btn btn-default">Lukk</button>
+  
        
     
 </div><!--sluttsak-->
