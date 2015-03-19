@@ -75,7 +75,30 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		annenKomplikasjonsFields = new HashMap<String,String>();
 	}
-	
+	/**
+	 * Denne starten benyttes til å sttte initverdier til komplikasjonen
+	 * @param init
+	 */
+	public AnnenkomplikasjonImpl(String init) {
+		super();
+		types = new int[]  {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		utypes = new int[] {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		annenKomplikasjonsFields = new HashMap<String,String>();
+		setInit();
+	}	
+	private void setInit(){
+		setKlassifikasjon("");
+		setKlassifikasjonkode("");
+		setKomplikasjonbeskrivelse("");
+		setKomplikasjondefinisjon("");
+		setAvvikarsak("");
+		setHovedprosess("");
+		setDelkode("");
+		setTiltak("");
+		setKommentar("");
+		setOppdaget("");
+		setPasientopplysninger("");
+	}
 	public void setParams(){
 		Long id = getMeldeid();
 		if (id == null){
