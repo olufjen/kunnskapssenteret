@@ -219,6 +219,7 @@ public class RapporterteMeldingerServerResourceHTML extends
 	    		    	 SimpleScalar hendelseDate = new SimpleScalar(datePart);
 	    		    	 dataModel.put(displaydateKey, hendelseDate);
 	    				 dataModel.put(andreHendelseId, annenModel);
+	    				 dataModel.put(annenHendelseId, annenKomplikasjon);
 	    				 sessionAdmin.setSessionObject(getRequest(), annenModel,andreHendelseId);	    			  
    			 	
 	    			  redirectPermanent(page);
