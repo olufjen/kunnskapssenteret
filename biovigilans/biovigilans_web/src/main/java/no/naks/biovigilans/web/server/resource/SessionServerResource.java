@@ -92,7 +92,7 @@ public class SessionServerResource extends ProsedyreServerResource {
 	//Rapporter AndreHendelse
 	protected AnnenKomplikasjonwebModel annenModel =  null;
 	protected String andreHendelseId ="andreHendelse";
-	
+	protected String annenHendelseId ="annenHendelse";
 	protected String[] alvorligHendelse; 
 	protected String[] hovedprosesslist;
 	protected String[] feilelleravvik;
