@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="http://newwindow.no/ks/nokc-0.1.7/css/custom.css"/>
 	
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all">
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
@@ -115,7 +116,12 @@
 					}
 				    
 				}
-				
+				function setRequired(elementName){
+					document.getElementsByTagName(elementName)[0].setAttribute("required", "required");
+				}
+				function resetRequired(elementName){
+					document.getElementsByTagName(elementName)[0].removeAttribute("required");
+				}				
 				/** this funciton unceked all sub radio and checkbox buttons before to select new one */
 				function checkUncheck() {
 					$("input:radio[name='tab-klassifikasjon-sub']").each(function(i) {
@@ -212,7 +218,7 @@
 				</div>
 				<div class="form-group" style="display: ${displaydate}">
 					<label>Dato For hendelsen</label><br>
-					<input type="date" name="hendelsen-date" id="hendelsen-date" />
+					<input type="date" required="required" name="hendelsen-date" id="hendelsen-date" />
 				</div>
 			<div class="form-group" style="display: ${display}">
 				<label>Tidligere beskrivelse av hendelsen </label>
@@ -222,7 +228,7 @@
 			</div>				
 				<div class="form-group" >
 				<label>Beskrivelse av hendelsen</label>
-					<textarea class="form-control"  name="beskrivelse" rows="3"  ></textarea>
+					<textarea class="form-control" name="beskrivelse" rows="3"  required></textarea>
 				</div>
 			<div class="form-group" style="display: ${display}">
 				<label>Tidligere oppgitt hovedprosess </label>
@@ -232,8 +238,8 @@
 			</div>					
 				<div class="form-group">
 					<label>Hvilken hovedprosess gjaldt hendelsen?</label>
-					<select name ="tab-prosess"  id="tab-prosess" class="form-control" >
-						<option selected="selected" >--- Select ---</option>
+					<select name ="tab-prosess" id="tab-prosess" class="form-control" required>
+						<option ></option>
 				       		<#list andreHendelse.hovedprosesslist as hovedprosess>
 				       			<option>${hovedprosess} </option>
 				       		 </#list>
@@ -247,8 +253,8 @@
 			</div>		
 				<div class="form-group">
 					<label>Primærårsak til feil eller avvik </label>
-					<select name ="tab-kvalitetskrav" id="tab-kvalitetskrav" class="form-control">
-						<option selected="selected" >--- Select ---</option>
+					<select name ="tab-kvalitetskrav" required="required" id="tab-kvalitetskrav" class="form-control">
+						<option  ></option>
 			       		<#list andreHendelse.feilelleravvik as feilelleravvik>
 			       			<option>${feilelleravvik} </option>
 			       		</#list>
@@ -267,7 +273,7 @@
 					<label>Klassifikasjon av feilen eller avviket</label>
 					<div class="radio">
 				          <label>
-				          	<input type="radio" name="tab-klassifikasjon" id="k-1"    value="Feil blod transfundert"  onclick="toggleDisplay('feilblod'); checkUncheck();"   />Feil blod transfundert
+				          	<input type="radio" name="tab-klassifikasjon" id="k-1" required="required"   value="Feil blod transfundert"  onclick="toggleDisplay('feilblod'); checkUncheck();setRequired('pas-kjonn')"   />Feil blod transfundert
 				          </label>
 				          <div id="feilblod" style="display: none" >
 				              <div class="radio" >
@@ -278,12 +284,12 @@
 					          </div>
 					          <div class="radio">	 
 					          	 <label>
-					          		<input type="radio" name="tab-klassifikasjon-sub" id="2"  value="Transfudert blod til feil pasient"  />Blodproduktet som ble gitt var tiltenkt en annen pasient
+					          		<input type="radio" name="tab-klassifikasjon-sub" id="2" value="Transfudert blod til feil pasient"  />Blodproduktet som ble gitt var tiltenkt en annen pasient
 					           	 </label>
 					          </div>
 					          <div class="radio">	 
 					          	 <label>
-					          		<input type="radio" name="tab-klassifikasjon-sub" id="3"    value="Feil type blodprodukt gitt"  />Feil type blodprodukt gitt
+					          		<input type="radio" name="tab-klassifikasjon-sub" id="3"   value="Feil type blodprodukt gitt"  />Feil type blodprodukt gitt
 					          	 </label>
 					          </div>
 					          <div class="radio">	 
@@ -402,13 +408,37 @@
 								</div>	
 								    <div class="form-group">
 							   			<label >Opplysninger om pasienten(e) som skulle hatt/fikk blod</label>
-							   			<textarea class="form-control"  name="pasientopplysninger" rows="3"  ></textarea>
-							   		</div>
+							   				<div class="radio">
+	          								<label>
+										          	<input type="radio" name="pas-kjonn" id="pas-kjonn-1" value="M"/>Mann
+										    </label>
+										    </div>
+									        <div class="radio">
+									          <label>
+									          	<input type="radio" name="pas-kjonn" id="pas-kjonn-2" value="K"/>Kvinne
+									          </label>
+										    </div>
+     
+											  <div class="form-group">
+												  
+												      <label>Alder</label>
+												 <!--     <input type="text" name ="pas-alder" id="aldervalg" list="pasalder" size="20" class="form-control">  --> 
+												      <select name ="pas-alder" id="pasalder">
+												      	<option  ></option>
+														<#list andreHendelse.aldergruppe as alder>
+												     		<option>${alder} </option>
+												     		   </#list>   
+												    
+												     </select>
+												  
+											  </div>
+<!-- 						   			<textarea class="form-control"  name="pasientopplysninger" rows="3"  ></textarea>
+ -->							   		</div>
 					      </div> <!-- End feilblod -->
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-2"  value="Smitte ved testing" onclick="toggleDisplay('smitte'); checkUncheck();"  />Smitte påvist ved testing
+			          	<input type="radio" name="tab-klassifikasjon" id="k-2" required="required" value="Smitte ved testing" onclick="toggleDisplay('smitte'); checkUncheck();"  />Smitte påvist ved testing
 			          </label>
 			          <div id="smitte" style="display: none" >
 				           <div class="radio">
@@ -426,7 +456,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-3"  value="Ved intervju fremkommer det informasjon" onclick="toggleDisplay('intervju'); checkUncheck();"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og evt tidligere tappinger
+			          	<input type="radio" name="tab-klassifikasjon" id="k-3" required="required" value="Ved intervju fremkommer det informasjon" onclick="toggleDisplay('intervju'); checkUncheck();"  />Ved intervju fremkommer det informasjon som hadde påvirket avgjørelsen om forrige og evt tidligere tappinger
 			          </label>
 			          <div id="intervju" style="display: none" >
 				          <div class="radio">	 
@@ -473,7 +503,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-4" onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
+			          	<input type="radio" name="tab-klassifikasjon" id="k-4" required="required" onclick="toggleDisplay('giver'); checkUncheck();"  value="giveren fyller"  />Giveren fyller ikke kravene, men blir likevel tappet
 			          </label>
 				  
 				      <div id="giver" style="display: none" >
@@ -496,7 +526,7 @@
 				     </div>
 				     <div class="radio">
 			     	  <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-5"   onclick="toggleDisplay('giveren'); checkUncheck();"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
+			          	<input type="radio" name="tab-klassifikasjon" id="k-5" required="required"  onclick="toggleDisplay('giveren'); checkUncheck();"  value="giver inform"  />Giveren informerer kort tid etter tapping om noe som gjør at blodet ikke skal brukes
 			          </label>
 				      <div id="giveren" style="display: none" >    
 				          <div class="radio">	 
@@ -529,7 +559,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-6"  onclick="toggleDisplay('utstyr'); checkUncheck();"  value="Utstyr"  />Utstyr 
+			          	<input type="radio" name="tab-klassifikasjon" id="k-6" required="required" onclick="toggleDisplay('utstyr'); checkUncheck();"  value="Utstyr"  />Utstyr 
 			          </label>
 			          <div id="utstyr" style="display: none" >
 				          <div class="radio">	 
@@ -553,7 +583,7 @@
 			          
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-7"  onclick="checkUncheck();" value="IKT"  /> IKT (utstyr og programvare)
+			          	<input type="radio" name="tab-klassifikasjon" id="k-7" required="required"  onclick="checkUncheck();" value="IKT"  /> IKT (utstyr og programvare)
 			          </label>
 			          
 			          
@@ -562,7 +592,7 @@
 			        
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-8"  onclick="toggleDisplay('analyser'); checkUncheck();" value="Analyser"  />Analyser
+			          	<input type="radio" name="tab-klassifikasjon" id="k-8" required="required" onclick="toggleDisplay('analyser'); checkUncheck();" value="Analyser"  />Analyser
 			          </label>
 			          <div id="analyser" style="display: none" >
 				          <div class="radio">	 
@@ -625,7 +655,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-9" onclick="toggleDisplay('transport'); checkUncheck();"  value="Henting og transport"  />Henting og transport
+			          	<input type="radio" name="tab-klassifikasjon" id="k-9" required="required" onclick="toggleDisplay('transport'); checkUncheck();"  value="Henting og transport"  />Henting og transport
 			          </label>
 			          <div id="transport" style="display: none" >
 				          <div class="radio">	 
@@ -643,7 +673,7 @@
 				    </div>
 				    <div class="radio">
 		              <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-10"  onclick="toggleDisplay('merking'); checkUncheck();"  value="Merking feil"  />Feilmerking
+			          	<input type="radio" name="tab-klassifikasjon" id="k-10" required="required" onclick="toggleDisplay('merking'); checkUncheck();"  value="Merking feil"  />Feilmerking
 			          </label>
 			         	<div id="merking" style="display: none" >
 				          <div class="radio">	 
@@ -665,7 +695,7 @@
 				    </div>
 				    <div class="radio">
 			          <label>
-			          	<input type="radio" name="tab-klassifikasjon" id="k-11"  onclick="toggleDisplay('annet'); checkUncheck();"  value="Annet"  />Annet
+			          	<input type="radio" name="tab-klassifikasjon" id="k-11" required="required"  onclick="toggleDisplay('annet'); checkUncheck();"  value="Annet"  />Annet
 			          </label>
 			          <div id="annet" style="display: none" >
 				          <div class="radio">	 
@@ -725,8 +755,8 @@
 			</div>	
 				<div class="form-group">
 					<label>Definisjon av alvorlig hendelse</label>
-					 <select name ="tab-hendelse" id="tab-hendelse" class="form-control">
-						<option selected="selected" >--- Select ---</option>
+					 <select name ="tab-hendelse" required="required" id="tab-hendelse" class="form-control">
+						<option selected="selected" ></option>
 			       		<#list andreHendelse.alvorligHendelse as alvorlig>
 			       			<option>${alvorlig} </option>
 			       		 </#list>
@@ -740,8 +770,8 @@
 			</div>	
 				<div class="form-group">
 				<label>Hvordan ble hendelsen oppdaget?</label>
-				 <select name ="hendelseoppdaget" id="hendelseoppdaget" class="form-control">
-						<option selected="selected">--- Select ---</option>
+				 <select name ="hendelseoppdaget"  required="required" id="hendelseoppdaget" class="form-control">
+						<option ></option>
 			       		<#list andreHendelse.hendelsenoppdaget as hendelsenoppdaget>
 			       			<option>${hendelsenoppdaget} </option>
 			       		 </#list>
@@ -755,7 +785,7 @@
 			</div>		
 				<div class="form-group">
 				<label>Gjennomførte eller planlagte forebyggende tiltak. Beskriv kort.</label>
-					<textarea class="form-control" name="planlagtetiltak" rows="3"  ></textarea>
+					<textarea class="form-control" required="required" name="planlagtetiltak" rows="3"  ></textarea>
 				</div>
 			<div class="form-group" style="display: ${display}">
 				<label>Tidligere oppgitt kommentar </label>
@@ -767,13 +797,7 @@
 				<label>Kommentar</label>
 					<textarea class="form-control" name="hendelsekommentar" rows="3" ></textarea>
 				</div>
-				
-			<div class="form-group" style="display: ${display}">
-									<label>Tidligere oppgitt ytterligere opplysninger </label>
-									<div>
- 									<label>${annenHendelse.kladd}</label>
- 									</div> 
-			</div>			
+
 			<div class="form-group">
 			
 			<label>Ytterligere opplysninger følger</label>
@@ -795,3 +819,4 @@
 		</form>
 	</div>	
 </body>
+</html>
