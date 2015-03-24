@@ -137,8 +137,11 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 	public void setPasientopplysninger(String pasientopplysninger) {
 		if(pasientopplysninger == null){
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
-			String field = "pasientopplysninger";
+			String field = "pas-kjonn";
 			pasientopplysninger = userEntries.get(field);
+			String alder = "pas-alder";
+			String temp = userEntries.get(alder);
+			pasientopplysninger = pasientopplysninger + ";" + temp;
 			if(pasientopplysninger == null)
 				pasientopplysninger = "";
 		}
@@ -160,7 +163,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
 			String field = "tab-klassifikasjon-sub";
 			delkode = userEntries.get(field);
-			if (delkode == null || delkode.trim().equalsIgnoreCase("--- Select ---")){
+			if (delkode == null || delkode.trim().equalsIgnoreCase("")){ // --- Select ---
 				delkode = "";
 			}
 			//delkode = annenKomplikasjonsFields.get(keys[9]);
@@ -215,7 +218,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
 			String field = "tab-hendelse";
 			komplikasjondefinisjon = userEntries.get(field);
-			if (komplikasjondefinisjon == null || komplikasjondefinisjon.trim().equalsIgnoreCase("--- Select ---")){
+			if (komplikasjondefinisjon == null || komplikasjondefinisjon.trim().equalsIgnoreCase("")){
 				komplikasjondefinisjon = "";
 			}
 			//komplikasjondefinisjon = (annenKomplikasjonsFields.get(keys[2])==null ? "" : annenKomplikasjonsFields.get(keys[2])) ;
@@ -230,7 +233,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
 			String field = "tab-kvalitetskrav";
 			avvikarsak = userEntries.get(field);
-			if (avvikarsak == null || avvikarsak.trim().equalsIgnoreCase("--- Select ---")){
+			if (avvikarsak == null || avvikarsak.trim().equalsIgnoreCase("")){
 				avvikarsak = "";
 			}
 			//avvikarsak = (annenKomplikasjonsFields.get(keys[4])==null ? "" : annenKomplikasjonsFields.get(keys[4])) ;
@@ -245,11 +248,11 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
 			String field = "tab-prosess";
 			hovedprosess = userEntries.get(field);
-			if (hovedprosess == null || hovedprosess.trim().equalsIgnoreCase("--- Select ---")){
+			if (hovedprosess == null || hovedprosess.trim().equalsIgnoreCase("")){
 				hovedprosess = "";
 			}
 		/*	hovedprosess = (annenKomplikasjonsFields.get(keys[5])==null ? "" : annenKomplikasjonsFields.get(keys[5])) ;
-			if(hovedprosess.equalsIgnoreCase("--- Select ---")){
+			if(hovedprosess.equalsIgnoreCase("")){
 				hovedprosess=null;
 			}*/
 		}
@@ -263,7 +266,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
 			String field = "planlagtetiltak";
 			tiltak = userEntries.get(field);
-			if (tiltak == null || tiltak.trim().equalsIgnoreCase("--- Select ---")){
+			if (tiltak == null || tiltak.trim().equalsIgnoreCase("")){
 				tiltak = "";
 			}
 			
@@ -294,7 +297,7 @@ public class AnnenkomplikasjonImpl extends AbstractVigilansmelding implements Vi
 			Map<String,String> userEntries = getAnnenKomplikasjonsFields();
 			String field = "hendelseoppdaget";
 			oppdaget = userEntries.get(field);
-			if (oppdaget == null || oppdaget.trim().equalsIgnoreCase("--- Select ---")){
+			if (oppdaget == null || oppdaget.trim().equalsIgnoreCase("")){
 				oppdaget = "";
 			}
 			/*oppdaget = (annenKomplikasjonsFields.get(keys[6])==null ? "" : annenKomplikasjonsFields.get(keys[6])) ;

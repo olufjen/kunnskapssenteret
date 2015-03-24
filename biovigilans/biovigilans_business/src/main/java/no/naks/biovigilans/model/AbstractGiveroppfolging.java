@@ -175,7 +175,7 @@ public abstract class AbstractGiveroppfolging extends AbstractModel implements G
 					if(legeSpesifiser != null && ! legeSpesifiser.isEmpty()){
 						behandling = behandling + ";" + legeSpesifiser;
 					}
-					if(sykemeldinggruppe != null && ! sykemeldinggruppe.trim().equalsIgnoreCase("--- Select ---")){
+					if(sykemeldinggruppe != null && ! sykemeldinggruppe.trim().equalsIgnoreCase("")){
 						behandling = behandling + ";" + sykemeldinggruppe;
 					}
 				}

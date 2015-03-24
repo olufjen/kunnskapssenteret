@@ -55,7 +55,7 @@ public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel i
 		Map<String,String> userEntries = getKomplikasjonGiverFields();
 		String field = "tab-arm";
 		lokalskadearm = userEntries.get(field);
-		if (lokalskadearm == null ||  lokalskadearm.trim().equalsIgnoreCase("--- Select ---")){
+		if (lokalskadearm == null ||  lokalskadearm.trim().equalsIgnoreCase("")){
 			lokalskadearm = "";
 		}
 		
@@ -76,7 +76,7 @@ public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel i
 		}else{
 			if(systemiskbivirkning.trim().equalsIgnoreCase("Systemisk-Ja")){
 				String systemValue = userEntries.get("tab-systemiskbivirkning");
-				if(systemValue != null || ! systemValue.trim().equalsIgnoreCase("--- Select ---") ){
+				if(systemValue != null || ! systemValue.trim().equalsIgnoreCase("") ){
 					systemiskbivirkning = systemiskbivirkning + ";" + systemValue;
 				}
 			}
@@ -114,7 +114,7 @@ public abstract class AbstractKomplikasjonsdiagnosegiver extends AbstractModel i
 		Map<String,String> userEntries = getKomplikasjonGiverFields();
 		String field = "tab-tabskadearm";
 		lokalskadebeskrivelse = userEntries.get(field);
-		if (lokalskadebeskrivelse == null ||  lokalskadebeskrivelse.trim().equalsIgnoreCase("--- Select ---")){
+		if (lokalskadebeskrivelse == null ||  lokalskadebeskrivelse.trim().equalsIgnoreCase("")){
 			lokalskadebeskrivelse = "";
 		}else{
 			
