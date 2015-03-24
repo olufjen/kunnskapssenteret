@@ -48,7 +48,8 @@ public class GiverKvitteringWebModel extends VigilansModel {
 	private String sykemeldinggruppe;
 	private String readonlyFlag="false";
 	
-	private static final String FIRSTSELECTVALUE ="--- Select ---";
+//	private static final String FIRSTSELECTVALUE ="--- Select ---";
+	private static final String FIRSTSELECTVALUE ="";
 	
 	public String getAvreg() {
 		Map<String,String> userEntries = getFormMap();
@@ -442,7 +443,7 @@ public class GiverKvitteringWebModel extends VigilansModel {
 		Map<String,String> userEntries = getFormMap();
 		String field = "tab-sted";
 		donasjonSted = userEntries.get(field);
-		if (donasjonSted == null || donasjonSted.equalsIgnoreCase("--- Select ---")){
+		if (donasjonSted == null || donasjonSted.equalsIgnoreCase("")){ // Endret fra  --- Selected --- OLJ 24.03.15
 			donasjonSted = "-";
 		}
 		return donasjonSted;
