@@ -23,6 +23,7 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 	protected String[] feilelleravvik;
 	protected String[] hendelsenoppdaget;
 	List<String> hvagikkgaltList ;
+	private String[] aldergruppe;	// Inneholder aldersgrupper tilgjengelig for brukervalg
 
 
 	public AnnenKomplikasjonwebModel(){
@@ -31,6 +32,20 @@ public class AnnenKomplikasjonwebModel extends VigilansModel {
 		komplikasjonsklassifikasjon =  new KomplikasjonsklassifikasjonImpl();
 		vigilansmelding = (Vigilansmelding) annenKomplikasjon;
 		//hvagikkgaltList = new ArrayList<String>();
+	}
+
+
+
+
+	public String[] getAldergruppe() {
+		return aldergruppe;
+	}
+
+
+
+
+	public void setAldergruppe(String[] aldergruppe) {
+		this.aldergruppe = aldergruppe;
 	}
 
 
