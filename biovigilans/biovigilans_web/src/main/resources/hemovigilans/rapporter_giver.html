@@ -110,7 +110,8 @@
 	var Spinner1;
 	var foo;
 	function toggleDisplay(id, displayvalue)
-	{    
+	{
+	 
 	  if ( displayvalue == 1 ) {
 	         document.getElementById(id).style.display = 'block';
 	    } else if (displayvalue == 0) {
@@ -124,7 +125,7 @@
 			document.getElementById('utenfor').style.display = 'block';
 			document.getElementById('hendelseDato').style.display = 'block'
 		}
-		else if(selectedValue=="--- Select ---"){
+		else if(selectedValue==""){
 			document.getElementById('hendelseDato').style.display = 'none'
 			document.getElementById('utenfor').style.display = 'none';
 		}else{
@@ -132,6 +133,69 @@
 			document.getElementById('utenfor').style.display = 'none';
 		}
 	}
+	function showfolgetekst(){
+		var selectedValue = document.getElementById("tabskadearm").value;
+		document.getElementById("tabskadearm").setAttribute('title',"");
+		switch (selectedValue){
+			case "Hematom uten smerter":
+				document.getElementById("tabskadearm").setAttribute('title',"Blodansamling i vevene, utenfor blodårene, som gir misfarging og hevelse, men ikke smerter. Kun hematomer som varer i mer enn en uke, eller som gir opphav til sykemelding, arbeidsuførhet, legebesøk eller sykehusinnleggelse, skal meldes.");
+				break;
+			case "Hematom med smerter":
+				document.getElementById("tabskadearm").setAttribute('title',"Blodansamling i vevene, utenfor blodårene, som gir misfarging, hevelse og lokale smerter. Store hematomer kan føre til nerveirritasjon og smerter pga. trykk mot andre strukturer. Kun hematomer som varer i mer enn en uke, eller som gir opphav til sykemelding, arbeidsuførhet, legebesøk eller sykehusinnleggelse, skal meldes.");
+				break;
+			case "Arteriell punksjon":
+				document.getElementById("tabskadearm").setAttribute('title',"Punksjon av arteria brachialis eller en av dens grener, med rask, eventuelt pulserende, strøm av lyst, rødt blod og av og til smerter i albuegropen. Det er økt risiko for hematom, nerveirritasjon, arteriovenøs fistel, compartmentsyndrom og arterielt pseudoaneurisme.");
+				break;
+			case "Tromboflebitt":
+				document.getElementById("tabskadearm").setAttribute('title',"Inflammasjon langs en vene etter venepunksjon. Symptomene er varme, ømhet, smerter, rødhet og hevelse ved innstikksstedet, eventuelt ledsaget av feber. Ofte kan venen palperes som en hard streng. Kan utvikle seg til infeksjon.");
+				break;
+			case "Nerveirritasjon":
+				document.getElementById("tabskadearm").setAttribute('title',"Skade eller irritasjon av lokal nerve. Skal mistenkes ved utstrålende, «elektriske» smerter som beveger seg vekk fra innstikksstedet, og/eller parestesier med prikking eller brennende følelse i hånden, håndleddet eller skulderregionen. Symptomene kan oppstå akutt ved direkte stikkskade mot nerven, eller komme gradvis ved trykkskade pga. hematom. Symptomene kan forverre seg i visse stillinger eller ved visse armbevegelser. I sjeldne tilfeller utvikles nedsatt kraft eller sensibilitet i armen. ");
+				break;
+			case "Lokal allergisk reaksjon":
+				document.getElementById("tabskadearm").setAttribute('title',"Kløe, rødhet og eventuelt utslett på innstikkstedet, der plasteret satt, eller på hele området som ble desinfisert før blodgiving, Kan oppstå rett etter en blodgiving eller timer eller dager senere.");
+				break;
+			case "Smerter":
+				document.getElementById("tabskadearm").setAttribute('title',"Smerte i armen som ble brukt til blodgiving, uten symptomer på nerveskade, hematom eller andre definerte komplikasjoner.");
+				break;
+			case "Langvarig blødning/reblødning fra stikkstedet":	
+				document.getElementById("tabskadearm").setAttribute('title',"Lekkasje av blod fra innstikksstedet etter at den initiale blødningen har stoppet. Skyldes utilstrekkelig kompresjon av innstikksstedet etter blodgiving og/eller belastning av armen kort tid etter giving.");
+				break;
+			case "Infiltrasjon av returblod/væske ved stikkstedet":
+				document.getElementById("tabskadearm").setAttribute('title',"Hevelse rundt innstikksstedet som følge av at saltvannsløsning eller returblod lekker ut i vevet, grunnet feil posisjon av nålen. Dette er kun aktuelt ved afereseprosedyrer");
+				break;	
+			default:
+				document.getElementById("tabskadearm").setAttribute('title',"D");
+				break;
+			}
+		}
+	
+	function showfolgetekstsystem(){
+		var selectedValue = document.getElementById("systemiskbivirkning").value;
+		document.getElementById("systemiskbivirkning").setAttribute('title',"");
+		switch (selectedValue){
+			case "Alvorlig vasovagal reaksjon uten synkope":
+				document.getElementById("systemiskbivirkning").setAttribute('title',"Inkontinens, kramper, laryngospasme, "); 
+				break;
+			case "Synkope uten traume":	
+				document.getElementById("systemiskbivirkning").setAttribute('title',"Vasovagal reaksjon med bevissthetstap. Ingen skade på giveren.");
+				break;
+			case "Synkope med traume":
+				document.getElementById("systemiskbivirkning").setAttribute('title',"Synkope med ledsagende skade, i form av smerte og eventuelt objektive funn. Skaden skyldes at giveren har slått seg, ofte ved fall, i forbindelse med synkopen.");
+				break;
+			case "Citratreaksjon":
+				document.getElementById("systemiskbivirkning").setAttribute('title',"Nummenhet og prikking i lepper, fingre og tær, eventuelt metallsmak i munnen, frysninger, skjelving, svimmelhet, press for brystet, muskelrykninger, rask eller langsom puls og pustebesvær. I alvorlige tilfeller spasmer i hender og føtter karpopedalspasme og generelle kramper tetani, sjokk, uregelmessig puls og hjertestans. Forekommer ved aferesegivning og skyldes hypokalsemi pga. citratbinding.");
+				break;
+
+			default:
+				document.getElementById("systemiskbivirkning").setAttribute('title',"D");
+				break;
+		}
+
+	}
+	
+	
+	
 	function showarmenblide(){
 		var selectedValue = document.getElementById("tabskadearm").value;
 		if(selectedValue=="Nerveirritasjon"){
@@ -140,6 +204,7 @@
 			document.getElementById('armenBilde').style.display = 'none';
 		}
 	}
+
 	function showbeskriv(){
 		var selectedValue = document.getElementById("systemiskbivirkning").value;
 		if(selectedValue=="Annen systemisk bivirkning"){
@@ -288,22 +353,22 @@
 		
 	    <div class="form-group">
 	        <label>Kjønn</label>
-	    	<div class="radio" >
+	    	<div class="radio"  >
 	          <label>
-	          	<input  type="radio" name="tab-kjonn" id="tab-kjonn-1" value="M"  />Mann
+	          	<input  type="radio" required="required" name="tab-kjonn" id="tab-kjonn-1" value="M"  />Mann
 	          </label> 
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-kjonn" id="tab-kjonn-2"  value="K"  />Kvinne
+	          	<input type="radio" required="required" name="tab-kjonn" id="tab-kjonn-2"  value="K"  />Kvinne
 	          </label>
 		    </div>
 	    </div>
 	    <div class="form-group">
 	      <label>Alder</label>
 <!-- 	      <input name ="tab-alder" list="giveralder" class="form-control"> -->
-	      <select name ="tab-alder" id="giveralder" class="form-control">
-	       		<option >--- Select ---</option>
+	      <select name ="tab-alder" id="giveralder" required="required" class="form-control">
+	        <option ></option>
 	       		<#list giverkomplikasjon.aldergruppe as alder>
 	       			<option>${alder} </option>
 	     		</#list>
@@ -322,12 +387,12 @@
 	      <label>Givererfaring</label>
 	      	<div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste"  value="forsteganggiver"  onclick="toggleDisplay('type-tapping',0);toggleDisplay('tab-tidligere',0)" />Førstegangsgiver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" required="required" value="forsteganggiver"  onclick="toggleDisplay('type-tapping',0);toggleDisplay('tab-tidligere',0)" />Førstegangsgiver
 	          </label>
 		    </div>
 		    <div class="radio">
 	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" value="etablertgiver"  onclick="toggleDisplay('type-tapping',this.checked);toggleDisplay('tab-tidligere',this.checked)"   />Etablert giver
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" required="required" value="etablertgiver"  onclick="toggleDisplay('type-tapping',this.checked);toggleDisplay('tab-tidligere',this.checked)"   />Etablert giver
 	          </label>
 		    </div>
 	    </div>
@@ -357,12 +422,12 @@
 	    <h3>Donasjon</h3>
 	    <div class="form-group" style="display: ${displaydate}">
 	    	<label>Donasjonsdato</label><br>
-	    	<input type="date" name="dato-donasjon" id="dato-donasjon" onchange="dateValidation();"  />
+	    	<input type="date" required="required" name="dato-donasjon" id="dato-donasjon" onchange="dateValidation();"  />
 	    </div>
 	    <div class="form-group">
 	      <label>Donasjonssted</label>
-	      <select name ="tab-sted" id="tappested" class="form-control">
-	       		<option >--- Select ---</option>
+	      <select name ="tab-sted" id="tappested" required="required" class="form-control">
+	         <option ></option>
 	       		<#list giverkomplikasjon.donasjonsstedgruppe as donasjonssted>
 	       			<option>${donasjonssted} </option>
 	       		</#list>
@@ -459,17 +524,17 @@
 	     <label>Måltid innen tre timer før tapping</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-maltid" id="tab-maltid" value="ja"/>Ja
+	          	<input type="radio"  name="tab-maltid" required="required" id="tab-maltid" value="ja"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-maltid" id="tab-maltid" value="nei"/>Nei
+	          	<input type="radio"  name="tab-maltid" required="required" id="tab-maltid" value="nei"/>Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-maltid" id="tab-maltid" value="vet ikke"/>Vet ikke
+	          	<input type="radio"  name="tab-maltid" required="required" id="tab-maltid" value="vet ikke"/>Vet ikke
 	          </label>
 		    </div>
 	    </div>
@@ -477,17 +542,17 @@
 	    <label>Komplisert venepunksjon</label>
 	      <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-vene" id="tab-vene" value="ja" onclick="toggleDisplay('beskriv-komplikasjon',0);"/>Ja
+	          	<input type="radio"  name="tab-vene" id="tab-vene" required="required" value="ja" onclick="toggleDisplay('beskriv-komplikasjon',0);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-vene" id="tab-vene" value="nei" onclick="toggleDisplay('beskriv-komplikasjon', 0);"/>Nei
+	          	<input type="radio"  name="tab-vene" id="tab-vene" required="required" value="nei" onclick="toggleDisplay('beskriv-komplikasjon', 0);"/>Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-vene" id="tab-vene" value="vet ikke" onclick="toggleDisplay('beskriv-komplikasjon', 0);" />Vet ikke
+	          	<input type="radio"  name="tab-vene" id="tab-vene" required="required" value="vet ikke" onclick="toggleDisplay('beskriv-komplikasjon', 0);" />Vet ikke
 	          </label>
 		    </div>
 	    </div>
@@ -495,9 +560,9 @@
 	    
 	    <div class="form-group">
 	      <label>Hvor startet reaksjonen?</label>
-	       <select id="re" name ="tab-hvor" list="icd10gruppehvor" class="form-control" onchange="blodbankenOptions()"  >
-		      <option selected="selected"  > --- Select ---</option>
-		     	<#list giverkomplikasjon.reaksjonengruppe as reaksjonen >
+	       <select id="re" name ="tab-hvor" list="icd10gruppehvor" class="form-control" required="required" onchange="blodbankenOptions()"  >
+		       	 <option ></option>
+		       	<#list giverkomplikasjon.reaksjonengruppe as reaksjonen >
 			 		<option >${reaksjonen}  </option>
 			   </#list>
 		  </select>
@@ -511,7 +576,7 @@
 		<div id="utenfor" style="display: none"  class="form-group">
 	      <label>Utenfor Blodbanken</label>
 	       <select  name ="tab-utenForBlodbanken" list="icd10gruppehvor" class="form-control"  >
-		      <option >--- Select ---</option>
+		      <option ></option>
 		     	<#list giverkomplikasjon.utenforBlodbankengruppe as utenforBlodbanken >
 			     		<option >${utenforBlodbanken}  </option>
 			 	</#list>
@@ -521,37 +586,37 @@
 			<label>Tid fra start tapping til reaksjon</label>
 	    	<div class="radio">
 	          <label >
-	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak1"   value="lessthan or equal to 5 min"  />
+	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak1" required="required"   value="<=5 min"  />
 	          		≤5 min
 	          </label>
 	    	</div>
 	    	<div class="radio">
 	          <label >
-	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak2"   value="6-30 min"  />
+	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak2" required="required"  value="6-30 min"  />
 	          		6-30 min
 	          </label>
 	    	</div>
 	    	<div class="radio">
 	          <label >
-	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak3"   value="31-59 min"  />
+	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak3" required="required"  value="31-59 min"  />
 	          		31-59 min
 	          </label>
 	    	</div>
 	    	<div class="radio">
 	          <label >
-	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak4"   value="1-6 timer"  />
+	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak4" required="required"  value="1-6 timer"  />
 	          		1-6 timer
 	          </label>
 	    	</div>
 	    	<div class="radio">
 	          <label >
-	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak5"   value="7-24 timer"  />
+	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak5" required="required"  value="7-24 timer"  />
 	          		7-24 timer
 	          </label>
 	    	</div>
 	    	<div class="radio">
 	          <label >
-	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak6"   value="greaterthan 24 timer"  />
+	          	<input type="radio"  name="tab-tapp-reak" id="tab-tapp-reak6" required="required"  value=">24 timer"  />
 	          		> 24 timer
 	          </label>
 	    	</div>
@@ -566,22 +631,22 @@
 		      <label>Lokal:</label>
 		      <div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-arm" id="tab-arm" value="Lokal-Ja" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
+		          	<input type="radio"  name="tab-arm" id="tab-arm" value="Lokal-Ja" required="required" onclick="toggleDisplay('tabskaearm-ja', this.checked);"/>Ja
 		          </label>
 			    </div>
 		        <div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-arm" id="tab-arm2" value="Lokal-Nei"  onclick="toggleDisplay('tabskaearm-ja', 0);"/>Nei
+		          	<input type="radio"  name="tab-arm" id="tab-arm2" value="Lokal-Nei" required="required" onclick="toggleDisplay('tabskaearm-ja', 0);"/>Nei
 		          </label>
 			    </div>
 		    </div>
 		
 		    <div id="tabskaearm-ja" class="form-group"  style="display: none"  >
 		      <label>Hvis Ja</label>
-		      <select name ="tab-tabskadearm" id="tabskadearm" class="form-control" onchange="showarmenblide();">
-	       		<option selected="selected" > --- Select --- </option>
+		      <select name ="tab-tabskadearm" id="tabskadearm" class="form-control" title="xyz" onchange="showarmenblide();showfolgetekst()">
+	       		<option ></option>
 	       		<#list giverkomplikasjon.skadeiarmen as skadeiarmen>
-	       				<option>${skadeiarmen} </option>
+	       				<option>${skadeiarmen}</option>
 	       		</#list>
 	     	  </select>
 		      <!-- <input name ="tab-tabskadearm" list="tabskadearm" class="form-control"> -->
@@ -606,20 +671,20 @@
 		     <label>Systemisk</label>
 		      <div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-bivirk" id="tab-bivirk" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
+		          	<input type="radio"  name="tab-bivirk" id="tab-bivirk" required="required" value="Systemisk-Ja" onclick="toggleDisplay('systemiskbivirkning-ja', this.checked);"/>Ja
 		          </label>
 			    </div>
 		        <div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-bivirk" id="tab-bivirk2" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
+		          	<input type="radio"  name="tab-bivirk" id="tab-bivirk2" required="required" value="Systemisk-Nei" onclick="toggleDisplay('systemiskbivirkning-ja', 0);"/>Nei
 		          </label>
 			    </div>
 		    </div>
 		    <div id="systemiskbivirkning-ja" style="display: none" class="form-group">
 		      <label>Hvis Ja</label>
 		      
-		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control" onchange="showbeskriv();">
-	       		<option > --- Select --- </option>
+		      <select name ="tab-systemiskbivirkning" id="systemiskbivirkning" class="form-control" onchange="showbeskriv();showfolgetekstsystem()">
+	       		<option ></option>
 	       		<#list giverkomplikasjon.systemiskgruppe as systemisk>
 	       				<option>${systemisk} </option>
 	       		</#list>
@@ -656,8 +721,8 @@
 	      
 	   	<div class="form-group">
 	   		<label>Varighet av komplikasjon/bivirkning/skade</label>
-		      <select name ="tab-varighet" id="tab-varighet" class="form-control">
-		      <option selected="selected">--- Select ---</option>
+		      <select name ="tab-varighet" id="tab-varighet" required="required" class="form-control">
+		   <option ></option>
 	       		<#list giverkomplikasjon.varighetSkadegruppe as varighetSkade>
 	       				<option>${varighetSkade} </option>
 	       		</#list>
@@ -671,32 +736,32 @@
 			<h3>Alvorlighetsgrad </h3>
 			<div class="radio">
 				<label title="Forbigående skade/ negativ helseeffekt som ikke krevde omfattende behandling.">
-					<input type="radio"  name="alvor-mang" id="grad1" value="Grad 1 Mindre alvorlig 1a Ubetydelig"/>
+					<input type="radio"  name="alvor-mang" id="grad1" required="required" value="Grad 1 Mindre alvorlig 1a Ubetydelig"/>
 					Grad 1 Mindre alvorlig 1a Ubetydelig
 				</label>
 			</div>
 			<div class="radio">
 				<label title="Behov for medisinsk behandling (for eksempel symptomatisk behandling), men mangel på slik ville ikke ha ført til varige skader eller redusert funksjon.">
-					<input type="radio"  name="alvor-mang" id="grad2" value="Grad 1 Mindre alvorlig 1b Moderat" />
+					<input type="radio"  name="alvor-mang" id="grad2" required="required" value="Grad 1 Mindre alvorlig 1b Moderat" />
 					Grad 1 Mindre alvorlig 1b Moderat
 				</label>
 			</div>
 			<div class="radio">
 				<label title="Behov for innleggelse på sykehus eller forlenget sykehusopphold som følge av komplikasjonen; og/eller -  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming; eller - behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.">
-					<input type="radio"  name="alvor-mang" id="grad3" value="Grad 2 Alvorlig" />
+					<input type="radio"  name="alvor-mang" id="grad3" required="required" value="Grad 2 Alvorlig" />
 					Grad 2 Alvorlig 
 				</label>
 			</div>
 			<div class="radio">
 				<label title="Behov for omfattende medisinsk intervensjon etter komplikasjonen (vasopressor-behandling, intubering, overflytting til intensivavdeling) for å redde livet.">
-					<input type="radio"  name="alvor-mang" id="grad4" value="Grad 3 Livstruende"/>
+					<input type="radio"  name="alvor-mang" id="grad4" required="required" value="Grad 3 Livstruende"/>
 					Grad 3 Livstruende 
 				</label>
 			</div>
 			
 			<div class="radio">
 				<label title="Døde etter en komplikasjon.">
-					<input type="radio"  name="alvor-mang" id="grad4" value="Grad 4 Dødsfall"/>
+					<input type="radio"  name="alvor-mang" id="grad4" required="required" value="Grad 4 Dødsfall"/>
 					Grad 4 Dødsfall 
 				</label>
 			</div>
@@ -705,33 +770,33 @@
 	    
 	    <div class="form-group">
 	   
-	      <label>Endelig utfall av skaden</label>
+	      <h3>Endelig utfall av skaden</h3>
 	      <div class="radio">
 	          <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
-	          	<input type="radio"  name="tab-klinisk" id="tab-helbredelse" value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
+	          	<input type="radio"  name="tab-klinisk" id="tab-helbredelse" required="required" value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
 	          	Ingen sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
+	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" required="required" value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
 	          	Mindre alvorlig sekvele
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet">
-	          	<input type="radio"  name="tab-klinisk" id="tab-sykemelding" value="alvorlig-sekvele" title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet"/>
+	          	<input type="radio"  name="tab-klinisk" id="tab-sykemelding" required="required" value="alvorlig-sekvele" title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet"/>
 	          	Alvorlig sekvele
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label title="Død som følge av skaden.">
-	          	<input type="radio"  name="tab-klinisk" id="tab-uforetrydg" value="død" title="Død som følge av skaden."/>Død
+	          	<input type="radio"  name="tab-klinisk" id="tab-uforetrydg" required="required" value="død" title="Død som følge av skaden."/>Død
 	          </label>
 		    </div>
 		     <div class="radio">
 	          <label >
-	          	<input type="radio"  name="tab-klinisk" id="tab-sekvele" value="vet-ikke"/>Vet Ikke
+	          	<input type="radio"  name="tab-klinisk" id="tab-sekvele" required="required" value="vet-ikke"/>Vet Ikke
 	          </label>
 		    </div>
 		    
@@ -741,25 +806,25 @@
 	    	  <label>Strakstiltak:</label>
 		      	<div class="radio">
 		          <label title="Ingen">
-		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0"  onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', 0)" value="Ingen" title="Ingen"/>
+		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak0" required="required"  onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', 0)" value="Ingen" title="Ingen"/>
 		          	Ingen
 		          </label>
 			    </div>
 		      	<div class="radio">
 		          <label title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping.">
-		          	<input type="radio"  name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
+		          	<input type="radio"  name="tab-strakstiltak" required="required" onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak1" value="Behandlet av blodbankpersonale" title="Giver ble behandlet av bioingeniør/sykepleier med ansvar for tapping."/>
 		          	Behandlet av blodbankpersonale
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label title="Giver ble behandlet av lege tilknyttet blodbanken.">
-		          	<input type="radio"  name="tab-strakstiltak"  onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
+		          	<input type="radio"  name="tab-strakstiltak" required="required" onclick="toggleDisplay('behandlingselected', 0);toggleDisplay('behandling', this.checked)" id="tab-strakstiltak2" value="Behandlet av blodbanklege" title="Giver ble behandlet av lege tilknyttet blodbanken."/>
 		          	Behandlet av blodbanklege
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). ">
-		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak3" value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);toggleDisplay('behandling', 0)" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
+		          	<input type="radio"  name="tab-strakstiltak" id="tab-strakstiltak3" required="required" value="Behandling på sykehus"  onclick="toggleDisplay('behandlingselected', this.checked);toggleDisplay('behandling', 0)" title="Giver ble behandlet av annen sykehuslege enn blodbanklegen (f.eks. ved behov for behandling som ikke kan gis i blodbanken). " />
 		          		Behandling på sykehus
 		          </label>
 			    </div>
@@ -819,7 +884,7 @@
 	  	  <label>Videre behandling/oppfølging </label>
 	       	  <div class="radio">
 		          <label >
-		          	<input type="radio"  name="tab-behandling" id="tab-behandling-ja" onclick="toggleDisplay('behandlingJa', this.checked);" value="Videre Behandling Ja"  />
+		          	<input type="radio"  name="tab-behandling" id="tab-behandling-ja" required="required" onclick="toggleDisplay('behandlingJa', this.checked);" value="Videre Behandling Ja"  />
 		          		Ja
 		          </label>
 		         <div id="behandlingJa" style="margin-left: 0.5cm;display: none"  >
@@ -847,7 +912,7 @@
 			          <div id="sykemelding" style="margin-left: 0.5cm;display: none">
 			          <label>Varighet:</label>
 					      <select  name ="tab-sykemeldinggruppe" id="sykemeldinggruppe" class="form-control">
-				       		<option >--- Select ---</option>
+				       		<option ></option>
 				       		<#list giverkomplikasjon.sykemeldinggruppe as sykemelding>
 				       			<option>${sykemelding} </option>
 				       		</#list>
@@ -864,13 +929,13 @@
 			  </div>
 			  <div class="radio">
 		          <label >
-		          	<input type="radio"  name="tab-behandling" id="tab-behandling-nei" onclick="toggleDisplay('behandlingJa', 0);" value="Videre Behandling Nei"  />
+		          	<input type="radio"  name="tab-behandling" id="tab-behandling-nei" required="required" onclick="toggleDisplay('behandlingJa', 0);" value="Videre Behandling Nei"  />
 		          		Nei
 		          </label>
 			  </div>
 			  <div class="radio">
 		          <label >
-		          	<input type="radio" name="tab-behandling" id="tab-behandling-vetIkke" onclick="toggleDisplay('behandlingJa',0);toggleDisplay('sykemelding',0);" value="Videre Behandling Vet ikke"  />
+		          	<input type="radio" name="tab-behandling" id="tab-behandling-vetIkke" required="required" onclick="toggleDisplay('behandlingJa',0);toggleDisplay('sykemelding',0);" value="Videre Behandling Vet ikke"  />
 		          		Vet Ikke
 		          </label>
 			  </div>
@@ -880,23 +945,23 @@
 	  		<h3>Kunne komplikasjonen ha vært forebygget?</h3>
 		      	<div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar1"  value="forebyggbar-ja" onclick="toggleDisplay('forbedringtiltak',this.checked);"/>Ja
+		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar1" required="required"  value="forebyggbar-ja" onclick="toggleDisplay('forbedringtiltak',this.checked);"/>Ja
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label>
-		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" value="forebyggbar-nei" onclick="toggleDisplay('forbedringtiltak',0);"/>Nei
+		          	<input type="radio" name="tab-forebyggbar" id="tab-forebyggbar2" required="required" value="forebyggbar-nei" onclick="toggleDisplay('forbedringtiltak',0);"/>Nei
 		          </label>
 			    </div>
 			    <div class="radio">
 		          <label>
-		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar3" value="forebyggbar-vetIkke" onclick="toggleDisplay('forbedringtiltak',0);"/>Vet ikke
+		          	<input type="radio"  name="tab-forebyggbar" id="tab-forebyggbar3" required="required" value="forebyggbar-vetIkke" onclick="toggleDisplay('forbedringtiltak',0);"/>Vet ikke
 		          </label>
 			    </div>
 	    </div>
-	    <div id="forbedringtiltak" class="form-group" style = "display: none">
+	    <div id="forbedringtiltak"  class="form-group" style = "display: none">
 		 	<label>Planlagte eller gjennomførte forbedringstiltak</label>
-		  	<textarea class="form-control" name="tab-forbedringstiltak" rows="3"  ></textarea>   
+		  	<textarea class="form-control" required="required" name="tab-forbedringstiltak" rows="3"  ></textarea>   
 		  	<br/>
 	  	</div>	
 	    
@@ -926,17 +991,17 @@
 	     <label>Giver er avregistrert (pga komplikasjonen)</label>
 	      	<div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-avreg" id="tab-avreg" value="avregistrert-Ja" onclick="toggleDisplay('tab-avregistrert-ja', this.checked);"/>Ja
+	          	<input type="radio"  name="tab-avreg" id="tab-avreg" required="required" value="avregistrert-Ja" onclick="toggleDisplay('tab-avregistrert-ja', this.checked);"/>Ja
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-avreg" id="tab-avreg" value="avregistrert-Nei" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Nei
+	          	<input type="radio"  name="tab-avreg" id="tab-avreg" required="required" value="avregistrert-Nei" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Nei
 	          </label>
 		    </div>
 	        <div class="radio">
 	          <label>
-	          	<input type="radio"  name="tab-avreg" id="tab-avreg" value="avregistrert-Vet-Ikke" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Vet ikke
+	          	<input type="radio"  name="tab-avreg" id="tab-avreg" required="required" value="avregistrert-Vet-Ikke" onclick="toggleDisplay('tab-avregistrert-ja', 0);"/>Vet ikke
 	          </label>
 		    </div>
 	    </div>
