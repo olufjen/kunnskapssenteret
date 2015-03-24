@@ -65,7 +65,7 @@ public abstract class AbstractDonasjon extends AbstractModel implements Donasjon
 			Map<String,String> userEntries = getDonasjonsFields();
 			String field = "tab-sted";
 			donasjonssted = userEntries.get(field);
-			if (donasjonssted == null || donasjonssted.trim().equalsIgnoreCase("--- Select ---") ){
+			if (donasjonssted == null || donasjonssted.trim().equalsIgnoreCase("") ){ //"--- Select ---"
 				donasjonssted = "";
 			}
 		}
