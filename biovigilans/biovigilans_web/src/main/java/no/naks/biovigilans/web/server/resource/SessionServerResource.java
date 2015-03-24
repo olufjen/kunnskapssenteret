@@ -526,7 +526,9 @@ public class SessionServerResource extends ProsedyreServerResource {
 		 Request request = getRequest();
 		 annenModel = (AnnenKomplikasjonwebModel)sessionAdmin.getSessionObject(request, andreHendelseId);
 	     if(annenModel == null){
+//	    	 annenModel.setKjonnValg(kjonnValg);
 	    	 annenModel = new AnnenKomplikasjonwebModel();
+	    	 annenModel.setAldergruppe(aldergruppe);
 	    	 annenModel.setAlvorligHendelse(alvorligHendelse);
 	    	 annenModel.setHovedprosesslist(hovedprosesslist);
 	    	 annenModel.setFeilelleravvik(feilelleravvik);
