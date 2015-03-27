@@ -100,6 +100,25 @@ $( document ).ready(function(){
 
 var Spinner1;
 var foo;
+var erotrocytt = "";
+function setRequired(elementName){
+	document.getElementsByTagName(elementName)[0].setAttribute("required", "required");
+}
+function resetRequired(elementName){
+	document.getElementById(elementName).removeAttribute("required");
+//	document.getElementsByTagName(elementName)[0].removeAttribute("required");
+}
+function seterotrocytt(ttt){
+	erotrocytt = ttt;
+}
+function geterytrocytt(){
+	if (erotrocytt == ""){
+		return 1;
+	}
+	if (erotrocytt == "ero"){
+		return 0;
+	}		
+}
 function toggleDisplay(id, displayvalue)
 {    
 	// alert("step 1 "+ id +" "+displayvalue);
@@ -322,7 +341,7 @@ function showtext(id,thetext){
 					$('div').find('input, textarea, select').attr('readonly', false);
 					$('div').find('select').attr('disabled', false);
 					
-					$("#sendinnTxt").html('Send inn');
+					$("#sendinnTxt").html('Kontroll før innsending');
 					$("#avbrytTxt").html('Avbryt');
 					$("#btnAvbryt").val('avbryt');
 					$("#btnSendinn").val('sendinn');
@@ -341,7 +360,7 @@ function showtext(id,thetext){
 
 <form id="rapport"  action="?method=PUT" method="post" > 
 <h1>Rapporter hendelse–Hemovigilans</h1>
-<!-- Nav tabs -->
+<!-- Nav tabs novalidate="novalidate" -->
 <ul class="nav nav-tabs">
   <li ><a href="rapporter_hendelse_main.html" data-toggle="tab">Meld fra om</a></li>
   <li><a href="rapporter_kontakt.html" data-toggle="tab">Kontaktinformasjon</a></li>
@@ -645,13 +664,13 @@ function showtext(id,thetext){
 <!--  <button id="btnHide">Hide</button>   -->
 
     <h3>Blodprodukt </h3>
-    <div class="form-group"> <!-- start div Blodprodukt -->	
+    <div class="form-group"> <!-- start div Blodprodukt annetblodprodukt-->	
   	
     <label>Blodproduktenhet som mest sannsynlig er årsak til komplikasjonen</label>
     <div class="checkbox">
       <label>
         <input type="radio" name="p-blod-erytrocytt" required="required" id="p-blod-erytrocytt"  value="blod-erytrocytt" 
-        onclick="toggleDisplay('erytrocyttantall', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapererytrocytt', this.checked);toggleDisplay('blod-egenskapertrombocytt',0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)"/>Erytrocyttkonsentrat
+        onclick="seterotrocytt('ero');toggleDisplay('erytrocyttantall', 0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapererytrocytt', this.checked);toggleDisplay('blod-egenskapertrombocytt',0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)"/>Erytrocyttkonsentrat
       </label>
   	</div>
     <div id="erytrocyttantall" style="display: none"  class="form-group">
@@ -664,7 +683,7 @@ function showtext(id,thetext){
     <div class="checkbox">
       <label>
         <input type="radio" name="p-blod-erytrocytt" required="required" id="p-blod-trombocytt" value="blod-trombocytt" 
-        onclick="toggleDisplay('trombocyttantall', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapertrombocytt', this.checked);toggleDisplay('blod-egenskapererytrocytt', 0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)"/>Trombocyttkonsentrat
+        onclick="seterotrocytt('');toggleDisplay('trombocyttantall', 0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('tappingtypetromb', this.checked);toggleDisplay('blod-egenskapertrombocytt', this.checked);toggleDisplay('blod-egenskapererytrocytt', 0);toggleDisplay('blod-plasmagruppe', 0);toggleDisplay('blod-egenskaperplasma', 0)"/>Trombocyttkonsentrat
       </label>
     </div>
    <div id="trombocyttantall" style="display: none" class="form-group">
@@ -676,12 +695,12 @@ function showtext(id,thetext){
 	<label>Type tapping</label>
     <div class="radio">
       <label>
-        <input type="radio" name="p-blod-tapping" id="p-blod-aferese" onclick="toggleDisplay('blod-suspensjon', this.checked)" value="p-blod-aferese"/>Aferese
+        <input type="radio" name="p-blod-tapping" id="p-blod-aferese" onclick="toggleDisplay('blod-suspensjon', geterytrocytt())" value="p-blod-aferese"/>Aferese
       </label>
   	</div>
   	  <div class="radio">
       <label>
-        <input type="radio" name="p-blod-tapping" id="p-blod-fullblod" onclick="toggleDisplay('blod-suspensjon', this.checked)" value="p-blod-fullblod"/>Fullblod
+        <input type="radio" name="p-blod-tapping" id="p-blod-fullblod" onclick="toggleDisplay('blod-suspensjon', geterytrocytt())" value="p-blod-fullblod"/>Fullblod
       </label>
   	</div>
   	  <div class="radio">
@@ -792,7 +811,8 @@ function showtext(id,thetext){
  
      <div class="checkbox">
     
-        <input type="radio" name="p-blod-erytrocytt" required="required" id="p-blod-plasma" value="p-blod-plasma" onclick="toggleDisplay('blod-plasmaantall',0);toggleDisplay('blod-plasmagruppe', this.checked);toggleDisplay('blod-egenskaperplasma', this.checked);toggleDisplay('blod-egenskapererytrocytt', 0);toggleDisplay('blod-egenskapertrombocytt', 0);toggleDisplay('tappingtypetromb', 0)"/>Plasma 
+        <input type="radio" name="p-blod-erytrocytt" required="required" id="p-blod-plasma" value="p-blod-plasma" 
+        onclick="toggleDisplay('blod-plasmaantall',0);toggleDisplay('annetblodprodukt', 0);toggleDisplay('blod-plasmagruppe', this.checked);toggleDisplay('blod-egenskaperplasma', this.checked);toggleDisplay('blod-egenskapererytrocytt', 0);toggleDisplay('blod-egenskapertrombocytt', 0);toggleDisplay('tappingtypetromb', 0)"/>Plasma 
     </div>
     <div id="blod-plasmagruppe" style="display: none" class="form-group">
          <label>Valg av plasma</label>
@@ -829,7 +849,7 @@ function showtext(id,thetext){
  -->
 
        
-    <div class="form-group">
+    <div class="form-group" id="annetblodprodukt">
      <label>Annet blodprodukt</label> 
       <input type="text"  name="p-blod-andre" size="80" value="" onemptied="toggleDisplay('blod-andreantall', 0)"  onfocus="toggleDisplay('blod-andreantall', 0)"  class="form-control"/>
      </div>
@@ -878,7 +898,7 @@ function showtext(id,thetext){
 
     <div id="annenblod-241" class="checkbox" style="display: none">
       <label>
-        <input type="checkbox" name="p-annenblod-erytrocytt" id="p-blod-erytrocytt" value="p-annenblod-erytrocytt" onclick="toggleDisplay('annenblod-erytrocyttantall', 0)"/>Erytrocyttkonsentrat
+        <input type="checkbox" name="p-annenblod-erytrocytt" id="p-blod-erytrocytt" value="p-annenblod-erytrocytt" onclick="toggleDisplay('annenblod-erytrocyttantall',  this.checked)"/>Erytrocyttkonsentrat
       </label>
   	</div>
     <div id="annenblod-erytrocyttantall" class="form-group"  style="display: none">
@@ -887,7 +907,7 @@ function showtext(id,thetext){
     </div>  	
     <div  id="annenblod-242" class="checkbox" style="display: none">
       <label>
-        <input type="checkbox" name="p-annenblod-trombocytt" id="p-blod-trombocytt" value="p-annenblod-trombocytt" onclick="toggleDisplay('annenblod-trombocyttantall', 0)"/>Trombocyttkonsentrat
+        <input type="checkbox" name="p-annenblod-trombocytt" id="p-blod-trombocytt" value="p-annenblod-trombocytt" onclick="toggleDisplay('annenblod-trombocyttantall',  this.checked)"/>Trombocyttkonsentrat
       </label>
     </div>
    <div id="annenblod-trombocyttantall" class="form-group" style="display: none">
@@ -897,7 +917,7 @@ function showtext(id,thetext){
           
    <div id="annenblod-245" class="checkbox" style="display: none">
       <label>
-        <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="p-annenblod-plasma" onclick="toggleDisplay('annenblod-plasmaantall', 0)"/>Plasma
+        <input type="checkbox" name="p-annenblod-plasma" id="p-blod-plasma" value="p-annenblod-plasma" onclick="toggleDisplay('annenblod-plasmaantall',  this.checked)"/>Plasma
       </label>
     </div>
     <div id="annenblod-plasmaantall" class="form-group" style="display: none">
@@ -958,9 +978,9 @@ function showtext(id,thetext){
     </div>
      <div id="temperaturstigning" class="form-group" style="display: none">
      <label>Temperatur før transfusjonsreaksjonen</label> 
-      <input type="number" step="0.1" min="25.0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
+      <input type="number" step="0.1" min="25.0" max="45.0" name="p-temperaturforstigning" id="p-temperaturforstigning" size="10" value="" class="form-control"/>
       <label>Temperatur etter transfusjonsreaksjonen</label> 
-      <input type="number" step="0.1" min="45.0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
+      <input type="number" step="0.1" min="25.0" max="45.0" name="p-temperaturetterstigning" id="p-temperaturetterstigning" size="10"  value="" class="form-control" oninput="updateOutput('p-temperaturforstigning','p-temperaturetterstigning','p-stigning')" />
       <label>Temperaturstigning</label> <!-- en desimal !!!! -->
       <output type="number" name="p-stigning" id="p-stigning"></output>
     </div>    
@@ -3014,22 +3034,27 @@ Vurder om du skal melde denne."/>Utelukket
 		<h3>Hvorfor skjedde denne komplikasjonen?</h3>
 	<div class="checkbox"  >
     <label>
-    	<input name="p-forholdpasient" type="checkbox" id="p-forholdpasient" required="required" value="forholdpasient" onclick="toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Forhold ved pasient (disponerende faktorer)  
+    	<input name="p-forholdpasient" type="checkbox" id="p-forholdpasient" required="required" value="forholdpasient" 
+    	onclick="resetRequired('p-forholdutstyr');resetRequired('p-uforlikeligprodukt');resetRequired('p-feilblodtrans');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>
+    	Forhold ved pasient (disponerende faktorer)  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-forholdutstyr" type="checkbox" id="p-forholdutstyr" required="required" value="forholdutstyr" onclick="toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Forhold ved utstyr  
+    	<input name="p-forholdutstyr" type="checkbox" id="p-forholdutstyr" required="required" value="forholdutstyr" 
+    	onclick="resetRequired('p-forholdpasient');resetRequired('p-uforlikeligprodukt');resetRequired('p-feilblodtrans');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Forhold ved utstyr  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-uforlikeligprodukt" type="checkbox" id="p-uforlikeligprodukt" required="required" value="uforlikeligprodukt" onclick="toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Uforlikelig blodprodukt  
+    	<input name="p-uforlikeligprodukt" type="checkbox" id="p-uforlikeligprodukt" required="required" value="uforlikeligprodukt" 
+    	onclick="resetRequired('p-forholdutstyr');resetRequired('p-forholdpasient');resetRequired('p-feilblodtrans');toggleDisplay('gikkgalt', 0);toggleDisplay('blodkrav', 0)"/>Uforlikelig blodprodukt  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-feilblodtrans" type="checkbox" id="p-feilblodtrans" required="required" value="feilblodtrans"  onclick="toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Feil blod transfundert   
+    	<input name="p-feilblodtrans" type="checkbox" id="p-feilblodtrans" required="required" value="feilblodtrans"  
+    	onclick="resetRequired('p-forholdutstyr');resetRequired('p-uforlikeligprodukt');resetRequired('p-forholdpasient');toggleDisplay('gikkgalt', this.checked);toggleDisplay('blodkrav', this.checked)"/>Feil blod transfundert   
     </label>
     <div id="gikkgalt" class="form-group" style="display: none">
      <label>Hva gikk galt?</label>
@@ -3139,17 +3164,20 @@ Vurder om du skal melde denne."/>Utelukket
   </div>
  	<div class="checkbox">
     <label>
-    	<input name="p-paregnelig" type="checkbox" id="g" required="required" value="paregnelig" onclick="toggleDisplay('gikkgalt', 0)"/>Påregnelig risiko  
+    	<input name="p-paregnelig" type="checkbox" id="g" required="required" value="paregnelig" 
+    	onclick="resetRequired('p-annetskjedde');resetRequired('p-vetikkeskjedde');toggleDisplay('gikkgalt', 0)"/>Påregnelig risiko  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-annetskjedde" type="checkbox" id="p-annetskjedde" required="required" value="annetskjedde" onclick="toggleDisplay('gikkgalt', 0)"/>Annet  
+    	<input name="p-annetskjedde" type="checkbox" id="p-annetskjedde" required="required" value="annetskjedde" 
+    	onclick="resetRequired('g');resetRequired('p-vetikkeskjedde');toggleDisplay('gikkgalt', 0)"/>Annet  
     </label>
     </div>
 	<div class="checkbox">
     <label>
-    	<input name="p-vetikkeskjedde" type="checkbox" id="p-vetikkeskjedde" required="required" value="vetikkeskjedde" onclick="toggleDisplay('gikkgalt', 0)"/>Vet ikke  
+    	<input name="p-vetikkeskjedde" type="checkbox" id="p-vetikkeskjedde" required="required" value="vetikkeskjedde" 
+    	onclick="resetRequired('p-paregnelig');resetRequired('p-annetskjedde');toggleDisplay('gikkgalt', 0)"/>Vet ikke  
     </label>
     </div>      
 	</div>
@@ -3158,12 +3186,12 @@ Vurder om du skal melde denne."/>Utelukket
 	<h3>Kunne komplikasjonen ha vært forebygget?</h3>
 	<div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg" required="required" value="ja" onclick="toggleDisplay('transfusjonforebygg',this.checked);toggleDisplay('transfusjonforebyggtext',this.checked)" />Ja
+        <input type="radio" name="p-forebygg" id="p-forebygg" required="required" value="ja" onclick="toggleDisplay('transfusjonforebygg',this.checked);toggleDisplay('transfusjonforebyggtext',0)" />Ja
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="p-forebygg" id="p-forebygg-2" required="required" value="ja" onclick="toggleDisplay('transfusjonforebygg', this.checked);toggleDisplay('transfusjonforebyggtext',this.checked)"/>Ja,delvis 
+        <input type="radio" name="p-forebygg" id="p-forebygg-2" required="required" value="ja" onclick="toggleDisplay('transfusjonforebygg', this.checked);toggleDisplay('transfusjonforebyggtext',0)"/>Ja,delvis 
       </label>
     </div>
     <div class="radio">
