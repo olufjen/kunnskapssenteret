@@ -18,6 +18,7 @@
 	<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
 	<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" ></script>
+	<script type="text/javascript" src="scripts/hendelser.js"></script>
 	<!--<link rel="stylesheet" href="css/bootstrap.css">-->
 </head>
 
@@ -152,7 +153,19 @@
 						 }
 					}
 				}	 */
-				
+
+				function validateForm() {
+					var elementNames = ["beskrivelse","tab-prosess","tab-kvalitetskrav","tab-klassifikasjon","tab-hendelse","hendelseoppdaget","planlagtetiltak"];
+					for (i = 0; i < elementNames.length; i++ )	{
+						var elementName = elementNames[i];
+					    var x = document.forms["rapport"][elementName].value;
+					    if (x == null || x == "") {
+					        alert("Feltet "+elementName+" mangler verdi. Vennligst velg Ikke godkjent!");
+					        return false;
+					    }						
+					}
+					return false;
+				}
 				function sendInn(val){
 					if(val=="sendinn"){
 						var btnValue = $("#btnSendinn").val();
@@ -183,7 +196,7 @@
 							$('div').find('input, textarea, select').attr('readonly', false);
 							$('div').find('select').attr('disabled', false);
 							
-							$("#sendinnTxt").html('Send inn');
+							$("#sendinnTxt").html('Kontroll før innsending');
 							$("#avbrytTxt").html('Avbryt');
 							$("#btnAvbryt").val('avbryt');
 							$("#btnSendinn").val('sendinn');
@@ -197,7 +210,7 @@
 					}
 				}
 			</script>
-		<form id="rapport" action="?method=PUT" method="post"  > 
+		<form id="rapport" name="rapport" action="?method=PUT" method="post"  > 
 			<h1>Rapporter Andre Hendelser</h1>
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs">
@@ -814,7 +827,7 @@
 			</div>
 				
 				<button type="submit" name="btnAvbryt" id="btnAvbryt" value="avbryt" class="btn btn-default" onclick="return sendInn('avbryt');"><span id="avbrytTxt">Avbryt</span> </button>
-	      		<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"  onclick="return sendInn('sendinn');" > <span id="sendinnTxt">Kontroll før innsending</span></button>
+	      		<button type="submit" name="btnSendinn" id="btnSendinn" value="sendinn" class="btn btn-primary"  onclick="validateForm();return sendInn('sendinn');" > <span id="sendinnTxt">Kontroll før innsending</span></button>
 			</div> <!-- End div andre hendelser -->
 		</form>
 	</div>	
