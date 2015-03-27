@@ -731,76 +731,8 @@
 	          <input  name="tab-varighet" type="text" class="form-control" id="tab-varighet" placeholder="Skriv inn..">
 	        </div> -->
 	    </div>
-	    <div class="form-group" >
-			
-			<h3>Alvorlighetsgrad </h3>
-			<div class="radio">
-				<label title="Forbigående skade/ negativ helseeffekt som ikke krevde omfattende behandling.">
-					<input type="radio"  name="alvor-mang" id="grad1" required="required" value="Grad 1 Mindre alvorlig 1a Ubetydelig"/>
-					Grad 1 Mindre alvorlig 1a Ubetydelig
-				</label>
-			</div>
-			<div class="radio">
-				<label title="Behov for medisinsk behandling (for eksempel symptomatisk behandling), men mangel på slik ville ikke ha ført til varige skader eller redusert funksjon.">
-					<input type="radio"  name="alvor-mang" id="grad2" required="required" value="Grad 1 Mindre alvorlig 1b Moderat" />
-					Grad 1 Mindre alvorlig 1b Moderat
-				</label>
-			</div>
-			<div class="radio">
-				<label title="Behov for innleggelse på sykehus eller forlenget sykehusopphold som følge av komplikasjonen; og/eller -  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming; eller - behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.">
-					<input type="radio"  name="alvor-mang" id="grad3" required="required" value="Grad 2 Alvorlig" />
-					Grad 2 Alvorlig 
-				</label>
-			</div>
-			<div class="radio">
-				<label title="Behov for omfattende medisinsk intervensjon etter komplikasjonen (vasopressor-behandling, intubering, overflytting til intensivavdeling) for å redde livet.">
-					<input type="radio"  name="alvor-mang" id="grad4" required="required" value="Grad 3 Livstruende"/>
-					Grad 3 Livstruende 
-				</label>
-			</div>
-			
-			<div class="radio">
-				<label title="Døde etter en komplikasjon.">
-					<input type="radio"  name="alvor-mang" id="grad4" required="required" value="Grad 4 Dødsfall"/>
-					Grad 4 Dødsfall 
-				</label>
-			</div>
-			
-		</div>
 	    
-	    <div class="form-group">
-	   
-	      <h3>Endelig utfall av skaden</h3>
-	      <div class="radio">
-	          <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
-	          	<input type="radio"  name="tab-klinisk" id="tab-helbredelse" required="required" value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
-	          	Ingen sekvele
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
-	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" required="required" value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
-	          	Mindre alvorlig sekvele
-	          </label>
-		    </div>
-	        <div class="radio">
-	          <label title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet">
-	          	<input type="radio"  name="tab-klinisk" id="tab-sykemelding" required="required" value="alvorlig-sekvele" title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet"/>
-	          	Alvorlig sekvele
-	          </label>
-		    </div>
-		     <div class="radio">
-	          <label title="Død som følge av skaden.">
-	          	<input type="radio"  name="tab-klinisk" id="tab-uforetrydg" required="required" value="død" title="Død som følge av skaden."/>Død
-	          </label>
-		    </div>
-		     <div class="radio">
-	          <label >
-	          	<input type="radio"  name="tab-klinisk" id="tab-sekvele" required="required" value="vet-ikke"/>Vet Ikke
-	          </label>
-		    </div>
-		    
-	    </div>
+	    <!-- Flyttes før Alvorlighetsgrad -->
 	    <div class="form-group">
 	    	<h3>Tiltak rettet mot giver</h3>
 	    	  <label>Strakstiltak:</label>
@@ -940,6 +872,81 @@
 		          </label>
 			  </div>
 	    </div>
+	<!-- Flyttes før alvorlighetsgrad end -->
+	    
+	    
+	    
+	    <div class="form-group" >
+			
+			<h3>Alvorlighetsgrad </h3>
+			<div class="radio">
+				<label title="Forbigående skade/ negativ helseeffekt som ikke krevde omfattende behandling.">
+					<input type="radio"  name="alvor-mang" id="grad1" required="required" value="Grad 1 Mindre alvorlig 1a Ubetydelig"/>
+					Grad 1 Mindre alvorlig 1a Ubetydelig
+				</label>
+			</div>
+			<div class="radio">
+				<label title="Behov for medisinsk behandling (for eksempel symptomatisk behandling), men mangel på slik ville ikke ha ført til varige skader eller redusert funksjon.">
+					<input type="radio"  name="alvor-mang" id="grad2" required="required" value="Grad 1 Mindre alvorlig 1b Moderat" />
+					Grad 1 Mindre alvorlig 1b Moderat
+				</label>
+			</div>
+			<div class="radio">
+				<label title="Behov for innleggelse på sykehus eller forlenget sykehusopphold som følge av komplikasjonen; og/eller -  komplikasjonen forårsaket vedvarende eller betydelig funksjonshemming; eller - behov for medisinsk eller kirurgisk behandling for å unngå varige skader eller redusert funksjon.">
+					<input type="radio"  name="alvor-mang" id="grad3" required="required" value="Grad 2 Alvorlig" />
+					Grad 2 Alvorlig 
+				</label>
+			</div>
+			<div class="radio">
+				<label title="Behov for omfattende medisinsk intervensjon etter komplikasjonen (vasopressor-behandling, intubering, overflytting til intensivavdeling) for å redde livet.">
+					<input type="radio"  name="alvor-mang" id="grad4" required="required" value="Grad 3 Livstruende"/>
+					Grad 3 Livstruende 
+				</label>
+			</div>
+			
+			<div class="radio">
+				<label title="Døde etter en komplikasjon.">
+					<input type="radio"  name="alvor-mang" id="grad4" required="required" value="Grad 4 Dødsfall"/>
+					Grad 4 Dødsfall 
+				</label>
+			</div>
+			
+		</div>
+	    
+	    <div class="form-group">
+	   
+	      <h3>Endelig utfall av skaden</h3>
+	      <div class="radio">
+	          <label title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse.">
+	          	<input type="radio"  name="tab-klinisk" id="tab-helbredelse" required="required" value="ingen-sekvele" title="Ingen subjektive symptomer eller kliniske funn som følge av skaden/ full helbredelse."/>
+	          	Ingen sekvele
+	          </label>
+		    </div>
+	        <div class="radio">
+	          <label title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet">
+	          	<input type="radio" name="tab-klinisk" id="tab-sekvele" required="required" value="mindrealvorlig-sekvele" title="Restskade som ikke er varig invalidiserende, og som ikke medfører varig arbeidsudyktighet"/>
+	          	Mindre alvorlig sekvele
+	          </label>
+		    </div>
+	        <div class="radio">
+	          <label title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet">
+	          	<input type="radio"  name="tab-klinisk" id="tab-sykemelding" required="required" value="alvorlig-sekvele" title="Restskade som er varig invalidiserende og/eller medfører varig hel eller delvis arbeidsudyktighet"/>
+	          	Alvorlig sekvele
+	          </label>
+		    </div>
+		     <div class="radio">
+	          <label title="Død som følge av skaden.">
+	          	<input type="radio"  name="tab-klinisk" id="tab-uforetrydg" required="required" value="død" title="Død som følge av skaden."/>Død
+	          </label>
+		    </div>
+		     <div class="radio">
+	          <label >
+	          	<input type="radio"  name="tab-klinisk" id="tab-sekvele" required="required" value="vet-ikke"/>Vet Ikke
+	          </label>
+		    </div>
+		    
+	    </div>
+	    
 	  	
 	  	<div class="form-group">
 	  		<h3>Kunne komplikasjonen ha vært forebygget?</h3>
