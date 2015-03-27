@@ -175,7 +175,7 @@
 		document.getElementById("systemiskbivirkning").setAttribute('title',"");
 		switch (selectedValue){
 			case "Alvorlig vasovagal reaksjon uten synkope":
-				document.getElementById("systemiskbivirkning").setAttribute('title',"Inkontinens, kramper, laryngospasme, "); 
+				document.getElementById("systemiskbivirkning").setAttribute('title',"Inkontinens, kramper, laryngospasme, larynxødem stridor/ pustevansker - og/eller symptomer på mild vasovagal reaksjon (se nedenfor) som varer > 48 timer og/eller som fører til legekonsultasjon og/eller intravenøs væsketilførsel - og/eller symptomer på moderate vasovagal reaksjon (se nedenfor) som varer > 15 min. Symptomer på mild vasovagal reaksjon: Blekhet, svette/klamhet, tachykardi, svimmelhet, varmefølelse, svakhetsfølelse, kvalme, hyperventilering, uro/angst. Symptomer på moderat vasovagal reaksjon: Bradykardi, oppkast, hypotensjon, parestesier, prikking. "); 
 				break;
 			case "Synkope uten traume":	
 				document.getElementById("systemiskbivirkning").setAttribute('title',"Vasovagal reaksjon med bevissthetstap. Ingen skade på giveren.");
@@ -198,7 +198,7 @@
 	
 	function showarmenblide(){
 		var selectedValue = document.getElementById("tabskadearm").value;
-		if(selectedValue=="Nerveirritasjon"){
+		if(selectedValue=="Nerveskade/-irritasjon"){
 			document.getElementById('armenBilde').style.display = 'block';
 		}else{
 			document.getElementById('armenBilde').style.display = 'none';
@@ -255,11 +255,11 @@
 	        rules: {
 	          givervektkg:{
 	        	  min: 40,
-	        	  max: 110
+	        	  max: 200
 	          },
 	        },
 	        messages: {
-	        	givervektkg: "Value must be between 40 to 110 kg"
+	        	givervektkg: "Value must be between 40 to 200 kg"
 	        },
             errorPlacement: function(error, element) {
             	if(element.attr("name") == "givervektkg"){
@@ -297,7 +297,7 @@
 					$('div').find('input, textarea, select').attr('readonly', false);
 					$('div').find('select').attr('disabled', false);
 					
-					$("#sendinnTxt").html('Send inn');
+					$("#sendinnTxt").html('Kontroll før innsending');
 					$("#avbrytTxt").html('Avbryt');
 					$("#btnAvbryt").val('avbryt');
 					$("#btnSendinn").val('sendinn');
@@ -386,12 +386,12 @@
 	    <div class="form-group">
 	      <label>Givererfaring</label>
 	      	<div class="radio">
-	          <label>
-	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" required="required" value="forsteganggiver"  onclick="toggleDisplay('type-tapping',0);toggleDisplay('tab-tidligere',0)" />Førstegangsgiver
+	          <label title="Person som enten gir blod for første gang eller som tar prøver i forbindelse med første gangs vurdering som blodgiver.">
+	          	<input type="radio" name="tab-givererfaring" id="tab-giver-forste" required="required" value="forsteganggiver"  onclick="toggleDisplay('type-tapping',this.checked);toggleDisplay('tab-tidligere',0)" />Førstegangsgiver
 	          </label>
 		    </div>
 		    <div class="radio">
-	          <label>
+	          <label title="Person som har gitt blod mer enn én gang.">
 	          	<input type="radio" name="tab-givererfaring" id="tab-giver-etabler" required="required" value="etablertgiver"  onclick="toggleDisplay('type-tapping',this.checked);toggleDisplay('tab-tidligere',this.checked)"   />Etablert giver
 	          </label>
 		    </div>
@@ -657,9 +657,9 @@
 				<input type="text" size="30"  style="color:red" id="tab-imgarea" name="tab-imgarea" readonly /><br>
 			    <img  src="http://newwindow.no/ks/nokc-0.1.6/img/armen.png" alt="" usemap="armenmap" />
 			  	<map name="armenmap">
-				 <area shape="rect" title="H. cephalica dx" coords="222,9,302,202" alt="V. cephalica dx" href="javascript: return false;"  onclick="setImageValue('H. cephalica dx');">
-				 <area shape="rect" title="H. cubiti media dx" coords="300,94,341,48" alt="V. cubiti media dx" href="javascript: return false;" onclick="setImageValue('H. cubiti media dx');">
-				 <area shape="rect" title="H. basilica dx" coords="325,17,400,165" alt="V. basilica dx" href="javascript: return false;" onclick="setImageValue('H. basilica dx');">
+				 <area shape="rect" title="V. cephalica dx" coords="222,9,302,202" alt="V. cephalica dx" href="javascript: return false;"  onclick="setImageValue('V. cephalica dx');">
+				 <area shape="rect" title="V. cubiti media dx" coords="300,94,341,48" alt="V. cubiti media dx" href="javascript: return false;" onclick="setImageValue('V. cubiti media dx');">
+				 <area shape="rect" title="V. basilica dx" coords="325,17,400,165" alt="V. basilica dx" href="javascript: return false;" onclick="setImageValue('V. basilica dx');">
 				 
 				 <area shape="rect" title="V. cubiti media sin" coords="655,47,690,110" alt="V. cubiti media sin" href="javascript: return false;" onclick="setImageValue('V. cubiti media sin');">
 				 <area shape="rect" title="V. basilica sin" coords="669,17,575,169" alt="V. basilica sin" href="javascript: return false;"  onclick="setImageValue('V. basilica sin');">
