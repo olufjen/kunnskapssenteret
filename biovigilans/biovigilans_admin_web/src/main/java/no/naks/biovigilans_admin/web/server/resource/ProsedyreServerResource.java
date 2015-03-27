@@ -32,6 +32,19 @@ public class ProsedyreServerResource extends ServerResource {
 	
 	
 
+	public HendelseWebService getHendelseWebService() {
+		return hendelseWebService;
+	}
+	public void setHendelseWebService(HendelseWebService hendelseWebService) {
+		this.hendelseWebService = hendelseWebService;
+	}
+	public SaksbehandlingWebService getSaksbehandlingWebservice() {
+		return saksbehandlingWebservice;
+	}
+	public void setSaksbehandlingWebservice(
+			SaksbehandlingWebService saksbehandlingWebservice) {
+		this.saksbehandlingWebservice = saksbehandlingWebservice;
+	}
 	public SessionAdmin getSessionAdmin() {
 		return sessionAdmin;
 	}
