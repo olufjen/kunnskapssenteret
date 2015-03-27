@@ -58,12 +58,15 @@ public class VigilansModel {
 	public void setMeldingLevert(Date meldingLevert) throws ParseException {
 		this.meldingLevert = meldingLevert;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			meldLevert = dateFormat.format(meldingLevert);
-			Date datoLevert =   dateFormat.parse(meldLevert);
-		} catch (ParseException e) {
-			System.out.println("date format problem: " + e.toString());
+		if (meldingLevert != null){
+			try {
+				meldLevert = dateFormat.format(meldingLevert);
+				Date datoLevert =   dateFormat.parse(meldLevert);
+			} catch (ParseException e) {
+				System.out.println("date format problem: " + e.toString());
+			}			
 		}
+
 	}
 
 
