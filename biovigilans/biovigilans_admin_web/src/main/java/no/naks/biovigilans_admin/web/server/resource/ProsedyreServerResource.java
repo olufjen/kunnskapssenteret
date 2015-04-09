@@ -1,12 +1,13 @@
 package no.naks.biovigilans_admin.web.server.resource;
 
-//import no.naks.biovigilans_admin.web.control.AnnenKomplikasjonWebService;
-//import no.naks.biovigilans_admin.web.control.DonasjonWebService;
-//import no.naks.biovigilans.web.control.GiverWebService;
-import no.naks.biovigilans_admin.web.control.ICD10WebService;
-import no.naks.biovigilans_admin.web.control.HendelseWebService;
+import no.naks.biovigilans.felles.control.AnnenKomplikasjonWebService;
+import no.naks.biovigilans.felles.control.DonasjonWebService;
+import no.naks.biovigilans.felles.control.GiverWebService;
+import no.naks.biovigilans.felles.control.ICD10WebService;
+
+import no.naks.biovigilans.felles.control.HendelseWebService;
 import no.naks.biovigilans_admin.web.control.SaksbehandlingWebService;
-import no.naks.biovigilans_admin.web.control.SessionAdmin;
+import no.naks.biovigilans.felles.control.SessionAdmin;
 //import no.naks.biovigilans.web.control.TableWebService;
 
 
