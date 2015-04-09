@@ -223,7 +223,13 @@
 			 <systemPath>${basedirx}\biovigilans_business\1.0-SNAPSHOT\fagprosedyrer_business-1.0-SNAPSHOT.jar</systemPath>
 	-->	  
 	 </dependency>
-		      
+      <dependency>
+         
+	          <groupId>no.kunnskapssenteret</groupId>
+	          <artifactId>biovigilans_felles</artifactId>
+	          <version>1.0-SNAPSHOT</version>
+
+	 </dependency>		      
 	     <dependency>
 	          <groupId>no.kunnskapssenteret</groupId>
 	          <artifactId>rammeverk_web</artifactId>
