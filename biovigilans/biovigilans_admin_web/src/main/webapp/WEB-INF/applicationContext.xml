@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -49,14 +50,15 @@
                         </list>
                 </property>
          </bean>
- 
-        <bean id="ICD10WebService" class="no.naks.biovigilans_admin.web.control.ICD10WebServiceImpl">
+         
+         
+        <bean id="ICD10WebService" class="no.naks.biovigilans.felles.control.ICD10WebServiceImpl">
 <!--  C:\\biovigilans\\temp\\ICD10CM.xml  C:\biovigilans\temp     -->
  <!--        <property name="xmlFillocation" value= "Z:\\prosjekter\\hemovgilans\\icd10\\ICD10CM_FY2014_Full_XML\\ICD10CM.xml" ></property>   -->   
 				<property name="xmlFillocation" value= "C:\\biovigilans\\temp\\ICD10CM.xml" ></property>  
 <!--				<property name="xmlFillocation" value= "/var/tmp/icd10/ICD10CM.xml" ></property>  -->
 
-        </bean> 
+        </bean> 	
 
             	
 	 	<bean name="path2BeanRouter" class="org.restlet.ext.spring.SpringBeanRouter"> 
@@ -103,7 +105,7 @@
         	<property name="sessionAdmin" ref="sessionAdmin"></property>
 			<property name="saksbehandlingWebservice" ref="saksBehandlerWebService"></property>
         </bean>      
-        <bean id="sessionAdmin" class="no.naks.biovigilans_admin.web.control.SessionAdminImpl">
+        <bean id="sessionAdmin" class="no.naks.biovigilans.felles.control.SessionAdminImpl">
         
         </bean>
 
